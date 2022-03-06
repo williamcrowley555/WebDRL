@@ -1,0 +1,124 @@
+<?php
+    class Khoa{
+        // Connection
+        private $conn;
+        // Table
+        private $db_table = "khoa";
+        // Columns
+        public $maKhoa;
+        public $tenKhoa;
+        public $taiKhoanKhoa;
+        public $matKhauKhoa;
+        
+        // Db connection
+        public function __construct($db){
+            $this->conn = $db;
+        }
+
+        //-------------------
+        //Các chức năng
+
+        // GET ALL
+        public function getAllKhoa(){
+            $sqlQuery = "SELECT maKhoa, tenKhoa, taiKhoanKhoa, matKhauKhoa FROM " . $this->db_table . "";
+            $stmt = $this->conn->prepare($sqlQuery);
+            $stmt->execute();
+            return $stmt;
+        }
+
+        // READ single
+        public function getSingleKhoa(){
+            $sqlQuery = "SELECT maKhoa, tenKhoa, taiKhoanKhoa, matKhauKhoa FROM ". $this->db_table ."
+                        WHERE maKhoa = ? LIMIT 0,1";
+            $stmt = $this->conn->prepare($sqlQuery);
+            $stmt->bindParam(1, $this->maKhoa);
+            $stmt->execute();
+
+            $dataRow = $stmt->fetch(PDO::FETCH_ASSOC);
+            
+            if ($dataRow != null){
+                $this->maKhoa = $dataRow['maKhoa'];
+                $this->tenKhoa = $dataRow['tenKhoa'];
+                $this->taiKhoanKhoa = $dataRow['taiKhoanKhoa'];
+                $this->matKhauKhoa = $dataRow['matKhauKhoa'];
+            }
+            
+        }
+
+        // CREATE
+        public function createKhoa(){
+            $sqlQuery = "INSERT INTO
+                        ". $this->db_table ."
+                    SET
+                        tenKhoa = :tenKhoa, 
+                        taiKhoanKhoa = :taiKhoanKhoa, 
+                        matKhauKhoa = :matKhauKhoa";
+        
+            $stmt = $this->conn->prepare($sqlQuery);
+        
+            // sanitize (Lọc dữ liệu đầu vào tránh SQLInjection, XSS)
+            $this->tenKhoa=htmlspecialchars(strip_tags($this->tenKhoa));
+            $this->taiKhoanKhoa=htmlspecialchars(strip_tags($this->taiKhoanKhoa));
+            $this->matKhauKhoa=htmlspecialchars(strip_tags($this->matKhauKhoa));
+        
+            // bind data
+            $stmt->bindParam(":tenKhoa", $this->tenKhoa);
+            $stmt->bindParam(":taiKhoanKhoa", $this->taiKhoanKhoa);
+            $stmt->bindParam(":matKhauKhoa", $this->matKhauKhoa);
+        
+            if($stmt->execute()){
+               return true;
+            }
+            return false;
+        }
+
+        // UPDATE
+        public function updateKhoa(){
+            $sqlQuery = "UPDATE
+                        ". $this->db_table ."
+                    SET
+                        tenKhoa = :tenKhoa, 
+                        taiKhoanKhoa = :taiKhoanKhoa, 
+                        matKhauKhoa = :matKhauKhoa
+                    WHERE 
+                        maKhoa = :maKhoa";
+        
+            $stmt = $this->conn->prepare($sqlQuery);
+        
+            // sanitize (Lọc dữ liệu đầu vào tránh SQLInjection, XSS)
+            $this->maKhoa=htmlspecialchars(strip_tags($this->maKhoa));
+            $this->tenKhoa=htmlspecialchars(strip_tags($this->tenKhoa));
+            $this->taiKhoanKhoa=htmlspecialchars(strip_tags($this->taiKhoanKhoa));
+            $this->matKhauKhoa=htmlspecialchars(strip_tags($this->matKhauKhoa));
+        
+            // bind data
+            $stmt->bindParam(":maKhoa", $this->maKhoa);
+            $stmt->bindParam(":tenKhoa", $this->tenKhoa);
+            $stmt->bindParam(":taiKhoanKhoa", $this->taiKhoanKhoa);
+            $stmt->bindParam(":matKhauKhoa", $this->matKhauKhoa);
+        
+            if($stmt->execute()){
+               return true;
+            }
+            return false;
+        }
+
+        // DELETE
+        function deleteKhoa(){
+            $sqlQuery = "DELETE FROM " . $this->db_table . " WHERE maKhoa = ?";
+            $stmt = $this->conn->prepare($sqlQuery);
+        
+            $this->maKhoa=htmlspecialchars(strip_tags($this->maKhoa));
+        
+            $stmt->bindParam(1, $this->maKhoa);
+        
+            if($stmt->execute()){
+                return true;
+            }
+            return false;
+        }
+
+
+    }
+
+?>
