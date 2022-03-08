@@ -1,0 +1,150 @@
+<?php
+    class SinhVien{
+        // Connection
+        private $conn;
+        // Table
+        private $db_table = "sinhvien";
+        // Columns
+        public $maSinhVien ;
+        public $hoTenSinhVien;
+        public $ngaySinh;
+        public $he;
+        public $matKhauSinhVien;
+        public $maLop;
+
+        // Db connection
+        public function __construct($db){
+            $this->conn = $db;
+        }
+
+        //-------------------
+        //Các chức năng
+
+        // GET ALL
+        public function getAllSinhVien(){
+            $sqlQuery = "SELECT maSinhVien , hoTenSinhVien, ngaySinh, he, matKhauSinhVien, maLop, diemTrungBinhChungHKXet FROM " . $this->db_table . "";
+            $stmt = $this->conn->prepare($sqlQuery);
+            $stmt->execute();
+            return $stmt;
+        }
+
+        // READ single
+        public function getSingleSinhVien(){
+            $sqlQuery = "SELECT maSinhVien , hoTenSinhVien, ngaySinh, he, matKhauSinhVien, maLop, diemTrungBinhChungHKXet FROM ". $this->db_table ."
+                        WHERE maSinhVien  = ? LIMIT 0,1";
+            $stmt = $this->conn->prepare($sqlQuery);
+            $stmt->bindParam(1, $this->maSinhVien );
+            $stmt->execute();
+
+            $dataRow = $stmt->fetch(PDO::FETCH_ASSOC);
+            
+            if ($dataRow != null){
+                $this->maSinhVien  = $dataRow['maSinhVien '];
+                $this->hoTenSinhVien = $dataRow['hoTenSinhVien'];
+                $this->ngaySinh = $dataRow['ngaySinh'];
+                $this->he = $dataRow['he'];
+                $this->matKhauSinhVien = $dataRow['matKhauSinhVien'];
+                $this->maLop = $dataRow['maLop'];
+                $this->diemTrungBinhChungHKXet = $dataRow['diemTrungBinhChungHKXet'];
+            }
+            
+        }
+
+        // CREATE
+        public function createSinhVien(){
+            $sqlQuery = "INSERT INTO
+                        ". $this->db_table ."
+                    SET
+                        hoTenSinhVien = :hoTenSinhVien, 
+                        ngaySinh = :ngaySinh, 
+                        he = :he,
+                        matKhauSinhVien = :matKhauSinhVien,
+                        maLop = :maLop,
+                        diemTrungBinhChungHKXet = :diemTrungBinhChungHKXet";
+                        
+        
+            $stmt = $this->conn->prepare($sqlQuery);
+        
+            // sanitize (Lọc dữ liệu đầu vào tránh SQLInjection, XSS)
+            $this->hoTenSinhVien=htmlspecialchars(strip_tags($this->hoTenSinhVien));
+            $this->ngaySinh=htmlspecialchars(strip_tags($this->ngaySinh));
+            $this->he=htmlspecialchars(strip_tags($this->he));
+            $this->matKhauSinhVien=htmlspecialchars(strip_tags($this->matKhauSinhVien));
+            $this->maLop=htmlspecialchars(strip_tags($this->maLop));
+            $this->diemTrungBinhChungHKXet=htmlspecialchars(strip_tags($this->diemTrungBinhChungHKXet));
+        
+            // bind data
+            $stmt->bindParam(":hoTenSinhVien", $this->hoTenSinhVien);
+            $stmt->bindParam(":ngaySinh", $this->ngaySinh);
+            $stmt->bindParam(":he", $this->he);
+            $stmt->bindParam(":matKhauSinhVien", $this->matKhauSinhVien);
+            $stmt->bindParam(":maLop", $this->maLop);
+            $stmt->bindParam(":diemTrungBinhChungHKXet", $this->diemTrungBinhChungHKXet);
+        
+            if($stmt->execute()){
+               return true;
+            }
+            return false;
+        }
+
+        // UPDATE
+        public function updateSinhVien(){
+            $sqlQuery = "UPDATE
+                        ". $this->db_table ."
+                    SET
+                        hoTenSinhVien = :hoTenSinhVien, 
+                        ngaySinh = :ngaySinh, 
+                        he = :he,
+                        matKhauSinhVien = :matKhauSinhVien,
+                        maLop = :maLop,
+                        diemTrungBinhChungHKXet = :diemTrungBinhChungHKXet
+                    WHERE 
+                        maSinhVien  = :maSinhVien ";
+        
+            $stmt = $this->conn->prepare($sqlQuery);
+        
+            // sanitize (Lọc dữ liệu đầu vào tránh SQLInjection, XSS)
+            $this->maSinhVien =htmlspecialchars(strip_tags($this->maSinhVien ));
+            $this->hoTenSinhVien=htmlspecialchars(strip_tags($this->hoTenSinhVien));
+            $this->ngaySinh=htmlspecialchars(strip_tags($this->ngaySinh));
+            $this->he=htmlspecialchars(strip_tags($this->he));
+            $this->matKhauSinhVien=htmlspecialchars(strip_tags($this->matKhauSinhVien));
+            $this->maLop=htmlspecialchars(strip_tags($this->maLop));
+            $this->diemTrungBinhChungHKXet=htmlspecialchars(strip_tags($this->diemTrungBinhChungHKXet));
+        
+        
+            // bind data
+            $stmt->bindParam(":maSinhVien ", $this->maSinhVien );
+            $stmt->bindParam(":hoTenSinhVien", $this->hoTenSinhVien);
+            $stmt->bindParam(":ngaySinh", $this->ngaySinh);
+            $stmt->bindParam(":he", $this->he);
+            $stmt->bindParam(":matKhauSinhVien", $this->matKhauSinhVien);
+            $stmt->bindParam(":maLop", $this->maLop);
+            $stmt->bindParam(":diemTrungBinhChungHKXet", $this->diemTrungBinhChungHKXet);
+        
+        
+            if($stmt->execute()){
+               return true;
+            }
+            return false;
+        }
+
+        // DELETE
+        function deleteSinhVien(){
+            $sqlQuery = "DELETE FROM " . $this->db_table . " WHERE maSinhVien  = ?";
+            $stmt = $this->conn->prepare($sqlQuery);
+        
+            $this->maSinhVien =htmlspecialchars(strip_tags($this->maSinhVien ));
+        
+            $stmt->bindParam(1, $this->maSinhVien );
+        
+            if($stmt->execute()){
+                return true;
+            }
+            return false;
+        }
+
+
+    }
+
+?>
