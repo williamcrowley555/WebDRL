@@ -1,5 +1,5 @@
 <?php
-    class Tieuchicap1{
+    class KhoaHoc{
         // Connection
         private $conn;
         // Table
