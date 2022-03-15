@@ -17,7 +17,7 @@
     if($item->maTieuChi3 != null){
         // create array
         $chamdiemrenluyen_arr = array(
-            "maChamDiemRenLuyen " =>  $item->maChamDiemRenLuyen ,
+            "maChamDiemRenLuyen" =>  $item->maChamDiemRenLuyen ,
             "maTieuChi3" => $item->maTieuChi3,
             "maSinhVien" => $item->maSinhVien,
             "diemSinhVienDanhGia" => $item->diemSinhVienDanhGia,

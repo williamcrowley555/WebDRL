@@ -16,7 +16,7 @@
     $data = json_decode(file_get_contents("php://input"));
     
     if ($data != null){
-        $item->maKhoa = $data->maKhoa;
+        $item->maHoatDong = $data->maHoatDong;
     
         if($item->deleteHoatDongDanhGia()){
             echo json_encode("HoatDongDanhGia deleted.");

@@ -16,7 +16,7 @@
     $data = json_decode(file_get_contents("php://input"));
     
     if ($data != null){
-        $item->maKhoa = $data->maKhoa;
+        $item->maSinhVien = $data->maSinhVien;
     
         if($item->deleteSinhVien()){
             echo json_encode("SinhVien deleted.");
