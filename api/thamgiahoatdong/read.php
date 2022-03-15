@@ -21,7 +21,7 @@
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
             extract($row);
             $e = array(
-                "maThamGiaHoatDong " => $maThamGiaHoatDong ,
+                "maThamGiaHoatDong" => $maThamGiaHoatDong ,
                 "maHoatDong" => $maHoatDong,
                 "maSinhVienThamGia" => $maSinhVienThamGia
             );

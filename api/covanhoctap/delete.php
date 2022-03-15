@@ -16,7 +16,7 @@
     $data = json_decode(file_get_contents("php://input"));
     
     if ($data != null){
-        $item->maKhoa = $data->maKhoa;
+        $item->maCoVanHocTap = $data->maCoVanHocTap;
     
         if($item->deleteCVHT()){
             echo json_encode("CVHT deleted.");

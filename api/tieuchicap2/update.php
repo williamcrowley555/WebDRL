@@ -11,7 +11,7 @@
     $database = new Database();
     $db = $database->getConnection();
     
-    $item = new Khoa($db);
+    $item = new Tieuchicap2($db);
     
     $data = json_decode(file_get_contents("php://input"));
     
@@ -22,7 +22,7 @@
         $item->noidung = $data->noidung;
         $item->matc1 = $data->matc1;
         
-        if($item->updateKhoa()){
+        if($item->updateTC2()){
             echo json_encode("tieuchicap2 data updated.");
         } else{
             echo json_encode("Data could not be updated");
