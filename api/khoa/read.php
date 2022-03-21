@@ -12,7 +12,7 @@
     $itemCount = $stmt->rowCount();
 
 
-    echo json_encode($itemCount); //print itemCount
+   // echo json_encode($itemCount); //print itemCount
     if($itemCount > 0){
         $khoaArr = array();
         $khoaArr["khoa"] = array(); //tạo object json 
