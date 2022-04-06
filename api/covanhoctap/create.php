@@ -16,9 +16,10 @@
 
     if ($data != null){
         //set các biến bằng data nhận từ user
+        $item->maCoVanHocTap = $data->maCoVanHocTap;
         $item->hoTenCoVan = $data->hoTenCoVan;
         $item->soDienThoai = $data->soDienThoai;
-        $item->matKhauTaiKhoanCoVan = $data->matKhauTaiKhoanCoVan;
+        $item->matKhauTaiKhoanCoVan = md5($data->matKhauTaiKhoanCoVan);
 
         if($item->createCVHT()){
             echo 'CVHT created successfully.';

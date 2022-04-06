@@ -18,7 +18,7 @@
         //set các biến bằng data nhận từ user
         $item->tenKhoa = $data->tenKhoa;
         $item->taiKhoanKhoa = $data->taiKhoanKhoa;
-        $item->matKhauKhoa = $data->matKhauKhoa;
+        $item->matKhauKhoa = md5($data->matKhauKhoa);
 
         if($item->createKhoa()){
             echo 'Khoa created successfully.';

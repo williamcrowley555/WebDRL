@@ -50,6 +50,7 @@
             $sqlQuery = "INSERT INTO
                         ". $this->db_table ."
                     SET
+                        maCoVanHocTap = :maCoVanHocTap,
                         hoTenCoVan = :hoTenCoVan, 
                         soDienThoai = :soDienThoai, 
                         matKhauTaiKhoanCoVan = :matKhauTaiKhoanCoVan";
@@ -57,11 +58,13 @@
             $stmt = $this->conn->prepare($sqlQuery);
         
             // sanitize (Lọc dữ liệu đầu vào tránh SQLInjection, XSS)
+            $this->maCoVanHocTap=htmlspecialchars(strip_tags($this->maCoVanHocTap));
             $this->hoTenCoVan=htmlspecialchars(strip_tags($this->hoTenCoVan));
             $this->soDienThoai=htmlspecialchars(strip_tags($this->soDienThoai));
             $this->matKhauTaiKhoanCoVan=htmlspecialchars(strip_tags($this->matKhauTaiKhoanCoVan));
         
             // bind data
+            $stmt->bindParam(":maCoVanHocTap", $this->maCoVanHocTap);
             $stmt->bindParam(":hoTenCoVan", $this->hoTenCoVan);
             $stmt->bindParam(":soDienThoai", $this->soDienThoai);
             $stmt->bindParam(":matKhauTaiKhoanCoVan", $this->matKhauTaiKhoanCoVan);
@@ -116,6 +119,29 @@
                 return true;
             }
             return false;
+        }
+        // check login
+        public function check_login(){
+            $sqlQuery = "SELECT maCoVanHocTap, hoTenCoVan, soDienThoai FROM ". $this->db_table ."
+                        WHERE maCoVanHocTap = ? AND matKhauTaiKhoanCoVan = ?  LIMIT 0,1";
+            $stmt = $this->conn->prepare($sqlQuery);
+            $stmt->bindParam(1, $this->maCoVanHocTap);
+            $stmt->bindParam(2, $this->matKhauTaiKhoanCoVan);
+
+            $stmt->execute();
+
+            $dataRow = $stmt->fetch(PDO::FETCH_ASSOC);
+            
+            if ($dataRow != null){
+                $this->maCoVanHocTap = $dataRow['maCoVanHocTap'];
+                $this->hoTenCoVan = $dataRow['hoTenCoVan'];
+                $this->soDienThoai = $dataRow['soDienThoai'];
+                return true;
+
+            }
+            return false;
+
+            
         }
 
 
