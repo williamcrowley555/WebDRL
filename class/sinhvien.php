@@ -5,7 +5,7 @@
         // Table
         private $db_table = "sinhvien";
         // Columns
-        public $maSinhVien ;
+        public $maSinhVien;
         public $hoTenSinhVien;
         public $ngaySinh;
         public $he;
@@ -22,7 +22,7 @@
 
         // GET ALL
         public function getAllSinhVien(){
-            $sqlQuery = "SELECT maSinhVien , hoTenSinhVien, ngaySinh, he, matKhauSinhVien, maLop, diemTrungBinhChungHKXet FROM " . $this->db_table . "";
+            $sqlQuery = "SELECT maSinhVien, hoTenSinhVien, ngaySinh, he, matKhauSinhVien, maLop FROM " . $this->db_table . "";
             $stmt = $this->conn->prepare($sqlQuery);
             $stmt->execute();
             return $stmt;
@@ -30,7 +30,7 @@
 
         // READ single
         public function getSingleSinhVien(){
-            $sqlQuery = "SELECT maSinhVien , hoTenSinhVien, ngaySinh, he, matKhauSinhVien, maLop, diemTrungBinhChungHKXet FROM ". $this->db_table ."
+            $sqlQuery = "SELECT maSinhVien , hoTenSinhVien, ngaySinh, he, matKhauSinhVien, maLop FROM ". $this->db_table ."
                         WHERE maSinhVien  = ? LIMIT 0,1";
             $stmt = $this->conn->prepare($sqlQuery);
             $stmt->bindParam(1, $this->maSinhVien );
@@ -39,13 +39,12 @@
             $dataRow = $stmt->fetch(PDO::FETCH_ASSOC);
             
             if ($dataRow != null){
-                $this->maSinhVien  = $dataRow['maSinhVien '];
+                $this->maSinhVien  = $dataRow['maSinhVien'];
                 $this->hoTenSinhVien = $dataRow['hoTenSinhVien'];
                 $this->ngaySinh = $dataRow['ngaySinh'];
                 $this->he = $dataRow['he'];
                 $this->matKhauSinhVien = $dataRow['matKhauSinhVien'];
                 $this->maLop = $dataRow['maLop'];
-                $this->diemTrungBinhChungHKXet = $dataRow['diemTrungBinhChungHKXet'];
             }
             
         }
@@ -55,31 +54,31 @@
             $sqlQuery = "INSERT INTO
                         ". $this->db_table ."
                     SET
+                        maSinhVien = :maSinhVien, 
                         hoTenSinhVien = :hoTenSinhVien, 
                         ngaySinh = :ngaySinh, 
                         he = :he,
                         matKhauSinhVien = :matKhauSinhVien,
-                        maLop = :maLop,
-                        diemTrungBinhChungHKXet = :diemTrungBinhChungHKXet";
+                        maLop = :maLop";
                         
         
             $stmt = $this->conn->prepare($sqlQuery);
         
             // sanitize (Lọc dữ liệu đầu vào tránh SQLInjection, XSS)
+            $this->maSinhVien=htmlspecialchars(strip_tags($this->maSinhVien));
             $this->hoTenSinhVien=htmlspecialchars(strip_tags($this->hoTenSinhVien));
             $this->ngaySinh=htmlspecialchars(strip_tags($this->ngaySinh));
             $this->he=htmlspecialchars(strip_tags($this->he));
             $this->matKhauSinhVien=htmlspecialchars(strip_tags($this->matKhauSinhVien));
             $this->maLop=htmlspecialchars(strip_tags($this->maLop));
-            $this->diemTrungBinhChungHKXet=htmlspecialchars(strip_tags($this->diemTrungBinhChungHKXet));
         
             // bind data
+            $stmt->bindParam(":maSinhVien", $this->maSinhVien);
             $stmt->bindParam(":hoTenSinhVien", $this->hoTenSinhVien);
             $stmt->bindParam(":ngaySinh", $this->ngaySinh);
             $stmt->bindParam(":he", $this->he);
             $stmt->bindParam(":matKhauSinhVien", $this->matKhauSinhVien);
             $stmt->bindParam(":maLop", $this->maLop);
-            $stmt->bindParam(":diemTrungBinhChungHKXet", $this->diemTrungBinhChungHKXet);
         
             if($stmt->execute()){
                return true;
@@ -92,12 +91,12 @@
             $sqlQuery = "UPDATE
                         ". $this->db_table ."
                     SET
+                        maSinhVien = :maSinhVien, 
                         hoTenSinhVien = :hoTenSinhVien, 
                         ngaySinh = :ngaySinh, 
                         he = :he,
                         matKhauSinhVien = :matKhauSinhVien,
-                        maLop = :maLop,
-                        diemTrungBinhChungHKXet = :diemTrungBinhChungHKXet
+                        maLop = :maLop
                     WHERE 
                         maSinhVien  = :maSinhVien ";
         
@@ -110,17 +109,15 @@
             $this->he=htmlspecialchars(strip_tags($this->he));
             $this->matKhauSinhVien=htmlspecialchars(strip_tags($this->matKhauSinhVien));
             $this->maLop=htmlspecialchars(strip_tags($this->maLop));
-            $this->diemTrungBinhChungHKXet=htmlspecialchars(strip_tags($this->diemTrungBinhChungHKXet));
         
         
             // bind data
-            $stmt->bindParam(":maSinhVien ", $this->maSinhVien );
+            $stmt->bindParam(":maSinhVien", $this->maSinhVien );
             $stmt->bindParam(":hoTenSinhVien", $this->hoTenSinhVien);
             $stmt->bindParam(":ngaySinh", $this->ngaySinh);
             $stmt->bindParam(":he", $this->he);
             $stmt->bindParam(":matKhauSinhVien", $this->matKhauSinhVien);
             $stmt->bindParam(":maLop", $this->maLop);
-            $stmt->bindParam(":diemTrungBinhChungHKXet", $this->diemTrungBinhChungHKXet);
         
         
             if($stmt->execute()){
@@ -143,7 +140,30 @@
             }
             return false;
         }
+         // check login 
+         public function check_login(){
+            $sqlQuery = "SELECT maSinhVien , hoTenSinhVien, ngaySinh, he, matKhauSinhVien, maLop FROM ". $this->db_table ."
+                        WHERE maSinhVien = ? AND matKhauSinhVien = ? LIMIT 0,1";
+            $stmt = $this->conn->prepare($sqlQuery);
+            $stmt->bindParam(1, $this->maSinhVien);
+            $stmt->bindParam(2, $this->matKhauSinhVien);
+            $stmt->execute();
 
+            $dataRow = $stmt->fetch(PDO::FETCH_ASSOC);
+           
+            if ($dataRow != null){
+                $this->maSinhVien  = $dataRow['maSinhVien'];
+                $this->hoTenSinhVien = $dataRow['hoTenSinhVien'];
+                $this->ngaySinh = $dataRow['ngaySinh'];
+                $this->he = $dataRow['he'];
+                $this->maLop = $dataRow['maLop'];
+
+                return true;
+            }
+            
+            return false;
+            
+        }
 
     }
 

@@ -16,10 +16,11 @@
 
     if ($data != null){
         //set các biến bằng data nhận từ user
+        $item->maSinhVien = $data->maSinhVien;
         $item->hoTenSinhVien = $data->hoTenSinhVien;
         $item->ngaySinh = $data->ngaySinh;        
         $item->he = $data->he;
-        $item->matKhauSinhVien = $data->matKhauSinhVien;
+        $item->matKhauSinhVien =md5($data->matKhauSinhVien);
         $item->maLop = $data->maLop;
 
         if($item->createSinhVien()){

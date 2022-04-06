@@ -22,7 +22,7 @@
             "ngaySinh" => $item->ngaySinh,
             "he" => $item->he,
             "matKhauSinhVien" => $item->matKhauSinhVien,
-            "matKhauSinhVien" => $item->matKhauSinhVien
+            "maLop" => $item->maLop
         );
       
         http_response_code(200);

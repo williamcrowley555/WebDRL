@@ -44,6 +44,27 @@
             }
             
         }
+        // Check login
+        public function check_login(){
+            $sqlQuery = "SELECT maKhoa, tenKhoa, taiKhoanKhoa, matKhauKhoa FROM ". $this->db_table ."
+                        WHERE taiKhoanKhoa = ? AND matKhauKhoa = ?  LIMIT 0,1";
+            $stmt = $this->conn->prepare($sqlQuery);
+            $stmt->bindParam(1, $this->taiKhoanKhoa);
+            $stmt->bindParam(2, $this->matKhauKhoa);
+            $stmt->execute();
+
+            $dataRow = $stmt->fetch(PDO::FETCH_ASSOC);
+            
+            if ($dataRow != null){
+                $this->maKhoa = $dataRow['maKhoa'];
+                $this->tenKhoa = $dataRow['tenKhoa'];
+                $this->taiKhoanKhoa = $dataRow['taiKhoanKhoa'];
+                $this->matKhauKhoa = $dataRow['matKhauKhoa'];
+                return true;
+
+            }
+            return false;  
+        }
 
         // CREATE
         public function createKhoa(){
