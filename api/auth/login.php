@@ -27,7 +27,7 @@
 
     $data = json_decode(file_get_contents("php://input")); // nhan data json tu client post len
   
-    if($data != null){
+    if(!empty($data->id) && !empty($data->password) && !empty($data->quyen)){
 
         switch ($data->quyen) {
 
@@ -38,48 +38,15 @@
                 $item->matKhauSinhVien = md5($data->password);  
         
                 if ($item->check_login()){
-                    
-                    $iss = "localhost";
-                    $iat = time(); //thời gian đăng nhập
-                    $nbf = $iat + 10;
-                    $exp = $iat + 30; //thời gian hết hạn của token
-                    $sinhvien_arr = array(
-                        "quyen" => "1",
-                        "maSinhVien" =>  $item->maSinhVien,
-                        "hoTenSinhVien" => $item->hoTenSinhVien,
-                        "ngaySinh" => $item->ngaySinh,
-                        "he" => $item->he,
-                        "maLop" => $item->maLop,
-                    );
-
-
-                    $payload_info = array(
-                        "iss"=> $iss, //issuer
-                        "iat"=> $iat, // issued at
-                        "nbf"=> $nbf, // not before at issue
-                        "exp"=> $exp, //expiration time
-                        //"aud"=>, //audience
-                        "sinhvien_arr"=> $sinhvien_arr
-                    );
-
-                    $secret_key = "daihocsaigon";
-
-                    $jwt = JWT::encode($payload_info, $secret_key, "HS256"); //HS256 là thuật toán băm
-    
-                    http_response_code(200);
-                    echo json_encode(array(
-                        "login_status"=> 1,
-                        "jwt"=> $jwt,
-                        "message"=>"Login successful",
-                        $sinhvien_arr
-                    ));     
+                    create_token("sinhvien",$item,"maSinhVien","hoTenSinhVien");
                     break;
-                }else{
-                    http_response_code(404);
-                    echo "Sai thông tin đăng nhập!";
-                    break;
-                }
-            }
+             
+            }else{
+                http_response_code(404);
+                echo "Sai thông tin đăng nhập!";
+                break;
+            } 
+        }
                 
             // la co van hoc tap
             case 2:{
@@ -88,18 +55,7 @@
                 $item->matKhauTaiKhoanCoVan = md5($data->password);  
         
                 if ($item->check_login()){
-                    // create array
-                    $covanhoctap_arr = array(
-                        "login status" => "successful",
-                        "quyen" => "2",
-                        "maCoVanHocTap" =>  $item->maCoVanHocTap,
-                        "hoTenCoVan" => $item->hoTenCoVan,
-                        "soDienThoai" => $item->soDienThoai
-                        
-                    );
-        
-                    http_response_code(200);
-                    echo json_encode($covanhoctap_arr);   
+                    create_token("CVHT",$item,"maCoVanHocTap","hoTenCVHT");
                     break;
                 }else{
                     http_response_code(404);
@@ -115,16 +71,8 @@
                 $item->matKhauKhoa = md5($data->password);  
             
                 if ($item->check_login()){
-                    // create array
-                    $khoa_arr = array(
-                        "login status" => "successful",
-                        "quyen" => "3",
-                        "maKhoa" =>  $item->maKhoa,
-                        "tenKhoa" => $item->tenKhoa,                            
-                    );
-            
-                    http_response_code(200);
-                    echo json_encode($khoa_arr);   
+                    create_token("Khoa",$item,"taiKhoanKhoa","tenKhoa");
+  
                     break; 
                 }else{
                     http_response_code(404);
@@ -144,8 +92,45 @@
     }else{
         echo "Chưa gửi thông tin đăng nhập!";
     }
-    
+     function create_token(
+        String $aud , // ai la nguoi dang nhap
+        $item ,
+        String $ma ,
+        String $hoten
+        
+     )
+    {
+        $iss = "localhost";
+        $iat = time(); //thời gian đăng nhập
+        $nbf = $iat + 10;
+        $exp = $iat + 60; //thời gian hết hạn của tokenv
+        $arr = array( 
+            $ma =>  $item->$ma,
+            $hoten => $item->$hoten
+        );
 
 
-    
+        $payload_info = array(
+            "iss"=> $iss, //issuer
+            "iat"=> $iat, // issued at
+            "nbf"=> $nbf, // not before at issue
+            "exp"=> $exp, //expiration time
+            "aud"=> $aud, //audience
+            $aud => $arr
+        );
+
+        $secret_key = "daihocsaigon";
+
+        $jwt = JWT::encode($payload_info, $secret_key, "HS256"); //HS256 là thuật toán băm
+
+        http_response_code(200);
+        echo json_encode(array(
+            "login_status"=> 1,
+            "jwt"=> $jwt,
+            "message"=>"Login successful",
+            $arr
+        ));     
+        
+    }   
+        
 ?>
