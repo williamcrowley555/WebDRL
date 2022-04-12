@@ -9,6 +9,8 @@
     include_once '../../class/sinhvien.php';
     include_once '../../class/covanhoctap.php';
     include_once '../../class/khoa.php';
+    require '../../vendor/autoload.php';
+    use \Firebase\JWT\JWT;
 
 
     $database = new Database();
@@ -24,15 +26,39 @@
             $item->matKhauSinhVien = md5($data->password);  
     
             if ($item->check_login()){
-                // create array
+                
+
+                $iss = "localhost";
+                $iat = time();
+                $nbf = $iat + 10 ;
+                $exp = $iat + 60 ;
+                $aud = "student";
                 $sinhvien_arr = array(
-                    "login status" => "successful",
                     "quyen" => "1",
                     "maSinhVien" =>  $item->maSinhVien,
                     "hoTenSinhVien" => $item->hoTenSinhVien,
                     "ngaySinh" => $item->ngaySinh,
                     "he" => $item->he,
                     "maLop" => $item->maLop,
+                );
+
+                $payload_info = array (
+                    //"iss"=>$iss,
+                   // "iat"=>$iat,
+                   // "nbf"=>$nbf,
+                   // "exp"=>$exp,
+                   // "aud"=>$aud,
+                    "data"=>$sinhvien_arr
+                );
+
+                $secret_key = "owt125";
+
+                $jwt = JWT::encode($payload_info,$secret_key,"HS512");
+                
+                // create array
+                $sinhvien_arr = array(
+                    "login status" => "successful",
+                    "jwt" => $jwt 
                 );
     
                 http_response_code(200);
