@@ -20,12 +20,13 @@
     $db = $database->getConnection();
 
     if($_SERVER['REQUEST_METHOD']==='POST'){
-        $data = json_decode(file_get_contents("php://input")); // nhan data json tu client post len
-        if(!empty($data->jwt)){  
+        $all_headers = getallheaders();
+        $jwt = $all_headers['Authorization'];
+        if(!empty($jwt)){  
             try {
-                $secret_key = "owt125";
+                $secret_key = "daihocsaigon";
 
-                $decoded_data = JWT::decode($data->jwt, new Key($secret_key,"HS512"));
+                $decoded_data = JWT::decode($jwt, new Key($secret_key,"HS256"));
                 http_response_code(200);
                 echo json_encode(array(
                     "status" => "1",
