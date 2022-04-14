@@ -55,7 +55,7 @@
                 $item->matKhauTaiKhoanCoVan = md5($data->password);  
         
                 if ($item->check_login()){
-                    create_token("CVHT",$item,"maCoVanHocTap","hoTenCVHT");
+                    create_token("cvht",$item,"maCoVanHocTap","hoTenCoVan");
                     break;
                 }else{
                     http_response_code(404);
@@ -71,7 +71,7 @@
                 $item->matKhauKhoa = md5($data->password);  
             
                 if ($item->check_login()){
-                    create_token("Khoa",$item,"taiKhoanKhoa","tenKhoa");
+                    create_token("khoa",$item,"taiKhoanKhoa","tenKhoa");
   
                     break; 
                 }else{
