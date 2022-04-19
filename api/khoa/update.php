@@ -7,32 +7,37 @@
     
     include_once '../../config/database.php';
     include_once '../../class/khoa.php';
+    include_once '../auth/read-data.php';
     
-    $database = new Database();
-    $db = $database->getConnection();
+    $read_data = new read_data();
+    $data=$read_data->read_token();
     
-    $item = new Khoa($db);
-    
-    $data = json_decode(file_get_contents("php://input"));
-    
-    if ($data != null){
-        $item->maKhoa = $data->maKhoa;
-    
-        //values
-        $item->tenKhoa = $data->tenKhoa;
-        $item->taiKhoanKhoa = $data->taiKhoanKhoa;
-        $item->matKhauKhoa = $data->matKhauKhoa;
+    // kiểm tra đăng nhập thành công 
+    if($data["status"]==1){
         
-        if($item->updateKhoa()){
-            echo json_encode("Khoa data updated.");
-        } else{
-            echo json_encode("Data could not be updated");
+        $database = new Database();
+        $db = $database->getConnection();
+        
+        $item = new Khoa($db);
+        
+        $data = json_decode(file_get_contents("php://input"));
+        
+        if ($data != null){
+            $item->maKhoa = $data->maKhoa;
+        
+            //values
+            $item->tenKhoa = $data->tenKhoa;
+            $item->taiKhoanKhoa = $data->taiKhoanKhoa;
+            $item->matKhauKhoa = $data->matKhauKhoa;
+            
+            if($item->updateKhoa()){
+                echo json_encode("Khoa data updated.");
+            } else{
+                echo json_encode("Data could not be updated");
+            }
+
+        }else{
+            echo 'No data posted.';
         }
-
-    }else{
-        echo 'No data posted.';
     }
-
-    
-
 ?>

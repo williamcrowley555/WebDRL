@@ -7,27 +7,35 @@
 
     include_once '../../config/database.php';
     include_once '../../class/tieuchicap1.php';
+    include_once '../auth/read-data.php';
+    
+    $read_data = new read_data();
+    $data=$read_data->read_token();
+    
+    // kiểm tra đăng nhập thành công 
+    if($data["status"]==1){
 
-    $database = new Database();
-    $db = $database->getConnection();
-    $item = new Tieuchicap1($db);
-    $item->matc1 = isset($_GET['matc1']) ? $_GET['matc1'] : die(); //Lấy id từ phương thức GET
-  
-    $item->getSingleTC1();
-    if($item->noidung != null){
-        // create array
-        $tieuchicap1_arr = array(
-            "matc1" =>  $item->matc1,
-            "noidung" => $item->noidung,
-            "diemtoida" => $item->diemtoida
-        );
-      
-        http_response_code(200);
-        echo json_encode($tieuchicap1_arr);
-    }
-      
-    else{
-        http_response_code(404);
-        echo json_encode("tieuchicap1 not found.");
+        $database = new Database();
+        $db = $database->getConnection();
+        $item = new Tieuchicap1($db);
+        $item->matc1 = isset($_GET['matc1']) ? $_GET['matc1'] : die(); //Lấy id từ phương thức GET
+    
+        $item->getSingleTC1();
+        if($item->noidung != null){
+            // create array
+            $tieuchicap1_arr = array(
+                "matc1" =>  $item->matc1,
+                "noidung" => $item->noidung,
+                "diemtoida" => $item->diemtoida
+            );
+        
+            http_response_code(200);
+            echo json_encode($tieuchicap1_arr);
+        }
+        
+        else{
+            http_response_code(404);
+            echo json_encode("tieuchicap1 not found.");
+        }
     }
 ?>

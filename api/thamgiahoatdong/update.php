@@ -6,30 +6,37 @@
     header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
     
     include_once '../../config/database.php';
-    include_once '../../class/thamgiahoatdong.php';
+    include_once '../auth/read-data.php';
+    include_once '../auth/read-data.php';
     
-    $database = new Database();
-    $db = $database->getConnection();
+    $read_data = new read_data();
+    $data=$read_data->read_token();
     
-    $item = new ThamGiaHoatDong($db);
-    
-    $data = json_decode(file_get_contents("php://input"));
-    
-    if ($data != null){
-        $item->maThamGiaHoatDong  = $data->maThamGiaHoatDong ;
-    
-        //values
-        $item->maHoatDong = $data->maHoatDong;
-        $item->maSinhVienThamGia = $data->maSinhVienThamGia;
+    // kiểm tra đăng nhập thành công 
+    if($data["status"]==1){
+        $database = new Database();
+        $db = $database->getConnection();
         
-        if($item->updateThamGiaHoatDong()){
-            echo json_encode("thamgiahoatdong data updated.");
-        } else{
-            echo json_encode("Data could not be updated");
-        }
+        $item = new ThamGiaHoatDong($db);
+        
+        $data = json_decode(file_get_contents("php://input"));
+        
+        if ($data != null){
+            $item->maThamGiaHoatDong  = $data->maThamGiaHoatDong ;
+        
+            //values
+            $item->maHoatDong = $data->maHoatDong;
+            $item->maSinhVienThamGia = $data->maSinhVienThamGia;
+            
+            if($item->updateThamGiaHoatDong()){
+                echo json_encode("thamgiahoatdong data updated.");
+            } else{
+                echo json_encode("Data could not be updated");
+            }
 
-    }else{
-        echo 'No data posted.';
+        }else{
+            echo 'No data posted.';
+        }
     }
 
     

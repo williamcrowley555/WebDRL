@@ -7,24 +7,32 @@
     
     include_once '../../config/database.php';
     include_once '../../class/thongbaodanhgia.php';
+    include_once '../auth/read-data.php';
     
-    $database = new Database();
-    $db = $database->getConnection();
+    $read_data = new read_data();
+    $data=$read_data->read_token();
     
-    $item = new ThongBaoDanhGia($db);
+    // kiểm tra đăng nhập thành công 
+    if($data["status"]==1){
     
-    $data = json_decode(file_get_contents("php://input"));
-    
-    if ($data != null){
-        $item->maThongBao = $data->maThongBao;
-    
-        if($item->deleteThongBaoDanhGia()){
-            echo json_encode("ThongBaoDanhGia deleted.");
-        } else{
-            echo json_encode("Data could not be deleted");
+        $database = new Database();
+        $db = $database->getConnection();
+        
+        $item = new ThongBaoDanhGia($db);
+        
+        $data = json_decode(file_get_contents("php://input"));
+        
+        if ($data != null){
+            $item->maThongBao = $data->maThongBao;
+        
+            if($item->deleteThongBaoDanhGia()){
+                echo json_encode("ThongBaoDanhGia deleted.");
+            } else{
+                echo json_encode("Data could not be deleted");
+            }
+        }else{
+            echo 'No data posted.';
         }
-    }else{
-        echo 'No data posted.';
     }
    
 

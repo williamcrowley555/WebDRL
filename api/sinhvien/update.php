@@ -7,34 +7,41 @@
     
     include_once '../../config/database.php';
     include_once '../../class/sinhvien.php';
+    include_once '../auth/read-data.php';
     
-    $database = new Database();
-    $db = $database->getConnection();
+    $read_data = new read_data();
+    $data=$read_data->read_token();
     
-    $item = new SinhVien($db);
+    // kiểm tra đăng nhập thành công 
+    if($data["status"]==1){
     
-    $data = json_decode(file_get_contents("php://input"));
-    
-    if ($data != null){
-        $item->maSinhVien  = $data->maSinhVien ;
-    
-        //values
-        $item->hoTenSinhVien = $data->hoTenSinhVien;
-        $item->ngaySinh = $data->ngaySinh;        
-        $item->he = $data->he;
-        $item->matKhauSinhVien = $data->matKhauSinhVien;
-        $item->maLop = $data->maLop;
+        $database = new Database();
+        $db = $database->getConnection();
         
-        if($item->updateSinhVien()){
-            echo json_encode("sinhvien data updated.");
-        } else{
-            echo json_encode("Data could not be updated");
+        $item = new SinhVien($db);
+        
+        $data = json_decode(file_get_contents("php://input"));
+        
+        if ($data != null){
+            $item->maSinhVien  = $data->maSinhVien ;
+        
+            //values
+            $item->hoTenSinhVien = $data->hoTenSinhVien;
+            $item->ngaySinh = $data->ngaySinh;        
+            $item->he = $data->he;
+            $item->matKhauSinhVien = $data->matKhauSinhVien;
+            $item->maLop = $data->maLop;
+            
+            if($item->updateSinhVien()){
+                echo json_encode("sinhvien data updated.");
+            } else{
+                echo json_encode("Data could not be updated");
+            }
+
+        }else{
+            echo 'No data posted.';
         }
-
-    }else{
-        echo 'No data posted.';
     }
-
     
 
 ?>

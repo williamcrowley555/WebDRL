@@ -7,32 +7,37 @@
     
     include_once '../../config/database.php';
     include_once '../../class/covanhoctap.php';
+    include_once '../auth/read-data.php';
     
-    $database = new Database();
-    $db = $database->getConnection();
+    $read_data = new read_data();
+    $data=$read_data->read_token();
     
-    $item = new CVHT($db);
+    // kiểm tra đăng nhập thành công 
+    if($data["status"]==1){
     
-    $data = json_decode(file_get_contents("php://input"));
-    
-    if ($data != null){
-        $item->maCoVanHocTap  = $data->maCoVanHocTap ;
-    
-        //values
-        $item->hoTenCoVan = $data->hoTenCoVan;
-        $item->soDienThoai = $data->soDienThoai;
-        $item->matKhauTaiKhoanCoVan = $data->matKhauTaiKhoanCoVan;
+        $database = new Database();
+        $db = $database->getConnection();
         
-        if($item->updateCVHT()){
-            echo json_encode("CVHT data updated.");
-        } else{
-            echo json_encode("Data could not be updated");
+        $item = new CVHT($db);
+        
+        $data = json_decode(file_get_contents("php://input"));
+        
+        if ($data != null){
+            $item->maCoVanHocTap  = $data->maCoVanHocTap ;
+        
+            //values
+            $item->hoTenCoVan = $data->hoTenCoVan;
+            $item->soDienThoai = $data->soDienThoai;
+            $item->matKhauTaiKhoanCoVan = $data->matKhauTaiKhoanCoVan;
+            
+            if($item->updateCVHT()){
+                echo json_encode("CVHT data updated.");
+            } else{
+                echo json_encode("Data could not be updated");
+            }
+
+        }else{
+            echo 'No data posted.';
         }
-
-    }else{
-        echo 'No data posted.';
     }
-
-    
-
 ?>

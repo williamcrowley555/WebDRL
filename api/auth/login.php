@@ -103,7 +103,7 @@
         $iss = "localhost";
         $iat = time(); //thời gian đăng nhập
         $nbf = $iat + 10;
-        $exp = $iat + 60; //thời gian hết hạn của tokenv
+        $exp = $iat + 99999; //thời gian hết hạn của tokenv
         $arr = array( 
             $ma =>  $item->$ma,
             $hoten => $item->$hoten

@@ -34,7 +34,7 @@
                 // );
                 return array(
                     "status" => "1",
-                    "user_data" => $decoded_data 
+                    "user_data" => ($decoded_data)
                     );            
             } catch (\Throwable $th) {
                 http_response_code(500);
@@ -56,14 +56,12 @@
         }
     }
     }
-
-
-    $database = new Database();
-    $db = $database->getConnection();
-    $read_data = new read_data();
-    if($_SERVER['REQUEST_METHOD']==='POST'){
-        $read_data->read_token();
-    }
+    // $database = new Database();
+    // $db = $database->getConnection();
+    // $read_data = new read_data();
+    // if($_SERVER['REQUEST_METHOD']==='POST'){
+    //     $read_data->read_token();
+    // }
     
       
 ?>

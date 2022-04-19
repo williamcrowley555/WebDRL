@@ -7,28 +7,36 @@
 
     include_once '../../config/database.php';
     include_once '../../class/khoa.php';
+    include_once '../auth/read-data.php';
+    
+    $read_data = new read_data();
+    $data=$read_data->read_token();
+    
+    // kiểm tra đăng nhập thành công 
+    if($data["status"]==1){
 
-    $database = new Database();
-    $db = $database->getConnection();
-    $item = new Khoa($db);
-    $item->maKhoa = isset($_GET['maKhoa']) ? $_GET['maKhoa'] : die(); //Lấy id từ phương thức GET
-  
-    $item->getSingleKhoa();
-    if($item->tenKhoa != null){
-        // create array
-        $khoa_arr = array(
-            "maKhoa" =>  $item->maKhoa,
-            "tenKhoa" => $item->tenKhoa,
-            "taiKhoanKhoa" => $item->taiKhoanKhoa,
-            "matKhauKhoa" => $item->matKhauKhoa
-        );
-      
-        http_response_code(200);
-        echo json_encode($khoa_arr);
-    }
-      
-    else{
-        http_response_code(404);
-        echo json_encode("Khoa not found.");
+        $database = new Database();
+        $db = $database->getConnection();
+        $item = new Khoa($db);
+        $item->maKhoa = isset($_GET['maKhoa']) ? $_GET['maKhoa'] : die(); //Lấy id từ phương thức GET
+    
+        $item->getSingleKhoa();
+        if($item->tenKhoa != null){
+            // create array
+            $khoa_arr = array(
+                "maKhoa" =>  $item->maKhoa,
+                "tenKhoa" => $item->tenKhoa,
+                "taiKhoanKhoa" => $item->taiKhoanKhoa,
+                "matKhauKhoa" => $item->matKhauKhoa
+            );
+        
+            http_response_code(200);
+            echo json_encode($khoa_arr);
+        }
+        
+        else{
+            http_response_code(404);
+            echo json_encode("Khoa not found.");
+        }
     }
 ?>

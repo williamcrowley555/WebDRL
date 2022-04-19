@@ -4,8 +4,16 @@
     
     include_once '../../config/database.php';
     include_once '../../class/covanhoctap.php';
+    include_once '../auth/read-data.php';
+
     $database = new Database();
     $db = $database->getConnection();
+
+    $read_data = new read_data();
+    $data=$read_data->read_token();
+    
+    // kiểm tra đăng nhập thành công và có phải giáo viên không
+    if($data["status"]==1 && $data['user_data']->aud == "khoa"){
 
     $items = new CVHT($db);
     $stmt = $items->getAllCVHT();
@@ -36,5 +44,6 @@
             array("message" => "No record found.")
         );
     }
+}
 
 ?>
