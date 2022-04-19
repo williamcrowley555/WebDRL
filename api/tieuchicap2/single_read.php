@@ -7,27 +7,35 @@
 
     include_once '../../config/database.php';
     include_once '../../class/tieuchicap2.php';
+    include_once '../auth/read-data.php';
+    
+    $read_data = new read_data();
+    $data=$read_data->read_token();
+    
+    // kiểm tra đăng nhập thành công 
+    if($data["status"]==1){
 
-    $database = new Database();
-    $db = $database->getConnection();
-    $item = new Tieuchicap2($db);
-    $item->matc2 = isset($_GET['matc2']) ? $_GET['matc2'] : die(); //Lấy id từ phương thức GET
-  
-    $item->getSingleTC2();
-    if($item->noidung != null){
-        // create array
-        $tieuchicap2_arr = array(
-            "matc2" =>  $item->matc2,
-            "noidung" => $item->noidung,
-            "matc1" => $item->matc1
-        );
-      
-        http_response_code(200);
-        echo json_encode($tieuchicap2_arr);
-    }
-      
-    else{
-        http_response_code(404);
-        echo json_encode("tieuchicap2 not found.");
+        $database = new Database();
+        $db = $database->getConnection();
+        $item = new Tieuchicap2($db);
+        $item->matc2 = isset($_GET['matc2']) ? $_GET['matc2'] : die(); //Lấy id từ phương thức GET
+    
+        $item->getSingleTC2();
+        if($item->noidung != null){
+            // create array
+            $tieuchicap2_arr = array(
+                "matc2" =>  $item->matc2,
+                "noidung" => $item->noidung,
+                "matc1" => $item->matc1
+            );
+        
+            http_response_code(200);
+            echo json_encode($tieuchicap2_arr);
+        }
+        
+        else{
+            http_response_code(404);
+            echo json_encode("tieuchicap2 not found.");
+        }
     }
 ?>

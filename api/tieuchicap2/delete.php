@@ -7,25 +7,33 @@
     
     include_once '../../config/database.php';
     include_once '../../class/tieuchicap2.php';
+    include_once '../auth/read-data.php';
     
-    $database = new Database();
-    $db = $database->getConnection();
+    $read_data = new read_data();
+    $data=$read_data->read_token();
     
-    $item = new Tieuchicap2($db);
-    
-    $data = json_decode(file_get_contents("php://input"));
-    
-    if ($data != null){
-        $item->matc2 = $data->matc2;
-    
-        if($item->deleteTC2()){
-            echo json_encode("TC2 deleted.");
-        } else{
-            echo json_encode("Data could not be deleted");
+    // kiểm tra đăng nhập thành công 
+    if($data["status"]==1){
+        
+        $database = new Database();
+        $db = $database->getConnection();
+        
+        $item = new Tieuchicap2($db);
+        
+        $data = json_decode(file_get_contents("php://input"));
+        
+        if ($data != null){
+            $item->matc2 = $data->matc2;
+        
+            if($item->deleteTC2()){
+                echo json_encode("TC2 deleted.");
+            } else{
+                echo json_encode("Data could not be deleted");
+            }
+        }else{
+            echo 'No data posted.';
         }
-    }else{
-        echo 'No data posted.';
     }
-   
+    
 
 ?>

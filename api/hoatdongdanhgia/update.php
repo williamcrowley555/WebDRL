@@ -7,35 +7,43 @@
     
     include_once '../../config/database.php';
     include_once '../../class/hoatdongdanhgia.php';
+    include_once '../auth/read-data.php';
     
-    $database = new Database();
-    $db = $database->getConnection();
+    $read_data = new read_data();
+    $data=$read_data->read_token();
     
-    $item = new HoatDongDanhGia($db);
+    // kiểm tra đăng nhập thành công 
+    if($data["status"]==1){
     
-    $data = json_decode(file_get_contents("php://input"));
-    
-    if ($data != null){
-        $item->maHoatDong  = $data->maHoatDong ;
-    
-        //values
-        $item->maTieuChi3 = $data->maTieuChi3;
-        $item->maKhoa = $data->maKhoa;
-        $item->tenHoatDong = $data->tenHoatDong;
-        $item->diemNhanDuoc = $data->diemNhanDuoc;
-        $item->diaDiemDienRaHoatDong = $data->diaDiemDienRaHoatDong;
-        $item->maQRDiaDiem = $data->maQRDiaDiem;
-        $item->thoiGianBatDauHoatDong = $data->thoiGianBatDauHoatDong;
-        $item->thoiGianKetThucHoatDong = $data->thoiGianKetThucHoatDong;
+        $database = new Database();
+        $db = $database->getConnection();
         
-        if($item->updateHoatDongDanhGia()){
-            echo json_encode("HoatDongDanhGia data updated.");
-        } else{
-            echo json_encode("Data could not be updated");
-        }
+        $item = new HoatDongDanhGia($db);
+        
+        $data = json_decode(file_get_contents("php://input"));
+        
+        if ($data != null){
+            $item->maHoatDong  = $data->maHoatDong ;
+        
+            //values
+            $item->maTieuChi3 = $data->maTieuChi3;
+            $item->maKhoa = $data->maKhoa;
+            $item->tenHoatDong = $data->tenHoatDong;
+            $item->diemNhanDuoc = $data->diemNhanDuoc;
+            $item->diaDiemDienRaHoatDong = $data->diaDiemDienRaHoatDong;
+            $item->maQRDiaDiem = $data->maQRDiaDiem;
+            $item->thoiGianBatDauHoatDong = $data->thoiGianBatDauHoatDong;
+            $item->thoiGianKetThucHoatDong = $data->thoiGianKetThucHoatDong;
+            
+            if($item->updateHoatDongDanhGia()){
+                echo json_encode("HoatDongDanhGia data updated.");
+            } else{
+                echo json_encode("Data could not be updated");
+            }
 
-    }else{
-        echo 'No data posted.';
+        }else{
+            echo 'No data posted.';
+        }
     }
 
     

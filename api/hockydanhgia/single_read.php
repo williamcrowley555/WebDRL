@@ -7,30 +7,38 @@
 
     include_once '../../config/database.php';
     include_once '../../class/hockydanhgia.php';
+    include_once '../auth/read-data.php';
+    
+    $read_data = new read_data();
+    $data=$read_data->read_token();
+    
+    // kiểm tra đăng nhập thành công 
+    if($data["status"]==1){
 
-    $database = new Database();
-    $db = $database->getConnection();
-    $item = new HocKyDanhGia($db);
-    $item->maHocKyDanhGia = isset($_GET['maHocKyDanhGia']) ? $_GET['maHocKyDanhGia'] : die(); //Lấy id từ phương thức GET
-  
-    $item->getSingleHocKyDanhGia();
-    if($item->hocKyXet != null){
-        // create array
-        $hockydanhgia_arr = array(
-            "maHocKyDanhGia" =>  $item->maHocKyDanhGia,
-            "hocKyXet" => $item->hocKyXet,
-            "namHocXet" => $item->namHocXet,
-            "maSinhVien" => $item->maSinhVien,
-            "coVanDuyet" => $item->coVanDuyet,
-            "khoaDuyet" => $item->khoaDuyet
-        );
-      
-        http_response_code(200);
-        echo json_encode($hockydanhgia_arr);
-    }
-      
-    else{
-        http_response_code(404);
-        echo json_encode("hockydanhgia not found.");
+        $database = new Database();
+        $db = $database->getConnection();
+        $item = new HocKyDanhGia($db);
+        $item->maHocKyDanhGia = isset($_GET['maHocKyDanhGia']) ? $_GET['maHocKyDanhGia'] : die(); //Lấy id từ phương thức GET
+    
+        $item->getSingleHocKyDanhGia();
+        if($item->hocKyXet != null){
+            // create array
+            $hockydanhgia_arr = array(
+                "maHocKyDanhGia" =>  $item->maHocKyDanhGia,
+                "hocKyXet" => $item->hocKyXet,
+                "namHocXet" => $item->namHocXet,
+                "maSinhVien" => $item->maSinhVien,
+                "coVanDuyet" => $item->coVanDuyet,
+                "khoaDuyet" => $item->khoaDuyet
+            );
+        
+            http_response_code(200);
+            echo json_encode($hockydanhgia_arr);
+        }
+        
+        else{
+            http_response_code(404);
+            echo json_encode("hockydanhgia not found.");
+        }
     }
 ?>

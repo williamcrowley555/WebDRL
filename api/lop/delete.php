@@ -7,25 +7,31 @@
     
     include_once '../../config/database.php';
     include_once '../../class/lop.php';
+    include_once '../auth/read-data.php';
     
-    $database = new Database();
-    $db = $database->getConnection();
+    $read_data = new read_data();
+    $data=$read_data->read_token();
     
-    $item = new Lop($db);
-    
-    $data = json_decode(file_get_contents("php://input"));
-    
-    if ($data != null){
-        $item->maLop = $data->maLop;
-    
-        if($item->deleteLop()){
-            echo json_encode("Lop deleted.");
-        } else{
-            echo json_encode("Data could not be deleted");
+    // kiểm tra đăng nhập thành công 
+    if($data["status"]==1){
+        $database = new Database();
+        $db = $database->getConnection();
+        
+        $item = new Lop($db);
+        
+        $data = json_decode(file_get_contents("php://input"));
+        
+        if ($data != null){
+            $item->maLop = $data->maLop;
+        
+            if($item->deleteLop()){
+                echo json_encode("Lop deleted.");
+            } else{
+                echo json_encode("Data could not be deleted");
+            }
+        }else{
+            echo 'No data posted.';
         }
-    }else{
-        echo 'No data posted.';
     }
-   
 
 ?>

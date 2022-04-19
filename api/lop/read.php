@@ -11,7 +11,8 @@
     $read_data = new read_data();
     $data=$read_data->read_token();
     
-    if($data["status"]==1){
+    // kiểm tra đăng nhập thành công và có phải giáo viên không
+    if($data["status"]==1 && $data['user_data']->aud == "cvht"){
         $items = new Lop($db);
         $stmt = $items->getAllLop();
         $itemCount = $stmt->rowCount();

@@ -7,25 +7,30 @@
     
     include_once '../../config/database.php';
     include_once '../../class/thamgiahoatdong.php';
+    $read_data = new read_data();
+    $data=$read_data->read_token();
     
-    $database = new Database();
-    $db = $database->getConnection();
+    // kiểm tra đăng nhập thành công 
+    if($data["status"]==1){
     
-    $item = new ThamGiaHoatDong($db);
-    
-    $data = json_decode(file_get_contents("php://input"));
-    
-    if ($data != null){
-        $item->maThamGiaHoatDong = $data->maThamGiaHoatDong;
-    
-        if($item->deleteThamGiaHoatDong()){
-            echo json_encode("ThamGiaHoatDong deleted.");
-        } else{
-            echo json_encode("Data could not be deleted");
+        $database = new Database();
+        $db = $database->getConnection();
+        
+        $item = new ThamGiaHoatDong($db);
+        
+        $data = json_decode(file_get_contents("php://input"));
+        
+        if ($data != null){
+            $item->maThamGiaHoatDong = $data->maThamGiaHoatDong;
+        
+            if($item->deleteThamGiaHoatDong()){
+                echo json_encode("ThamGiaHoatDong deleted.");
+            } else{
+                echo json_encode("Data could not be deleted");
+            }
+        }else{
+            echo 'No data posted.';
         }
-    }else{
-        echo 'No data posted.';
     }
-   
 
 ?>

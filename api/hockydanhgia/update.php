@@ -7,6 +7,13 @@
     
     include_once '../../config/database.php';
     include_once '../../class/hockydanhgia.php';
+    include_once '../auth/read-data.php';
+    
+    $read_data = new read_data();
+    $data=$read_data->read_token();
+    
+    // kiểm tra đăng nhập thành công 
+    if($data["status"]==1){
     
     $database = new Database();
     $db = $database->getConnection();
