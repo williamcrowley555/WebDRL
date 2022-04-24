@@ -140,30 +140,31 @@
             }
             return false;
         }
+
          // check login 
-         public function check_login(){
-            $sqlQuery = "SELECT maSinhVien , hoTenSinhVien, ngaySinh, he, matKhauSinhVien, maLop FROM ". $this->db_table ."
-                        WHERE maSinhVien = ? AND matKhauSinhVien = ? LIMIT 0,1";
-            $stmt = $this->conn->prepare($sqlQuery);
-            $stmt->bindParam(1, $this->maSinhVien);
-            $stmt->bindParam(2, $this->matKhauSinhVien);
-            $stmt->execute();
+        //  public function check_login(){
+        //     $sqlQuery = "SELECT maSinhVien , hoTenSinhVien, ngaySinh, he, matKhauSinhVien, maLop FROM ". $this->db_table ."
+        //                 WHERE maSinhVien = ? AND matKhauSinhVien = ? LIMIT 0,1";
+        //     $stmt = $this->conn->prepare($sqlQuery);
+        //     $stmt->bindParam(1, $this->maSinhVien);
+        //     $stmt->bindParam(2, $this->matKhauSinhVien);
+        //     $stmt->execute();
 
-            $dataRow = $stmt->fetch(PDO::FETCH_ASSOC);
+        //     $dataRow = $stmt->fetch(PDO::FETCH_ASSOC);
            
-            if ($dataRow != null){
-                $this->maSinhVien  = $dataRow['maSinhVien'];
-                $this->hoTenSinhVien = $dataRow['hoTenSinhVien'];
-                $this->ngaySinh = $dataRow['ngaySinh'];
-                $this->he = $dataRow['he'];
-                $this->maLop = $dataRow['maLop'];
+        //     if ($dataRow != null){
+        //         $this->maSinhVien  = $dataRow['maSinhVien'];
+        //         $this->hoTenSinhVien = $dataRow['hoTenSinhVien'];
+        //         $this->ngaySinh = $dataRow['ngaySinh'];
+        //         $this->he = $dataRow['he'];
+        //         $this->maLop = $dataRow['maLop'];
 
-                return true;
-            }
+        //         return true;
+        //     }
             
-            return false;
+        //     return false;
             
-        }
+        // }
 
     }
 

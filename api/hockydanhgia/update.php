@@ -42,6 +42,6 @@
         echo 'No data posted.';
     }
 
-    
+}
 
 ?>

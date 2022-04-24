@@ -20,8 +20,9 @@
     public static function read_token()
     {
         $all_headers = getallheaders();
-        $jwt = $all_headers['Authorization'];
-        if(!empty($jwt)){  
+        
+        if(!empty($all_headers['Authorization'])){  
+            $jwt = $all_headers['Authorization'];
             try {
                 $secret_key = "daihocsaigon";
 
@@ -51,8 +52,8 @@
 
           
         }else{
-            http_response_code(200);
-            echo json_encode("not enough data");
+            http_response_code(403);
+            echo json_encode("Vui long dang nhap");
         }
     }
     }
