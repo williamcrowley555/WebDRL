@@ -38,6 +38,10 @@
     <link href="../css/swiper.css" rel="stylesheet">
     <link href="../css/styles.css" rel="stylesheet">
 
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+
+
+    
     <!-- Favicon  -->
     <link rel="icon" href="../images/SGU-LOGO-400x400.png">
 
@@ -45,6 +49,8 @@
 </head>
 
 <body data-bs-spy="scroll" data-bs-target="#navbarExample">
+
+    
 
     <!-- Navigation -->
     <nav id="navbarExample" class="navbar navbar-expand-lg fixed-top navbar-light" aria-label="Main navigation" style="background: white;">
@@ -93,23 +99,23 @@
                 <form style="padding: 48px;">
                     <!-- Email input -->
                     <div class="form-outline mb-4">
-                      <input type="text" id="form1Example1" class="form-control" />
+                      <input type="text" id="inputLogin_MSSV" class="form-control" />
                       <label class="form-label" for="form1Example1">Mã số sinh viên</label>
                     </div>
                   
                     <!-- Password input -->
                     <div class="form-outline mb-4">
-                      <input type="password" id="form1Example2" class="form-control" />
+                      <input type="password" id="inputLogin_MatKhau" class="form-control" />
                       <label class="form-label" for="form1Example2">Mật khẩu</label>
                     </div>
-                  
+
                     <!-- 2 column grid layout for inline styling -->
                     <div class="row mb-4">
                       
                     </div>
                   
                     <!-- Submit button -->
-                    <button type="submit" style="width:fit-content;" class="btn btn-primary btn-block">Đăng nhập</button>
+                    <button type="button" style="width:fit-content;" class="btn btn-primary btn-block" onclick="Login();">Đăng nhập</button>
                   </form>
             </div>
             <!-- end of row -->
@@ -150,10 +156,13 @@
     <script src="../js/swiper.min.js"></script>
     <!-- Swiper for image and text sliders -->
     <script src="../js/scripts.js"></script>
+
+    <script src="function.js"></script>
     <!-- Custom scripts -->
     <!-- MDB -->
     <script type="text/javascript" src="../js/mdb.min.js"></script>
 
+    
 </body>
 
 </html>
