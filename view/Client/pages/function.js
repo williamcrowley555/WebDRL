@@ -1,4 +1,5 @@
 
+
 function Login() {
     var _inputLogin_MSSV = $('#inputLogin_MSSV').val();
     var _inputLogin_MatKhau = $('#inputLogin_MatKhau').val();
@@ -16,14 +17,23 @@ function Login() {
             type: "POST",
             contentType: "application/json;charset=utf-8",
             dataType: "json",
+            async: false,
             success: function (result) {
                 console.log(result);
-                console.log(result['0']['quyen']);
-                document.cookie = "jwt="+ result['jwt'] +"";
-               
-                if (result['0']['quyen'] == 'sinhvien'){
-                    window.location.href = "sinhvien/sinhvien_chamdiem.html";
+                var quyen = result['0']['quyen'];
+                
+                if (quyen == 'sinhvien'){
+                    document.cookie = "jwt=1;maSinhVien=sinhvien";
+                    // document.cookie = "jwt="+ result['jwt'] +
+                    //             ";maSinhVien=" + result['0']['maSinhVien'] +
+                    //             ";hoTenSinhVien ="+ result['0']['hoTenSinhVien'] +  
+                    //             ";quyen ="+ quyen +";";
+
+                    //window.location.href = "sinhvien/sinhvien_chamdiem.html";
                 }
+                
+
+
                
             },
             error: function (errorMessage) {
