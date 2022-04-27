@@ -17,52 +17,55 @@
 
     class read_data{
     
-    public static function read_token()
-    {
-        $all_headers = getallheaders();
-        
-        if(!empty($all_headers['Authorization'])){  
-            $jwt = $all_headers['Authorization'];
-            try {
-                $secret_key = "daihocsaigon";
+        public static function read_token()
+        {
+            $all_headers = getallheaders();
+            
+            if(!empty($all_headers['Authorization'])){  
+                $jwt = $all_headers['Authorization'];
+                try {
+                    $secret_key = "daihocsaigon";
 
-                $decoded_data = JWT::decode($jwt, new Key($secret_key,"HS256"));
-                http_response_code(200);
-                // echo json_encode(array(
-                //     "status" => "1",
-                //     "user_data" => $decoded_data 
-                //     )
-                // );
-                return array(
-                    "status" => "1",
-                    "user_data" => ($decoded_data)
-                    );            
-            } catch (\Throwable $th) {
-                http_response_code(500);
-                // echo json_encode(array(
-                //     "status" => "0",
-                //     "message" =>  $th->getMessage()
-                //     )
-                // );
-                return   array(
-                    "status" => "0",
-                    "message" =>  $th->getMessage()
-                );           
+                    $decoded_data = JWT::decode($jwt, new Key($secret_key,"HS256"));
+                    http_response_code(200);
+                    // echo json_encode(array(
+                    //     "status" => "1",
+                    //     "user_data" => $decoded_data 
+                    //     )
+                    // );
+                    return array(
+                        "status" => "1",
+                        "user_data" => ($decoded_data)
+                        );            
+                } catch (\Throwable $th) {
+                    http_response_code(500);
+                    // echo json_encode(array(
+                    //     "status" => "0",
+                    //     "message" =>  $th->getMessage()
+                    //     )
+                    // );
+                    return array(
+                        "status" => "0",
+                        "message" =>  $th->getMessage()
+                    );           
+                }
+
+            
+            }else{
+                http_response_code(403);
+                echo json_encode("Vui long dang nhap");
             }
-
-          
-        }else{
-            http_response_code(403);
-            echo json_encode("Vui long dang nhap");
         }
+
+        
     }
-    }
-    // $database = new Database();
-    // $db = $database->getConnection();
-    // $read_data = new read_data();
-    // if($_SERVER['REQUEST_METHOD']==='POST'){
-    //     $read_data->read_token();
-    // }
+
+     //$database = new Database();
+     //$db = $database->getConnection();
+    $read_data = new read_data();
+    //if($_SERVER['REQUEST_METHOD']==='POST'){
+        echo json_encode($read_data->read_token()) ;
+    //}
     
       
 ?>

@@ -13,7 +13,7 @@
     include_once '../../class/sinhvien.php';
     include_once '../../class/covanhoctap.php';
     include_once '../../class/khoa.php';
-
+    include_once '../../class/user_token.php';
 
     // $data example:
     // {
@@ -66,9 +66,37 @@
             $obj_SinhVien->maLop = $dataRow_SinhVien['maLop'];
             $obj_SinhVien->quyen = $dataRow_SinhVien['quyen'];
 
-            create_token("sinhvien",$obj_SinhVien,"maSinhVien","hoTenSinhVien", "quyen");
+            $jwt = create_token("sinhvien",$obj_SinhVien,"maSinhVien","hoTenSinhVien", "quyen");
+
+            //Them phien dang nhap vao table user_token
+            $objUserToken = new UserToken($db);
+            $objUserToken->maSo = $obj_SinhVien->maSinhVien;
+            $objUserToken->token = $jwt;
+            $objUserToken->quyen = $obj_SinhVien->quyen;
+            $objUserToken->thoiGianDangNhap = date("Y-m-d H:i:s");
+            $objUserToken->thoiGianHetHan = date("Y-m-d H:i:s", strtotime('+24 hours'));
+
+            if ($objUserToken->checkUserTokenExist($objUserToken->maSo)){
+                $objUserToken->deleteUserToken();
+            }
+
+            $objUserToken->createUserToken();
+
+            $arr = array( 
+                "maSinhVien" =>  $obj_SinhVien->maSinhVien,
+                "hoTenSinhVien" => $obj_SinhVien->hoTenSinhVien,
+                "quyen" => $obj_SinhVien->quyen
+            );
+
+            echo json_encode(array(
+                "login_status"=> 1,
+                "jwt"=> $jwt,
+                "message"=>"Login successful",
+                $arr
+            )); 
 
             return true;
+
         }
 
         //Co van hoc tap
@@ -90,7 +118,35 @@
             $obj_CVHT->soDienThoai = $dataRow_CVHT['soDienThoai'];
             $obj_CVHT->quyen = $dataRow_CVHT['quyen'];
 
-            create_token("cvht",$obj_CVHT,"maCoVanHocTap","hoTenCoVan", "quyen");
+            $jwt = create_token("cvht",$obj_CVHT,"maCoVanHocTap","hoTenCoVan", "quyen");
+
+            //Them phien dang nhap vao table user_token
+            $objUserToken = new UserToken($db);
+            $objUserToken->maSo = $obj_CVHT->maCoVanHocTap;
+            $objUserToken->token = $jwt;
+            $objUserToken->quyen = $obj_CVHT->quyen;
+            $objUserToken->thoiGianDangNhap = date("Y-m-d H:i:s");
+            $objUserToken->thoiGianHetHan = date("Y-m-d H:i:s", strtotime('+24 hours')); 
+
+            if ($objUserToken->checkUserTokenExist($objUserToken->maSo)){
+                $objUserToken->deleteUserToken();
+            }
+            
+            $objUserToken->createUserToken();
+
+            $arr = array( 
+                "maCoVanHocTap" =>  $obj_CVHT->maCoVanHocTap,
+                "hoTenCoVan" => $obj_CVHT->hoTenCoVan,
+                "quyen" => $obj_CVHT->quyen
+            );
+
+
+            echo json_encode(array(
+                "login_status"=> 1,
+                "jwt"=> $jwt,
+                "message"=>"Login successful",
+                $arr
+            )); 
             
             return true;
         }
@@ -116,7 +172,37 @@
             $obj_Khoa->matKhauKhoa = $dataRow_Khoa['matKhauKhoa'];
             $obj_Khoa->quyen = $dataRow_Khoa['quyen'];
 
-            create_token("khoa",$obj_Khoa,"taiKhoanKhoa","tenKhoa","quyen");
+            $jwt =  create_token("khoa",$obj_Khoa,"taiKhoanKhoa","tenKhoa","quyen");
+
+            //Them phien dang nhap vao table user_token
+            $objUserToken = new UserToken($db);
+            $objUserToken->maSo = $obj_Khoa->maKhoa;
+            $objUserToken->token = $jwt;
+            $objUserToken->quyen = $obj_Khoa->quyen;
+            $objUserToken->thoiGianDangNhap = date("Y-m-d H:i:s");
+            $objUserToken->thoiGianHetHan = date("Y-m-d H:i:s", strtotime('+24 hours')); 
+
+            if ($objUserToken->checkUserTokenExist($objUserToken->maSo)){
+                $objUserToken->deleteUserToken();
+            }
+
+            $objUserToken->createUserToken();
+
+            $arr = array( 
+                "taiKhoanKhoa" =>  $obj_Khoa->taiKhoanKhoa,
+                "tenKhoa" => $obj_Khoa->tenKhoa,
+                "quyen" => $obj_Khoa->quyen
+            );
+
+
+            echo json_encode(array(
+                "login_status"=> 1,
+                "jwt"=> $jwt,
+                "message"=>"Login successful",
+                $arr
+            )); 
+
+            
             return true;
         }
 
@@ -124,6 +210,8 @@
         return false;
         
     }
+
+
 
 
     //---Create token-------
@@ -139,7 +227,8 @@
         $iss = "localhost";
         $iat = time(); //thời gian đăng nhập
         $nbf = $iat + 10;
-        $exp = $iat + 99999; //thời gian hết hạn của tokenv
+        // jwt valid for 1 day (60 seconds * 60 minutes * 24 hours * 1 days)
+        $exp = $iat + 60*60*24; //token hết hạn sau 24 tiếng //thời gian hết hạn của tokenv
         $arr = array( 
             $ma =>  $item->$ma,
             $hoten => $item->$hoten,
@@ -159,18 +248,21 @@
         $secret_key = "daihocsaigon";
 
         $jwt = JWT::encode($payload_info, $secret_key, "HS256"); //HS256 là thuật toán băm
-
-        http_response_code(200);
-        echo json_encode(array(
-            "login_status"=> 1,
-            "jwt"=> $jwt,
-            "message"=>"Login successful",
-            $arr
-        ));     
         
-    }   
+        
+        http_response_code(200);
+        return $jwt;
+        
+        // echo json_encode(array(
+        //     "login_status"=> 1,
+        //     "jwt"=> $jwt,
+        //     "message"=>"Login successful",
+        //     $arr
+        // ));     
+        
+    }
 
 
     
-        
+    
 ?>
