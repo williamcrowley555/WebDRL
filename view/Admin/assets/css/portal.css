@@ -10402,13 +10402,15 @@ button.close:focus {
   }
 }
 .app {
-  min-height: 100vh;
+  /* min-height: 100vh;
   height: 100%;
   width: 100%;
   background: #f5f6fe;
+  overflow-x: hidden; */
   padding-top: 56px;
-  overflow-x: hidden;
+  
 }
+
 .app-footer .copyright {
   font-size: 0.8125rem;
 }

@@ -5,7 +5,13 @@ function Login() {
     var _inputLogin_MatKhau = $('#inputLogin_MatKhau').val();
 
     if (_inputLogin_MSSV == '' || _inputLogin_MatKhau == '') {
-        alert('Vui lòng điền thông tin!');
+        Swal.fire({
+            icon: 'error',
+            title: 'Lỗi đăng nhập',
+            text: 'Vui lòng điền đầy đủ thông tin!',
+            timer: 3000,
+            timerProgressBar: true
+        })
     } else {
         var objLogin = {
             taiKhoan: _inputLogin_MSSV,
@@ -32,10 +38,20 @@ function Login() {
                         document.cookie = 'quyen=' + quyen;
                         document.cookie = 'jwt=' + result['jwt'];
                 
-                        alert('Sinh viên');
+                       
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Đăng nhập thành công!',
+                            timer: 2000,
+                            timerProgressBar: true,
+                            showConfirmButton: false
+                        })
 
-                        window.location.href = "sinhvien/sinhvien_chamdiem.html";
+                        setTimeout(function() {
+                            window.location.href = "sinhvien/sinhvien_chamdiem.html";
+                        }, 5000);
                         break;
+
                     }
                          
                     case 'covanhoctap':{
@@ -60,7 +76,14 @@ function Login() {
                
             },
             error: function (errorMessage) {
-                alert(errorMessage.responseText);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Lỗi đăng nhập',
+                    text: errorMessage.responseText,
+                    timer: 3000,
+                    timerProgressBar: true
+                })
+            
             }
         });
 

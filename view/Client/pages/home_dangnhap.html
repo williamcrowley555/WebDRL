@@ -38,8 +38,7 @@
     <link href="../css/swiper.css" rel="stylesheet">
     <link href="../css/styles.css" rel="stylesheet">
 
-    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
-
+    <script src="../js/jquery-3.6.0.js"></script>
     <script src="home_auth.js"></script>
     
     <!-- Favicon  -->
@@ -100,7 +99,7 @@
     <div style="width: 100%;">
         <div class="container">
             <div class="row" style="margin: 0 auto;text-align: center;background: white;border-radius: 10px;">
-                <form style="padding: 48px;">
+                <form style="padding: 48px;" id="formLogin">
                     <!-- Email input -->
                     <div class="form-outline mb-4">
                       <input type="text" id="inputLogin_MSSV" class="form-control" />
@@ -119,7 +118,7 @@
                     </div>
                   
                     <!-- Submit button -->
-                    <button type="button" style="width:fit-content;" class="btn btn-primary btn-block" onclick="Login();">Đăng nhập</button>
+                    <button type="button" style="width:fit-content;" class="btn btn-primary btn-block" id="btnLogin" onclick="Login();">Đăng nhập</button>
                   </form>
             </div>
             <!-- end of row -->
@@ -166,11 +165,37 @@
     <!-- MDB -->
     <script type="text/javascript" src="../js/mdb.min.js"></script>
 
-    <script src="../js/jquery-3.6.0.js"></script>
+    
+    <script src="../js/sweetalert2.all.min.js"></script>
+
     <script>
         setTimeout(function(){
             $('.loader_bg').fadeToggle();
         }, 1000);
+
+        var inputMSSV = document.getElementById("inputLogin_MSSV");
+        var input = document.getElementById("inputLogin_MatKhau");
+
+        // Execute a function when the user presses a key on the keyboard
+        inputMSSV.addEventListener("keypress", function(event) {
+        // If the user presses the "Enter" key on the keyboard
+        if (event.key === "Enter") {
+            // Cancel the default action, if needed
+            event.preventDefault();
+            // Trigger the button element with a click
+            document.getElementById("btnLogin").click();
+        }
+        });
+
+        input.addEventListener("keypress", function(event) {
+        // If the user presses the "Enter" key on the keyboard
+        if (event.key === "Enter") {
+            // Cancel the default action, if needed
+            event.preventDefault();
+            // Trigger the button element with a click
+            document.getElementById("btnLogin").click();
+        }
+        });
     </script>
 </body>
 
