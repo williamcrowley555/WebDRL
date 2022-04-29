@@ -10,12 +10,17 @@ function getCookie(cName) {
 }
 
 
+window.setInterval(checkCookie, 1000);
 
-if (getCookie('jwt')==null){
-    window.location.href = "../home_dangnhap.html";
-}else{
-    console.log(getCookie('jwt'));
+function checkCookie(){
+    if (getCookie('jwt')==null){
+        window.location.href = "../home_dangnhap.html";
+    }else{
+       // console.log(getCookie('jwt'));
+    }
 }
+
+
 
 
 

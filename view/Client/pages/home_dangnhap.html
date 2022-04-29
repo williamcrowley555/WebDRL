@@ -50,6 +50,10 @@
 
 <body data-bs-spy="scroll" data-bs-target="#navbarExample">
 
+    <!-- Preloader -->
+<div class="loader_bg">
+	<div class="loader"></div>
+</div>
     
 
     <!-- Navigation -->
@@ -162,7 +166,12 @@
     <!-- MDB -->
     <script type="text/javascript" src="../js/mdb.min.js"></script>
 
-    
+    <script src="../js/jquery-3.6.0.js"></script>
+    <script>
+        setTimeout(function(){
+            $('.loader_bg').fadeToggle();
+        }, 1000);
+    </script>
 </body>
 
 </html>

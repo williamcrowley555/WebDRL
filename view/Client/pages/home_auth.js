@@ -9,7 +9,10 @@ function getCookie(cName) {
   return res;
 }
 
-if (getCookie("jwt")!= null){
+window.setInterval(checkCookie, 1000);
+
+function checkCookie(){
+  if (getCookie("jwt")!= null){
     switch (getCookie("quyen")) {
         case "sinhvien": {
           window.location.href = "sinhvien/sinhvien_chamdiem.html";
@@ -30,4 +33,6 @@ if (getCookie("jwt")!= null){
           break;
       }
 }
+}
+
 
