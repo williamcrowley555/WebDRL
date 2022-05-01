@@ -15,7 +15,7 @@
 					<div class="page-utilities">
 						<div class="row g-2 justify-content-start justify-content-md-end align-items-center">
 
-						<div class="col-auto">
+							<div class="col-auto">
 
 								<select class="form-select w-auto">
 									<option selected value="option-1">Tất cả khoa</option>
@@ -32,7 +32,7 @@
 									<option value="option-3">DCT1188</option>
 								</select>
 							</div>
-							
+
 							<div class="col-auto">
 								<form class="table-search-form row gx-1 align-items-center">
 									<div class="col-auto">
@@ -45,8 +45,8 @@
 
 							</div>
 							<!--//col-->
-							
-							
+
+
 						</div>
 						<!--//row-->
 					</div>
@@ -61,74 +61,17 @@
 								<table class="table app-table-hover mb-0 text-left">
 									<thead>
 										<tr>
-											<th class="cell">Order</th>
-											<th class="cell">Product</th>
-											<th class="cell">Customer</th>
-											<th class="cell">Date</th>
-											<th class="cell">Status</th>
-											<th class="cell">Total</th>
+											<th class="cell">STT</th>
+											<th class="cell">Mã số sinh viên</th>
+											<th class="cell">Họ tên sinh viên</th>
+											<th class="cell">Ngày sinh</th>
+											<th class="cell">Hệ</th>
+											<th class="cell">Lớp</th>
 											<th class="cell"></th>
 										</tr>
 									</thead>
-									<tbody>
-										<tr>
-											<td class="cell">#15346</td>
-											<td class="cell"><span class="truncate">Lorem ipsum dolor sit amet eget volutpat erat</span></td>
-											<td class="cell">John Sanders</td>
-											<td class="cell"><span>17 Oct</span><span class="note">2:16 PM</span></td>
-											<td class="cell"><span class="badge bg-success">Paid</span></td>
-											<td class="cell">$259.35</td>
-											<td class="cell"><a class="btn-sm app-btn-secondary" href="#">View</a></td>
-										</tr>
-										<tr>
-											<td class="cell">#15345</td>
-											<td class="cell"><span class="truncate">Consectetur adipiscing elit</span></td>
-											<td class="cell">Dylan Ambrose</td>
-											<td class="cell"><span class="cell-data">16 Oct</span><span class="note">03:16 AM</span></td>
-											<td class="cell"><span class="badge bg-warning">Pending</span></td>
-											<td class="cell">$96.20</td>
-											<td class="cell"><a class="btn-sm app-btn-secondary" href="#">View</a></td>
-										</tr>
-										<tr>
-											<td class="cell">#15344</td>
-											<td class="cell"><span class="truncate">Pellentesque diam imperdiet</span></td>
-											<td class="cell">Teresa Holland</td>
-											<td class="cell"><span class="cell-data">16 Oct</span><span class="note">01:16 AM</span></td>
-											<td class="cell"><span class="badge bg-success">Paid</span></td>
-											<td class="cell">$123.00</td>
-											<td class="cell"><a class="btn-sm app-btn-secondary" href="#">View</a></td>
-										</tr>
-
-										<tr>
-											<td class="cell">#15343</td>
-											<td class="cell"><span class="truncate">Vestibulum a accumsan lectus sed mollis ipsum</span></td>
-											<td class="cell">Jayden Massey</td>
-											<td class="cell"><span class="cell-data">15 Oct</span><span class="note">8:07 PM</span></td>
-											<td class="cell"><span class="badge bg-success">Paid</span></td>
-											<td class="cell">$199.00</td>
-											<td class="cell"><a class="btn-sm app-btn-secondary" href="#">View</a></td>
-										</tr>
-
-										<tr>
-											<td class="cell">#15342</td>
-											<td class="cell"><span class="truncate">Justo feugiat neque</span></td>
-											<td class="cell">Reina Brooks</td>
-											<td class="cell"><span class="cell-data">12 Oct</span><span class="note">04:23 PM</span></td>
-											<td class="cell"><span class="badge bg-danger">Cancelled</span></td>
-											<td class="cell">$59.00</td>
-											<td class="cell"><a class="btn-sm app-btn-secondary" href="#">View</a></td>
-										</tr>
-
-										<tr>
-											<td class="cell">#15341</td>
-											<td class="cell"><span class="truncate">Morbi vulputate lacinia neque et sollicitudin</span></td>
-											<td class="cell">Raymond Atkins</td>
-											<td class="cell"><span class="cell-data">11 Oct</span><span class="note">11:18 AM</span></td>
-											<td class="cell"><span class="badge bg-success">Paid</span></td>
-											<td class="cell">$678.26</td>
-											<td class="cell"><a class="btn-sm app-btn-secondary" href="#">View</a></td>
-										</tr>
-
+									<tbody id="id_tbodySinhVien">
+										
 									</tbody>
 								</table>
 							</div>
@@ -180,6 +123,7 @@
 <!-- Javascript -->
 <script src="assets/plugins/popper.min.js"></script>
 <script src="assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+<script src="assets/js/sweetalert2.all.min.js"></script>
 
 <!-- Charts JS -->
 <script src="assets/plugins/chart.js/chart.min.js"></script>
@@ -193,6 +137,49 @@
 	setTimeout(function() {
 		$('.loader_bg').fadeToggle();
 	}, 1000);
+
+
+
+	$.ajax({
+		url: "http://localhost/WebDRL/api/sinhvien/read.php",
+		type: "GET",
+		contentType: "application/json;charset=utf-8",
+    	dataType: "json",
+		async: false,
+		headers: { 'Authorization': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJpYXQiOjE2NTE0MTk2MTAsIm5iZiI6MTY1MTQxOTYyMCwiZXhwIjoxNjUxNTA2MDEwLCJhdWQiOiJzaW5odmllbiIsInNpbmh2aWVuIjp7Im1hU2luaFZpZW4iOiIzMTE4NDEwMjYyIiwiaG9UZW5TaW5oVmllbiI6Ik5ndXlcdTFlYzVuIFRoXHUwMWIwXHUwMWExbmcgTVx1MWViZm4iLCJxdXllbiI6InNpbmh2aWVuIn19.Vgo5oWnbkjqsIaYWKR6gEFlPklOnwYm054hNva2dqmw' },
+		
+		success: function(result) {
+			console.log(result);
+
+			var countSinhVien = 0;
+	
+			$.each(result['sinhvien'], function(index) {
+				countSinhVien += 1;
+		
+				$('#id_tbodySinhVien').append("<tr>\
+					<td class='cell'>"+ countSinhVien +"</td>\
+					<td class='cell'><span class='truncate'>"+ result['sinhvien'][index].maSinhVien +"</span></td>\
+					<td class='cell'>"+ result['sinhvien'][index].hoTenSinhVien +"</td>\
+					<td class='cell'>"+ result['sinhvien'][index].ngaySinh +"</td>\
+					<td class='cell'>"+ result['sinhvien'][index].he +"</td>\
+					<td class='cell'>"+ result['sinhvien'][index].maLop +"</td>\
+					<td class='cell'><a class='btn-sm app-btn-secondary' href='#'>Đặt lại mật khẩu</a></td>\
+					</tr>");
+				
+			
+			})
+		},
+		error: function(errorMessage) {
+			Swal.fire({
+				icon: 'error',
+				title: 'Lỗi',
+				text: errorMessage.responseText,
+				timer: 5000,
+				timerProgressBar: true
+			})
+
+		}
+	});
 </script>
 </body>
 

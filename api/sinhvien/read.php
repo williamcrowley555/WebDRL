@@ -1,6 +1,7 @@
 <?php
     header("Access-Control-Allow-Origin: *");
     header("Content-Type: application/json; charset=UTF-8");
+    header("Access-Control-Allow-Methods: GET");
     
     include_once '../../config/database.php';
     include_once '../../class/sinhvien.php';
@@ -20,7 +21,7 @@
     $itemCount = $stmt->rowCount();
 
 
-    echo json_encode($itemCount); //print itemCount
+    //echo json_encode($itemCount); //print itemCount
     if($itemCount > 0){
         $sinhvienArr = array();
         $sinhvienArr["sinhvien"] = array(); //tạo object json 
@@ -33,11 +34,11 @@
                 "hoTenSinhVien" => $hoTenSinhVien,
                 "ngaySinh" => $ngaySinh,
                 "he" => $he,
-                "matKhauSinhVien" => $matKhauSinhVien,
                 "maLop" => $maLop
             );
             array_push($sinhvienArr["sinhvien"], $e);
         }
+        http_response_code(200);
         echo json_encode($sinhvienArr);
     }
     else{

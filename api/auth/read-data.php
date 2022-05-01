@@ -62,9 +62,9 @@
 
      //$database = new Database();
      //$db = $database->getConnection();
-    $read_data = new read_data();
+//$read_data = new read_data();
     //if($_SERVER['REQUEST_METHOD']==='POST'){
-        echo json_encode($read_data->read_token()) ;
+      //  echo json_encode($read_data->read_token()) ;
     //}
     
       
