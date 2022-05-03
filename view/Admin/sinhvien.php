@@ -132,54 +132,17 @@
 <!-- Page Specific JS -->
 <script src="assets/js/app.js"></script>
 
+
 <script src="assets/js/jquery-3.6.0.js"></script>
 <script>
 	setTimeout(function() {
 		$('.loader_bg').fadeToggle();
 	}, 1000);
 
+	//hàm trong function.js
+	GetListSinhVien();
 
 
-	$.ajax({
-		url: "http://localhost/WebDRL/api/sinhvien/read.php",
-		type: "GET",
-		contentType: "application/json;charset=utf-8",
-    	dataType: "json",
-		async: false,
-		headers: { 'Authorization': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJpYXQiOjE2NTE0MTk2MTAsIm5iZiI6MTY1MTQxOTYyMCwiZXhwIjoxNjUxNTA2MDEwLCJhdWQiOiJzaW5odmllbiIsInNpbmh2aWVuIjp7Im1hU2luaFZpZW4iOiIzMTE4NDEwMjYyIiwiaG9UZW5TaW5oVmllbiI6Ik5ndXlcdTFlYzVuIFRoXHUwMWIwXHUwMWExbmcgTVx1MWViZm4iLCJxdXllbiI6InNpbmh2aWVuIn19.Vgo5oWnbkjqsIaYWKR6gEFlPklOnwYm054hNva2dqmw' },
-		
-		success: function(result) {
-			console.log(result);
-
-			var countSinhVien = 0;
-	
-			$.each(result['sinhvien'], function(index) {
-				countSinhVien += 1;
-		
-				$('#id_tbodySinhVien').append("<tr>\
-					<td class='cell'>"+ countSinhVien +"</td>\
-					<td class='cell'><span class='truncate'>"+ result['sinhvien'][index].maSinhVien +"</span></td>\
-					<td class='cell'>"+ result['sinhvien'][index].hoTenSinhVien +"</td>\
-					<td class='cell'>"+ result['sinhvien'][index].ngaySinh +"</td>\
-					<td class='cell'>"+ result['sinhvien'][index].he +"</td>\
-					<td class='cell'>"+ result['sinhvien'][index].maLop +"</td>\
-					<td class='cell'><a class='btn-sm app-btn-secondary' href='#'>Đặt lại mật khẩu</a></td>\
-					</tr>");
-				
-			
-			})
-		},
-		error: function(errorMessage) {
-			Swal.fire({
-				icon: 'error',
-				title: 'Lỗi',
-				text: errorMessage.responseText,
-				timer: 5000,
-				timerProgressBar: true
-			})
-
-		}
-	});
 </script>
 </body>
 

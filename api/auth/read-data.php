@@ -53,7 +53,7 @@
             
             }else{
                 http_response_code(403);
-                echo json_encode("Vui long dang nhap");
+                echo json_encode("Vui lòng đăng nhập!");
             }
         }
 
