@@ -75,12 +75,10 @@
 	<script src="assets/js/sweetalert2.all.min.js"></script>
 	
 	<!-- Pagination -->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.min.js"></script>
+	<script src="assets/js/pagination.min.js"></script>
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.css"/>
-    <!-- FontAwesome JS-->
-    <script defer src="assets/plugins/fontawesome/js/all.min.js"></script>
-
+	<link rel="stylesheet" href="assets/css/pagination.css"/>	
+    
 	<script src="assets/js/function.js"></script>
     
     <!-- App CSS -->  

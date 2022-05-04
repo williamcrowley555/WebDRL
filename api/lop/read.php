@@ -12,42 +12,53 @@
     $data=$read_data->read_token();
     
     // kiểm tra đăng nhập thành công và có phải giáo viên không
-    if($data["status"]==1 && $data['user_data']->aud == "cvht"){
-        $items = new Lop($db);
-        $stmt = $items->getAllLop();
-        $itemCount = $stmt->rowCount();
+    if($data["status"]==1 ){
 
+        if ($data['user_data']->aud == "cvht" || $data['user_data']->aud == "khoa" || $data['user_data']->aud == "phongcongtacsinhvien"){
+            $items = new Lop($db);
+            $stmt = $items->getAllLop();
+            $itemCount = $stmt->rowCount();
+    
+            if($itemCount > 0){
+                $lopArr = array();
+                $lopArr["lop"] = array(); //tạo object json 
+                $lopArr["itemCount"] = $itemCount;
+                $countRow = 0;
 
-    echo json_encode($itemCount); //print itemCount
-        if($itemCount > 0){
-            $lopArr = array();
-            $lopArr["lop"] = array(); //tạo object json 
-            $lopArr["itemCount"] = $itemCount;
-
-            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-                extract($row);
-                $e = array(
-                    "maLop" => $maLop ,
-                    "tenLop" => $tenLop,
-                    "maKhoa" => $maKhoa,
-                    "maCoVanHocTap" => $maCoVanHocTap,
-                    "maKhoaHoc" => $maKhoaHoc
-                );
-                array_push($lopArr["lop"], $e);
+                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+                    extract($row);
+                    $countRow++;
+                    $e = array( 
+                        "soThuTu" => $countRow,
+                        "maLop" => $maLop ,
+                        "tenLop" => $tenLop,
+                        "maKhoa" => $maKhoa,
+                        "maCoVanHocTap" => $maCoVanHocTap,
+                        "maKhoaHoc" => $maKhoaHoc
+                    );
+                    array_push($lopArr["lop"], $e);
+                }
+                http_response_code(200);
+                echo json_encode($lopArr);
             }
-            echo json_encode($lopArr);
-        }
-        else{
-            http_response_code(404);
+            else{
+                http_response_code(404);
+                echo json_encode(
+                    array("message" => "Không tìm thấy kết quả.")
+                );
+            }
+        }else{
+            http_response_code(403);
             echo json_encode(
-                array("message" => "No record found.")
+                array("message" => "Bạn không có quyền (tài khoản giáo viên, khoa, phòng công tác sinh viên)")
             );
         }
+        
 
     }else{
-        http_response_code(404);
+        http_response_code(403);
         echo json_encode(
-            array("message" => "bạn không có quyền (tài khoản giáo viên hoặc khoa)")
+            array("message" => "Vui lòng đăng nhập trước!")
         );
     }
     

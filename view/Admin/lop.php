@@ -7,7 +7,7 @@
 		<div class="container-xl">
 
 			<h1 class="app-page-title">.</h1>
-			<h1 class="app-page-title">Sinh viên</h1>
+			<h1 class="app-page-title">Lớp</h1>
 
 			<div class="row g-4 mb-4">
 
@@ -24,19 +24,11 @@
 								</select>
 							</div>
 
-							<div class="col-auto">
-
-								<select class="form-select w-auto">
-									<option selected value="option-1">Tất cả lớp</option>
-									<option value="option-2">DCT1189</option>
-									<option value="option-3">DCT1188</option>
-								</select>
-							</div>
-
+							
 							<div class="col-auto">
 								<form class="table-search-form row gx-1 align-items-center">
 									<div class="col-auto">
-										<input type="text" id="search-orders" name="searchorders" class="form-control search-orders" placeholder="Nhập mã số sinh viên...">
+										<input type="text" id="search-orders" name="searchorders" class="form-control search-orders" placeholder="Nhập mã lớp...">
 									</div>
 									<div class="col-auto">
 										<button type="submit" class="btn app-btn-secondary">Tìm kiếm</button>
@@ -62,15 +54,15 @@
 									<thead>
 										<tr>
 											<th class="cell">STT</th>
-											<th class="cell">Mã số sinh viên</th>
-											<th class="cell">Họ tên sinh viên</th>
-											<th class="cell">Ngày sinh</th>
-											<th class="cell">Hệ</th>
-											<th class="cell">Lớp</th>
+											<th class="cell">Mã lớp</th>
+											<th class="cell">Tên lớp</th>
+											<th class="cell">Mã khoa</th>
+											<th class="cell">Mã cố vấn học tập</th>
+											<th class="cell">Mã khóa học</th>
 											<th class="cell"></th>
 										</tr>
 									</thead>
-									<tbody id="id_tbodySinhVien">
+									<tbody id="id_tbodyLop">
 										
 									</tbody>
 								</table>
@@ -135,7 +127,7 @@
 	}, 1000);
 
 	//hàm trong function.js
-	GetListSinhVien();
+	GetListLop();
  
 
 </script>

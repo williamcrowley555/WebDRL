@@ -13,7 +13,7 @@
     <link rel="shortcut icon" href="favicon.ico"> 
     
     <!-- FontAwesome JS-->
-    <script defer src="assets/plugins/fontawesome/js/all.min.js"></script>
+    <!-- <script defer src="assets/plugins/fontawesome/js/all.min.js"></script> -->
 	<script src="assets/js/sweetalert2.all.min.js"></script>
 
 	<script src="assets/js/auth_login.js"></script>

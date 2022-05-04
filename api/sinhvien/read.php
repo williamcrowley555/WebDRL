@@ -14,13 +14,10 @@
     $quyen = "";
     
     // kiểm tra đăng nhập thành công 
-    if($data["status"]==1){
-        if (isset($data['user_data']->phongcongtacsinhvien)){
-            $quyen = $data['user_data']->phongcongtacsinhvien->quyen;
-        }
+    if($data["status"]==1 ){
         
         //check quyền ctsv trước khi được phép call
-        if ($quyen == "ctsv"){
+        if ($data['user_data']->aud == "phongcongtacsinhvien" || $data['user_data']->aud == "khoa"){
             
             $database = new Database();
             $db = $database->getConnection();
