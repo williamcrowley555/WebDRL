@@ -47,11 +47,11 @@
             
         }
 
-        public function checkUserTokenExist($maSo){
+        public function checkUserTokenExist($token){
             $sqlQuery = "SELECT * FROM ". $this->db_table ."
-                        WHERE maSo = ? LIMIT 0,1";
+                        WHERE token = ? LIMIT 0,1";
             $stmt = $this->conn->prepare($sqlQuery);
-            $stmt->bindParam(1, $maSo);
+            $stmt->bindParam(1, $token);
             $stmt->execute();
 
             $dataRow = $stmt->fetch(PDO::FETCH_ASSOC);

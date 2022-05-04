@@ -20,14 +20,39 @@
         //-------------------
         //Các chức năng
 
-        // GET ALL
-        public function getAllSinhVien(){
+        //GET ALL NO PAGING
+        public function getAllSinhVienNoPaging(){
+        
             $sqlQuery = "SELECT maSinhVien, hoTenSinhVien, ngaySinh, he, matKhauSinhVien, maLop FROM " . $this->db_table . "";
+            
             $stmt = $this->conn->prepare($sqlQuery);
             $stmt->execute();
             return $stmt;
+
         }
 
+        // GET ALL
+        public function getAllSinhVien(){
+            if (@$_GET['page'] && @$_GET['row_per_page']){
+                $page = $_GET['page'];
+                $row_per_page = $_GET['row_per_page'];
+
+                $begin = ($page * $row_per_page) - $row_per_page;
+                
+                $sqlQuery = "SELECT maSinhVien, hoTenSinhVien, ngaySinh, he, matKhauSinhVien, maLop FROM " . $this->db_table . " LIMIT ".$begin.",".$row_per_page."";
+
+            }else{
+                $sqlQuery = "SELECT maSinhVien, hoTenSinhVien, ngaySinh, he, matKhauSinhVien, maLop FROM " . $this->db_table . "";
+                
+            }
+
+            $stmt = $this->conn->prepare($sqlQuery);
+            $stmt->execute();
+            return $stmt;
+
+        }
+
+        
         // READ single
         public function getSingleSinhVien(){
             $sqlQuery = "SELECT maSinhVien , hoTenSinhVien, ngaySinh, he, matKhauSinhVien, maLop FROM ". $this->db_table ."

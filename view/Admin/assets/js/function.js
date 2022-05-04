@@ -9,7 +9,7 @@ function getCookie(cName) {
     return res;
 }
 
-window.setInterval(checkCookie, 1000);
+window.setInterval(checkCookie, 500);
 
 function checkCookie(){
     if (getCookie("jwt")== null){
@@ -32,27 +32,43 @@ function GetListSinhVien() {
             dataType: "json",
             async: false,
             headers: { 'Authorization': jwtCookie },
-            
+            // data: {
+            //     page: page,
+            //     row_per_page: row_per_page
+            // },
             success: function(result) {
-                console.log(result);
-    
-                var countSinhVien = 0;
-        
-                $.each(result['sinhvien'], function(index) {
-                    countSinhVien += 1;
-            
-                    $('#id_tbodySinhVien').append("<tr>\
-                        <td class='cell'>"+ countSinhVien +"</td>\
-                        <td class='cell'><span class='truncate'>"+ result['sinhvien'][index].maSinhVien +"</span></td>\
-                        <td class='cell'>"+ result['sinhvien'][index].hoTenSinhVien +"</td>\
-                        <td class='cell'>"+ result['sinhvien'][index].ngaySinh +"</td>\
-                        <td class='cell'>"+ result['sinhvien'][index].he +"</td>\
-                        <td class='cell'>"+ result['sinhvien'][index].maLop +"</td>\
-                        <td class='cell'><a class='btn-sm app-btn-secondary' href='#'>Đặt lại mật khẩu</a></td>\
-                        </tr>");
-                    
-                
-                })
+       
+                $('#idPhanTrang').pagination({
+                    dataSource: result['sinhvien'],
+                    pageSize: 10,
+                    autoHidePrevious: true,
+                    autoHideNext: true,
+                   
+                    callback: function (data, pagination) {
+                        var htmlData ="";
+                        var countSinhVien = 0;
+                        // htmlData = "<tr></tr>"
+                        for (let i = 0; i< data.length; i++){
+                            countSinhVien += 1;
+                            
+                            htmlData += "<tr>\
+                                <td class='cell'>"+ data[i].soThuTu +"</td>\
+                                <td class='cell'><span class='truncate'>"+ data[i].maSinhVien +"</span></td>\
+                                <td class='cell'>"+ data[i].hoTenSinhVien +"</td>\
+                                <td class='cell'>"+ data[i].ngaySinh +"</td>\
+                                <td class='cell'>"+ data[i].he +"</td>\
+                                <td class='cell'>"+ data[i].maLop +"</td>\
+                                <td class='cell'><a class='btn-sm app-btn-secondary' href='#'>Đặt lại mật khẩu</a></td>\
+                                </tr>";
+                           
+                        }
+
+                       $("#id_tbodySinhVien").html(htmlData);
+                    }
+
+                });
+
+
             },
             error: function(errorMessage) {
                 Swal.fire({
@@ -63,6 +79,11 @@ function GetListSinhVien() {
                     timerProgressBar: true
                 })
     
+            },
+            statusCode: {
+                403: function(xhr) {
+                    location.href = 'login.php';
+                  }
             }
         });
 
@@ -71,90 +92,6 @@ function GetListSinhVien() {
 
     
 }
-
-
-function Login() {
-    var _inputLogin_taiKhoan = $('#inputLogin_taiKhoan').val();
-    var _inputLogin_MatKhau = $('#inputLogin_MatKhau').val();
-
-    if (_inputLogin_taiKhoan == '' || _inputLogin_MatKhau == '') {
-        Swal.fire({
-            icon: 'error',
-            title: 'Lỗi đăng nhập',
-            text: 'Vui lòng điền đầy đủ thông tin!',
-            timer: 3000,
-            timerProgressBar: true
-        })
-    } else {
-        var objLogin = {
-            taiKhoan: _inputLogin_taiKhoan,
-            matKhau: _inputLogin_MatKhau
-        };
-        
-        $.ajax({
-            url: "http://localhost/WebDRL/api/auth/login_admin.php",
-            data: JSON.stringify(objLogin),
-            type: "POST",
-            contentType: "application/json;charset=utf-8",
-            dataType: "json",
-            async: false,
-            success: function (result) {
-                console.log(result);
-                var quyen = result['0']['quyen'];
-                
-                switch (quyen) {
-                    case 'ctsv':{
-                        deleteAllCookies();
-                        
-                        document.cookie = 'taiKhoan=' + result['0']['taiKhoan'];
-                        document.cookie = 'hoTenNhanVien=' + result['0']['hoTenNhanVien'];
-                        document.cookie = 'quyen=' + quyen;
-                        document.cookie = 'jwt=' + result['jwt'];
-                
-                       
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Đăng nhập thành công!',
-                            timer: 2000,
-                            timerProgressBar: true,
-                            showConfirmButton: false
-                        })
-
-                        setTimeout(function() {
-                            window.location.href = "sinhvien/sinhvien_chamdiem.html";
-                        }, 5000);
-                        break;
-
-                    }
-                         
-                    
-                    default:{
-                        window.location.href = "login.php";
-                        break;
-                    }
-                       
-                }
-                
-                
-               
-            },
-            error: function (errorMessage) {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Lỗi đăng nhập',
-                    text: errorMessage.responseText,
-                    timer: 3000,
-                    timerProgressBar: true
-                })
-            
-            }
-        });
-
-
-        
-    }
-}
-
 
 
 function deleteAllCookies() {

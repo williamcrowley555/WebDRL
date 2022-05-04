@@ -81,18 +81,10 @@
 						<!--//app-card-body-->
 					</div>
 					<!--//app-card-->
-					<nav class="app-pagination">
-						<ul class="pagination justify-content-center">
-							<li class="page-item disabled">
-								<a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
-							</li>
-							<li class="page-item active"><a class="page-link" href="#">1</a></li>
-							<li class="page-item"><a class="page-link" href="#">2</a></li>
-							<li class="page-item"><a class="page-link" href="#">3</a></li>
-							<li class="page-item">
-								<a class="page-link" href="#">Next</a>
-							</li>
-						</ul>
+					<nav class="app-pagination" id="idPhanTrang">
+						<!-- <ul class="pagination justify-content-center" id="idPhanTrang">
+							
+						</ul> -->
 					</nav>
 					<!--//app-pagination-->
 
@@ -103,7 +95,6 @@
 
 			</div>
 			<!--//row-->
-
 
 
 		</div>
@@ -134,6 +125,10 @@
 
 
 <script src="assets/js/jquery-3.6.0.js"></script>
+<!-- Pagination -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.min.js"></script>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.css"/>
 <script>
 	setTimeout(function() {
 		$('.loader_bg').fadeToggle();
@@ -141,7 +136,7 @@
 
 	//hàm trong function.js
 	GetListSinhVien();
-
+ 
 
 </script>
 </body>

@@ -71,6 +71,13 @@
     <meta name="author" content="Xiaoying Riley at 3rd Wave Media">    
     <link rel="shortcut icon" href="favicon.ico"> 
     
+	<script src="assets/js/jquery-3.6.0.js"></script>
+	<script src="assets/js/sweetalert2.all.min.js"></script>
+	
+	<!-- Pagination -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.css"/>
     <!-- FontAwesome JS-->
     <script defer src="assets/plugins/fontawesome/js/all.min.js"></script>
 
@@ -79,6 +86,7 @@
     <!-- App CSS -->  
     <link id="theme-style" rel="stylesheet" href="assets/css/portal.css">
 
+	
 </head> 
 
 <!-- Preloader -->

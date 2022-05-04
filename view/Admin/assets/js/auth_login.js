@@ -9,18 +9,20 @@ function getCookie(cName) {
     return res;
 }
 
-window.setInterval(checkCookie, 1000);
+window.setInterval(checkCookie, 500);
 
 function checkCookie(){
   if (getCookie("jwt")!= null){
     switch (getCookie('quyen')) {
         case "ctsv": {
-            window.location.href = "index.php";
+            setTimeout(function() {
+                location.href = "index.php";
+            }, 100);
+            
             break;
         }
       
         default:{
-            window.location.href = 'login.php'
             break;
         }
           
@@ -55,7 +57,6 @@ function Login() {
             dataType: "json",
             async: false,
             success: function (result) {
-                console.log(result);
                 var quyen = result['0']['quyen'];
                 
                 switch (quyen) {
@@ -67,19 +68,26 @@ function Login() {
                         document.cookie = 'quyen=' + quyen;
                         document.cookie = 'jwt=' + result['jwt'];
                 
-                       
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Đăng nhập thành công!',
-                            text: 'Đang chuyển hướng...',
+                        const Toast = Swal.mixin({
+                            toast: true,
+                            position: 'top-end',
+                            showConfirmButton: false,
                             timer: 2000,
                             timerProgressBar: true,
-                            showConfirmButton: true
-                        })
-
+                            didOpen: (toast) => {
+                              toast.addEventListener('mouseenter', Swal.stopTimer)
+                              toast.addEventListener('mouseleave', Swal.resumeTimer)
+                            }
+                          })
+                          
+                          Toast.fire({
+                            icon: 'success',
+                            title: 'Đăng nhập thành công'
+                          })
+                       
                         setTimeout(function() {
-                            window.location.href = "sinhvien/sinhvien_chamdiem.html";
-                        }, 5000);
+                            location.href = "index.php";
+                        }, 2000);
                         break;
 
                     }
