@@ -13,37 +13,56 @@
     $data=$read_data->read_token();
     
     // kiểm tra đăng nhập thành công và có phải giáo viên không
-    if($data["status"]==1 && $data['user_data']->aud == "khoa"){
+    if($data["status"]==1){
 
-    $items = new CVHT($db);
-    $stmt = $items->getAllCVHT();
-    $itemCount = $stmt->rowCount();
+        //check quyền ctsv trước khi được phép call
+        if ($data['user_data']->aud == "phongcongtacsinhvien" || $data['user_data']->aud == "khoa"){
+            $items = new CVHT($db);
+            $stmt = $items->getAllCVHT();
+            $itemCount = $stmt->rowCount();
 
+            $countRow = 0;
 
-    echo json_encode($itemCount); //print itemCount
-    if($itemCount > 0){
-        $covanhoctapArr = array();
-        $covanhoctapArr["covanhoctap"] = array(); //tạo object json 
-        $covanhoctapArr["itemCount"] = $itemCount;
+            if($itemCount > 0){
+                $covanhoctapArr = array();
+                $covanhoctapArr["covanhoctap"] = array(); //tạo object json 
+                $covanhoctapArr["itemCount"] = $itemCount;
 
-        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-            extract($row);
-            $e = array(
-                "maCoVanHocTap" => $maCoVanHocTap ,
-                "hoTenCoVan" => $hoTenCoVan,
-                "soDienThoai" => $soDienThoai,
-                "matKhauTaiKhoanCoVan" => $matKhauTaiKhoanCoVan
+                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+                    extract($row);
+                    $countRow++;
+                    $e = array(
+                        "soThuTu" => $countRow,
+                        "maCoVanHocTap" => $maCoVanHocTap ,
+                        "hoTenCoVan" => $hoTenCoVan,
+                        "soDienThoai" => $soDienThoai,
+                        "matKhauTaiKhoanCoVan" => $matKhauTaiKhoanCoVan
+                    );
+                    array_push($covanhoctapArr["covanhoctap"], $e);
+                }
+                http_response_code(200);
+                echo json_encode($covanhoctapArr);
+            }
+            else{
+                http_response_code(404);
+                echo json_encode(
+                    array("message" => "Không tìm thấy kết quả.")
+                );
+            }
+
+        }else{
+            http_response_code(403);
+            echo json_encode(
+                array("message" => "Không có quyền thực hiện điều này!")
             );
-            array_push($covanhoctapArr["covanhoctap"], $e);
         }
-        echo json_encode($covanhoctapArr);
-    }
-    else{
-        http_response_code(404);
+
+        
+    }else{
+        http_response_code(403);
         echo json_encode(
-            array("message" => "No record found.")
+            array("message" => "Vui lòng đăng nhập!")
         );
     }
-}
 
 ?>

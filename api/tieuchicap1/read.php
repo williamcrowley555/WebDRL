@@ -19,7 +19,6 @@
         $itemCount = $stmt->rowCount();
 
 
-        echo json_encode($itemCount); //print itemCount
         if($itemCount > 0){
             $tieuchicap1Arr = array();
             $tieuchicap1Arr["tieuchicap1"] = array(); //tạo object json 

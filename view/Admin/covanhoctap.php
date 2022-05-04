@@ -77,15 +77,13 @@
 									<thead>
 										<tr>
 											<th class="cell">STT</th>
-											<th class="cell">Mã lớp</th>
-											<th class="cell">Tên lớp</th>
-											<th class="cell">Mã khoa</th>
 											<th class="cell">Mã cố vấn học tập</th>
-											<th class="cell">Mã khóa học</th>
+											<th class="cell">Họ tên cố vấn</th>
+											<th class="cell">Số điện thoại</th>
 											<th class="cell"></th>
 										</tr>
 									</thead>
-									<tbody id="id_tbodyLop">
+									<tbody id="id_tbodyData">
 										
 									</tbody>
 								</table>
@@ -150,7 +148,7 @@
 	}, 1000);
 
 	//hàm trong function.js
-	GetListLop();
+	GetListCVHT();
  
 
 </script>

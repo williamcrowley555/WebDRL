@@ -18,8 +18,6 @@
         $stmt = $items->getAllTC3();
         $itemCount = $stmt->rowCount();
 
-
-        echo json_encode($itemCount); //print itemCount
         if($itemCount > 0){
             $tieuchicap3Arr = array();
             $tieuchicap3Arr["tieuchicap3"] = array(); //tạo object json 
