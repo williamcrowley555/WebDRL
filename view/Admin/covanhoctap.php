@@ -7,7 +7,7 @@
 		<div class="container-xl">
 
 			<h1 class="app-page-title">.</h1>
-			<h1 class="app-page-title">Lớp</h1>
+			<h1 class="app-page-title"><img src="assets/images/icons/presentation.png" alt="" width="30px">  Cố vấn học tập</h1>
 
 			<div class="row g-4 mb-4">
 
@@ -38,7 +38,7 @@
 							</div>
 							<!--//col-->
 							<div class="col-auto" style="padding-left: 15px;">
-								<button class="btn app-btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">Thêm mới</button>
+								<button class="btn app-btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#AddModal">Thêm mới</button>
 							</div>
 
 						</div>
@@ -48,23 +48,53 @@
 				</div>
 				<!--//col-auto-->
 
-				<!-- Modal -->
-				<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-				<div class="modal-dialog">	
-					<div class="modal-content">
-					<div class="modal-header">
-						<h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				<!-- Modal thêm -->
+				<div class="modal fade" id="AddModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+					<div class="modal-dialog">	
+						<div class="modal-content">
+							<div class="modal-header">
+								<img src="assets/images/icons/add.png" width="25px" style="padding-right: 5px;" > 
+								<h5 class="modal-title" id="exampleModalLabel"> Thêm cố vấn học tập</h5>
+								<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+							</div>
+						<div class="modal-body">
+
+						<div class="mb-3">
+							<label for="inputMaCoVanHocTap" class="form-label" style="color: black; font-weight: 500;" >Mã cố vấn học tập</label>
+							<input type="text" class="form-control" id="inputMaCoVanHocTap" placeholder="Nhập mã cố vấn học tập..." >
+						</div>
+
+						<div class="mb-3">
+							<label for="inputMaCoVanHocTap" class="form-label" style="color: black; font-weight: 500;" >Họ tên cố vấn học tập</label>
+							<input type="text" class="form-control" id="inputTenCoVanHocTap" placeholder="Nhập họ tên cố vấn học tập..." >
+						</div>
+
+						<div class="mb-3">
+							<label for="inputMaCoVanHocTap" class="form-label" style="color: black; font-weight: 500;" >Số điện thoại</label>
+							<input type="text" class="form-control" id="inputSoDienThoai" placeholder="Nhập số điện thoại..." >
+						</div>
+
+						<hr>
+						 <span style="text-transform: uppercase;color: black;"><img src="assets/images/icons/lock.png" alt="" style="width: 20px;"> Thông tin mật khẩu</span>
+						<hr>
+
+						<div class="mb-3">
+							<label for="inputMaCoVanHocTap" class="form-label" style="color: black; font-weight: 500;" >Mật khẩu mới</label>
+							<input type="password" class="form-control" id="inputMatKhauMoi" placeholder="Nhập mật khẩu..." >
+						</div>
+
+						<div class="mb-3">
+							<label for="inputMaCoVanHocTap" class="form-label" style="color: black; font-weight: 500;" >Nhập lại mật khẩu</label>
+							<input type="password" class="form-control" id="inputNhapLaiMatKhau" placeholder="Nhập lại mật khẩu..." >
+						</div>
+
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+							<button type="button" class="btn btn-primary" style='color: white;' onclick="ThemCVHT()">Thêm mới</button>
+						</div>
+						</div>
 					</div>
-					<div class="modal-body">
-						...
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-						<button type="button" class="btn btn-primary">Save changes</button>
-					</div>
-					</div>
-				</div>
 				</div>
 
 				
@@ -135,6 +165,7 @@
 
 <!-- Page Specific JS -->
 <script src="assets/js/app.js"></script>
+<script src="assets/js/covanhoctap/function.js"></script>
 
 
 <script src="assets/js/jquery-3.6.0.js"></script>

@@ -7,7 +7,7 @@
 		<div class="container-xl">
 
 			<h1 class="app-page-title">.</h1>
-			<h1 class="app-page-title">Sinh viên</h1>
+			<h1 class="app-page-title"><img src="assets/images/icons/group.png" alt="" width="30px"> Sinh viên</h1>
 
 			<div class="row g-4 mb-4">
 
@@ -122,6 +122,7 @@
 
 <!-- Page Specific JS -->
 <script src="assets/js/app.js"></script>
+<script src="assets/js/sinhvien/function.js"></script>
 
 
 <script src="assets/js/jquery-3.6.0.js"></script>

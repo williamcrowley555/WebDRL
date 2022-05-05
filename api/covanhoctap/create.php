@@ -15,27 +15,47 @@
     // kiểm tra đăng nhập thành công 
     if($data["status"]==1){
 
-        $database = new Database();
-        $db = $database->getConnection();
+        //check quyền ctsv trước khi được phép call
+        if ($data['user_data']->aud == "phongcongtacsinhvien"){
 
-        $item = new CVHT($db); //new Khoa object
-        $data = json_decode(file_get_contents("php://input")); //lấy request data từ user 
+            $database = new Database();
+            $db = $database->getConnection();
+    
+            $item = new CVHT($db); //new Khoa object
+            $data = json_decode(file_get_contents("php://input")); //lấy request data từ user 
 
-        if ($data != null){
-            //set các biến bằng data nhận từ user
-            $item->maCoVanHocTap = $data->maCoVanHocTap;
-            $item->hoTenCoVan = $data->hoTenCoVan;
-            $item->soDienThoai = $data->soDienThoai;
-            $item->matKhauTaiKhoanCoVan = md5($data->matKhauTaiKhoanCoVan);
-
-            if($item->createCVHT()){
-                echo 'CVHT created successfully.';
-            } else{
-                echo 'CVHT could not be created.';
+            if ($data != null){
+                //set các biến bằng data nhận từ user
+                $item->maCoVanHocTap = $data->maCoVanHocTap;
+                $item->hoTenCoVan = $data->hoTenCoVan;
+                $item->soDienThoai = $data->soDienThoai;
+                $item->matKhauTaiKhoanCoVan = md5($data->matKhauTaiKhoanCoVan);
+    
+                if($item->createCVHT()){
+                    http_response_code(200);
+                    echo json_encode(
+                        array("message" => "Thêm cố vấn học tập thành công!")
+                    );
+                } else{
+                    echo 'Thêm cố vấn học tập thất bại!';
+                }
+            }else{
+                http_response_code(404);
+                echo 'Không nhận được dữ liệu gửi lên.';
             }
         }else{
-            echo 'No data posted.';
+            http_response_code(403);
+            echo json_encode(
+                array("message" => "Không có quyền thực hiện điều này!")
+            );
         }
+
+        
+    }else{
+        http_response_code(403);
+        echo json_encode(
+            array("message" => "Vui lòng đăng nhập!")
+        );
     }
     
 

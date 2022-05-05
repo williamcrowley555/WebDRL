@@ -79,7 +79,7 @@
 
 	<link rel="stylesheet" href="assets/css/pagination.css"/>	
     
-	<script src="assets/js/function.js"></script>
+	<script src="assets/js/check_token.js"></script>
     
     <!-- App CSS -->  
     <link id="theme-style" rel="stylesheet" href="assets/css/portal.css">

@@ -61,7 +61,7 @@ function Login() {
                 
                 switch (quyen) {
                     case 'ctsv':{
-                        deleteAllCookies();
+                       // deleteAllCookies();
                         
                         document.cookie = 'taiKhoan=' + result['0']['taiKhoan'];
                         document.cookie = 'hoTenNhanVien=' + result['0']['hoTenNhanVien'];
