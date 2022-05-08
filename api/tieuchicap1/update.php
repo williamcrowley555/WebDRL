@@ -8,36 +8,53 @@
     include_once '../../config/database.php';
     include_once '../../class/tieuchicap1.php';
     include_once '../auth/read-data.php';
+    include_once '../auth/check_quyen.php';
     
     $read_data = new read_data();
     $data=$read_data->read_token();
+
+    $checkQuyen = new checkQuyen();
     
     // kiểm tra đăng nhập thành công 
     if($data["status"]==1){
         
-        $database = new Database();
-        $db = $database->getConnection();
-        
-        $item = new Tieuchicap1($db);
-        
-        $data = json_decode(file_get_contents("php://input"));
-        
-        if ($data != null){
-            $item->matc1 = $data->matc1;
-        
-            //values
-            $item->noidung = $data->noidung;
-            $item->diemtoida = $data->diemtoida;
+        if ($checkQuyen->checkQuyen_CTSV($data["user_data"]->aud)){
+            $database = new Database();
+            $db = $database->getConnection();
             
-            if($item->updateTC1()){
-                echo json_encode("tieuchicap1 data updated.");
-            } else{
-                echo json_encode("Data could not be updated");
+            $item = new Tieuchicap1($db);
+            
+            $data = json_decode(file_get_contents("php://input"));
+            
+            if ($data != null){
+                $item->matc1 = $data->matc1;
+            
+                //values
+                $item->noidung = $data->noidung;
+                $item->diemtoida = $data->diemtoida;
+                
+                if($item->updateTC1()){
+                    echo json_encode("tieuchicap1 cập nhật thành công.");
+                } else{
+                    echo json_encode("tieuchicap1 cập nhật thất bại.");
+                }
+    
+            }else{
+                echo 'Không có dữ liệu được gửi lên.';
             }
 
         }else{
-            echo 'No data posted.';
+            http_response_code(403);
+            echo json_encode(
+                array("message" => "Bạn không có quyền thực hiện điều này!")
+            );
         }
+        
+    }else{
+        http_response_code(403);
+        echo json_encode(
+            array("message" => "Vui lòng đăng nhập trước!")
+        );
     }
 
     

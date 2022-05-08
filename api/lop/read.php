@@ -5,16 +5,20 @@
     include_once '../../config/database.php';
     include_once '../../class/lop.php';
     include_once '../auth/read-data.php';
+    include_once '../auth/check_quyen.php';
+
     $database = new Database();
     $db = $database->getConnection();
 
     $read_data = new read_data();
     $data=$read_data->read_token();
+
+    $checkQuyen = new checkQuyen();
     
     // kiểm tra đăng nhập thành công và có phải giáo viên không
     if($data["status"]==1 ){
 
-        if ($data['user_data']->aud == "cvht" || $data['user_data']->aud == "khoa" || $data['user_data']->aud == "phongcongtacsinhvien"){
+        if ($checkQuyen->checkQuyen_CVHT_Khoa_CTSV($data["user_data"]->aud)){
             $items = new Lop($db);
             $stmt = $items->getAllLop();
             $itemCount = $stmt->rowCount();
@@ -50,7 +54,7 @@
         }else{
             http_response_code(403);
             echo json_encode(
-                array("message" => "Bạn không có quyền (tài khoản giáo viên, khoa, phòng công tác sinh viên)")
+                array("message" => "Bạn không có quyền thực hiện điều này!")
             );
         }
         
