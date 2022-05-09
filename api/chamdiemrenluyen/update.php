@@ -41,12 +41,12 @@ if ($data != null) {
     $item->maChamDiemRenLuyen = $data->maChamDiemRenLuyen;
 
     //values
+    $item->maTieuChi2 = $data->maTieuChi2;
     $item->maTieuChi3 = $data->maTieuChi3;
     $item->maSinhVien = $data->maSinhVien;
     $item->diemSinhVienDanhGia = $data->diemSinhVienDanhGia;
     $item->diemLopDanhGia = $data->diemLopDanhGia;
-    $item->diemTrungBinhChungHKTruoc = $data->diemTrungBinhChungHKTruoc;
-    $item->diemTrungBinhChungHKXet = $data->diemTrungBinhChungHKXet;
+
 
     if ($item->updateChamDiemRenLuyen()) {
         echo json_encode("ChamDiemRenLuyen data updated.");

@@ -39,11 +39,11 @@ $data = json_decode(file_get_contents("php://input")); //lấy request data từ
 if ($data != null) {
     //set các biến bằng data nhận từ user
     $item->maTieuChi3 = $data->maTieuChi3;
+    $item->maTieuChi2 = $data->maTieuChi2;
     $item->maSinhVien = $data->maSinhVien;
     $item->diemSinhVienDanhGia = $data->diemSinhVienDanhGia;
     $item->diemLopDanhGia = $data->diemLopDanhGia;
-    $item->diemTrungBinhChungHKTruoc = $data->diemTrungBinhChungHKTruoc;
-    $item->diemTrungBinhChungHKXet = $data->diemTrungBinhChungHKXet;
+
 
 
     if ($item->createChamDiemRenLuyen()) {
