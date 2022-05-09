@@ -22,6 +22,7 @@
             $thamgiahoatdongArr["thamgiahoatdong"] = array(); //tạo object json 
             $thamgiahoatdongArr["itemCount"] = $itemCount;
 
+            
             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
                 extract($row);
                 $e = array(
