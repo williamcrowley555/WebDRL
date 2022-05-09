@@ -1,68 +1,61 @@
 <?php
-    header("Access-Control-Allow-Origin: *");
-    header("Content-Type: application/json; charset=UTF-8");
-    
-    include_once '../../config/database.php';
-    include_once '../../class/covanhoctap.php';
-    include_once '../auth/read-data.php';
+header("Access-Control-Allow-Origin: *");
+header("Content-Type: application/json; charset=UTF-8");
 
-    $database = new Database();
-    $db = $database->getConnection();
+include_once '../../config/database.php';
+include_once '../../class/covanhoctap.php';
+include_once '../auth/read-data.php';
+include_once '../auth/check_quyen.php';
 
-    $read_data = new read_data();
-    $data=$read_data->read_token();
-    
-    // kiểm tra đăng nhập thành công và có phải giáo viên không
-    if($data["status"]==1){
+$database = new Database();
+$db = $database->getConnection();
 
-        //check quyền ctsv trước khi được phép call
-        if ($data['user_data']->aud == "phongcongtacsinhvien" || $data['user_data']->aud == "khoa"){
-            $items = new CVHT($db);
-            $stmt = $items->getAllCVHT();
-            $itemCount = $stmt->rowCount();
+$read_data = new read_data();
+$data = $read_data->read_token();
 
-            $countRow = 0;
+// kiểm tra đăng nhập thành công và có phải giáo viên không
+if ($data["status"] == 1) {
+    if ($checkQuyen->checkQuyen_CTSV($data["user_data"]->aud)) {
+        $items = new CVHT($db);
+        $stmt = $items->getAllCVHT();
+        $itemCount = $stmt->rowCount();
 
-            if($itemCount > 0){
-                $covanhoctapArr = array();
-                $covanhoctapArr["covanhoctap"] = array(); //tạo object json 
-                $covanhoctapArr["itemCount"] = $itemCount;
+        $countRow = 0;
 
-                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-                    extract($row);
-                    $countRow++;
-                    $e = array(
-                        "soThuTu" => $countRow,
-                        "maCoVanHocTap" => $maCoVanHocTap ,
-                        "hoTenCoVan" => $hoTenCoVan,
-                        "soDienThoai" => $soDienThoai,
-                        "matKhauTaiKhoanCoVan" => $matKhauTaiKhoanCoVan
-                    );
-                    array_push($covanhoctapArr["covanhoctap"], $e);
-                }
-                http_response_code(200);
-                echo json_encode($covanhoctapArr);
-            }
-            else{
-                http_response_code(404);
-                echo json_encode(
-                    array("message" => "Không tìm thấy kết quả.")
+        if ($itemCount > 0) {
+            $covanhoctapArr = array();
+            $covanhoctapArr["covanhoctap"] = array(); //tạo object json 
+            $covanhoctapArr["itemCount"] = $itemCount;
+
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                extract($row);
+                $countRow++;
+                $e = array(
+                    "soThuTu" => $countRow,
+                    "maCoVanHocTap" => $maCoVanHocTap,
+                    "hoTenCoVan" => $hoTenCoVan,
+                    "soDienThoai" => $soDienThoai,
+                    "matKhauTaiKhoanCoVan" => $matKhauTaiKhoanCoVan
                 );
+                array_push($covanhoctapArr["covanhoctap"], $e);
             }
-
-        }else{
-            http_response_code(403);
+            http_response_code(200);
+            echo json_encode($covanhoctapArr);
+        } else {
+            http_response_code(404);
             echo json_encode(
-                array("message" => "Không có quyền thực hiện điều này!")
+                array("message" => "Không tìm thấy kết quả.")
             );
         }
-
-        
-    }else{
+    } else {
         http_response_code(403);
         echo json_encode(
-            array("message" => "Vui lòng đăng nhập!")
+            array("message" => "Bạn không có quyền thực hiện điều này!")
         );
     }
-
-?>
+} else {
+    http_response_code(403);
+    echo json_encode(
+        array("message" => "Vui lòng đăng nhập trước!")
+    );
+}
