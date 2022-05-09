@@ -37,6 +37,7 @@
                         "soThuTu" => $countRow,
                         "matc2" => $matc2 ,
                         "noidung" => $noidung,
+                        "diemtoida" => $diemtoida,
                         "matc1" => $matc1
                     );
                     array_push($tieuchicap2Arr["tieuchicap2"], $e);

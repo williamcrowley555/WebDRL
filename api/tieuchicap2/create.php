@@ -28,6 +28,7 @@
             if ($data != null){
                 //set các biến bằng data nhận từ user
                 $item->noidung = $data->noidung;
+                $item->diemtoida = $data->diemtoida;
                 $item->matc1 = $data->matc1;
     
                 if($item->createTC2()){
