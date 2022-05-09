@@ -7,6 +7,8 @@
 
     include_once '../../config/database.php';
     include_once '../../class/thamgiahoatdong.php';
+    include_once '../auth/read-data.php';
+    
     $read_data = new read_data();
     $data=$read_data->read_token();
     
