@@ -54,3 +54,4 @@
             array("message" => "Vui lòng đăng nhập trước!")
         );
     }
+    ?>

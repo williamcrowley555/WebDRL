@@ -45,3 +45,6 @@ include_once '../auth/check_quyen.php';
             array("message" => "Vui lòng đăng nhập trước!")
         );
     }
+
+
+?>

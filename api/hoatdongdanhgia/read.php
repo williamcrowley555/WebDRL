@@ -31,13 +31,14 @@
                 $e = array(
                     "maHoatDong" => $maHoatDong ,
                     "maTieuChi3" => $maTieuChi3,
+                    "maTieuChi2" => $maTieuChi2,
                     "maKhoa" => $maKhoa,
                     "tenHoatDong" => $tenHoatDong,
                     "diemNhanDuoc" => $diemNhanDuoc,
                     "diaDiemDienRaHoatDong" => $diaDiemDienRaHoatDong,
                     "maQRDiaDiem" => $maQRDiaDiem,
-                    "tenKhoa" => $tenKhoa,
-                    "matKhauKhoa" => $matKhauKhoa
+                    "thoiGianBatDauHoatDong" => $thoiGianBatDauHoatDong,
+                    "thoiGianKetThucHoatDong" => $thoiGianKetThucHoatDong
                 );
                 array_push($hoatdongdanhgiaArr["hoatdongdanhgia"], $e);
             }
@@ -62,3 +63,4 @@
             array("message" => "Vui lòng đăng nhập trước!")
         );
     }
+?>

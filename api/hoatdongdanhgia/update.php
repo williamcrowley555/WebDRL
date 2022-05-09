@@ -28,6 +28,7 @@ if ($data["status"] == 1) {
 
             //values
             $item->maTieuChi3 = $data->maTieuChi3;
+            $item->maTieuChi2 = $data->maTieuChi2;
             $item->maKhoa = $data->maKhoa;
             $item->tenHoatDong = $data->tenHoatDong;
             $item->diemNhanDuoc = $data->diemNhanDuoc;
@@ -56,3 +57,7 @@ if ($data["status"] == 1) {
         array("message" => "Vui lòng đăng nhập trước!")
     );
 }
+
+
+
+?>
