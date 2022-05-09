@@ -29,9 +29,14 @@
                 $hoatdongdanhgia_arr = array(
                     "maHoatDong" =>  $item->maHoatDong,
                     "maTieuChi3" => $item->maTieuChi3,
+                    "maTieuChi2" => $item->maTieuChi2,
                     "maKhoa" => $item->maKhoa,
                     "tenHoatDong" =>  $item->tenHoatDong,
-                    "diemNhanDuoc" => $item->diemNhanDuoc        );
+                    "diemNhanDuoc" => $item->diemNhanDuoc,
+                    "maQRDiaDiem" =>  $item->maQRDiaDiem,
+                    "thoiGianBatDauHoatDong" =>  $item->thoiGianBatDauHoatDong,
+                    "thoiGianKetThucHoatDong" =>  $item->thoiGianKetThucHoatDong   
+                );
             
                 http_response_code(200);
                 echo json_encode($hoatdongdanhgia_arr);
@@ -52,3 +57,5 @@
             array("message" => "Vui lòng đăng nhập trước!")
         );
     }
+
+?>

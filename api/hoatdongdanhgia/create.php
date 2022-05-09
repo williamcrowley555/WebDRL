@@ -25,6 +25,7 @@
             if ($data != null){
                 //set các biến bằng data nhận từ user
                 $item->maTieuChi3 = $data->maTieuChi3;
+                $item->maTieuChi2 = $data->maTieuChi2;
                 $item->maKhoa = $data->maKhoa;
                 $item->tenHoatDong = $data->tenHoatDong;
                 $item->diemNhanDuoc = $data->diemNhanDuoc;

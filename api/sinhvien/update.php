@@ -53,3 +53,4 @@ if ($data["status"] == 1) {
         array("message" => "Vui lòng đăng nhập trước!")
     );
 }
+?>

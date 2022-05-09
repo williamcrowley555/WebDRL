@@ -53,9 +53,13 @@ if ($data["status"] == 1 && $data['user_data']->aud == "cvht") {
             array("message" => "Bạn không có quyền thực hiện điều này!")
         );
     }
+
 } else {
     http_response_code(403);
     echo json_encode(
         array("message" => "Vui lòng đăng nhập trước!")
     );
 }
+
+    ?>
+

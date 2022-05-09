@@ -7,6 +7,7 @@
         // Columns
         public $maHoatDong;
         public $maTieuChi3;
+        public $maTieuChi2;
         public $maKhoa;
         public $tenHoatDong;
         public $diemNhanDuoc;
@@ -27,7 +28,7 @@
 
         // GET ALL
         public function getAllHoatDongDanhGia(){
-            $sqlQuery = "SELECT maHoatDong  , maTieuChi3, maKhoa, tenHoatDong, diemNhanDuoc, diaDiemDienRaHoatDong, maQRDiaDiem, thoiGianBatDauHoatDong, thoiGianKetThucHoatDong FROM " . $this->db_table . "";
+            $sqlQuery = "SELECT maHoatDong, maTieuChi2, maTieuChi3, maKhoa, tenHoatDong, diemNhanDuoc, diaDiemDienRaHoatDong, maQRDiaDiem, thoiGianBatDauHoatDong, thoiGianKetThucHoatDong FROM " . $this->db_table . "";
             $stmt = $this->conn->prepare($sqlQuery);
             $stmt->execute();
             return $stmt;
@@ -35,7 +36,7 @@
 
         // READ single
         public function getSingleHoatDongDanhGia(){
-            $sqlQuery = "SELECT maHoatDong  , maTieuChi3, maKhoa, tenHoatDong, diemNhanDuoc, diaDiemDienRaHoatDong, maQRDiaDiem, thoiGianBatDauHoatDong, thoiGianKetThucHoatDong FROM ". $this->db_table ."
+            $sqlQuery = "SELECT maHoatDong, maTieuChi2, maTieuChi3, maKhoa, tenHoatDong, diemNhanDuoc, diaDiemDienRaHoatDong, maQRDiaDiem, thoiGianBatDauHoatDong, thoiGianKetThucHoatDong FROM ". $this->db_table ."
                         WHERE maHoatDong   = ? LIMIT 0,1";
             $stmt = $this->conn->prepare($sqlQuery);
             $stmt->bindParam(1, $this->maHoatDong  );
@@ -44,8 +45,9 @@
             $dataRow = $stmt->fetch(PDO::FETCH_ASSOC);
             
             if ($dataRow != null){
-                $this->maHoatDong   = $dataRow['maHoatDong  '];
+                $this->maHoatDong   = $dataRow['maHoatDong'];
                 $this->maTieuChi3 = $dataRow['maTieuChi3'];
+                $this->maTieuChi2 = $dataRow['maTieuChi2'];
                 $this->maKhoa = $dataRow['maKhoa'];
                 $this->tenHoatDong = $dataRow['tenHoatDong'];
                 $this->diemNhanDuoc = $dataRow['diemNhanDuoc'];
@@ -63,6 +65,7 @@
                         ". $this->db_table ."
                     SET
                         maTieuChi3 = :maTieuChi3, 
+                        maTieuChi2 = :maTieuChi2,
                         maKhoa = :maKhoa, 
                         tenHoatDong = :tenHoatDong,
                         diemNhanDuoc = :diemNhanDuoc,
@@ -76,6 +79,7 @@
         
             // sanitize (Lọc dữ liệu đầu vào tránh SQLInjection, XSS)
             $this->maTieuChi3=htmlspecialchars(strip_tags($this->maTieuChi3));
+            $this->maTieuChi2=htmlspecialchars(strip_tags($this->maTieuChi2));
             $this->maKhoa=htmlspecialchars(strip_tags($this->maKhoa));
             $this->tenHoatDong=htmlspecialchars(strip_tags($this->tenHoatDong));
             $this->diemNhanDuoc=htmlspecialchars(strip_tags($this->diemNhanDuoc));
@@ -86,6 +90,7 @@
         
             // bind data
             $stmt->bindParam(":maTieuChi3", $this->maTieuChi3);
+            $stmt->bindParam(":maTieuChi2", $this->maTieuChi2);
             $stmt->bindParam(":maKhoa", $this->maKhoa);
             $stmt->bindParam(":tenHoatDong", $this->tenHoatDong);
             $stmt->bindParam(":diemNhanDuoc", $this->diemNhanDuoc);
@@ -107,6 +112,7 @@
                         ". $this->db_table ."
                     SET
                         maTieuChi3 = :maTieuChi3, 
+                        maTieuChi2 = :maTieuChi2, 
                         maKhoa = :maKhoa, 
                         tenHoatDong = :tenHoatDong,
                         diemNhanDuoc = :diemNhanDuoc,
@@ -120,8 +126,9 @@
             $stmt = $this->conn->prepare($sqlQuery);
         
             // sanitize (Lọc dữ liệu đầu vào tránh SQLInjection, XSS)
-            $this->maHoatDong  =htmlspecialchars(strip_tags($this->maHoatDong  ));
+            $this->maHoatDong  =htmlspecialchars(strip_tags($this->maHoatDong));
             $this->maTieuChi3=htmlspecialchars(strip_tags($this->maTieuChi3));
+            $this->maTieuChi2=htmlspecialchars(strip_tags($this->maTieuChi2));
             $this->maKhoa=htmlspecialchars(strip_tags($this->maKhoa));
             $this->tenHoatDong=htmlspecialchars(strip_tags($this->tenHoatDong));
             $this->diemNhanDuoc=htmlspecialchars(strip_tags($this->diemNhanDuoc));
@@ -134,6 +141,7 @@
             // bind data
             $stmt->bindParam(":maHoatDong  ", $this->maHoatDong  );
             $stmt->bindParam(":maTieuChi3", $this->maTieuChi3);
+            $stmt->bindParam(":maTieuChi2", $this->maTieuChi2);
             $stmt->bindParam(":maKhoa", $this->maKhoa);
             $stmt->bindParam(":tenHoatDong", $this->tenHoatDong);
             $stmt->bindParam(":diemNhanDuoc", $this->diemNhanDuoc);
