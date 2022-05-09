@@ -40,12 +40,12 @@ if ($item->maTieuChi3 != null) {
     // create array
     $chamdiemrenluyen_arr = array(
         "maChamDiemRenLuyen" =>  $item->maChamDiemRenLuyen,
+        "maTieuChi2" => $maTieuChi2,
         "maTieuChi3" => $item->maTieuChi3,
         "maSinhVien" => $item->maSinhVien,
         "diemSinhVienDanhGia" => $item->diemSinhVienDanhGia,
-        "diemLopDanhGia" => $item->diemLopDanhGia,
-        "diemTrungBinhChungHKTruoc" => $item->diemTrungBinhChungHKTruoc,
-        "diemTrungBinhChungHKXet" => $item->diemTrungBinhChungHKXet
+        "diemLopDanhGia" => $item->diemLopDanhGia
+       
     );
 
     http_response_code(200);
