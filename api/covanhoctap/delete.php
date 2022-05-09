@@ -8,32 +8,45 @@
     include_once '../../config/database.php';
     include_once '../../class/covanhoctap.php';
     include_once '../auth/read-data.php';
-    
+    include_once '../auth/check_quyen.php';
+
     $read_data = new read_data();
     $data=$read_data->read_token();
     
     // kiểm tra đăng nhập thành công 
     if($data["status"]==1){
-    
-        $database = new Database();
-        $db = $database->getConnection();
-        
-        $item = new CVHT($db);
-        
-        $data = json_decode(file_get_contents("php://input"));
-        
-        if ($data != null){
-            $item->maCoVanHocTap = $data->maCoVanHocTap;
-        
-            if($item->deleteCVHT()){
-                echo json_encode("CVHT deleted.");
-            } else{
-                echo json_encode("Data could not be deleted");
-            }
-        }else{
-            echo 'No data posted.';
+        if ($checkQuyen->checkQuyen_CTSV($data["user_data"]->aud)) {
+            $database = new Database();
+            $db = $database->getConnection();
+            
+            $item = new CVHT($db);
+            
+            $data = json_decode(file_get_contents("php://input"));
+            
+            if ($data != null){
+                $item->maCoVanHocTap = $data->maCoVanHocTap;
+            
+                if($item->deleteCVHT()){
+                    echo json_encode("CVHT deleted.");
+                } else{
+                    echo json_encode("Data could not be deleted");
+                }
+            }else{
+                echo 'No data posted.';
+            }} else {
+            http_response_code(403);
+            echo json_encode(
+                array("message" => "Bạn không có quyền thực hiện điều này!")
+            );
         }
+    } else {
+        http_response_code(403);
+        echo json_encode(
+            array("message" => "Vui lòng đăng nhập trước!")
+        );
     }
+       
+    
    
 
 ?>

@@ -8,40 +8,48 @@
     include_once '../../config/database.php';
     include_once '../../class/phieurenluyen.php';
     include_once '../auth/read-data.php';
-    
+    include_once '../auth/check_quyen.php';
+
     $read_data = new read_data();
     $data=$read_data->read_token();
     
     // kiểm tra đăng nhập thành công 
     if($data["status"]==1){
-    
-        $database = new Database();
-        $db = $database->getConnection();
+        if ($checkQuyen->checkQuyen_CTSV($data["user_data"]->aud)) {
         
-        $item = new PhieuRenLuyen($db);
-        
-        $data = json_decode(file_get_contents("php://input"));
-        
-        if ($data != null){
-            $item->maPhieuRenLuyen  = $data->maPhieuRenLuyen ;
-        
-            //values
-            $item->xepLoai = $data->xepLoai;
-            $item->diemTongCong = $data->diemTongCong;
-            $item->maSinhVien = $data->maSinhVien;
-            $item->maHocKyDanhGia = $data->maHocKyDanhGia;
+            $database = new Database();
+            $db = $database->getConnection();
             
-            if($item->updatePhieuRenLuyen()){
-                echo json_encode("phieurenluyen data updated.");
-            } else{
-                echo json_encode("Data could not be updated");
-            }
-
-        }else{
-            echo 'No data posted.';
-        }
-    }
-
+            $item = new PhieuRenLuyen($db);
+            
+            $data = json_decode(file_get_contents("php://input"));
+            
+            if ($data != null){
+                $item->maPhieuRenLuyen  = $data->maPhieuRenLuyen ;
+            
+                //values
+                $item->xepLoai = $data->xepLoai;
+                $item->diemTongCong = $data->diemTongCong;
+                $item->maSinhVien = $data->maSinhVien;
+                $item->maHocKyDanhGia = $data->maHocKyDanhGia;
+                
+                if($item->updatePhieuRenLuyen()){
+                    echo json_encode("phieurenluyen data updated.");
+                } else{
+                    echo json_encode("Data could not be updated");
+                }
     
-
-?>
+            }else{
+                echo 'No data posted.';
+            }} else {
+            http_response_code(403);
+            echo json_encode(
+                array("message" => "Bạn không có quyền thực hiện điều này!")
+            );
+        }
+    } else {
+        http_response_code(403);
+        echo json_encode(
+            array("message" => "Vui lòng đăng nhập trước!")
+        );
+    }

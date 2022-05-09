@@ -5,15 +5,14 @@
     include_once '../../config/database.php';
     include_once '../../class/khoa.php';
     include_once '../auth/read-data.php';
-    
+    include_once '../auth/check_quyen.php';
+
     $read_data = new read_data();
     $data=$read_data->read_token();
     
     // kiểm tra đăng nhập thành công 
     if($data["status"]==1){
-
-        //check quyền ctsv trước khi được phép call
-        if ($data['user_data']->aud == "phongcongtacsinhvien" || $data['user_data']->aud == "khoa"){
+        if ($checkQuyen->checkQuyen_CTSV($data["user_data"]->aud)) {
             $database = new Database();
             $db = $database->getConnection();
     
@@ -51,18 +50,15 @@
                 );
             }
 
-        }else{
+        } else {
             http_response_code(403);
             echo json_encode(
-                array("message" => "Không có quyền thực hiện điều này!")
+                array("message" => "Bạn không có quyền thực hiện điều này!")
             );
         }
-        
-    }else{
+    }else {
         http_response_code(403);
         echo json_encode(
-            array("message" => "Vui lòng đăng nhập!")
+            array("message" => "Vui lòng đăng nhập trước!")
         );
     }
-
-?>
