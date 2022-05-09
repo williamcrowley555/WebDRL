@@ -8,37 +8,48 @@
     include_once '../../config/database.php';
     include_once '../../class/sinhvien.php';
     include_once '../auth/read-data.php';
-    
+    include_once '../auth/check_quyen.php';
+
     $read_data = new read_data();
     $data=$read_data->read_token();
     
     // kiểm tra đăng nhập thành công 
     if($data["status"]==1){
-
-        $database = new Database();
-        $db = $database->getConnection();
-        $item = new SinhVien($db);
-        $item->maSinhVien = isset($_GET['maSinhVien']) ? $_GET['maSinhVien'] : die(); //Lấy id từ phương thức GET
-    
-        $item->getSingleSinhVien();
-        if($item->hoTenSinhVien != null){
-            // create array
-            $sinhvien_arr = array(
-                "maSinhVien" =>  $item->maSinhVien,
-                "hoTenSinhVien" => $item->hoTenSinhVien,
-                "ngaySinh" => $item->ngaySinh,
-                "he" => $item->he,
-                "matKhauSinhVien" => $item->matKhauSinhVien,
-                "maLop" => $item->maLop
+        if ($checkQuyen->checkQuyen_CTSV($data["user_data"]->aud)) {
+       
+            $database = new Database();
+            $db = $database->getConnection();
+            $item = new SinhVien($db);
+            $item->maSinhVien = isset($_GET['maSinhVien']) ? $_GET['maSinhVien'] : die(); //Lấy id từ phương thức GET
+        
+            $item->getSingleSinhVien();
+            if($item->hoTenSinhVien != null){
+                // create array
+                $sinhvien_arr = array(
+                    "maSinhVien" =>  $item->maSinhVien,
+                    "hoTenSinhVien" => $item->hoTenSinhVien,
+                    "ngaySinh" => $item->ngaySinh,
+                    "he" => $item->he,
+                    "matKhauSinhVien" => $item->matKhauSinhVien,
+                    "maLop" => $item->maLop
+                );
+            
+                http_response_code(200);
+                echo json_encode($sinhvien_arr);
+            }
+            
+            else{
+                http_response_code(404);
+                echo json_encode("sinhvien not found.");
+            } } else {
+            http_response_code(403);
+            echo json_encode(
+                array("message" => "Bạn không có quyền thực hiện điều này!")
             );
-        
-            http_response_code(200);
-            echo json_encode($sinhvien_arr);
         }
-        
-        else{
-            http_response_code(404);
-            echo json_encode("sinhvien not found.");
-        }
+    } else {
+        http_response_code(403);
+        echo json_encode(
+            array("message" => "Vui lòng đăng nhập trước!")
+        );
     }
-?>
