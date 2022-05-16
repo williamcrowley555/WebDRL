@@ -43,12 +43,12 @@ if ($itemCount > 0) {
         extract($row);
         $e = array(
             "maChamDiemRenLuyen" => $maChamDiemRenLuyen,
+            "maTieuChi2" => $maTieuChi2,
             "maTieuChi3" => $maTieuChi3,
             "maSinhVien" => $maSinhVien,
             "diemSinhVienDanhGia" => $diemSinhVienDanhGia,
             "diemLopDanhGia" => $diemLopDanhGia,
-            "diemTrungBinhChungHKTruoc" => $diemTrungBinhChungHKTruoc,
-            "diemTrungBinhChungHKXet" => $diemTrungBinhChungHKXet
+           
         );
         array_push($ChamDiemRenLuyenArr["ChamDiemRenLuyen"], $e);
     }
