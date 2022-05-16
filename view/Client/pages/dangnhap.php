@@ -1,14 +1,14 @@
 <?php
     include_once "header.php";
-
+    
     include_once __DIR__."/helpers/checkcookie.php";
+    
+    $page_word = explode("/", $_SERVER['REQUEST_URI']);
 
-    $checkCookie = new CheckCookie();
-
-    if ($checkCookie->CheckAuthLogin()->maSinhVien != null){
-        echo $checkCookie->CheckAuthLogin()->maSinhVien;
-
+    if (strcmp(end($page_word),'dangnhap.php') == 0){
+        $checkCookie->CheckAuthOnlyLoginPage();
     }
+    
 ?>
 
 

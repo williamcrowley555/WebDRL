@@ -1,3 +1,51 @@
+<?php 
+    include_once __DIR__."/helpers/checkcookie.php";
+
+    $checkCookie = new CheckCookie();
+    
+    $page_word = explode("/", $_SERVER['REQUEST_URI']);
+
+    //echo end($page_word);
+
+    if (strcmp(end($page_word),'dangnhap.php') != 0){
+        $checkCookie->CheckAuthLogin();
+    }
+
+   
+
+    // if ($_COOKIE['jwt'] != null){
+    //     $jwt = $_COOKIE['jwt'];
+
+    //     $dataUser = $checkCookie->read_data_token($jwt);
+
+    //     $quyenUser = $dataUser['user_data']->aud;
+    //     switch ($quyenUser) {
+    //         case 'sinhvien':{
+    //             header("Location: chamdiem.php");
+    //             break;
+    //         }
+
+    //         case 'cvht':{
+    //             header("Location: cvht.php");
+    //             break;
+    //         }
+
+    //         case 'khoa':{
+    //             header("Location: khoa.php");
+    //             break;
+    //         }
+           
+            
+    //     }
+       
+
+
+    // }
+
+    
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -47,7 +95,6 @@
     <script src="../js/chamdiemchitiet/chamdiemchitiet.js"></script>
     
     
-
     
 </head>
 

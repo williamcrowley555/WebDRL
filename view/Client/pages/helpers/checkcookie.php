@@ -53,19 +53,25 @@
 
 
         public function CheckAuthLogin(){
-            if ($_COOKIE['jwt'] != null){
-                echo "<script></script>";
-                $jwt = $_COOKIE['jwt'];
-
-                $data = $this->read_data_token($jwt);
-        
-                return $data["user_data"]->sinhvien;
-            }else{
-                header("Location: dangnhap.php");
+            if (!isset($_COOKIE['jwt'])){
+                if ($_COOKIE['jwt'] == null){
+                    header("Location: dangnhap.php");
+                }
             }
-
-        }
             
+        }
+
+        public function CheckAuthOnlyLoginPage(){
+            if (isset($_COOKIE['jwt'])){
+                if ($_COOKIE['jwt'] != null){
+                    echo "<script>history.go(-1);</script>";
+    
+                }
+            }
+            
+        }
+    
+        
 
         
 

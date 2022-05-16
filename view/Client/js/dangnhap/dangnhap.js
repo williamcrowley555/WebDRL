@@ -25,16 +25,16 @@ function Login(inputLogin_MSSV, inputLogin_MatKhau) {
       dataType: "json",
       async: false,
       success: function (result) {
-        console.log(result);
+        //console.log(result);
 
-        deleteAllCookies();
+        //deleteAllCookies();
 
         document.cookie= "jwt = " + result["jwt"];
 
         Swal.fire({
             icon: "success",
             title: "Đăng nhập thành công!",
-            timer: 1500,
+            timer: 1000,
             timerProgressBar: true,
             showConfirmButton: false,
         });
@@ -47,7 +47,7 @@ function Login(inputLogin_MSSV, inputLogin_MatKhau) {
             dataType: "text",
             data: {jwt: result["jwt"]}, 
             success: function(result_DHDN){
-                console.log(result_DHDN);
+                console.log("kết quả: " + result_DHDN);
                 
             }
         });
