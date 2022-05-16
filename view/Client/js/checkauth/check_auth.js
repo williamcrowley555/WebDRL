@@ -10,11 +10,10 @@ function getCookie(cName) {
 }
 
 
-window.setInterval(checkCookie, 1000);
 
 function checkCookie(){
     if (getCookie('jwt')==null){
-        window.location.href = "../home_dangnhap.html";
+        window.location.href = "dangnhap.php";
     }else{
        // console.log(getCookie('jwt'));
     }

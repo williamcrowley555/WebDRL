@@ -1,3 +1,10 @@
+<?php
+	if (http_response_code() == 403){
+		header('login.php');
+	}
+
+?>
+
 <!DOCTYPE html>
 <html lang="vi"> 
 <head>

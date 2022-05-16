@@ -13,6 +13,8 @@ $db = $database->getConnection();
 $read_data = new read_data();
 $data = $read_data->read_token();
 
+$checkQuyen = new checkQuyen();
+
 // kiểm tra đăng nhập thành công và có phải giáo viên không
 if ($data["status"] == 1) {
     if ($checkQuyen->checkQuyen_CTSV($data["user_data"]->aud)) {

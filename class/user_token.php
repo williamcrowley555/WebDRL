@@ -63,6 +63,22 @@
             return false;
         }
 
+        public function checkUserExist($maSo){
+            $sqlQuery = "SELECT * FROM ". $this->db_table ."
+                        WHERE maSo = ? LIMIT 0,1";
+            $stmt = $this->conn->prepare($sqlQuery);
+            $stmt->bindParam(1, $maSo);
+            $stmt->execute();
+
+            $dataRow = $stmt->fetch(PDO::FETCH_ASSOC);
+            
+            if ($dataRow != null){
+                return true;
+            }
+            
+            return false;
+        }
+
         // CREATE
         public function createUserToken(){
             $sqlQuery = "INSERT INTO
@@ -132,13 +148,13 @@
         }
 
         // DELETE
-        function deleteUserToken(){
+        function deleteUserToken($maSo){
             $sqlQuery = "DELETE FROM " . $this->db_table . " WHERE maSo = ?";
             $stmt = $this->conn->prepare($sqlQuery);
         
             $this->maSo=htmlspecialchars(strip_tags($this->maSo));
         
-            $stmt->bindParam(1, $this->maSo);
+            $stmt->bindParam(1, $maSo);
         
             if($stmt->execute()){
                 return true;

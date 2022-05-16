@@ -15,10 +15,11 @@
 
     
 
-    
 
+    
     class read_data{
         
+        //dùng cho check token trong header bên api ở mỗi request
         public static function read_token()
         {
             $database = new Database();
@@ -40,18 +41,17 @@
                     if ($userTokenClass->checkUserTokenExist($jwt)){
 
                         http_response_code(200);
-                        // echo json_encode(array(
-                        //     "status" => "1",
-                        //     "user_data" => $decoded_data 
-                        //     )
-                        // );
+                        
                         return array(
                             "status" => "1",
                             "user_data" => ($decoded_data)
                             );    
                     }else{
-                        
                         http_response_code(403);
+                        return array(
+                            "status" => "0",
+                            "message" =>  "Vui lòng đăng nhập!"
+                        );  
                     }
 
                 } catch (\Throwable $th) {
@@ -69,8 +69,12 @@
             }
         }
 
-        
+
+
     }
+    
+
+
 
      //$database = new Database();
      //$db = $database->getConnection();
@@ -78,6 +82,6 @@
     //if($_SERVER['REQUEST_METHOD']==='POST'){
       //  echo json_encode($read_data->read_token()) ;
     //}
-    
-      
+
+
 ?>

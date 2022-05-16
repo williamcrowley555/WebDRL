@@ -30,17 +30,12 @@ function GetListSinhVien() {
 
         $.ajax({
             url: "http://localhost/WebDRL/api/sinhvien/read.php",
+            async: true,
             type: "GET",
             contentType: "application/json;charset=utf-8",
             dataType: "json",
-            async: false,
             headers: { 'Authorization': jwtCookie },
-            // data: {
-            //     page: page,
-            //     row_per_page: row_per_page
-            // },
             success: function(result) {
-       
                 $('#idPhanTrang').pagination({
                     dataSource: result['sinhvien'],
                     pageSize: 10,
@@ -87,7 +82,7 @@ function GetListSinhVien() {
                     //deleteAllCookies();
 
                     //location.href = 'login.php';
-                  }
+                }
             }
         });
 

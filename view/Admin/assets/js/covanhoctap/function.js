@@ -80,7 +80,7 @@ function GetListCVHT() {
                 403: function(xhr) {
                     //deleteAllCookies();
 
-                    //location.href = 'login.php';
+                    location.href = 'login.php';
                 }
             }
         });
@@ -138,7 +138,7 @@ function ThemCVHT() {
                     type: "POST",
                     contentType: "application/json;charset=utf-8",
                     dataType: "json",
-                    async: false,
+                    async: true,
                     headers: { 'Authorization': jwtCookie },
                     data: JSON.stringify(postData),
                     success: function(result) {

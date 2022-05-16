@@ -32,7 +32,7 @@ function GetListLop() {
             type: "GET",
             contentType: "application/json;charset=utf-8",
             dataType: "json",
-            async: false,
+            async: true,
             headers: { 'Authorization': jwtCookie },
             success: function(result) {
                 
@@ -76,13 +76,6 @@ function GetListLop() {
                     timerProgressBar: true
                 })
     
-            },
-            statusCode: {
-                403: function(xhr) {
-                   // deleteAllCookies();
-
-                    //location.href = 'login.php';
-                }
             }
         });
 

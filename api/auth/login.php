@@ -77,7 +77,7 @@
             $objUserToken->thoiGianHetHan = date("Y-m-d H:i:s", strtotime('+24 hours'));
 
             if ($objUserToken->checkUserTokenExist($objUserToken->maSo)){
-                $objUserToken->deleteUserToken();
+                $objUserToken->deleteUserToken($objUserToken->maSo);
             }
 
             $objUserToken->createUserToken();
@@ -129,7 +129,7 @@
             $objUserToken->thoiGianHetHan = date("Y-m-d H:i:s", strtotime('+24 hours')); 
 
             if ($objUserToken->checkUserTokenExist($objUserToken->maSo)){
-                $objUserToken->deleteUserToken();
+                $objUserToken->deleteUserToken($objUserToken->maSo);
             }
             
             $objUserToken->createUserToken();
@@ -183,7 +183,7 @@
             $objUserToken->thoiGianHetHan = date("Y-m-d H:i:s", strtotime('+24 hours')); 
 
             if ($objUserToken->checkUserTokenExist($objUserToken->maSo)){
-                $objUserToken->deleteUserToken();
+                $objUserToken->deleteUserToken($objUserToken->maSo);
             }
 
             $objUserToken->createUserToken();

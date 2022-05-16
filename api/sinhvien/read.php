@@ -11,12 +11,11 @@ include_once '../auth/check_quyen.php';
 $read_data = new read_data();
 $data = $read_data->read_token();
 
-$quyen = "";
+$checkQuyen = new checkQuyen();
 
 // kiểm tra đăng nhập thành công 
 if ($data["status"] == 1) {
     if ($checkQuyen->checkQuyen_CTSV($data["user_data"]->aud)) {
-
 
 
         $database = new Database();
@@ -27,7 +26,6 @@ if ($data["status"] == 1) {
         $itemCount = $stmt->rowCount();
 
         $totalRecords = $items->getAllSinhVienNoPaging()->rowCount();
-
 
         //echo json_encode($itemCount); //print itemCount
         if ($itemCount > 0) {

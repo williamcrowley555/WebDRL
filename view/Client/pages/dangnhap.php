@@ -1,86 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
+<?php
+    include_once "header.php";
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    include_once __DIR__."/helpers/checkcookie.php";
 
-    <!-- SEO Meta Tags -->
-    <meta name="description" content="Your description">
-    <meta name="author" content="Your name">
+    $checkCookie = new CheckCookie();
 
-    <!-- OG Meta Tags to improve the way the post looks when you share the page on Facebook, Twitter, LinkedIn -->
-    <meta property="og:site_name" content="" />
-    <!-- website name -->
-    <meta property="og:site" content="" />
-    <!-- website link -->
-    <meta property="og:title" content="" />
-    <!-- title shown in the actual shared post -->
-    <meta property="og:description" content="" />
-    <!-- description shown in the actual shared post -->
-    <meta property="og:image" content="" />
-    <!-- image link, make sure it's jpg -->
-    <meta property="og:url" content="" />
-    <!-- where do you want your post to link to -->
-    <meta name="twitter:card" content="summary_large_image">
-    <!-- to have large image post format in Twitter -->
+    if ($checkCookie->CheckAuthLogin()->maSinhVien != null){
+        echo $checkCookie->CheckAuthLogin()->maSinhVien;
 
-    <!-- Webpage Title -->
-    <title>Quản lý điểm rèn luyện | Đăng nhập</title>
-
-    <!-- MDB -->
-    <link rel="stylesheet" href="../css/mdb.min.css" />
-
-    <!-- Styles -->
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
-    <link href="../css/bootstrap.min.css" rel="stylesheet">
-    <link href="../css/fontawesome-all.min.css" rel="stylesheet">
-    <link href="../css/swiper.css" rel="stylesheet">
-    <link href="../css/styles.css" rel="stylesheet">
-
-    <script src="../js/jquery-3.6.0.js"></script>
-    <script src="home_auth.js"></script>
-    
-    <!-- Favicon  -->
-    <link rel="icon" href="../images/SGU-LOGO-400x400.png">
-
-
-</head>
-
-<body data-bs-spy="scroll" data-bs-target="#navbarExample">
-
-    <!-- Preloader -->
-<div class="loader_bg">
-	<div class="loader"></div>
-</div>
-    
-
-    <!-- Navigation -->
-    <nav id="navbarExample" class="navbar navbar-expand-lg fixed-top navbar-light" aria-label="Main navigation" style="background: white;">
-        <div class="container">
-
-            <!-- Image Logo -->
-            <a class="navbar-brand logo-image" href="index.html"><img src="../images/logo.png" alt="alternative"></a>
-
-            <!-- Text Logo - Use this if you don't have a graphic logo -->
-            <!-- <a class="navbar-brand logo-text" href="index.html">Nubis</a> -->
-
-            <button class="navbar-toggler p-0 border-0" type="button" id="navbarSideCollapse" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="navbar-collapse offcanvas-collapse" id="navbarsExampleDefault">
-                <ul class="navbar-nav ms-auto navbar-nav-scroll">
-                    
-                </ul>
-                
-            </div>
-            <!-- end of navbar-collapse -->
-        </div>
-        <!-- end of container -->
-    </nav>
-    <!-- end of navbar -->
-    <!-- end of navigation -->
+    }
+?>
 
 
     <!-- Header -->
@@ -118,7 +47,7 @@
                     </div>
                   
                     <!-- Submit button -->
-                    <button type="button" style="width:fit-content;" class="btn btn-primary btn-block" id="btnLogin" onclick="Login();">Đăng nhập</button>
+                    <button type="button" style="width:fit-content;" class="btn btn-primary btn-block" id="btnLogin" >Đăng nhập</button>
                   </form>
             </div>
             <!-- end of row -->
@@ -160,21 +89,23 @@
     <!-- Swiper for image and text sliders -->
     <script src="../js/scripts.js"></script>
 
-    <script src="function.js"></script>
     <!-- Custom scripts -->
     <!-- MDB -->
     <script type="text/javascript" src="../js/mdb.min.js"></script>
 
-    
+   
+
     <script src="../js/sweetalert2.all.min.js"></script>
 
     <script>
+    $( document ).ready(function() {
         setTimeout(function(){
             $('.loader_bg').fadeToggle();
         }, 1000);
 
+        
         var inputMSSV = document.getElementById("inputLogin_MSSV");
-        var input = document.getElementById("inputLogin_MatKhau");
+        var inputMatKhau = document.getElementById("inputLogin_MatKhau");
 
         // Execute a function when the user presses a key on the keyboard
         inputMSSV.addEventListener("keypress", function(event) {
@@ -187,7 +118,7 @@
         }
         });
 
-        input.addEventListener("keypress", function(event) {
+        inputMatKhau.addEventListener("keypress", function(event) {
         // If the user presses the "Enter" key on the keyboard
         if (event.key === "Enter") {
             // Cancel the default action, if needed
@@ -196,6 +127,21 @@
             document.getElementById("btnLogin").click();
         }
         });
+
+
+        //Login
+        $("#btnLogin").on("click",function(){
+            var inputMSSV_value = $("#inputLogin_MSSV").val();
+            var inputMatKhau_value = $("#inputLogin_MatKhau").val();
+
+            Login(inputMSSV_value, inputMatKhau_value);
+        });
+    })
+
+        
+
+
+
     </script>
 </body>
 

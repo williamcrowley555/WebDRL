@@ -74,10 +74,11 @@
             $objUserToken->thoiGianDangNhap = date("Y-m-d H:i:s");
             $objUserToken->thoiGianHetHan = date("Y-m-d H:i:s", strtotime('+24 hours'));
 
-            if ($objUserToken->checkUserTokenExist($objUserToken->maSo)){
-                $objUserToken->deleteUserToken();
-            }
 
+            if ($objUserToken->checkUserExist($objUserToken->maSo)){
+                $objUserToken->deleteUserToken($objUserToken->maSo);
+            }
+               
             $objUserToken->createUserToken();
 
             $arr = array( 
@@ -85,16 +86,16 @@
                 "hoTenNhanVien" => $obj_CTSV->hoTenNhanVien,
                 "quyen" => $obj_CTSV->quyen
             );
-
+    
             echo json_encode(array(
                 "login_status"=> 1,
                 "jwt"=> $jwt,
                 "message"=>"Login successful",
                 $arr
             )); 
-
+    
             return true;
-
+            
         }
 
         return false;
@@ -151,8 +152,3 @@
         // ));     
         
     }
-
-
-    
-    
-?>
