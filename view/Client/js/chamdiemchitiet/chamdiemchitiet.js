@@ -29,7 +29,7 @@ function getTieuChiDanhGia(){
             $.each(result, function(index) {
 
                 for (var i = 0;i < result[index].length;i++){
-                    console.log(result[index][i].noidung);
+                    //console.log(result[index][i].noidung);
 
                     $('#tbody_noiDungDanhGia').append("<tr>\
                             <td style='font-weight: bold;'>" + result[index][i].noidung + "</td>\
@@ -53,7 +53,7 @@ function getTieuChiDanhGia(){
                                 
                                 for (var k = 0;k < result_tc2[index_tc2].length;k++){
                                     if ((result[index][i].matc1) === (result_tc2[index_tc2][k].matc1)){
-                                        console.log(result_tc2[index_tc2][k].noidung);
+                                        //console.log(result_tc2[index_tc2][k].noidung);
 
                                         if ((result_tc2[index_tc2][k].diemtoida) != 0){
                                             $('#tbody_noiDungDanhGia').append("<tr>\
@@ -87,7 +87,7 @@ function getTieuChiDanhGia(){
                                                 $.each(result_tc3, function(index_tc3){
                                                     for (var p = 0;p < result_tc3[index_tc3].length;p++){
                                                         if ((result_tc2[index_tc2][k].matc2) === (result_tc3[index_tc3][p].matc2)){
-                                                            console.log(result_tc3[index_tc3][p].noidung);
+                                                           // console.log(result_tc3[index_tc3][p].noidung);
 
                                                             $('#tbody_noiDungDanhGia').append("<tr>\
                                                                 <td>\

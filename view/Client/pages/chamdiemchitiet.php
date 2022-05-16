@@ -1,15 +1,7 @@
 <?php
     include_once "header.php";
 
-    include_once __DIR__."/helpers/checkcookie.php";
-
-    $checkCookie = new CheckCookie();
-
-    if ($checkCookie->CheckAuthLogin()->maSinhVien != null){
-        echo $checkCookie->CheckAuthLogin()->maSinhVien;
-
-    }
-
+    
     
 ?>
 
@@ -142,7 +134,6 @@
         <script src="../js/scripts.js"></script>
         
         <!-- Custom scripts -->
-        <script src="../js/checkauth/check_auth.js"></script>
 
         <script>
             getTieuChiDanhGia();
