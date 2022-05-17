@@ -29,7 +29,7 @@ function GetListSinhVien() {
         var jwtCookie = getCookie("jwt");
 
         $.ajax({
-            url: "http://localhost/WebDRL/api/sinhvien/read.php",
+            url: "../../api/sinhvien/read.php",
             async: true,
             type: "GET",
             contentType: "application/json;charset=utf-8",

@@ -50,7 +50,7 @@ function Login() {
         };
         
         $.ajax({
-            url: "http://localhost/WebDRL/api/auth/login_admin.php",
+            url: "../../api/auth/login_admin.php",
             data: JSON.stringify(objLogin),
             type: "POST",
             contentType: "application/json;charset=utf-8",

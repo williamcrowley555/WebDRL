@@ -28,7 +28,7 @@ function GetListLop() {
         var jwtCookie = getCookie("jwt");
 
         $.ajax({
-            url: "http://localhost/WebDRL/api/lop/read.php",
+            url: "../../api/lop/read.php",
             type: "GET",
             contentType: "application/json;charset=utf-8",
             dataType: "json",

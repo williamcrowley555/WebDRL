@@ -29,7 +29,7 @@ function GetListCVHT() {
         var jwtCookie = getCookie("jwt");
 
         $.ajax({
-            url: "http://localhost/WebDRL/api/covanhoctap/read.php",
+            url: "../../api/covanhoctap/read.php",
             type: "GET",
             contentType: "application/json;charset=utf-8",
             dataType: "json",
