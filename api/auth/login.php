@@ -83,9 +83,8 @@
             $objUserToken->createUserToken();
 
             $arr = array( 
-                "maSinhVien" =>  $obj_SinhVien->maSinhVien,
-                "hoTenSinhVien" => $obj_SinhVien->hoTenSinhVien,
-                "quyen" => $obj_SinhVien->quyen
+                "maSo" =>  $obj_SinhVien->maSinhVien,
+                "hoTen" => $obj_SinhVien->hoTenSinhVien
             );
 
             echo json_encode(array(
@@ -135,9 +134,8 @@
             $objUserToken->createUserToken();
 
             $arr = array( 
-                "maCoVanHocTap" =>  $obj_CVHT->maCoVanHocTap,
-                "hoTenCoVan" => $obj_CVHT->hoTenCoVan,
-                "quyen" => $obj_CVHT->quyen
+                "maSo" =>  $obj_CVHT->maCoVanHocTap,
+                "hoTen" => $obj_CVHT->hoTenCoVan
             );
 
 
@@ -189,9 +187,8 @@
             $objUserToken->createUserToken();
 
             $arr = array( 
-                "taiKhoanKhoa" =>  $obj_Khoa->taiKhoanKhoa,
-                "tenKhoa" => $obj_Khoa->tenKhoa,
-                "quyen" => $obj_Khoa->quyen
+                "maSo" =>  $obj_Khoa->maKhoa,
+                "hoTen" => $obj_Khoa->tenKhoa
             );
 
 

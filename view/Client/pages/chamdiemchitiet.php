@@ -1,8 +1,6 @@
 <?php
     include_once "header.php";
 
-    
-    
 ?>
 
 
@@ -26,41 +24,8 @@
                 <div style="padding: 48px;">
                     <h6 style="text-transform: uppercase; text-align: left;">--Thông tin sinh viên--</h6>
                     <div class="form-outline mb-4">
-                        <div class="row justify-content-center" style="padding-bottom: 30px;text-align: start;">
-                            <div class="row">
-                                <div class="col">
-                                    <span style="font-weight: bold;">Họ tên: </span>Nguyễn Văn A
-                                </div>
-                                <div class="col">
-                                    <span style="font-weight: bold;">Mã số sinh viên: </span>3118410262
-                                </div>
-                                <div class="col">
-                                    <span style="font-weight: bold;">Ngày sinh: </span>07/08/2000
-                                </div>
-
-                                <div class="col">
-                                    <span style="font-weight: bold;">Lớp: </span>DCT1189
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col">
-                                    <span style="font-weight: bold;">Khoa: </span>Công nghệ thông tin
-                                </div>
-
-                                <div class="col">
-                                    <span style="font-weight: bold;">Hệ: </span>Chính quy
-                                </div>
-
-                                <div class="col">
-                                    <span style="font-weight: bold;">Học kỳ: </span>1
-                                </div>
-
-                                <div class="col">
-                                    <span style="font-weight: bold;">Năm học: </span>2021-2022
-                                </div>
-
-                            </div>
+                        <div class="row justify-content-center" style="padding-bottom: 30px;text-align: start;" id="part_thongTinSinhVien">
+                            
 
                         </div>
 
@@ -137,6 +102,10 @@
 
         <script>
             getTieuChiDanhGia();
+
+            getThongTinNguoiDung();
+
+
         </script>
 
         <!-- MDB -->

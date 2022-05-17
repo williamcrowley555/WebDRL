@@ -39,13 +39,7 @@
             http_response_code(404);
             echo json_encode("lop not found.");
         }
-        if ($checkQuyen->checkQuyen_CTSV($data["user_data"]->aud)) {
-        } else {
-            http_response_code(403);
-            echo json_encode(
-                array("message" => "Bạn không có quyền thực hiện điều này!")
-            );
-        }
+       
     } else {
         http_response_code(403);
         echo json_encode(

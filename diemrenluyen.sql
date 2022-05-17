@@ -2,10 +2,10 @@
 -- version 5.1.3
 -- https://www.phpmyadmin.net/
 --
--- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th5 16, 2022 lúc 05:46 PM
--- Phiên bản máy phục vụ: 10.4.24-MariaDB
--- Phiên bản PHP: 7.4.29
+-- Host: 127.0.0.1
+-- Generation Time: May 17, 2022 at 05:48 PM
+-- Server version: 10.4.24-MariaDB
+-- PHP Version: 7.4.29
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,13 +18,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Cơ sở dữ liệu: `diemrenluyen`
+-- Database: `diemrenluyen`
 --
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `chamdiemrenluyen`
+-- Table structure for table `chamdiemrenluyen`
 --
 
 CREATE TABLE `chamdiemrenluyen` (
@@ -40,7 +40,7 @@ CREATE TABLE `chamdiemrenluyen` (
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `covanhoctap`
+-- Table structure for table `covanhoctap`
 --
 
 CREATE TABLE `covanhoctap` (
@@ -52,7 +52,7 @@ CREATE TABLE `covanhoctap` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `covanhoctap`
+-- Dumping data for table `covanhoctap`
 --
 
 INSERT INTO `covanhoctap` (`maCoVanHocTap`, `hoTenCoVan`, `soDienThoai`, `matKhauTaiKhoanCoVan`, `quyen`) VALUES
@@ -70,7 +70,7 @@ INSERT INTO `covanhoctap` (`maCoVanHocTap`, `hoTenCoVan`, `soDienThoai`, `matKha
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `hoatdongdanhgia`
+-- Table structure for table `hoatdongdanhgia`
 --
 
 CREATE TABLE `hoatdongdanhgia` (
@@ -89,7 +89,7 @@ CREATE TABLE `hoatdongdanhgia` (
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `hockydanhgia`
+-- Table structure for table `hockydanhgia`
 --
 
 CREATE TABLE `hockydanhgia` (
@@ -104,11 +104,11 @@ CREATE TABLE `hockydanhgia` (
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `khoa`
+-- Table structure for table `khoa`
 --
 
 CREATE TABLE `khoa` (
-  `maKhoa` int(11) NOT NULL,
+  `maKhoa` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `tenKhoa` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `taiKhoanKhoa` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `matKhauKhoa` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
@@ -116,17 +116,16 @@ CREATE TABLE `khoa` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `khoa`
+-- Dumping data for table `khoa`
 --
 
 INSERT INTO `khoa` (`maKhoa`, `tenKhoa`, `taiKhoanKhoa`, `matKhauKhoa`, `quyen`) VALUES
-(6, 'Công nghệ thông tinnn', 'cntt', '8e347e789002556f4b6043bbd2c0862f', 'khoa'),
-(7, 'nghe thuat', 'nghethuat', '0fb7d766f7c97572770762946940ce9a', 'khoa');
+('DCT', 'Công nghệ thông tin', 'cntt', '8e347e789002556f4b6043bbd2c0862f', 'khoa');
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `khoahoc`
+-- Table structure for table `khoahoc`
 --
 
 CREATE TABLE `khoahoc` (
@@ -136,7 +135,7 @@ CREATE TABLE `khoahoc` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `khoahoc`
+-- Dumping data for table `khoahoc`
 --
 
 INSERT INTO `khoahoc` (`maKhoaHoc`, `namBatDau`, `namKetThuc`) VALUES
@@ -145,7 +144,7 @@ INSERT INTO `khoahoc` (`maKhoaHoc`, `namBatDau`, `namKetThuc`) VALUES
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `lop`
+-- Table structure for table `lop`
 --
 
 CREATE TABLE `lop` (
@@ -157,7 +156,7 @@ CREATE TABLE `lop` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `lop`
+-- Dumping data for table `lop`
 --
 
 INSERT INTO `lop` (`maLop`, `tenLop`, `maKhoa`, `maCoVanHocTap`, `maKhoaHoc`) VALUES
@@ -166,7 +165,7 @@ INSERT INTO `lop` (`maLop`, `tenLop`, `maKhoa`, `maCoVanHocTap`, `maKhoaHoc`) VA
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `phieurenluyen`
+-- Table structure for table `phieurenluyen`
 --
 
 CREATE TABLE `phieurenluyen` (
@@ -182,7 +181,7 @@ CREATE TABLE `phieurenluyen` (
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `phongcongtacsinhvien`
+-- Table structure for table `phongcongtacsinhvien`
 --
 
 CREATE TABLE `phongcongtacsinhvien` (
@@ -196,7 +195,7 @@ CREATE TABLE `phongcongtacsinhvien` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Đang đổ dữ liệu cho bảng `phongcongtacsinhvien`
+-- Dumping data for table `phongcongtacsinhvien`
 --
 
 INSERT INTO `phongcongtacsinhvien` (`taiKhoan`, `matKhau`, `hoTenNhanVien`, `email`, `sodienthoai`, `diaChi`, `quyen`) VALUES
@@ -205,7 +204,7 @@ INSERT INTO `phongcongtacsinhvien` (`taiKhoan`, `matKhau`, `hoTenNhanVien`, `ema
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `sinhvien`
+-- Table structure for table `sinhvien`
 --
 
 CREATE TABLE `sinhvien` (
@@ -219,12 +218,12 @@ CREATE TABLE `sinhvien` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `sinhvien`
+-- Dumping data for table `sinhvien`
 --
 
 INSERT INTO `sinhvien` (`maSinhVien`, `hoTenSinhVien`, `ngaySinh`, `he`, `matKhauSinhVien`, `maLop`, `quyen`) VALUES
 ('1234', 'phong', '2022-04-12', 'a', '202cb962ac59075b964b07152d234b70', '123', 'sinhvien'),
-('3118410262', 'Nguyễn Thương Mến', '2006-04-07', 'd', 'e10adc3949ba59abbe56e057f20f883e', 's', 'sinhvien'),
+('3118410262', 'Nguyễn Thương Mến', '2006-04-07', 'Đại học', 'e10adc3949ba59abbe56e057f20f883e', 'DCT1189', 'sinhvien'),
 ('3118410328', 'men', '2022-04-12', 'a', '202cb962ac59075b964b07152d234b70', '123', 'sinhvien'),
 ('3119200001', 'VÕ TUẤN ANH ', '2001-01-13', 'Đại học', '0a76e3b1832d55f9dfdfc9e29ff59d38', 'DGD1191', 'sinhvien'),
 ('3119200002', 'VƯƠNG NGỌC CHÂU ', '2000-09-25', 'Đại học', 'dcfcdfef773c27cee8850b66d6416df9', 'DGD1191', 'sinhvien'),
@@ -298,7 +297,7 @@ INSERT INTO `sinhvien` (`maSinhVien`, `hoTenSinhVien`, `ngaySinh`, `he`, `matKha
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `thamgiahoatdong`
+-- Table structure for table `thamgiahoatdong`
 --
 
 CREATE TABLE `thamgiahoatdong` (
@@ -310,7 +309,7 @@ CREATE TABLE `thamgiahoatdong` (
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `thongbaodanhgia`
+-- Table structure for table `thongbaodanhgia`
 --
 
 CREATE TABLE `thongbaodanhgia` (
@@ -328,7 +327,7 @@ CREATE TABLE `thongbaodanhgia` (
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `tieuchicap1`
+-- Table structure for table `tieuchicap1`
 --
 
 CREATE TABLE `tieuchicap1` (
@@ -338,7 +337,7 @@ CREATE TABLE `tieuchicap1` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `tieuchicap1`
+-- Dumping data for table `tieuchicap1`
 --
 
 INSERT INTO `tieuchicap1` (`matc1`, `noidung`, `diemtoida`) VALUES
@@ -352,7 +351,7 @@ INSERT INTO `tieuchicap1` (`matc1`, `noidung`, `diemtoida`) VALUES
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `tieuchicap2`
+-- Table structure for table `tieuchicap2`
 --
 
 CREATE TABLE `tieuchicap2` (
@@ -363,7 +362,7 @@ CREATE TABLE `tieuchicap2` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `tieuchicap2`
+-- Dumping data for table `tieuchicap2`
 --
 
 INSERT INTO `tieuchicap2` (`matc2`, `noidung`, `diemtoida`, `matc1`) VALUES
@@ -400,7 +399,7 @@ INSERT INTO `tieuchicap2` (`matc2`, `noidung`, `diemtoida`, `matc1`) VALUES
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `tieuchicap3`
+-- Table structure for table `tieuchicap3`
 --
 
 CREATE TABLE `tieuchicap3` (
@@ -411,7 +410,7 @@ CREATE TABLE `tieuchicap3` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `tieuchicap3`
+-- Dumping data for table `tieuchicap3`
 --
 
 INSERT INTO `tieuchicap3` (`matc3`, `noidung`, `diem`, `matc2`) VALUES
@@ -449,7 +448,7 @@ INSERT INTO `tieuchicap3` (`matc3`, `noidung`, `diem`, `matc2`) VALUES
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `user_token`
+-- Table structure for table `user_token`
 --
 
 CREATE TABLE `user_token` (
@@ -462,216 +461,177 @@ CREATE TABLE `user_token` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Đang đổ dữ liệu cho bảng `user_token`
+-- Dumping data for table `user_token`
 --
 
 INSERT INTO `user_token` (`stt`, `maSo`, `token`, `quyen`, `thoiGianDangNhap`, `thoiGianHetHan`) VALUES
-(146, '3118410262', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJpYXQiOjE2NTIzNjM4MjMsIm5iZiI6MTY1MjM2MzgzMywiZXhwIjoxNjUyNDUwMjIzLCJhdWQiOiJzaW5odmllbiIsInNpbmh2aWVuIjp7Im1hU2luaFZpZW4iOiIzMTE4NDEwMjYyIiwiaG9UZW5TaW5oVmllbiI6Ik5ndXlcdTFlYzVuIFRoXHUwMWIwXHUwMWExbmcgTVx1MWViZm4iLCJxdXllbiI6InNpbmh2aWVuIn19.8LYQ1ysFfLkJ9BFid4aJp0bERgw8AGvMqsWdojnp9Lg', 'sinhvien', '2022-05-12 08:57:03', '2022-05-13 08:57:03'),
-(147, '3118410262', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJpYXQiOjE2NTIzNjU3OTIsIm5iZiI6MTY1MjM2NTgwMiwiZXhwIjoxNjUyNDUyMTkyLCJhdWQiOiJzaW5odmllbiIsInNpbmh2aWVuIjp7Im1hU2luaFZpZW4iOiIzMTE4NDEwMjYyIiwiaG9UZW5TaW5oVmllbiI6Ik5ndXlcdTFlYzVuIFRoXHUwMWIwXHUwMWExbmcgTVx1MWViZm4iLCJxdXllbiI6InNpbmh2aWVuIn19.JoT_mXhIWN8wFaLMHNb-Fz4S7MdTFwWefOjHaQy2UvI', 'sinhvien', '2022-05-12 09:29:52', '2022-05-13 09:29:52'),
-(148, '3118410262', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJpYXQiOjE2NTI0MjkyNDcsIm5iZiI6MTY1MjQyOTI1NywiZXhwIjoxNjUyNTE1NjQ3LCJhdWQiOiJzaW5odmllbiIsInNpbmh2aWVuIjp7Im1hU2luaFZpZW4iOiIzMTE4NDEwMjYyIiwiaG9UZW5TaW5oVmllbiI6Ik5ndXlcdTFlYzVuIFRoXHUwMWIwXHUwMWExbmcgTVx1MWViZm4iLCJxdXllbiI6InNpbmh2aWVuIn19.ZnTiWZY29oz3F1b9E7oqwtuapUdhfdcDDVm1gTaJd4Y', 'sinhvien', '2022-05-13 03:07:27', '2022-05-14 03:07:27'),
-(149, '3118410262', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJpYXQiOjE2NTI0Mjk0MTMsIm5iZiI6MTY1MjQyOTQyMywiZXhwIjoxNjUyNTE1ODEzLCJhdWQiOiJzaW5odmllbiIsInNpbmh2aWVuIjp7Im1hU2luaFZpZW4iOiIzMTE4NDEwMjYyIiwiaG9UZW5TaW5oVmllbiI6Ik5ndXlcdTFlYzVuIFRoXHUwMWIwXHUwMWExbmcgTVx1MWViZm4iLCJxdXllbiI6InNpbmh2aWVuIn19.LelmwnjVMuIp0SNQO68Beq56qKT58tJQAi8bZZapwXo', 'sinhvien', '2022-05-13 03:10:13', '2022-05-14 03:10:13'),
-(150, '3118410262', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJpYXQiOjE2NTI0Mjk0NDUsIm5iZiI6MTY1MjQyOTQ1NSwiZXhwIjoxNjUyNTE1ODQ1LCJhdWQiOiJzaW5odmllbiIsInNpbmh2aWVuIjp7Im1hU2luaFZpZW4iOiIzMTE4NDEwMjYyIiwiaG9UZW5TaW5oVmllbiI6Ik5ndXlcdTFlYzVuIFRoXHUwMWIwXHUwMWExbmcgTVx1MWViZm4iLCJxdXllbiI6InNpbmh2aWVuIn19.p1cI9GZEHT9Jjbr0GhNlhVLzu__PN10auXplzr_B94E', 'sinhvien', '2022-05-13 03:10:45', '2022-05-14 03:10:45'),
-(151, '3118410262', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJpYXQiOjE2NTI1ODgyMDcsIm5iZiI6MTY1MjU4ODIxNywiZXhwIjoxNjUyNjc0NjA3LCJhdWQiOiJzaW5odmllbiIsInNpbmh2aWVuIjp7Im1hU2luaFZpZW4iOiIzMTE4NDEwMjYyIiwiaG9UZW5TaW5oVmllbiI6Ik5ndXlcdTFlYzVuIFRoXHUwMWIwXHUwMWExbmcgTVx1MWViZm4iLCJxdXllbiI6InNpbmh2aWVuIn19.1BZ3PsShImH0pJKNznNgYGawnyR3leu9DyAk9xUMT38', 'sinhvien', '2022-05-14 23:16:47', '2022-05-15 23:16:47'),
-(152, '3118410262', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJpYXQiOjE2NTI2MTE5NzAsIm5iZiI6MTY1MjYxMTk4MCwiZXhwIjoxNjUyNjk4MzcwLCJhdWQiOiJzaW5odmllbiIsInNpbmh2aWVuIjp7Im1hU2luaFZpZW4iOiIzMTE4NDEwMjYyIiwiaG9UZW5TaW5oVmllbiI6Ik5ndXlcdTFlYzVuIFRoXHUwMWIwXHUwMWExbmcgTVx1MWViZm4iLCJxdXllbiI6InNpbmh2aWVuIn19.1jHVRZKukbnhFU4Rrez8zg-YWw14jN5uLpxipHz9bcA', 'sinhvien', '2022-05-15 05:52:50', '2022-05-16 05:52:50'),
-(153, '3118410262', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJpYXQiOjE2NTI2MTM0NjMsIm5iZiI6MTY1MjYxMzQ3MywiZXhwIjoxNjUyNjk5ODYzLCJhdWQiOiJzaW5odmllbiIsInNpbmh2aWVuIjp7Im1hU2luaFZpZW4iOiIzMTE4NDEwMjYyIiwiaG9UZW5TaW5oVmllbiI6Ik5ndXlcdTFlYzVuIFRoXHUwMWIwXHUwMWExbmcgTVx1MWViZm4iLCJxdXllbiI6InNpbmh2aWVuIn19.dtX22uJN6-vPPr-Nz2PzsG-PJBrsY74AL5A0q8xDGO0', 'sinhvien', '2022-05-15 06:17:43', '2022-05-16 06:17:43'),
-(154, '3118410262', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJpYXQiOjE2NTI2Mjc3NDksIm5iZiI6MTY1MjYyNzc1OSwiZXhwIjoxNjUyNzE0MTQ5LCJhdWQiOiJzaW5odmllbiIsInNpbmh2aWVuIjp7Im1hU2luaFZpZW4iOiIzMTE4NDEwMjYyIiwiaG9UZW5TaW5oVmllbiI6Ik5ndXlcdTFlYzVuIFRoXHUwMWIwXHUwMWExbmcgTVx1MWViZm4iLCJxdXllbiI6InNpbmh2aWVuIn19.fUpui_-7ycUFqG3oMHErhPwU3dkYwxFVZESg0vt-_w4', 'sinhvien', '2022-05-15 10:15:49', '2022-05-16 10:15:49'),
-(155, '3118410262', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJpYXQiOjE2NTI2Mjc5MDQsIm5iZiI6MTY1MjYyNzkxNCwiZXhwIjoxNjUyNzE0MzA0LCJhdWQiOiJzaW5odmllbiIsInNpbmh2aWVuIjp7Im1hU2luaFZpZW4iOiIzMTE4NDEwMjYyIiwiaG9UZW5TaW5oVmllbiI6Ik5ndXlcdTFlYzVuIFRoXHUwMWIwXHUwMWExbmcgTVx1MWViZm4iLCJxdXllbiI6InNpbmh2aWVuIn19.-zbWX3YZ90T_hy6_qwtaXXlURwRERfW0AEEOG5JFv1s', 'sinhvien', '2022-05-15 10:18:24', '2022-05-16 10:18:24'),
-(156, '3118410262', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJpYXQiOjE2NTI2Mjg1MDksIm5iZiI6MTY1MjYyODUxOSwiZXhwIjoxNjUyNzE0OTA5LCJhdWQiOiJzaW5odmllbiIsInNpbmh2aWVuIjp7Im1hU2luaFZpZW4iOiIzMTE4NDEwMjYyIiwiaG9UZW5TaW5oVmllbiI6Ik5ndXlcdTFlYzVuIFRoXHUwMWIwXHUwMWExbmcgTVx1MWViZm4iLCJxdXllbiI6InNpbmh2aWVuIn19.pu0RygKv7qOTNEaY1uPGUyciMRAdWAc6i05a1jWMaB8', 'sinhvien', '2022-05-15 10:28:29', '2022-05-16 10:28:29'),
-(157, '3118410262', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJpYXQiOjE2NTI2Mjg2MjIsIm5iZiI6MTY1MjYyODYzMiwiZXhwIjoxNjUyNzE1MDIyLCJhdWQiOiJzaW5odmllbiIsInNpbmh2aWVuIjp7Im1hU2luaFZpZW4iOiIzMTE4NDEwMjYyIiwiaG9UZW5TaW5oVmllbiI6Ik5ndXlcdTFlYzVuIFRoXHUwMWIwXHUwMWExbmcgTVx1MWViZm4iLCJxdXllbiI6InNpbmh2aWVuIn19.QwNGN01bmiANq8J-9gbkVl6MUSIwyW-ylQV4Oc2rwZ8', 'sinhvien', '2022-05-15 10:30:22', '2022-05-16 10:30:22'),
-(158, '3119200001', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJpYXQiOjE2NTI2NjkyNzAsIm5iZiI6MTY1MjY2OTI4MCwiZXhwIjoxNjUyNzU1NjcwLCJhdWQiOiJzaW5odmllbiIsInNpbmh2aWVuIjp7Im1hU2luaFZpZW4iOiIzMTE5MjAwMDAxIiwiaG9UZW5TaW5oVmllbiI6IlZcdTAwZDUgVFVcdTFlYTROIEFOSCAiLCJxdXllbiI6InNpbmh2aWVuIn19.rMxt6l3_2zKO2U_mkWDSiXv3Z1zENVWuLiiO8A01Ks0', 'sinhvien', '2022-05-15 21:47:50', '2022-05-16 21:47:50'),
-(160, '3119200001', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJpYXQiOjE2NTI2NzU0MDYsIm5iZiI6MTY1MjY3NTQxNiwiZXhwIjoxNjUyNzYxODA2LCJhdWQiOiJzaW5odmllbiIsInNpbmh2aWVuIjp7Im1hU2luaFZpZW4iOiIzMTE5MjAwMDAxIiwiaG9UZW5TaW5oVmllbiI6IlZcdTAwZDUgVFVcdTFlYTROIEFOSCAiLCJxdXllbiI6InNpbmh2aWVuIn19.PIBCUTnKk_1z41s1fgyV66rb9I9haVjHu22oKcKlMok', 'sinhvien', '2022-05-15 23:30:06', '2022-05-16 23:30:06'),
-(161, '3119200001', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJpYXQiOjE2NTI2NzU4ODUsIm5iZiI6MTY1MjY3NTg5NSwiZXhwIjoxNjUyNzYyMjg1LCJhdWQiOiJzaW5odmllbiIsInNpbmh2aWVuIjp7Im1hU2luaFZpZW4iOiIzMTE5MjAwMDAxIiwiaG9UZW5TaW5oVmllbiI6IlZcdTAwZDUgVFVcdTFlYTROIEFOSCAiLCJxdXllbiI6InNpbmh2aWVuIn19.IhiQ24dE0WPbQP7qqu_JYUU0lSNd1oUBo8IPklel7W8', 'sinhvien', '2022-05-15 23:38:05', '2022-05-16 23:38:05'),
-(162, '3119200001', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJpYXQiOjE2NTI2NzYyNTQsIm5iZiI6MTY1MjY3NjI2NCwiZXhwIjoxNjUyNzYyNjU0LCJhdWQiOiJzaW5odmllbiIsInNpbmh2aWVuIjp7Im1hU2luaFZpZW4iOiIzMTE5MjAwMDAxIiwiaG9UZW5TaW5oVmllbiI6IlZcdTAwZDUgVFVcdTFlYTROIEFOSCAiLCJxdXllbiI6InNpbmh2aWVuIn19.eyhO2Pqp5mzZQDxYDdjnXGGD63s7YeQv0U7M_i1ediA', 'sinhvien', '2022-05-15 23:44:14', '2022-05-16 23:44:14'),
-(163, '3119200001', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJpYXQiOjE2NTI2NzYzMjEsIm5iZiI6MTY1MjY3NjMzMSwiZXhwIjoxNjUyNzYyNzIxLCJhdWQiOiJzaW5odmllbiIsInNpbmh2aWVuIjp7Im1hU2luaFZpZW4iOiIzMTE5MjAwMDAxIiwiaG9UZW5TaW5oVmllbiI6IlZcdTAwZDUgVFVcdTFlYTROIEFOSCAiLCJxdXllbiI6InNpbmh2aWVuIn19.fvSRGeTErI4oBGWFUOZZP-9LVkNDpHQnk5FdTE6E0AQ', 'sinhvien', '2022-05-15 23:45:21', '2022-05-16 23:45:21'),
-(164, '3119200001', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJpYXQiOjE2NTI2NzYzMzQsIm5iZiI6MTY1MjY3NjM0NCwiZXhwIjoxNjUyNzYyNzM0LCJhdWQiOiJzaW5odmllbiIsInNpbmh2aWVuIjp7Im1hU2luaFZpZW4iOiIzMTE5MjAwMDAxIiwiaG9UZW5TaW5oVmllbiI6IlZcdTAwZDUgVFVcdTFlYTROIEFOSCAiLCJxdXllbiI6InNpbmh2aWVuIn19.68FGAfun8KvIwg8zEHzC_hl7iFg2U-wffWglL7GvrBM', 'sinhvien', '2022-05-15 23:45:34', '2022-05-16 23:45:34'),
-(165, '3119200001', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJpYXQiOjE2NTI2NzY1MjUsIm5iZiI6MTY1MjY3NjUzNSwiZXhwIjoxNjUyNzYyOTI1LCJhdWQiOiJzaW5odmllbiIsInNpbmh2aWVuIjp7Im1hU2luaFZpZW4iOiIzMTE5MjAwMDAxIiwiaG9UZW5TaW5oVmllbiI6IlZcdTAwZDUgVFVcdTFlYTROIEFOSCAiLCJxdXllbiI6InNpbmh2aWVuIn19.cnOoo58fdAwhbeWlxo-21XO1nWXckec_oo25N-ETw90', 'sinhvien', '2022-05-15 23:48:45', '2022-05-16 23:48:45'),
-(166, '3119200001', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJpYXQiOjE2NTI2ODE5NDAsIm5iZiI6MTY1MjY4MTk1MCwiZXhwIjoxNjUyNzY4MzQwLCJhdWQiOiJzaW5odmllbiIsInNpbmh2aWVuIjp7Im1hU2luaFZpZW4iOiIzMTE5MjAwMDAxIiwiaG9UZW5TaW5oVmllbiI6IlZcdTAwZDUgVFVcdTFlYTROIEFOSCAiLCJxdXllbiI6InNpbmh2aWVuIn19.mN4YrQZCXHS6LGmGfAax_8g1-x9biMGhfQ7PqX4z6yU', 'sinhvien', '2022-05-16 01:19:00', '2022-05-17 01:19:00'),
-(167, '3119200001', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJpYXQiOjE2NTI2ODE5NTcsIm5iZiI6MTY1MjY4MTk2NywiZXhwIjoxNjUyNzY4MzU3LCJhdWQiOiJzaW5odmllbiIsInNpbmh2aWVuIjp7Im1hU2luaFZpZW4iOiIzMTE5MjAwMDAxIiwiaG9UZW5TaW5oVmllbiI6IlZcdTAwZDUgVFVcdTFlYTROIEFOSCAiLCJxdXllbiI6InNpbmh2aWVuIn19.TtFXbNU9Le6LmebV9P24-gbsfHIX3z9rCLKh2sUOr0I', 'sinhvien', '2022-05-16 01:19:17', '2022-05-17 01:19:17'),
-(168, '3119200001', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJpYXQiOjE2NTI2ODIwODUsIm5iZiI6MTY1MjY4MjA5NSwiZXhwIjoxNjUyNzY4NDg1LCJhdWQiOiJzaW5odmllbiIsInNpbmh2aWVuIjp7Im1hU2luaFZpZW4iOiIzMTE5MjAwMDAxIiwiaG9UZW5TaW5oVmllbiI6IlZcdTAwZDUgVFVcdTFlYTROIEFOSCAiLCJxdXllbiI6InNpbmh2aWVuIn19.EPBZfMnR6mwabf03qsi5O-EPUdwxr1g1lhFjcoBqRDs', 'sinhvien', '2022-05-16 01:21:25', '2022-05-17 01:21:25'),
-(169, '3119200001', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJpYXQiOjE2NTI2OTc0NTEsIm5iZiI6MTY1MjY5NzQ2MSwiZXhwIjoxNjUyNzgzODUxLCJhdWQiOiJzaW5odmllbiIsInNpbmh2aWVuIjp7Im1hU2luaFZpZW4iOiIzMTE5MjAwMDAxIiwiaG9UZW5TaW5oVmllbiI6IlZcdTAwZDUgVFVcdTFlYTROIEFOSCAiLCJxdXllbiI6InNpbmh2aWVuIn19.xhNEGv8CrbB5zJrBy8Sw8cGZCkH1JvlbiotX40VE1T8', 'sinhvien', '2022-05-16 05:37:31', '2022-05-17 05:37:31'),
-(170, '3119200001', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJpYXQiOjE2NTI2OTc2NDcsIm5iZiI6MTY1MjY5NzY1NywiZXhwIjoxNjUyNzg0MDQ3LCJhdWQiOiJzaW5odmllbiIsInNpbmh2aWVuIjp7Im1hU2luaFZpZW4iOiIzMTE5MjAwMDAxIiwiaG9UZW5TaW5oVmllbiI6IlZcdTAwZDUgVFVcdTFlYTROIEFOSCAiLCJxdXllbiI6InNpbmh2aWVuIn19.Dpkfz9A7br01s4g1BrtuoOR5YUJUbmTIxqIlCckcQ4U', 'sinhvien', '2022-05-16 05:40:47', '2022-05-17 05:40:47'),
-(171, '3119200001', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJpYXQiOjE2NTI2OTc3ODYsIm5iZiI6MTY1MjY5Nzc5NiwiZXhwIjoxNjUyNzg0MTg2LCJhdWQiOiJzaW5odmllbiIsInNpbmh2aWVuIjp7Im1hU2luaFZpZW4iOiIzMTE5MjAwMDAxIiwiaG9UZW5TaW5oVmllbiI6IlZcdTAwZDUgVFVcdTFlYTROIEFOSCAiLCJxdXllbiI6InNpbmh2aWVuIn19.Ro9b_s3S75MhGmbDrmS3qQkFO58tpLLOWD1fcGG4JQ4', 'sinhvien', '2022-05-16 05:43:06', '2022-05-17 05:43:06'),
-(172, '3119200001', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJpYXQiOjE2NTI2OTc4MTMsIm5iZiI6MTY1MjY5NzgyMywiZXhwIjoxNjUyNzg0MjEzLCJhdWQiOiJzaW5odmllbiIsInNpbmh2aWVuIjp7Im1hU2luaFZpZW4iOiIzMTE5MjAwMDAxIiwiaG9UZW5TaW5oVmllbiI6IlZcdTAwZDUgVFVcdTFlYTROIEFOSCAiLCJxdXllbiI6InNpbmh2aWVuIn19.YSZ2cr7J2nSm95X5MknWtXMn6k29bAsSuXsc7rTH8iQ', 'sinhvien', '2022-05-16 05:43:33', '2022-05-17 05:43:33'),
-(173, '3119200001', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJpYXQiOjE2NTI2OTc4ODYsIm5iZiI6MTY1MjY5Nzg5NiwiZXhwIjoxNjUyNzg0Mjg2LCJhdWQiOiJzaW5odmllbiIsInNpbmh2aWVuIjp7Im1hU2luaFZpZW4iOiIzMTE5MjAwMDAxIiwiaG9UZW5TaW5oVmllbiI6IlZcdTAwZDUgVFVcdTFlYTROIEFOSCAiLCJxdXllbiI6InNpbmh2aWVuIn19.si0ZxcNYKk0l0SyGY_O10vWMrmOGsBG95sR3iz9hv7s', 'sinhvien', '2022-05-16 05:44:46', '2022-05-17 05:44:46'),
-(174, '3119200001', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJpYXQiOjE2NTI3MDcyMDEsIm5iZiI6MTY1MjcwNzIxMSwiZXhwIjoxNjUyNzkzNjAxLCJhdWQiOiJzaW5odmllbiIsInNpbmh2aWVuIjp7Im1hU2luaFZpZW4iOiIzMTE5MjAwMDAxIiwiaG9UZW5TaW5oVmllbiI6IlZcdTAwZDUgVFVcdTFlYTROIEFOSCAiLCJxdXllbiI6InNpbmh2aWVuIn19.MDIqukFlfGD4nQNkf3CDKxeNQ3ayyOZiZui74jSZbNs', 'sinhvien', '2022-05-16 08:20:01', '2022-05-17 08:20:01'),
-(177, '3119200001', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJpYXQiOjE2NTI3MDc0MDAsIm5iZiI6MTY1MjcwNzQxMCwiZXhwIjoxNjUyNzkzODAwLCJhdWQiOiJzaW5odmllbiIsInNpbmh2aWVuIjp7Im1hU2luaFZpZW4iOiIzMTE5MjAwMDAxIiwiaG9UZW5TaW5oVmllbiI6IlZcdTAwZDUgVFVcdTFlYTROIEFOSCAiLCJxdXllbiI6InNpbmh2aWVuIn19.7cSLaWVv_hOEr_-PJtMvAROsn6WzatvKn3TU3upCOBk', 'sinhvien', '2022-05-16 08:23:20', '2022-05-17 08:23:20'),
-(178, '3119200001', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJpYXQiOjE2NTI3MTI5ODUsIm5iZiI6MTY1MjcxMjk5NSwiZXhwIjoxNjUyNzk5Mzg1LCJhdWQiOiJzaW5odmllbiIsInNpbmh2aWVuIjp7Im1hU2luaFZpZW4iOiIzMTE5MjAwMDAxIiwiaG9UZW5TaW5oVmllbiI6IlZcdTAwZDUgVFVcdTFlYTROIEFOSCAiLCJxdXllbiI6InNpbmh2aWVuIn19.bMHl-uOA7xl7z0G3amTdL8qzu0oQ05Z6nrsajvBKSSA', 'sinhvien', '2022-05-16 09:56:25', '2022-05-17 09:56:25'),
-(179, '3119200001', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJpYXQiOjE2NTI3MTMwNjQsIm5iZiI6MTY1MjcxMzA3NCwiZXhwIjoxNjUyNzk5NDY0LCJhdWQiOiJzaW5odmllbiIsInNpbmh2aWVuIjp7Im1hU2luaFZpZW4iOiIzMTE5MjAwMDAxIiwiaG9UZW5TaW5oVmllbiI6IlZcdTAwZDUgVFVcdTFlYTROIEFOSCAiLCJxdXllbiI6InNpbmh2aWVuIn19.2uK6yJWfI1uCIbnpV9Yl0J7HUuePCewfzo98JvWjR8Y', 'sinhvien', '2022-05-16 09:57:44', '2022-05-17 09:57:44'),
-(180, '3119200001', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJpYXQiOjE2NTI3MTMyOTksIm5iZiI6MTY1MjcxMzMwOSwiZXhwIjoxNjUyNzk5Njk5LCJhdWQiOiJzaW5odmllbiIsInNpbmh2aWVuIjp7Im1hU2luaFZpZW4iOiIzMTE5MjAwMDAxIiwiaG9UZW5TaW5oVmllbiI6IlZcdTAwZDUgVFVcdTFlYTROIEFOSCAiLCJxdXllbiI6InNpbmh2aWVuIn19.f7CGWfeekM_MX7i6cQYOGPpaMDbRucF5psreP30hqaE', 'sinhvien', '2022-05-16 10:01:39', '2022-05-17 10:01:39'),
-(181, '3119200001', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJpYXQiOjE2NTI3MTMzMDUsIm5iZiI6MTY1MjcxMzMxNSwiZXhwIjoxNjUyNzk5NzA1LCJhdWQiOiJzaW5odmllbiIsInNpbmh2aWVuIjp7Im1hU2luaFZpZW4iOiIzMTE5MjAwMDAxIiwiaG9UZW5TaW5oVmllbiI6IlZcdTAwZDUgVFVcdTFlYTROIEFOSCAiLCJxdXllbiI6InNpbmh2aWVuIn19._T7h5XsUNUwOljmxm5fxmE_ue0r97Rb7ILJE6zHgKd0', 'sinhvien', '2022-05-16 10:01:45', '2022-05-17 10:01:45'),
-(183, 'ctsv1', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJpYXQiOjE2NTI3MTU0OTcsIm5iZiI6MTY1MjcxNTUwNywiZXhwIjoxNjUyODAxODk3LCJhdWQiOiJwaG9uZ2Nvbmd0YWNzaW5odmllbiIsInBob25nY29uZ3RhY3Npbmh2aWVuIjp7InRhaUtob2FuIjoiY3RzdjEiLCJob1Rlbk5oYW5WaWVuIjoiTmhcdTAwZTJuIHZpXHUwMGVhbiBDVFNWIDEiLCJxdXllbiI6ImN0c3YifX0.yvrQVahKhEVI9JHydsKjWKnhnubyILxzAq_u8wwBnhc', 'ctsv', '2022-05-16 10:38:17', '2022-05-17 10:38:17'),
-(184, '3119200001', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJpYXQiOjE2NTI3MTU3NjUsIm5iZiI6MTY1MjcxNTc3NSwiZXhwIjoxNjUyODAyMTY1LCJhdWQiOiJzaW5odmllbiIsInNpbmh2aWVuIjp7Im1hU2luaFZpZW4iOiIzMTE5MjAwMDAxIiwiaG9UZW5TaW5oVmllbiI6IlZcdTAwZDUgVFVcdTFlYTROIEFOSCAiLCJxdXllbiI6InNpbmh2aWVuIn19.WB4_jNBRWTyqY4dVfrkQNV-gLk1voS3BKbWukU-O5i0', 'sinhvien', '2022-05-16 10:42:45', '2022-05-17 10:42:45'),
-(185, '3119200001', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJpYXQiOjE2NTI3MTU5MDUsIm5iZiI6MTY1MjcxNTkxNSwiZXhwIjoxNjUyODAyMzA1LCJhdWQiOiJzaW5odmllbiIsInNpbmh2aWVuIjp7Im1hU2luaFZpZW4iOiIzMTE5MjAwMDAxIiwiaG9UZW5TaW5oVmllbiI6IlZcdTAwZDUgVFVcdTFlYTROIEFOSCAiLCJxdXllbiI6InNpbmh2aWVuIn19.I-UKTBxhlwo983Ti5iCF8oy7SNthdQSqA8hNr9wQgV4', 'sinhvien', '2022-05-16 10:45:05', '2022-05-17 10:45:05');
+(193, 'ctsv1', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJpYXQiOjE2NTI3OTc3OTksIm5iZiI6MTY1Mjc5NzgwOSwiZXhwIjoxNjUyODg0MTk5LCJhdWQiOiJwaG9uZ2Nvbmd0YWNzaW5odmllbiIsInBob25nY29uZ3RhY3Npbmh2aWVuIjp7InRhaUtob2FuIjoiY3RzdjEiLCJob1Rlbk5oYW5WaWVuIjoiTmhcdTAwZTJuIHZpXHUwMGVhbiBDVFNWIDEiLCJxdXllbiI6ImN0c3YifX0.9z9bjrtaxzbvCwPDhjFb6FAal9wEcNAwBH5tUWBKqhk', 'ctsv', '2022-05-17 09:29:59', '2022-05-18 09:29:59'),
+(203, '3119200001', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJpYXQiOjE2NTI3OTk5NDIsIm5iZiI6MTY1Mjc5OTk1MiwiZXhwIjoxNjUyODg2MzQyLCJhdWQiOiJzaW5odmllbiIsInNpbmh2aWVuIjp7Im1hU2luaFZpZW4iOiIzMTE5MjAwMDAxIiwiaG9UZW5TaW5oVmllbiI6IlZcdTAwZDUgVFVcdTFlYTROIEFOSCAiLCJxdXllbiI6InNpbmh2aWVuIn19.v7ync6oStbVDR_X00WgRzVCRZ-yu9hXwkTmOWN5UXmw', 'sinhvien', '2022-05-17 10:05:42', '2022-05-18 10:05:42'),
+(204, '3118410262', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJpYXQiOjE2NTI4MDIxNTMsIm5iZiI6MTY1MjgwMjE2MywiZXhwIjoxNjUyODg4NTUzLCJhdWQiOiJzaW5odmllbiIsInNpbmh2aWVuIjp7Im1hU2luaFZpZW4iOiIzMTE4NDEwMjYyIiwiaG9UZW5TaW5oVmllbiI6Ik5ndXlcdTFlYzVuIFRoXHUwMWIwXHUwMWExbmcgTVx1MWViZm4iLCJxdXllbiI6InNpbmh2aWVuIn19.k-jfeu9rhLTproBBQ6MAOE9J-cb94-QFG__FQD_Xukk', 'sinhvien', '2022-05-17 10:42:33', '2022-05-18 10:42:33');
 
 --
--- Chỉ mục cho các bảng đã đổ
+-- Indexes for dumped tables
 --
 
 --
--- Chỉ mục cho bảng `chamdiemrenluyen`
+-- Indexes for table `chamdiemrenluyen`
 --
 ALTER TABLE `chamdiemrenluyen`
   ADD PRIMARY KEY (`maChamDiemRenLuyen`);
 
 --
--- Chỉ mục cho bảng `covanhoctap`
+-- Indexes for table `covanhoctap`
 --
 ALTER TABLE `covanhoctap`
   ADD PRIMARY KEY (`maCoVanHocTap`);
 
 --
--- Chỉ mục cho bảng `hoatdongdanhgia`
+-- Indexes for table `hoatdongdanhgia`
 --
 ALTER TABLE `hoatdongdanhgia`
   ADD PRIMARY KEY (`maHoatDong`);
 
 --
--- Chỉ mục cho bảng `hockydanhgia`
+-- Indexes for table `hockydanhgia`
 --
 ALTER TABLE `hockydanhgia`
   ADD PRIMARY KEY (`maHocKyDanhGia`);
 
 --
--- Chỉ mục cho bảng `khoa`
+-- Indexes for table `khoa`
 --
 ALTER TABLE `khoa`
   ADD PRIMARY KEY (`maKhoa`);
 
 --
--- Chỉ mục cho bảng `khoahoc`
+-- Indexes for table `khoahoc`
 --
 ALTER TABLE `khoahoc`
   ADD PRIMARY KEY (`maKhoaHoc`);
 
 --
--- Chỉ mục cho bảng `lop`
+-- Indexes for table `lop`
 --
 ALTER TABLE `lop`
   ADD PRIMARY KEY (`maLop`);
 
 --
--- Chỉ mục cho bảng `phieurenluyen`
+-- Indexes for table `phieurenluyen`
 --
 ALTER TABLE `phieurenluyen`
   ADD PRIMARY KEY (`maPhieuRenLuyen`);
 
 --
--- Chỉ mục cho bảng `phongcongtacsinhvien`
+-- Indexes for table `phongcongtacsinhvien`
 --
 ALTER TABLE `phongcongtacsinhvien`
   ADD PRIMARY KEY (`taiKhoan`);
 
 --
--- Chỉ mục cho bảng `sinhvien`
+-- Indexes for table `sinhvien`
 --
 ALTER TABLE `sinhvien`
   ADD PRIMARY KEY (`maSinhVien`);
 
 --
--- Chỉ mục cho bảng `thamgiahoatdong`
+-- Indexes for table `thamgiahoatdong`
 --
 ALTER TABLE `thamgiahoatdong`
   ADD PRIMARY KEY (`maThamGiaHoatDong`);
 
 --
--- Chỉ mục cho bảng `thongbaodanhgia`
+-- Indexes for table `thongbaodanhgia`
 --
 ALTER TABLE `thongbaodanhgia`
   ADD PRIMARY KEY (`maThongBao`);
 
 --
--- Chỉ mục cho bảng `tieuchicap1`
+-- Indexes for table `tieuchicap1`
 --
 ALTER TABLE `tieuchicap1`
   ADD PRIMARY KEY (`matc1`);
 
 --
--- Chỉ mục cho bảng `tieuchicap2`
+-- Indexes for table `tieuchicap2`
 --
 ALTER TABLE `tieuchicap2`
   ADD PRIMARY KEY (`matc2`);
 
 --
--- Chỉ mục cho bảng `tieuchicap3`
+-- Indexes for table `tieuchicap3`
 --
 ALTER TABLE `tieuchicap3`
   ADD PRIMARY KEY (`matc3`);
 
 --
--- Chỉ mục cho bảng `user_token`
+-- Indexes for table `user_token`
 --
 ALTER TABLE `user_token`
   ADD PRIMARY KEY (`stt`);
 
 --
--- AUTO_INCREMENT cho các bảng đã đổ
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT cho bảng `chamdiemrenluyen`
+-- AUTO_INCREMENT for table `chamdiemrenluyen`
 --
 ALTER TABLE `chamdiemrenluyen`
   MODIFY `maChamDiemRenLuyen` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT cho bảng `hoatdongdanhgia`
+-- AUTO_INCREMENT for table `hoatdongdanhgia`
 --
 ALTER TABLE `hoatdongdanhgia`
   MODIFY `maHoatDong` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT cho bảng `hockydanhgia`
+-- AUTO_INCREMENT for table `hockydanhgia`
 --
 ALTER TABLE `hockydanhgia`
   MODIFY `maHocKyDanhGia` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT cho bảng `khoa`
---
-ALTER TABLE `khoa`
-  MODIFY `maKhoa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
-
---
--- AUTO_INCREMENT cho bảng `phieurenluyen`
+-- AUTO_INCREMENT for table `phieurenluyen`
 --
 ALTER TABLE `phieurenluyen`
   MODIFY `maPhieuRenLuyen` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT cho bảng `thamgiahoatdong`
+-- AUTO_INCREMENT for table `thamgiahoatdong`
 --
 ALTER TABLE `thamgiahoatdong`
   MODIFY `maThamGiaHoatDong` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT cho bảng `thongbaodanhgia`
+-- AUTO_INCREMENT for table `thongbaodanhgia`
 --
 ALTER TABLE `thongbaodanhgia`
   MODIFY `maThongBao` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT cho bảng `tieuchicap1`
+-- AUTO_INCREMENT for table `tieuchicap1`
 --
 ALTER TABLE `tieuchicap1`
   MODIFY `matc1` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
--- AUTO_INCREMENT cho bảng `tieuchicap2`
+-- AUTO_INCREMENT for table `tieuchicap2`
 --
 ALTER TABLE `tieuchicap2`
   MODIFY `matc2` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
--- AUTO_INCREMENT cho bảng `tieuchicap3`
+-- AUTO_INCREMENT for table `tieuchicap3`
 --
 ALTER TABLE `tieuchicap3`
   MODIFY `matc3` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
--- AUTO_INCREMENT cho bảng `user_token`
+-- AUTO_INCREMENT for table `user_token`
 --
 ALTER TABLE `user_token`
-  MODIFY `stt` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=186;
+  MODIFY `stt` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=205;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

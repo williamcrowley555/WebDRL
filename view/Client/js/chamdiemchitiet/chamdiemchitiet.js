@@ -11,12 +11,13 @@ function getCookie(cName) {
 
 var jwtCookie = getCookie('jwt');
 
+
 //Show tiêu chí đánh giá
 function getTieuChiDanhGia(){
 
     //Ajax tieuchicap1
     $.ajax({
-        url: "http://localhost/WebDRL/api/tieuchicap1/read.php",
+        url: "../../../api/tieuchicap1/read.php",
         async: false,
         type: "GET",
         contentType: "application/json;charset=utf-8",
@@ -40,7 +41,7 @@ function getTieuChiDanhGia(){
 
                     //Ajax tieuchicap2
                     $.ajax({
-                        url: "http://localhost/WebDRL/api/tieuchicap2/read.php",
+                        url: "../../../api/tieuchicap2/read.php",
                         async: false,
                         type: "GET",
                         contentType: "application/json;charset=utf-8",
@@ -75,7 +76,7 @@ function getTieuChiDanhGia(){
                                         
                                         //Ajax tieuchicap3
                                         $.ajax({
-                                            url: "http://localhost/WebDRL/api/tieuchicap3/read.php",
+                                            url: "../../../api/tieuchicap3/read.php",
                                             async: false,
                                             type: "GET",
                                             contentType: "application/json;charset=utf-8",
@@ -149,4 +150,124 @@ function getTieuChiDanhGia(){
 
         }
     });
+}
+
+
+
+function getThongTinNguoiDung() {
+    if (getCookie('maSo') != null){
+        var maSo = getCookie('maSo');
+        
+        $.ajax({
+            url: "../../../api/sinhvien/single_read.php?maSinhVien=" + maSo,
+            async: false,
+            type: "GET",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            headers: {
+                'Authorization': jwtCookie
+            },
+            success: function(result) {
+                var hoTenSinhVien = result['hoTenSinhVien'];
+                var ngaySinh = result['ngaySinh'];
+                var maLop = result['maLop'];
+                var he = result['he'];
+               
+                $.ajax({
+                    url: "../../../api/lop/single_read.php?maLop=" + maLop,
+                    async: false,
+                    type: "GET",
+                    contentType: "application/json;charset=utf-8",
+                    dataType: "json",
+                    headers: {
+                        'Authorization': jwtCookie
+                    },
+                    success: function(result_Lop) {
+                        var maKhoa = result_Lop['maKhoa'];
+                       
+                        $.ajax({
+                            url: "../../../api/khoa/single_read.php?maKhoa=" + maKhoa,
+                            async: false,
+                            type: "GET",
+                            contentType: "application/json;charset=utf-8",
+                            dataType: "json",
+                            headers: {
+                                'Authorization': jwtCookie
+                            },
+                            success: function(result_Khoa) {
+                                var tenKhoa = result_Khoa['tenKhoa'];
+                               
+                                $("#part_thongTinSinhVien").append("\
+                                    <div class='row'>\
+                                        <div class='col'>\
+                                            <span style='font-weight: bold;'>Họ tên: </span>"+ hoTenSinhVien +"\
+                                        </div>\
+                                        <div class='col'>\
+                                            <span style='font-weight: bold;'>Mã số sinh viên: </span>"+ maSo +"\
+                                        </div>\
+                                        <div class='col'>\
+                                            <span style='font-weight: bold;'>Ngày sinh: </span>"+ ngaySinh +"\
+                                        </div>\
+                                        <div class='col'>\
+                                            <span style='font-weight: bold;'>Lớp: </span>"+ maLop +"\
+                                        </div>\
+                                    </div>\
+                                    <div class='row'>\
+                                        <div class='col'>\
+                                            <span style='font-weight: bold;'>Khoa: </span>"+ tenKhoa +"\
+                                        </div>\
+                                        <div class='col'>\
+                                            <span style='font-weight: bold;'>Hệ: </span>"+ he +"\
+                                        </div>\
+                                        <div class='col'>\
+                                            <span style='font-weight: bold;'>Học kỳ: </span>1\
+                                        </div>\
+                                        <div class='col'>\
+                                            <span style='font-weight: bold;'>Năm học: </span>2021-2022\
+                                        </div>\
+                                    </div>\
+                                ");
+                
+                            },
+                            error: function(errorMessage) {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Lỗi',
+                                    text: errorMessage.responseText,
+                                    timer: 5000,
+                                    timerProgressBar: true
+                                })
+                
+                            }
+                        });
+        
+                    },
+                    error: function(errorMessage) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Lỗi',
+                            text: errorMessage.responseText,
+                            timer: 5000,
+                            timerProgressBar: true
+                        })
+        
+                    }
+                });
+
+            },
+            error: function(errorMessage) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Lỗi',
+                    text: errorMessage.responseText,
+                    timer: 5000,
+                    timerProgressBar: true
+                })
+
+            }
+        });
+
+
+    }
+
 }

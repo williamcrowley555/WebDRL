@@ -12,10 +12,12 @@
 
     $read_data = new read_data();
     $data=$read_data->read_token();
+
+    $checkQuyen = new checkQuyen();
     
     // kiểm tra đăng nhập thành công 
     if($data["status"]==1){
-        if ($checkQuyen->checkQuyen_CTSV($data["user_data"]->aud)) {
+        //if ($checkQuyen->checkQuyen_CTSV($data["user_data"]->aud)) {
        
             $database = new Database();
             $db = $database->getConnection();
@@ -30,23 +32,21 @@
                     "hoTenSinhVien" => $item->hoTenSinhVien,
                     "ngaySinh" => $item->ngaySinh,
                     "he" => $item->he,
-                    "matKhauSinhVien" => $item->matKhauSinhVien,
+                   // "matKhauSinhVien" => $item->matKhauSinhVien,
                     "maLop" => $item->maLop
                 );
             
                 http_response_code(200);
                 echo json_encode($sinhvien_arr);
-            }
-            
-            else{
+            }else{
                 http_response_code(404);
                 echo json_encode("sinhvien not found.");
-            } } else {
-            http_response_code(403);
-            echo json_encode(
-                array("message" => "Bạn không có quyền thực hiện điều này!")
-            );
-        }
+            }
+        // } else {
+        //     http_response_code(403);
+        //     echo json_encode(
+        //         array("message" => "Bạn không có quyền thực hiện điều này!")
+        //     );
     } else {
         http_response_code(403);
         echo json_encode(

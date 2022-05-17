@@ -15,7 +15,7 @@
     
     // kiểm tra đăng nhập thành công 
     if($data["status"]==1){
-        if ($checkQuyen->checkQuyen_CTSV($data["user_data"]->aud)) {
+       // if ($checkQuyen->checkQuyen_CTSV($data["user_data"]->aud)) {
             $database = new Database();
             $db = $database->getConnection();
             $item = new Khoa($db);
@@ -27,8 +27,8 @@
                 $khoa_arr = array(
                     "maKhoa" =>  $item->maKhoa,
                     "tenKhoa" => $item->tenKhoa,
-                    "taiKhoanKhoa" => $item->taiKhoanKhoa,
-                    "matKhauKhoa" => $item->matKhauKhoa
+                    "taiKhoanKhoa" => $item->taiKhoanKhoa
+                    //"matKhauKhoa" => $item->matKhauKhoa
                 );
             
                 http_response_code(200);
@@ -38,12 +38,12 @@
             else{
                 http_response_code(404);
                 echo json_encode("Khoa not found.");
-            }} else {
-            http_response_code(403);
-            echo json_encode(
-                array("message" => "Bạn không có quyền thực hiện điều này!")
-            );
-        }
+            }
+        // } else {
+        //     http_response_code(403);
+        //     echo json_encode(
+        //         array("message" => "Bạn không có quyền thực hiện điều này!")
+        // );
     } else {
         http_response_code(403);
         echo json_encode(

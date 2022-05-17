@@ -13,23 +13,25 @@ function Login(inputLogin_MSSV, inputLogin_MatKhau) {
     });
   } else {
     var objLogin = {
-      taiKhoan: _inputLogin_MSSV,
+      taiKhoan: _inputLogin_MSSV, 
       matKhau: _inputLogin_MatKhau,
     };
 
     $.ajax({
-      url: "http://localhost/WebDRL/api/auth/login.php",
+      url: "../../../api/auth/login.php",
       data: JSON.stringify(objLogin),
       type: "POST",
       contentType: "application/json;charset=utf-8",
       dataType: "json",
       async: false,
       success: function (result) {
-        //console.log(result);
+        console.log(result);
 
         //deleteAllCookies();
 
         document.cookie= "jwt = " + result["jwt"];
+        document.cookie = "maSo = " + result[0]["maSo"];
+        document.cookie = "hoTen = " + result[0]["hoTen"];
 
         Swal.fire({
             icon: "success",
