@@ -1,7 +1,41 @@
 <?php
+    include_once "checkcookie.php";
 
-    echo $_POST['jwt'];
-    return $_POST['jwt'];
+    if (isset($_POST['jwt'])){
+        $jwt = $_POST['jwt'];
+
+        $dataToken = CheckCookie::read_data_token($jwt);
+
+        $quyen = $dataToken['user_data']->aud;
+
+        switch ($quyen) {
+            case 'sinhvien':{
+                header("Location: ../chamdiem.php");
+                break;
+            }
+            
+            case 'cvht':{
+                header("Location: ../cvht.php");
+                break;
+            }
+
+            case 'khoa':{
+                header("Location: ../khoa.php");
+                break;
+            }
+            
+            
+            default:{
+                header("Location: ../dangnhap.php");
+                break;
+            }
+               
+        }
+    
+   
+
+        
+    }
 
 
 

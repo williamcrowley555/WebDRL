@@ -40,27 +40,11 @@ function Login(inputLogin_MSSV, inputLogin_MatKhau) {
         });
         
         
-        //gui token sang file dieuhuongdangnhap.php (backend) de xu ly
-        $.ajax({
-            url: "helpers/dieuhuongdangnhap.php", 
-            method: "POST",
-            dataType: "text",
-            data: {jwt: result["jwt"]}, 
-            success: function(result_DHDN){
-                console.log("kết quả: " + result_DHDN);
-                
-            }
-        });
-
-
-       
-
-
-
-
-        // setTimeout(function () {
-        //   window.location.href = "helpers/dieuhuongdangnhap.php";
-        // }, 1500);
+        
+         setTimeout(function () {
+            $("#formDieuHuongDangNhap").append("<input type='text' id='jwt' name='jwt' value='" + result["jwt"] + "'>");
+            $("form#formDieuHuongDangNhap").submit();
+         }, 1000);
 
       },
       error: function (errorMessage) {

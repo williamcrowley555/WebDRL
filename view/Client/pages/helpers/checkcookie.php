@@ -23,30 +23,31 @@
 
                 $decoded_data = JWT::decode($jwt, new Key($secret_key,"HS256"));
 
-                //check token có tồn tại trong database hay không (tránh token rác)
+                //check token có tồn tại trong database hay không (tránh client gửi token rác)
                 if ($userTokenClass->checkUserTokenExist($jwt)){
 
                     http_response_code(200);
-                        
+                    
                     return array(
                         "status" => "1",
                         "user_data" => ($decoded_data)
                         );    
-                    }else{
-                        http_response_code(403);
-                        return array(
-                            "status" => "0",
-                            "message" =>  "Vui lòng đăng nhập!"
-                        );  
-                    }
-
-                } catch (\Throwable $th) {
-                    http_response_code(500);
+                }else{
+                    http_response_code(403);
                     return array(
                         "status" => "0",
-                        "message" =>  $th->getMessage()
+                        "message" =>  "Vui lòng đăng nhập!"
+                    );  
+                }
+
+            } catch (\Throwable $th) {
+                http_response_code(500);
+                return array(
+                    "status" => "0",
+                    "message" =>  $th->getMessage()
                 );           
             }
+
 
             
         }

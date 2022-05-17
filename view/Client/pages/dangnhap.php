@@ -56,6 +56,9 @@
         <!-- end of container -->
   
 
+        <form id="formDieuHuongDangNhap" action="helpers/dieuhuongdangnhap.php" method="POST" style="display: none">
+           
+        </form>
 
     <!-- Footer -->
     <div class="footer">
