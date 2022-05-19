@@ -11,9 +11,11 @@ include_once '../auth/check_quyen.php';
 
 $read_data = new read_data();
 $data = $read_data->read_token();
+$checkQuyen = new checkQuyen();
+
 
 // kiểm tra đăng nhập thành công và có phải giáo viên không
-if ($data["status"] == 1 && $data['user_data']->aud == "cvht") {
+if ($data["status"] == 1 ) {
     if ($checkQuyen->checkQuyen_CTSV($data["user_data"]->aud)) {
         $database = new Database();
         $db = $database->getConnection();

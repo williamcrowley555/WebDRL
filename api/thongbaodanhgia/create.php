@@ -12,7 +12,6 @@
     
     $read_data = new read_data();
     $data=$read_data->read_token();
-    
     $checkQuyen = new checkQuyen();
 
     // kiểm tra đăng nhập thành công 
