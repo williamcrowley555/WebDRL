@@ -38,8 +38,8 @@
 					break;
 				}
 
-				case 'phieuchamdiem.php':{
-					echo "Phiếu chấm điểm | Web điểm rèn luyện";
+				case 'phieurenluyen.php':{
+					echo "Phiếu rèn luyện | Web điểm rèn luyện";
 					break;
 				}
 
@@ -218,17 +218,17 @@
 
 						<li class="nav-item">
 					        <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-					        <a class="nav-link <?php if (end($page_word) == 'phieuchamdiem.php') echo 'active'; ?>" href="phieuchamdiem.php">
+					        <a class="nav-link <?php if (end($page_word) == 'phieurenluyen.php') echo 'active'; ?>" href="phieurenluyen.php">
 						        <span class="nav-icon">
 									<img src="assets/images/icons/document.png" alt="icon phiếu chấm điểm" width="10%">
 						         </span>
-		                         <span class="nav-link-text">Phiếu chấm điểm</span>
+		                         <span class="nav-link-text">Phiếu rèn luyện</span>
 					        </a><!--//nav-link-->
 					    </li><!--//nav-item-->
 
 						<li class="nav-item">
 					        <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-					        <a class="nav-link <?php if (end($page_word) == 'hoatdongdanhgia.php') echo 'active'; ?>" href="hoatdongdanhgia.html">
+					        <a class="nav-link <?php if (end($page_word) == 'hoatdongdanhgia.php') echo 'active'; ?>" href="hoatdongdanhgia.php">
 						        <span class="nav-icon">
 									<img src="assets/images/icons/society.png" alt="icon hoạt động" width="10%">
 						         </span>
@@ -238,7 +238,7 @@
 
 						<li class="nav-item">
 					        <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-					        <a class="nav-link <?php if (end($page_word) == 'tieuchidanhgia.php') echo 'active'; ?>" href="tieuchidanhgia.html">
+					        <a class="nav-link <?php if (end($page_word) == 'tieuchidanhgia.php') echo 'active'; ?>" href="tieuchidanhgia.php">
 						        <span class="nav-icon">
 									<img src="assets/images/icons/society.png" alt="icon hoạt động" width="10%">
 						         </span>
