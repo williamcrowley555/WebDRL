@@ -11,8 +11,11 @@
     include_once '../auth/check_quyen.php';
 
 
+
     $read_data = new read_data();
     $data = $read_data->read_token();
+
+
 
   
     // kiểm tra đăng nhập thành công 
