@@ -15,7 +15,7 @@
     // kiểm tra đăng nhập thành công 
     if($data["status"]==1){
 
-        if ($checkQuyen->checkQuyen_Khoa_CTSV($data["user_data"]->aud)){
+        //if ($checkQuyen->checkQuyen_Khoa_CTSV($data["user_data"]->aud)){
             $database = new Database();
             $db = $database->getConnection();
     
@@ -57,12 +57,12 @@
                     array("message" => "Không tìm thấy dữ liệu.")
                 );
             }
-        }else{
-            http_response_code(403);
-            echo json_encode(
-                array("message" => "Bạn không có quyền thực hiện điều này!")
-            );
-        }
+        // }else{
+        //     http_response_code(403);
+        //     echo json_encode(
+        //         array("message" => "Bạn không có quyền thực hiện điều này!")
+        //     );
+        // }
         
     }else{
         http_response_code(403);

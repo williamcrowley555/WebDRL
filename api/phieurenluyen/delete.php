@@ -33,16 +33,19 @@
                 }
             }else{
                 echo 'No data posted.';
-            }} else {
+            }
+        } else {
             http_response_code(403);
             echo json_encode(
                 array("message" => "Bạn không có quyền thực hiện điều này!")
             );
         }
+    
     } else {
         http_response_code(403);
         echo json_encode(
             array("message" => "Vui lòng đăng nhập trước!")
         );
     }
-    ?>
+    
+?>

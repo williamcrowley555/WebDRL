@@ -15,7 +15,7 @@ $data = $read_data->read_token();
 
 // kiểm tra đăng nhập thành công 
 if ($data["status"] == 1) {
-    if ($checkQuyen->checkQuyen_CTSV($data["user_data"]->aud)) {
+    //if ($checkQuyen->checkQuyen_CTSV($data["user_data"]->aud)) {
         $database = new Database();
         $db = $database->getConnection();
         $item = new HocKyDanhGia($db);
@@ -27,10 +27,7 @@ if ($data["status"] == 1) {
             $hockydanhgia_arr = array(
                 "maHocKyDanhGia" =>  $item->maHocKyDanhGia,
                 "hocKyXet" => $item->hocKyXet,
-                "namHocXet" => $item->namHocXet,
-                "maSinhVien" => $item->maSinhVien,
-                "coVanDuyet" => $item->coVanDuyet,
-                "khoaDuyet" => $item->khoaDuyet
+                "namHocXet" => $item->namHocXet
             );
 
             http_response_code(200);
@@ -39,12 +36,12 @@ if ($data["status"] == 1) {
             http_response_code(404);
             echo json_encode("hockydanhgia not found.");
         }
-    } else {
-        http_response_code(403);
-        echo json_encode(
-            array("message" => "Bạn không có quyền thực hiện điều này!")
-        );
-    }
+    // } else {
+    //     http_response_code(403);
+    //     echo json_encode(
+    //         array("message" => "Bạn không có quyền thực hiện điều này!")
+    //     );
+    // }
 } else {
     http_response_code(403);
     echo json_encode(

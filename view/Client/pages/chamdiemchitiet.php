@@ -41,7 +41,7 @@
                                         <th scope="col"><strong>NỘI DUNG ĐÁNH GIÁ</strong></th>
                                         <th scope="col"><strong>Điểm tối đa</strong></th>
                                         <th scope="col"><strong>Điểm SV tự đánh giá</strong></th>
-                                        <th scope="col"><strong>Điểm lớp đánh giá</strong></th>
+                                        <!-- <th scope="col"><strong>Điểm lớp đánh giá</strong></th> -->
                                         <th scope="col"><strong>Ghi chú</strong></th>
                                     </tr>
                                 </thead>
@@ -55,7 +55,7 @@
 
                         </div>
 
-                        <button type="button" class="btn btn-primary" style="width: auto;">Chấm điểm</button>
+                        <button type="button" class="btn btn-primary" style="width: auto;" onclick="chamDiemRenLuyen();">Chấm điểm</button>
 
                     </div>
                 </div>

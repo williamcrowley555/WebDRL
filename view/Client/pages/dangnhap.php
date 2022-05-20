@@ -102,9 +102,7 @@
 
     <script>
     $( document ).ready(function() {
-        setTimeout(function(){
-            $('.loader_bg').fadeToggle();
-        }, 1000);
+       
 
         
         var inputMSSV = document.getElementById("inputLogin_MSSV");

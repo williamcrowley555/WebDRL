@@ -31,7 +31,10 @@ if ($data["status"] == 1) {
                 "maSinhVien" => $item->maSinhVien,
                 "diemTrungBinhChungHKTruoc" => $item->diemTrungBinhChungHKTruoc,
                 "diemTrungBinhChungHKXet" => $item->diemTrungBinhChungHKXet,
-                "maHocKyDanhGia" => $item->maHocKyDanhGia
+                "maHocKyDanhGia" => $item->maHocKyDanhGia,
+                "coVanDuyet" => $coVanDuyet,
+                "khoaDuyet" => $khoaDuyet,
+                "fileDinhKem" => $fileDinhKem
             );
 
             http_response_code(200);

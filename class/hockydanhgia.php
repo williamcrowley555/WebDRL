@@ -5,12 +5,10 @@
         // Table
         private $db_table = "hockydanhgia";
         // Columns
-        public $hockydanhgia ;
+        public $maHocKyDanhGia;
         public $hocKyXet;
         public $namHocXet;
-        public $maSinhVien;
-        public $coVanDuyet;
-        public $khoaDuyet;
+       
 
         // Db connection
         public function __construct($db){
@@ -22,7 +20,7 @@
 
         // GET ALL
         public function getAllHocKyDanhGia(){
-            $sqlQuery = "SELECT hockydanhgia , hocKyXet, namHocXet, maSinhVien, coVanDuyet, khoaDuyet, diemTrungBinhChungHKXet FROM " . $this->db_table . "";
+            $sqlQuery = "SELECT maHocKyDanhGia , hocKyXet, namHocXet FROM " . $this->db_table . "";
             $stmt = $this->conn->prepare($sqlQuery);
             $stmt->execute();
             return $stmt;
@@ -30,22 +28,18 @@
 
         // READ single
         public function getSingleHocKyDanhGia(){
-            $sqlQuery = "SELECT hockydanhgia , hocKyXet, namHocXet, maSinhVien, coVanDuyet, khoaDuyet, diemTrungBinhChungHKXet FROM ". $this->db_table ."
-                        WHERE hockydanhgia  = ? LIMIT 0,1";
+            $sqlQuery = "SELECT maHocKyDanhGia, hocKyXet, namHocXet FROM ". $this->db_table ."
+                        WHERE maHocKyDanhGia  = ? LIMIT 0,1";
             $stmt = $this->conn->prepare($sqlQuery);
-            $stmt->bindParam(1, $this->hockydanhgia );
+            $stmt->bindParam(1, $this->maHocKyDanhGia );
             $stmt->execute();
 
             $dataRow = $stmt->fetch(PDO::FETCH_ASSOC);
             
             if ($dataRow != null){
-                $this->hockydanhgia  = $dataRow['hockydanhgia '];
+                $this->maHocKyDanhGia  = $dataRow['maHocKyDanhGia'];
                 $this->hocKyXet = $dataRow['hocKyXet'];
                 $this->namHocXet = $dataRow['namHocXet'];
-                $this->maSinhVien = $dataRow['maSinhVien'];
-                $this->coVanDuyet = $dataRow['coVanDuyet'];
-                $this->khoaDuyet = $dataRow['khoaDuyet'];
-                $this->diemTrungBinhChungHKXet = $dataRow['diemTrungBinhChungHKXet'];
             }
             
         }
@@ -55,32 +49,24 @@
             $sqlQuery = "INSERT INTO
                         ". $this->db_table ."
                     SET
+                        maHocKyDanhGia = :maHocKyDanhGia,
                         hocKyXet = :hocKyXet, 
-                        namHocXet = :namHocXet, 
-                        maSinhVien = :maSinhVien,
-                        coVanDuyet = :coVanDuyet,
-                        khoaDuyet = :khoaDuyet,
-                        diemTrungBinhChungHKXet = :diemTrungBinhChungHKXet";
+                        namHocXet = :namHocXet";
                         
         
             $stmt = $this->conn->prepare($sqlQuery);
         
             // sanitize (Lọc dữ liệu đầu vào tránh SQLInjection, XSS)
+            $this->maHocKyDanhGia=htmlspecialchars(strip_tags($this->maHocKyDanhGia));
             $this->hocKyXet=htmlspecialchars(strip_tags($this->hocKyXet));
             $this->namHocXet=htmlspecialchars(strip_tags($this->namHocXet));
-            $this->maSinhVien=htmlspecialchars(strip_tags($this->maSinhVien));
-            $this->coVanDuyet=htmlspecialchars(strip_tags($this->coVanDuyet));
-            $this->khoaDuyet=htmlspecialchars(strip_tags($this->khoaDuyet));
-            $this->diemTrungBinhChungHKXet=htmlspecialchars(strip_tags($this->diemTrungBinhChungHKXet));
+            
         
             // bind data
+            $stmt->bindParam(":maHocKyDanhGia", $this->maHocKyDanhGia);
             $stmt->bindParam(":hocKyXet", $this->hocKyXet);
             $stmt->bindParam(":namHocXet", $this->namHocXet);
-            $stmt->bindParam(":maSinhVien", $this->maSinhVien);
-            $stmt->bindParam(":coVanDuyet", $this->coVanDuyet);
-            $stmt->bindParam(":khoaDuyet", $this->khoaDuyet);
-            $stmt->bindParam(":diemTrungBinhChungHKXet", $this->diemTrungBinhChungHKXet);
-        
+      
             if($stmt->execute()){
                return true;
             }
@@ -93,34 +79,21 @@
                         ". $this->db_table ."
                     SET
                         hocKyXet = :hocKyXet, 
-                        namHocXet = :namHocXet, 
-                        maSinhVien = :maSinhVien,
-                        coVanDuyet = :coVanDuyet,
-                        khoaDuyet = :khoaDuyet,
-                        diemTrungBinhChungHKXet = :diemTrungBinhChungHKXet
+                        namHocXet = :namHocXet
                     WHERE 
-                        hockydanhgia  = :hockydanhgia ";
+                        maHocKyDanhGia  = :maHocKyDanhGia ";
         
             $stmt = $this->conn->prepare($sqlQuery);
         
             // sanitize (Lọc dữ liệu đầu vào tránh SQLInjection, XSS)
-            $this->hockydanhgia =htmlspecialchars(strip_tags($this->hockydanhgia ));
+            $this->maHocKyDanhGia =htmlspecialchars(strip_tags($this->maHocKyDanhGia ));
             $this->hocKyXet=htmlspecialchars(strip_tags($this->hocKyXet));
             $this->namHocXet=htmlspecialchars(strip_tags($this->namHocXet));
-            $this->maSinhVien=htmlspecialchars(strip_tags($this->maSinhVien));
-            $this->coVanDuyet=htmlspecialchars(strip_tags($this->coVanDuyet));
-            $this->khoaDuyet=htmlspecialchars(strip_tags($this->khoaDuyet));
-            $this->diemTrungBinhChungHKXet=htmlspecialchars(strip_tags($this->diemTrungBinhChungHKXet));
-        
-        
+           
             // bind data
-            $stmt->bindParam(":hockydanhgia ", $this->hockydanhgia );
+            $stmt->bindParam(":maHocKyDanhGia ", $this->maHocKyDanhGia );
             $stmt->bindParam(":hocKyXet", $this->hocKyXet);
             $stmt->bindParam(":namHocXet", $this->namHocXet);
-            $stmt->bindParam(":maSinhVien", $this->maSinhVien);
-            $stmt->bindParam(":coVanDuyet", $this->coVanDuyet);
-            $stmt->bindParam(":khoaDuyet", $this->khoaDuyet);
-            $stmt->bindParam(":diemTrungBinhChungHKXet", $this->diemTrungBinhChungHKXet);
         
         
             if($stmt->execute()){
@@ -131,12 +104,12 @@
 
         // DELETE
         function deleteHocKyDanhGia(){
-            $sqlQuery = "DELETE FROM " . $this->db_table . " WHERE hockydanhgia  = ?";
+            $sqlQuery = "DELETE FROM " . $this->db_table . " WHERE maHocKyDanhGia = ?";
             $stmt = $this->conn->prepare($sqlQuery);
         
-            $this->hockydanhgia =htmlspecialchars(strip_tags($this->hockydanhgia ));
+            $this->maHocKyDanhGia =htmlspecialchars(strip_tags($this->maHocKyDanhGia ));
         
-            $stmt->bindParam(1, $this->hockydanhgia );
+            $stmt->bindParam(1, $this->maHocKyDanhGia );
         
             if($stmt->execute()){
                 return true;

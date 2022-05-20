@@ -13,8 +13,8 @@ $read_data = new read_data();
 $data = $read_data->read_token();
 
 // kiểm tra đăng nhập thành công và có phải giáo viên không
-if ($data["status"] == 1 && $data['user_data']->aud == "cvht") {
-    if ($checkQuyen->checkQuyen_CTSV($data["user_data"]->aud)) {
+if ($data["status"] == 1 ) {
+    if (checkQuyen::checkQuyen_CTSV($data["user_data"]->aud)) {
         $database = new Database();
         $db = $database->getConnection();
         $items = new PhieuRenLuyen($db);
@@ -36,7 +36,10 @@ if ($data["status"] == 1 && $data['user_data']->aud == "cvht") {
                     "maSinhVien" => $maSinhVien,
                     "diemTrungBinhChungHKTruoc" => $diemTrungBinhChungHKTruoc,
                     "diemTrungBinhChungHKXet" => $diemTrungBinhChungHKXet,
-                    "maHocKyDanhGia" => $maHocKyDanhGia
+                    "maHocKyDanhGia" => $maHocKyDanhGia,
+                    "coVanDuyet" => $coVanDuyet,
+                    "khoaDuyet" => $khoaDuyet,
+                    "fileDinhKem" => $fileDinhKem
                 );
                 array_push($phieurenluyenArr["phieurenluyen"], $e);
             }
@@ -61,5 +64,6 @@ if ($data["status"] == 1 && $data['user_data']->aud == "cvht") {
     );
 }
 
-    ?>
+
+?>
 

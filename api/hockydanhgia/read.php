@@ -13,7 +13,7 @@
     
     // kiểm tra đăng nhập thành công 
     if($data["status"]==1){
-        if ($checkQuyen->checkQuyen_CTSV($data["user_data"]->aud)) {
+        //if (checkQuyen::checkQuyen_CTSV($data["user_data"]->aud)) {
             $database = new Database();
             $db = $database->getConnection();
     
@@ -41,18 +41,18 @@
                     array_push($hockydanhgiaArr["hockydanhgia"], $e);
                 }
                 echo json_encode($hockydanhgiaArr);
-            }
-            else{
+            }else{
                 http_response_code(404);
                 echo json_encode(
                     array("message" => "No record found.")
                 );
-            } } else {
-            http_response_code(403);
-            echo json_encode(
-                array("message" => "Bạn không có quyền thực hiện điều này!")
-            );
-        }
+            } 
+        // } else {
+        //     http_response_code(403);
+        //     echo json_encode(
+        //         array("message" => "Bạn không có quyền thực hiện điều này!")
+        //     );
+        // }
     } else {
         http_response_code(403);
         echo json_encode(

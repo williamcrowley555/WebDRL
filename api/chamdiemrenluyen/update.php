@@ -41,11 +41,13 @@ if ($data != null) {
     $item->maChamDiemRenLuyen = $data->maChamDiemRenLuyen;
 
     //values
-    $item->maTieuChi2 = $data->maTieuChi2;
+    $item->maPhieuRenLuyen = $data->maPhieuRenLuyen;
     $item->maTieuChi3 = $data->maTieuChi3;
+    $item->maTieuChi2 = $data->maTieuChi2;
     $item->maSinhVien = $data->maSinhVien;
     $item->diemSinhVienDanhGia = $data->diemSinhVienDanhGia;
     $item->diemLopDanhGia = $data->diemLopDanhGia;
+    $item->ghiChu = $data->ghiChu;
 
 
     if ($item->updateChamDiemRenLuyen()) {

@@ -34,6 +34,9 @@ if ($data["status"] == 1) {
             $item->diemTrungBinhChungHKTruoc = $data->diemTrungBinhChungHKTruoc;
             $item->diemTrungBinhChungHKXet = $data->diemTrungBinhChungHKXet;
             $item->maHocKyDanhGia = $data->maHocKyDanhGia;
+            $item->coVanDuyet = $data->coVanDuyet;
+            $item->khoaDuyet = $data->khoaDuyet;
+            $item->fileDinhKem = $data->fileDinhKem;
 
             if ($item->updatePhieuRenLuyen()) {
                 echo json_encode("phieurenluyen data updated.");

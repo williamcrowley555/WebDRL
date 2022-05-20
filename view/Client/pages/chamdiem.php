@@ -1,5 +1,9 @@
 <?php
     include_once "header.php";
+
+    if ($quyenNguoiDung != 'sinhvien'){
+      echo "<script>history.go(-1)</script>";
+    }
 ?>
  
 

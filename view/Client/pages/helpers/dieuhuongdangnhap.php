@@ -15,12 +15,12 @@
             }
             
             case 'cvht':{
-                header("Location: ../cvht.php");
+                header("Location: ../cvht_duyetdiemrenluyen.php");
                 break;
             }
 
             case 'khoa':{
-                header("Location: ../khoa.php");
+                header("Location: ../khoa_duyetdiemrenluyen.php");
                 break;
             }
             

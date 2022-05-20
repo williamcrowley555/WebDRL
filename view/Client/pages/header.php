@@ -1,50 +1,26 @@
-<?php 
-    include_once __DIR__."/helpers/checkcookie.php";
+<?php
+include_once __DIR__ . "/helpers/checkcookie.php";
 
-    $checkCookie = new CheckCookie();
+$checkCookie = new CheckCookie();
+
+$page_word = explode("/", $_SERVER['REQUEST_URI']);
+
+//echo end($page_word);
+
+if (strcmp(end($page_word), 'dangnhap.php') != 0) {
+    $checkCookie->CheckAuthLogin();
+}
+
+if (isset($_COOKIE['jwt'])){
+    $jwt = $_COOKIE['jwt'];
+    $dataToken = CheckCookie::read_data_token($jwt);
+    $quyenNguoiDung = $dataToken['user_data']->aud; 
     
-    $page_word = explode("/", $_SERVER['REQUEST_URI']);
+}
 
-    //echo end($page_word);
-
-    if (strcmp(end($page_word),'dangnhap.php') != 0){
-        $checkCookie->CheckAuthLogin();
-    }
-
-   
-
-    // if ($_COOKIE['jwt'] != null){
-    //     $jwt = $_COOKIE['jwt'];
-
-    //     $dataUser = $checkCookie->read_data_token($jwt);
-
-    //     $quyenUser = $dataUser['user_data']->aud;
-    //     switch ($quyenUser) {
-    //         case 'sinhvien':{
-    //             header("Location: chamdiem.php");
-    //             break;
-    //         }
-
-    //         case 'cvht':{
-    //             header("Location: cvht.php");
-    //             break;
-    //         }
-
-    //         case 'khoa':{
-    //             header("Location: khoa.php");
-    //             break;
-    //         }
-           
-            
-    //     }
-       
-
-
-    // }
-
-    
 
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -74,7 +50,72 @@
     <!-- to have large image post format in Twitter -->
 
     <!-- Webpage Title -->
-    <title>Quản lý điểm rèn luyện</title>
+    <title>
+        <?php 
+			//$page_word = explode("/", $_SERVER['REQUEST_URI'] );
+
+            $active_dangNhap = '';
+            $active_chamDiem = '';
+            $active_chamDiemChiTiet = '';
+            $active_CVHT_DuyetDiem = '';
+            $active_Khoa_DuyetDiem = '';
+            $active_TraCuuDiem = '';
+            $active_TraCuuHoatDong = '';
+
+			switch (end($page_word)) {
+				case 'dangnhap.php':{
+					echo "Đăng nhập | Điểm rèn luyện";
+                    $active_dangNhap = "active";
+                
+					break;
+				}
+					
+				case 'chamdiem.php':{
+					echo "Chấm điểm | Điểm rèn luyện";
+                    $active_chamDiem = "active";
+					break;
+				}
+
+				case 'chamdiemchitiet.php':{
+					echo "Chấm điểm chi tiết | Điểm rèn luyện";
+                    $active_chamDiemChiTiet = "active";
+					break;
+				}
+
+				case 'cvht_duyetdiemrenluyen.php':{
+					echo "Duyệt điểm rèn luyện | CVHT | Điểm rèn luyện";
+                    $active_CVHT_DuyetDiem = "active";
+					break;
+				}
+
+				case 'khoa_duyetdiemrenluyen.php':{
+					echo "Duyệt điểm rèn luyện | Khoa | Điểm rèn luyện";
+                    $active_Khoa_DuyetDiem = "active";
+					break;
+				}
+
+				case 'tracuudiemrenluyen.php':{
+					echo "Tra cứu điểm rèn luyện | Điểm rèn luyện";
+                    $active_TraCuuDiem = "active";
+					break;
+				}
+
+				case 'tracuuhoatdongthamgia.php':{
+					echo "Tra cứu hoạt động tham gia | Điểm rèn luyện";
+                    $active_TraCuuHoatDong = "active";
+					break;
+				}
+
+				default:{
+					echo "404 Not Found";
+					break;
+				}
+					
+			}
+			
+		?>
+
+    </title>
 
     <!-- MDB -->
     <link rel="stylesheet" href="../css/mdb.min.css" />
@@ -86,6 +127,9 @@
     <link href="../css/swiper.css" rel="stylesheet">
     <link href="../css/styles.css" rel="stylesheet">
     <script src="../js/jquery-3.6.0.js"></script>
+
+    <script src="../js/sweetalert2.all.min.js"></script>
+
     <!-- Favicon  -->
     <link rel="icon" href="../images/SGU-LOGO-400x400.png">
 
@@ -93,10 +137,14 @@
     <!-- Custom Script -->
     <script src="../js/dangnhap/dangnhap.js"></script>
     <script src="../js/chamdiemchitiet/chamdiemchitiet.js"></script>
-    
-    
-    
+
+
 </head>
+
+<!-- Preloader -->
+<div class="loader_bg">
+    <div class="loader"></div>
+</div>
 
 <body data-bs-spy="scroll" data-bs-target="#navbarExample">
 
@@ -116,28 +164,86 @@
 
             <div class="navbar-collapse offcanvas-collapse" id="navbarsExampleDefault">
                 <ul class="navbar-nav ms-auto navbar-nav-scroll">
-                    <!-- <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#header">Trang chủ</a>
-                    </li> -->
+                
+                    <!-- Chức năng chung -->
                     <li class="nav-item">
-                        <a class="nav-link active" href="#services"> Chấm điểm rèn luyện</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#details">Xem điểm rèn luyện</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#details">Xem hoạt động đã tham gia</a>
+                        <a class="nav-link <?php echo $active_TraCuuDiem; ?>" href="tracuudiemrenluyen.php" style="text-transform: uppercase;"> Tra cứu điểm rèn luyện</a>
                     </li>
 
+                    <li class="nav-item">
+                        <a class="nav-link <?php echo $active_TraCuuHoatDong; ?>" href="tracuuhoatdongthamgia.php"  style="text-transform: uppercase;"> Tra cứu hoạt động tham gia</a>
+                    </li>
+
+                    <!-- Chức năng sinh viên -->
+                    <?php 
+                        if (isset($quyenNguoiDung)){
+                            switch ($quyenNguoiDung) {
+                                case 'sinhvien':{
+                                    echo "<li class='nav-item'>
+                                        <a class='nav-link ". $active_chamDiem ."' href='chamdiem.php' style='text-transform: uppercase;'> Chấm điểm rèn luyện</a>
+                                    </li>";
+                                    break;
+                                }
+                                
+                                case 'cvht':{
+                                    echo "<li class='nav-item'>
+                                        <a class='nav-link ".$active_CVHT_DuyetDiem."' href='cvht_duyetdiemrenluyen.php' style='text-transform: uppercase;'> Duyệt danh sách điểm rèn luyện theo lớp</a>
+                                    </li>";
+                                    break;
+                                }
+                    
+                                case 'khoa':{
+                                    echo "<li class='nav-item'>
+                                        <a class='nav-link ".$active_Khoa_DuyetDiem."' href='khoa_duyetdiemrenluyen.php'  style='text-transform: uppercase;'> Duyệt danh sách điểm rèn luyện</a>
+                                    </li>";
+                                    break;
+                                }
+                            }
+
+                            if (isset($_COOKIE['hoTen'])) $hoten = $_COOKIE['hoTen'];
+
+                            echo "<li class='nav-item dropdown'>
+                                <a class='nav-link dropdown-toggle' href='#' id='navbarDropdownMenuLink' role='button' data-mdb-toggle='dropdown' aria-expanded='false' style='text-transform: uppercase;'>
+                                    <span class='nav-item' style='text-transform: uppercase;'>
+                                        Xin chào, ". $hoten ."
+                                    </span>
+                                </a>
+                                <ul class='dropdown-menu' aria-labelledby='navbarDropdownMenuLink'>
+                                    <li>
+                                        <a class='dropdown-item' href='#' style='text-transform: uppercase;'><img src='../images/logout.png' width='15px' > Đăng xuất</a>
+                                    </li>
+                                </ul>
+                            </li>";
+
+                         
+                        }else{
+                            echo "<li class='nav-item'>
+                                <a class='nav-link ". $active_dangNhap ."' href='dangnhap.php' style='text-transform: uppercase;'> Đăng nhập</a>
+                            </li>";
+                        }
+
+
+                    ?>
+                    
+
+                    
+
+
+
                 </ul>
-                <span class="nav-item">
-                    Nguyễn Văn A
-                </span>
-                <span>Đăng xuất</span>
+
+
             </div>
             <!-- end of navbar-collapse -->
+     
         </div>
         <!-- end of container -->
     </nav>
     <!-- end of navbar -->
     <!-- end of navigation -->
+
+    <script>
+        setTimeout(function() {
+            $('.loader_bg').fadeToggle();
+        }, 1000);
+    </script>
