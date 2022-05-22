@@ -1,6 +1,10 @@
 <?php
     include_once "header.php";
 
+    if (!isset($_GET['maHocKy'])){
+        echo "<script>window.location.href = 'chamdiem.php';</script>";
+    }
+
 ?>
 
 
@@ -101,10 +105,7 @@
         <!-- Custom scripts -->
 
         <script>
-            getTieuChiDanhGia();
-
-            getThongTinNguoiDung();
-
+            HienThiThongTinVaDanhGia();
 
         </script>
 

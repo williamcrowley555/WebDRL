@@ -17,42 +17,67 @@
     // kiểm tra đăng nhập thành công 
     if($data["status"]==1){
 
-        if ($checkQuyen->checkQuyen_Khoa_CTSV($data["user_data"]->aud)){
+       // if ($checkQuyen->checkQuyen_Khoa_CTSV($data["user_data"]->aud)){
             $database = new Database();
             $db = $database->getConnection();
             $item = new ThongBaoDanhGia($db);
-            $item->maThongBao = isset($_GET['maThongBao']) ? $_GET['maThongBao'] : die(); //Lấy id từ phương thức GET
-        
-            $item->getSingleThongBaoDanhGia();
-            if($item->ngaySinhVienDanhGia != null){
-                // create array
-                $thongbaodanhgia_arr = array(
-                    "maThongBao" =>  $item->maThongBao,
-                    "ngaySinhVienDanhGia" => $item->ngaySinhVienDanhGia,
-                    "ngaySinhVienKetThucDanhGia" => $item->ngaySinhVienKetThucDanhGia,
-                    "ngayCoVanDanhGia" => $item->ngayCoVanDanhGia,
-                    "ngayCoVanKetThucDanhGia" => $item->ngayCoVanKetThucDanhGia,
-                    "ngayKhoaDanhGia" => $item->ngayKhoaDanhGia,
-                    "ngayKhoaKetThucDanhGia" => $item->ngayKhoaKetThucDanhGia,
-                    "ngayThongBao" => $item->ngayThongBao,
-                    "maHocKyDanhGia" => $item->maHocKyDanhGia        
-                );
-            
-                http_response_code(200);
-                echo json_encode($thongbaodanhgia_arr);
+
+            if (isset($_GET["maThongBao"])){
+                $item->maThongBao = isset($_GET['maThongBao']) ? $_GET['maThongBao'] : die(); //Lấy id từ phương thức GET
+
+                $item->getSingleThongBaoDanhGia();
+                if($item->ngaySinhVienDanhGia != null){
+                    // create array
+                    $thongbaodanhgia_arr = array(
+                        "maThongBao" =>  $item->maThongBao,
+                        "ngaySinhVienDanhGia" => $item->ngaySinhVienDanhGia,
+                        "ngaySinhVienKetThucDanhGia" => $item->ngaySinhVienKetThucDanhGia,
+                        "ngayCoVanDanhGia" => $item->ngayCoVanDanhGia,
+                        "ngayCoVanKetThucDanhGia" => $item->ngayCoVanKetThucDanhGia,
+                        "ngayKhoaDanhGia" => $item->ngayKhoaDanhGia,
+                        "ngayKhoaKetThucDanhGia" => $item->ngayKhoaKetThucDanhGia,
+                        "ngayThongBao" => $item->ngayThongBao,
+                        "maHocKyDanhGia" => $item->maHocKyDanhGia        
+                    );
+
+                    http_response_code(200);
+                    echo json_encode($thongbaodanhgia_arr);
+                }
+            }else{
+                if (isset($_GET["maHocKyDanhGia"])){
+                    $item->maHocKyDanhGia = isset($_GET['maHocKyDanhGia']) ? $_GET['maHocKyDanhGia'] : die(); //Lấy id từ phương thức GET
+    
+                    $item->getSingleThongBaoDanhGia_HocKyDanhGia();
+                    if($item->ngaySinhVienDanhGia != null){
+                        // create array
+                        $thongbaodanhgia_arr = array(
+                            "maThongBao" =>  $item->maThongBao,
+                            "ngaySinhVienDanhGia" => $item->ngaySinhVienDanhGia,
+                            "ngaySinhVienKetThucDanhGia" => $item->ngaySinhVienKetThucDanhGia,
+                            "ngayCoVanDanhGia" => $item->ngayCoVanDanhGia,
+                            "ngayCoVanKetThucDanhGia" => $item->ngayCoVanKetThucDanhGia,
+                            "ngayKhoaDanhGia" => $item->ngayKhoaDanhGia,
+                            "ngayKhoaKetThucDanhGia" => $item->ngayKhoaKetThucDanhGia,
+                            "ngayThongBao" => $item->ngayThongBao,
+                            "maHocKyDanhGia" => $item->maHocKyDanhGia        
+                        );
+    
+                        http_response_code(200);
+                        echo json_encode($thongbaodanhgia_arr);
+                    }
+                }else{
+                    http_response_code(404);
+                    echo json_encode("thongbaodanhgia không tìm thấy.");
+                }
             }
-            
-            else{
-                http_response_code(404);
-                echo json_encode("thongbaodanhgia không tìm thấy.");
-            }
-        }else{
-            http_response_code(403);
-            echo json_encode(
-                array("message" => "Bạn không có quyền thực hiện điều này!")
-            );
-        }
-        
+
+        // }else{
+        //     http_response_code(403);
+        //     echo json_encode(
+        //         array("message" => "Bạn không có quyền thực hiện điều này!")
+        //     );
+        // }
+    
     }else{
         http_response_code(403);
         echo json_encode(

@@ -107,7 +107,7 @@ if (isset($_COOKIE['jwt'])){
 				}
 
 				default:{
-					echo "404 Not Found";
+					echo "Điểm rèn luyện";
 					break;
 				}
 					
@@ -153,7 +153,7 @@ if (isset($_COOKIE['jwt'])){
         <div class="container">
 
             <!-- Image Logo -->
-            <a class="navbar-brand logo-image" href="index.html"><img src="../images/logo.png" alt="alternative"></a>
+            <a class="navbar-brand logo-image" href="tracuudiemrenluyen.php"><img src="../images/logo.png" alt="alternative"></a>
 
             <!-- Text Logo - Use this if you don't have a graphic logo -->
             <!-- <a class="navbar-brand logo-text" href="index.html">Nubis</a> -->
@@ -167,7 +167,7 @@ if (isset($_COOKIE['jwt'])){
                 
                     <!-- Chức năng chung -->
                     <li class="nav-item">
-                        <a class="nav-link <?php echo $active_TraCuuDiem; ?>" href="tracuudiemrenluyen.php" style="text-transform: uppercase;"> Tra cứu điểm rèn luyện</a>
+                        <a class="nav-link <?php if (end($page_word) == 'tracuudiemrenluyen.php') echo 'active'; ?>" href="tracuudiemrenluyen.php" style="text-transform: uppercase;"> Tra cứu điểm rèn luyện</a>
                     </li>
 
                     <li class="nav-item">

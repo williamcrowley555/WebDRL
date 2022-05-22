@@ -28,10 +28,10 @@
                     <div class="form-outline mb-4">
                         <div class="row justify-content-center" style="padding-bottom: 30px;">
                             <div class="col-4">
-                               <span style="font-weight: bold;">Họ tên: </span>Nguyễn Văn A
+                               <span style="font-weight: bold;">Họ tên sinh viên: </span><span id="text_HoTen" ></span>
                             </div>
                             <div class="col-4">
-                                <span style="font-weight: bold;">Mã số sinh viên: </span>3118410262
+                                <span style="font-weight: bold;">Mã số sinh viên: </span><span id="text_MaSo"></span> 
                             </div>
                           </div>
 
@@ -44,37 +44,8 @@
                                 <th></th>
                               </tr>
                             </thead>
-                            <tbody>
-                              <tr>
-                                <td>
-                                    <p class="fw-normal mb-1">1</p>
-                                </td>
-                                <td>
-                                  <p class="fw-normal mb-1">2021-2022</p>
-                                </td>
-                                <td>
-                                  <span class="badge badge-primary" style="color: black;">Đang mở chấm</span>
-                                </td>
-                                <td>
-                                  <button type="button" class="btn btn-info" style="color: white;">Chấm điểm</button>
-                                  <button type="button" class="btn btn-warning" style="color: white;">Chấm lại</button>
-                                </td>
-                              </tr>
-
-                              <tr>
-                                <td>
-                                    <p class="fw-normal mb-1">2</p>
-                                </td>
-                                <td>
-                                  <p class="fw-normal mb-1">2020-2021</p>
-                                </td>
-                                <td>
-                                  <span class="badge badge-success" style="color: black;">Đã chấm</span>
-                                </td>
-                                <td>
-                                  <button type="button" class="btn btn-light" style="color: black;">Xem chi tiết</button>
-                                </td>
-                              </tr>
+                            <tbody id="tbody_hocKyDanhGia" >
+                              
                               
                             </tbody>
                           </table>
@@ -123,6 +94,11 @@
     <!-- Swiper for image and text sliders -->
     <script src="../js/scripts.js"></script>
 
+    <script src="../js/chamdiem/chamdiem.js"></script>
+
+    <script>
+        getThongTinHocKyDanhGia();
+    </script>
     
     <!-- Custom scripts -->
     <!-- MDB -->

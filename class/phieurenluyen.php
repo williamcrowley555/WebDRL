@@ -60,6 +60,31 @@ class PhieuRenLuyen
         }
     }
 
+    public function getSinglePhieuRenLuyen_TheoMaHocKyVaMSSV()
+    {
+        $sqlQuery = "SELECT maPhieuRenLuyen, xepLoai, diemTongCong, maSinhVien, diemTrungBinhChungHKTruoc, diemTrungBinhChungHKXet, maHocKyDanhGia, coVanDuyet, khoaDuyet, fileDinhKem FROM " . $this->db_table . "
+                        WHERE maHocKyDanhGia = ? AND maSinhVien = ? LIMIT 0,1";
+        $stmt = $this->conn->prepare($sqlQuery);
+        $stmt->bindParam(1, $this->maHocKyDanhGia);
+        $stmt->bindParam(2, $this->maSinhVien);
+        $stmt->execute();
+
+        $dataRow = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($dataRow != null) {
+            $this->maPhieuRenLuyen = $dataRow['maPhieuRenLuyen'];
+            $this->xepLoai = $dataRow['xepLoai'];
+            $this->diemTongCong = $dataRow['diemTongCong'];
+            $this->maSinhVien = $dataRow['maSinhVien'];
+            $this->diemTrungBinhChungHKTruoc = $dataRow['diemTrungBinhChungHKTruoc'];
+            $this->diemTrungBinhChungHKXet = $dataRow['diemTrungBinhChungHKXet'];
+            $this->maHocKyDanhGia = $dataRow['maHocKyDanhGia'];
+            $this->coVanDuyet = $dataRow['coVanDuyet'];
+            $this->khoaDuyet = $dataRow['khoaDuyet'];
+            $this->fileDinhKem = $dataRow['fileDinhKem'];
+        }
+    }
+
     // CREATE
     public function createPhieuRenLuyen()
     {

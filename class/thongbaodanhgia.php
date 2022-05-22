@@ -57,6 +57,30 @@
             
         }
 
+        //Get single thongbao qua maHocKyDanhGia
+        public function getSingleThongBaoDanhGia_HocKyDanhGia(){
+            $sqlQuery = "SELECT maThongBao, ngaySinhVienDanhGia, ngaySinhVienKetThucDanhGia, ngayCoVanDanhGia, ngayCoVanKetThucDanhGia, ngayKhoaDanhGia, ngayKhoaKetThucDanhGia, ngayThongBao, maHocKyDanhGia FROM ". $this->db_table ."
+                        WHERE maHocKyDanhGia = ? LIMIT 0,1";
+            $stmt = $this->conn->prepare($sqlQuery);
+            $stmt->bindParam(1, $this->maHocKyDanhGia  );
+            $stmt->execute();
+
+            $dataRow = $stmt->fetch(PDO::FETCH_ASSOC);
+            
+            if ($dataRow != null){
+                $this->maThongBao   = $dataRow['maThongBao'];
+                $this->ngaySinhVienDanhGia = $dataRow['ngaySinhVienDanhGia'];
+                $this->ngaySinhVienKetThucDanhGia = $dataRow['ngaySinhVienKetThucDanhGia'];
+                $this->ngayCoVanDanhGia = $dataRow['ngayCoVanDanhGia'];
+                $this->ngayCoVanKetThucDanhGia = $dataRow['ngayCoVanKetThucDanhGia'];
+                $this->ngayKhoaDanhGia = $dataRow['ngayKhoaDanhGia'];
+                $this->ngayKhoaKetThucDanhGia = $dataRow['ngayKhoaKetThucDanhGia'];
+                $this->ngayThongBao = $dataRow['ngayThongBao'];
+                $this->maHocKyDanhGia = $dataRow['maHocKyDanhGia'];
+            }
+            
+        }
+
         // CREATE
         public function createThongBaoDanhGia(){
             $sqlQuery = "INSERT INTO

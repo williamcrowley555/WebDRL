@@ -27,8 +27,98 @@ function changeNumberHandle(val, number)
   }
 }
 
+
 var jwtCookie = getCookie("jwt");
 
+var url = new URL(window.location.href);
+var GET_MaHocKy = url.searchParams.get("maHocKy");
+
+
+//-----------------------------------------//
+function HienThiThongTinVaDanhGia() {
+    var checkMaHocKyHopLe = 0;  
+
+    if (GET_MaHocKy != null){
+      if (GET_MaHocKy.trim() != ''){
+        
+        $.ajax({
+          url: "../../../api/thongbaodanhgia/read.php",
+          async: false,
+          type: "GET",
+          contentType: "application/json;charset=utf-8",
+          dataType: "json",
+          headers: {
+            Authorization: jwtCookie,
+          },
+          success: function (result_ThongBaoDanhGia) {
+
+            
+            $.each(result_ThongBaoDanhGia, function (index_TBDG) {
+              for (var q = 0;q < result_ThongBaoDanhGia[index_TBDG].length;q++) {
+                var maHocKy_TBDG = result_ThongBaoDanhGia[index_TBDG][q].maHocKyDanhGia;
+  
+                if (GET_MaHocKy === maHocKy_TBDG){
+                  checkMaHocKyHopLe++;
+                  var ngaySVDanhGia = new Date(result_ThongBaoDanhGia[index_TBDG][q].ngaySinhVienDanhGia);
+                  var ngaySVKetThucDanhGia = new Date(result_ThongBaoDanhGia[index_TBDG][q].ngaySinhVienKetThucDanhGia);
+          
+                  //lấy ngày hiện tại
+                  var today = new Date();
+                  var ngayHienTai = new Date(today.getFullYear() +"-" +(today.getMonth() + 1) +"-" +today.getDate());
+          
+                  //thời gian hiện tại nằm trong khoảng thời gian học kỳ còn mở chấm
+                  if (ngayHienTai.getTime() >= ngaySVDanhGia.getTime() 
+                  && ngayHienTai.getTime() <= ngaySVKetThucDanhGia.getTime()) 
+                  {
+                    
+                      //vẫn còn trong thời gian mở chấm nên giữ nguyên page
+                      getTieuChiDanhGia();
+                      getThongTinNguoiDung();
+  
+                  }else{
+                      window.location.href = 'chamdiem.php';
+                  }
+  
+                }
+  
+              }
+
+
+              if (checkMaHocKyHopLe == 0){
+                window.location.href = 'chamdiem.php';
+              }
+              
+            });
+
+
+
+
+          },
+          error: function (errorMessage_tc3) {
+            thongBaoLoi(errorMessage_tc3.responseText);
+          },
+        });
+      }else{
+        window.location.href = 'chamdiem.php';
+      }
+
+
+      
+    }else{
+     
+      window.location.href = 'chamdiem.php';
+    }
+}
+
+
+
+
+
+
+
+
+
+//------------------------------------------------//
 //Show tiêu chí đánh giá
 function getTieuChiDanhGia() {
     //Ajax tieuchicap1
@@ -137,7 +227,7 @@ function getTieuChiDanhGia() {
             });
 
             $("#tbody_noiDungDanhGia").append(
-                "<tr>\
+                "<tr style='background: darkseagreen;' >\
                 <td style='font-weight: bold;' >Cộng: </span>\
                 </td>\
                 <td><em></em></td>\
@@ -219,141 +309,61 @@ function getThongTinNguoiDung() {
               success: function (result_Khoa) {
                 var tenKhoa = result_Khoa["tenKhoa"];
 
-                $.ajax({
-                  url: "../../../api/thongbaodanhgia/read.php",
-                  async: false,
-                  type: "GET",
-                  contentType: "application/json;charset=utf-8",
-                  dataType: "json",
-                  headers: {
-                    Authorization: jwtCookie,
-                  },
-                  success: function (result_ThongBaoDanhGia) {
-                    $.each(result_ThongBaoDanhGia, function (index_TBDG) {
-                      for (
-                        var q = 0;
-                        q < result_ThongBaoDanhGia[index_TBDG].length;
-                        q++
-                      ) {
-                        var ngaySVDanhGia = new Date(
-                          result_ThongBaoDanhGia[index_TBDG][
-                            q
-                          ].ngaySinhVienDanhGia
-                        );
-                        var ngaySVKetThucDanhGia = new Date(
-                          result_ThongBaoDanhGia[index_TBDG][
-                            q
-                          ].ngaySinhVienKetThucDanhGia
-                        );
-
-                        //lấy ngày hiện tại
-                        var today = new Date();
-                        var ngayHienTai = new Date(
-                          today.getFullYear() +
-                            "-" +
-                            (today.getMonth() + 1) +
-                            "-" +
-                            today.getDate()
-                        );
-
-                        //thời gian hiện tại nằm trong khoảng thời gian học kỳ còn mở chấm
-                        if (
-                          ngayHienTai.toLocaleDateString() >=
-                            ngaySVDanhGia.toLocaleDateString() &&
-                          ngayHienTai.toLocaleDateString() <=
-                            ngaySVKetThucDanhGia.toLocaleDateString()
-                        ) {
-                          var input_maHocKyDanhGia =
-                            result_ThongBaoDanhGia[index_TBDG][q]
-                              .maHocKyDanhGia;
-
-                          $.ajax({
-                            url:
-                              "../../../api/hockydanhgia/single_read.php?maHocKyDanhGia=" +
-                              input_maHocKyDanhGia,
-                            async: false,
-                            type: "GET",
-                            contentType: "application/json;charset=utf-8",
-                            dataType: "json",
-                            headers: {
-                              Authorization: jwtCookie,
-                            },
-                            success: function (result_HKDG) {
-                              var input_hocKyXet = result_HKDG.hocKyXet;
-                              var input_namHocXet = result_HKDG.namHocXet;
-
-                              $("#part_thongTinSinhVien").append(
-                                "\
-                                                                <div class='row'>\
-                                                                    <div class='col'>\
-                                                                        <span style='font-weight: bold;'>Họ tên: </span>" +
-                                  hoTenSinhVien +
-                                  "\
-                                                                    </div>\
-                                                                    <div class='col'>\
-                                                                        <span style='font-weight: bold;'>Mã số sinh viên: </span>" +
-                                  maSo +
-                                  "\
-                                                                    </div>\
-                                                                    <div class='col'>\
-                                                                        <span style='font-weight: bold;'>Ngày sinh: </span>" +
-                                  ngaySinh +
-                                  "\
-                                                                    </div>\
-                                                                    <div class='col'>\
-                                                                        <span style='font-weight: bold;'>Lớp: </span>" +
-                                  maLop +
-                                  "\
-                                                                    </div>\
-                                                                </div>\
-                                                                <div class='row'>\
-                                                                    <div class='col'>\
-                                                                        <span style='font-weight: bold;'>Khoa: </span>" +
-                                  tenKhoa +
-                                  "\
-                                                                    </div>\
-                                                                    <div class='col'>\
-                                                                        <span style='font-weight: bold;'>Hệ: </span>" +
-                                  he +
-                                  "\
-                                                                    </div>\
-                                                                    <div class='col'>\
-                                                                        <span style='font-weight: bold;'>Học kỳ: </span>" +
-                                  input_hocKyXet +
-                                  "\
-                                                                    </div>\
-                                                                    <div class='col'>\
-                                                                        <span style='font-weight: bold;'>Năm học: </span>" +
-                                  input_namHocXet +
-                                  "\
-                                                                    </div>\
-                                                                    <div class='col' style='display: none;'>\
-                                                                        <input type='text' id='input_maHocKyDanhGia' value='" +
-                                  input_maHocKyDanhGia +
-                                  "' /></span>\
-                                                                    </div>\
-                                                                </div>\
-                                                            "
-                              );
-                            },
-                            error: function (errorMessage_tc3) {
-                              thongBaoLoi(errorMessage_tc3.responseText);
-                            },
-                          });
-                        }
-                      }
-                    });
-                  },
-                  error: function (errorMessage_tc3) {
-                    thongBaoLoi(errorMessage_tc3.responseText);
-                  },
-                });
-              },
-              error: function (errorMessage) {
-                thongBaoLoi(errorMessage.responseText);
                 
-              },
+                            $.ajax({
+                              url: "../../../api/hockydanhgia/single_read.php?maHocKyDanhGia=" + GET_MaHocKy,
+                              async: false,
+                              type: "GET",
+                              contentType: "application/json;charset=utf-8",
+                              dataType: "json",
+                              headers: {
+                                Authorization: jwtCookie,
+                              },
+                              success: function (result_HKDG) {
+                                var input_hocKyXet = result_HKDG.hocKyXet;
+                                var input_namHocXet = result_HKDG.namHocXet;
+  
+                                $("#part_thongTinSinhVien").append("\<div class='row'>\
+                                    <div class='col'>\
+                                    <span style='font-weight: bold;'>Họ tên: </span>" + hoTenSinhVien + "\</div>\
+                                    <div class='col'>\
+                                    <span style='font-weight: bold;'>Mã số sinh viên: </span>" + maSo + "\
+                                    </div>\
+                                    <div class='col'>\
+                                    <span style='font-weight: bold;'>Ngày sinh: </span>" + ngaySinh + "\
+                                    </div>\
+                                    <div class='col'>\
+                                    <span style='font-weight: bold;'>Lớp: </span>" + maLop +"\
+                                    </div>\
+                                    </div>\
+                                    <div class='row'>\
+                                    <div class='col'>\
+                                    <span style='font-weight: bold;'>Khoa: </span>" + tenKhoa + "\
+                                    </div>\
+                                    <div class='col'>\
+                                    <span style='font-weight: bold;'>Hệ: </span>" + he + "\
+                                    </div>\
+                                    <div class='col'>\
+                                    <span style='font-weight: bold;'>Học kỳ: </span>" + input_hocKyXet + "\
+                                    </div>\
+                                    <div class='col'>\
+                                    <span style='font-weight: bold;'>Năm học: </span>" + input_namHocXet + "\
+                                    </div>\
+                                    <div class='col' style='display: none;'>\
+                                    <input type='text' id='input_maHocKyDanhGia' value='" +GET_MaHocKy +"' /></span>\
+                                    </div>\
+                                    </div>\
+                                    ");
+                              },
+                              error: function (errorMessage_tc3) {
+                                thongBaoLoi(errorMessage_tc3.responseText);
+                              },
+                            });
+                  }
+                      
+              
             });
+              
           },
           error: function (errorMessage) {
             thongBaoLoi(errorMessage.responseText);
@@ -373,15 +383,7 @@ function checkValidateInput(){
     var _inputTBCHocKyDangXet = $('#inputTBCHocKyDangXet').val();
     var _input_diemtongcong = $('#input_diemtongcong').val();
 
-    if (_inputTBCHocKyTruoc == ''){
-      thongBaoLoi("Vui lòng nhập điểm TBC học kỳ trước.");
-      return false;
-    }
-
-    if (_inputTBCHocKyDangXet == ''){
-      thongBaoLoi("Vui lòng nhập điểm TBC học kỳ đang xét.");
-      return false;
-    }
+   
 
     if (_input_diemtongcong == ''){
       thongBaoLoi("Vui lòng nhập điểm TỔNG CỘNG cuối cùng.");
@@ -418,7 +420,7 @@ function chamDiemRenLuyen() {
     
         var dataPost_PhieuRenLuyen = {
             maPhieuRenLuyen: _inputMaPhieuRenLuyen,
-            xepLoai: null,
+            xepLoai: '',
             diemTongCong: _inputDiemTongCong,
             maSinhVien: _inputMaSinhVien,
             diemTrungBinhChungHKTruoc: _inputDiemTBCHKTruoc,
@@ -544,7 +546,18 @@ function chamDiemRenLuyen() {
                     }
                 });
 
-                Swal.fire('Chấm điểm rèn luyện thành công!', '', 'success');
+                Swal.fire({
+                  icon: "success",
+                  title: "Chấm điểm rèn luyện thành công!",
+                  text: "Đang chuyển hướng...",
+                  timer: 2500,
+                  timerProgressBar: true,
+                });
+                
+                window.setTimeout(function (){
+                  window.location.href = 'chamdiem.php';
+                }, 2500);
+                
             },
             error: function (errorMessage_tc3) {
                 Swal.fire({

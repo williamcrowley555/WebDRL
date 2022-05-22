@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 17, 2022 at 05:48 PM
+-- Generation Time: May 22, 2022 at 06:30 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.29
 
@@ -29,13 +29,27 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `chamdiemrenluyen` (
   `maChamDiemRenLuyen` int(11) NOT NULL,
-  `maPhieuRenLuyen` int(11) NOT NULL,
-  `maTieuChi3` int(11) NOT NULL,
-  `maTieuChi2` int(11) NOT NULL,
+  `maPhieuRenLuyen` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `maTieuChi3` int(11) DEFAULT NULL,
+  `maTieuChi2` int(11) DEFAULT NULL,
   `maSinhVien` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `diemSinhVienDanhGia` int(11) NOT NULL,
-  `diemLopDanhGia` int(11) NOT NULL
+  `diemSinhVienDanhGia` int(11) DEFAULT NULL,
+  `diemLopDanhGia` int(11) DEFAULT NULL,
+  `ghiChu` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `chamdiemrenluyen`
+--
+
+INSERT INTO `chamdiemrenluyen` (`maChamDiemRenLuyen`, `maPhieuRenLuyen`, `maTieuChi3`, `maTieuChi2`, `maSinhVien`, `diemSinhVienDanhGia`, `diemLopDanhGia`, `ghiChu`) VALUES
+(21, 'PRLHK121223118410262', 0, 7, '3118410262', 15, 0, ''),
+(22, 'PRLHK121223118410262', 0, 8, '3118410262', 10, 0, ''),
+(23, 'PRLHK121223118410262', 22, 0, '3118410262', 5, 0, ''),
+(24, 'PRLHK121223118410262', 0, 12, '3118410262', 5, 0, ''),
+(25, 'PRLHK121223118410262', 0, 14, '3118410262', 10, 0, ''),
+(26, 'PRLHK121223118410262', 0, 18, '3118410262', 5, 0, ''),
+(27, 'PRLHK121223118410262', 0, 27, '3118410262', 3, 0, '');
 
 -- --------------------------------------------------------
 
@@ -93,13 +107,18 @@ CREATE TABLE `hoatdongdanhgia` (
 --
 
 CREATE TABLE `hockydanhgia` (
-  `maHocKyDanhGia` int(11) NOT NULL,
+  `maHocKyDanhGia` varchar(11) COLLATE utf8_unicode_ci NOT NULL,
   `hocKyXet` int(11) NOT NULL,
-  `namHocXet` int(11) NOT NULL,
-  `maSinhVien` int(11) NOT NULL,
-  `coVanDuyet` int(11) NOT NULL,
-  `khoaDuyet` int(11) NOT NULL
+  `namHocXet` varchar(255) COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `hockydanhgia`
+--
+
+INSERT INTO `hockydanhgia` (`maHocKyDanhGia`, `hocKyXet`, `namHocXet`) VALUES
+('HK12122', 1, '2021-2022'),
+('HK22122', 2, '2021-2022');
 
 -- --------------------------------------------------------
 
@@ -169,14 +188,24 @@ INSERT INTO `lop` (`maLop`, `tenLop`, `maKhoa`, `maCoVanHocTap`, `maKhoaHoc`) VA
 --
 
 CREATE TABLE `phieurenluyen` (
-  `maPhieuRenLuyen` int(11) NOT NULL,
-  `xepLoai` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `diemTongCong` int(11) NOT NULL,
-  `maSinhVien` int(11) NOT NULL,
+  `maPhieuRenLuyen` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `xepLoai` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `diemTongCong` int(11) DEFAULT NULL,
+  `maSinhVien` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `diemTrungBinhChungHKTruoc` double NOT NULL,
   `diemTrungBinhChungHKXet` double NOT NULL,
-  `maHocKyDanhGia` int(11) NOT NULL
+  `maHocKyDanhGia` varchar(11) COLLATE utf8_unicode_ci NOT NULL,
+  `coVanDuyet` tinyint(1) DEFAULT NULL,
+  `khoaDuyet` tinyint(1) DEFAULT NULL,
+  `fileDinhKem` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `phieurenluyen`
+--
+
+INSERT INTO `phieurenluyen` (`maPhieuRenLuyen`, `xepLoai`, `diemTongCong`, `maSinhVien`, `diemTrungBinhChungHKTruoc`, `diemTrungBinhChungHKXet`, `maHocKyDanhGia`, `coVanDuyet`, `khoaDuyet`, `fileDinhKem`) VALUES
+('PRLHK121223118410262', '', 53, '3118410262', 0, 0, 'HK12122', 0, 0, '');
 
 -- --------------------------------------------------------
 
@@ -314,15 +343,23 @@ CREATE TABLE `thamgiahoatdong` (
 
 CREATE TABLE `thongbaodanhgia` (
   `maThongBao` int(11) NOT NULL,
-  `ngaySinhVienDanhGia` int(11) NOT NULL,
-  `ngaySinhVienKetThucDanhGia` int(11) NOT NULL,
-  `ngayCoVanDanhGia` int(11) NOT NULL,
-  `ngayCoVanKetThucDanhGia` int(11) NOT NULL,
-  `ngayKhoaDanhGia` int(11) NOT NULL,
-  `ngayKhoaKetThucDanhGia` int(11) NOT NULL,
-  `ngayThongBao` int(11) NOT NULL,
-  `maHocKyDanhGia` int(11) NOT NULL
+  `ngaySinhVienDanhGia` date NOT NULL,
+  `ngaySinhVienKetThucDanhGia` date NOT NULL,
+  `ngayCoVanDanhGia` date NOT NULL,
+  `ngayCoVanKetThucDanhGia` date NOT NULL,
+  `ngayKhoaDanhGia` date NOT NULL,
+  `ngayKhoaKetThucDanhGia` date NOT NULL,
+  `ngayThongBao` date NOT NULL,
+  `maHocKyDanhGia` varchar(11) COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `thongbaodanhgia`
+--
+
+INSERT INTO `thongbaodanhgia` (`maThongBao`, `ngaySinhVienDanhGia`, `ngaySinhVienKetThucDanhGia`, `ngayCoVanDanhGia`, `ngayCoVanKetThucDanhGia`, `ngayKhoaDanhGia`, `ngayKhoaKetThucDanhGia`, `ngayThongBao`, `maHocKyDanhGia`) VALUES
+(1, '2021-12-14', '2022-01-14', '2022-01-15', '2022-02-16', '2022-02-17', '2022-02-24', '2022-02-13', 'HK12122'),
+(2, '2022-05-20', '2022-05-31', '2022-06-01', '2022-06-15', '2022-05-16', '2022-06-30', '2022-05-20', 'HK22122');
 
 -- --------------------------------------------------------
 
@@ -346,7 +383,7 @@ INSERT INTO `tieuchicap1` (`matc1`, `noidung`, `diemtoida`) VALUES
 (3, 'III - Đánh giá về ý thức và kết quả tham gia các hoạt động chính trị - xã hội, văn hóa, văn nghệ, thể thao, phòng chống các tệ nạn xã hội (tối đa 20 điểm).', 20),
 (4, 'IV – Đánh giá ý thức công dân trong quan hệ cộng đồng (tối đa 25 điểm).', 25),
 (5, 'V - Đánh giá về ý thức và kết quả tham gia phụ trách lớp, các đoàn thể trong nhà trường (tối đa 10 điểm).', 10),
-(6, 'Thêm', 30);
+(6, 'VI. Hoạt động khác', 30);
 
 -- --------------------------------------------------------
 
@@ -366,35 +403,36 @@ CREATE TABLE `tieuchicap2` (
 --
 
 INSERT INTO `tieuchicap2` (`matc2`, `noidung`, `diemtoida`, `matc1`) VALUES
-(1, '1.Kết quả học tập: TBC học kì trước:       TBC học kì được đánh giá:', 0, 1),
+(1, '1.Kết quả học tập: ', 0, 1),
 (2, '2.Tinh thần vượt khó trong học tập:', 0, 1),
 (3, '3.Tham gia nghiên cứu khoa học (NCKH):', 0, 1),
 (4, '4.Tham gia rèn luyện nghiệp vụ (RLNV):', 0, 1),
-(5, '5.Tham gia các câu lạc bộ học thuật', 0, 1),
-(6, '6.Thành viên đội tuyển dự thi Olympic các môn học:', 0, 1),
-(7, '1. Tham gia các hoạt động chính trị – xã hội do nhà trường quy định:', 0, 3),
-(8, '2. Tham gia hoạt động văn hóa, văn nghệ, TDTT, phòng chống TNXH…', 5, 3),
-(9, '3. Tham gia trong đội tuyển văn nghệ, TDTT :', 0, 3),
-(10, '2. Được biểu dương người tốt, việc tốt ở nhà trường hoặc ở địa phương (có giấy chứng nhận)', 5, 4),
-(11, '3. Tham gia các hoạt động tình nguyện trung hạn: MHX, Tiếp sức mùa thi', 10, 4),
-(12, '4. Tham gia các công tác xã hội và các hoạt động tình nguyện ngắn ngày (có xác nhận của đơn vị tổ chức)', 10, 4),
-(13, '5. Có tinh thần chia sẻ, giúp đỡ người có khó khăn, hoạn nạn', 5, 4),
-(14, '6. Tham gia hiến máu tình nguyện', 5, 4),
-(15, '7. Tham gia hội thao GDQP –AN cấp quận, cấp TP', 5, 4),
-(16, '8. Vi phạm ATGT, trật tự công cộng (có giấy báo gửi về trường)', -10, 4),
-(17, '1. Lớp trưởng, BCH Đoàn trường, BCH Hội sinh viên trường', 10, 5),
-(18, '2. Lớp phó, BCH Đoàn khoa, BCH LCH SV; BCH CĐ, BCH chi hội lớp', 8, 5),
-(19, '3. Tổ trưởng, tổ phó', 3, 5),
-(20, '4. Đảng viên', 8, 5),
-(21, '5. Đối tượng Đảng', 5, 5),
-(22, '6. Đoàn viên TNCS Hồ Chí Minh', 3, 5),
-(23, '7. Được Đoàn thanh niên, Hội sinh viên biểu dương, khen thưởng', 0, 5),
-(24, '1. Chấp hành tốt nội quy, quy chế của nhà trường', 15, 2),
-(25, '2. Tham gia đầy đủ các buổi họp của trường, khoa, CVHT, lớp tổ chức', 10, 2),
-(26, '3. Một lần vi phạm quy chế, quy định của trường (có biên bản xử lý)', -10, 2),
-(27, '4. Vắng 01 buổi họp do trường, khoa, CVHT, lớp tổ chức không lý do ', -5, 2),
-(30, 'Thêm', 30, 6),
-(32, '1. Chấp hành tốt các chủ trương, chính sách, pháp luật của nhà nước:', 10, 4);
+(5, '5. Tham gia các câu lạc bộ học thuật', 0, 1),
+(6, '6. Thành viên đội tuyển dự thi Olympic các môn học:', 0, 1),
+(7, '1. Chấp hành tốt nội quy, quy chế của nhà trường', 15, 2),
+(8, '2. Tham gia đầy đủ các buổi họp của trường, khoa, CVHT, lớp tổ chức', 10, 2),
+(9, '3. Một lần vi phạm quy chế, quy định của trường (có biên bản xử lý)', -10, 2),
+(10, '4. Vắng 01 buổi họp do trường, khoa, CVHT, lớp tổ chức không lý do', -5, 2),
+(11, '1. Tham gia các hoạt động chính trị – xã hội do nhà trường quy định:', 0, 3),
+(12, '2. Tham gia hoạt động văn hóa, văn nghệ, TDTT, phòng chống TNXH…', 5, 3),
+(13, '3. Tham gia trong đội tuyển văn nghệ, TDTT :', 0, 3),
+(14, '1. Chấp hành tốt các chủ trương, chính sách, pháp luật của nhà nước:', 10, 4),
+(15, '2. Được biểu dương người tốt, việc tốt ở nhà trường hoặc ở địa phương (có giấy chứng nhận)', 5, 4),
+(16, '3. Tham gia các hoạt động tình nguyện trung hạn: MHX, Tiếp sức mùa thi', 10, 4),
+(17, '4. Tham gia các công tác xã hội và các hoạt động tình nguyện ngắn ngày (có xác nhận của đơn vị tổ chức)', 10, 4),
+(18, '5. Có tinh thần chia sẻ, giúp đỡ người có khó khăn, hoạn nạn', 5, 4),
+(19, '6. Tham gia hiến máu tình nguyện', 5, 4),
+(20, '7. Tham gia hội thao GDQP –AN cấp quận, cấp TP', 5, 4),
+(21, '8. Vi phạm ATGT, trật tự công cộng (có giấy báo gửi về trường)', -10, 4),
+(22, '1. Lớp trưởng, BCH Đoàn trường, BCH Hội sinh viên trường', 10, 5),
+(23, '2. Lớp phó, BCH Đoàn khoa, BCH LCH SV; BCH CĐ, BCH chi hội lớp', 8, 5),
+(24, '3. Tổ trưởng, tổ phó', 3, 5),
+(25, '4. Đảng viên', 8, 5),
+(26, '5. Đối tượng Đảng', 5, 5),
+(27, '6. Đoàn viên TNCS Hồ Chí Minh', 3, 5),
+(28, '7. Được Đoàn thanh niên, Hội sinh viên biểu dương, khen thưởng', 0, 5),
+(29, '*Tham gia các họat động đặc biệt do nhà trường huy động', 15, 6),
+(30, '*Đạt giải thưởng trong các kì thi cấp tỉnh thành trở lên', 15, 6);
 
 -- --------------------------------------------------------
 
@@ -420,7 +458,7 @@ INSERT INTO `tieuchicap3` (`matc3`, `noidung`, `diem`, `matc2`) VALUES
 (4, 'd. Điểm trung bình chung học kì từ  2,00 đến 2,49', 2, 1),
 (5, 'đ. Điểm trung bình chung học kì  dưới 2,00', 0, 1),
 (6, 'a. Kết quả học tập tăng một bậc so với học kỳ trước,  ĐTBCHK từ  2,00 trở lên', 3, 2),
-(7, 'a. Kết quả học tập tăng một bậc so với học kỳ trước,  ĐTBCHK từ  2,00 trở lên', 6, 2),
+(7, 'b. Kết quả học tập tăng hai bậc so với học kỳ trước,  ĐTBCHK từ  2,00 trở lên', 6, 2),
 (8, 'c. Sinh viên năm thứ I, nếu có kết quả học tập HK I từ 2,00 trở lên', 3, 2),
 (9, 'a. Khóa luận tốt nghiệp từ loại giỏi trở lên', 6, 3),
 (10, 'b. Đề tài NCKH cấp trường từ loại giỏi trở lên', 6, 3),
@@ -435,15 +473,13 @@ INSERT INTO `tieuchicap3` (`matc3`, `noidung`, `diem`, `matc2`) VALUES
 (19, 'a. Cấp khoa', 4, 6),
 (20, 'b. Cấp trường', 6, 6),
 (21, 'c. Cấp toàn quốc', 10, 6),
-(22, 'a. Tham gia đầy đủ các buổi sinh hoạt chính trị xã hội theo quy định', 10, 7),
-(23, 'b. Vắng mặt 01 buổi không lý do', -5, 7),
-(24, 'a. Cấp khoa', 5, 9),
-(25, 'b. Cấp trường', 10, 9),
-(26, 'c. Được khen thưởng cấp toàn quốc', 15, 9),
-(27, 'a. Cấp khoa', 5, 23),
-(28, 'b. Cấp trường, cấp thành phố', 10, 23),
-(29, '*Tham gia các họat động đặc biệt do nhà trường huy động', 15, 30),
-(30, '*Đạt giải thưởng trong các kì thi cấp tỉnh thành trở lên', 15, 30);
+(22, 'a. Tham gia đầy đủ các buổi sinh hoạt chính trị xã hội theo quy định', 10, 11),
+(23, 'b. Vắng mặt 01 buổi không lý do', -5, 11),
+(24, 'a. Cấp khoa', 5, 13),
+(25, 'b. Cấp trường', 10, 13),
+(26, 'c. Được khen thưởng cấp toàn quốc', 15, 13),
+(27, 'a. Cấp khoa', 5, 28),
+(28, 'b. Cấp trường, cấp thành phố', 10, 28);
 
 -- --------------------------------------------------------
 
@@ -465,9 +501,8 @@ CREATE TABLE `user_token` (
 --
 
 INSERT INTO `user_token` (`stt`, `maSo`, `token`, `quyen`, `thoiGianDangNhap`, `thoiGianHetHan`) VALUES
-(193, 'ctsv1', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJpYXQiOjE2NTI3OTc3OTksIm5iZiI6MTY1Mjc5NzgwOSwiZXhwIjoxNjUyODg0MTk5LCJhdWQiOiJwaG9uZ2Nvbmd0YWNzaW5odmllbiIsInBob25nY29uZ3RhY3Npbmh2aWVuIjp7InRhaUtob2FuIjoiY3RzdjEiLCJob1Rlbk5oYW5WaWVuIjoiTmhcdTAwZTJuIHZpXHUwMGVhbiBDVFNWIDEiLCJxdXllbiI6ImN0c3YifX0.9z9bjrtaxzbvCwPDhjFb6FAal9wEcNAwBH5tUWBKqhk', 'ctsv', '2022-05-17 09:29:59', '2022-05-18 09:29:59'),
-(203, '3119200001', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJpYXQiOjE2NTI3OTk5NDIsIm5iZiI6MTY1Mjc5OTk1MiwiZXhwIjoxNjUyODg2MzQyLCJhdWQiOiJzaW5odmllbiIsInNpbmh2aWVuIjp7Im1hU2luaFZpZW4iOiIzMTE5MjAwMDAxIiwiaG9UZW5TaW5oVmllbiI6IlZcdTAwZDUgVFVcdTFlYTROIEFOSCAiLCJxdXllbiI6InNpbmh2aWVuIn19.v7ync6oStbVDR_X00WgRzVCRZ-yu9hXwkTmOWN5UXmw', 'sinhvien', '2022-05-17 10:05:42', '2022-05-18 10:05:42'),
-(204, '3118410262', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJpYXQiOjE2NTI4MDIxNTMsIm5iZiI6MTY1MjgwMjE2MywiZXhwIjoxNjUyODg4NTUzLCJhdWQiOiJzaW5odmllbiIsInNpbmh2aWVuIjp7Im1hU2luaFZpZW4iOiIzMTE4NDEwMjYyIiwiaG9UZW5TaW5oVmllbiI6Ik5ndXlcdTFlYzVuIFRoXHUwMWIwXHUwMWExbmcgTVx1MWViZm4iLCJxdXllbiI6InNpbmh2aWVuIn19.k-jfeu9rhLTproBBQ6MAOE9J-cb94-QFG__FQD_Xukk', 'sinhvien', '2022-05-17 10:42:33', '2022-05-18 10:42:33');
+(222, 'ctsv1', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJpYXQiOjE2NTMxNjk4MjYsIm5iZiI6MTY1MzE2OTgzNiwiZXhwIjoxNjUzMjU2MjI2LCJhdWQiOiJwaG9uZ2Nvbmd0YWNzaW5odmllbiIsInBob25nY29uZ3RhY3Npbmh2aWVuIjp7InRhaUtob2FuIjoiY3RzdjEiLCJob1Rlbk5oYW5WaWVuIjoiTmhcdTAwZTJuIHZpXHUwMGVhbiBDVFNWIDEiLCJxdXllbiI6ImN0c3YifX0.Z1wFLWQF4PBt3ofAAAZ3iN3YpGP0jEzy7BO7hwb9MV0', 'ctsv', '2022-05-21 16:50:26', '2022-05-22 16:50:26'),
+(225, '3118410262', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJpYXQiOjE2NTMyMzU3MzUsIm5iZiI6MTY1MzIzNTc0NSwiZXhwIjoxNjUzMzIyMTM1LCJhdWQiOiJzaW5odmllbiIsInNpbmh2aWVuIjp7Im1hU2luaFZpZW4iOiIzMTE4NDEwMjYyIiwiaG9UZW5TaW5oVmllbiI6Ik5ndXlcdTFlYzVuIFRoXHUwMWIwXHUwMWExbmcgTVx1MWViZm4iLCJxdXllbiI6InNpbmh2aWVuIn19.8tY-Ao_RMZ1dLaHqcYiMw0ujH5YyltMk7r5ruP-I_kk', 'sinhvien', '2022-05-22 11:08:55', '2022-05-23 11:08:55');
 
 --
 -- Indexes for dumped tables
@@ -577,25 +612,13 @@ ALTER TABLE `user_token`
 -- AUTO_INCREMENT for table `chamdiemrenluyen`
 --
 ALTER TABLE `chamdiemrenluyen`
-  MODIFY `maChamDiemRenLuyen` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `maChamDiemRenLuyen` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `hoatdongdanhgia`
 --
 ALTER TABLE `hoatdongdanhgia`
   MODIFY `maHoatDong` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `hockydanhgia`
---
-ALTER TABLE `hockydanhgia`
-  MODIFY `maHocKyDanhGia` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `phieurenluyen`
---
-ALTER TABLE `phieurenluyen`
-  MODIFY `maPhieuRenLuyen` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `thamgiahoatdong`
@@ -607,7 +630,7 @@ ALTER TABLE `thamgiahoatdong`
 -- AUTO_INCREMENT for table `thongbaodanhgia`
 --
 ALTER TABLE `thongbaodanhgia`
-  MODIFY `maThongBao` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `maThongBao` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `tieuchicap1`
@@ -619,19 +642,19 @@ ALTER TABLE `tieuchicap1`
 -- AUTO_INCREMENT for table `tieuchicap2`
 --
 ALTER TABLE `tieuchicap2`
-  MODIFY `matc2` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `matc2` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT for table `tieuchicap3`
 --
 ALTER TABLE `tieuchicap3`
-  MODIFY `matc3` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `matc3` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `user_token`
 --
 ALTER TABLE `user_token`
-  MODIFY `stt` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=205;
+  MODIFY `stt` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=226;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

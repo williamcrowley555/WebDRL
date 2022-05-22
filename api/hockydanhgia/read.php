@@ -23,7 +23,7 @@
             $itemCount = $stmt->rowCount();
     
     
-            echo json_encode($itemCount); //print itemCount
+            //echo json_encode($itemCount); //print itemCount
             if($itemCount > 0){
                 $hockydanhgiaArr = array();
                 $hockydanhgiaArr["hockydanhgia"] = array(); //tạo object json 
@@ -34,10 +34,7 @@
                     $e = array(
                         "maHocKyDanhGia" => $maHocKyDanhGia ,
                         "hocKyXet" => $hocKyXet,
-                        "namHocXet" => $namHocXet,
-                        "maSinhVien" => $maSinhVien,
-                        "coVanDuyet" => $coVanDuyet,
-                        "khoaDuyet" => $khoaDuyet
+                        "namHocXet" => $namHocXet
                     );
                     array_push($hockydanhgiaArr["hockydanhgia"], $e);
                 }
