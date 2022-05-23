@@ -25,12 +25,17 @@ if ($data["status"] == 1) {
 
         if ($data != null) {
             //set các biến bằng data nhận từ user
+            $item->maHocKyDanhGia = $data->maHocKyDanhGia;
             $item->hocKyXet = $data->hocKyXet;
             $item->namHocXet = $data->namHocXet;
-            $item->maSinhVien = $data->maSinhVien;
-            $item->coVanDuyet = $data->coVanDuyet;
-            $item->khoaDuyet = $data->khoaDuyet;
 
+            $upload_path = './upload/'.$item->maHocKyDanhGia.'/';
+
+            //$upload_path = './upload/'.$item->maHocKyDanhGia.'/'.$item->maSinhVien.'/';
+
+            if (!is_dir($upload_path)){
+                mkdir($upload_path, 0777, true);
+            }
 
             if ($item->createHocKyDanhGia()) {
                 echo 'hockydanhgia created successfully.';

@@ -23,7 +23,7 @@
         //GET ALL NO PAGING
         public function getAllSinhVienNoPaging(){
         
-            $sqlQuery = "SELECT maSinhVien, hoTenSinhVien, ngaySinh, he, matKhauSinhVien, maLop FROM " . $this->db_table . "";
+            $sqlQuery = "SELECT maSinhVien, hoTenSinhVien, ngaySinh, he, maLop FROM " . $this->db_table . "";
             
             $stmt = $this->conn->prepare($sqlQuery);
             $stmt->execute();
@@ -39,14 +39,26 @@
 
                 $begin = ($page * $row_per_page) - $row_per_page;
                 
-                $sqlQuery = "SELECT maSinhVien, hoTenSinhVien, ngaySinh, he, matKhauSinhVien, maLop FROM " . $this->db_table . " LIMIT ".$begin.",".$row_per_page."";
+                $sqlQuery = "SELECT maSinhVien, hoTenSinhVien, ngaySinh, he, maLop FROM " . $this->db_table . " LIMIT ".$begin.",".$row_per_page."";
 
             }else{
-                $sqlQuery = "SELECT maSinhVien, hoTenSinhVien, ngaySinh, he, matKhauSinhVien, maLop FROM " . $this->db_table . "";
+                $sqlQuery = "SELECT maSinhVien, hoTenSinhVien, ngaySinh, he, maLop FROM " . $this->db_table . "";
                 
             }
 
             $stmt = $this->conn->prepare($sqlQuery);
+            $stmt->execute();
+            return $stmt;
+
+        }
+
+        // GET ALL SINHVIEN THEO MALOP
+        public function getAllSinhVienTheoMaLop($maLop){
+            $sqlQuery = "SELECT maSinhVien, hoTenSinhVien, ngaySinh, he, maLop FROM " . $this->db_table . " 
+                        WHERE maLop = ? ";
+            
+            $stmt = $this->conn->prepare($sqlQuery);
+            $stmt->bindParam(1, $maLop );
             $stmt->execute();
             return $stmt;
 

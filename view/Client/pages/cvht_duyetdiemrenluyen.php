@@ -36,7 +36,7 @@
                         </div>
                     </div>
                     <h6 style="text-align: left">Danh sách lớp cố vấn</h6>
-                    <table class="table align-middle mb-0 bg-white table-striped">
+                    <table class="table align-middle mb-0 bg-white table-hover">
                             <thead class="bg-light">
                               <tr>
                                 <th>STT</th>

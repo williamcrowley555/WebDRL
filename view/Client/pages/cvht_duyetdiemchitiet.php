@@ -1,7 +1,7 @@
 <?php
     include_once "header.php";
 
-    if ($quyenNguoiDung != 'sinhvien'){
+    if ($quyenNguoiDung != 'cvht'){
         echo "<script>history.go(-1)</script>";
     }
 
@@ -52,7 +52,7 @@
                                             <th scope="col"><strong>Điểm tối đa</strong></th>
                                             <th scope="col"><strong>Điểm SV tự đánh giá</strong></th>
                                             <!-- <th scope="col"><strong>Điểm lớp đánh giá</strong></th> -->
-                                            <!-- <th scope="col"><strong>Ghi chú</strong></th> -->
+                                            <th scope="col"><strong>Ghi chú</strong></th>
                                         </tr>
                                     </thead>
                                     <tbody id="tbody_noiDungDanhGia">
@@ -120,32 +120,15 @@
         <script>
             HienThiThongTinVaDanhGia();
 
-            //Code tự tính điểm tổng cộng
-            $('#tbody_noiDungDanhGia').find("input").on('change', function(){
-                let calDiemTongCong = 0;
-                $("#tbody_noiDungDanhGia").find("input").each(function () {
-                    var tieuChi = this.id.slice(0, 8);
-                  
-                    if (tieuChi == 'TongCong'){
-                        if (this.value != null){
-                            calDiemTongCong = calDiemTongCong + Number(this.value);
-                        }
-                        
-                    }
-                    
-                });
+          
 
-                $('#input_diemtongcong').val(calDiemTongCong);
-
-            });
-
-
-
+    
             function chamDiemRenLuyen() {
 
                 $("form#formDanhGiaDRL").on("submit",function (e) {
                 e.preventDefault();
-          
+
+                console.log("da vo day");
 
                 Swal.fire({
                 title: 'Xác nhận chấm điểm rèn luyện?',
@@ -159,44 +142,16 @@
                     var _inputDiemTBCHKTruoc = $("#inputTBCHocKyTruoc").val();
                     var _inputDiemTBCHKDangXet = $("#inputTBCHocKyDangXet").val();
                     var _inputMaHocKyDanhGia = $("#input_maHocKyDanhGia").val();
-                    var _inputDiemTongCong = Number($('#input_diemtongcong').val());
-                    var _inputXepLoai = '';
-                        
+                    var _inputDiemTongCong = $('#input_diemtongcong').val();
                 
                     var _inputMaPhieuRenLuyen = "PRL" + _inputMaHocKyDanhGia + _inputMaSinhVien;
                     //vd: maPhieuRenLuyen = PRLHK121223118410262
                 
-                    if (_inputDiemTongCong >= 90 && _inputDiemTongCong <= 100){
-                        _inputXepLoai = 'Xuất sắc';
-                    }
-
-                    if (_inputDiemTongCong >= 80 && _inputDiemTongCong <= 89){
-                        _inputXepLoai = 'Tốt';
-                    }
-
-                    if (_inputDiemTongCong >= 65 && _inputDiemTongCong <= 79){
-                        _inputXepLoai = 'Khá';
-                    }
-
-                    if (_inputDiemTongCong >= 50 && _inputDiemTongCong <= 64){
-                        _inputXepLoai = 'Trung bình';
-                    }
-
-                    if (_inputDiemTongCong >= 35 && _inputDiemTongCong <= 49){
-                        _inputXepLoai = 'Yếu';
-                    }
-
-                    if (_inputDiemTongCong < 35){
-                        _inputXepLoai = 'Kém';
-                    }
-
-                  
                     
                          var formData = new FormData(document.getElementById('formDanhGiaDRL'));
                          formData.append("maPhieuRenLuyen", _inputMaPhieuRenLuyen);
                          formData.append("maSinhVien", _inputMaSinhVien);
                          formData.append("maHocKyDanhGia", _inputMaHocKyDanhGia);
-                         formData.append("xepLoai", _inputXepLoai);
 
                         //Tạo phiếu rèn luyện trước
                         $.ajax({
@@ -330,12 +285,10 @@
                             
                             },
                             error: function (errorMessage_tc3) {
-                            
-                                console.log(errorMessage_tc3.responseJSON.message);
                                 Swal.fire({
                                     icon: "error",
                                     title: "Lỗi",
-                                    text: errorMessage_tc3.responseJSON.message,
+                                    text: errorMessage_tc3.responseText,
                                     //timer: 5000,
                                     timerProgressBar: true,
                                 });

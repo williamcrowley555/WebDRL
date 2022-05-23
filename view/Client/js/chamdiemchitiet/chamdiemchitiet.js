@@ -72,9 +72,9 @@ function HienThiThongTinVaDanhGia() {
                   {
                     
                       //vẫn còn trong thời gian mở chấm nên giữ nguyên page
-                      getTieuChiDanhGia();
                       getThongTinNguoiDung();
-  
+                      getTieuChiDanhGia();
+                      
                   }else{
                       window.location.href = 'chamdiem.php';
                   }
@@ -163,14 +163,14 @@ function getTieuChiDanhGia() {
                                         <td><em>" + result_tc2[index_tc2][k].noidung +"</em></td>\
                                         <td><em>" +result_tc2[index_tc2][k].diemtoida +"đ</em></td>\
                                         <td><input type='number' style='width: 100px;' onchange='changeNumberHandle(this,"+ result_tc2[index_tc2][k].diemtoida +")' id='TC2_" + result_tc2[index_tc2][k].matc2 +"' /></td>\
-                                        <td><input type='text' style='width: 100px;'  id='ghiChuTC2_" + result_tc2[index_tc2][k].matc2 +"' /></td>\
                                     </tr>");
+
+                                    // <td><input type='text' style='width: 100px;'  id='ghiChuTC2_" + result_tc2[index_tc2][k].matc2 +"' /></td>\
                                     
                                 } else {
                                     if (result_tc2[index_tc2][k].noidung == "1.Kết quả học tập: ") {
                                         $("#tbody_noiDungDanhGia").append("<tr>\
-                                            <td><em>" + result_tc2[index_tc2][k].noidung +"<br>Điểm TBC học kỳ trước: <input type='number' id='inputTBCHocKyTruoc' style='width: 100px;margin-right: 30px' />Điểm TBC học kỳ đang xét: <input type='number' id='inputTBCHocKyDangXet' style='width: 100px;' /> </em></td>\
-                                            <td></td>\
+                                            <td><em>" + result_tc2[index_tc2][k].noidung +"<br>Điểm TBC học kỳ trước: <input type='text' id='inputTBCHocKyTruoc' name='diemTrungBinhChungHKTruoc' style='width: 100px;margin-right: 30px' />Điểm TBC học kỳ đang xét: <input type='text' id='inputTBCHocKyDangXet' name='diemTrungBinhChungHKXet' style='width: 100px;' /> </em></td>\
                                             <td></td>\
                                             <td></td>\
                                             </tr>"
@@ -178,7 +178,6 @@ function getTieuChiDanhGia() {
                                     } else {
                                         $("#tbody_noiDungDanhGia").append("<tr>\
                                             <td><em>" + result_tc2[index_tc2][k].noidung +"</em></td>\
-                                            <td></td>\
                                             <td></td>\
                                             <td></td>\
                                             </tr>"
@@ -205,11 +204,11 @@ function getTieuChiDanhGia() {
                                             $("#tbody_noiDungDanhGia").append("<tr>\
                                                 <td>" +result_tc3[index_tc3][p].noidung +"</span></td>\
                                                 <td><em>" + result_tc3[index_tc3][p].diem + "đ</em></td>\
-                                                <td><input type='number' style='width: 100px;' onchange='changeNumberHandle(this,"+ result_tc3[index_tc3][k].diem +")' id='TC3_" + result_tc3[index_tc3][p].matc3 + "' /></td>\
-                                                <td><input type='text' style='width: 100px;'  id='ghiChuTC3_" + result_tc3[index_tc3][p].matc3 + "' /></td>\
+                                                <td><input type='number' style='width: 100px;' onchange='changeNumberHandle(this,"+ result_tc3[index_tc3][p].diem +")' id='TC3_" + result_tc3[index_tc3][p].matc3 + "' /></td>\
                                                 </tr>");
-
                                             }
+
+                                            // <td><input type='text' style='width: 100px;'  id='ghiChuTC3_" + result_tc3[index_tc3][p].matc3 + "' /></td>\
                                         }
                                         });
                                     },
@@ -231,8 +230,7 @@ function getTieuChiDanhGia() {
                 <td style='font-weight: bold;' >Cộng: </span>\
                 </td>\
                 <td><em></em></td>\
-                <td><input type='number' style='width: 100px' onchange='changeNumberHandle(this,"+ result[index][i].diemtoida +")' id='TC1_" + result[index][i].matc1 +"' /></td>\
-                <td></td>\
+                <td><input type='number' style='width: 100px' onchange='changeNumberHandle(this,"+ result[index][i].diemtoida +")' id='TongCong_TC1_" + result[index][i].matc1 +"' /></td>\
                 </tr>"
             );
             }
@@ -250,15 +248,15 @@ function getTieuChiDanhGia() {
             <td style='font-weight: bold;' >ĐIỂM TỔNG CỘNG (tối đa không quá 100 điểm): </span>\
             </td>\
             <td><em></em></td>\
-            <td><input type='number' style='width: 100px' onchange='changeNumberHandle(this, 100)' id='input_diemtongcong' /></td>\
-            <td></td>\
+            <td><input type='number' style='width: 100px' onchange='changeNumberHandle(this, 100)' id='input_diemtongcong' name='diemTongCong' /></td>\
         </tr>"
     );
 
     $("#tbody_noiDungDanhGia").append(
         "<tr>\
             <td style='font-weight: bold;' >FILE MINH CHỨNG ĐÍNH KÈM (NẾU CÓ): </span>\
-            <input type='file' id='input_fileDinhKem' />\
+            <input type='file' id='input_fileDinhKem' name='fileDinhKem' />\
+            <br> <span>Chỉ nhận file định dạng .zip và .rar (file nén)</span>\
             </td>\
         </tr>"
     );
@@ -384,12 +382,35 @@ function checkValidateInput(){
     var _input_diemtongcong = $('#input_diemtongcong').val();
 
    
-
     if (_input_diemtongcong == ''){
       thongBaoLoi("Vui lòng nhập điểm TỔNG CỘNG cuối cùng.");
       return false;
     }
-    
+
+    if (_inputTBCHocKyTruoc != null){
+      if (isNaN(parseFloat(_inputTBCHocKyTruoc))){
+        thongBaoLoi("Điểm trung bình chung phải là số! Mời nhập lại!");
+        return false;
+      }else{
+        if (parseFloat(_inputTBCHocKyTruoc) > 4){
+          thongBaoLoi("Điểm trung bình chung phải nhỏ hơn 4 (hệ 4)!");
+          return false;
+        }
+      }
+    }
+
+    if (_inputTBCHocKyDangXet != null){
+      if (isNaN(parseFloat(_inputTBCHocKyDangXet))){
+        thongBaoLoi("Điểm trung bình chung phải là số! Mời nhập lại!");
+        return false;
+      }else{
+        if (parseFloat(_inputTBCHocKyTruoc) > 4){
+          thongBaoLoi("Điểm trung bình chung phải nhỏ hơn 4 (hệ 4)!");
+          return false;
+        }
+      }
+    }
+
     
     return true;
       
@@ -399,190 +420,7 @@ function checkValidateInput(){
 
 
 //Chấm điểm rèn luyện
-function chamDiemRenLuyen() {
 
-  Swal.fire({
-    title: 'Xác nhận chấm điểm rèn luyện?',
-    showDenyButton: true,
-    confirmButtonText: 'Xác nhận',
-    denyButtonText: `Đóng`,
-  }).then((result) => {
-    if (result.isConfirmed) {
-      if (checkValidateInput()){
-        var _inputMaSinhVien = getCookie("maSo");
-        var _inputDiemTBCHKTruoc = $("#inputTBCHocKyTruoc").val();
-        var _inputDiemTBCHKDangXet = $("#inputTBCHocKyDangXet").val();
-        var _inputMaHocKyDanhGia = $("#input_maHocKyDanhGia").val();
-        var _inputDiemTongCong = $('#input_diemtongcong').val();
-    
-        var _inputMaPhieuRenLuyen = "PRL" + _inputMaHocKyDanhGia + _inputMaSinhVien;
-        //vd: maPhieuRenLuyen = PRLHK121223118410262
-    
-        var dataPost_PhieuRenLuyen = {
-            maPhieuRenLuyen: _inputMaPhieuRenLuyen,
-            xepLoai: '',
-            diemTongCong: _inputDiemTongCong,
-            maSinhVien: _inputMaSinhVien,
-            diemTrungBinhChungHKTruoc: _inputDiemTBCHKTruoc,
-            diemTrungBinhChungHKXet: _inputDiemTBCHKDangXet,
-            maHocKyDanhGia: $("#input_maHocKyDanhGia").val(),
-            coVanDuyet: null,
-            khoaDuyet: null,
-            fileDinhKem: null
-        };
-    
-        //Tạo phiếu rèn luyện trước
-        $.ajax({
-            url: "../../../api/phieurenluyen/create.php",
-            async: false,
-            type: "POST",
-            contentType: "application/json;charset=utf-8",
-            dataType: "json",
-            data: JSON.stringify(dataPost_PhieuRenLuyen),
-            headers: {
-                Authorization: jwtCookie,
-            },
-            success: function (resultCreate) {
-                //console.log(resultCreate);
-    
-                //Vòng lặp input để tạo các hàng giá trị của chamdiemrenluyen theo mã phiếu điểm rèn luyện
-                $("#tbody_noiDungDanhGia").find("input").each(function () {
-                    if (this.value != "") {
-                        var _inputDiemSVDanhGia = this.value;
-                        var tieuChi = this.id.slice(0, 3);
-    
-                        //Chưa xử lý thêm ghi chú (thêm 1 switch case trước switch case tiêu chí này)
-                        switch (tieuChi) {
-                            case "TC2": {
-                                var _inputMaTieuChi2 = this.id.slice(4, this.id.length);
-    
-                                var dataPost_ChamDiemRenLuyen = {
-                                    maPhieuRenLuyen: _inputMaPhieuRenLuyen,
-                                    maTieuChi3: null,  
-                                    maTieuChi2: _inputMaTieuChi2,
-                                    maSinhVien: _inputMaSinhVien,
-                                    diemSinhVienDanhGia: _inputDiemSVDanhGia,
-                                    diemLopDanhGia: null,
-                                    ghiChu: null
-                                };
-    
-                                //console.log(dataPost_ChamDiemRenLuyen);
-    
-                                $.ajax({
-                                url: "../../../api/chamdiemrenluyen/create.php",
-                                    async: false,
-                                    type: "POST",
-                                    contentType: "application/json;charset=utf-8",
-                                    dataType: "json",
-                                    data: JSON.stringify(dataPost_ChamDiemRenLuyen),
-                                    headers: {
-                                        Authorization: jwtCookie,
-                                    },
-                                    success: function (resultCreate_ChamDiemRenLuyen) {
-                                        //console.log(resultCreate_ChamDiemRenLuyen);
-                                    },
-                                    error: function (errorMessage) {
-                                        Swal.fire({
-                                        icon: "error",
-                                        title: "Lỗi",
-                                        text: errorMessage.responseText,
-                                        //timer: 5000,
-                                        timerProgressBar: true,
-                                        });
-                                    },
-                                });
-    
-                                break;
-                            }
-    
-                            case "TC3": {
-                                var _inputMaTieuChi3 = this.id.slice(4, this.id.length);
-    
-                                var dataPost_ChamDiemRenLuyen = {
-                                    maPhieuRenLuyen: _inputMaPhieuRenLuyen,
-                                    maTieuChi3: _inputMaTieuChi3,
-                                    maSinhVien: _inputMaSinhVien,
-                                    diemSinhVienDanhGia: _inputDiemSVDanhGia,
-                                    maTieuChi2: null,
-                                    ghiChu: null,
-                                    diemLopDanhGia: null
-    
-                                };
-    
-                                //console.log(dataPost_ChamDiemRenLuyen);
-                         
-                                $.ajax({
-                                url: "../../../api/chamdiemrenluyen/create.php",
-                                    async: false,
-                                    type: "POST",
-                                    contentType: "application/json;charset=utf-8",
-                                    dataType: "json",
-                                    data: JSON.stringify(dataPost_ChamDiemRenLuyen),
-                                    headers: {
-                                        Authorization: jwtCookie,
-                                    },
-                                    success: function (resultCreate_ChamDiemRenLuyen) {
-                                        //console.log(resultCreate_ChamDiemRenLuyen);
-                                    },
-                                    error: function (errorMessage) {
-                                        Swal.fire({
-                                        icon: "error",
-                                        title: "Lỗi",
-                                        text: errorMessage.responseText,
-                                        //timer: 5000,
-                                        timerProgressBar: true,
-                                        });
-                                    },
-                                });
-    
-                                break;
-                            }
-    
-                            default: {
-                                break;
-                            }
-                        }
-    
-                    }
-                });
-
-                Swal.fire({
-                  icon: "success",
-                  title: "Chấm điểm rèn luyện thành công!",
-                  text: "Đang chuyển hướng...",
-                  timer: 2500,
-                  timerProgressBar: true,
-                });
-                
-                window.setTimeout(function (){
-                  window.location.href = 'chamdiem.php';
-                }, 2500);
-                
-            },
-            error: function (errorMessage_tc3) {
-                Swal.fire({
-                    icon: "error",
-                    title: "Lỗi",
-                    text: errorMessage_tc3.responseText,
-                    //timer: 5000,
-                    timerProgressBar: true,
-                });
-            },
-        });
-      
-    
-      }
-
-
-      
-    }
-  })
-
-  
-
-
-    
-}
 
 
 function Test(){
