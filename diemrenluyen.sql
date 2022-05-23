@@ -2,10 +2,10 @@
 -- version 5.1.3
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: May 22, 2022 at 06:30 PM
--- Server version: 10.4.24-MariaDB
--- PHP Version: 7.4.29
+-- Máy chủ: 127.0.0.1
+-- Thời gian đã tạo: Th5 24, 2022 lúc 06:23 AM
+-- Phiên bản máy phục vụ: 10.4.24-MariaDB
+-- Phiên bản PHP: 7.4.29
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,13 +18,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `diemrenluyen`
+-- Cơ sở dữ liệu: `diemrenluyen`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `chamdiemrenluyen`
+-- Cấu trúc bảng cho bảng `chamdiemrenluyen`
 --
 
 CREATE TABLE `chamdiemrenluyen` (
@@ -39,7 +39,7 @@ CREATE TABLE `chamdiemrenluyen` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `chamdiemrenluyen`
+-- Đang đổ dữ liệu cho bảng `chamdiemrenluyen`
 --
 
 INSERT INTO `chamdiemrenluyen` (`maChamDiemRenLuyen`, `maPhieuRenLuyen`, `maTieuChi3`, `maTieuChi2`, `maSinhVien`, `diemSinhVienDanhGia`, `diemLopDanhGia`, `ghiChu`) VALUES
@@ -49,12 +49,16 @@ INSERT INTO `chamdiemrenluyen` (`maChamDiemRenLuyen`, `maPhieuRenLuyen`, `maTieu
 (24, 'PRLHK121223118410262', 0, 12, '3118410262', 5, 0, ''),
 (25, 'PRLHK121223118410262', 0, 14, '3118410262', 10, 0, ''),
 (26, 'PRLHK121223118410262', 0, 18, '3118410262', 5, 0, ''),
-(27, 'PRLHK121223118410262', 0, 27, '3118410262', 3, 0, '');
+(27, 'PRLHK121223118410262', 0, 27, '3118410262', 3, 0, ''),
+(42, 'PRLHK221223118410262', 0, 7, '3118410262', 15, 0, ''),
+(43, 'PRLHK221223118410262', 0, 8, '3118410262', 10, 0, ''),
+(44, 'PRLHK221223118410262', 22, 0, '3118410262', 10, 0, ''),
+(54, 'PRLHK221223118410018', 1, 0, '3118410018', 14, 0, '');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `covanhoctap`
+-- Cấu trúc bảng cho bảng `covanhoctap`
 --
 
 CREATE TABLE `covanhoctap` (
@@ -62,29 +66,20 @@ CREATE TABLE `covanhoctap` (
   `hoTenCoVan` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `soDienThoai` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `matKhauTaiKhoanCoVan` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `quyen` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'covanhoctap'
+  `quyen` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'cvht'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `covanhoctap`
+-- Đang đổ dữ liệu cho bảng `covanhoctap`
 --
 
 INSERT INTO `covanhoctap` (`maCoVanHocTap`, `hoTenCoVan`, `soDienThoai`, `matKhauTaiKhoanCoVan`, `quyen`) VALUES
-('23423', 'Nguyễn Văn B', '045234234234', '468171c825c02408cc99935447c785a5', 'covanhoctap'),
-('321', 'men', '0987654321', 'caf1a3dfb505ffed0d024130f58c5cfa', 'covanhoctap'),
-('34234', 'Cố vấn 1', '3424', 'e10adc3949ba59abbe56e057f20f883e', 'covanhoctap'),
-('969363', 'AAAA', '969363', '3223ebb174aaba8db2c4af254266cca0', 'covanhoctap'),
-('aloha', 'aloha', 'aloha', 'd34b6c59ef0497d8ff246abd1049352e', 'covanhoctap'),
-('data', 'data', 'data', '8d777f385d3dfec8815d20f7496026dc', 'covanhoctap'),
-('đádasd', 'ádasd', 'ádasd', '202cb962ac59075b964b07152d234b70', 'covanhoctap'),
-('fdfdsf', 'fdfdsf', 'fdfdsf', '0decf2e926011bf53eb22c7e6e73094d', 'covanhoctap'),
-('GV321', 'men', '0987654321', 'caf1a3dfb505ffed0d024130f58c5cfa', 'covanhoctap'),
-('vcvxcvxcvx', 'vcvxcvxcvx', 'vcvxcvxcvx', '7e529a9ee5d6a3a01833cf9eaeb41d29', 'covanhoctap');
+('11364', 'Lương Minh Huấn', '0559349434', '804fce744c17d9250210436d98709490', 'cvht');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `hoatdongdanhgia`
+-- Cấu trúc bảng cho bảng `hoatdongdanhgia`
 --
 
 CREATE TABLE `hoatdongdanhgia` (
@@ -103,7 +98,7 @@ CREATE TABLE `hoatdongdanhgia` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `hockydanhgia`
+-- Cấu trúc bảng cho bảng `hockydanhgia`
 --
 
 CREATE TABLE `hockydanhgia` (
@@ -113,7 +108,7 @@ CREATE TABLE `hockydanhgia` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `hockydanhgia`
+-- Đang đổ dữ liệu cho bảng `hockydanhgia`
 --
 
 INSERT INTO `hockydanhgia` (`maHocKyDanhGia`, `hocKyXet`, `namHocXet`) VALUES
@@ -123,7 +118,7 @@ INSERT INTO `hockydanhgia` (`maHocKyDanhGia`, `hocKyXet`, `namHocXet`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `khoa`
+-- Cấu trúc bảng cho bảng `khoa`
 --
 
 CREATE TABLE `khoa` (
@@ -135,7 +130,7 @@ CREATE TABLE `khoa` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `khoa`
+-- Đang đổ dữ liệu cho bảng `khoa`
 --
 
 INSERT INTO `khoa` (`maKhoa`, `tenKhoa`, `taiKhoanKhoa`, `matKhauKhoa`, `quyen`) VALUES
@@ -144,7 +139,7 @@ INSERT INTO `khoa` (`maKhoa`, `tenKhoa`, `taiKhoanKhoa`, `matKhauKhoa`, `quyen`)
 -- --------------------------------------------------------
 
 --
--- Table structure for table `khoahoc`
+-- Cấu trúc bảng cho bảng `khoahoc`
 --
 
 CREATE TABLE `khoahoc` (
@@ -154,7 +149,7 @@ CREATE TABLE `khoahoc` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `khoahoc`
+-- Đang đổ dữ liệu cho bảng `khoahoc`
 --
 
 INSERT INTO `khoahoc` (`maKhoaHoc`, `namBatDau`, `namKetThuc`) VALUES
@@ -163,7 +158,7 @@ INSERT INTO `khoahoc` (`maKhoaHoc`, `namBatDau`, `namKetThuc`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `lop`
+-- Cấu trúc bảng cho bảng `lop`
 --
 
 CREATE TABLE `lop` (
@@ -175,16 +170,18 @@ CREATE TABLE `lop` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `lop`
+-- Đang đổ dữ liệu cho bảng `lop`
 --
 
 INSERT INTO `lop` (`maLop`, `tenLop`, `maKhoa`, `maCoVanHocTap`, `maKhoaHoc`) VALUES
-('DCT1189', 'Công nghệ thông tin lớp 9', 'DCT', '11898', 'K18');
+('DCT1186', 'CNTT lớp 6', 'DCT', '11363', 'K18'),
+('DCT1188', 'CNTT lớp 8', 'DCT', '11364', 'K18'),
+('DCT1189', 'Công nghệ thông tin lớp 9', 'DCT', '11364', 'K18');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `phieurenluyen`
+-- Cấu trúc bảng cho bảng `phieurenluyen`
 --
 
 CREATE TABLE `phieurenluyen` (
@@ -201,16 +198,18 @@ CREATE TABLE `phieurenluyen` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `phieurenluyen`
+-- Đang đổ dữ liệu cho bảng `phieurenluyen`
 --
 
 INSERT INTO `phieurenluyen` (`maPhieuRenLuyen`, `xepLoai`, `diemTongCong`, `maSinhVien`, `diemTrungBinhChungHKTruoc`, `diemTrungBinhChungHKXet`, `maHocKyDanhGia`, `coVanDuyet`, `khoaDuyet`, `fileDinhKem`) VALUES
-('PRLHK121223118410262', '', 53, '3118410262', 0, 0, 'HK12122', 0, 0, '');
+('PRLHK121223118410262', 'Trung bình', 53, '3118410262', 0, 0, 'HK12122', 0, 0, ''),
+('PRLHK221223118410018', 'Kém', 14, '3118410018', 4, 4, 'HK22122', 0, 0, 'New Text Document.zip'),
+('PRLHK221223118410262', 'Yếu', 35, '3118410262', 3.5, 3, 'HK22122', 0, 0, 'New Text Document.zip');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `phongcongtacsinhvien`
+-- Cấu trúc bảng cho bảng `phongcongtacsinhvien`
 --
 
 CREATE TABLE `phongcongtacsinhvien` (
@@ -224,7 +223,7 @@ CREATE TABLE `phongcongtacsinhvien` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `phongcongtacsinhvien`
+-- Đang đổ dữ liệu cho bảng `phongcongtacsinhvien`
 --
 
 INSERT INTO `phongcongtacsinhvien` (`taiKhoan`, `matKhau`, `hoTenNhanVien`, `email`, `sodienthoai`, `diaChi`, `quyen`) VALUES
@@ -233,7 +232,7 @@ INSERT INTO `phongcongtacsinhvien` (`taiKhoan`, `matKhau`, `hoTenNhanVien`, `ema
 -- --------------------------------------------------------
 
 --
--- Table structure for table `sinhvien`
+-- Cấu trúc bảng cho bảng `sinhvien`
 --
 
 CREATE TABLE `sinhvien` (
@@ -247,86 +246,20 @@ CREATE TABLE `sinhvien` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `sinhvien`
+-- Đang đổ dữ liệu cho bảng `sinhvien`
 --
 
 INSERT INTO `sinhvien` (`maSinhVien`, `hoTenSinhVien`, `ngaySinh`, `he`, `matKhauSinhVien`, `maLop`, `quyen`) VALUES
-('1234', 'phong', '2022-04-12', 'a', '202cb962ac59075b964b07152d234b70', '123', 'sinhvien'),
-('3118410262', 'Nguyễn Thương Mến', '2006-04-07', 'Đại học', 'e10adc3949ba59abbe56e057f20f883e', 'DCT1189', 'sinhvien'),
-('3118410328', 'men', '2022-04-12', 'a', '202cb962ac59075b964b07152d234b70', '123', 'sinhvien'),
-('3119200001', 'VÕ TUẤN ANH ', '2001-01-13', 'Đại học', '0a76e3b1832d55f9dfdfc9e29ff59d38', 'DGD1191', 'sinhvien'),
-('3119200002', 'VƯƠNG NGỌC CHÂU ', '2000-09-25', 'Đại học', 'dcfcdfef773c27cee8850b66d6416df9', 'DGD1191', 'sinhvien'),
-('3119200003', 'NGUYỄN THỊ KIỀU DIỂM ', '2001-05-28', 'Đại học', '7df07f5ead2efcf30ffacf0a5d718564', 'DGD1191', 'sinhvien'),
-('3119200007', 'CAO HỒNG NHUẬN ', '2001-08-31', 'Đại học', 'da0b1a83844ee73f2c497f78c5a7df68', 'DGD1191', 'sinhvien'),
-('3119200008', 'HUỲNH THỊ HOÀNG PHẤN ', '2001-04-01', 'Đại học', 'd321a2e046edbb1d6b3e2d58fe19e0a2', 'DGD1191', 'sinhvien'),
-('3119200009', 'PHẠM THỊ YẾN PHƯƠNG ', '2001-07-25', 'Đại học', 'e424d1a0166e86dd2f10d649255b7ad3', 'DGD1191', 'sinhvien'),
-('3119200010', 'DƯƠNG PHẠM NGÂN QUỲNH ', '2001-06-19', 'Đại học', '561327ec9100e8073e5645989b9af25f', 'DGD1191', 'sinhvien'),
-('3119200011', 'LÊ THỊ THÙY TRANG ', '2001-09-18', 'Đại học', 'e1583b89e6bbbe884670af8ee7853520', 'DGD1191', 'sinhvien'),
-('3119200013', 'TÔ BẢO VY ', '2001-08-01', 'Đại học', '09e8f94923f747d130994a8d7a594e79', 'DGD1191', 'sinhvien'),
-('3120200001', 'NGUYỄN TUẤN ANH ', '2002-03-06', 'Đại học', 'cb4129b7759ba216e85b929f211d11de', 'DGD1201', 'sinhvien'),
-('3120200002', 'LÂM NHÃ BÌNH ', '2002-03-26', 'Đại học', 'd76f0c379930b4cfbfa734f533c5292f', 'DGD1201', 'sinhvien'),
-('3120200003', 'HUỲNH THỊ THANH CHÚC ', '2002-08-10', 'Đại học', 'bcf1e579199347b4d304da6d98c99554', 'DGD1201', 'sinhvien'),
-('3120200005', 'ĐẶNG NGỌC DUYÊN ', '2002-11-15', 'Đại học', '71600d42e6ec5232b6efa37757e9e8f7', 'DGD1201', 'sinhvien'),
-('3120200006', 'PHÙNG KIM HÂN ', '2002-06-20', 'Đại học', 'd83ea6067d01acbaf4f768c7a7110ef8', 'DGD1201', 'sinhvien'),
-('3120200009', 'TRẦN THỊ YẾN KHOA ', '2002-11-18', 'Đại học', '7ab23d2373a191f3c385d02089ff2028', 'DGD1201', 'sinhvien'),
-('3120200010', 'NGUYỄN THỊ MỸ LINH ', '2002-10-05', 'Đại học', '407a0e03b95fae25b85f354401877f4f', 'DGD1201', 'sinhvien'),
-('3120200011', 'ĐẶNG LƯU NỮ CẨM LY ', '2002-02-01', 'Đại học', '3004618885b27a2a371f4b8be9c48963', 'DGD1201', 'sinhvien'),
-('3120200012', 'NGUYỄN LÊ HỒNG MAI ', '2002-10-20', 'Đại học', 'e42ea2678ea3bcaeff776aff256e9c28', 'DGD1201', 'sinhvien'),
-('3120200013', 'NGUYỄN THỊ NGỌC MAI ', '2002-11-12', 'Đại học', '95f571953e9589494be43e41ae6e9da5', 'DGD1201', 'sinhvien'),
-('3120200014', 'ĐINH THỊ DIỄM MY ', '2002-10-23', 'Đại học', '71c2573ef384e67c8b0269f907c4f608', 'DGD1201', 'sinhvien'),
-('3120200015', 'ĐÀO THỊ THU NGA ', '2002-01-12', 'Đại học', 'dd2f27180c0bbe920fdf49b691dfa88c', 'DGD1201', 'sinhvien'),
-('3120200016', 'NGUYỄN THỊ TUYẾT NGÂN ', '2002-01-02', 'Đại học', '4da7ae226de70fca73184b33455d8ead', 'DGD1201', 'sinhvien'),
-('3120200017', 'PHÙNG NGUYỄN NGỌC KIM NGÂN ', '2002-01-17', 'Đại học', 'cd8655e4e1db45d795b850a817ecd9c7', 'DGD1201', 'sinhvien'),
-('3120200018', 'PHÙNG ÁNH NGỌC ', '2002-12-11', 'Đại học', 'ad6dabe58bb9a9a63e211c506da92472', 'DGD1201', 'sinhvien'),
-('3120200019', 'ĐINH TÔ HOÀNG NGUYÊN ', '2002-04-16', 'Đại học', 'a6cd16ea4dca6907a1c673cd1798fb03', 'DGD1201', 'sinhvien'),
-('3120200022', 'DƯƠNG THỊ KIM QUYÊN ', '2002-08-07', 'Đại học', '0765d434e5b35c5af7f8a2012867dcd7', 'DGD1201', 'sinhvien'),
-('3120200024', 'HỒ QUANG THỊNH ', '2002-10-13', 'Đại học', 'a95a9de8ae625ec5370fc9d3d6f60e9f', 'DGD1201', 'sinhvien'),
-('3120200025', 'NGUYỄN THỊ HOÀI THU ', '2002-08-09', 'Đại học', 'f5f19da822341df5bf1330ad43c228fd', 'DGD1201', 'sinhvien'),
-('3120200026', 'NGUYỄN THỊ CẨM THUY ', '2002-03-05', 'Đại học', 'dfaaf8e5d813f1e77ff6a01f6b4b05c1', 'DGD1201', 'sinhvien'),
-('3120200029', 'NGUYỄN THỊ THÙY TRANG ', '2002-09-07', 'Đại học', '821185cddafe58f2976b03a925aec71c', 'DGD1201', 'sinhvien'),
-('3120200030', 'ĐÀO THỊ BÍCH TRÂM ', '2002-04-05', 'Đại học', 'd114955b922a4502439e1043913ff640', 'DGD1201', 'sinhvien'),
-('3120200032', 'NGUYỄN MAI TRÂN ', '2002-07-27', 'Đại học', 'c6b88bc00eff72264ccea1dbd63266e2', 'DGD1201', 'sinhvien'),
-('3120200033', 'NGUYỄN THANH TRÚC ', '2002-12-23', 'Đại học', '4c0d2dc3c5a8c7fe2b2292f82ccd4076', 'DGD1201', 'sinhvien'),
-('3120200034', 'PHƯƠNG PHI TRƯỜNG ', '2001-06-09', 'Đại học', 'cb27e3cd790850e20ca224b89df05590', 'DGD1201', 'sinhvien'),
-('3120200036', 'TÔ XUÂN VÀNG ', '2002-08-04', 'Đại học', 'e7c8e67ee008d86f6489aca3d3813e81', 'DGD1201', 'sinhvien'),
-('3120200037', 'LÊ THÚY VÂN ', '2002-09-11', 'Đại học', '1539678f34b8ddf39201472e26fcec8b', 'DGD1201', 'sinhvien'),
-('3120200038', 'NGUYỄN HUỲNH THẢO VY ', '2002-06-02', 'Đại học', 'fd20a307c1c11a5bb5a2ab05e9e36c0d', 'DGD1201', 'sinhvien'),
-('3120200039', 'NGUYỄN THỊ NGỌC YẾN ', '2002-10-28', 'Đại học', '94846eba5712252c0d5ea2fc2a317de9', 'DGD1201', 'sinhvien'),
-('3120200040', 'TRẦN THỊ KIM YẾN ', '2002-09-02', 'Đại học', '576972c2f455e1e024bfeddcb44c7f09', 'DGD1201', 'sinhvien'),
-('3121200002', 'CAO THỊ NGỌC ANH ', '2003-07-25', 'Đại học', '614cfd6748d614dcfe50852382601df0', 'DGD1211', 'sinhvien'),
-('3121200003', 'NGUYỄN HOÀNG PHƯƠNG ANH ', '2003-10-23', 'Đại học', 'e3713daae2a158844bccb2effab08f5c', 'DGD1211', 'sinhvien'),
-('3121200004', 'NGUYỄN QUỲNH ANH ', '2003-10-25', 'Đại học', 'af35525028fba23f63080b99f1da4820', 'DGD1211', 'sinhvien'),
-('3121200005', 'NGUYỄN LÊ KHÁNH DUY ', '2003-03-23', 'Đại học', '8726393725b768076e408177f871809a', 'DGD1211', 'sinhvien'),
-('3121200007', 'TRẦN THỊ KHÁNH HUYỀN ', '2003-04-04', 'Đại học', 'e4c666716af3cd9e7e29a1fdda4b2b56', 'DGD1211', 'sinhvien'),
-('3121200010', 'NGUYỄN THỊ PHƯƠNG LAN ', '0000-00-00', 'Đại học', 'e387f02b505af5ef67a9ac0f94877cf0', 'DGD1211', 'sinhvien'),
-('3121200011', 'NGUYỄN THANH LIÊM ', '2003-08-01', 'Đại học', '800e8ff35839f7adbaa32da8ffaa4dc0', 'DGD1211', 'sinhvien'),
-('3121200012', 'TRẦN NGỌC LIÊN ', '2003-02-22', 'Đại học', '94892bce34ca2fcbbe879393eca43afd', 'DGD1211', 'sinhvien'),
-('3121200013', 'LÊ THỊ THÙY LINH ', '2003-10-04', 'Đại học', '1e805dc3a38189ceeb06380a93e9310c', 'DGD1211', 'sinhvien'),
-('3121200014', 'THÁI THỊ BÍCH LOAN ', '2003-02-17', 'Đại học', 'cf6de6a4c8260c0787bc2bd36a2c497c', 'DGD1211', 'sinhvien'),
-('3121200016', 'NGUYỄN HỒ NGỌC NGÂN ', '2003-06-30', 'Đại học', '659d36ce8f5dd05549d3c17ac072dd9b', 'DGD1211', 'sinhvien'),
-('3121200017', 'NGUYỄN THỊ HỒNG NHUNG ', '2003-11-23', 'Đại học', 'fd0a06d98281cae4781afa4c25bbae3f', 'DGD1211', 'sinhvien'),
-('3121200018', 'ĐẶNG THỊ HUỲNH NHƯ ', '2003-10-20', 'Đại học', 'a0b844a6cf5c28fef2c3a4b7a1e16fa5', 'DGD1211', 'sinhvien'),
-('3121200019', 'SIM NIÊ ', '2003-11-20', 'Đại học', 'd59a56d14f005defd06067f5d6d60165', 'DGD1211', 'sinhvien'),
-('3121200020', 'TRẦN THỊ TÚ PHƯƠNG ', '2003-10-01', 'Đại học', '51d7cb151d3009e8d51b98406bcd7aab', 'DGD1211', 'sinhvien'),
-('3121200023', 'HỒ ANH THƯ ', '2003-02-12', 'Đại học', '2ab8abfb0d8050efe09db17b8df1939a', 'DGD1211', 'sinhvien'),
-('3121200024', 'MAI HOÀNG ĐOAN THƯ ', '2003-09-23', 'Đại học', '6c446ca4f9b85c6f3e575219613fbeea', 'DGD1211', 'sinhvien'),
-('3121200025', 'PHAN LÊ ANH THƯ ', '2003-12-08', 'Đại học', 'f8318da9fdf10bf24f155fb36fd98891', 'DGD1211', 'sinhvien'),
-('3121200026', 'TRẦN THỊ NGỌC THƯƠNG ', '0000-00-00', 'Đại học', 'c30834aff42a2814d5e86acedab306d9', 'DGD1211', 'sinhvien'),
-('3121200027', 'LĂNG NGUYỄN ĐOAN TRANG ', '2003-11-10', 'Đại học', 'f6dd2b849f55d5b36a06153d1636ff65', 'DGD1211', 'sinhvien'),
-('3121200028', 'LÊ PHẠM PHƯƠNG TRANG ', '2003-07-10', 'Đại học', '45605c7a6678b895dc492e4640c836af', 'DGD1211', 'sinhvien'),
-('3121200029', 'NGUYỄN THỊ BẢO TRÂM ', '2003-12-03', 'Đại học', '891147c5eeca69baf90c0892abe3b377', 'DGD1211', 'sinhvien'),
-('3121200030', 'NGUYỄN THỊ NGỌC TRÂM ', '2003-06-07', 'Đại học', '25f34038dc4aff8fe6a4f370c464373a', 'DGD1211', 'sinhvien'),
-('3121200032', 'MAI DƯƠNG HOÀNG TRINH ', '2003-01-31', 'Đại học', 'fce2cab5d569b81dc205147ef906d9ef', 'DGD1211', 'sinhvien'),
-('3121200033', 'TRẦN THỊ DIỄM TRINH ', '2003-08-26', 'Đại học', '0194892dd37298ab0670acd122fcabf0', 'DGD1211', 'sinhvien'),
-('3121200034', 'HUỲNH THỊ CẨM TÚ ', '2003-06-13', 'Đại học', 'cbfcf1523d1edd23fb5fbcb61ee4687f', 'DGD1211', 'sinhvien'),
-('3121200035', 'TRẦN NGUYỄN DIỄM TUYỀN ', '2003-10-23', 'Đại học', '55959c39896da629f01fe42745899ceb', 'DGD1211', 'sinhvien'),
-('3121200037', 'LÊ HUY VŨ ', '2003-11-08', 'Đại học', '666ac9e714b27da64e3cc8980e6d00b4', 'DGD1211', 'sinhvien'),
-('3121200039', 'TRẦN BẢO YẾN ', '2003-07-17', 'Đại học', '90f3aae95fad6648590fc2805f3c410d', 'DGD1211', 'sinhvien');
+('3118410018', 'LÊ NGÔ THIÊN ẤN', '2000-12-16', 'Đại học', '041f7b834b36b8d4f10e5a62b978550e', 'DCT1189', 'sinhvien'),
+('3118410030', 'BÙI HỮU BẰNG', '2000-04-07', 'Đại học', '1e0b1e37e1e1705428d0f3d22c81685d', 'DCT1189', 'sinhvien'),
+('3118410046', 'TRẦN THANH CỦA', '2000-10-13', 'Đại học', '73ea22f44907a127b85844322e41447c', 'DCT1189', 'sinhvien'),
+('3118410059', 'NGUYỄN PHƯỚC DUY', '2000-11-13', 'Đại học', 'd78c4e1abc3480c8899313aa648f9e03', 'DCT1189', 'sinhvien'),
+('3118410262', 'NGUYỄN THƯƠNG MẾN', '2000-06-01', 'Đại học', 'b75617aed87d1a170dd25d22547f888d', 'DCT1189', 'sinhvien');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `thamgiahoatdong`
+-- Cấu trúc bảng cho bảng `thamgiahoatdong`
 --
 
 CREATE TABLE `thamgiahoatdong` (
@@ -338,7 +271,7 @@ CREATE TABLE `thamgiahoatdong` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `thongbaodanhgia`
+-- Cấu trúc bảng cho bảng `thongbaodanhgia`
 --
 
 CREATE TABLE `thongbaodanhgia` (
@@ -354,7 +287,7 @@ CREATE TABLE `thongbaodanhgia` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `thongbaodanhgia`
+-- Đang đổ dữ liệu cho bảng `thongbaodanhgia`
 --
 
 INSERT INTO `thongbaodanhgia` (`maThongBao`, `ngaySinhVienDanhGia`, `ngaySinhVienKetThucDanhGia`, `ngayCoVanDanhGia`, `ngayCoVanKetThucDanhGia`, `ngayKhoaDanhGia`, `ngayKhoaKetThucDanhGia`, `ngayThongBao`, `maHocKyDanhGia`) VALUES
@@ -364,7 +297,7 @@ INSERT INTO `thongbaodanhgia` (`maThongBao`, `ngaySinhVienDanhGia`, `ngaySinhVie
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tieuchicap1`
+-- Cấu trúc bảng cho bảng `tieuchicap1`
 --
 
 CREATE TABLE `tieuchicap1` (
@@ -374,7 +307,7 @@ CREATE TABLE `tieuchicap1` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `tieuchicap1`
+-- Đang đổ dữ liệu cho bảng `tieuchicap1`
 --
 
 INSERT INTO `tieuchicap1` (`matc1`, `noidung`, `diemtoida`) VALUES
@@ -388,7 +321,7 @@ INSERT INTO `tieuchicap1` (`matc1`, `noidung`, `diemtoida`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tieuchicap2`
+-- Cấu trúc bảng cho bảng `tieuchicap2`
 --
 
 CREATE TABLE `tieuchicap2` (
@@ -399,7 +332,7 @@ CREATE TABLE `tieuchicap2` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `tieuchicap2`
+-- Đang đổ dữ liệu cho bảng `tieuchicap2`
 --
 
 INSERT INTO `tieuchicap2` (`matc2`, `noidung`, `diemtoida`, `matc1`) VALUES
@@ -437,7 +370,7 @@ INSERT INTO `tieuchicap2` (`matc2`, `noidung`, `diemtoida`, `matc1`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tieuchicap3`
+-- Cấu trúc bảng cho bảng `tieuchicap3`
 --
 
 CREATE TABLE `tieuchicap3` (
@@ -448,7 +381,7 @@ CREATE TABLE `tieuchicap3` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `tieuchicap3`
+-- Đang đổ dữ liệu cho bảng `tieuchicap3`
 --
 
 INSERT INTO `tieuchicap3` (`matc3`, `noidung`, `diem`, `matc2`) VALUES
@@ -484,7 +417,7 @@ INSERT INTO `tieuchicap3` (`matc3`, `noidung`, `diem`, `matc2`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `user_token`
+-- Cấu trúc bảng cho bảng `user_token`
 --
 
 CREATE TABLE `user_token` (
@@ -497,164 +430,166 @@ CREATE TABLE `user_token` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `user_token`
+-- Đang đổ dữ liệu cho bảng `user_token`
 --
 
 INSERT INTO `user_token` (`stt`, `maSo`, `token`, `quyen`, `thoiGianDangNhap`, `thoiGianHetHan`) VALUES
-(222, 'ctsv1', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJpYXQiOjE2NTMxNjk4MjYsIm5iZiI6MTY1MzE2OTgzNiwiZXhwIjoxNjUzMjU2MjI2LCJhdWQiOiJwaG9uZ2Nvbmd0YWNzaW5odmllbiIsInBob25nY29uZ3RhY3Npbmh2aWVuIjp7InRhaUtob2FuIjoiY3RzdjEiLCJob1Rlbk5oYW5WaWVuIjoiTmhcdTAwZTJuIHZpXHUwMGVhbiBDVFNWIDEiLCJxdXllbiI6ImN0c3YifX0.Z1wFLWQF4PBt3ofAAAZ3iN3YpGP0jEzy7BO7hwb9MV0', 'ctsv', '2022-05-21 16:50:26', '2022-05-22 16:50:26'),
-(225, '3118410262', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJpYXQiOjE2NTMyMzU3MzUsIm5iZiI6MTY1MzIzNTc0NSwiZXhwIjoxNjUzMzIyMTM1LCJhdWQiOiJzaW5odmllbiIsInNpbmh2aWVuIjp7Im1hU2luaFZpZW4iOiIzMTE4NDEwMjYyIiwiaG9UZW5TaW5oVmllbiI6Ik5ndXlcdTFlYzVuIFRoXHUwMWIwXHUwMWExbmcgTVx1MWViZm4iLCJxdXllbiI6InNpbmh2aWVuIn19.8tY-Ao_RMZ1dLaHqcYiMw0ujH5YyltMk7r5ruP-I_kk', 'sinhvien', '2022-05-22 11:08:55', '2022-05-23 11:08:55');
+(227, 'ctsv1', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJpYXQiOjE2NTMyNTY0ODcsIm5iZiI6MTY1MzI1NjQ5NywiZXhwIjoxNjUzMzQyODg3LCJhdWQiOiJwaG9uZ2Nvbmd0YWNzaW5odmllbiIsInBob25nY29uZ3RhY3Npbmh2aWVuIjp7InRhaUtob2FuIjoiY3RzdjEiLCJob1Rlbk5oYW5WaWVuIjoiTmhcdTAwZTJuIHZpXHUwMGVhbiBDVFNWIDEiLCJxdXllbiI6ImN0c3YifX0.8jiQIrjiXoxBvoUXw_zJOy6n6RiGFyn0UGhY0DORSYk', 'ctsv', '2022-05-22 16:54:47', '2022-05-23 16:54:47'),
+(241, '11364', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJpYXQiOjE2NTMzNDUzMDcsIm5iZiI6MTY1MzM0NTMxNywiZXhwIjoxNjUzNDMxNzA3LCJhdWQiOiJjdmh0IiwiY3ZodCI6eyJtYUNvVmFuSG9jVGFwIjoiMTEzNjQiLCJob1RlbkNvVmFuIjoiTFx1MDFiMFx1MDFhMW5nIE1pbmggSHVcdTFlYTVuIiwicXV5ZW4iOiJjdmh0In19.-tpVjmMinIP0SNXXRZAL4vc3SYeMJMRuQu182lSjjLU', 'cvht', '2022-05-23 17:35:07', '2022-05-24 17:35:07'),
+(243, '3118410262', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJpYXQiOjE2NTMzNDU2MDUsIm5iZiI6MTY1MzM0NTYxNSwiZXhwIjoxNjUzNDMyMDA1LCJhdWQiOiJzaW5odmllbiIsInNpbmh2aWVuIjp7Im1hU2luaFZpZW4iOiIzMTE4NDEwMjYyIiwiaG9UZW5TaW5oVmllbiI6Ik5HVVlcdTFlYzROIFRIXHUwMWFmXHUwMWEwTkcgTVx1MWViZU4iLCJxdXllbiI6InNpbmh2aWVuIn19.nO6Da23KqfsjZTuyHKcyE5G-4KM2_BQzqF4ljkzzHMw', 'sinhvien', '2022-05-23 22:40:05', '2022-05-24 22:40:05'),
+(245, '3118410018', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJpYXQiOjE2NTMzNDYxOTAsIm5iZiI6MTY1MzM0NjIwMCwiZXhwIjoxNjUzNDMyNTkwLCJhdWQiOiJzaW5odmllbiIsInNpbmh2aWVuIjp7Im1hU2luaFZpZW4iOiIzMTE4NDEwMDE4IiwiaG9UZW5TaW5oVmllbiI6IkxcdTAwY2EgTkdcdTAwZDQgVEhJXHUwMGNhTiBcdTFlYTROIiwicXV5ZW4iOiJzaW5odmllbiJ9fQ.U4VvWUJ9dJ5CC7SdsVzSPiHWP_VwYQ8V0Zc1CeSRGhs', 'sinhvien', '2022-05-23 22:49:50', '2022-05-24 22:49:50');
 
 --
--- Indexes for dumped tables
+-- Chỉ mục cho các bảng đã đổ
 --
 
 --
--- Indexes for table `chamdiemrenluyen`
+-- Chỉ mục cho bảng `chamdiemrenluyen`
 --
 ALTER TABLE `chamdiemrenluyen`
   ADD PRIMARY KEY (`maChamDiemRenLuyen`);
 
 --
--- Indexes for table `covanhoctap`
+-- Chỉ mục cho bảng `covanhoctap`
 --
 ALTER TABLE `covanhoctap`
   ADD PRIMARY KEY (`maCoVanHocTap`);
 
 --
--- Indexes for table `hoatdongdanhgia`
+-- Chỉ mục cho bảng `hoatdongdanhgia`
 --
 ALTER TABLE `hoatdongdanhgia`
   ADD PRIMARY KEY (`maHoatDong`);
 
 --
--- Indexes for table `hockydanhgia`
+-- Chỉ mục cho bảng `hockydanhgia`
 --
 ALTER TABLE `hockydanhgia`
   ADD PRIMARY KEY (`maHocKyDanhGia`);
 
 --
--- Indexes for table `khoa`
+-- Chỉ mục cho bảng `khoa`
 --
 ALTER TABLE `khoa`
   ADD PRIMARY KEY (`maKhoa`);
 
 --
--- Indexes for table `khoahoc`
+-- Chỉ mục cho bảng `khoahoc`
 --
 ALTER TABLE `khoahoc`
   ADD PRIMARY KEY (`maKhoaHoc`);
 
 --
--- Indexes for table `lop`
+-- Chỉ mục cho bảng `lop`
 --
 ALTER TABLE `lop`
   ADD PRIMARY KEY (`maLop`);
 
 --
--- Indexes for table `phieurenluyen`
+-- Chỉ mục cho bảng `phieurenluyen`
 --
 ALTER TABLE `phieurenluyen`
   ADD PRIMARY KEY (`maPhieuRenLuyen`);
 
 --
--- Indexes for table `phongcongtacsinhvien`
+-- Chỉ mục cho bảng `phongcongtacsinhvien`
 --
 ALTER TABLE `phongcongtacsinhvien`
   ADD PRIMARY KEY (`taiKhoan`);
 
 --
--- Indexes for table `sinhvien`
+-- Chỉ mục cho bảng `sinhvien`
 --
 ALTER TABLE `sinhvien`
   ADD PRIMARY KEY (`maSinhVien`);
 
 --
--- Indexes for table `thamgiahoatdong`
+-- Chỉ mục cho bảng `thamgiahoatdong`
 --
 ALTER TABLE `thamgiahoatdong`
   ADD PRIMARY KEY (`maThamGiaHoatDong`);
 
 --
--- Indexes for table `thongbaodanhgia`
+-- Chỉ mục cho bảng `thongbaodanhgia`
 --
 ALTER TABLE `thongbaodanhgia`
   ADD PRIMARY KEY (`maThongBao`);
 
 --
--- Indexes for table `tieuchicap1`
+-- Chỉ mục cho bảng `tieuchicap1`
 --
 ALTER TABLE `tieuchicap1`
   ADD PRIMARY KEY (`matc1`);
 
 --
--- Indexes for table `tieuchicap2`
+-- Chỉ mục cho bảng `tieuchicap2`
 --
 ALTER TABLE `tieuchicap2`
   ADD PRIMARY KEY (`matc2`);
 
 --
--- Indexes for table `tieuchicap3`
+-- Chỉ mục cho bảng `tieuchicap3`
 --
 ALTER TABLE `tieuchicap3`
   ADD PRIMARY KEY (`matc3`);
 
 --
--- Indexes for table `user_token`
+-- Chỉ mục cho bảng `user_token`
 --
 ALTER TABLE `user_token`
   ADD PRIMARY KEY (`stt`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT cho các bảng đã đổ
 --
 
 --
--- AUTO_INCREMENT for table `chamdiemrenluyen`
+-- AUTO_INCREMENT cho bảng `chamdiemrenluyen`
 --
 ALTER TABLE `chamdiemrenluyen`
-  MODIFY `maChamDiemRenLuyen` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `maChamDiemRenLuyen` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
 
 --
--- AUTO_INCREMENT for table `hoatdongdanhgia`
+-- AUTO_INCREMENT cho bảng `hoatdongdanhgia`
 --
 ALTER TABLE `hoatdongdanhgia`
   MODIFY `maHoatDong` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `thamgiahoatdong`
+-- AUTO_INCREMENT cho bảng `thamgiahoatdong`
 --
 ALTER TABLE `thamgiahoatdong`
   MODIFY `maThamGiaHoatDong` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `thongbaodanhgia`
+-- AUTO_INCREMENT cho bảng `thongbaodanhgia`
 --
 ALTER TABLE `thongbaodanhgia`
   MODIFY `maThongBao` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT for table `tieuchicap1`
+-- AUTO_INCREMENT cho bảng `tieuchicap1`
 --
 ALTER TABLE `tieuchicap1`
   MODIFY `matc1` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
--- AUTO_INCREMENT for table `tieuchicap2`
+-- AUTO_INCREMENT cho bảng `tieuchicap2`
 --
 ALTER TABLE `tieuchicap2`
   MODIFY `matc2` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
--- AUTO_INCREMENT for table `tieuchicap3`
+-- AUTO_INCREMENT cho bảng `tieuchicap3`
 --
 ALTER TABLE `tieuchicap3`
   MODIFY `matc3` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
--- AUTO_INCREMENT for table `user_token`
+-- AUTO_INCREMENT cho bảng `user_token`
 --
 ALTER TABLE `user_token`
-  MODIFY `stt` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=226;
+  MODIFY `stt` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=246;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
