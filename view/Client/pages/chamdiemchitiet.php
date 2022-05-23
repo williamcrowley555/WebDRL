@@ -1,6 +1,10 @@
 <?php
     include_once "header.php";
 
+    if ($quyenNguoiDung != 'sinhvien'){
+        echo "<script>history.go(-1)</script>";
+    }
+
     if (!isset($_GET['maHocKy'])){
         echo "<script>window.location.href = 'chamdiem.php';</script>";
     }

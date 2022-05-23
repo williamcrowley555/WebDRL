@@ -11,11 +11,9 @@
     include_once '../auth/check_quyen.php';
 
 
-$read_data = new read_data();
-$data = $read_data->read_token();
-$checkQuyen = new checkQuyen();
-
-
+    $read_data = new read_data();
+    $data = $read_data->read_token();
+    $checkQuyen = new checkQuyen();
 
     // kiểm tra đăng nhập thành công 
     if ($data["status"] == 1) {
@@ -26,35 +24,121 @@ $checkQuyen = new checkQuyen();
             $item = new PhieuRenLuyen($db); //new Khoa object
             $data = json_decode(file_get_contents("php://input")); //lấy request data từ user 
 
-            if ($data != null) {
-                //set các biến bằng data nhận từ user
-                $item->maPhieuRenLuyen = $data->maPhieuRenLuyen;
-                $item->xepLoai = $data->xepLoai;
-                $item->diemTongCong = $data->diemTongCong;
-                $item->maSinhVien = $data->maSinhVien;
-                $item->diemTrungBinhChungHKTruoc = $data->diemTrungBinhChungHKTruoc;
-                $item->diemTrungBinhChungHKXet = $data->diemTrungBinhChungHKXet;
-                $item->maHocKyDanhGia = $data->maHocKyDanhGia;
-                $item->coVanDuyet = $data->coVanDuyet;
-                $item->khoaDuyet = $data->khoaDuyet;
-                $item->fileDinhKem = $data->fileDinhKem;
 
-                
-                if ($item->createPhieuRenLuyen()) {
-                    http_response_code(200);
-                    echo json_encode(array(
-                        "message"=>"phieurenluyen created successful"
-                    ));
+            $fileName = $_FILES['fileDinhKem']['name'];
+            $tempPath = $_FILES['fileDinhKem']['tmp_name'];
+            $fileSize = $_FILES['fileDinhKem']['size'];
+
+
+            //Nếu không có file đính kèm thì chạy code này, ngược lại thì chạy code ở else
+            if (empty($fileName)){
+                if (isset($_POST['maPhieuRenLuyen']) && isset($_POST['maSinhVien']) &&
+                    isset($_POST['diemTrungBinhChungHKTruoc']) && isset($_POST['diemTrungBinhChungHKXet']) 
+                    && isset($_POST['maHocKyDanhGia']) && isset($_POST['diemTongCong'])){
+
+                    //set các biến bằng data nhận từ user
+                    $item->maPhieuRenLuyen = $_POST['maPhieuRenLuyen'];
+                    $item->xepLoai = null;
+                    $item->diemTongCong = $_POST['diemTongCong'];
+                    $item->maSinhVien = $_POST['maSinhVien'];
+                    $item->diemTrungBinhChungHKTruoc = $_POST['diemTrungBinhChungHKTruoc'];
+                    $item->diemTrungBinhChungHKXet = $_POST['diemTrungBinhChungHKXet'];
+                    $item->maHocKyDanhGia = $_POST['maHocKyDanhGia'];
+                    $item->coVanDuyet = null;
+                    $item->khoaDuyet = null;
+                    $item->fileDinhKem = null;
+        
+                        
+                    if ($item->createPhieuRenLuyen()) {
+                        http_response_code(200);
+                        echo json_encode(array(
+                            "message"=>"phieurenluyen created successful"
+                        ));
+                    } else {
+                        echo json_encode(array(
+                            "message"=>"phieurenluyen could not be created."
+                        ));
+                    }
+        
                 } else {
-                    echo json_encode(array(
-                        "message"=>"phieurenluyen could not be created."
-                    ));
+                    echo json_encode(
+                        array("message" => "No data posted!")
+                    );
                 }
-            } else {
-                echo json_encode(
-                    array("message" => "No data posted!")
-                );
+            }else{
+                $upload_path = 'upload/';
+
+                $fileExt = strtolower(pathinfo($fileName, PATHINFO_EXTENSION)); // lấy phần mở rộng (đuôi file)
+
+                $valid_extensions = array('zip','rar');
+
+                if (in_array($fileExt, $valid_extensions)){
+                    if (!file_exists($upload_path.$fileName)){ //check file có tồn tại trong folder upload chưa
+                        
+                        //fileSize nhỏ hơn 10MB
+                        if ($fileSize < 10000000){
+                           
+                            if (isset($_POST['maPhieuRenLuyen']) && isset($_POST['maSinhVien']) &&
+                                isset($_POST['diemTrungBinhChungHKTruoc']) && isset($_POST['diemTrungBinhChungHKXet']) 
+                                && isset($_POST['maHocKyDanhGia']) && isset($_POST['diemTongCong'])){
+
+                                //set các biến bằng data nhận từ user
+                                $item->maPhieuRenLuyen = $_POST['maPhieuRenLuyen'];
+                                $item->xepLoai = null;
+                                $item->diemTongCong = $_POST['diemTongCong'];
+                                $item->maSinhVien = $_POST['maSinhVien'];
+                                $item->diemTrungBinhChungHKTruoc = $_POST['diemTrungBinhChungHKTruoc'];
+                                $item->diemTrungBinhChungHKXet = $_POST['diemTrungBinhChungHKXet'];
+                                $item->maHocKyDanhGia = $_POST['maHocKyDanhGia'];
+                                $item->coVanDuyet = null;
+                                $item->khoaDuyet = null;
+                                $item->fileDinhKem = $fileName;
+                    
+                                if ($item->createPhieuRenLuyen()) {
+
+                                    move_uploaded_file($tempPath, $upload_path.$fileName);
+
+                                    http_response_code(200);
+                                    echo json_encode(array(
+                                        "message"=>"phieurenluyen created successful"
+                                    ));
+                                } else {
+                                    echo json_encode(array(
+                                        "message"=>"phieurenluyen could not be created."
+                                    ));
+                                }
+                    
+                            } else {
+                                echo json_encode(
+                                    array("message" => "No data posted!")
+                                );
+                            }
+
+
+                        }else{
+                            echo json_encode(
+                                array("message" => "File quá lớn, chỉ chấp nhận file nhỏ hơn 10MB")
+                            );
+                        }
+
+
+                    }else{
+                        echo json_encode(
+                            array("message" => "File đã tồn tại trên server")
+                        );
+                    }
+
+                }else{
+                    echo json_encode(
+                        array("message" => "Chỉ chấp nhận file định dạng .zip, .rar")
+                    );
+                }
+
+
             }
+
+            
+
         // } else {
         //     http_response_code(403);
         //     echo json_encode(

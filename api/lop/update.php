@@ -16,7 +16,7 @@
 
     // kiểm tra đăng nhập thành công 
     if($data["status"]==1){
-        if ($checkQuyen->checkQuyen_CTSV($data["user_data"]->aud)) {
+        if ($checkQuyen->checkQuyen_CVHT_Khoa_CTSV($data["user_data"]->aud)) {
             $database = new Database();
             $db = $database->getConnection();
             
@@ -41,7 +41,8 @@
     
             }else{
                 echo 'No data posted.';
-            }} else {
+            }
+        } else {
             http_response_code(403);
             echo json_encode(
                 array("message" => "Bạn không có quyền thực hiện điều này!")

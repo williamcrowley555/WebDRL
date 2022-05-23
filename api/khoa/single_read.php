@@ -16,7 +16,7 @@
 
     // kiểm tra đăng nhập thành công 
     if($data["status"]==1){
-       // if ($checkQuyen->checkQuyen_CTSV($data["user_data"]->aud)) {
+        //if ($checkQuyen->checkQuyen_CVHT_Khoa_CTSV($data["user_data"]->aud)) {
             $database = new Database();
             $db = $database->getConnection();
             $item = new Khoa($db);
@@ -27,8 +27,8 @@
                 // create array
                 $khoa_arr = array(
                     "maKhoa" =>  $item->maKhoa,
-                    "tenKhoa" => $item->tenKhoa,
-                    "taiKhoanKhoa" => $item->taiKhoanKhoa
+                    "tenKhoa" => $item->tenKhoa
+                    //"taiKhoanKhoa" => $item->taiKhoanKhoa
                     //"matKhauKhoa" => $item->matKhauKhoa
                 );
             
@@ -44,7 +44,8 @@
         //     http_response_code(403);
         //     echo json_encode(
         //         array("message" => "Bạn không có quyền thực hiện điều này!")
-        // );
+        //     );
+        // }
     } else {
         http_response_code(403);
         echo json_encode(

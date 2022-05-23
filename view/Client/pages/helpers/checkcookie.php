@@ -65,7 +65,7 @@
         public function CheckAuthOnlyLoginPage(){
             if (isset($_COOKIE['jwt'])){
                 if ($_COOKIE['jwt'] != null){
-                    echo "<script>history.go(-1);</script>";
+                    echo "<script>window.location.href = 'tracuudiemrenluyen.php';</script>";
     
                 }
             }

@@ -28,12 +28,31 @@
                     <div class="form-outline mb-4">
                         <div class="row justify-content-center" style="padding-bottom: 30px;">
                             <div class="col-4">
-                               <span style="font-weight: bold;">Họ tên: </span>Cố vấn học tập
+                               <span style="font-weight: bold;">Họ tên: </span><span id="text_HoTen" ></span>
                             </div>
                             <div class="col-4">
-                                <span style="font-weight: bold;">Mã số: </span>3
+                                <span style="font-weight: bold;">Mã số: </span><span id="text_MaSo"></span> 
                             </div>
-                          </div>
+                        </div>
+                    </div>
+                    <h6 style="text-align: left">Danh sách lớp cố vấn</h6>
+                    <table class="table align-middle mb-0 bg-white table-striped">
+                            <thead class="bg-light">
+                              <tr>
+                                <th>STT</th>
+                                <th>Mã lớp</th>
+                                <th>Tên lớp</th>
+                                <th>Khóa học</th>
+                                <th>Tên khoa</th>
+                                <th></th>
+                              </tr>
+                            </thead>
+                            <tbody id="tbody_DanhSachLop" >
+                              
+                              
+                            </tbody>
+                          </table>
+
 
                          
                     </div>
@@ -79,7 +98,11 @@
     <!-- Swiper for image and text sliders -->
     <script src="../js/scripts.js"></script>
 
+    <script src="../js/cvht/cvht_duyetdiemrenluyen.js"></script>
     
+    <script>
+        getThongTinLopCoVan();
+    </script>
     <!-- Custom scripts -->
     <!-- MDB -->
     <script type="text/javascript" src="../js/mdb.min.js"></script>

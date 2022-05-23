@@ -3,7 +3,7 @@
 /* Navigation*/
 // Collapse the navbar by adding the top-nav-collapse class
 window.onscroll = function () {
-	scrollFunction();
+	//scrollFunction();
 	scrollFunctionBTT(); // back to top button
 };
 

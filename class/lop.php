@@ -27,6 +27,17 @@
             return $stmt;
         }
 
+        //GET ALL LOP THEO MA CO VAN
+        public function getAllLopTheoMaCoVan($maCoVanHocTap){
+            $sqlQuery = "SELECT maLop, tenLop, maKhoa, maCoVanHocTap, maKhoaHoc FROM " . $this->db_table . " 
+                        WHERE maCoVanHocTap = ? ";
+            $stmt = $this->conn->prepare($sqlQuery);
+            $stmt->bindParam(1, $maCoVanHocTap);
+            $stmt->execute();
+            return $stmt;
+        }
+        
+        
         // READ single
         public function getSingleLop(){
             $sqlQuery = "SELECT maLop, tenLop, maKhoa, maCoVanHocTap, maKhoaHoc FROM ". $this->db_table ."

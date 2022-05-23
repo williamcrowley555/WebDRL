@@ -41,6 +41,7 @@
                                 <th>Học kỳ</th>
                                 <th>Năm học</th>
                                 <th>Trạng thái</th>
+                                <th>Ngày kết thúc</th>
                                 <th></th>
                               </tr>
                             </thead>

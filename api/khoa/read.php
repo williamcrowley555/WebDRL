@@ -13,7 +13,7 @@
     
     // kiểm tra đăng nhập thành công 
     if($data["status"]==1){
-        if ($checkQuyen->checkQuyen_CTSV($data["user_data"]->aud)) {
+        if ($checkQuyen->checkQuyen_CVHT_Khoa_CTSV($data["user_data"]->aud)) {
             $database = new Database();
             $db = $database->getConnection();
     
@@ -35,9 +35,9 @@
                     $e = array(
                         "soThuTu" => $countRow,
                         "maKhoa" => $maKhoa,
-                        "tenKhoa" => $tenKhoa,
-                        "taiKhoanKhoa" => $taiKhoanKhoa,
-                        "matKhauKhoa" => $matKhauKhoa
+                        "tenKhoa" => $tenKhoa
+                        //"taiKhoanKhoa" => $taiKhoanKhoa
+                        // "matKhauKhoa" => $matKhauKhoa
                     );
                     array_push($khoaArr["khoa"], $e);
                 }

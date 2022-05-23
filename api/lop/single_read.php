@@ -16,30 +16,37 @@
 
     // kiểm tra đăng nhập thành công 
     if($data["status"]==1){
-        $database = new Database();
-        $db = $database->getConnection();
-        $item = new Lop($db);
-        $item->maLop = isset($_GET['maLop']) ? $_GET['maLop'] : die(); //Lấy id từ phương thức GET
-    
-        $item->getSingleLop();
-        if($item->tenLop != null){
-            // create array
-            $lop_arr = array(
-                "maLop" =>  $item->maLop,
-                "tenLop" => $item->tenLop,
-                "maKhoa" => $item->maKhoa,
-                "maCoVanHocTap" => $item->maCoVanHocTap,
-                "maKhoaHoc" => $item->maKhoaHoc
-            );
+        //if ($checkQuyen->checkQuyen_CVHT_Khoa_CTSV($data["user_data"]->aud)) {
+            $database = new Database();
+            $db = $database->getConnection();
+            $item = new Lop($db);
+            $item->maLop = isset($_GET['maLop']) ? $_GET['maLop'] : die(); //Lấy id từ phương thức GET
         
-            http_response_code(200);
-            echo json_encode($lop_arr);
-        }
-        
-        else{
-            http_response_code(404);
-            echo json_encode("lop not found.");
-        }
+            $item->getSingleLop();
+            if($item->tenLop != null){
+                // create array
+                $lop_arr = array(
+                    "maLop" =>  $item->maLop,
+                    "tenLop" => $item->tenLop,
+                    "maKhoa" => $item->maKhoa,
+                    "maCoVanHocTap" => $item->maCoVanHocTap,
+                    "maKhoaHoc" => $item->maKhoaHoc
+                );
+            
+                http_response_code(200);
+                echo json_encode($lop_arr);
+            }
+            
+            else{
+                http_response_code(404);
+                echo json_encode("lop not found.");
+            }
+        // } else {
+        //         http_response_code(403);
+        //         echo json_encode(
+        //             array("message" => "Bạn không có quyền thực hiện điều này!")
+        //         );
+        // }
        
     } else {
         http_response_code(403);
@@ -47,4 +54,5 @@
             array("message" => "Vui lòng đăng nhập trước!")
         );
     }
-    ?>
+    
+?>

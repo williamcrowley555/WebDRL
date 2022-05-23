@@ -14556,7 +14556,7 @@ input[type=file].form-control.is-invalid:focus-within~.form-file-label .form-fil
 }
 
 .table th {
-    font-weight: 500
+    font-weight: 900
 }
 
 .table tbody {
