@@ -35,13 +35,16 @@
                             </div>
                           </div>
 
-                          <table class="table align-middle mb-0 bg-white table-striped">
+                          <table class="table align-middle mb-0 bg-white table-hover">
                             <thead class="bg-light">
                               <tr>
                                 <th>Học kỳ</th>
                                 <th>Năm học</th>
-                                <th>Trạng thái</th>
-                                <th>Ngày kết thúc</th>
+                                <th>Trạng thái chấm</th>
+                                <th>Cố vấn duyệt</th>
+                                <th>Khoa duyệt</th>
+                                <th>Điểm</th>
+                                <th>Ngày kết thúc chấm</th>
                                 <th></th>
                               </tr>
                             </thead>
