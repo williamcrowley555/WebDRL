@@ -96,6 +96,7 @@ function getThongTinHocKyDanhGia() {
                                                         <td><span class='badge badge-warning' style='color: black;font-size: inherit;'>Chưa duyệt</span></td>\
                                                         <td><span class='badge badge-warning' style='color: black;font-size: inherit;'>Chưa duyệt</span></td>\
                                                         <td><p class='fw-normal mb-1'>" + resultRead.diemTongCong +"</p></td>\
+                                                        <td><p class='fw-normal mb-1'>" + resultRead.xepLoai +"</p></td>\
                                                         <td><span>"+ ngaySinhVienKetThucDanhGia.toLocaleDateString() +"</span></td>\
                                                         <td>\
                                                             <button type='button' class='btn btn-warning' style='color: white;'>Chấm lại</button>\
@@ -109,6 +110,7 @@ function getThongTinHocKyDanhGia() {
                                                         <td><span class='badge badge-warning' style='color: black;font-size: inherit;'>Chưa duyệt</span></td>\
                                                         <td><span class='badge badge-success' style='color: black;font-size: inherit;'>Đã duyệt</span></td>\
                                                         <td><p class='fw-normal mb-1'>" + resultRead.diemTongCong +"</p></td>\
+                                                        <td><p class='fw-normal mb-1'>" + resultRead.xepLoai +"</p></td>\
                                                         <td><span>"+ ngaySinhVienKetThucDanhGia.toLocaleDateString() +"</span></td>\
                                                         <td>\
                                                             <button type='button' class='btn btn-warning' style='color: white;'>Chấm lại</button>\
@@ -124,6 +126,7 @@ function getThongTinHocKyDanhGia() {
                                                     <td><span class='badge badge-success' style='color: black;font-size: inherit;'>Đã duyệt</span></td>\
                                                     <td><span class='badge badge-warning' style='color: black;font-size: inherit;'>Chưa duyệt</span></td>\
                                                     <td><p class='fw-normal mb-1'>" + resultRead.diemTongCong +"</p></td>\
+                                                    <td><p class='fw-normal mb-1'>" + resultRead.xepLoai +"</p></td>\
                                                     <td><span>"+ ngaySinhVienKetThucDanhGia.toLocaleDateString() +"</span></td>\
                                                     <td>\
                                                         <button type='button' class='btn btn-warning' style='color: white;'>Chấm lại</button>\
@@ -136,6 +139,7 @@ function getThongTinHocKyDanhGia() {
                                                     <td><span class='badge badge-success' style='color: black;font-size: inherit;'>Đã duyệt</span></td>\
                                                     <td><span class='badge badge-success' style='color: black;font-size: inherit;'>Đã duyệt</span></td>\
                                                     <td><p class='fw-normal mb-1'>" + resultRead.diemTongCong +"</p></td>\
+                                                    <td><p class='fw-normal mb-1'>" + resultRead.xepLoai +"</p></td>\
                                                     <td><span>"+ ngaySinhVienKetThucDanhGia.toLocaleDateString() +"</span></td>\
                                                     <td>\
                                                         <button type='button' class='btn btn-warning' style='color: white;'>Chấm lại</button>\
@@ -150,6 +154,7 @@ function getThongTinHocKyDanhGia() {
                                             $("#tbody_hocKyDanhGia").append("<tr><td><p class='fw-normal mb-1'>" + hocKyXet_HKDG + "</p></td>\
                                                 <td><p class='fw-normal mb-1'>" + namHocXet_HKDG +"</p></td>\
                                                 <td><span class='badge badge-warning' style='color: black;font-size: inherit;'>Đang mở chấm</span></td>\
+                                                <td></td>\
                                                 <td></td>\
                                                 <td></td>\
                                                 <td></td>\
@@ -185,6 +190,7 @@ function getThongTinHocKyDanhGia() {
                                                             <td><span class='badge badge-warning' style='color: black;font-size: inherit;'>Chưa duyệt</span></td>\
                                                             <td><span class='badge badge-warning' style='color: black;font-size: inherit;'>Chưa duyệt</span></td>\
                                                             <td><p class='fw-normal mb-1'>" + resultRead.diemTongCong +"</p></td>\
+                                                            <td><p class='fw-normal mb-1'>" + resultRead.xepLoai +"</p></td>\
                                                             <td><span>"+ ngaySinhVienKetThucDanhGia.toLocaleDateString() +"</span></td>\
                                                             <td>\
                                                             <a href='xembangdiemrenluyen.php?"+ maHocKyDanhGia_HKDG +"' ><button type='button' class='btn btn-light' style='color: black;'> Xem chi tiết</button></a>\
@@ -198,6 +204,7 @@ function getThongTinHocKyDanhGia() {
                                                             <td><span class='badge badge-warning' style='color: black;font-size: inherit;'>Chưa duyệt</span></td>\
                                                             <td><span class='badge badge-success' style='color: black;font-size: inherit;'>Đã duyệt</span></td>\
                                                             <td><p class='fw-normal mb-1'>" + resultRead.diemTongCong +"</p></td>\
+                                                            <td><p class='fw-normal mb-1'>" + resultRead.xepLoai +"</p></td>\
                                                             <td><span>"+ ngaySinhVienKetThucDanhGia.toLocaleDateString() +"</span></td>\
                                                             <td>\
                                                             <a href='xembangdiemrenluyen.php?"+ maHocKyDanhGia_HKDG +"' ><button type='button' class='btn btn-light' style='color: black;'> Xem chi tiết</button></a>\
@@ -213,6 +220,7 @@ function getThongTinHocKyDanhGia() {
                                                         <td><span class='badge badge-success' style='color: black;font-size: inherit;'>Đã duyệt</span></td>\
                                                         <td><span class='badge badge-warning' style='color: black;font-size: inherit;'>Chưa duyệt</span></td>\
                                                         <td><p class='fw-normal mb-1'>" + resultRead.diemTongCong +"</p></td>\
+                                                        <td><p class='fw-normal mb-1'>" + resultRead.xepLoai +"</p></td>\
                                                         <td><span>"+ ngaySinhVienKetThucDanhGia.toLocaleDateString() +"</span></td>\
                                                         <td>\
                                                         <a href='xembangdiemrenluyen.php?"+ maHocKyDanhGia_HKDG +"' ><button type='button' class='btn btn-light' style='color: black;'> Xem chi tiết</button></a>\
@@ -225,6 +233,7 @@ function getThongTinHocKyDanhGia() {
                                                         <td><span class='badge badge-success' style='color: black;font-size: inherit;'>Đã duyệt</span></td>\
                                                         <td><span class='badge badge-success' style='color: black;font-size: inherit;'>Đã duyệt</span></td>\
                                                         <td><p class='fw-normal mb-1'>" + resultRead.diemTongCong +"</p></td>\
+                                                        <td><p class='fw-normal mb-1'>" + resultRead.xepLoai +"</p></td>\
                                                         <td><span>"+ ngaySinhVienKetThucDanhGia.toLocaleDateString() +"</span></td>\
                                                         <td>\
                                                         <a href='xembangdiemrenluyen.php?"+ maHocKyDanhGia_HKDG +"' ><button type='button' class='btn btn-light' style='color: black;'> Xem chi tiết</button></a>\
@@ -240,6 +249,7 @@ function getThongTinHocKyDanhGia() {
                                             $("#tbody_hocKyDanhGia").append("<tr><td><p class='fw-normal mb-1'>" + hocKyXet_HKDG + "</p></td>\
                                                 <td><p class='fw-normal mb-1'>" + namHocXet_HKDG +"</p></td>\
                                                 <td><span class='badge badge-danger' style='color: black;font-size: inherit;'>Chưa chấm</span></td>\
+                                                <td></td>\
                                                 <td></td>\
                                                 <td></td>\
                                                 <td></td>\

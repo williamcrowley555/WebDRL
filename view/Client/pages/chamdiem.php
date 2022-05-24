@@ -44,6 +44,7 @@
                                 <th>Cố vấn duyệt</th>
                                 <th>Khoa duyệt</th>
                                 <th>Điểm</th>
+                                <th>Xếp loại</th>
                                 <th>Ngày kết thúc chấm</th>
                                 <th></th>
                               </tr>

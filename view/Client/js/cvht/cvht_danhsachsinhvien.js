@@ -138,7 +138,7 @@ function getDanhSachDRLSinhVienLopTheoHocKy(maLop, maHocKyDanhGia) {
                                     <td>"+ result_PRL.diemTongCong +"</td>\
                                     <td>"+ result_PRL.xepLoai +"</td>\
                                     <td>\
-                                        <a href='cvht_duyetdiemchitiet.php?maSinhVien="+ maSinhVien +"&maHocKyDanhGia="+ maHocKyDanhGia +"' ><button type='button' class='btn btn-primary' style='color: white;width: max-content;'>Xem và duyệt</button></a>\
+                                        <a href='cvht_duyetdiemchitiet.php?maSinhVien="+ maSinhVien +"&maHocKy="+ maHocKyDanhGia +"' ><button type='button' class='btn btn-primary' style='color: white;width: max-content;'>Xem và duyệt</button></a>\
                                     </td>\
                                 </tr>");
 

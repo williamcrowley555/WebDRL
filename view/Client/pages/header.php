@@ -136,8 +136,7 @@ if (isset($_COOKIE['jwt'])){
 
     <!-- Custom Script -->
     <script src="../js/dangnhap/dangnhap.js"></script>
-    <script src="../js/chamdiemchitiet/chamdiemchitiet.js"></script>
-
+   
 
 </head>
 

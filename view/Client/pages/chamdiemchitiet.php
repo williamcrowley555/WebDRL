@@ -111,7 +111,8 @@
         <script src="../js/scripts.js"></script>
         
         <!-- Custom scripts -->
-
+        <script src="../js/chamdiemchitiet/chamdiemchitiet.js"></script>
+        
         <script>
            
 
@@ -121,18 +122,48 @@
             HienThiThongTinVaDanhGia();
 
             //Code tự tính điểm tổng cộng
-            $('#tbody_noiDungDanhGia').find("input").on('change', function(){
-                let calDiemTongCong = 0;
-                $("#tbody_noiDungDanhGia").find("input").each(function () {
-                    var tieuChi = this.id.slice(0, 8);
-                  
-                    if (tieuChi == 'TongCong'){
-                        if (this.value != null){
-                            calDiemTongCong = calDiemTongCong + Number(this.value);
-                        }
-                        
+            let calDiemTongCong = 0;
+            let calDiemTongTieuChi1 = 0;
+            $("#tbody_noiDungDanhGia").find("input").each(function() {
+                var tieuChi = this.id.slice(0, 3);
+                var idDiemTongTieuChi1_SinhVien = this.id.slice(0, 12);
+
+                if (tieuChi == 'TC2' || tieuChi == 'TC3') {
+                    if (this.value != null) {
+                        calDiemTongCong += Number(this.value);
+                        calDiemTongTieuChi1 += Number(this.value);
                     }
-                    
+                }
+
+                if (idDiemTongTieuChi1_SinhVien == 'TongCong_TC1') {
+                    $('#' + this.id).val(calDiemTongTieuChi1);
+                    calDiemTongTieuChi1 = 0;
+                }
+
+            });
+
+            //onchange
+            $('#tbody_noiDungDanhGia').find("input").on('change', function() {
+                let calDiemTongCong = 0;
+                let calDiemTongTieuChi1 = 0;
+                $("#tbody_noiDungDanhGia").find("input").each(function() {
+                    var tieuChi = this.id.slice(0, 3);
+
+                    var idDiemTongTieuChi1_SinhVien = this.id.slice(0, 12);
+
+                    if (tieuChi == 'TC2' || tieuChi == 'TC3') {
+                        if (this.value != null) {
+                            calDiemTongCong += Number(this.value);
+                            calDiemTongTieuChi1 += Number(this.value);
+                        }
+                    }
+
+                    if (idDiemTongTieuChi1_SinhVien == 'TongCong_TC1') {
+                        $('#' + this.id).val(calDiemTongTieuChi1);
+                        calDiemTongTieuChi1 = 0;
+                    }
+
+
                 });
 
                 $('#input_diemtongcong').val(calDiemTongCong);

@@ -29,9 +29,21 @@
         // GET ALL
         public function getAllChamDiemRenLuyen()
         {
-            $sqlQuery = "SELECT maChamDiemRenLuyen, maPhieuRenLuyen, maTieuChi2, maTieuChi3, diemSinhVienDanhGia, maSinhVien, diemLopDanhGia, ghiChu FROM " . $this->db_table . "";
+            $sqlQuery = "SELECT * FROM " . $this->db_table . "";
             $stmt = $this->conn->prepare($sqlQuery);
             $stmt->execute();
+            return $stmt;
+        }
+
+        // READ single
+        public function getSingleChamDiemRenLuyen_TheoPhieuRenLuyen($maPhieuRenLuyen)
+        {
+            $sqlQuery = "SELECT * FROM " . $this->db_table . "
+                            WHERE maPhieuRenLuyen  = ? ";
+            $stmt = $this->conn->prepare($sqlQuery);
+            $stmt->bindParam(1, $maPhieuRenLuyen);
+            $stmt->execute();
+
             return $stmt;
         }
 
@@ -58,6 +70,7 @@
                 
             }
         }
+
 
         // CREATE
         public function createChamDiemRenLuyen()

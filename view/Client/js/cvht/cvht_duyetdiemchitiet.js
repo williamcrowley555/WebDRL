@@ -24,7 +24,7 @@ function changeNumberHandle(val, number)
   if (number < 0){
     number = 0;
   }
-
+  
   if (Number(val.value) > number)
   {
     val.value = number
@@ -36,6 +36,8 @@ var jwtCookie = getCookie("jwt");
 
 var url = new URL(window.location.href);
 var GET_MaHocKy = url.searchParams.get("maHocKy");
+
+var GET_MaSinhVien = url.searchParams.get("maSinhVien");
 
 
 //-----------------------------------------//
@@ -71,17 +73,17 @@ function HienThiThongTinVaDanhGia() {
                   var ngayHienTai = new Date(today.getFullYear() +"-" +(today.getMonth() + 1) +"-" +today.getDate());
           
                   //thời gian hiện tại nằm trong khoảng thời gian học kỳ còn mở chấm
-                  if (ngayHienTai.getTime() >= ngaySVDanhGia.getTime() 
-                  && ngayHienTai.getTime() <= ngaySVKetThucDanhGia.getTime()) 
-                  {
+                //   if (ngayHienTai.getTime() >= ngaySVDanhGia.getTime() 
+                //   && ngayHienTai.getTime() <= ngaySVKetThucDanhGia.getTime()) 
+                //   {
                     
                       //vẫn còn trong thời gian mở chấm nên giữ nguyên page
                       getThongTinNguoiDung();
                       getTieuChiDanhGia();
                       
-                  }else{
-                      window.location.href = 'chamdiem.php';
-                  }
+                //   }else{
+                //       window.location.href = 'chamdiem.php';
+                //   }
   
                 }
   
@@ -95,8 +97,6 @@ function HienThiThongTinVaDanhGia() {
             });
 
 
-
-
           },
           error: function (errorMessage_tc3) {
             thongBaoLoi(errorMessage_tc3.responseText);
@@ -107,18 +107,11 @@ function HienThiThongTinVaDanhGia() {
       }
 
 
-      
     }else{
      
       window.location.href = 'chamdiem.php';
     }
 }
-
-
-
-
-
-
 
 
 
@@ -145,6 +138,8 @@ function getTieuChiDanhGia() {
                 <td style='font-weight: bold;'>" +result[index][i].noidung + "</td>\
                 <td></td>\
                 <td></td>\
+                <td></td>\
+                <td></td>\
                 </tr>");
 
             //Ajax tieuchicap2
@@ -166,7 +161,9 @@ function getTieuChiDanhGia() {
                                     $("#tbody_noiDungDanhGia").append("<tr>\
                                         <td><em>" + result_tc2[index_tc2][k].noidung +"</em></td>\
                                         <td><em>" +result_tc2[index_tc2][k].diemtoida +"đ</em></td>\
-                                        <td><input type='number' style='width: 100px;' onchange='changeNumberHandle(this,"+ result_tc2[index_tc2][k].diemtoida +")' id='TC2_" + result_tc2[index_tc2][k].matc2 +"' /></td>\
+                                        <td><input type='number' style='width: 100px;' onchange='changeNumberHandle(this,"+ result_tc2[index_tc2][k].diemtoida +")' id='TC2_" + result_tc2[index_tc2][k].matc2 +"' disabled/></td>\
+                                        <td><input type='number' style='width: 100px;' onchange='changeNumberHandle(this,"+ result_tc2[index_tc2][k].diemtoida +")' id='CVHT_TC2_" + result_tc2[index_tc2][k].matc2 +"' /></td>\
+                                        <td></td>\
                                     </tr>");
 
                                     // <td><input type='text' style='width: 100px;'  id='ghiChuTC2_" + result_tc2[index_tc2][k].matc2 +"' /></td>\
@@ -177,11 +174,15 @@ function getTieuChiDanhGia() {
                                             <td><em>" + result_tc2[index_tc2][k].noidung +"<br>Điểm TBC học kỳ trước: <input type='text' id='inputTBCHocKyTruoc' name='diemTrungBinhChungHKTruoc' style='width: 100px;margin-right: 30px' />Điểm TBC học kỳ đang xét: <input type='text' id='inputTBCHocKyDangXet' name='diemTrungBinhChungHKXet' style='width: 100px;' /> </em></td>\
                                             <td></td>\
                                             <td></td>\
+                                            <td></td>\
+                                            <td></td>\
                                             </tr>"
                                     );
                                     } else {
                                         $("#tbody_noiDungDanhGia").append("<tr>\
                                             <td><em>" + result_tc2[index_tc2][k].noidung +"</em></td>\
+                                            <td></td>\
+                                            <td></td>\
                                             <td></td>\
                                             <td></td>\
                                             </tr>"
@@ -208,7 +209,9 @@ function getTieuChiDanhGia() {
                                             $("#tbody_noiDungDanhGia").append("<tr>\
                                                 <td>" +result_tc3[index_tc3][p].noidung +"</span></td>\
                                                 <td><em>" + result_tc3[index_tc3][p].diem + "đ</em></td>\
-                                                <td><input type='number' style='width: 100px;' onchange='changeNumberHandle(this,"+ result_tc3[index_tc3][p].diem +")' id='TC3_" + result_tc3[index_tc3][p].matc3 + "' /></td>\
+                                                <td><input type='number' style='width: 100px;' onchange='changeNumberHandle(this,"+ result_tc3[index_tc3][p].diem +")' id='TC3_" + result_tc3[index_tc3][p].matc3 + "' disabled /></td>\
+                                                <td><input type='number' style='width: 100px;' onchange='changeNumberHandle(this,"+ result_tc3[index_tc3][p].diem +")' id='CVHT_TC3_" + result_tc3[index_tc3][p].matc3 + "' /></td>\
+                                                <td></td>\
                                                 </tr>");
                                             }
 
@@ -231,10 +234,11 @@ function getTieuChiDanhGia() {
 
             $("#tbody_noiDungDanhGia").append(
                 "<tr style='background: darkseagreen;' >\
-                <td style='font-weight: bold;' >Cộng: </span>\
+                <td style='font-weight: bold;' ><span>Cộng: </span>\
                 </td>\
                 <td><em></em></td>\
-                <td><input type='number' style='width: 100px' onchange='changeNumberHandle(this,"+ result[index][i].diemtoida +")' id='TongCong_TC1_" + result[index][i].matc1 +"' /></td>\
+                <td><input type='number' style='width: 100px' onchange='changeNumberHandle(this,"+ result[index][i].diemtoida +")' id='TongCong_TC1_" + result[index][i].matc1 +"' disabled/></td>\
+                <td><input type='number' style='width: 100px' onchange='changeNumberHandle(this,"+ result[index][i].diemtoida +")' id='CVHT_TongCong_TC1_" + result[index][i].matc1 +"' /></td>\
                 </tr>"
             );
             }
@@ -252,16 +256,20 @@ function getTieuChiDanhGia() {
             <td style='font-weight: bold;' >ĐIỂM TỔNG CỘNG (tối đa không quá 100 điểm): </span>\
             </td>\
             <td><em></em></td>\
-            <td><input type='number' style='width: 100px' onchange='changeNumberHandle(this, 100)' id='input_diemtongcong' name='diemTongCong' /></td>\
+            <td><input type='number' style='width: 100px' onchange='changeNumberHandle(this, 100)' id='input_diemtongcong'  disabled/></td>\
+            <td><input type='number' style='width: 100px' onchange='changeNumberHandle(this, 100)' id='CVHT_input_diemtongcong' name='diemTongCong' /></td>\
         </tr>"
     );
 
     $("#tbody_noiDungDanhGia").append(
         "<tr>\
             <td style='font-weight: bold;' >FILE MINH CHỨNG ĐÍNH KÈM (NẾU CÓ): </span>\
-            <input type='file' id='input_fileDinhKem' name='fileDinhKem' />\
+            <a href='#' id='input_fileDinhKem' name='fileDinhKem' ></a>\
             <br> <span>Chỉ nhận file định dạng .zip và .rar (file nén)</span>\
             </td>\
+            <td></td>\
+            <td style='font-weight: bold;text-transform: uppercase;' colspan='2' >Xếp loại: <span id='text_XepLoai' ></span></td>\
+            <td style='font-weight: bold;'  ><span></span></td>\
         </tr>"
     );
 
@@ -269,11 +277,10 @@ function getTieuChiDanhGia() {
 }
 
 function getThongTinNguoiDung() {
-  if (getCookie("maSo") != null) {
-    var maSo = getCookie("maSo");
-
+  if (GET_MaSinhVien != null) {
+ 
     $.ajax({
-      url: "../../../api/sinhvien/single_read.php?maSinhVien=" + maSo,
+      url: "../../../api/sinhvien/single_read.php?maSinhVien=" + GET_MaSinhVien,
       async: false,
       type: "GET",
       contentType: "application/json;charset=utf-8",
@@ -312,50 +319,50 @@ function getThongTinNguoiDung() {
                 var tenKhoa = result_Khoa["tenKhoa"];
 
                 
-                            $.ajax({
-                              url: "../../../api/hockydanhgia/single_read.php?maHocKyDanhGia=" + GET_MaHocKy,
-                              async: false,
-                              type: "GET",
-                              contentType: "application/json;charset=utf-8",
-                              dataType: "json",
-                              headers: {
-                                Authorization: jwtCookie,
-                              },
-                              success: function (result_HKDG) {
-                                var input_hocKyXet = result_HKDG.hocKyXet;
-                                var input_namHocXet = result_HKDG.namHocXet;
+                    $.ajax({
+                        url: "../../../api/hockydanhgia/single_read.php?maHocKyDanhGia=" + GET_MaHocKy,
+                        async: false,
+                        type: "GET",
+                        contentType: "application/json;charset=utf-8",
+                        dataType: "json",
+                        headers: {
+                            Authorization: jwtCookie,
+                        },
+                        success: function (result_HKDG) {
+                            var input_hocKyXet = result_HKDG.hocKyXet;
+                            var input_namHocXet = result_HKDG.namHocXet;
   
-                                $("#part_thongTinSinhVien").append("\<div class='row'>\
-                                    <div class='col'>\
-                                    <span style='font-weight: bold;'>Họ tên: </span>" + hoTenSinhVien + "\</div>\
-                                    <div class='col'>\
-                                    <span style='font-weight: bold;'>Mã số sinh viên: </span>" + maSo + "\
-                                    </div>\
-                                    <div class='col'>\
-                                    <span style='font-weight: bold;'>Ngày sinh: </span>" + ngaySinh.toLocaleDateString() + "\
-                                    </div>\
-                                    <div class='col'>\
-                                    <span style='font-weight: bold;'>Lớp: </span>" + maLop +"\
-                                    </div>\
-                                    </div>\
-                                    <div class='row'>\
-                                    <div class='col'>\
-                                    <span style='font-weight: bold;'>Khoa: </span>" + tenKhoa + "\
-                                    </div>\
-                                    <div class='col'>\
-                                    <span style='font-weight: bold;'>Hệ: </span>" + he + "\
-                                    </div>\
-                                    <div class='col'>\
-                                    <span style='font-weight: bold;'>Học kỳ: </span>" + input_hocKyXet + "\
-                                    </div>\
-                                    <div class='col'>\
-                                    <span style='font-weight: bold;'>Năm học: </span>" + input_namHocXet + "\
-                                    </div>\
-                                    <div class='col' style='display: none;'>\
-                                    <input type='text' id='input_maHocKyDanhGia' value='" +GET_MaHocKy +"' /></span>\
-                                    </div>\
-                                    </div>\
-                                    ");
+                            $("#part_thongTinSinhVien").append("\<div class='row'>\
+                                <div class='col'>\
+                                <span style='font-weight: bold;'>Họ tên: </span>" + hoTenSinhVien + "\</div>\
+                                <div class='col'>\
+                                <span style='font-weight: bold;'>Mã số sinh viên: </span>" + GET_MaSinhVien + "\
+                                </div>\
+                                <div class='col'>\
+                                <span style='font-weight: bold;'>Ngày sinh: </span>" + ngaySinh.toLocaleDateString() + "\
+                                </div>\
+                                <div class='col'>\
+                                <span style='font-weight: bold;'>Lớp: </span>" + maLop +"\
+                                </div>\
+                                </div>\
+                                <div class='row'>\
+                                <div class='col'>\
+                                <span style='font-weight: bold;'>Khoa: </span>" + tenKhoa + "\
+                                </div>\
+                                <div class='col'>\
+                                <span style='font-weight: bold;'>Hệ: </span>" + he + "\
+                                </div>\
+                                <div class='col'>\
+                                <span style='font-weight: bold;'>Học kỳ: </span>" + input_hocKyXet + "\
+                                </div>\
+                                <div class='col'>\
+                                <span style='font-weight: bold;'>Năm học: </span>" + input_namHocXet + "\
+                                </div>\
+                                <div class='col' style='display: none;'>\
+                                <input type='text' id='input_maHocKyDanhGia' value='" +GET_MaHocKy +"' /></span>\
+                                </div>\
+                                </div>\
+                                ");
                               },
                               error: function (errorMessage_tc3) {
                                 thongBaoLoi(errorMessage_tc3.responseText);
@@ -423,12 +430,92 @@ function checkValidateInput(){
 }
 
 
-//Chấm điểm rèn luyện
+
+  //Load thông tin sinh viên đã đánh giá
+  function LoadThongTinSinhVienDanhGia() {
+    
+    var maPhieuRenLuyen = "PRL" + GET_MaHocKy + GET_MaSinhVien;
+
+    $.ajax({
+        url: "../../../api/phieurenluyen/single_read.php?maPhieuRenLuyen=" + maPhieuRenLuyen,
+        async: false,
+        type: "GET",
+        contentType: "application/json;charset=utf-8",
+        dataType: "json",
+        headers: {
+            Authorization: jwtCookie,
+        },
+        success: function (result_PRL) {
+           var xepLoai = result_PRL.xepLoai;
+           var diemTongCong = result_PRL.diemTongCong;
+           var diemTrungBinhChungHKTruoc = result_PRL.diemTrungBinhChungHKTruoc;
+           var diemTrungBinhChungHKXet = result_PRL.diemTrungBinhChungHKXet;
+           var fileDinhKem = result_PRL.fileDinhKem;
+           var fileDinhKem_Name = fileDinhKem.substring(fileDinhKem.lastIndexOf('/') + 1);
+     
+           $.ajax({
+            url: "../../../api/chamdiemrenluyen/read.php?maPhieuRenLuyen=" + maPhieuRenLuyen,
+            async: false,
+            type: "GET",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            headers: {
+                Authorization: jwtCookie,
+            },
+            success: function (result_CD) {
+              $("#inputTBCHocKyTruoc").val(diemTrungBinhChungHKTruoc);
+              $("#inputTBCHocKyDangXet").val(diemTrungBinhChungHKXet);
+              $("#input_diemtongcong").val(diemTongCong);
+              $("#CVHT_input_diemtongcong").val(diemTongCong);
+              $("#text_XepLoai").text(xepLoai);
+              $("#input_fileDinhKem").text(fileDinhKem_Name);
+              $("#input_fileDinhKem").attr("href", fileDinhKem);
+
+
+              $.each(result_CD, function (index_cd) {
+                for (var p = 0;p < result_CD[index_cd].length;p++) {
+                  var maTieuChi2 = result_CD[index_cd][p].maTieuChi2;
+                  var maTieuChi3 = result_CD[index_cd][p].maTieuChi3;
+                  var diemSinhVienDanhGia = result_CD[index_cd][p].diemSinhVienDanhGia;
+
+                  $('#tbody_noiDungDanhGia').find('input').each(function () {
+                      var tieuChi = this.id.slice(0, 3);
+                      var maTieuChi = this.id.slice(4,9);
+
+                      if (tieuChi == 'TC2'){
+                        if (maTieuChi2 == maTieuChi){
+                          $("#" + this.id).val(diemSinhVienDanhGia);
+                          $("#CVHT_" + this.id).val(diemSinhVienDanhGia);
+                        }
+                      }
+
+                      if (tieuChi == 'TC3'){
+                        if (maTieuChi3 == maTieuChi){
+                          $("#" + this.id).val(diemSinhVienDanhGia);
+                          $("#CVHT_" + this.id).val(diemSinhVienDanhGia);
+                        }
+                      }
+            
+                  });
+
+
+                }
+              });
+    
+            },
+            error: function (errorMessage_tc3) {
+              thongBaoLoi(errorMessage_tc3.responseText);
+            },
+          });
+
+         
+        },
+        error: function (errorMessage_tc3) {
+          thongBaoLoi(errorMessage_tc3.responseText);
+        },
+    });
 
 
 
-function Test(){
+  }
 
-
-
-}

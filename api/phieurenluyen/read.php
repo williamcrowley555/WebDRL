@@ -13,6 +13,12 @@ $read_data = new read_data();
 $data = $read_data->read_token();
 $checkQuyen = new checkQuyen();
 
+//get domain dùng cho link file
+if(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') $url = "https://";   
+else $url = "http://";   
+
+$url .= $_SERVER['HTTP_HOST'];   
+
 
 // kiểm tra đăng nhập thành công và có phải giáo viên không
 if ($data["status"] == 1 ) {
@@ -30,21 +36,40 @@ if ($data["status"] == 1 ) {
             $phieurenluyenArr["phieurenluyen"] = array(); //tạo object json 
             $phieurenluyenArr["itemCount"] = $itemCount;
 
+            $urlFile = $url.dirname($_SERVER['PHP_SELF'])."/upload/";
+
             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                 extract($row);
-                $e = array(
-                    "maPhieuRenLuyen" => $maPhieuRenLuyen,
-                    "xepLoai" => $xepLoai,
-                    "diemTongCong" => $diemTongCong,
-                    "maSinhVien" => $maSinhVien,
-                    "diemTrungBinhChungHKTruoc" => $diemTrungBinhChungHKTruoc,
-                    "diemTrungBinhChungHKXet" => $diemTrungBinhChungHKXet,
-                    "maHocKyDanhGia" => $maHocKyDanhGia,
-                    "coVanDuyet" => $coVanDuyet,
-                    "khoaDuyet" => $khoaDuyet,
-                    "fileDinhKem" => $fileDinhKem
-                );
-                array_push($phieurenluyenArr["phieurenluyen"], $e);
+                if ($fileDinhKem != null){
+                    $e = array(
+                        "maPhieuRenLuyen" => $maPhieuRenLuyen,
+                        "xepLoai" => $xepLoai,
+                        "diemTongCong" => $diemTongCong,
+                        "maSinhVien" => $maSinhVien,
+                        "diemTrungBinhChungHKTruoc" => $diemTrungBinhChungHKTruoc,
+                        "diemTrungBinhChungHKXet" => $diemTrungBinhChungHKXet,
+                        "maHocKyDanhGia" => $maHocKyDanhGia,
+                        "coVanDuyet" => $coVanDuyet,
+                        "khoaDuyet" => $khoaDuyet,
+                        "fileDinhKem" => $urlFile.$maHocKyDanhGia."/".$maSinhVien.'/'.$fileDinhKem
+                    );
+                    array_push($phieurenluyenArr["phieurenluyen"], $e);
+                }else{
+                    $e = array(
+                        "maPhieuRenLuyen" => $maPhieuRenLuyen,
+                        "xepLoai" => $xepLoai,
+                        "diemTongCong" => $diemTongCong,
+                        "maSinhVien" => $maSinhVien,
+                        "diemTrungBinhChungHKTruoc" => $diemTrungBinhChungHKTruoc,
+                        "diemTrungBinhChungHKXet" => $diemTrungBinhChungHKXet,
+                        "maHocKyDanhGia" => $maHocKyDanhGia,
+                        "coVanDuyet" => $coVanDuyet,
+                        "khoaDuyet" => $khoaDuyet,
+                        "fileDinhKem" => $fileDinhKem
+                    );
+                    array_push($phieurenluyenArr["phieurenluyen"], $e);
+                }
+                
             }
             echo json_encode($phieurenluyenArr);
         } else {

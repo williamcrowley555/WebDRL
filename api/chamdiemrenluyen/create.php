@@ -15,9 +15,6 @@
     $read_data = new read_data();
     $data = $read_data->read_token();
 
-
-
-  
     // kiểm tra đăng nhập thành công 
     if ($data["status"] == 1) {
         //if (checkQuyen::checkQuyen_CTSV($data["user_data"]->aud)) {

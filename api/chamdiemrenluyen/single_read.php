@@ -17,33 +17,40 @@ $checkQuyen = new checkQuyen();
 
 // kiểm tra đăng nhập thành công 
 if ($data["status"] == 1) {
-    if ($checkQuyen->checkQuyen_CTSV($data["user_data"]->aud)) {
+    if ($checkQuyen->checkQuyen_CVHT_Khoa_CTSV($data["user_data"]->aud)) {
         $database = new Database();
         $db = $database->getConnection();
-        $item = new ChamDiemRenLuyen($db);
-        $item->maChamDiemRenLuyen  = isset($_GET['maChamDiemRenLuyen ']) ? $_GET['maChamDiemRenLuyen '] : die(); //Lấy id từ phương thức GET
+        
 
-        $item->getSingleChamDiemRenLuyen();
-        if ($item->maPhieuRenLuyen != null) {
-            // create array
-            $chamdiemrenluyen_arr = array(
-                "maChamDiemRenLuyen" =>  $item->maChamDiemRenLuyen,
-                "maPhieuRenLuyen" =>  $item->maPhieuRenLuyen,
-                "maTieuChi3" => $item->maTieuChi3,
-                "maTieuChi2" => $maTieuChi2,
-                "maSinhVien" => $item->maSinhVien,
-                "diemSinhVienDanhGia" => $item->diemSinhVienDanhGia,
-                "diemLopDanhGia" => $item->diemLopDanhGia,
-                "ghiChu" => $item->ghiChu
-            
-            );
+        if (isset($_GET['maChamDiemRenLuyen']) ){
+            $item->maChamDiemRenLuyen  = isset($_GET['maChamDiemRenLuyen']) ? $_GET['maChamDiemRenLuyen'] : die(); //Lấy id từ phương thức GET
 
-            http_response_code(200);
-            echo json_encode($chamdiemrenluyen_arr);
-        } else {
-            http_response_code(404);
-            echo json_encode("chamdiemrenluyen không tìm thấy.");
+            $item = new ChamDiemRenLuyen($db);
+            $item->getSingleChamDiemRenLuyen();
+            if ($item->maPhieuRenLuyen != null) {
+                // create array
+                $chamdiemrenluyen_arr = array(
+                    "maChamDiemRenLuyen" =>  $item->maChamDiemRenLuyen,
+                    "maPhieuRenLuyen" =>  $item->maPhieuRenLuyen,
+                    "maTieuChi3" => $item->maTieuChi3,
+                    "maTieuChi2" => $item->maTieuChi2,
+                    "maSinhVien" => $item->maSinhVien,
+                    "diemSinhVienDanhGia" => $item->diemSinhVienDanhGia,
+                    "diemLopDanhGia" => $item->diemLopDanhGia,
+                    "ghiChu" => $item->ghiChu
+                
+                );
+    
+                http_response_code(200);
+                echo json_encode($chamdiemrenluyen_arr);
+            } else {
+                http_response_code(404);
+                echo json_encode("chamdiemrenluyen không tìm thấy.");
+            }
+
         }
+       
+
     } else {
         http_response_code(403);
         echo json_encode(
