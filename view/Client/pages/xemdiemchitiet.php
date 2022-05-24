@@ -1,12 +1,8 @@
 <?php
 include_once "header.php";
 
-if ($quyenNguoiDung != 'cvht') {
-    echo "<script>history.go(-1)</script>";
-}
-
 if (!isset($_GET['maHocKy']) && !isset($_GET['maSinhVien'])) {
-    echo "<script>window.location.href = 'cvht_duyetdiemrenluyen.php';</script>";
+    echo "<script>window.location.href = 'tracuudiemrenluyen.php';</script>";
 }
 
 ?>
@@ -16,7 +12,7 @@ if (!isset($_GET['maHocKy']) && !isset($_GET['maSinhVien'])) {
 <header id="header" class="header">
     <div class="container">
         <div class="row">
-            <h4 style="text-transform: uppercase;">Cố vấn học tập <br> Duyệt điểm rèn luyện</h4>
+            <h4 style="text-transform: uppercase;">Xem phiếu điểm rèn luyện</h4>
         </div>
         <!-- end of row -->
     </div>
@@ -65,8 +61,7 @@ if (!isset($_GET['maHocKy']) && !isset($_GET['maSinhVien'])) {
 
                         </div>
 
-                        <button type="submit" class="btn btn-primary" style="width: auto;" onclick="return DuyetDiemRenLuyen();">Duyệt điểm</button>
-
+                        
                     </div>
                 </form>
 
@@ -111,7 +106,7 @@ if (!isset($_GET['maHocKy']) && !isset($_GET['maSinhVien'])) {
     <script src="../js/scripts.js"></script>
 
     <!-- Custom scripts -->
-    <script src="../js/cvht/cvht_duyetdiemchitiet.js"></script>
+    <script src="../js/xemdiemchitiet/xemdiemchitiet.js"></script>
 
     <script>
 

@@ -35,6 +35,17 @@ class PhieuRenLuyen
         return $stmt;
     }
 
+    // GET ALL THEO MSSV
+    public function getAllPhieuRenLuyen_TheoMSSV($maSinhVien)
+    {
+        $sqlQuery = "SELECT maPhieuRenLuyen, xepLoai, diemTongCong, maSinhVien, diemTrungBinhChungHKTruoc, diemTrungBinhChungHKXet, maHocKyDanhGia, coVanDuyet, khoaDuyet, fileDinhKem FROM " . $this->db_table . "
+                    WHERE maSinhVien = ? ";
+        $stmt = $this->conn->prepare($sqlQuery);
+        $stmt->bindParam(1, $maSinhVien);
+        $stmt->execute();
+        return $stmt;
+    }
+
     // READ single
     public function getSinglePhieuRenLuyen()
     {
@@ -84,6 +95,8 @@ class PhieuRenLuyen
             $this->fileDinhKem = $dataRow['fileDinhKem'];
         }
     }
+
+
 
     // CREATE
     public function createPhieuRenLuyen()
@@ -148,6 +161,55 @@ class PhieuRenLuyen
                         diemTrungBinhChungHKXet = :diemTrungBinhChungHKXet,
                         maHocKyDanhGia = :maHocKyDanhGia,
                         coVanDuyet = :coVanDuyet,
+                        khoaDuyet = :khoaDuyet
+                    WHERE 
+                        maPhieuRenLuyen = :maPhieuRenLuyen";
+
+        $stmt = $this->conn->prepare($sqlQuery);
+
+        // sanitize (Lọc dữ liệu đầu vào tránh SQLInjection, XSS)
+        $this->maPhieuRenLuyen = htmlspecialchars(strip_tags($this->maPhieuRenLuyen));
+        $this->xepLoai = htmlspecialchars(strip_tags($this->xepLoai));
+        $this->diemTongCong = htmlspecialchars(strip_tags($this->diemTongCong));
+        $this->maSinhVien = htmlspecialchars(strip_tags($this->maSinhVien));
+        $this->diemTrungBinhChungHKTruoc = htmlspecialchars(strip_tags($this->diemTrungBinhChungHKTruoc));
+        $this->diemTrungBinhChungHKXet = htmlspecialchars(strip_tags($this->diemTrungBinhChungHKXet));
+        $this->maHocKyDanhGia = htmlspecialchars(strip_tags($this->maHocKyDanhGia));
+        $this->coVanDuyet = htmlspecialchars(strip_tags($this->coVanDuyet));
+        $this->khoaDuyet = htmlspecialchars(strip_tags($this->khoaDuyet));
+       
+        // bind data
+        $stmt->bindParam(":maPhieuRenLuyen", $this->maPhieuRenLuyen);
+        $stmt->bindParam(":xepLoai", $this->xepLoai);
+        $stmt->bindParam(":diemTongCong", $this->diemTongCong);
+        $stmt->bindParam(":maSinhVien", $this->maSinhVien);
+        $stmt->bindParam(":diemTrungBinhChungHKTruoc", $this->diemTrungBinhChungHKTruoc);
+        $stmt->bindParam(":diemTrungBinhChungHKXet", $this->diemTrungBinhChungHKXet);
+        $stmt->bindParam(":maHocKyDanhGia", $this->maHocKyDanhGia);
+        $stmt->bindParam(":coVanDuyet", $this->coVanDuyet);
+        $stmt->bindParam(":khoaDuyet", $this->khoaDuyet);
+
+
+        if ($stmt->execute()) {
+            return true;
+        }
+        return false;
+    }
+
+
+    // UPDATE WITH FILE
+    public function updatePhieuRenLuyen_WithFile()
+    {
+        $sqlQuery = "UPDATE
+                        " . $this->db_table . "
+                    SET
+                        xepLoai = :xepLoai, 
+                        diemTongCong = :diemTongCong, 
+                        maSinhVien = :maSinhVien,
+                        diemTrungBinhChungHKTruoc = :diemTrungBinhChungHKTruoc, 
+                        diemTrungBinhChungHKXet = :diemTrungBinhChungHKXet,
+                        maHocKyDanhGia = :maHocKyDanhGia,
+                        coVanDuyet = :coVanDuyet,
                         khoaDuyet = :khoaDuyet,
                         fileDinhKem = :fileDinhKem
                     WHERE 
@@ -166,7 +228,7 @@ class PhieuRenLuyen
         $this->coVanDuyet = htmlspecialchars(strip_tags($this->coVanDuyet));
         $this->khoaDuyet = htmlspecialchars(strip_tags($this->khoaDuyet));
         $this->fileDinhKem = htmlspecialchars(strip_tags($this->fileDinhKem));
-
+       
         // bind data
         $stmt->bindParam(":maPhieuRenLuyen", $this->maPhieuRenLuyen);
         $stmt->bindParam(":xepLoai", $this->xepLoai);
@@ -178,7 +240,6 @@ class PhieuRenLuyen
         $stmt->bindParam(":coVanDuyet", $this->coVanDuyet);
         $stmt->bindParam(":khoaDuyet", $this->khoaDuyet);
         $stmt->bindParam(":fileDinhKem", $this->fileDinhKem);
-
 
 
         if ($stmt->execute()) {

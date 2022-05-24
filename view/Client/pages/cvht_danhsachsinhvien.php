@@ -45,8 +45,13 @@
                             
                             </select>
                         </div>
+
                     </div>
 
+                    <div class="col-auto" style="float: left; margin-bottom: 15px;">
+                            <span style="color:#223150; font-weight: 900;text-transform: uppercase;">Thời gian cố vấn đánh giá: </span>
+                            <span id="text_ngayCoVanKetThucDanhGia"  style='font-size: large;'></span>
+                    </div>
                     
                     <table class="table align-middle mb-0 bg-white table-hover">
                             <thead class="bg-light">
@@ -126,21 +131,41 @@
         var url = new URL(window.location.href);
         var GET_MaLop = url.searchParams.get("maLop");
 
-        var getMaHocKyDanhGiaOption = $('#select_HocKyDanhGia option:selected').val();
-        $('#tbody_DanhSachDiemTheoKy').find('tr').remove();
-        getDanhSachDRLSinhVienLopTheoHocKy(GET_MaLop, getMaHocKyDanhGiaOption);
 
-
-        $('#select_HocKyDanhGia').on('change', function() {
+        function HienThiThongTin() {
             var getMaHocKyDanhGiaOption = $('#select_HocKyDanhGia option:selected').val();
 
-            $('#tbody_DanhSachDiemTheoKy').find('tr').remove();
+            $.ajax({
+                url: "../../../api/thongbaodanhgia/single_read.php?maHocKyDanhGia=" + getMaHocKyDanhGiaOption,
+                async: false,
+                type: "GET",
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                headers: {
+                    Authorization: jwtCookie,
+                },
+                success: function (result_HKDG) {
+                    var ngayCoVanDanhGia = new Date(result_HKDG.ngayCoVanDanhGia);
+                    var ngayCoVanKetThucDanhGia = new Date(result_HKDG.ngayCoVanKetThucDanhGia);
+                    $('#text_ngayCoVanKetThucDanhGia').text(ngayCoVanDanhGia.toLocaleDateString() + " - " + ngayCoVanKetThucDanhGia.toLocaleDateString());
+                   
+                },
+                error: function (errorMessage) {
+                    thongBaoLoi(errorMessage.responseText);
+                },
+            });
 
+
+            $('#tbody_DanhSachDiemTheoKy').find('tr').remove();
             getDanhSachDRLSinhVienLopTheoHocKy(GET_MaLop, getMaHocKyDanhGiaOption );
+        }
+
+        HienThiThongTin();
+
+        $('#select_HocKyDanhGia').on('change', function() {
+            HienThiThongTin();
         });
        
-
-        
         
 
     </script>

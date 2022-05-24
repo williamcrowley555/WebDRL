@@ -124,19 +124,20 @@
             $sqlQuery = "UPDATE
                             " . $this->db_table . "
                         SET
-                            maPhieuRenLuyen = :maPhieuRenLuyen
+                            maPhieuRenLuyen = :maPhieuRenLuyen,
                             maTieuChi3 = :maTieuChi3, 
                             maTieuChi2 = :maTieuChi2,
+                            maSinhVien = :maSinhVien,
                             diemSinhVienDanhGia = :diemSinhVienDanhGia, 
                             diemLopDanhGia = :diemLopDanhGia,
-                            maSinhVien = :maSinhVien,
                             ghiChu = :ghiChu
                         WHERE 
-                            maChamDiemRenLuyen  = :maChamDiemRenLuyen ";
+                            maChamDiemRenLuyen = :maChamDiemRenLuyen";
 
             $stmt = $this->conn->prepare($sqlQuery);
 
             // sanitize (Lọc dữ liệu đầu vào tránh SQLInjection, XSS)
+            $this->maChamDiemRenLuyen = htmlspecialchars(strip_tags($this->maChamDiemRenLuyen));
             $this->maPhieuRenLuyen = htmlspecialchars(strip_tags($this->maPhieuRenLuyen));
             $this->maTieuChi3 = htmlspecialchars(strip_tags($this->maTieuChi3));
             $this->maTieuChi2 = htmlspecialchars(strip_tags($this->maTieuChi2));
@@ -147,6 +148,7 @@
 
 
             // bind data
+            $stmt->bindParam(":maChamDiemRenLuyen", $this->maChamDiemRenLuyen);
             $stmt->bindParam(":maPhieuRenLuyen", $this->maPhieuRenLuyen);
             $stmt->bindParam(":maTieuChi3", $this->maTieuChi3);
             $stmt->bindParam(":maTieuChi2", $this->maTieuChi2);

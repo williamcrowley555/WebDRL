@@ -247,7 +247,7 @@
                     
                                 //Vòng lặp input để tạo các hàng giá trị của chamdiemrenluyen theo mã phiếu điểm rèn luyện
                                 $("#tbody_noiDungDanhGia").find("input").each(function () {
-                                    if (this.value != "") {
+                                    //if (this.value != "") {
                                         var _inputDiemSVDanhGia = this.value;
                                         var tieuChi = this.id.slice(0, 3);
                     
@@ -343,7 +343,7 @@
                                             }
                                         }
                     
-                                    }
+                                    //}
                                 });
 
                                 Swal.fire({

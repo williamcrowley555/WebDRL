@@ -127,36 +127,79 @@ function getDanhSachDRLSinhVienLopTheoHocKy(maLop, maHocKyDanhGia) {
                         success: function (result_PRL) {
                             //Nếu tìm thấy thì xử lý ở đây ngược lại xử lý ở error
                             //coVanDuyet = 0 thì đã chấm nhưng cố vấn chưa duyệt, ngược lại = 1 là đã duyệt
-                            if (result_PRL.coVanDuyet == 0){
-                                $("#tbody_DanhSachDiemTheoKy").append("<tr>\
-                                    <td>" + soThuTu +"</td>\
-                                    <td><p class='fw-normal mb-1'>" + maSinhVien +"</p></td>\
-                                    <td><p class='fw-normal mb-1'>"+ hoTenSinhVien +"</p></td>\
-                                    <td><p class='fw-normal mb-1'>"+ new Date(ngaySinhSV).toLocaleDateString() +"</p></td>\
-                                    <td><span class='badge badge-success' style='color: black;font-size: smaller;'>Đã chấm</span></td>\
-                                    <td><span class='badge badge-warning' style='color: black;font-size: smaller;'>Chưa duyệt</span></td>\
-                                    <td>"+ result_PRL.diemTongCong +"</td>\
-                                    <td>"+ result_PRL.xepLoai +"</td>\
-                                    <td>\
-                                        <a href='cvht_duyetdiemchitiet.php?maSinhVien="+ maSinhVien +"&maHocKy="+ maHocKyDanhGia +"' ><button type='button' class='btn btn-primary' style='color: white;width: max-content;'>Xem và duyệt</button></a>\
-                                    </td>\
-                                </tr>");
+                            $.ajax({
+                                url: "../../../api/thongbaodanhgia/single_read.php?maHocKyDanhGia=" + maHocKyDanhGia,
+                                async: false,
+                                type: "GET",
+                                contentType: "application/json;charset=utf-8",
+                                dataType: "json",
+                                headers: {
+                                    Authorization: jwtCookie,
+                                },
+                                success: function (result_HKDG) {
+                                    var ngayCoVanDanhGia = new Date(result_HKDG.ngayCoVanDanhGia);
+                                    var ngayCoVanKetThucDanhGia = new Date(result_HKDG.ngayCoVanKetThucDanhGia);
+                                    
+                                    var today = new Date();
+                                    var ngayHienTai = new Date(today.getFullYear() +"-" +(today.getMonth() + 1) +"-" +today.getDate());
 
-                            }else{
-                                $("#tbody_DanhSachDiemTheoKy").append("<tr>\
-                                    <td>" + soThuTu +"</td>\
-                                    <td><p class='fw-normal mb-1'>" + maSinhVien +"</p></td>\
-                                    <td><p class='fw-normal mb-1'>"+ hoTenSinhVien +"</p></td>\
-                                    <td><p class='fw-normal mb-1'>"+ new Date(ngaySinhSV).toLocaleDateString() +"</p></td>\
-                                    <td><span class='badge badge-success' style='color: black;font-size: smaller;'>Đã chấm</span></td>\
-                                    <td><span class='badge badge-success' style='color: black;font-size: smaller;'>Đã duyệt</span></td>\
-                                    <td>"+ result_PRL.diemTongCong +"</td>\
-                                    <td>"+ result_PRL.xepLoai +"</td>\
-                                    <td>\
-                                        <a href='#' ><button type='button' class='btn btn-light' style='color: black;width: max-content;'>Xem chi tiết</button></a>\
-                                    </td>\
-                                 </tr>");
-                            }
+                                    if (ngayHienTai.getTime() >= ngayCoVanDanhGia.getTime() 
+                                    && ngayHienTai.getTime() <= ngayCoVanKetThucDanhGia.getTime()) 
+                                    {
+                                        if (result_PRL.coVanDuyet == 0){
+                                            $("#tbody_DanhSachDiemTheoKy").append("<tr>\
+                                                <td>" + soThuTu +"</td>\
+                                                <td><p class='fw-normal mb-1'>" + maSinhVien +"</p></td>\
+                                                <td><p class='fw-normal mb-1'>"+ hoTenSinhVien +"</p></td>\
+                                                <td><p class='fw-normal mb-1'>"+ new Date(ngaySinhSV).toLocaleDateString() +"</p></td>\
+                                                <td><span class='badge badge-success' style='color: black;font-size: smaller;'>Đã chấm</span></td>\
+                                                <td><span class='badge badge-warning' style='color: black;font-size: smaller;'>Chưa duyệt</span></td>\
+                                                <td>"+ result_PRL.diemTongCong +"</td>\
+                                                <td>"+ result_PRL.xepLoai +"</td>\
+                                                <td>\
+                                                    <a href='cvht_duyetdiemchitiet.php?maSinhVien="+ maSinhVien +"&maHocKy="+ maHocKyDanhGia +"' ><button type='button' class='btn btn-primary' style='color: white;width: max-content;'>Xem và duyệt</button></a>\
+                                                </td>\
+                                            </tr>");
+            
+                                        }else{
+                                            $("#tbody_DanhSachDiemTheoKy").append("<tr>\
+                                                <td>" + soThuTu +"</td>\
+                                                <td><p class='fw-normal mb-1'>" + maSinhVien +"</p></td>\
+                                                <td><p class='fw-normal mb-1'>"+ hoTenSinhVien +"</p></td>\
+                                                <td><p class='fw-normal mb-1'>"+ new Date(ngaySinhSV).toLocaleDateString() +"</p></td>\
+                                                <td><span class='badge badge-success' style='color: black;font-size: smaller;'>Đã chấm</span></td>\
+                                                <td><span class='badge badge-success' style='color: black;font-size: smaller;'>Đã duyệt</span></td>\
+                                                <td>"+ result_PRL.diemTongCong +"</td>\
+                                                <td>"+ result_PRL.xepLoai +"</td>\
+                                                <td>\
+                                                    <a href='cvht_duyetdiemchitiet.php?maSinhVien="+ maSinhVien +"&maHocKy="+ maHocKyDanhGia +"' ><button type='button' class='btn btn-warning' style='color: black;width: max-content;'>Duyệt lại</button></a>\
+                                                </td>\
+                                             </tr>");
+                                        }
+                                    }else{
+                                        $("#tbody_DanhSachDiemTheoKy").append("<tr>\
+                                                <td>" + soThuTu +"</td>\
+                                                <td><p class='fw-normal mb-1'>" + maSinhVien +"</p></td>\
+                                                <td><p class='fw-normal mb-1'>"+ hoTenSinhVien +"</p></td>\
+                                                <td><p class='fw-normal mb-1'>"+ new Date(ngaySinhSV).toLocaleDateString() +"</p></td>\
+                                                <td><span class='badge badge-success' style='color: black;font-size: smaller;'>Đã chấm</span></td>\
+                                                <td><span class='badge badge-success' style='color: black;font-size: smaller;'>Đã duyệt</span></td>\
+                                                <td>"+ result_PRL.diemTongCong +"</td>\
+                                                <td>"+ result_PRL.xepLoai +"</td>\
+                                                <td>\
+                                                    <a href='xemdiemchitiet.php?maHocKy="+ maHocKyDanhGia +"&maSinhVien="+ maSinhVien +"' ><button type='button' class='btn btn-light' style='color: black;width: max-content;'>Xem chi tiết</button></a>\
+                                                </td>\
+                                             </tr>");
+                                    }
+
+                                   
+                                },
+                                error: function (errorMessage) {
+                                    thongBaoLoi(errorMessage.responseText);
+                                },
+                            });
+
+                            
                             
                         },
                         error: function (errorMessage) {

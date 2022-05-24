@@ -64,33 +64,18 @@ function HienThiThongTinVaDanhGia() {
   
                 if (GET_MaHocKy === maHocKy_TBDG){
                   checkMaHocKyHopLe++;
-                  var ngayCoVanDanhGia = new Date(result_ThongBaoDanhGia[index_TBDG][q].ngayCoVanDanhGia);
-                  var ngayCoVanKetThucDanhGia = new Date(result_ThongBaoDanhGia[index_TBDG][q].ngayCoVanKetThucDanhGia);
-          
-                  //lấy ngày hiện tại
-                  var today = new Date();
-                  var ngayHienTai = new Date(today.getFullYear() +"-" +(today.getMonth() + 1) +"-" +today.getDate());
-          
-                  //thời gian hiện tại nằm trong khoảng thời gian học kỳ còn mở chấm
-                  if (ngayHienTai.getTime() >= ngayCoVanDanhGia.getTime() 
-                  && ngayHienTai.getTime() <= ngayCoVanKetThucDanhGia.getTime()) 
-                  {
-                    
-                      //vẫn còn trong thời gian mở chấm nên giữ nguyên page
-                      getThongTinNguoiDung();
-                      getTieuChiDanhGia();
+
+                     
+                  getThongTinNguoiDung();
+                  getTieuChiDanhGia();
                       
-                  }else{
-                      window.location.href = 'cvht_duyetdiemrenluyen.php';
-                  }
-  
                 }
   
               }
 
 
               if (checkMaHocKyHopLe == 0){
-                window.location.href = 'cvht_duyetdiemrenluyen.php';
+                window.location.href = 'tracuudiemrenluyen.php';
               }
               
             });
@@ -102,13 +87,13 @@ function HienThiThongTinVaDanhGia() {
           },
         });
       }else{
-        window.location.href = 'cvht_duyetdiemrenluyen.php';
+        window.location.href = 'tracuudiemrenluyen.php';
       }
 
 
     }else{
      
-      window.location.href = 'cvht_duyetdiemrenluyen.php';
+      window.location.href = 'tracuudiemrenluyen.php';
     }
 }
 
@@ -161,7 +146,7 @@ function getTieuChiDanhGia() {
                                         <td><em>" + result_tc2[index_tc2][k].noidung +"</em></td>\
                                         <td><em>" +result_tc2[index_tc2][k].diemtoida +"đ</em></td>\
                                         <td><input type='number' style='width: 100px;' onchange='changeNumberHandle(this,"+ result_tc2[index_tc2][k].diemtoida +")' id='TC2_" + result_tc2[index_tc2][k].matc2 +"' disabled/></td>\
-                                        <td><input type='number' style='width: 100px;' onchange='changeNumberHandle(this,"+ result_tc2[index_tc2][k].diemtoida +")' id='CVHT_TC2_" + result_tc2[index_tc2][k].matc2 +"' /></td>\
+                                        <td><input type='number' style='width: 100px;' onchange='changeNumberHandle(this,"+ result_tc2[index_tc2][k].diemtoida +")' id='CVHT_TC2_" + result_tc2[index_tc2][k].matc2 +"' disabled/></td>\
                                         <td></td>\
                                     </tr>");
 
@@ -170,7 +155,7 @@ function getTieuChiDanhGia() {
                                 } else {
                                     if (result_tc2[index_tc2][k].noidung == "1.Kết quả học tập: ") {
                                         $("#tbody_noiDungDanhGia").append("<tr>\
-                                            <td><em>" + result_tc2[index_tc2][k].noidung +"<br>Điểm TBC học kỳ trước: <input type='text' id='inputTBCHocKyTruoc' name='diemTrungBinhChungHKTruoc' style='width: 100px;margin-right: 30px' />Điểm TBC học kỳ đang xét: <input type='text' id='inputTBCHocKyDangXet' name='diemTrungBinhChungHKXet' style='width: 100px;' /> </em></td>\
+                                            <td><em>" + result_tc2[index_tc2][k].noidung +"<br>Điểm TBC học kỳ trước: <input type='text' id='inputTBCHocKyTruoc' name='diemTrungBinhChungHKTruoc' style='width: 100px;margin-right: 30px' disabled/>Điểm TBC học kỳ đang xét: <input type='text' id='inputTBCHocKyDangXet' name='diemTrungBinhChungHKXet' style='width: 100px;' disabled/> </em></td>\
                                             <td></td>\
                                             <td></td>\
                                             <td></td>\
@@ -209,7 +194,7 @@ function getTieuChiDanhGia() {
                                                 <td>" +result_tc3[index_tc3][p].noidung +"</span></td>\
                                                 <td><em>" + result_tc3[index_tc3][p].diem + "đ</em></td>\
                                                 <td><input type='number' style='width: 100px;' onchange='changeNumberHandle(this,"+ result_tc3[index_tc3][p].diem +")' id='TC3_" + result_tc3[index_tc3][p].matc3 + "' disabled /></td>\
-                                                <td><input type='number' style='width: 100px;' onchange='changeNumberHandle(this,"+ result_tc3[index_tc3][p].diem +")' id='CVHT_TC3_" + result_tc3[index_tc3][p].matc3 + "' /></td>\
+                                                <td><input type='number' style='width: 100px;' onchange='changeNumberHandle(this,"+ result_tc3[index_tc3][p].diem +")' id='CVHT_TC3_" + result_tc3[index_tc3][p].matc3 + "' disabled/></td>\
                                                 <td></td>\
                                                 </tr>");
                                             }
@@ -237,7 +222,7 @@ function getTieuChiDanhGia() {
                 </td>\
                 <td><em></em></td>\
                 <td><input type='number' style='width: 100px' onchange='changeNumberHandle(this,"+ result[index][i].diemtoida +")' id='TongCong_TC1_" + result[index][i].matc1 +"' disabled/></td>\
-                <td><input type='number' style='width: 100px' onchange='changeNumberHandle(this,"+ result[index][i].diemtoida +")' id='CVHT_TongCong_TC1_" + result[index][i].matc1 +"' /></td>\
+                <td><input type='number' style='width: 100px' onchange='changeNumberHandle(this,"+ result[index][i].diemtoida +")' id='CVHT_TongCong_TC1_" + result[index][i].matc1 +"' disabled/></td>\
                 </tr>"
             );
             }
@@ -256,7 +241,7 @@ function getTieuChiDanhGia() {
             </td>\
             <td><em></em></td>\
             <td><input type='number' style='width: 100px' onchange='changeNumberHandle(this, 100)' id='input_diemtongcong'  disabled/></td>\
-            <td><input type='number' style='width: 100px' onchange='changeNumberHandle(this, 100)' id='CVHT_input_diemtongcong' name='diemTongCong' /></td>\
+            <td><input type='number' style='width: 100px' onchange='changeNumberHandle(this, 100)' id='CVHT_input_diemtongcong' name='diemTongCong' disabled/></td>\
         </tr>"
     );
 

@@ -31,7 +31,6 @@
                     "hoTenSinhVien" => $item->hoTenSinhVien,
                     "ngaySinh" => $item->ngaySinh,
                     "he" => $item->he,
-                   // "matKhauSinhVien" => $item->matKhauSinhVien,
                     "maLop" => $item->maLop
                 );
             
@@ -39,7 +38,7 @@
                 echo json_encode($sinhvien_arr);
             }else{
                 http_response_code(404);
-                echo json_encode("sinhvien not found.");
+                echo json_encode(array("message" => "Không tìm thấy kết quả."));
             }
         // } else {
         //     http_response_code(403);

@@ -15,26 +15,64 @@
     <!-- end of header -->
     <!-- end of header -->
 
-    <div style="width: 100%;">
+
         <div class="container">
             <div class="row" style="margin: 0 auto;text-align: center;background: white;border-radius: 10px;">
-                <form style="padding: 48px;">
+                <div style="padding: 48px;">
                     <!-- Email input -->
                     <div class="form-outline mb-4">
-                        <input type="text" id="form1Example1" class="form-control" />
-                        <label class="form-label" for="form1Example1">Nhập mã số sinh viên</label>
+                        <input type="text" id="input_MSSVTraCuu" class="form-control" />
+                        <label class="form-label" for="">Nhập mã số sinh viên</label>
                     </div>
 
                     <!-- Submit button -->
-                    <button type="submit" class="btn btn-primary btn-block" style="width: fit-content;" >Tra cứu</button>
-                </form>
+                    <button type="button" class="btn btn-primary btn-block" style="width: fit-content;" onclick="return TraCuuDiemRenLuyen();" >Tra cứu</button>
+                </div>
             </div>
+         
             <!-- end of row -->
+            <div class="row" style="margin: 0 auto;margin-top: 15px;text-align: center;background: white;border-radius: 10px;display: none;" id="id_NoiDungKetQuaTraCuu" >
+                <div style="padding: 48px;">
+                    <div class="form-outline mb-4">
+                        
+                        <h5 style="text-transform: uppercase">---Kết quả tìm kiếm---</h5>
+
+                        <div class="row justify-content-center" style="padding-bottom: 30px;">
+                            <div class="col-4">
+                                <span style="font-weight: bold;">Mã số sinh viên: </span><span id="text_MaSo"></span> 
+                            
+                            </div>
+                            <div class="col-4">
+                                <span style="font-weight: bold;">Họ tên sinh viên: </span><span id="text_HoTen" ></span>
+                            </div>
+                        </div>
+
+                        <table class="table align-middle mb-0 bg-white table-hover">
+                            <thead class="bg-light">
+                                <tr>
+                                    <th>Học kỳ</th>
+                                    <th>Năm học</th>
+                                    <th>Điểm rèn luyện</th>
+                                    <th>Xếp loại</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                                <tbody id="tbody_hocKyDanhGia" >
+                               
+                                </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+
+            
         </div>
+
+        
 
         <!-- end of container -->
   
-
 
     <!-- Footer -->
     <div class="footer">
@@ -68,6 +106,14 @@
     <!-- Swiper for image and text sliders -->
     <script src="../js/scripts.js"></script>
     <!-- Custom scripts -->
+    <script src="../js/tracuudiemrenluyen/tracuudiemrenluyen.js" ></script>
+
+    <script>
+ 
+
+    </script>
+
+    
     <!-- MDB -->
     <script type="text/javascript" src="../js/mdb.min.js"></script>
 

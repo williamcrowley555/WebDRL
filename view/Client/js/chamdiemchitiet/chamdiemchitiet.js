@@ -260,6 +260,7 @@ function getTieuChiDanhGia() {
         "<tr>\
             <td style='font-weight: bold;' >FILE MINH CHỨNG ĐÍNH KÈM (NẾU CÓ): </span>\
             <input type='file' id='input_fileDinhKem' name='fileDinhKem' />\
+            <a href='#' id='input_fileDinhKem_show' name='fileDinhKem_show' ></a>\
             <br> <span>Chỉ nhận file định dạng .zip và .rar (file nén)</span>\
             </td>\
         </tr>"
@@ -391,6 +392,11 @@ function checkValidateInput(){
       return false;
     }
 
+    if (_input_diemtongcong > 100){
+      thongBaoLoi("Điểm tổng cộng không quá 100! Mời nhập lại!.");
+      return false;
+    }
+
     if (_inputTBCHocKyTruoc != null){
       if (isNaN(parseFloat(_inputTBCHocKyTruoc))){
         thongBaoLoi("Điểm trung bình chung phải là số! Mời nhập lại!");
@@ -427,8 +433,102 @@ function checkValidateInput(){
 
 
 
-function Test(){
+  //Load thông tin sinh viên đã đánh giá
+  function LoadThongTinSinhVienDanhGia() {
+                  
+    var maPhieuRenLuyen = "PRL" + GET_MaHocKy + getCookie('maSo');
+
+    $.ajax({
+        url: "../../../api/phieurenluyen/single_read.php?maPhieuRenLuyen=" + maPhieuRenLuyen,
+        async: false,
+        type: "GET",
+        contentType: "application/json;charset=utf-8",
+        dataType: "json",
+        headers: {
+            Authorization: jwtCookie,
+        },
+        success: function (result_PRL) {
+          var xepLoai = result_PRL.xepLoai;
+          var diemTongCong = result_PRL.diemTongCong;
+          var diemTrungBinhChungHKTruoc = result_PRL.diemTrungBinhChungHKTruoc;
+          var diemTrungBinhChungHKXet = result_PRL.diemTrungBinhChungHKXet;
+          var fileDinhKem = result_PRL.fileDinhKem;
+          var fileDinhKem_Name = fileDinhKem.substring(fileDinhKem.lastIndexOf('/') + 1);
+      
+          $.ajax({
+              url: "../../../api/chamdiemrenluyen/read.php?maPhieuRenLuyen=" + maPhieuRenLuyen,
+              async: false,
+              type: "GET",
+              contentType: "application/json;charset=utf-8",
+              dataType: "json",
+              headers: {
+                  Authorization: jwtCookie,
+              },
+              success: function (result_CD) {
+                $("#inputTBCHocKyTruoc").val(diemTrungBinhChungHKTruoc);
+                $("#inputTBCHocKyDangXet").val(diemTrungBinhChungHKXet);
+                $("#input_diemtongcong").val(diemTongCong);
+                $("#CVHT_input_diemtongcong").val(diemTongCong);
+                $("#text_XepLoai").text(xepLoai);
+                $("#input_fileDinhKem_show").text(fileDinhKem_Name);
+                $("#input_fileDinhKem_show").attr("href", fileDinhKem);
+
+
+                $.each(result_CD, function (index_cd) {
+                    for (var p = 0;p < result_CD[index_cd].length;p++) {
+                    var maTieuChi2 = result_CD[index_cd][p].maTieuChi2;
+                    var maTieuChi3 = result_CD[index_cd][p].maTieuChi3;
+                    var diemSinhVienDanhGia = result_CD[index_cd][p].diemSinhVienDanhGia;
+                    var diemLopDanhGia = result_CD[index_cd][p].diemLopDanhGia;
+
+                    $('#tbody_noiDungDanhGia').find('input').each(function () {
+                        var tieuChi = this.id.slice(0, 3);
+                        var maTieuChi = this.id.slice(4,9);
+
+                        if (tieuChi == 'TC2'){
+                            if (maTieuChi2 == maTieuChi){
+                            $("#" + this.id).val(diemSinhVienDanhGia);
+                            
+                            if (diemLopDanhGia != 0){
+                                $("#CVHT_" + this.id).val(diemLopDanhGia);
+                            }else{
+                                $("#CVHT_" + this.id).val(diemSinhVienDanhGia);
+                            }
+                            
+                            }
+                        }
+
+                        if (tieuChi == 'TC3'){
+                            if (maTieuChi3 == maTieuChi){
+                            $("#" + this.id).val(diemSinhVienDanhGia);
+
+                            if (diemLopDanhGia != 0){
+                                $("#CVHT_" + this.id).val(diemLopDanhGia);
+                            }else{
+                                $("#CVHT_" + this.id).val(diemSinhVienDanhGia);
+                            }
+                            }
+                        }
+                
+                    });
+
+
+                    }
+                });
+      
+              },
+              error: function (errorMessage_tc3) {
+                thongBaoLoi(errorMessage_tc3.responseText);
+              },
+          });
+
+        
+        },
+        error: function (errorMessage_tc3) {
+          thongBaoLoi(errorMessage_tc3.responseText);
+        },
+    });
 
 
 
-}
+  }
