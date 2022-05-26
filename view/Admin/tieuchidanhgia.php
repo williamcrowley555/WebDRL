@@ -7,7 +7,7 @@
 		<div class="container-xl">
 
 			<h1 class="app-page-title">.</h1>
-			<h1 class="app-page-title"><img src="assets/images/icons/class.png" alt="" width="30px"> Khoa</h1>
+			<h1 class="app-page-title"><img src="assets/images/icons/class.png" alt="" width="30px"> Tiêu chí đánh giá</h1>
 
 			<div class="row g-4 mb-4">
 
@@ -16,15 +16,15 @@
 						<div class="row g-2 justify-content-start justify-content-md-end align-items-center">
 
 						<div class="col-auto">
-							<select class="form-select w-auto">
-								<option selected value="option-1">Tiêu chí cấp 1</option>
-								<option value="option-2">Tiêu chí cấp 2</option>
-								<option value="option-3">Tiêu chí cấp 3</option>
+							<select class="form-select w-auto" id = "selected_tieuchi">
+								<option selected value="tieuchicap1">Tiêu chí cấp 1</option>
+								<option value="tieuchicap2">Tiêu chí cấp 2</option>
+								<option value="tieuchicap3">Tiêu chí cấp 3</option>
 							</select>
 						</div>
 
 							
-							<div class="col-auto">
+							<!-- <div class="col-auto">
 								<form class="table-search-form row gx-1 align-items-center">
 									<div class="col-auto">
 										<input type="text" id="search-orders" name="searchorders" class="form-control search-orders" placeholder="Nhập mã tiêu chí">
@@ -34,11 +34,9 @@
 									</div>
 								</form>
 
-							</div>
+							</div> -->
 							<!--//col-->
-							<div class="col-auto" style="padding-left: 15px;">
-								<button class="btn app-btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">Thêm mới</button>
-							</div>
+							
 
 						</div>
 						<!--//row-->
@@ -72,13 +70,13 @@
 					<div class="app-card app-card-orders-table shadow-sm mb-5">
 						<div class="app-card-body">
 							<div class="table-responsive">
-								<table class="table app-table-hover mb-0 text-left">
+								<table class="table app-table-hover mb-0 text-left" >
 									<thead>
-										<tr>
+										<tr id = "coloum_table">
 											<th class="cell">STT</th>
-											<th class="cell">Mã Khoa</th>
-											<th class="cell">Tên Khoa</th>
-											<th class="cell">Tài khoản khoa</th>
+											<th class="cell">Mã Tiêu Chí</th>
+											<th class="cell">Tên Tiêu Chí</th>
+											<th class="cell">Điểm</th>
 										</tr>
 									</thead>
 									<tbody id="id_tbodyLop">
@@ -133,7 +131,7 @@
 
 <!-- Page Specific JS -->
 <script src="assets/js/app.js"></script>
-<script src="assets/js/khoa/function.js"></script>
+<script src="assets/js/tieuchidanhgia/function.js"></script>
 
 <script src="assets/js/jquery-3.6.0.js"></script>
 <!-- Pagination -->
@@ -145,8 +143,17 @@
 		$('.loader_bg').fadeToggle();
 	}, 1000);
 
+	var tieuChi_selected = "tieuchicap1";
 	//hàm trong function.js
-	GetListKhoa();
+	GetListTieuChi(tieuChi_selected);
+
+	$('#selected_tieuchi').on('change', function(){
+		var tieuChi_selected = $('#selected_tieuchi').val();
+		// let tr = document.createElement("<th class='cell'>Điểm</th>");
+		// $('$coloum_table').append(tr);
+		GetListTieuChi(tieuChi_selected);
+	
+	});
  
 
 </script>
