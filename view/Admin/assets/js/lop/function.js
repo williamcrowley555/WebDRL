@@ -20,12 +20,14 @@ function deleteAllCookies() {
     }
 }
 
+var jwtCookie = getCookie("jwt");
+
 
 //Lớp//
-function GetListLop() {
+function GetListLop(maKhoa) {
 
-    if (getCookie("jwt")!= null){
-        var jwtCookie = getCookie("jwt");
+    if (maKhoa == 'tatcakhoa'){
+        $("#id_tbodyLop tr").remove();
 
         $.ajax({
             url: "../../api/lop/read.php",
@@ -61,7 +63,7 @@ function GetListLop() {
                            
                         }
 
-                       $("#id_tbodyLop").html(htmlData);
+                       $("#id_tbodyLop").append(htmlData);
                     }
 
                 });
@@ -79,6 +81,152 @@ function GetListLop() {
             }
         });
 
+
+    }else{
+
+        $("#id_tbodyLop tr").remove();
+
+        $.ajax({
+            url: "../../api/lop/read.php?maKhoa=" + maKhoa,
+            type: "GET",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            async: true,
+            headers: { 'Authorization': jwtCookie },
+            success: function(result) {
+                
+                $('#idPhanTrang').pagination({
+                    dataSource: result['lop'],
+                    pageSize: 10,
+                    autoHidePrevious: true,
+                    autoHideNext: true,
+                   
+                    callback: function (data, pagination) {
+                        var htmlData ="";
+                        var count = 0;
+                        
+                        for (let i = 0; i< data.length; i++){
+                            count += 1;
+                            
+                            htmlData += "<tr>\
+                                <td class='cell'>"+ data[i].soThuTu +"</td>\
+                                <td class='cell'><span class='truncate'>"+ data[i].maLop +"</span></td>\
+                                <td class='cell'>"+ data[i].tenLop +"</td>\
+                                <td class='cell'>"+ data[i].maKhoa +"</td>\
+                                <td class='cell'>"+ data[i].maCoVanHocTap +"</td>\
+                                <td class='cell'>"+ data[i].maKhoaHoc +"</td>\
+                                <td class='cell'><a class='btn bg-warning' href='#' style='color: white;'>Chỉnh sửa</a></td>\
+                                </tr>";
+                           
+                        }
+
+                       $("#id_tbodyLop").append(htmlData);
+                    }
+
+                });
+
+            },
+            error: function(errorMessage) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Lỗi',
+                    text: errorMessage.responseText,
+                    //timer: 5000,
+                    timerProgressBar: true
+                })
+    
+            }
+        });
+
+
     }
 
+        
 }
+
+
+
+function TimKiemLop(maLop) {
+    $("#id_tbodyLop tr").remove();
+  
+    $.ajax({
+      url: "../../api/lop/single_read.php?maLop=" + maLop,
+      async: false,
+      type: "GET",
+      contentType: "application/json;charset=utf-8",
+      dataType: "json",
+      headers: { Authorization: jwtCookie },
+      success: function (result_Lop) {
+        var htmlData = "";
+  
+        htmlData += "<tr>\
+            <td class='cell'>1</td>\
+            <td class='cell'><span class='truncate'>"+ result_Lop.maLop +"</span></td>\
+            <td class='cell'>"+ result_Lop.tenLop +"</td>\
+            <td class='cell'>"+ result_Lop.maKhoa +"</td>\
+            <td class='cell'>"+ result_Lop.maCoVanHocTap +"</td>\
+            <td class='cell'>"+ result_Lop.maKhoaHoc +"</td>\
+            <td class='cell'><a class='btn bg-warning' href='#' style='color: white;'>Chỉnh sửa</a></td>\
+        </tr>"
+  
+        $("#id_tbodyLop").append(htmlData);
+  
+      },
+      error: function (errorMessage) {
+        var htmlData = "";
+  
+        $("#id_tbodyLop").append(htmlData);
+      },
+      statusCode: {
+        403: function (xhr) {
+          //deleteAllCookies();
+          //location.href = 'login.php';
+        },
+      },
+    });
+  }
+
+
+function LoadComboBoxThongTinKhoa() {
+    //Load khoa
+    $.ajax({
+      url: "../../api/khoa/read.php",
+      type: "GET",
+      contentType: "application/json;charset=utf-8",
+      dataType: "json",
+      async: false,
+      headers: { Authorization: jwtCookie },
+      success: function (result_Khoa) {
+        $("#select_Khoa").find("option").remove();
+  
+        $("#select_Khoa").append(
+          "<option selected value='tatcakhoa'>Tất cả khoa</option>"
+        );
+  
+        $.each(result_Khoa, function (index_Khoa) {
+          for (var p = 0; p < result_Khoa[index_Khoa].length; p++) {
+            $("#select_Khoa").append(
+              "<option value='" +
+                result_Khoa[index_Khoa][p].maKhoa +
+                "'>" +
+                result_Khoa[index_Khoa][p].tenKhoa +
+                "</option>"
+            );
+          }
+        });
+      },
+      error: function (errorMessage) {
+        Swal.fire({
+          icon: "error",
+          title: "Lỗi",
+          text: errorMessage.responseText,
+          //timer: 5000,
+          timerProgressBar: true,
+        });
+      },
+    });
+
+}
+
+
+

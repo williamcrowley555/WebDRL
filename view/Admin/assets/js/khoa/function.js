@@ -51,15 +51,15 @@ function GetListKhoa() {
                             
                             htmlData += "<tr>\
                                 <td class='cell'>"+ data[i].soThuTu +"</td>\
-                                <td class='cell'><span class='truncate'>"+ data[i].maKhoa +"</span></td>\
+                                <td class='cell'><span class='truncate' id='field_maKhoa' >"+ data[i].maKhoa +"</span></td>\
                                 <td class='cell'>"+ data[i].tenKhoa +"</td>\
                                 <td class='cell'>"+ data[i].taiKhoanKhoa +"</td>\
-                                <td class='cell'><a class='btn bg-warning' href='#' style='color: white;'>Đặt lại mật khẩu</a></td>\
+                                <td class='cell'><button class='btn btn-info' id='id_DatLaiMatKhau' style='color: white;' data-bs-toggle='modal' data-bs-target='#ModalDatLaiMatKhau' >Đặt lại mật khẩu</button></td>\
                                 </tr>";
                            
                         }
 
-                       $("#id_tbodyLop").html(htmlData);
+                       $("#id_tbodyKhoa").append(htmlData);
                     }
 
                 });
@@ -78,5 +78,14 @@ function GetListKhoa() {
         });
 
     }
+
+}
+
+
+function DatLaiMatKhau() {
+    
+    
+
+
 
 }

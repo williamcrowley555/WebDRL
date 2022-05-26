@@ -17,29 +17,27 @@
 
 							<div class="col-auto">
 
-								<select class="form-select w-auto">
-									<option selected value="option-1">Tất cả khoa</option>
-									<option value="option-2">Công nghệ thông tin</option>
-									<option value="option-3">Điện tử viễn thông</option>
+								<select class="form-select w-auto" id="select_Khoa">
+									
 								</select>
 							</div>
 
 							
 							<div class="col-auto">
-								<form class="table-search-form row gx-1 align-items-center">
+								<div class="table-search-form row gx-1 align-items-center">
 									<div class="col-auto">
-										<input type="text" id="search-orders" name="searchorders" class="form-control search-orders" placeholder="Nhập mã lớp...">
+										<input type="text" id="input_timKiemMaLop" name="" class="form-control" placeholder="Nhập mã lớp...">
 									</div>
 									<div class="col-auto">
-										<button type="submit" class="btn app-btn-secondary">Tìm kiếm</button>
+										<button type="button" onclick="return TimKiemLop($('#input_timKiemMaSinhVien').val());" class="btn app-btn-secondary">Tìm kiếm</button>
 									</div>
-								</form>
+								</div>
 
 							</div>
 							<!--//col-->
-							<div class="col-auto" style="padding-left: 15px;">
+							<!-- <div class="col-auto" style="padding-left: 15px;">
 								<button class="btn app-btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">Thêm mới</button>
-							</div>
+							</div> -->
 
 						</div>
 						<!--//row-->
@@ -150,7 +148,32 @@
 	}, 1000);
 
 	//hàm trong function.js
-	GetListLop();
+	var maKhoa = 'tatcakhoa';
+
+	if (maKhoa != ''){
+		GetListLop(maKhoa);
+	}
+	
+	$('#select_Khoa').on('change', function(){
+		var maKhoa = $('#id_tbodyLop').val();
+
+		if (maKhoa != ''){
+			GetListLop(maKhoa);
+		}
+
+	});	
+
+	$('#input_timKiemMaLop').on('change', function(){
+		var maLop = $('#input_timKiemMaLop').val();
+
+		if (maLop != ''){
+			TimKiemLop(maLop);
+		}
+
+	});	
+
+
+	LoadComboBoxThongTinKhoa();
  
 
 </script>

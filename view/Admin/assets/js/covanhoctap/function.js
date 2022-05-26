@@ -55,7 +55,7 @@ function GetListCVHT() {
                                 <td class='cell'><span class='truncate'>"+ data[i].maCoVanHocTap +"</span></td>\
                                 <td class='cell'>"+ data[i].hoTenCoVan +"</td>\
                                 <td class='cell'>"+ data[i].soDienThoai +"</td>\
-                                <td class='cell'><a class='btn bg-warning' href='#' style='color: white;' >Đặt lại mật khẩu</a></td>\
+                                <td class='cell'><button type=button' class='btn btn-info' style='color: white;' >Đặt lại mật khẩu</button></td>\
                                 </tr>";
                            
                         }
@@ -134,7 +134,7 @@ function ThemCVHT() {
                 console.log(postData);
         
                 $.ajax({
-                    url: "http://localhost/WebDRL/api/covanhoctap/create.php",
+                    url: "../../api/covanhoctap/create.php",
                     type: "POST",
                     contentType: "application/json;charset=utf-8",
                     dataType: "json",

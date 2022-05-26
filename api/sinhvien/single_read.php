@@ -21,6 +21,7 @@
             $database = new Database();
             $db = $database->getConnection();
             $item = new SinhVien($db);
+
             $item->maSinhVien = isset($_GET['maSinhVien']) ? $_GET['maSinhVien'] : die(); //Lấy id từ phương thức GET
         
             $item->getSingleSinhVien();

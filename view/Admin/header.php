@@ -1,7 +1,8 @@
 <?php
-	if (http_response_code() == 403){
-		header('login.php');
-	}
+	// if (http_response_code() == 403){
+	// 	header('login.php');
+	// }
+	
 
 ?>
 
@@ -44,7 +45,7 @@
 				}
 
 				case 'hoatdongdanhgia.php':{
-					echo "Sinh viên | Web điểm rèn luyện";
+					echo "Hoạt động đánh giá | Web điểm rèn luyện";
 					break;
 				}
 
@@ -59,7 +60,7 @@
 				}
 
 				default:{
-					echo "404 Not Found";
+					echo "Web điểm rèn luyện";
 					break;
 				}
 					
@@ -85,6 +86,7 @@
 	<script src="assets/js/pagination.min.js"></script>
 
 	<link rel="stylesheet" href="assets/css/pagination.css"/>	
+	
     
 	<script src="assets/js/check_token.js"></script>
     
@@ -129,7 +131,7 @@
 									        
 				        </div><!--//app-utility-item-->
 			            <div class="app-utility-item">
-				            <span>Admin 1</span>
+				            <span><?php if (isset($_COOKIE['hoTenNhanVien'])) echo $_COOKIE['hoTenNhanVien']; ?></span>
 					    </div><!--//app-utility-item-->
 			            
 			            <div class="app-utility-item app-user-dropdown dropdown">
@@ -230,7 +232,7 @@
 					        <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
 					        <a class="nav-link <?php if (end($page_word) == 'hoatdongdanhgia.php') echo 'active'; ?>" href="hoatdongdanhgia.php">
 						        <span class="nav-icon">
-									<img src="assets/images/icons/society.png" alt="icon hoạt động" width="10%">
+									<img src="assets/images/icons/class.png" alt="icon hoạt động" width="10%">
 						         </span>
 		                         <span class="nav-link-text">Hoạt động đánh giá</span>
 					        </a><!--//nav-link-->

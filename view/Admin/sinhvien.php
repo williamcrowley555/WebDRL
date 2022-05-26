@@ -17,31 +17,27 @@
 
 							<div class="col-auto">
 
-								<select class="form-select w-auto">
-									<option selected value="option-1">Tất cả khoa</option>
-									<option value="option-2">Công nghệ thông tin</option>
-									<option value="option-3">Điện tử viễn thông</option>
+								<select class="form-select w-auto" id='select_Khoa'>
+									
 								</select>
 							</div>
 
 							<div class="col-auto">
 
-								<select class="form-select w-auto">
-									<option selected value="option-1">Tất cả lớp</option>
-									<option value="option-2">DCT1189</option>
-									<option value="option-3">DCT1188</option>
+								<select class="form-select w-auto" id='select_Lop'>
+									
 								</select>
 							</div>
 
 							<div class="col-auto">
-								<form class="table-search-form row gx-1 align-items-center">
+								<div class="table-search-form row gx-1 align-items-center">
 									<div class="col-auto">
-										<input type="text" id="search-orders" name="searchorders" class="form-control search-orders" placeholder="Nhập mã số sinh viên...">
+										<input type="text" id="input_timKiemMaSinhVien" name="" class="form-control" placeholder="Nhập mã số sinh viên...">
 									</div>
 									<div class="col-auto">
-										<button type="submit" class="btn app-btn-secondary">Tìm kiếm</button>
+										<button type="button" onclick="return TimKiemSinhVien($('#input_timKiemMaSinhVien').val());" class="btn app-btn-secondary">Tìm kiếm</button>
 									</div>
-								</form>
+								</div>
 
 							</div>
 							<!--//col-->
@@ -135,9 +131,47 @@
 		$('.loader_bg').fadeToggle();
 	}, 1000);
 
+	var maKhoa_selected = 'tatcakhoa';
+	var maLop_selected = 'tatcalop';
+
 	//hàm trong function.js
-	GetListSinhVien();
+	GetListSinhVien(maKhoa_selected, maLop_selected);
+
+	$('#select_Khoa').on('change', function(){
+		var maKhoa_selected = $('#select_Khoa').val();
+		var maLop_selected = $('#select_Lop').val();
+
+		GetListSinhVien(maKhoa_selected, maLop_selected);
+	
+	});
+
+	$('#select_Lop').on('change', function(){
+		var maKhoa_selected = $('#select_Khoa').val();
+		var maLop_selected = $('#select_Lop').val();
+
+		GetListSinhVien(maKhoa_selected, maLop_selected);
+	
+	});
+
+	$('#input_timKiemMaSinhVien').on('change', function(){
+		var _input_timKiemMaSinhVien = $('#input_timKiemMaSinhVien').val();
+		
+		if (_input_timKiemMaSinhVien != ''){
+			TimKiemSinhVien(_input_timKiemMaSinhVien);
+		}
+		
+	
+	});
+	
  
+	LoadComboBoxThongTinKhoa();
+
+	$('#select_Khoa').on('change', function(){
+		var maLop_selected = $('#select_Khoa').val();
+	
+		LoadComboBoxThongTinLopTheoKhoa(maLop_selected);
+	
+	});
 
 </script>
 </body>

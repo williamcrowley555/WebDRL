@@ -30,7 +30,7 @@
                 $tieuchicap2_arr = array(
                     "matc2" =>  $item->matc2,
                     "noidung" => $item->noidung,
-                    "diemtoida" => $item->$diemtoida,
+                    "diemtoida" => $item->diemtoida,
                     "matc1" => $item->matc1
                 );
             

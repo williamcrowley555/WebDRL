@@ -38,13 +38,16 @@
                 $item->thoiGianKetThucHoatDong = $data->thoiGianKetThucHoatDong;
     
                 if($item->createHoatDongDanhGia()){
+                    http_response_code(200);
                     echo 'HoatDongDanhGia created successfully.';
                 } else{
+                    http_response_code(500);
                     echo 'HoatDongDanhGia could not be created.';
                 }
             }else{
                 echo 'No data posted.';
-            }} else {
+            }
+        } else {
             http_response_code(403);
             echo json_encode(
                 array("message" => "Bạn không có quyền thực hiện điều này!")

@@ -48,6 +48,39 @@
 				</div>
 				<!--//col-auto-->
 
+				<!-- Modal đặt lại mật khẩu-->
+				<div class="modal fade" id="ModalDatLaiMatKhau" tabindex="-1" aria-labelledby="ModalDatLaiMatKhauLabel" aria-hidden="true">
+					<div class="modal-dialog">	
+						<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="exampleModalLabel">Đặt lại mật khẩu</h5>
+							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						</div>
+						<div class="modal-body">
+							<div class="mb-3">
+								<label for="input_MaKhoa" class="form-label" style="color: black; font-weight: 500;" >Mã khoa</label>
+								<input type="text" class="form-control" id="input_MaKhoa" placeholder="Nhập mã khoa..." disabled>
+							</div>
+
+							<div class="mb-3">
+								<label for="input_MatKhauMoi" class="form-label" style="color: black; font-weight: 500;" >Mật khẩu mới</label>
+								<input type="password" class="form-control" id="input_MatKhauMoi" placeholder="Nhập mật khẩu mới..." >
+							</div>
+
+							<div class="mb-3">
+								<label for="input_NhapLaiMatKhau" class="form-label" style="color: black; font-weight: 500;" >Xác nhận mật khẩu</label>
+								<input type="password" class="form-control" id="input_NhapLaiMatKhau" placeholder="Nhập lại mật khẩu mới..." >
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+							<button type="button" class="btn btn-primary" style="color: white;">Xác nhận</button>
+						</div>
+						</div>
+					</div>
+				</div>
+
+
 				<!-- Modal -->
 				<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 				<div class="modal-dialog">	
@@ -69,6 +102,8 @@
 
 				
 
+				
+
 				<div class="tab-pane fade show active" id="orders-all" role="tabpanel" aria-labelledby="orders-all-tab">
 					<div class="app-card app-card-orders-table shadow-sm mb-5">
 						<div class="app-card-body">
@@ -77,12 +112,13 @@
 									<thead>
 										<tr>
 											<th class="cell">STT</th>
-											<th class="cell">Mã Khoa</th>
-											<th class="cell">Tên Khoa</th>
+											<th class="cell">Mã khoa</th>
+											<th class="cell">Tên khoa</th>
 											<th class="cell">Tài khoản khoa</th>
+											<th class="cell"></th>
 										</tr>
 									</thead>
-									<tbody id="id_tbodyLop">
+									<tbody id="id_tbodyKhoa">
 										
 									</tbody>
 								</table>
@@ -149,6 +185,11 @@
 	//hàm trong function.js
 	GetListKhoa();
  
+	$('#id_DatLaiMatKhau').on('click', function(){
+		var get_MaKhoa = $('#field_maKhoa').val()
+
+		
+	});
 
 </script>
 </body>
