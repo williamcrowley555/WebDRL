@@ -21,11 +21,12 @@ function deleteAllCookies() {
 }
 
 
+var jwtCookie = getCookie("jwt");
+
 //phieurenluyen//
 function GetListPhieurenluyen() {
 
-    if (getCookie("jwt")!= null){
-        var jwtCookie = getCookie("jwt");
+    $("#id_tbodyPhieuRenLuyen tr").remove();
 
         $.ajax({
             url: "../../api/phieurenluyen/read.php",
@@ -56,12 +57,12 @@ function GetListPhieurenluyen() {
                                 <td class='cell'>"+ data[i].maHocKyDanhGia +"</td>\
                                 <td class='cell'>"+ data[i].diemTongCong +"</td>\
                                 <td class='cell'>"+ data[i].xepLoai +"</td>\
-                                <td class='cell'><a class='btn bg-warning' href='#' style='color: white;'>Chỉnh sửa</a></td>\
+                                <td class='cell'><a class='btn btn-secondary' href='#' style='color: white;'>Xem chi tiết</a></td>\
                                 </tr>";
                            
                         }
 
-                       $("#id_tbodyLop").html(htmlData);
+                       $("#id_tbodyPhieuRenLuyen").append(htmlData);
                     }
 
                 });
@@ -79,6 +80,48 @@ function GetListPhieurenluyen() {
             }
         });
 
-    }
 
 }
+
+
+function LoadComboBoxThongTinKhoa() {
+    //Load khoa
+    $.ajax({
+      url: "../../api/khoa/read.php",
+      type: "GET",
+      contentType: "application/json;charset=utf-8",
+      dataType: "json",
+      async: false,
+      headers: { Authorization: jwtCookie },
+      success: function (result_Khoa) {
+        $("#select_Khoa").find("option").remove();
+  
+        $("#select_Khoa").append(
+          "<option selected value='tatcakhoa'>Tất cả khoa</option>"
+        );
+  
+        $.each(result_Khoa, function (index_Khoa) {
+          for (var p = 0; p < result_Khoa[index_Khoa].length; p++) {
+            $("#select_Khoa").append(
+              "<option value='" +
+                result_Khoa[index_Khoa][p].maKhoa +
+                "'>" +
+                result_Khoa[index_Khoa][p].tenKhoa +
+                "</option>"
+            );
+          }
+        });
+      },
+      error: function (errorMessage) {
+        Swal.fire({
+          icon: "error",
+          title: "Lỗi",
+          text: errorMessage.responseText,
+          //timer: 5000,
+          timerProgressBar: true,
+        });
+      },
+    });
+}
+
+

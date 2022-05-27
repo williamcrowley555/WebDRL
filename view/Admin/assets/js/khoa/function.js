@@ -54,7 +54,7 @@ function GetListKhoa() {
                                 <td class='cell'><span class='truncate' id='field_maKhoa' >"+ data[i].maKhoa +"</span></td>\
                                 <td class='cell'>"+ data[i].tenKhoa +"</td>\
                                 <td class='cell'>"+ data[i].taiKhoanKhoa +"</td>\
-                                <td class='cell'><button class='btn btn-info' id='id_DatLaiMatKhau' style='color: white;' data-bs-toggle='modal' data-bs-target='#ModalDatLaiMatKhau' >Đặt lại mật khẩu</button></td>\
+                                <td class='cell'><button class='btn btn-info' id='btn_DatLaiMatKhau' style='color: white;' data-id='"+ data[i].maKhoa +"' >Đặt lại mật khẩu</button></td>\
                                 </tr>";
                            
                         }

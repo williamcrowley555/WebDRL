@@ -177,7 +177,8 @@
 <script src="assets/js/pagination.min.js"></script>
 
 <link rel="stylesheet" href="assets/css/pagination.css"/>
-<script>
+
+<script type="text/javascript">
 	setTimeout(function() {
 		$('.loader_bg').fadeToggle();
 	}, 1000);
@@ -185,11 +186,15 @@
 	//hàm trong function.js
 	GetListKhoa();
  
-	$('#id_DatLaiMatKhau').on('click', function(){
-		var get_MaKhoa = $('#field_maKhoa').val()
-
+	$('#btn_DatLaiMatKhau').click(function() {
+		var id = $(this).data('id');      
 		
-	});
+		alert(id);
+
+		$('#input_MaKhoa').val(id);
+
+	
+    } );
 
 </script>
 </body>

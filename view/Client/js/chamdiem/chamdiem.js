@@ -165,7 +165,7 @@ function getThongTinHocKyDanhGia() {
                                                 <td><span>"+ ngaySinhVienDanhGia.toLocaleDateString() +"</span></td>\
                                                 <td><span>"+ ngaySinhVienKetThucDanhGia.toLocaleDateString() +"</span></td>\
                                                 <td>\
-                                                    <a href='chamlaichitiet.php?maHocKy="+ maHocKyDanhGia_HKDG +"' ><button type='button' class='btn btn-info' style='color: white;'>Chấm điểm</button></a>\
+                                                    <a href='chamdiemchitiet.php?maHocKy="+ maHocKyDanhGia_HKDG +"' ><button type='button' class='btn btn-info' style='color: white;'>Chấm điểm</button></a>\
                                                 </td>\
                                             </tr>");
                                         },

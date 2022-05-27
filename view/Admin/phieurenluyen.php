@@ -17,10 +17,8 @@
 
 							<div class="col-auto">
 
-								<select class="form-select w-auto">
-									<option selected value="option-1">Tất cả khoa</option>
-									<option value="option-2">Công nghệ thông tin</option>
-									<option value="option-3">Điện tử viễn thông</option>
+								<select class="form-select w-auto" id="select_Khoa" >
+									
 								</select>
 							</div>
 
@@ -38,7 +36,7 @@
 							</div>
 							<!--//col-->
 							<div class="col-auto" style="padding-left: 15px;">
-								<button class="btn app-btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">Thêm mới</button>
+								<!-- <button class="btn app-btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">Thêm mới</button> -->
 							</div>
 
 						</div>
@@ -77,14 +75,15 @@
 									<thead>
 										<tr>
 											<th class="cell">STT</th>
-											<th class="cell">Mã PRL</th>
+											<th class="cell">Mã phiếu rèn luyện</th>
 											<th class="cell">Mã sinh viên</th>
-											<th class="cell">Mã HK</th>
+											<th class="cell">Mã học kỳ</th>
 											<th class="cell">Điểm tổng</th>
 											<th class="cell">Xếp loại</th>
+											<th class="cell"></th>
 										</tr>
 									</thead>
-									<tbody id="id_tbodyLop">
+									<tbody id="id_tbodyPhieuRenLuyen">
 										
 									</tbody>
 								</table>
@@ -151,6 +150,7 @@
 	//hàm trong function.js
 	GetListPhieurenluyen();
  
+	LoadComboBoxThongTinKhoa();
 
 </script>
 </body>
