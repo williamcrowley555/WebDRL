@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 26, 2022 at 11:01 AM
+-- Generation Time: May 28, 2022 at 11:06 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.29
 
@@ -43,55 +43,55 @@ CREATE TABLE `chamdiemrenluyen` (
 --
 
 INSERT INTO `chamdiemrenluyen` (`maChamDiemRenLuyen`, `maPhieuRenLuyen`, `maTieuChi3`, `maTieuChi2`, `maSinhVien`, `diemSinhVienDanhGia`, `diemLopDanhGia`, `ghiChu`) VALUES
-(337, 'PRLHK221223118410262', 1, 0, '3118410262', 0, 0, ''),
-(338, 'PRLHK221223118410262', 2, 0, '3118410262', 0, 0, ''),
-(339, 'PRLHK221223118410262', 3, 0, '3118410262', 0, 0, ''),
-(340, 'PRLHK221223118410262', 4, 0, '3118410262', 0, 0, ''),
-(341, 'PRLHK221223118410262', 5, 0, '3118410262', 0, 0, ''),
-(342, 'PRLHK221223118410262', 6, 0, '3118410262', 0, 0, ''),
-(343, 'PRLHK221223118410262', 7, 0, '3118410262', 0, 0, ''),
-(344, 'PRLHK221223118410262', 8, 0, '3118410262', 0, 0, ''),
-(345, 'PRLHK221223118410262', 9, 0, '3118410262', 0, 0, ''),
-(346, 'PRLHK221223118410262', 10, 0, '3118410262', 0, 0, ''),
-(347, 'PRLHK221223118410262', 11, 0, '3118410262', 0, 0, ''),
-(348, 'PRLHK221223118410262', 12, 0, '3118410262', 0, 0, ''),
-(349, 'PRLHK221223118410262', 13, 0, '3118410262', 0, 0, ''),
-(350, 'PRLHK221223118410262', 14, 0, '3118410262', 0, 0, ''),
-(351, 'PRLHK221223118410262', 15, 0, '3118410262', 0, 0, ''),
-(352, 'PRLHK221223118410262', 16, 0, '3118410262', 0, 0, ''),
-(353, 'PRLHK221223118410262', 17, 0, '3118410262', 0, 0, ''),
-(354, 'PRLHK221223118410262', 18, 0, '3118410262', 0, 0, ''),
-(355, 'PRLHK221223118410262', 19, 0, '3118410262', 0, 0, ''),
-(356, 'PRLHK221223118410262', 20, 0, '3118410262', 0, 0, ''),
-(357, 'PRLHK221223118410262', 21, 0, '3118410262', 0, 0, ''),
-(358, 'PRLHK221223118410262', 0, 7, '3118410262', 15, 0, ''),
-(359, 'PRLHK221223118410262', 0, 8, '3118410262', 10, 0, ''),
-(360, 'PRLHK221223118410262', 0, 9, '3118410262', 0, 0, ''),
-(361, 'PRLHK221223118410262', 0, 10, '3118410262', 0, 0, ''),
-(362, 'PRLHK221223118410262', 22, 0, '3118410262', 0, 0, ''),
-(363, 'PRLHK221223118410262', 23, 0, '3118410262', 0, 0, ''),
-(364, 'PRLHK221223118410262', 0, 12, '3118410262', 0, 0, ''),
-(365, 'PRLHK221223118410262', 24, 0, '3118410262', 0, 0, ''),
-(366, 'PRLHK221223118410262', 25, 0, '3118410262', 0, 0, ''),
-(367, 'PRLHK221223118410262', 26, 0, '3118410262', 0, 0, ''),
-(368, 'PRLHK221223118410262', 0, 14, '3118410262', 0, 0, ''),
-(369, 'PRLHK221223118410262', 0, 15, '3118410262', 0, 0, ''),
-(370, 'PRLHK221223118410262', 0, 16, '3118410262', 0, 0, ''),
-(371, 'PRLHK221223118410262', 0, 17, '3118410262', 0, 0, ''),
-(372, 'PRLHK221223118410262', 0, 18, '3118410262', 0, 0, ''),
-(373, 'PRLHK221223118410262', 0, 19, '3118410262', 0, 0, ''),
-(374, 'PRLHK221223118410262', 0, 20, '3118410262', 0, 0, ''),
-(375, 'PRLHK221223118410262', 0, 21, '3118410262', 0, 0, ''),
-(376, 'PRLHK221223118410262', 0, 22, '3118410262', 0, 0, ''),
-(377, 'PRLHK221223118410262', 0, 23, '3118410262', 0, 0, ''),
-(378, 'PRLHK221223118410262', 0, 24, '3118410262', 0, 0, ''),
-(379, 'PRLHK221223118410262', 0, 25, '3118410262', 0, 0, ''),
-(380, 'PRLHK221223118410262', 0, 26, '3118410262', 0, 0, ''),
-(381, 'PRLHK221223118410262', 0, 27, '3118410262', 0, 0, ''),
-(382, 'PRLHK221223118410262', 27, 0, '3118410262', 0, 0, ''),
-(383, 'PRLHK221223118410262', 28, 0, '3118410262', 0, 0, ''),
-(384, 'PRLHK221223118410262', 0, 29, '3118410262', 15, 0, ''),
-(385, 'PRLHK221223118410262', 0, 30, '3118410262', 10, 0, '');
+(484, 'PRLHK221223118410018', 1, 0, '3118410018', 0, 0, ''),
+(485, 'PRLHK221223118410018', 2, 0, '3118410018', 12, 12, ''),
+(486, 'PRLHK221223118410018', 3, 0, '3118410018', 0, 0, ''),
+(487, 'PRLHK221223118410018', 4, 0, '3118410018', 0, 0, ''),
+(488, 'PRLHK221223118410018', 5, 0, '3118410018', 0, 0, ''),
+(489, 'PRLHK221223118410018', 6, 0, '3118410018', 0, 0, ''),
+(490, 'PRLHK221223118410018', 7, 0, '3118410018', 0, 0, ''),
+(491, 'PRLHK221223118410018', 8, 0, '3118410018', 0, 0, ''),
+(492, 'PRLHK221223118410018', 9, 0, '3118410018', 0, 0, ''),
+(493, 'PRLHK221223118410018', 10, 0, '3118410018', 0, 0, ''),
+(494, 'PRLHK221223118410018', 11, 0, '3118410018', 0, 0, ''),
+(495, 'PRLHK221223118410018', 12, 0, '3118410018', 0, 0, ''),
+(496, 'PRLHK221223118410018', 13, 0, '3118410018', 0, 0, ''),
+(497, 'PRLHK221223118410018', 14, 0, '3118410018', 0, 0, ''),
+(498, 'PRLHK221223118410018', 15, 0, '3118410018', 0, 0, ''),
+(499, 'PRLHK221223118410018', 16, 0, '3118410018', 0, 0, ''),
+(500, 'PRLHK221223118410018', 17, 0, '3118410018', 0, 0, ''),
+(501, 'PRLHK221223118410018', 18, 0, '3118410018', 0, 0, ''),
+(502, 'PRLHK221223118410018', 19, 0, '3118410018', 0, 0, ''),
+(503, 'PRLHK221223118410018', 20, 0, '3118410018', 0, 0, ''),
+(504, 'PRLHK221223118410018', 21, 0, '3118410018', 0, 0, ''),
+(505, 'PRLHK221223118410018', 0, 7, '3118410018', 15, 15, ''),
+(506, 'PRLHK221223118410018', 0, 8, '3118410018', 10, 10, ''),
+(507, 'PRLHK221223118410018', 0, 9, '3118410018', 0, 0, ''),
+(508, 'PRLHK221223118410018', 0, 10, '3118410018', 0, 0, ''),
+(509, 'PRLHK221223118410018', 22, 0, '3118410018', 10, 10, ''),
+(510, 'PRLHK221223118410018', 23, 0, '3118410018', 0, 0, ''),
+(511, 'PRLHK221223118410018', 0, 12, '3118410018', 5, 5, ''),
+(512, 'PRLHK221223118410018', 24, 0, '3118410018', 0, 0, ''),
+(513, 'PRLHK221223118410018', 25, 0, '3118410018', 0, 0, ''),
+(514, 'PRLHK221223118410018', 26, 0, '3118410018', 0, 0, ''),
+(515, 'PRLHK221223118410018', 0, 14, '3118410018', 10, 10, ''),
+(516, 'PRLHK221223118410018', 0, 15, '3118410018', 0, 0, ''),
+(517, 'PRLHK221223118410018', 0, 16, '3118410018', 0, 0, ''),
+(518, 'PRLHK221223118410018', 0, 17, '3118410018', 0, 0, ''),
+(519, 'PRLHK221223118410018', 0, 18, '3118410018', 0, 0, ''),
+(520, 'PRLHK221223118410018', 0, 19, '3118410018', 0, 0, ''),
+(521, 'PRLHK221223118410018', 0, 20, '3118410018', 0, 0, ''),
+(522, 'PRLHK221223118410018', 0, 21, '3118410018', 0, 0, ''),
+(523, 'PRLHK221223118410018', 0, 22, '3118410018', 0, 0, ''),
+(524, 'PRLHK221223118410018', 0, 23, '3118410018', 0, 0, ''),
+(525, 'PRLHK221223118410018', 0, 24, '3118410018', 0, 0, ''),
+(526, 'PRLHK221223118410018', 0, 25, '3118410018', 0, 0, ''),
+(527, 'PRLHK221223118410018', 0, 26, '3118410018', 0, 0, ''),
+(528, 'PRLHK221223118410018', 0, 27, '3118410018', 3, 3, ''),
+(529, 'PRLHK221223118410018', 27, 0, '3118410018', 0, 0, ''),
+(530, 'PRLHK221223118410018', 28, 0, '3118410018', 0, 0, ''),
+(531, 'PRLHK221223118410018', 0, 29, '3118410018', 0, 0, ''),
+(532, 'PRLHK221223118410018', 0, 30, '3118410018', 0, 15, '');
 
 -- --------------------------------------------------------
 
@@ -130,15 +130,17 @@ CREATE TABLE `hoatdongdanhgia` (
   `diaDiemDienRaHoatDong` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `maQRDiaDiem` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `thoiGianBatDauHoatDong` datetime NOT NULL,
-  `thoiGianKetThucHoatDong` datetime NOT NULL
+  `thoiGianKetThucHoatDong` datetime NOT NULL,
+  `maHocKyDanhGia` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `thoiGianBatDauDiemDanh` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `hoatdongdanhgia`
 --
 
-INSERT INTO `hoatdongdanhgia` (`maHoatDong`, `maTieuChi2`, `maTieuChi3`, `maKhoa`, `tenHoatDong`, `diemNhanDuoc`, `diaDiemDienRaHoatDong`, `maQRDiaDiem`, `thoiGianBatDauHoatDong`, `thoiGianKetThucHoatDong`) VALUES
-(12, 12, 0, 'DCT', 'Hiến máu tình nguyện lần 1', 5, 'Sân KLF - CSC SGU', '628ec176e3946.png', '2020-06-01 00:00:00', '2020-06-02 00:00:00');
+INSERT INTO `hoatdongdanhgia` (`maHoatDong`, `maTieuChi2`, `maTieuChi3`, `maKhoa`, `tenHoatDong`, `diemNhanDuoc`, `diaDiemDienRaHoatDong`, `maQRDiaDiem`, `thoiGianBatDauHoatDong`, `thoiGianKetThucHoatDong`, `maHocKyDanhGia`, `thoiGianBatDauDiemDanh`) VALUES
+(12, 12, 0, 'DCT', 'Hiến máu tình nguyện lần 1', 5, 'Sân KLF - CSC SGU', '628ec176e3946.png', '2022-05-28 17:00:00', '2022-06-01 00:00:00', 'HK22122', '2022-05-28 23:04:00');
 
 -- --------------------------------------------------------
 
@@ -247,7 +249,7 @@ CREATE TABLE `phieurenluyen` (
 --
 
 INSERT INTO `phieurenluyen` (`maPhieuRenLuyen`, `xepLoai`, `diemTongCong`, `maSinhVien`, `diemTrungBinhChungHKTruoc`, `diemTrungBinhChungHKXet`, `maHocKyDanhGia`, `coVanDuyet`, `khoaDuyet`, `fileDinhKem`) VALUES
-('PRLHK221223118410262', 'Trung bình', 50, '3118410262', 3.5, 4, 'HK22122', 0, 0, 'alohe.zip');
+('PRLHK221223118410018', 'Tốt', 80, '3118410018', 3.5, 3.42, 'HK22122', 1, 0, 'New WinRAR archive.rar');
 
 -- --------------------------------------------------------
 
@@ -297,7 +299,6 @@ INSERT INTO `sinhvien` (`maSinhVien`, `hoTenSinhVien`, `ngaySinh`, `he`, `matKha
 ('3118410030', 'BÙI HỮU BẰNG', '2000-04-07', 'Đại học', '1e0b1e37e1e1705428d0f3d22c81685d', 'DCT1189', 'sinhvien'),
 ('3118410046', 'TRẦN THANH CỦA', '2000-10-13', 'Đại học', '73ea22f44907a127b85844322e41447c', 'DCT1189', 'sinhvien'),
 ('3118410059', 'NGUYỄN PHƯỚC DUY', '2000-11-13', 'Đại học', 'd78c4e1abc3480c8899313aa648f9e03', 'DCT1189', 'sinhvien'),
-('3118410111', 'Nguyễn Văn A', '1996-05-16', 'Đại học', '90b4e1e9db93158ac55b4539c5bc1063', 'DCT1186', 'sinhvien'),
 ('3118410262', 'NGUYỄN THƯƠNG MẾN', '2000-06-01', 'Đại học', 'b75617aed87d1a170dd25d22547f888d', 'DCT1189', 'sinhvien');
 
 -- --------------------------------------------------------
@@ -309,8 +310,15 @@ INSERT INTO `sinhvien` (`maSinhVien`, `hoTenSinhVien`, `ngaySinh`, `he`, `matKha
 CREATE TABLE `thamgiahoatdong` (
   `maThamGiaHoatDong` int(11) NOT NULL,
   `maHoatDong` int(11) NOT NULL,
-  `maSinhVienThamGia` int(11) NOT NULL
+  `maSinhVienThamGia` varchar(255) COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `thamgiahoatdong`
+--
+
+INSERT INTO `thamgiahoatdong` (`maThamGiaHoatDong`, `maHoatDong`, `maSinhVienThamGia`) VALUES
+(1, 12, '3118410262');
 
 -- --------------------------------------------------------
 
@@ -479,11 +487,11 @@ CREATE TABLE `user_token` (
 --
 
 INSERT INTO `user_token` (`stt`, `maSo`, `token`, `quyen`, `thoiGianDangNhap`, `thoiGianHetHan`) VALUES
-(245, '3118410018', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJpYXQiOjE2NTMzNDYxOTAsIm5iZiI6MTY1MzM0NjIwMCwiZXhwIjoxNjUzNDMyNTkwLCJhdWQiOiJzaW5odmllbiIsInNpbmh2aWVuIjp7Im1hU2luaFZpZW4iOiIzMTE4NDEwMDE4IiwiaG9UZW5TaW5oVmllbiI6IkxcdTAwY2EgTkdcdTAwZDQgVEhJXHUwMGNhTiBcdTFlYTROIiwicXV5ZW4iOiJzaW5odmllbiJ9fQ.U4VvWUJ9dJ5CC7SdsVzSPiHWP_VwYQ8V0Zc1CeSRGhs', 'sinhvien', '2022-05-23 22:49:50', '2022-05-24 22:49:50'),
 (254, '3118410046', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJpYXQiOjE2NTM0MTA4NzgsIm5iZiI6MTY1MzQxMDg4OCwiZXhwIjoxNjUzNDk3Mjc4LCJhdWQiOiJzaW5odmllbiIsInNpbmh2aWVuIjp7Im1hU2luaFZpZW4iOiIzMTE4NDEwMDQ2IiwiaG9UZW5TaW5oVmllbiI6IlRSXHUxZWE2TiBUSEFOSCBDXHUxZWU2QSIsInF1eWVuIjoic2luaHZpZW4ifX0.riF7cOGFXA7r5Tgo_nFwO4A29AXj4UbPfU9IOIWqZU4', 'sinhvien', '2022-05-24 16:47:58', '2022-05-25 16:47:58'),
-(257, '11364', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJpYXQiOjE2NTM0MjQ4MDAsIm5iZiI6MTY1MzQyNDgxMCwiZXhwIjoxNjUzNTExMjAwLCJhdWQiOiJjdmh0IiwiY3ZodCI6eyJtYUNvVmFuSG9jVGFwIjoiMTEzNjQiLCJob1RlbkNvVmFuIjoiTFx1MDFiMFx1MDFhMW5nIE1pbmggSHVcdTFlYTVuIiwicXV5ZW4iOiJjdmh0In19.8fEhoaTpfevjMUD8znYvKJmzDx-EZjrfIugYjHTxFPo', 'cvht', '2022-05-24 20:40:00', '2022-05-25 20:40:00'),
-(260, '3118410262', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJpYXQiOjE2NTM1MTc0NjAsIm5iZiI6MTY1MzUxNzQ3MCwiZXhwIjoxNjUzNjAzODYwLCJhdWQiOiJzaW5odmllbiIsInNpbmh2aWVuIjp7Im1hU2luaFZpZW4iOiIzMTE4NDEwMjYyIiwiaG9UZW5TaW5oVmllbiI6Ik5HVVlcdTFlYzROIFRIXHUwMWFmXHUwMWEwTkcgTVx1MWViZU4iLCJxdXllbiI6InNpbmh2aWVuIn19.nbFaRY-f-kCuIjZi_pTxj8PYEnzJi6VeHrfq5t6k0hQ', 'sinhvien', '2022-05-25 22:24:20', '2022-05-26 22:24:20'),
-(264, 'ctsv1', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJpYXQiOjE2NTM1MjAxNTAsIm5iZiI6MTY1MzUyMDE2MCwiZXhwIjoxNjUzNjA2NTUwLCJhdWQiOiJwaG9uZ2Nvbmd0YWNzaW5odmllbiIsInBob25nY29uZ3RhY3Npbmh2aWVuIjp7InRhaUtob2FuIjoiY3RzdjEiLCJob1Rlbk5oYW5WaWVuIjoiTmhcdTAwZTJuIHZpXHUwMGVhbiBDVFNWIDEiLCJxdXllbiI6ImN0c3YifX0.hazUpaU-vI8tjTztth6SOPhfn2_RWaT6TTpvMvniL2A', 'ctsv', '2022-05-25 23:09:10', '2022-05-26 23:09:10');
+(272, '3118410018', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJpYXQiOjE2NTM2OTQxMjksIm5iZiI6MTY1MzY5NDEzOSwiZXhwIjoxNjUzNzgwNTI5LCJhdWQiOiJzaW5odmllbiIsInNpbmh2aWVuIjp7Im1hU2luaFZpZW4iOiIzMTE4NDEwMDE4IiwiaG9UZW5TaW5oVmllbiI6IkxcdTAwY2EgTkdcdTAwZDQgVEhJXHUwMGNhTiBcdTFlYTROIiwicXV5ZW4iOiJzaW5odmllbiJ9fQ.jGBKgkFxWTCHZmOrlGWhMJ2ghNicElbZPA9GegLh5Ck', 'sinhvien', '2022-05-27 23:28:49', '2022-05-28 23:28:49'),
+(273, '11364', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJpYXQiOjE2NTM2OTQ4NzAsIm5iZiI6MTY1MzY5NDg4MCwiZXhwIjoxNjUzNzgxMjcwLCJhdWQiOiJjdmh0IiwiY3ZodCI6eyJtYUNvVmFuSG9jVGFwIjoiMTEzNjQiLCJob1RlbkNvVmFuIjoiTFx1MDFiMFx1MDFhMW5nIE1pbmggSHVcdTFlYTVuIiwicXV5ZW4iOiJjdmh0In19.6_zWOGyAuvi1_L-v7MpOnovTtNzqIx3rhv2XqAmsjMQ', 'cvht', '2022-05-27 23:41:10', '2022-05-28 23:41:10'),
+(275, '3118410262', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJpYXQiOjE2NTM3MjY3MzUsIm5iZiI6MTY1MzcyNjc0NSwiZXhwIjoxNjUzODEzMTM1LCJhdWQiOiJzaW5odmllbiIsInNpbmh2aWVuIjp7Im1hU2luaFZpZW4iOiIzMTE4NDEwMjYyIiwiaG9UZW5TaW5oVmllbiI6Ik5HVVlcdTFlYzROIFRIXHUwMWFmXHUwMWEwTkcgTVx1MWViZU4iLCJxdXllbiI6InNpbmh2aWVuIn19.zqIlGi8zwWV3Q8pTWjuDP45OJMb7HWHb1kR5ai7eFU0', 'sinhvien', '2022-05-28 08:32:15', '2022-05-29 08:32:15'),
+(276, 'ctsv1', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJpYXQiOjE2NTM3NTM3NDYsIm5iZiI6MTY1Mzc1Mzc1NiwiZXhwIjoxNjUzODQwMTQ2LCJhdWQiOiJwaG9uZ2Nvbmd0YWNzaW5odmllbiIsInBob25nY29uZ3RhY3Npbmh2aWVuIjp7InRhaUtob2FuIjoiY3RzdjEiLCJob1Rlbk5oYW5WaWVuIjoiTmhcdTAwZTJuIHZpXHUwMGVhbiBDVFNWIDEiLCJxdXllbiI6ImN0c3YifX0.CSjfLK1aPwDn2k14qQQCRWWEYdbUuFztoXwV0mvWQgU', 'ctsv', '2022-05-28 16:02:26', '2022-05-29 16:02:26');
 
 --
 -- Indexes for dumped tables
@@ -593,7 +601,7 @@ ALTER TABLE `user_token`
 -- AUTO_INCREMENT for table `chamdiemrenluyen`
 --
 ALTER TABLE `chamdiemrenluyen`
-  MODIFY `maChamDiemRenLuyen` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=386;
+  MODIFY `maChamDiemRenLuyen` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=533;
 
 --
 -- AUTO_INCREMENT for table `hoatdongdanhgia`
@@ -605,7 +613,7 @@ ALTER TABLE `hoatdongdanhgia`
 -- AUTO_INCREMENT for table `thamgiahoatdong`
 --
 ALTER TABLE `thamgiahoatdong`
-  MODIFY `maThamGiaHoatDong` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `maThamGiaHoatDong` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `thongbaodanhgia`
@@ -635,7 +643,7 @@ ALTER TABLE `tieuchicap3`
 -- AUTO_INCREMENT for table `user_token`
 --
 ALTER TABLE `user_token`
-  MODIFY `stt` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=265;
+  MODIFY `stt` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=277;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
