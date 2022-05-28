@@ -24,9 +24,12 @@
             $item = new PhieuRenLuyen($db);
             $data = json_decode(file_get_contents("php://input"));
 
-            $fileName = $_FILES['fileDinhKem']['name'];
-            $tempPath = $_FILES['fileDinhKem']['tmp_name'];
-            $fileSize = $_FILES['fileDinhKem']['size'];
+            if (isset($_FILES['fileDinhKem'])){
+                $fileName = $_FILES['fileDinhKem']['name'];
+                $tempPath = $_FILES['fileDinhKem']['tmp_name'];
+                $fileSize = $_FILES['fileDinhKem']['size'];
+            }
+            
 
             if (empty($fileName)){
                 if (isset($_POST['maPhieuRenLuyen']) && isset($_POST['maSinhVien']) &&

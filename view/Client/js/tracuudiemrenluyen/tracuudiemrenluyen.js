@@ -65,6 +65,20 @@ function TraCuuDiemRenLuyen() {
                                 var diemTongCong = result_TraCuu[index_tc][p].diemTongCong;
                                 var xepLoai = result_TraCuu[index_tc][p].xepLoai;
                                 var maHocKyDanhGia = result_TraCuu[index_tc][p].maHocKyDanhGia;
+                                var coVanDuyet = result_TraCuu[index_tc][p].coVanDuyet;
+                                var khoaDuyet = result_TraCuu[index_tc][p].khoaDuyet;
+
+                                if (coVanDuyet == 0) {
+                                    covanDuyet = "<span class='badge badge-warning' style='color: black;font-size: inherit;'>Chưa duyệt</span>";
+                                }else{
+                                    covanDuyet = "<span class='badge badge-success' style='color: black;font-size: inherit;'>Đã duyệt</span>";
+                                }
+
+                                if (khoaDuyet == 0) {
+                                    khoaDuyet = "<span class='badge badge-warning' style='color: black;font-size: inherit;'>Chưa duyệt</span>";
+                                }else{
+                                    khoaDuyet = "<span class='badge badge-success' style='color: black;font-size: inherit;'>Đã duyệt</span>";
+                                }
     
                                 $.ajax({
                                     url: "../../../api/hockydanhgia/single_read.php?maHocKyDanhGia=" + maHocKyDanhGia,
@@ -85,6 +99,8 @@ function TraCuuDiemRenLuyen() {
                                             <td>"+ namHocXet +"</td>\
                                             <td>"+ diemTongCong +"</td>\
                                             <td>"+ xepLoai +"</td>\
+                                            <td>"+ covanDuyet +"</td>\
+                                            <td>"+ khoaDuyet +"</td>\
                                             <td><a href='xemdiemchitiet.php?maHocKy="+ maHocKyDanhGia +"&maSinhVien="+ _input_MSSVTraCuu +"' ><button type='button' class='btn btn-light' style='color: black;'> Xem chi tiết</button></a>\</td>\
                                         </tr>");
                                     

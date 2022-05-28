@@ -56,7 +56,6 @@ function HienThiThongTinVaDanhGia() {
           },
           success: function (result_ThongBaoDanhGia) {
 
-            
             $.each(result_ThongBaoDanhGia, function (index_TBDG) {
               for (var q = 0;q < result_ThongBaoDanhGia[index_TBDG].length;q++) {
                 var maHocKy_TBDG = result_ThongBaoDanhGia[index_TBDG][q].maHocKyDanhGia;

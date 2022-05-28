@@ -49,6 +49,8 @@
                     "tenHoatDong" => $tenHoatDong,
                     "diemNhanDuoc" => $diemNhanDuoc,
                     "diaDiemDienRaHoatDong" => $diaDiemDienRaHoatDong,
+                    "maHocKyDanhGia" => $maHocKyDanhGia,
+                    "thoiGianBatDauDiemDanh" => $thoiGianBatDauDiemDanh,
                     "maQRDiaDiem" => $urlFile.$maQRDiaDiem,
                     "thoiGianBatDauHoatDong" => $thoiGianBatDauHoatDong,
                     "thoiGianKetThucHoatDong" => $thoiGianKetThucHoatDong

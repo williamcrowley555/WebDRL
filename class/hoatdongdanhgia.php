@@ -13,6 +13,8 @@
         public $diemNhanDuoc;
         public $diaDiemDienRaHoatDong;
         public $maQRDiaDiem;
+        public $maHocKyDanhGia;
+        public $thoiGianBatDauDiemDanh;
         public $thoiGianBatDauHoatDong;
         public $thoiGianKetThucHoatDong;
 
@@ -28,7 +30,7 @@
 
         // GET ALL
         public function getAllHoatDongDanhGia(){
-            $sqlQuery = "SELECT maHoatDong, maTieuChi2, maTieuChi3, maKhoa, tenHoatDong, diemNhanDuoc, diaDiemDienRaHoatDong, maQRDiaDiem, thoiGianBatDauHoatDong, thoiGianKetThucHoatDong FROM " . $this->db_table . "";
+            $sqlQuery = "SELECT * FROM " . $this->db_table . "";
             $stmt = $this->conn->prepare($sqlQuery);
             $stmt->execute();
             return $stmt;
@@ -36,8 +38,8 @@
 
         // READ single
         public function getSingleHoatDongDanhGia(){
-            $sqlQuery = "SELECT maHoatDong, maTieuChi2, maTieuChi3, maKhoa, tenHoatDong, diemNhanDuoc, diaDiemDienRaHoatDong, maQRDiaDiem, thoiGianBatDauHoatDong, thoiGianKetThucHoatDong FROM ". $this->db_table ."
-                        WHERE maHoatDong   = ? LIMIT 0,1";
+            $sqlQuery = "SELECT * FROM ". $this->db_table ."
+                        WHERE maHoatDong  = ? LIMIT 0,1";
             $stmt = $this->conn->prepare($sqlQuery);
             $stmt->bindParam(1, $this->maHoatDong  );
             $stmt->execute();
@@ -53,6 +55,8 @@
                 $this->diemNhanDuoc = $dataRow['diemNhanDuoc'];
                 $this->diaDiemDienRaHoatDong = $dataRow['diaDiemDienRaHoatDong'];
                 $this->maQRDiaDiem = $dataRow['maQRDiaDiem'];
+                $this->maHocKyDanhGia = $dataRow['maHocKyDanhGia'];
+                $this->thoiGianBatDauDiemDanh = $dataRow['thoiGianBatDauDiemDanh'];
                 $this->thoiGianBatDauHoatDong = $dataRow['thoiGianBatDauHoatDong'];
                 $this->thoiGianKetThucHoatDong = $dataRow['thoiGianKetThucHoatDong'];
             }
@@ -71,6 +75,8 @@
                         diemNhanDuoc = :diemNhanDuoc,
                         diaDiemDienRaHoatDong = :diaDiemDienRaHoatDong,
                         maQRDiaDiem = :maQRDiaDiem,
+                        maHocKyDanhGia = :maHocKyDanhGia,
+                        thoiGianBatDauDiemDanh = :thoiGianBatDauDiemDanh,
                         thoiGianBatDauHoatDong = :thoiGianBatDauHoatDong,
                         thoiGianKetThucHoatDong = :thoiGianKetThucHoatDong";
                         
@@ -85,6 +91,8 @@
             $this->diemNhanDuoc=htmlspecialchars(strip_tags($this->diemNhanDuoc));
             $this->diaDiemDienRaHoatDong=htmlspecialchars(strip_tags($this->diaDiemDienRaHoatDong));
             $this->maQRDiaDiem=htmlspecialchars(strip_tags($this->maQRDiaDiem));
+            $this->maHocKyDanhGia=htmlspecialchars(strip_tags($this->maHocKyDanhGia));
+            $this->thoiGianBatDauDiemDanh=htmlspecialchars(strip_tags($this->thoiGianBatDauDiemDanh));
             $this->thoiGianBatDauHoatDong=htmlspecialchars(strip_tags($this->thoiGianBatDauHoatDong));
             $this->thoiGianKetThucHoatDong=htmlspecialchars(strip_tags($this->thoiGianKetThucHoatDong));
         
@@ -96,6 +104,8 @@
             $stmt->bindParam(":diemNhanDuoc", $this->diemNhanDuoc);
             $stmt->bindParam(":diaDiemDienRaHoatDong", $this->diaDiemDienRaHoatDong);
             $stmt->bindParam(":maQRDiaDiem", $this->maQRDiaDiem);
+            $stmt->bindParam(":maHocKyDanhGia", $this->maHocKyDanhGia);
+            $stmt->bindParam(":thoiGianBatDauDiemDanh", $this->thoiGianBatDauDiemDanh);
             $stmt->bindParam(":thoiGianBatDauHoatDong", $this->thoiGianBatDauHoatDong);
             $stmt->bindParam(":thoiGianKetThucHoatDong", $this->thoiGianKetThucHoatDong);
 
@@ -118,6 +128,8 @@
                         diemNhanDuoc = :diemNhanDuoc,
                         diaDiemDienRaHoatDong = :diaDiemDienRaHoatDong,
                         maQRDiaDiem = :maQRDiaDiem,
+                        maHocKyDanhGia = :maHocKyDanhGia,
+                        thoiGianBatDauDiemDanh = :thoiGianBatDauDiemDanh,
                         thoiGianBatDauHoatDong = :thoiGianBatDauHoatDong,
                         thoiGianKetThucHoatDong = :thoiGianKetThucHoatDong
                     WHERE 
@@ -134,6 +146,8 @@
             $this->diemNhanDuoc=htmlspecialchars(strip_tags($this->diemNhanDuoc));
             $this->diaDiemDienRaHoatDong=htmlspecialchars(strip_tags($this->diaDiemDienRaHoatDong));
             $this->maQRDiaDiem=htmlspecialchars(strip_tags($this->maQRDiaDiem));
+            $this->maHocKyDanhGia=htmlspecialchars(strip_tags($this->maHocKyDanhGia));
+            $this->thoiGianBatDauDiemDanh=htmlspecialchars(strip_tags($this->thoiGianBatDauDiemDanh));
             $this->thoiGianBatDauHoatDong=htmlspecialchars(strip_tags($this->thoiGianBatDauHoatDong));
             $this->thoiGianKetThucHoatDong=htmlspecialchars(strip_tags($this->thoiGianKetThucHoatDong));
         
@@ -147,6 +161,8 @@
             $stmt->bindParam(":diemNhanDuoc", $this->diemNhanDuoc);
             $stmt->bindParam(":diaDiemDienRaHoatDong", $this->diaDiemDienRaHoatDong);
             $stmt->bindParam(":maQRDiaDiem", $this->maQRDiaDiem);
+            $stmt->bindParam(":maHocKyDanhGia", $this->maHocKyDanhGia);
+            $stmt->bindParam(":thoiGianBatDauDiemDanh", $this->thoiGianBatDauDiemDanh);
             $stmt->bindParam(":thoiGianBatDauHoatDong", $this->thoiGianBatDauHoatDong);
             $stmt->bindParam(":thoiGianKetThucHoatDong", $this->thoiGianKetThucHoatDong);
         
@@ -162,7 +178,7 @@
             $sqlQuery = "DELETE FROM " . $this->db_table . " WHERE maHoatDong   = ?";
             $stmt = $this->conn->prepare($sqlQuery);
         
-            $this->maHoatDong  =htmlspecialchars(strip_tags($this->maHoatDong  ));
+            $this->maHoatDong = htmlspecialchars(strip_tags($this->maHoatDong  ));
         
             $stmt->bindParam(1, $this->maHoatDong  );
         

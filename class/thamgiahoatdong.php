@@ -43,6 +43,25 @@
             
         }
 
+        // READ single
+        public function getSingleThamGiaHoatDong_MaHoatDongVaMaSinhVien(){
+            $sqlQuery = "SELECT maThamGiaHoatDong, maHoatDong, maSinhVienThamGia FROM ". $this->db_table ."
+                        WHERE maHoatDong = ? AND maSinhVienThamGia = ? LIMIT 0,1";
+            $stmt = $this->conn->prepare($sqlQuery);
+            $stmt->bindParam(1, $this->maHoatDong);
+            $stmt->bindParam(2, $this->maSinhVienThamGia);
+            $stmt->execute();
+
+            $dataRow = $stmt->fetch(PDO::FETCH_ASSOC);
+            
+            if ($dataRow != null){
+                $this->maThamGiaHoatDong = $dataRow['maThamGiaHoatDong'];
+                $this->maHoatDong = $dataRow['maHoatDong'];
+                $this->maSinhVienThamGia = $dataRow['maSinhVienThamGia'];
+            }
+            
+        }
+
         // CREATE
         public function createThamGiaHoatDong(){
             $sqlQuery = "INSERT INTO

@@ -114,7 +114,6 @@
 											<th class="cell">STT</th>
 											<th class="cell">Mã khoa</th>
 											<th class="cell">Tên khoa</th>
-											<th class="cell">Tài khoản khoa</th>
 											<th class="cell"></th>
 										</tr>
 									</thead>

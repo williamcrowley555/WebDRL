@@ -16,7 +16,7 @@ $data = $read_data->read_token();
 
 // kiểm tra đăng nhập thành công 
 if ($data["status"] == 1) {
-    if ($checkQuyen->checkQuyen_CTSV($data["user_data"]->aud)) {
+    //if ($checkQuyen->checkQuyen_CTSV($data["user_data"]->aud)) {
         $database = new Database();
         $db = $database->getConnection();
 
@@ -29,19 +29,28 @@ if ($data["status"] == 1) {
             $item->maSinhVienThamGia = $data->maSinhVienThamGia;
 
             if ($item->createThamGiaHoatDong()) {
-                echo 'thamgiahoatdong created successfully.';
+                http_response_code(200);
+                echo json_encode(
+                    array("message" => "Tạo thamgiahoatdong thành công!")
+                );
             } else {
-                echo 'thamgiahoatdong could not be created.';
+                http_response_code(500);
+                echo json_encode(
+                    array("message" => "Tạo thamgiahoatdong không thành công!")
+                );
             }
         } else {
-            echo 'No data posted.';
+            http_response_code(404);
+            echo json_encode(
+                array("message" => "Không có dữ liệu gửi lên!")
+            );
         }
-    } else {
-        http_response_code(403);
-        echo json_encode(
-            array("message" => "Bạn không có quyền thực hiện điều này!")
-        );
-    }
+    // } else {
+    //     http_response_code(403);
+    //     echo json_encode(
+    //         array("message" => "Bạn không có quyền thực hiện điều này!")
+    //     );
+    // }
 } else {
     http_response_code(403);
     echo json_encode(

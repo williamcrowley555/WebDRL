@@ -85,7 +85,7 @@ if ($data["status"] == 1 ) {
             } else {
                 http_response_code(404);
                 echo json_encode(
-                    array("message" => "No record found.")
+                    array("message" => "Không tìm thấy kết quả.")
                 );
             }
 
@@ -146,7 +146,7 @@ if ($data["status"] == 1 ) {
             } else {
                 http_response_code(404);
                 echo json_encode(
-                    array("message" => "No record found.")
+                    array("message" => "Không tìm thấy kết quả.")
                 );
             }
         }

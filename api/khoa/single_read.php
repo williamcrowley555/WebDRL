@@ -27,8 +27,8 @@
                 // create array
                 $khoa_arr = array(
                     "maKhoa" =>  $item->maKhoa,
-                    "tenKhoa" => $item->tenKhoa,
-                    "taiKhoanKhoa" => $item->taiKhoanKhoa
+                    "tenKhoa" => $item->tenKhoa
+                    //"taiKhoanKhoa" => $item->taiKhoanKhoa
                     //"matKhauKhoa" => $item->matKhauKhoa
                 );
             

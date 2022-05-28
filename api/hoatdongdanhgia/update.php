@@ -34,16 +34,21 @@ if ($data["status"] == 1) {
             $item->tenHoatDong = $data->tenHoatDong;
             $item->diemNhanDuoc = $data->diemNhanDuoc;
             $item->diaDiemDienRaHoatDong = $data->diaDiemDienRaHoatDong;
+            $item->maHocKyDanhGia = $data->maHocKyDanhGia;
             $item->maQRDiaDiem = $data->maQRDiaDiem;
+            $item->thoiGianBatDauDiemDanh = $data->thoiGianBatDauDiemDanh;
             $item->thoiGianBatDauHoatDong = $data->thoiGianBatDauHoatDong;
             $item->thoiGianKetThucHoatDong = $data->thoiGianKetThucHoatDong;
 
             if ($item->updateHoatDongDanhGia()) {
+                http_response_code(200);
                 echo json_encode("HoatDongDanhGia data updated.");
             } else {
+                http_response_code(500);
                 echo json_encode("Data could not be updated");
             }
         } else {
+            http_response_code(404);
             echo 'No data posted.';
         }
     } else {

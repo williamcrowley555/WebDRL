@@ -54,6 +54,8 @@
                                     <th>Năm học</th>
                                     <th>Điểm rèn luyện</th>
                                     <th>Xếp loại</th>
+                                    <th>Cố vấn duyệt</th>
+                                    <th>Khoa duyệt</th>
                                     <th></th>
                                 </tr>
                             </thead>

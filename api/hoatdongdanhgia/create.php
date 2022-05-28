@@ -34,6 +34,8 @@
                 $item->diemNhanDuoc = $data->diemNhanDuoc;
                 $item->diaDiemDienRaHoatDong = $data->diaDiemDienRaHoatDong;
                 $item->maQRDiaDiem = qrcode1::create_QRcode($data->url); // link check hoat dong, luu name qrcode
+                $item->maHocKyDanhGia = $data->maHocKyDanhGia;
+                $item->thoiGianBatDauDiemDanh = $data->thoiGianBatDauDiemDanh;
                 $item->thoiGianBatDauHoatDong = $data->thoiGianBatDauHoatDong;
                 $item->thoiGianKetThucHoatDong = $data->thoiGianKetThucHoatDong;
     

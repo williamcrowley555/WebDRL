@@ -438,6 +438,7 @@ function checkValidateInput(){
            var diemTongCong = result_PRL.diemTongCong;
            var diemTrungBinhChungHKTruoc = result_PRL.diemTrungBinhChungHKTruoc;
            var diemTrungBinhChungHKXet = result_PRL.diemTrungBinhChungHKXet;
+           var coVanDuyet = result_PRL.coVanDuyet;
            var fileDinhKem = result_PRL.fileDinhKem;
            var fileDinhKem_Name = fileDinhKem.substring(fileDinhKem.lastIndexOf('/') + 1);
      
@@ -454,7 +455,10 @@ function checkValidateInput(){
               $("#inputTBCHocKyTruoc").val(diemTrungBinhChungHKTruoc);
               $("#inputTBCHocKyDangXet").val(diemTrungBinhChungHKXet);
               //$("#input_diemtongcong").val(diemTongCong);
-              $("#CVHT_input_diemtongcong").val(diemTongCong);
+              if (coVanDuyet == 1){
+                $("#CVHT_input_diemtongcong").val(diemTongCong);
+              }
+              
               $("#text_XepLoai").text(xepLoai);
               $("#input_fileDinhKem").text(fileDinhKem_Name);
               $("#input_fileDinhKem").attr("href", fileDinhKem);
@@ -478,7 +482,7 @@ function checkValidateInput(){
                           if (diemLopDanhGia != 0){
                             $("#CVHT_" + this.id).val(diemLopDanhGia);
                           }else{
-                            $("#CVHT_" + this.id).val(diemSinhVienDanhGia);
+                            $("#CVHT_" + this.id).val(0);
                           }
                           
                         }
@@ -491,7 +495,7 @@ function checkValidateInput(){
                           if (diemLopDanhGia != 0){
                             $("#CVHT_" + this.id).val(diemLopDanhGia);
                           }else{
-                            $("#CVHT_" + this.id).val(diemSinhVienDanhGia);
+                            $("#CVHT_" + this.id).val(0);
                           }
                         }
                       }

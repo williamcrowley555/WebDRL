@@ -240,6 +240,7 @@ if (!isset($_GET['maHocKy']) && !isset($_GET['maSinhVien'])) {
                             formData.append("xepLoai", _inputXepLoai);
                             formData.append("coVanDuyet", 1);
                             formData.append("khoaDuyet", 0);
+                    
                      
                             //update phiếu rèn luyện trước
                             $.ajax({
@@ -396,7 +397,7 @@ if (!isset($_GET['maHocKy']) && !isset($_GET['maSinhVien'])) {
 
                                     Swal.fire({
                                         icon: "success",
-                                        title: "Chấm điểm rèn luyện thành công!",
+                                        title: "Duyệt điểm rèn luyện thành công!",
                                         text: "Đang chuyển hướng...",
                                         timer: 2500,
                                         timerProgressBar: true,

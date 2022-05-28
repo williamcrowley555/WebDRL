@@ -18,7 +18,7 @@
     // kiểm tra đăng nhập thành công 
     if($data["status"]==1){
 
-        if ($checkQuyen->checkQuyen_CTSV($data["user_data"]->aud)){
+        //if ($checkQuyen->checkQuyen_CTSV($data["user_data"]->aud)){
             $database = new Database();
             $db = $database->getConnection();
             $item = new Tieuchicap3($db);
@@ -41,12 +41,12 @@
                 http_response_code(404);
                 echo json_encode("tieuchicap3 không tìm thấy.");
             }
-        }else{
-            http_response_code(403);
-            echo json_encode(
-                array("message" => "Bạn không có quyền thực hiện điều này!")
-            );
-        }
+        // }else{
+        //     http_response_code(403);
+        //     echo json_encode(
+        //         array("message" => "Bạn không có quyền thực hiện điều này!")
+        //     );
+        // }
         
     }else{
         http_response_code(403);

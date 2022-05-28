@@ -17,11 +17,12 @@
     // kiểm tra đăng nhập thành công 
     if($data["status"]==1){
         
-        if ($checkQuyen->checkQuyen_CTSV($data["user_data"]->aud)) {
+        //if ($checkQuyen->checkQuyen_CTSV($data["user_data"]->aud)) {
         
             $database = new Database();
             $db = $database->getConnection();
             $item = new HoatDongDanhGia($db);
+        
             $item->maHoatDong = isset($_GET['maHoatDong']) ? $_GET['maHoatDong'] : die(); //Lấy id từ phương thức GET
         
             $item->getSingleHoatDongDanhGia();
@@ -34,6 +35,9 @@
                     "maKhoa" => $item->maKhoa,
                     "tenHoatDong" =>  $item->tenHoatDong,
                     "diemNhanDuoc" => $item->diemNhanDuoc,
+                    "maHocKyDanhGia" => $item->maHocKyDanhGia,
+                    "thoiGianBatDauDiemDanh" => $item->thoiGianBatDauDiemDanh,
+                    "diaDiemDienRaHoatDong" => $item->diaDiemDienRaHoatDong,
                     "maQRDiaDiem" =>  $item->maQRDiaDiem,
                     "thoiGianBatDauHoatDong" =>  $item->thoiGianBatDauHoatDong,
                     "thoiGianKetThucHoatDong" =>  $item->thoiGianKetThucHoatDong   
@@ -45,13 +49,17 @@
             
             else{
                 http_response_code(404);
-                echo json_encode("hoatdongdanhgia not found.");
-            }} else {
-            http_response_code(403);
-            echo json_encode(
-                array("message" => "Bạn không có quyền thực hiện điều này!")
-            );
-        }
+                echo json_encode(
+                    array("message" => "hoatdongdanhgia không tìm thấy!")
+                );
+           
+            }
+        // } else {
+        //     http_response_code(403);
+        //     echo json_encode(
+        //         array("message" => "Bạn không có quyền thực hiện điều này!")
+        //     );
+        // }
     } else {
         http_response_code(403);
         echo json_encode(
