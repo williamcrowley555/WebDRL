@@ -14,6 +14,12 @@
     $data=$read_data->read_token();
     $checkQuyen = new checkQuyen();
 
+    //get domain dùng cho link file
+    if(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') $url = "https://";   
+        else $url = "http://";   
+        
+    $url .= $_SERVER['HTTP_HOST'];
+
     // kiểm tra đăng nhập thành công 
     if($data["status"]==1){
         
@@ -22,6 +28,8 @@
             $database = new Database();
             $db = $database->getConnection();
             $item = new HoatDongDanhGia($db);
+
+            $urlFile = $url.dirname($_SERVER['PHP_SELF'])."/QRImages/";
         
             $item->maHoatDong = isset($_GET['maHoatDong']) ? $_GET['maHoatDong'] : die(); //Lấy id từ phương thức GET
         
@@ -38,7 +46,7 @@
                     "maHocKyDanhGia" => $item->maHocKyDanhGia,
                     "thoiGianBatDauDiemDanh" => $item->thoiGianBatDauDiemDanh,
                     "diaDiemDienRaHoatDong" => $item->diaDiemDienRaHoatDong,
-                    "maQRDiaDiem" =>  $item->maQRDiaDiem,
+                    "maQRDiaDiem" =>  $urlFile.$item->maQRDiaDiem,
                     "thoiGianBatDauHoatDong" =>  $item->thoiGianBatDauHoatDong,
                     "thoiGianKetThucHoatDong" =>  $item->thoiGianKetThucHoatDong   
                 );

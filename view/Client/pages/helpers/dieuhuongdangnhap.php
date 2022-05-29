@@ -3,6 +3,7 @@
 
     if (isset($_POST['jwt'])){
         $jwt = $_POST['jwt'];
+        $previousPage = $_POST['previousPage'];
 
         $dataToken = CheckCookie::read_data_token($jwt);
 
@@ -10,8 +11,15 @@
 
         switch ($quyen) {
             case 'sinhvien':{
-                header("Location: ../chamdiem.php");
+                if (!empty($previousPage)){
+                    header("Location: ".$previousPage);
+                }else{
+                    header("Location: ../chamdiem.php");
+                }
+               
+               
                 break;
+                
             }
             
             case 'cvht':{

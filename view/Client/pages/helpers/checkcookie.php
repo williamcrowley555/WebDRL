@@ -52,8 +52,11 @@
             
         }
 
+        
 
         public function CheckAuthLogin(){
+          
+
             if (!isset($_COOKIE['jwt'])){
                 if ($_COOKIE['jwt'] == null){
                     header("Location: dangnhap.php");

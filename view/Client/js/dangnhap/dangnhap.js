@@ -1,3 +1,15 @@
+function getCookie(cName) {
+  const name = cName + "=";
+  const cDecoded = decodeURIComponent(document.cookie); //to be careful
+  const cArr = cDecoded.split("; ");
+  let res;
+  cArr.forEach((val) => {
+      if (val.indexOf(name) === 0) res = val.substring(name.length);
+  });
+  return res;
+}
+
+
 //Login
 function Login(inputLogin_MSSV, inputLogin_MatKhau) {
   var _inputLogin_MSSV = inputLogin_MSSV;
@@ -25,7 +37,7 @@ function Login(inputLogin_MSSV, inputLogin_MatKhau) {
       dataType: "json",
       async: false,
       success: function (result) {
-        console.log(result);
+        //console.log(result);
 
         //deleteAllCookies();
 
@@ -45,6 +57,7 @@ function Login(inputLogin_MSSV, inputLogin_MatKhau) {
         
          setTimeout(function () {
             $("#formDieuHuongDangNhap").append("<input type='text' id='jwt' name='jwt' value='" + result["jwt"] + "'>");
+            $("#formDieuHuongDangNhap").append("<input type='text' id='previousPage' name='previousPage' value='" + getCookie('previousPage') + "'>");
             $("form#formDieuHuongDangNhap").submit();
          }, 1000);
 

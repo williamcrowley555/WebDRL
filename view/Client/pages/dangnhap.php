@@ -1,6 +1,6 @@
 <?php
     include_once "header.php";
-    
+
     include_once __DIR__."/helpers/checkcookie.php";
     
     $page_word = explode("/", $_SERVER['REQUEST_URI']);
@@ -9,6 +9,8 @@
         $checkCookie->CheckAuthOnlyLoginPage();
     }
     
+
+   
 ?>
 
 

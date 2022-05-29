@@ -209,6 +209,9 @@ function getThongTinHoatDong(){
                             </div>\
                             <div class='list-group-item list-group-item-action' >\
                                 <span style='font-weight: bold;'>Thời gian kết thúc: </span>"+ thoiGianKetThucHoatDong.toLocaleString() +"\
+                            </div>\
+                            <div class='list-group-item list-group-item-action' >\
+                                <span style='font-weight: bold;'>Mã QR: </span><img src='"+ maQRDiaDiem +"' width='15%' />\
                             </div>");
 
            
