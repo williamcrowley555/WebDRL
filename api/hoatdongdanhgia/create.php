@@ -27,6 +27,7 @@
     
             if ($data != null){
                 //set các biến bằng data nhận từ user
+                $item->maHoatDong = $data->maHoatDong;
                 $item->maTieuChi3 = $data->maTieuChi3;
                 $item->maTieuChi2 = $data->maTieuChi2;
                 $item->maKhoa = $data->maKhoa;
@@ -41,13 +42,20 @@
     
                 if($item->createHoatDongDanhGia()){
                     http_response_code(200);
-                    echo 'HoatDongDanhGia created successfully.';
+                    echo json_encode(
+                        array("message" => "Tạo hoạt động đánh giá thành công!")
+                    );
                 } else{
                     http_response_code(500);
-                    echo 'HoatDongDanhGia could not be created.';
+                    echo json_encode(
+                        array("message" => "Tạo hoạt động đánh giá KHÔNG thành công!")
+                    );
                 }
             }else{
-                echo 'No data posted.';
+                http_response_code(500);
+                echo json_encode(
+                    array("message" => "Không có dữ liệu gửi lên!")
+                );
             }
         } else {
             http_response_code(403);

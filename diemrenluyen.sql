@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 28, 2022 at 11:06 PM
+-- Generation Time: May 30, 2022 at 09:09 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.29
 
@@ -121,7 +121,7 @@ INSERT INTO `covanhoctap` (`maCoVanHocTap`, `hoTenCoVan`, `soDienThoai`, `matKha
 --
 
 CREATE TABLE `hoatdongdanhgia` (
-  `maHoatDong` int(11) NOT NULL,
+  `maHoatDong` varchar(11) COLLATE utf8_unicode_ci NOT NULL,
   `maTieuChi2` int(11) NOT NULL,
   `maTieuChi3` int(11) NOT NULL,
   `maKhoa` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
@@ -140,7 +140,7 @@ CREATE TABLE `hoatdongdanhgia` (
 --
 
 INSERT INTO `hoatdongdanhgia` (`maHoatDong`, `maTieuChi2`, `maTieuChi3`, `maKhoa`, `tenHoatDong`, `diemNhanDuoc`, `diaDiemDienRaHoatDong`, `maQRDiaDiem`, `thoiGianBatDauHoatDong`, `thoiGianKetThucHoatDong`, `maHocKyDanhGia`, `thoiGianBatDauDiemDanh`) VALUES
-(12, 12, 0, 'DCT', 'Hiến máu tình nguyện lần 1', 5, 'Sân KLF - CSC SGU', '628ec176e3946.png', '2022-05-28 17:00:00', '2022-06-01 00:00:00', 'HK22122', '2022-05-28 23:04:00');
+('HD7', 16, 0, 'DCT', 'Hoạt động 23', 3, 'SGU', '62940ede5bd82.png', '2022-05-30 07:24:00', '2022-05-31 07:24:00', 'HK12122', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -313,13 +313,6 @@ CREATE TABLE `thamgiahoatdong` (
   `maSinhVienThamGia` varchar(255) COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
--- Dumping data for table `thamgiahoatdong`
---
-
-INSERT INTO `thamgiahoatdong` (`maThamGiaHoatDong`, `maHoatDong`, `maSinhVienThamGia`) VALUES
-(1, 12, '3118410262');
-
 -- --------------------------------------------------------
 
 --
@@ -490,8 +483,8 @@ INSERT INTO `user_token` (`stt`, `maSo`, `token`, `quyen`, `thoiGianDangNhap`, `
 (254, '3118410046', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJpYXQiOjE2NTM0MTA4NzgsIm5iZiI6MTY1MzQxMDg4OCwiZXhwIjoxNjUzNDk3Mjc4LCJhdWQiOiJzaW5odmllbiIsInNpbmh2aWVuIjp7Im1hU2luaFZpZW4iOiIzMTE4NDEwMDQ2IiwiaG9UZW5TaW5oVmllbiI6IlRSXHUxZWE2TiBUSEFOSCBDXHUxZWU2QSIsInF1eWVuIjoic2luaHZpZW4ifX0.riF7cOGFXA7r5Tgo_nFwO4A29AXj4UbPfU9IOIWqZU4', 'sinhvien', '2022-05-24 16:47:58', '2022-05-25 16:47:58'),
 (272, '3118410018', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJpYXQiOjE2NTM2OTQxMjksIm5iZiI6MTY1MzY5NDEzOSwiZXhwIjoxNjUzNzgwNTI5LCJhdWQiOiJzaW5odmllbiIsInNpbmh2aWVuIjp7Im1hU2luaFZpZW4iOiIzMTE4NDEwMDE4IiwiaG9UZW5TaW5oVmllbiI6IkxcdTAwY2EgTkdcdTAwZDQgVEhJXHUwMGNhTiBcdTFlYTROIiwicXV5ZW4iOiJzaW5odmllbiJ9fQ.jGBKgkFxWTCHZmOrlGWhMJ2ghNicElbZPA9GegLh5Ck', 'sinhvien', '2022-05-27 23:28:49', '2022-05-28 23:28:49'),
 (273, '11364', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJpYXQiOjE2NTM2OTQ4NzAsIm5iZiI6MTY1MzY5NDg4MCwiZXhwIjoxNjUzNzgxMjcwLCJhdWQiOiJjdmh0IiwiY3ZodCI6eyJtYUNvVmFuSG9jVGFwIjoiMTEzNjQiLCJob1RlbkNvVmFuIjoiTFx1MDFiMFx1MDFhMW5nIE1pbmggSHVcdTFlYTVuIiwicXV5ZW4iOiJjdmh0In19.6_zWOGyAuvi1_L-v7MpOnovTtNzqIx3rhv2XqAmsjMQ', 'cvht', '2022-05-27 23:41:10', '2022-05-28 23:41:10'),
-(275, '3118410262', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJpYXQiOjE2NTM3MjY3MzUsIm5iZiI6MTY1MzcyNjc0NSwiZXhwIjoxNjUzODEzMTM1LCJhdWQiOiJzaW5odmllbiIsInNpbmh2aWVuIjp7Im1hU2luaFZpZW4iOiIzMTE4NDEwMjYyIiwiaG9UZW5TaW5oVmllbiI6Ik5HVVlcdTFlYzROIFRIXHUwMWFmXHUwMWEwTkcgTVx1MWViZU4iLCJxdXllbiI6InNpbmh2aWVuIn19.zqIlGi8zwWV3Q8pTWjuDP45OJMb7HWHb1kR5ai7eFU0', 'sinhvien', '2022-05-28 08:32:15', '2022-05-29 08:32:15'),
-(276, 'ctsv1', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJpYXQiOjE2NTM3NTM3NDYsIm5iZiI6MTY1Mzc1Mzc1NiwiZXhwIjoxNjUzODQwMTQ2LCJhdWQiOiJwaG9uZ2Nvbmd0YWNzaW5odmllbiIsInBob25nY29uZ3RhY3Npbmh2aWVuIjp7InRhaUtob2FuIjoiY3RzdjEiLCJob1Rlbk5oYW5WaWVuIjoiTmhcdTAwZTJuIHZpXHUwMGVhbiBDVFNWIDEiLCJxdXllbiI6ImN0c3YifX0.CSjfLK1aPwDn2k14qQQCRWWEYdbUuFztoXwV0mvWQgU', 'ctsv', '2022-05-28 16:02:26', '2022-05-29 16:02:26');
+(296, 'ctsv1', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJpYXQiOjE2NTM4NzIyODIsIm5iZiI6MTY1Mzg3MjI5MiwiZXhwIjoxNjUzOTU4NjgyLCJhdWQiOiJwaG9uZ2Nvbmd0YWNzaW5odmllbiIsInBob25nY29uZ3RhY3Npbmh2aWVuIjp7InRhaUtob2FuIjoiY3RzdjEiLCJob1Rlbk5oYW5WaWVuIjoiTmhcdTAwZTJuIHZpXHUwMGVhbiBDVFNWIDEiLCJxdXllbiI6ImN0c3YifX0.VAsweUnXxubsnYtrE9QaWxmz-W2KLPJK8jgkUILABDc', 'ctsv', '2022-05-30 00:58:02', '2022-05-31 00:58:02'),
+(297, '3118410262', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJpYXQiOjE2NTM4NzI0MDEsIm5iZiI6MTY1Mzg3MjQxMSwiZXhwIjoxNjUzOTU4ODAxLCJhdWQiOiJzaW5odmllbiIsInNpbmh2aWVuIjp7Im1hU2luaFZpZW4iOiIzMTE4NDEwMjYyIiwiaG9UZW5TaW5oVmllbiI6Ik5HVVlcdTFlYzROIFRIXHUwMWFmXHUwMWEwTkcgTVx1MWViZU4iLCJxdXllbiI6InNpbmh2aWVuIn19.YFCKwfDVkcs3vtv24_dfVhW4KZVgTfyTYDYsV1E1gKg', 'sinhvien', '2022-05-30 01:00:01', '2022-05-31 01:00:01');
 
 --
 -- Indexes for dumped tables
@@ -604,12 +597,6 @@ ALTER TABLE `chamdiemrenluyen`
   MODIFY `maChamDiemRenLuyen` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=533;
 
 --
--- AUTO_INCREMENT for table `hoatdongdanhgia`
---
-ALTER TABLE `hoatdongdanhgia`
-  MODIFY `maHoatDong` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
-
---
 -- AUTO_INCREMENT for table `thamgiahoatdong`
 --
 ALTER TABLE `thamgiahoatdong`
@@ -643,7 +630,7 @@ ALTER TABLE `tieuchicap3`
 -- AUTO_INCREMENT for table `user_token`
 --
 ALTER TABLE `user_token`
-  MODIFY `stt` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=277;
+  MODIFY `stt` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=298;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

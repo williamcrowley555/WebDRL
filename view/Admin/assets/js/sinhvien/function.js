@@ -20,6 +20,25 @@ function deleteAllCookies() {
   }
 }
 
+function ThongBaoLoi(message) {
+  Swal.fire({
+    icon: "error",
+    title: "Lỗi",
+    text: message,
+    //timer: 5000,
+    timerProgressBar: true,
+    showCloseButton: true,
+  });
+}
+
+function checkLoiDangNhap(message) {
+  if ( message.localeCompare("Vui lòng đăng nhập trước!") == 0 ){
+      deleteAllCookies();
+      location.href = 'login.php';
+  }
+}
+
+
 var jwtCookie = getCookie("jwt");
 
 //Sinh viên//
@@ -79,6 +98,8 @@ function GetListSinhVien(maKhoa, maLop) {
           });
         },
         error: function (errorMessage) {
+          checkLoiDangNhap(errorMessage.responseJSON.message);
+
           Swal.fire({
             icon: "error",
             title: "Lỗi",
@@ -161,10 +182,12 @@ function GetListSinhVien(maKhoa, maLop) {
                       });
                     },
                     error: function (errorMessage) {
+                      checkLoiDangNhap(errorMessage.responseJSON.message);
+
                       Swal.fire({
                         icon: "error",
                         title: "Lỗi",
-                        text: errorMessage.responseText,
+                        text: errorMessage.responseJSON.message,
                         timer: 5000,
                         timerProgressBar: true,
                       });
@@ -180,10 +203,12 @@ function GetListSinhVien(maKhoa, maLop) {
               });
             },
             error: function (errorMessage) {
+              checkLoiDangNhap(errorMessage.responseJSON.message);
+
               Swal.fire({
                 icon: "error",
                 title: "Lỗi",
-                text: errorMessage.responseText,
+                text: errorMessage.responseJSON.message,
                 timer: 5000,
                 timerProgressBar: true,
               });
@@ -247,10 +272,12 @@ function GetListSinhVien(maKhoa, maLop) {
               });
             },
             error: function (errorMessage) {
+              checkLoiDangNhap(errorMessage.responseJSON.message);
+
               Swal.fire({
                 icon: "error",
                 title: "Lỗi",
-                text: errorMessage.responseText,
+                text: errorMessage.responseJSON.message,
                 timer: 5000,
                 timerProgressBar: true,
               });
@@ -295,6 +322,8 @@ function TimKiemSinhVien(maSinhVien) {
 
     },
     error: function (errorMessage) {
+      checkLoiDangNhap(errorMessage.responseJSON.message);
+
       var htmlData = "";
 
       $("#id_tbodySinhVien").append(htmlData);
@@ -337,10 +366,12 @@ function LoadComboBoxThongTinKhoa() {
       });
     },
     error: function (errorMessage) {
+      checkLoiDangNhap(errorMessage.responseJSON.message);
+
       Swal.fire({
         icon: "error",
         title: "Lỗi",
-        text: errorMessage.responseText,
+        text: errorMessage.responseJSON.message,
         //timer: 5000,
         timerProgressBar: true,
       });
@@ -378,10 +409,12 @@ function LoadComboBoxThongTinLopTheoKhoa(maKhoa) {
         });
       },
       error: function (errorMessage) {
+        checkLoiDangNhap(errorMessage.responseJSON.message);
+        
         Swal.fire({
           icon: "error",
           title: "Lỗi",
-          text: errorMessage.responseText,
+          text: errorMessage.responseJSON.message,
           //timer: 5000,
           timerProgressBar: true,
         });

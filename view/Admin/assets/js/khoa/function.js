@@ -20,6 +20,13 @@ function deleteAllCookies() {
     }
 }
 
+function checkLoiDangNhap(message) {
+    if ( message.localeCompare("Vui lòng đăng nhập trước!") == 0 ){
+        deleteAllCookies();
+        location.href = 'login.php';
+    }
+}
+
 
 //Khoa//
 function GetListKhoa() {
@@ -65,10 +72,13 @@ function GetListKhoa() {
 
             },
             error: function(errorMessage) {
+                checkLoiDangNhap(errorMessage.responseJSON.message);
+                
+                console.log(errorMessage.responseJSON.message);
                 Swal.fire({
                     icon: 'error',
                     title: 'Lỗi',
-                    text: errorMessage.responseText,
+                    text: errorMessage.responseJSON.message,
                     //timer: 5000,
                     timerProgressBar: true
                 })

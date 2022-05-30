@@ -36,6 +36,7 @@
             return $stmt;
         }
 
+        
         // READ single
         public function getSingleHoatDongDanhGia(){
             $sqlQuery = "SELECT * FROM ". $this->db_table ."
@@ -68,6 +69,7 @@
             $sqlQuery = "INSERT INTO
                         ". $this->db_table ."
                     SET
+                        maHoatDong = :maHoatDong, 
                         maTieuChi3 = :maTieuChi3, 
                         maTieuChi2 = :maTieuChi2,
                         maKhoa = :maKhoa, 
@@ -84,6 +86,7 @@
             $stmt = $this->conn->prepare($sqlQuery);
         
             // sanitize (Lọc dữ liệu đầu vào tránh SQLInjection, XSS)
+            $this->maHoatDong=htmlspecialchars(strip_tags($this->maHoatDong));
             $this->maTieuChi3=htmlspecialchars(strip_tags($this->maTieuChi3));
             $this->maTieuChi2=htmlspecialchars(strip_tags($this->maTieuChi2));
             $this->maKhoa=htmlspecialchars(strip_tags($this->maKhoa));
@@ -97,6 +100,7 @@
             $this->thoiGianKetThucHoatDong=htmlspecialchars(strip_tags($this->thoiGianKetThucHoatDong));
         
             // bind data
+            $stmt->bindParam(":maHoatDong", $this->maHoatDong);
             $stmt->bindParam(":maTieuChi3", $this->maTieuChi3);
             $stmt->bindParam(":maTieuChi2", $this->maTieuChi2);
             $stmt->bindParam(":maKhoa", $this->maKhoa);
@@ -153,7 +157,7 @@
         
         
             // bind data
-            $stmt->bindParam(":maHoatDong  ", $this->maHoatDong  );
+            $stmt->bindParam(":maHoatDong", $this->maHoatDong  );
             $stmt->bindParam(":maTieuChi3", $this->maTieuChi3);
             $stmt->bindParam(":maTieuChi2", $this->maTieuChi2);
             $stmt->bindParam(":maKhoa", $this->maKhoa);

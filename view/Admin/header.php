@@ -1,7 +1,5 @@
 <?php
-	// if (http_response_code() == 403){
-	// 	header('login.php');
-	// }
+	
 	
 
 ?>
@@ -15,7 +13,7 @@
 
 			switch (end($page_word)) {
 				case 'index.php':{
-					echo "Tổng quan | Web điểm rèn luyện";
+					echo "Thống kê | Web điểm rèn luyện";
 					break;
 				}
 					
@@ -54,10 +52,11 @@
 					break;
 				}
 
-				case 'thongke.php':{
-					echo "Thống kê | Web điểm rèn luyện";
+				case 'thongbaodanhgia.php':{
+					echo "Thông báo đánh giá | Web điểm rèn luyện";
 					break;
 				}
+
 
 				default:{
 					echo "Web điểm rèn luyện";
@@ -170,9 +169,9 @@
 					        <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
 					        <a class="nav-link <?php if (end($page_word) == 'index.php') echo 'active'; ?>" href="index.php">
 						        <span class="nav-icon">
-									<img src="assets/images/icons/home.png" alt="icon tổng quan" width="10%">
+									<img src="assets/images/icons/home.png" alt="icon tổng quan/thống kê" width="10%">
 						         </span>
-		                         <span class="nav-link-text">Tổng quan</span>
+		                         <span class="nav-link-text">Thống kê</span>
 					        </a><!--//nav-link-->
 					    </li><!--//nav-item-->
 
@@ -242,7 +241,7 @@
 					        <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
 					        <a class="nav-link <?php if (end($page_word) == 'tieuchidanhgia.php') echo 'active'; ?>" href="tieuchidanhgia.php">
 						        <span class="nav-icon">
-									<img src="assets/images/icons/society.png" alt="icon hoạt động" width="10%">
+									<img src="assets/images/icons/society.png" alt="icon tiêu chí" width="10%">
 						         </span>
 		                         <span class="nav-link-text">Tiêu chí đánh giá</span>
 					        </a><!--//nav-link-->
@@ -250,11 +249,11 @@
 
 						<li class="nav-item">
 					        <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-					        <a class="nav-link <?php if (end($page_word) == 'thongke.php') echo 'active'; ?>" href="thongke.php">
+					        <a class="nav-link <?php if (end($page_word) == 'thongbaodanhgia.php') echo 'active'; ?>" href="thongbaodanhgia.php">
 						        <span class="nav-icon">
-									<img src="assets/images/icons/analytics.png" alt="icon thống kê" width="10%">
+									<img src="assets/images/icons/social.png" alt="icon thông báo đánh giá" width="10%">
 						         </span>
-		                         <span class="nav-link-text">Thống kê</span>
+		                         <span class="nav-link-text">Thông báo đánh giá</span>
 					        </a><!--//nav-link-->
 					    </li><!--//nav-item-->
 

@@ -25,7 +25,7 @@
                 $item->maThamGiaHoatDong = isset($_GET['maThamGiaHoatDong']) ? $_GET['maThamGiaHoatDong'] : die(); //Lấy id từ phương thức GET
         
                 $item->getSingleThamGiaHoatDong();
-                if($item->maHoatDong != null){
+                if($item->maThamGiaHoatDong != null){
                     // create array
                     $thamgiahoatdong_arr = array(
                         "maThamGiaHoatDong" =>  $item->maThamGiaHoatDong,
@@ -47,7 +47,7 @@
                     $item->maHoatDong = isset($_GET['maHoatDong']) ? $_GET['maHoatDong'] : die(); //Lấy id từ phương thức GET
 
                     $item->getSingleThamGiaHoatDong_MaHoatDongVaMaSinhVien();
-                    if($item->maHoatDong != null){
+                    if($item->maThamGiaHoatDong != null){
                         // create array
                         $thamgiahoatdong_arr = array(
                             "maThamGiaHoatDong" =>  $item->maThamGiaHoatDong,

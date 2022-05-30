@@ -57,7 +57,7 @@
 		    <div class="d-flex flex-column align-content-end">
 			    <div class="app-auth-body mx-auto" style="width: auto;">	
 				    <div class="app-auth-branding mb-4"><a class="app-logo" href="#"><img class="logo-icon me-2" src="assets/images/SGU-LOGO-400x400.png" alt="logo"></a></div>
-					<h2 class="auth-heading text-center mb-5" style="text-transform: uppercase;">Đăng nhập công tác sinh viên <br> Web Điểm rèn luyện</h2>
+					<h2 class="auth-heading text-center mb-5" style="text-transform: uppercase;">Đăng nhập quản lý<br> Web Điểm rèn luyện</h2>
 			        <div class="auth-form-container text-start">
 						<form class="auth-form login-form">         
 							<div class="email mb-3">

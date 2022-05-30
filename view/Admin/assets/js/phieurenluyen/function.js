@@ -20,6 +20,24 @@ function deleteAllCookies() {
     }
 }
 
+function ThongBaoLoi(message) {
+  Swal.fire({
+    icon: "error",
+    title: "Lỗi",
+    text: message,
+    //timer: 5000,
+    timerProgressBar: true,
+    showCloseButton: true,
+  });
+}
+
+function checkLoiDangNhap(message) {
+  if ( message.localeCompare("Vui lòng đăng nhập trước!") == 0 ){
+      deleteAllCookies();
+      location.href = 'login.php';
+  }
+}
+
 
 var jwtCookie = getCookie("jwt");
 
@@ -69,6 +87,8 @@ function GetListPhieurenluyen() {
 
             },
             error: function(errorMessage) {
+              checkLoiDangNhap(errorMessage.responseJSON.message);
+
                 Swal.fire({
                     icon: 'error',
                     title: 'Lỗi',
@@ -113,6 +133,8 @@ function LoadComboBoxThongTinKhoa() {
         });
       },
       error: function (errorMessage) {
+        checkLoiDangNhap(errorMessage.responseJSON.message);
+
         Swal.fire({
           icon: "error",
           title: "Lỗi",

@@ -17,29 +17,44 @@
 
 							<div class="col-auto">
 
-								<select class="form-select w-auto">
-									<option selected value="option-1">Tie</option>
-									<option value="option-2">Công nghệ thông tin</option>
-									<option value="option-3">Điện tử viễn thông</option>
-								</select>
 							</div>
 
 							
 							<div class="col-auto">
-								<form class="table-search-form row gx-1 align-items-center">
+								<div class="table-search-form row gx-1 align-items-center" style="padding-bottom: 20px;">
 									<div class="col-auto">
-										<input type="text" id="search-orders" name="searchorders" class="form-control search-orders" placeholder="Nhập mã hoatdongdanhgia">
+										<input type="text" id="inputTimKiem_MaHoatDong" name="inputTimKiem_MaHoatDong" class="form-control search-orders" placeholder="Nhập mã hoạt động..." >
 									</div>
 									<div class="col-auto">
-										<button type="submit" class="btn app-btn-secondary">Tìm kiếm</button>
+										<button type="button" class="btn app-btn-secondary">Tìm kiếm</button>
 									</div>
-								</form>
 
+									<div class="col-auto" style="padding-left: 15px;">
+										<button class="btn app-btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#AddModal">Thêm mới</button>
+									</div>
+								</div>
+
+								<div class="table-search-form row gx-1 align-items-center">
+									<div class="col-auto">
+										<p></p>
+										<span style="font-weight: 700;">Lọc theo thời gian: </button>
+									</div>
+									<div class="col-auto">
+										<span style="font-weight: 700;" >Thời gian bắt đầu</span>
+										<input type="datetime-local" id="search-orders" name="searchorders" class="form-control search-orders" placeholder="Nhập mã hoạt động..." >
+									</div>
+									<div class="col-auto">
+										<span style="font-weight: 700;" >Thời gian bắt đầu</span>
+										<input type="datetime-local" id="search-orders" name="searchorders" class="form-control search-orders" placeholder="Nhập mã hoạt động..." >
+									</div>
+									
+								</div>
 							</div>
+
+						
+				
 							<!--//col-->
-							<div class="col-auto" style="padding-left: 15px;">
-								<button class="btn app-btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#AddModal">Thêm mới</button>
-							</div>
+							
 
 						</div>
 						<!--//row-->
@@ -58,6 +73,13 @@
 								<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 							</div>
 						<div class="modal-body">
+
+						<div class="mb-3">
+							<label for="input_TenHoatDong" class="form-label" style="color: black; font-weight: 500;" >Học kỳ áp dụng</label>
+							<select class="form-select" aria-label="Default select example" id="select_HocKyDanhGia">
+						
+							</select>
+						</div>
 
 						<div class="mb-3">
 							<label for="input_TenHoatDong" class="form-label" style="color: black; font-weight: 500;" >Tên hoạt động</label>
@@ -124,8 +146,11 @@
 											<th class="cell">Mã khoa tổ chức</th>
 											<th class="cell">Tiêu chí được cộng điểm</th>
 											<th class="cell">Điểm nhận được</th>
+											<th class="cell">Địa điểm</th>
+											<th class="cell">Học kỳ áp dụng</th>
 											<th class="cell">Thời gian bắt đầu</th>
 											<th class="cell">Thời gian kết thúc</th>
+											<th class="cell">Thời gian bắt đầu điểm danh</th>
 											<th class="cell">Mã QR điểm danh/checkin</th>
 										</tr>
 									</thead>

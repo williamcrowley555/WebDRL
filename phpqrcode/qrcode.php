@@ -8,9 +8,9 @@ class qrcode1{
         $path = dirname(__DIR__).'../api/hoatdongdanhgia/QRImages/';
         $name_img = uniqid(). ".png";
         $file = $path .  $name_img ;
-        $ecc = "M";
-        $pixel_Size = 10;
-        $frame_Size = 10;
+        $ecc = "L";
+        $pixel_Size = 12;
+        $frame_Size = 8;
         
         QRcode::png($url, $file, $ecc, $pixel_Size, $frame_Size);
         return   $name_img;

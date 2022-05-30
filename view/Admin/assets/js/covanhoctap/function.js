@@ -21,6 +21,13 @@ function deleteAllCookies() {
     }
 }
 
+function checkLoiDangNhap(message) {
+    if ( message.localeCompare("Vui lòng đăng nhập trước!") == 0 ){
+        deleteAllCookies();
+        location.href = 'login.php';
+    }
+}
+
 
 //Cố vấn học tập//
 function GetListCVHT() {
@@ -67,6 +74,8 @@ function GetListCVHT() {
 
             },
             error: function(errorMessage) {
+                checkLoiDangNhap(errorMessage.responseJSON.message);
+
                 Swal.fire({
                     icon: 'error',
                     title: 'Lỗi',
@@ -74,13 +83,14 @@ function GetListCVHT() {
                     //timer: 5000,
                     timerProgressBar: true
                 })
+                
     
             },
             statusCode: {
                 403: function(xhr) {
                     //deleteAllCookies();
 
-                    location.href = 'login.php';
+                    //location.href = 'login.php';
                 }
             }
         });
@@ -166,6 +176,8 @@ function ThemCVHT() {
         
                     },
                     error: function(errorMessage) {
+                        checkLoiDangNhap(errorMessage.responseJSON.message);
+                        
                         Swal.fire({
                             icon: 'error',
                             title: 'Lỗi',
@@ -177,9 +189,7 @@ function ThemCVHT() {
                     },
                     statusCode: {
                         403: function(xhr) {
-                            //deleteAllCookies();
-        
-                            //location.href = 'login.php';
+                            
                         }
                     }
                 });

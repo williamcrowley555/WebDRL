@@ -33,6 +33,15 @@ function ThongBaoLoi(message) {
   });
 }
 
+
+function checkLoiDangNhap(message) {
+    if ( message.localeCompare("Vui lòng đăng nhập trước!") == 0 ){
+        deleteAllCookies();
+        location.href = 'login.php';
+    }
+}
+
+
 //hoatdongdanhgia//
 function GetListHoatdongdanhgia() {
   if (getCookie("jwt") != null) {
@@ -79,14 +88,22 @@ function GetListHoatdongdanhgia() {
                                 <td class='cell'>" + data[i].maKhoa + "</td>\
                                 <td class='cell'>" + result_tieuchi2.noidung + "</td>\
                                 <td class='cell'>" + data[i].diemNhanDuoc + "</td>\
+                                <td class='cell'>" + data[i].diaDiemDienRaHoatDong + "</td>\
+                                <td class='cell'>" + data[i].maHocKyDanhGia + "</td>\
                                 <td class='cell'>" + data[i].thoiGianBatDauHoatDong + "</td>\
                                 <td class='cell'>" + data[i].thoiGianKetThucHoatDong + "</td>\
-                                <td class='cell'><img src='"+ data[i].maQRDiaDiem +"' style='width: 35%;' /></td>\
-                                <td class='cell'><a class='btn bg-warning' href='#' style='color: white;'>Chỉnh sửa</a></td>\
+                                <td class='cell'>" + data[i].thoiGianBatDauDiemDanh + "</td>\
+                                <td class='cell'><img src='"+ data[i].maQRDiaDiem +"' style='width: 40%;' /></td>\
+                                <td class='cell'>\
+                                    <a class='btn' href='#' style='color: white;width: max-content;margin: 5px;background: dodgerblue;'>Bắt đầu điểm danh</a>\
+                                    <a class='btn bg-warning' href='#' style='color: white;margin: 5px;'>Chỉnh sửa</a>\
+                                </td>\
                                 </tr>";
                         
                         },
                         error: function (errorMessage) {
+                            checkLoiDangNhap(errorMessage.responseJSON.message);
+                            
                             Swal.fire({
                                 icon: "error",
                                 title: "Lỗi",
@@ -119,14 +136,22 @@ function GetListHoatdongdanhgia() {
                                 <td class='cell'>" + data[i].maKhoa + "</td>\
                                 <td class='cell'>" + result_tieuchi3.noidung + "</td>\
                                 <td class='cell'>" + data[i].diemNhanDuoc + "</td>\
+                                <td class='cell'>" + data[i].diaDiemDienRaHoatDong + "</td>\
+                                <td class='cell'>" + data[i].maHocKyDanhGia + "</td>\
                                 <td class='cell'>" + data[i].thoiGianBatDauHoatDong + "</td>\
                                 <td class='cell'>" + data[i].thoiGianKetThucHoatDong + "</td>\
-                                <td class='cell'><img src='"+ data[i].maQRDiaDiem +"' style='width: 35%;' /></td>\
-                                <td class='cell'><a class='btn bg-warning' href='#' style='color: white;'>Chỉnh sửa</a></td>\
+                                <td class='cell'>" + data[i].thoiGianBatDauDiemDanh + "</td>\
+                                <td class='cell'><img src='"+ data[i].maQRDiaDiem +"' style='width: 40%;' /></td>\
+                                <td class='cell'>\
+                                    <a class='btn' href='#' style='color: white;width: max-content;margin: 5px;background: dodgerblue;'>Bắt đầu điểm danh</a>\
+                                    <a class='btn bg-warning' href='#' style='color: white;margin: 5px;'>Chỉnh sửa</a>\
+                                </td>\
                                 </tr>";
                 
                         },
                         error: function (errorMessage) {
+                            checkLoiDangNhap(errorMessage.responseJSON.message);
+
                             Swal.fire({
                                 icon: "error",
                                 title: "Lỗi",
@@ -152,6 +177,8 @@ function GetListHoatdongdanhgia() {
         });
       },
       error: function (errorMessage) {
+        checkLoiDangNhap(errorMessage.responseJSON.message);
+
         Swal.fire({
           icon: "error",
           title: "Lỗi",
@@ -191,6 +218,8 @@ function LoadThongTinThemMoi() {
 
         },
         error: function (errorMessage) {
+            checkLoiDangNhap(errorMessage.responseJSON.message);
+
             Swal.fire({
                 icon: "error",
                 title: "Lỗi",
@@ -245,6 +274,8 @@ function LoadThongTinThemMoi() {
                     
                 },
                 error: function (errorMessage) {
+                    checkLoiDangNhap(errorMessage.responseJSON.message);
+
                     Swal.fire({
                         icon: "error",
                         title: "Lỗi",
@@ -257,6 +288,8 @@ function LoadThongTinThemMoi() {
             
         },
         error: function (errorMessage) {
+            checkLoiDangNhap(errorMessage.responseJSON.message);
+
             Swal.fire({
                 icon: "error",
                 title: "Lỗi",
@@ -268,6 +301,39 @@ function LoadThongTinThemMoi() {
     });
 
 
+    //Load học kỳ áp dụng
+    $.ajax({
+        url: "../../api/hockydanhgia/read.php",
+        type: "GET",
+        contentType: "application/json;charset=utf-8",
+        dataType: "json",
+        async: false,
+        headers: { 'Authorization': jwtCookie },
+        success: function (result_HocKy) {
+            $('#select_HocKyDanhGia').find('option').remove();
+
+            $.each(result_HocKy, function (index_HocKy) {
+                for (var b = 0; b < result_HocKy[index_HocKy].length; b++) {
+                    
+                    $('#select_HocKyDanhGia').append("<option value='"+ result_HocKy[index_HocKy][b].maHocKyDanhGia +"'> "+ result_HocKy[index_HocKy][b].hocKyXet + " - "+ result_HocKy[index_HocKy][b].namHocXet +"</option>");
+
+                }
+            });
+
+        },
+        error: function (errorMessage) {
+            checkLoiDangNhap(errorMessage.responseJSON.message);
+
+            Swal.fire({
+                icon: "error",
+                title: "Lỗi",
+                text: errorMessage.responseText,
+                //timer: 5000,
+                timerProgressBar: true,
+            });
+        },
+    });
+
 }
 
 
@@ -278,7 +344,10 @@ function LoadThongTinThemMoi() {
 
 function ThemMoi() {
     
+    var _input_MaHocKy = $('#select_HocKyDanhGia option:selected').val();
     var _input_TenHoatDong = $('#input_TenHoatDong').val();
+    var _input_MaKhoa = $('#select_Khoa option:selected').val();
+    var _input_MaTieuChi = $('#select_TieuChi option:selected').val();
     var _input_DiemNhanDuoc = $('#input_DiemNhanDuoc').val();
     var _input_DiaDiemHoatDong = $('#input_DiaDiemHoatDong').val();
     var _input_ThoiGianBatDau = $('#input_ThoiGianBatDau').val();
@@ -286,17 +355,175 @@ function ThemMoi() {
 
     if (_input_TenHoatDong == '' || _input_DiemNhanDuoc == '' ||  _input_DiaDiemHoatDong == '' || 
     _input_ThoiGianBatDau == '' || _input_ThoiGianKetThuc == ''  ){
-        thongBaoLoi("Vui lòng nhập đầy đủ thông tin!");
+        ThongBaoLoi("Vui lòng nhập đầy đủ thông tin!");
 
     }else{
 
-        var dataPost = {
+        //Lấy mã hoạt động max + 1 để dùng cho tạo url hoạt động đánh giá
+        $.ajax({
+            url: "../../api/hoatdongdanhgia/read.php",
+            type: "GET",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            async: false,
+            headers: { 'Authorization': jwtCookie },
+            success: function (result) {
+                var maxID_MaHoatDong = 0;
+                $.each(result, function (index) {
+                    for (var b = 0; b < result[index].length; b++) {
+                        //Mã hoạt động ví dụ: HD1
+                        if ((result[index][b].maHoatDong).slice(2,3) > maxID_MaHoatDong ){
+                            maxID_MaHoatDong = (result[index][b].maHoatDong).slice(2,3);
+                        }
+                    }
+                });
+
+                var maHoatDongNew = "HD" + (Number(maxID_MaHoatDong) + 1);
+
+                var maTieuChi_sliced = _input_MaTieuChi.slice(0,3);
+                var _value_maTieuChi = _input_MaTieuChi.slice(4,_input_MaTieuChi.length);
+
+
+                 //http://localhost/WebDRL/view/Client/pages/diemdanhhoatdong.php?maHoatDong=HD1
+                var currentDomainURL = window.location.protocol + '//' + window.location.hostname;
+                var urlCreate = currentDomainURL + "/WebDRL/view/Client/pages/diemdanhhoatdong.php?maHoatDong=" + maHoatDongNew;
+
+                //Tạo hoạt động đánh giá
+                if (maTieuChi_sliced == 'TC2'){
+                    var dataPost = {
+                        maHoatDong: maHoatDongNew,
+                        maTieuChi2: _value_maTieuChi,
+                        maTieuChi3: null,
+                        maHocKyDanhGia: _input_MaHocKy,
+                        tenHoatDong: _input_TenHoatDong,
+                        maKhoa: _input_MaKhoa,
+                        diemNhanDuoc: _input_DiemNhanDuoc,
+                        diaDiemDienRaHoatDong: _input_DiaDiemHoatDong,
+                        thoiGianBatDauHoatDong: _input_ThoiGianBatDau,
+                        thoiGianKetThucHoatDong: _input_ThoiGianKetThuc,
+                        thoiGianBatDauDiemDanh: null,
+                        url: urlCreate
+                    }
+
+                    //console.log(dataPost);
+
+                    $.ajax({
+                        url: "../../api/hoatdongdanhgia/create.php",
+                        type: "POST",
+                        contentType: "application/json;charset=utf-8",
+                        dataType: "json",
+                        data: JSON.stringify(dataPost),
+                        async: false,
+                        headers: { 'Authorization': jwtCookie },
+                        success: function (result_Create) {
+                            $('#AddModal').modal('hide');
+
+                            Swal.fire({
+                                icon: "success",
+                                title: "Tạo thành công!",
+                                text: '',
+                                timer: 3000,
+                                timerProgressBar: true,
+                            });
+
+                            setTimeout(function(){
+                                location.reload();
+                            }, 3000);
+
+                        },
+                        error: function (errorMessage) {
+                            checkLoiDangNhap(errorMessage.responseJSON.message);
+
+                            Swal.fire({
+                                icon: "error",
+                                title: "Lỗi",
+                                text: errorMessage.responseJSON.message,
+                                //timer: 5000,
+                                timerProgressBar: true,
+                            });
+                        },
+                    });
+
+
+
+                }
+        
+                if (maTieuChi_sliced == 'TC3'){
+                    var dataPost = {
+                        maHoatDong: maHoatDongNew,
+                        maTieuChi2: null,
+                        maTieuChi3: _value_maTieuChi,
+                        maHocKyDanhGia: _input_MaHocKy,
+                        tenHoatDong: _input_TenHoatDong,
+                        maKhoa: _input_MaKhoa,
+                        diemNhanDuoc: _input_DiemNhanDuoc,
+                        diaDiemDienRaHoatDong: _input_DiaDiemHoatDong,
+                        thoiGianBatDauHoatDong: _input_ThoiGianBatDau,
+                        thoiGianKetThucHoatDong: _input_ThoiGianKetThuc,
+                        thoiGianBatDauDiemDanh: null,
+                        url: urlCreate
+                    }
+
+                    //console.log(dataPost);
+
+                    $.ajax({
+                        url: "../../api/hoatdongdanhgia/create.php",
+                        type: "POST",
+                        contentType: "application/json;charset=utf-8",
+                        dataType: "json",
+                        data: JSON.stringify(dataPost),
+                        async: false,
+                        headers: { 'Authorization': jwtCookie },
+                        success: function (result_Create) {
+                            $('#AddModal').modal('hide');
+
+                            Swal.fire({
+                                icon: "success",
+                                title: "Tạo thành công!",
+                                text: '',
+                                timer: 2000,
+                                timerProgressBar: true,
+                            });
+
+                            setTimeout(function(){
+                                location.reload();
+                            }, 2000);
+
+                        },
+                        error: function (errorMessage) {
+                            checkLoiDangNhap(errorMessage.responseJSON.message);
+
+                            Swal.fire({
+                                icon: "error",
+                                title: "Lỗi",
+                                text: errorMessage.responseJSON.message,
+                                //timer: 5000,
+                                timerProgressBar: true,
+                            });
+                        },
+                    });
+
+                }
+        
+                
             
+            },
+            error: function (errorMessage) {
+                checkLoiDangNhap(errorMessage.responseJSON.message);
 
-        }
+                Swal.fire({
+                    icon: "error",
+                    title: "Lỗi",
+                    text: errorMessage.responseJSON.message,
+                    //timer: 5000,
+                    timerProgressBar: true,
+                });
+            },
+        });
+        
 
 
-    }
+   }
 
 
 

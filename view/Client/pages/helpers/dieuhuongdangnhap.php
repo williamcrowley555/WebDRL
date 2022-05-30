@@ -13,10 +13,9 @@
             case 'sinhvien':{
                 if (!empty($previousPage)){
                     header("Location: ".$previousPage);
-                }else{
-                    header("Location: ../chamdiem.php");
                 }
-               
+                
+                header("Location: ../chamdiem.php");
                
                 break;
                 
