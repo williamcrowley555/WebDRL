@@ -1,4 +1,5 @@
 <?php
+    
     if (!isset($_GET['maHoatDong'])){
         echo "<script>window.location.href = 'tracuuhoatdongthamgia.php';</script>";
     }
@@ -7,13 +8,12 @@
     //Dùng để lưu lại page vào cookie điều hướng ngược lại sau khi đăng nhập
     setCookie('previousPage', $previousLink);
 
+    
     include_once "header.php";
 
     if ($quyenNguoiDung != 'sinhvien'){
         echo "<script>history.go(-1)</script>";
     }
-
-    
     
 
 ?>

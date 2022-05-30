@@ -192,9 +192,6 @@ function GetListHoatdongdanhgia() {
 }
 
 
-
-
-
 function LoadThongTinThemMoi() {
 
     //Load khoa
@@ -335,11 +332,6 @@ function LoadThongTinThemMoi() {
     });
 
 }
-
-
-
-
-
 
 
 function ThemMoi() {
@@ -527,4 +519,9 @@ function ThemMoi() {
 
 
 
+}
+
+
+function DiemDanhHoatDong(params) {
+    
 }

@@ -441,7 +441,9 @@ function checkValidateInput(){
            var coVanDuyet = result_PRL.coVanDuyet;
            var fileDinhKem = result_PRL.fileDinhKem;
            var fileDinhKem_Name = fileDinhKem.substring(fileDinhKem.lastIndexOf('/') + 1);
-     
+          
+           console.log(xepLoai);
+
            $.ajax({
             url: "../../../api/chamdiemrenluyen/read.php?maPhieuRenLuyen=" + maPhieuRenLuyen,
             async: false,

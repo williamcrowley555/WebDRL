@@ -117,8 +117,8 @@ if (!isset($_GET['maHocKy']) && !isset($_GET['maSinhVien'])) {
         HienThiThongTinVaDanhGia();
         LoadThongTinSinhVienDanhGia();
 
-        var diemTong_XepLoai = Number($('#CVHT_input_diemtongcong').val());
-        $("#text_XepLoai").text(TinhXepLoai(diemTong_XepLoai));
+       // var diemTong_XepLoai = Number($('#CVHT_input_diemtongcong').val());
+        //$("#text_XepLoai").text(TinhXepLoai(diemTong_XepLoai));
         
         //Code tự tính điểm tổng cộng-------------------//
         let calDiemTongCong_SinhVien = 0;

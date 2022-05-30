@@ -11,12 +11,13 @@
 
         switch ($quyen) {
             case 'sinhvien':{
-                if (!empty($previousPage)){
+                if ($previousPage != ''){
                     header("Location: ".$previousPage);
+                }else{
+                    header("Location: ../chamdiem.php");
                 }
                 
-                header("Location: ../chamdiem.php");
-               
+                
                 break;
                 
             }

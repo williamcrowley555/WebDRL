@@ -9,6 +9,12 @@ function getCookie(cName) {
   return res;
 }
 
+var previousPage = '';
+
+if (getCookie('previousPage') !== undefined){
+  previousPage = getCookie('previousPage');
+}
+
 
 //Login
 function Login(inputLogin_MSSV, inputLogin_MatKhau) {
@@ -57,7 +63,7 @@ function Login(inputLogin_MSSV, inputLogin_MatKhau) {
         
          setTimeout(function () {
             $("#formDieuHuongDangNhap").append("<input type='text' id='jwt' name='jwt' value='" + result["jwt"] + "'>");
-            $("#formDieuHuongDangNhap").append("<input type='text' id='previousPage' name='previousPage' value='" + getCookie('previousPage') + "'>");
+            $("#formDieuHuongDangNhap").append("<input type='text' id='previousPage' name='previousPage' value='" + previousPage + "'>");
             $("form#formDieuHuongDangNhap").submit();
          }, 1000);
 
