@@ -17,8 +17,8 @@
             $database = new Database();
             $db = $database->getConnection();
     
-            $items = new Khoa($db);
-            $stmt = $items->getAllKhoa();
+            $items = new KhoaHoc($db);
+            $stmt = $items->getAllKhoaHoc();
             $itemCount = $stmt->rowCount();     
     
     
@@ -30,20 +30,22 @@
                 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
                     extract($row);
                     $e = array(
-                        "maKhoaHoc" => $maKhoaHoc ,
+                        "maKhoaHoc" => $maKhoaHoc,
                         "namBatDau" => $namBatDau,
                         "namKetThuc" => $namKetThuc
                     );
                     array_push($khoahocArr["khoahoc"], $e);
                 }
+                http_response_code(200);
                 echo json_encode($khoahocArr);
             }
             else{
                 http_response_code(404);
                 echo json_encode(
-                    array("message" => "No record found.")
+                    array("message" => "Không tìm thấy dữ liệu.")
                 );
-            }} else {
+            }
+        } else {
             http_response_code(403);
             echo json_encode(
                 array("message" => "Bạn không có quyền thực hiện điều này!")
@@ -55,4 +57,5 @@
             array("message" => "Vui lòng đăng nhập trước!")
         );
     }
-    ?>
+    
+?>

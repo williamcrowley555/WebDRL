@@ -75,12 +75,15 @@ function GetListPhieurenluyen() {
                                 <td class='cell'>"+ data[i].maHocKyDanhGia +"</td>\
                                 <td class='cell'>"+ data[i].diemTongCong +"</td>\
                                 <td class='cell'>"+ data[i].xepLoai +"</td>\
+                                <td class='cell'>"+ SetTrangThaiDuyet(data[i].coVanDuyet) +"</td>\
+                                <td class='cell'>"+ SetTrangThaiDuyet(data[i].khoaDuyet) +"</td>\
+                                <td class='cell'><a href='"+ data[i].fileDinhKem +"' >"+ data[i].fileDinhKem.substring(data[i].fileDinhKem.lastIndexOf('/') + 1) +"</a></td>\
                                 <td class='cell'><a class='btn btn-secondary' href='#' style='color: white;'>Xem chi tiết</a></td>\
                                 </tr>";
                            
                         }
 
-                       $("#id_tbodyPhieuRenLuyen").append(htmlData);
+                       $("#id_tbodyPhieuRenLuyen").html(htmlData);
                     }
 
                 });
@@ -99,6 +102,21 @@ function GetListPhieurenluyen() {
     
             }
         });
+
+
+}
+
+function SetTrangThaiDuyet(value) {
+  var trangThaiDuyet = '';
+  if (value == 1){
+    trangThaiDuyet = "<span class='badge bg-success' style='color: white;font-size: inherit;'>Đã duyệt</span>";
+  }else{
+    if (value == 0){
+      trangThaiDuyet = "<span class='badge bg-warning' style='color: white;font-size: inherit;'>Chưa duyệt</span>";
+    }
+  }
+  
+  return trangThaiDuyet;
 
 
 }

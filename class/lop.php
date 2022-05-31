@@ -73,6 +73,7 @@
             $sqlQuery = "INSERT INTO
                         ". $this->db_table ."
                     SET
+                        maLop = :maLop,
                         tenLop = :tenLop, 
                         maKhoa = :maKhoa, 
                         maCoVanHocTap = :maCoVanHocTap,
@@ -82,12 +83,14 @@
             $stmt = $this->conn->prepare($sqlQuery);
         
             // sanitize (Lọc dữ liệu đầu vào tránh SQLInjection, XSS)
+            $this->maLop=htmlspecialchars(strip_tags($this->maLop));
             $this->tenLop=htmlspecialchars(strip_tags($this->tenLop));
             $this->maKhoa=htmlspecialchars(strip_tags($this->maKhoa));
             $this->maCoVanHocTap=htmlspecialchars(strip_tags($this->maCoVanHocTap));
             $this->maKhoaHoc=htmlspecialchars(strip_tags($this->maKhoaHoc));
         
             // bind data
+            $stmt->bindParam(":maLop", $this->maLop);
             $stmt->bindParam(":tenLop", $this->tenLop);
             $stmt->bindParam(":maKhoa", $this->maKhoa);
             $stmt->bindParam(":maCoVanHocTap", $this->maCoVanHocTap);

@@ -83,7 +83,7 @@ function HienThiThongTinVaDanhGia() {
 
           },
           error: function (errorMessage_tc3) {
-            thongBaoLoi(errorMessage_tc3.responseText);
+            thongBaoLoi(errorMessage_tc3.responseJSON.message);
           },
         });
       }else{
@@ -204,7 +204,7 @@ function getTieuChiDanhGia() {
                                         });
                                     },
                                     error: function (errorMessage_tc3) {
-                                      thongBaoLoi(errorMessage_tc3.responseText);
+                                      thongBaoLoi(errorMessage_tc3.responseJSON.message);
                                     },
                                 });
                             }
@@ -212,7 +212,7 @@ function getTieuChiDanhGia() {
                     });
                 },
                 error: function (errorMessage_tc2) {
-                    thongBaoLoi(errorMessage_tc2.responseText);
+                    thongBaoLoi(errorMessage_tc2.responseJSON.message);
                 },
             });
 
@@ -231,7 +231,7 @@ function getTieuChiDanhGia() {
             });
         },
         error: function (errorMessage) {
-            thongBaoLoi(errorMessage.responseText);
+            thongBaoLoi(errorMessage.responseJSON.message);
         },
     });
 
@@ -349,7 +349,7 @@ function getThongTinNguoiDung() {
                                 ");
                               },
                               error: function (errorMessage_tc3) {
-                                thongBaoLoi(errorMessage_tc3.responseText);
+                                thongBaoLoi(errorMessage_tc3.responseJSON.message);
                               },
                             });
                   }
@@ -359,12 +359,12 @@ function getThongTinNguoiDung() {
               
           },
           error: function (errorMessage) {
-            thongBaoLoi(errorMessage.responseText);
+            thongBaoLoi(errorMessage.responseJSON.message);
           },
         });
       },
       error: function (errorMessage) {
-        thongBaoLoi(errorMessage.responseText);
+        thongBaoLoi(errorMessage.responseJSON.message);
       },
     });
   }
@@ -510,14 +510,14 @@ function checkValidateInput(){
     
             },
             error: function (errorMessage_tc3) {
-              thongBaoLoi(errorMessage_tc3.responseText);
+              thongBaoLoi(errorMessage_tc3.responseJSON.message);
             },
           });
 
          
         },
         error: function (errorMessage_tc3) {
-          thongBaoLoi(errorMessage_tc3.responseText);
+          thongBaoLoi(errorMessage_tc3.responseJSON.message);
         },
     });
 

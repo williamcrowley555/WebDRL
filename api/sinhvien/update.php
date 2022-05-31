@@ -16,7 +16,7 @@ $checkQuyen = new checkQuyen();
 
 // kiểm tra đăng nhập thành công 
 if ($data["status"] == 1) {
-    if ($checkQuyen->checkQuyen_CTSV($data["user_data"]->aud)) {
+    //if ($checkQuyen->checkQuyen_CTSV($data["user_data"]->aud)) {
         $database = new Database();
         $db = $database->getConnection();
 
@@ -31,23 +31,32 @@ if ($data["status"] == 1) {
             $item->hoTenSinhVien = $data->hoTenSinhVien;
             $item->ngaySinh = $data->ngaySinh;
             $item->he = $data->he;
-            $item->matKhauSinhVien = $data->matKhauSinhVien;
+            $item->matKhauSinhVien = md5($data->matKhauSinhVien);
             $item->maLop = $data->maLop;
 
             if ($item->updateSinhVien()) {
-                echo json_encode("sinhvien data updated.");
+                http_response_code(200);
+                echo json_encode(
+                    array("message" => "sinhvien cập nhật thành công.")
+                );
             } else {
-                echo json_encode("Data could not be updated");
+                http_response_code(500);
+                echo json_encode(
+                    array("message" => "sinhvien cập nhật KHÔNG thành công.")
+                );
             }
         } else {
-            echo 'No data posted.';
+            http_response_code(403);
+            echo json_encode(
+                array("message" => "Không có dữ liệu gửi lên.")
+            );
         }
-    } else {
-        http_response_code(403);
-        echo json_encode(
-            array("message" => "Bạn không có quyền thực hiện điều này!")
-        );
-    }
+    // } else {
+    //     http_response_code(403);
+    //     echo json_encode(
+    //         array("message" => "Bạn không có quyền thực hiện điều này!")
+    //     );
+    // }
 } else {
     http_response_code(403);
     echo json_encode(

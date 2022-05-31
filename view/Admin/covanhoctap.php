@@ -97,6 +97,42 @@
 					</div>
 				</div>
 
+				<!-- Modal reset password -->
+				<div class="modal fade" id="DatLaiMatKhauModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="exampleModalLabel"> Đặt lại mật khẩu</h5>
+								<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+							</div>
+							<div class="modal-body">
+
+								<div class="mb-3">
+									<label for="input_CoVanHocTap_Update" class="form-label" style="color: black; font-weight: 500;">Mã cố vấn học tập</label>
+									<input type="text" class="form-control mb-2" id="input_CoVanHocTap_Update" placeholder="Nhập mã cố vấn học tập..." disabled>
+								</div>
+
+
+								<div class="mb-3">
+									<label for="input_MatKhauMoi" class="form-label" style="color: black; font-weight: 500;">Mật khẩu mới</label>
+									<input type="password" class="form-control" id="input_MatKhauMoi" placeholder="Nhập mật khẩu mới...">
+								</div>
+
+								<div class="mb-3">
+									<label for="input_NhapLaiMatKhauMoi" class="form-label" style="color: black; font-weight: 500;">Nhập lại Mật khẩu mới</label>
+									<input type="password" class="form-control" id="input_NhapLaiMatKhauMoi" placeholder="Nhập lại mật khẩu mới...">
+								</div>
+
+								
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+								<button type="button" class="btn btn-info" style='color: white;' onclick="return DatLaiMatKhau()">Đặt lại mật khẩu</button>
+							</div>
+						</div>
+					</div>
+				</div>
+
 				
 
 				<div class="tab-pane fade show active" id="orders-all" role="tabpanel" aria-labelledby="orders-all-tab">
@@ -181,6 +217,18 @@
 	//hàm trong function.js
 	GetListCVHT();
  
+
+	//Dat lai mat khau
+	$(document).ready(function(){
+		$('.btn_DatLaiMatKhau').on('click', function(){
+			var maSinhVien = $(this).attr('data-id');
+		
+			$('#input_CoVanHocTap_Update').val(maSinhVien);
+			
+		
+		})
+	});
+
 
 </script>
 </body>

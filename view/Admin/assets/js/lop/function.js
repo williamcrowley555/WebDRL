@@ -83,7 +83,7 @@ function GetListLop(maKhoa) {
                            
                         }
 
-                       $("#id_tbodyLop").append(htmlData);
+                       $("#id_tbodyLop").html(htmlData);
                     }
 
                 });
@@ -142,7 +142,7 @@ function GetListLop(maKhoa) {
                            
                         }
 
-                       $("#id_tbodyLop").append(htmlData);
+                       $("#id_tbodyLop").html(htmlData);
                     }
 
                 });
@@ -193,7 +193,7 @@ function TimKiemLop(maLop) {
             <td class='cell'><a class='btn bg-warning' href='#' style='color: white;'>Chỉnh sửa</a></td>\
         </tr>"
   
-        $("#id_tbodyLop").append(htmlData);
+        $("#id_tbodyLop").html(htmlData);
   
       },
       error: function (errorMessage) {
@@ -201,7 +201,7 @@ function TimKiemLop(maLop) {
 
         var htmlData = "";
   
-        $("#id_tbodyLop").append(htmlData);
+        $("#id_tbodyLop").html(htmlData);
       },
       statusCode: {
         403: function (xhr) {
@@ -238,6 +238,14 @@ function LoadComboBoxThongTinKhoa() {
                 result_Khoa[index_Khoa][p].tenKhoa +
                 "</option>"
             );
+
+            $("#select_Khoa_Add").append(
+              "<option value='" +
+                result_Khoa[index_Khoa][p].maKhoa +
+                "'>" +
+                result_Khoa[index_Khoa][p].tenKhoa +
+                "</option>"
+            );
           }
         });
       },
@@ -257,4 +265,153 @@ function LoadComboBoxThongTinKhoa() {
 }
 
 
+function LoadComboBoxCoVanHocTap_AddModal() {
+  //Load CVHT
+  $.ajax({
+    url: "../../api/covanhoctap/read.php",
+    type: "GET",
+    contentType: "application/json;charset=utf-8",
+    dataType: "json",
+    async: false,
+    headers: { Authorization: jwtCookie },
+    success: function (result_CVHT) {
+      $("#select_CVHT_Add").find("option").remove();
 
+      $.each(result_CVHT, function (index_CVHT) {
+        for (var p = 0; p < result_CVHT[index_CVHT].length; p++) {
+
+          $("#select_CVHT_Add").append(
+            "<option value='" +
+              result_CVHT[index_CVHT][p].maCoVanHocTap +
+              "'>" + result_CVHT[index_CVHT][p].maCoVanHocTap + " - " +
+              result_CVHT[index_CVHT][p].hoTenCoVan +
+              "</option>"
+          );
+
+          
+        }
+      });
+    },
+    error: function (errorMessage) {
+      checkLoiDangNhap(errorMessage.responseJSON.message);
+
+      Swal.fire({
+        icon: "error",
+        title: "Lỗi",
+        text: errorMessage.responseText,
+        //timer: 5000,
+        timerProgressBar: true,
+      });
+    },
+  });
+
+}
+
+
+function LoadComboBoxKhoaHoc_AddModal() {
+  //Load Khóa học
+  $.ajax({
+    url: "../../api/khoahoc/read.php",
+    type: "GET",
+    contentType: "application/json;charset=utf-8",
+    dataType: "json",
+    async: false,
+    headers: { Authorization: jwtCookie },
+    success: function (result_KhoaHoc) {
+      $("#select_KhoaHoc_Add").find("option").remove();
+
+      $.each(result_KhoaHoc, function (index_KhoaHoc) {
+        for (var p = 0; p < result_KhoaHoc[index_KhoaHoc].length; p++) {
+
+          $("#select_KhoaHoc_Add").append(
+            "<option value='" +
+            result_KhoaHoc[index_KhoaHoc][p].maKhoaHoc +
+              "'>" + result_KhoaHoc[index_KhoaHoc][p].maKhoaHoc + 
+              "</option>"
+          );
+
+          
+        }
+      });
+    },
+    error: function (errorMessage) {
+      //checkLoiDangNhap(errorMessage.responseJSON.message);
+
+      Swal.fire({
+        icon: "error",
+        title: "Lỗi",
+        text: errorMessage.responseText,
+        //timer: 5000,
+        timerProgressBar: true,
+      });
+    },
+  });
+
+}
+
+
+function ThemMoi() {
+  var _input_MaLop = $('#input_MaLop').val();
+  var _input_TenLop = $('#input_TenLop').val();
+  var _select_Khoa_Add = $('#select_Khoa_Add option:selected').val();
+  var _select_CVHT_Add = $('#select_CVHT_Add option:selected').val();
+  var _select_KhoaHoc_Add = $('#select_KhoaHoc_Add option:selected').val();
+
+  if (_input_MaLop == '' || _input_TenLop == ''){
+    ThongBaoLoi("Vui lòng nhập đầy đủ thông tin!");
+
+  }else{
+
+    var dataPost ={
+      maLop: _input_MaLop,
+      tenLop: _input_TenLop,
+      maKhoa: _select_Khoa_Add,
+      maCoVanHocTap: _select_CVHT_Add,
+      maKhoaHoc: _select_KhoaHoc_Add
+    }
+
+
+    $.ajax({
+      url: "../../api/lop/create.php",
+      type: "POST",
+      contentType: "application/json;charset=utf-8",
+      dataType: "json",
+      data: JSON.stringify(dataPost),
+      async: false,
+      headers: { Authorization: jwtCookie },
+      success: function (result_Create) {
+        $('#AddModal').modal('hide');
+        
+        Swal.fire({
+          icon: "success",
+          title: "Tạo thành công!",
+          text: '',
+          timer: 2000,
+          timerProgressBar: true,
+        });
+
+        setTimeout(() => {
+          location.reload();
+        }, 2000);
+  
+      },
+      error: function (errorMessage) {
+        checkLoiDangNhap(errorMessage.responseJSON.message);
+  
+        Swal.fire({
+          icon: "error",
+          title: "Lỗi",
+          text: errorMessage.responseJSON.message,
+          //timer: 5000,
+          timerProgressBar: true,
+        });
+      },
+    });
+
+
+  }
+
+
+
+
+}

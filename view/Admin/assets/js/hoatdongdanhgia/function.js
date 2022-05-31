@@ -503,13 +503,146 @@ function ThemMoi() {
             error: function (errorMessage) {
                 checkLoiDangNhap(errorMessage.responseJSON.message);
 
-                Swal.fire({
-                    icon: "error",
-                    title: "Lỗi",
-                    text: errorMessage.responseJSON.message,
-                    //timer: 5000,
-                    timerProgressBar: true,
-                });
+                //Trường hợp database trắng, chưa có hoạt động nào//--
+                if (errorMessage.responseJSON.message == 'Không tìm thấy dữ liệu.'){
+                    
+                    var maHoatDongNew = "HD1";
+
+                    var maTieuChi_sliced = _input_MaTieuChi.slice(0,3);
+                    var _value_maTieuChi = _input_MaTieuChi.slice(4,_input_MaTieuChi.length);
+
+
+                    //http://localhost/WebDRL/view/Client/pages/diemdanhhoatdong.php?maHoatDong=HD1
+                    var currentDomainURL = window.location.protocol + '//' + window.location.hostname;
+                    var urlCreate = currentDomainURL + "/WebDRL/view/Client/pages/diemdanhhoatdong.php?maHoatDong=" + maHoatDongNew;
+
+                    //Tạo hoạt động đánh giá
+                    if (maTieuChi_sliced == 'TC2'){
+                        var dataPost = {
+                            maHoatDong: maHoatDongNew,
+                            maTieuChi2: _value_maTieuChi,
+                            maTieuChi3: null,
+                            maHocKyDanhGia: _input_MaHocKy,
+                            tenHoatDong: _input_TenHoatDong,
+                            maKhoa: _input_MaKhoa,
+                            diemNhanDuoc: _input_DiemNhanDuoc,
+                            diaDiemDienRaHoatDong: _input_DiaDiemHoatDong,
+                            thoiGianBatDauHoatDong: _input_ThoiGianBatDau,
+                            thoiGianKetThucHoatDong: _input_ThoiGianKetThuc,
+                            thoiGianBatDauDiemDanh: null,
+                            url: urlCreate
+                        }
+
+                        //console.log(dataPost);
+
+                        $.ajax({
+                            url: "../../api/hoatdongdanhgia/create.php",
+                            type: "POST",
+                            contentType: "application/json;charset=utf-8",
+                            dataType: "json",
+                            data: JSON.stringify(dataPost),
+                            async: false,
+                            headers: { 'Authorization': jwtCookie },
+                            success: function (result_Create) {
+                                $('#AddModal').modal('hide');
+
+                                Swal.fire({
+                                    icon: "success",
+                                    title: "Tạo thành công!",
+                                    text: '',
+                                    timer: 2000,
+                                    timerProgressBar: true,
+                                });
+
+                                setTimeout(function(){
+                                    location.reload();
+                                }, 2000);
+
+                            },
+                            error: function (errorMessage) {
+                                checkLoiDangNhap(errorMessage.responseJSON.message);
+
+                                Swal.fire({
+                                    icon: "error",
+                                    title: "Lỗi",
+                                    text: errorMessage.responseJSON.message,
+                                    //timer: 5000,
+                                    timerProgressBar: true,
+                                });
+                            },
+                        });
+
+
+
+                    }
+            
+                    if (maTieuChi_sliced == 'TC3'){
+                        var dataPost = {
+                            maHoatDong: maHoatDongNew,
+                            maTieuChi2: null,
+                            maTieuChi3: _value_maTieuChi,
+                            maHocKyDanhGia: _input_MaHocKy,
+                            tenHoatDong: _input_TenHoatDong,
+                            maKhoa: _input_MaKhoa,
+                            diemNhanDuoc: _input_DiemNhanDuoc,
+                            diaDiemDienRaHoatDong: _input_DiaDiemHoatDong,
+                            thoiGianBatDauHoatDong: _input_ThoiGianBatDau,
+                            thoiGianKetThucHoatDong: _input_ThoiGianKetThuc,
+                            thoiGianBatDauDiemDanh: null,
+                            url: urlCreate
+                        }
+
+                        //console.log(dataPost);
+
+                        $.ajax({
+                            url: "../../api/hoatdongdanhgia/create.php",
+                            type: "POST",
+                            contentType: "application/json;charset=utf-8",
+                            dataType: "json",
+                            data: JSON.stringify(dataPost),
+                            async: false,
+                            headers: { 'Authorization': jwtCookie },
+                            success: function (result_Create) {
+                                $('#AddModal').modal('hide');
+
+                                Swal.fire({
+                                    icon: "success",
+                                    title: "Tạo thành công!",
+                                    text: '',
+                                    timer: 2000,
+                                    timerProgressBar: true,
+                                });
+
+                                setTimeout(function(){
+                                    location.reload();
+                                }, 2000);
+
+                            },
+                            error: function (errorMessage) {
+                                checkLoiDangNhap(errorMessage.responseJSON.message);
+
+                                Swal.fire({
+                                    icon: "error",
+                                    title: "Lỗi",
+                                    text: errorMessage.responseJSON.message,
+                                    //timer: 5000,
+                                    timerProgressBar: true,
+                                });
+                            },
+                        });
+
+                    }
+                }else{
+                    Swal.fire({
+                        icon: "error",
+                        title: "Lỗi",
+                        text: errorMessage.responseJSON.message,
+                        //timer: 5000,
+                        timerProgressBar: true,
+                    });
+                }
+
+                
             },
         });
         

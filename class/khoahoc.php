@@ -48,16 +48,19 @@
             $sqlQuery = "INSERT INTO
                         ". $this->db_table ."
                     SET
+                        maKhoaHoc = :maKhoaHoc, 
                         namBatDau = :namBatDau, 
                         namKetThuc = :namKetThuc";
         
             $stmt = $this->conn->prepare($sqlQuery);
         
             // sanitize (Lọc dữ liệu đầu vào tránh SQLInjection, XSS)
+            $this->maKhoaHoc=htmlspecialchars(strip_tags($this->maKhoaHoc));
             $this->namBatDau=htmlspecialchars(strip_tags($this->namBatDau));
             $this->namKetThuc=htmlspecialchars(strip_tags($this->namKetThuc));
         
             // bind data
+            $stmt->bindParam(":maKhoaHoc", $this->maKhoaHoc);
             $stmt->bindParam(":namBatDau", $this->namBatDau);
             $stmt->bindParam(":namKetThuc", $this->namKetThuc);
         

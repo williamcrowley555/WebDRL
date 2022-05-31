@@ -25,17 +25,28 @@
     
             if ($data != null){
                 //set các biến bằng data nhận từ user
+                $item->maKhoaHoc = $data->maKhoaHoc;
                 $item->namBatDau = $data->namBatDau;
                 $item->namKetThuc = $data->namKetThuc;
     
                 if($item->createKhoaHoc()){
-                    echo 'khoahoc created successfully.';
+                    http_response_code(200);
+                    echo json_encode(
+                        array("message" => "khoahoc tạo thành công!")
+                    );
                 } else{
-                    echo 'khoahoc could not be created.';
+                    http_response_code(500);
+                    echo json_encode(
+                        array("message" => "khoahoc tạo KHÔNG thành công!")
+                    );
                 }
             }else{
-                echo 'No data posted.';
-            }} else {
+                http_response_code(404);
+                echo json_encode(
+                    array("message" => "Không có dữ liệu gửi lên!")
+                );
+            }
+        } else {
             http_response_code(403);
             echo json_encode(
                 array("message" => "Bạn không có quyền thực hiện điều này!")

@@ -28,12 +28,14 @@ function checkLoiDangNhap(message) {
     }
 }
 
+var jwtCookie = getCookie("jwt");
+
 
 //Cố vấn học tập//
 function GetListCVHT() {
 
     if (getCookie("jwt")!= null){
-        var jwtCookie = getCookie("jwt");
+        
 
         $.ajax({
             url: "../../api/covanhoctap/read.php",
@@ -62,7 +64,8 @@ function GetListCVHT() {
                                 <td class='cell'><span class='truncate'>"+ data[i].maCoVanHocTap +"</span></td>\
                                 <td class='cell'>"+ data[i].hoTenCoVan +"</td>\
                                 <td class='cell'>"+ data[i].soDienThoai +"</td>\
-                                <td class='cell'><button type=button' class='btn btn-info' style='color: white;' >Đặt lại mật khẩu</button></td>\
+                                <td class='cell'><button type=button' class='btn btn-info btn_DatLaiMatKhau' data-bs-toggle='modal' data-bs-target='#DatLaiMatKhauModal' style='color: white;' data-id='" + data[i].maCoVanHocTap +
+                        "' >Đặt lại mật khẩu</button></td>\
                                 </tr>";
                            
                         }
@@ -104,8 +107,7 @@ function GetListCVHT() {
 function ThemCVHT() {
     
     if (getCookie("jwt")!= null){
-        var jwtCookie = getCookie("jwt");
-
+ 
         var _inputMaCoVanHocTap = $('#inputMaCoVanHocTap').val();
         var _inputTenCoVanHocTap = $('#inputTenCoVanHocTap').val();
         var _inputSoDienThoai = $('#inputSoDienThoai').val();
@@ -201,6 +203,107 @@ function ThemCVHT() {
     }
 
 }
+
+
+
+
+function DatLaiMatKhau() {
+    var maCoVanHocTap_Update = $('#input_CoVanHocTap_Update').val();
+  
+    var _input_MatKhauMoi = $('#input_MatKhauMoi').val();
+    var _input_NhapLaiMatKhauMoi = $('#input_NhapLaiMatKhauMoi').val();
+  
+    if (_input_MatKhauMoi == '' || _input_NhapLaiMatKhauMoi == '') {
+      ThongBaoLoi("Vui lòng nhập đầy đủ thông tin!");
+    }else{
+      if (_input_MatKhauMoi != _input_NhapLaiMatKhauMoi){
+        ThongBaoLoi("Nhập lại mật khẩu không khớp với mật khẩu! Mời nhập lại!");
+      }else{
+  
+        $.ajax({
+          url: "../../api/covanhoctap/single_read.php?maCoVanHocTap=" + maCoVanHocTap_Update,
+          type: "GET",
+          contentType: "application/json;charset=utf-8",
+          dataType: "json",
+          async: false,
+          headers: { Authorization: jwtCookie },
+          success: function (result_SV) {
+            var _input_MaCoVanHocTap = result_SV.maCoVanHocTap;
+            var _input_HoTenCoVan = result_SV.hoTenCoVan;
+            var _input_SoDienThoai = result_SV.soDienThoai;
+           
+           var dataPost_Update = {
+              maCoVanHocTap:  _input_MaCoVanHocTap,
+              hoTenCoVan: _input_HoTenCoVan,
+              soDienThoai: _input_SoDienThoai,
+              matKhauTaiKhoanCoVan: _input_MatKhauMoi
+  
+           }
+          
+  
+           $.ajax({
+            url: "../../api/covanhoctap/update.php",
+            type: "POST",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            data: JSON.stringify(dataPost_Update),
+            async: false,
+            headers: { Authorization: jwtCookie },
+            success: function (result_Create) {
+              $('#DatLaiMatKhauModal').modal('hide');
+              
+              Swal.fire({
+                icon: "success",
+                title: "Đặt lại mật khẩu thành công!",
+                text: '',
+                timer: 2000,
+                timerProgressBar: true,
+              });
+      
+              setTimeout(() => {
+                location.reload();
+              }, 2000);
+      
+            },
+            error: function (errorMessage) {
+              checkLoiDangNhap(errorMessage.responseJSON.message);
+        
+              Swal.fire({
+                icon: "error",
+                title: "Lỗi",
+                text: errorMessage.responseJSON.message,
+                //timer: 5000,
+                timerProgressBar: true,
+              });
+            },
+          });
+  
+  
+  
+      
+          },
+          error: function (errorMessage) {
+            checkLoiDangNhap(errorMessage.responseJSON.message);
+      
+            Swal.fire({
+              icon: "error",
+              title: "Lỗi",
+              text: errorMessage.responseJSON.message,
+              //timer: 5000,
+              timerProgressBar: true,
+            });
+          },
+        });
+  
+      }
+  
+  
+    }
+  
+   
+    
+  
+  }
 
 
 

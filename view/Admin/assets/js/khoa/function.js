@@ -65,7 +65,7 @@ function GetListKhoa() {
                            
                         }
 
-                       $("#id_tbodyKhoa").append(htmlData);
+                       $("#id_tbodyKhoa").html(htmlData);
                     }
 
                 });

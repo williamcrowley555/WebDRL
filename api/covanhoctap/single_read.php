@@ -38,8 +38,11 @@
             
             else{
                 http_response_code(404);
-                echo json_encode("covanhoctap not found.");
-            } } else {
+                echo json_encode(
+                    array("message" => "Không có dữ liệu.")
+                );
+            } 
+        } else {
             http_response_code(403);
             echo json_encode(
                 array("message" => "Bạn không có quyền thực hiện điều này!")

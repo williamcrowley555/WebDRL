@@ -30,17 +30,27 @@
                 //values
                 $item->hoTenCoVan = $data->hoTenCoVan;
                 $item->soDienThoai = $data->soDienThoai;
-                $item->matKhauTaiKhoanCoVan = $data->matKhauTaiKhoanCoVan;
+                $item->matKhauTaiKhoanCoVan = md5($data->matKhauTaiKhoanCoVan);
                 
                 if($item->updateCVHT()){
-                    echo json_encode("CVHT data updated.");
+                    http_response_code(200);
+                    echo json_encode(
+                        array("message" => "Cố vấn học tập cập nhật thành công!")
+                    );
                 } else{
-                    echo json_encode("Data could not be updated");
+                    http_response_code(404);
+                    echo json_encode(
+                        array("message" => "Cố vấn học tập cập nhật KHÔNG thành công!")
+                    );
                 }
     
             }else{
-                echo 'No data posted.';
-            } } else {
+                http_response_code(404);
+                echo json_encode(
+                    array("message" => "Không có dữ liệu gửi lên!")
+                );
+            } 
+        } else {
             http_response_code(403);
             echo json_encode(
                 array("message" => "Bạn không có quyền thực hiện điều này!")

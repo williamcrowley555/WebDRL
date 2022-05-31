@@ -80,6 +80,9 @@
 											<th class="cell">Mã học kỳ</th>
 											<th class="cell">Điểm tổng</th>
 											<th class="cell">Xếp loại</th>
+											<th class="cell">Cố vấn duyệt</th>
+											<th class="cell">Khoa duyệt</th>
+											<th class="cell">Tệp đính kèm</th>
 											<th class="cell"></th>
 										</tr>
 									</thead>

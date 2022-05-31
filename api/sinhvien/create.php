@@ -33,13 +33,23 @@
                 $item->maLop = $data->maLop;
     
                 if($item->createSinhVien()){
-                    echo 'sinhvien created successfully.';
+                    http_response_code(200);
+                    echo json_encode(
+                        array("message" => "sinhvien tạo thành công.")
+                    );
                 } else{
-                    echo 'sinhvien could not be created.';
+                    http_response_code(404);
+                    echo json_encode(
+                        array("message" => "sinhvien tạo KHÔNG thành công.")
+                    );
                 }
             }else{
-                echo 'No data posted.';
-            } } else {
+                http_response_code(404);
+                echo json_encode(
+                    array("message" => "Không có dữ liệu gửi lên.")
+                );
+            } 
+        } else {
             http_response_code(403);
             echo json_encode(
                 array("message" => "Bạn không có quyền thực hiện điều này!")

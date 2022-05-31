@@ -26,18 +26,28 @@
     
             if ($data != null){
                 //set các biến bằng data nhận từ user
+                $item->maLop = $data->maLop;
                 $item->tenLop = $data->tenLop;
                 $item->maKhoa = $data->maKhoa;
                 $item->maCoVanHocTap = $data->maCoVanHocTap;
                 $item->maKhoaHoc = $data->maKhoaHoc;
     
                 if($item->createLop()){
-                    echo ' lop created successfully.';
+                    http_response_code(200);
+                    echo json_encode(
+                        array("message" => "lop tạo thành công!")
+                    );
                 } else{
-                    echo ' lop could not be created.';
+                    http_response_code(500);
+                    echo json_encode(
+                        array("message" => "lop tạo KHÔNG thành công!")
+                    );
                 }
             }else{
-                echo 'No data posted.';
+                http_response_code(404);
+                echo json_encode(
+                    array("message" => "Không có dữ liệu gửi lên.")
+                );
             } 
         } else {
             http_response_code(403);

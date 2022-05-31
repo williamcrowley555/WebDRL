@@ -31,6 +31,14 @@
 									<div class="col-auto">
 										<button type="button" onclick="return TimKiemLop($('#input_timKiemMaSinhVien').val());" class="btn app-btn-secondary">Tìm kiếm</button>
 									</div>
+
+									<div class="col-auto" style="padding-left: 15px;">
+										<button class="btn app-btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#AddModal">Thêm mới</button>
+									</div>
+
+									<div class="col-auto" style="padding-left: 15px;">
+										<button class="btn app-btn-primary" type="button" data-bs-toggle="" data-bs-target="#" disabled>Import danh sách</button>
+									</div>
 								</div>
 
 							</div>
@@ -46,23 +54,56 @@
 				</div>
 				<!--//col-auto-->
 
-				<!-- Modal -->
-				<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-				<div class="modal-dialog">	
-					<div class="modal-content">
-					<div class="modal-header">
-						<h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				<!-- Modal thêm -->
+				<div class="modal fade" id="AddModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<img src="assets/images/icons/add.png" width="25px" style="padding-right: 5px;">
+								<h5 class="modal-title" id="exampleModalLabel"> Thêm lớp</h5>
+								<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+							</div>
+							<div class="modal-body">
+
+								<div class="mb-3">
+									<label for="input_MaLop" class="form-label" style="color: black; font-weight: 500;">Mã lớp</label>
+									<input type="text" class="form-control mb-2" id="input_MaLop" placeholder="Nhập mã lớp...">
+								</div>
+
+								<div class="mb-3">
+									<label for="input_TenLop" class="form-label" style="color: black; font-weight: 500;">Tên lớp</label>
+									<input type="text" class="form-control" id="input_TenLop" placeholder="Nhập tên lớp...">
+								</div>
+
+								<div class="mb-3">
+									<label for="select_Khoa_Add" class="form-label" style="color: black; font-weight: 500;">Khoa</label>
+									<select class="form-select" aria-label="Default select example" id="select_Khoa_Add">
+
+									</select>
+								</div>
+
+								<div class="mb-3">
+									<label for="select_CVHT_Add" class="form-label" style="color: black; font-weight: 500;">Cố vấn học tập</label>
+									<select class="form-select" aria-label="Default select example" id="select_CVHT_Add">
+
+									</select>
+								</div>
+
+								<div class="mb-3">
+									<label for="select_KhoaHoc_Add" class="form-label" style="color: black; font-weight: 500;">Khóa học</label>
+									<select class="form-select" aria-label="Default select example" id="select_KhoaHoc_Add">
+
+									</select>
+								</div>
+
+
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+								<button type="button" class="btn btn-primary" style='color: white;' onclick="return ThemMoi()">Thêm mới</button>
+							</div>
+						</div>
 					</div>
-					<div class="modal-body">
-						...
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-						<button type="button" class="btn btn-primary">Save changes</button>
-					</div>
-					</div>
-				</div>
 				</div>
 
 				
@@ -172,9 +213,15 @@
 
 	});	
 
-
+	
 	LoadComboBoxThongTinKhoa();
- 
+	
+	LoadComboBoxCoVanHocTap_AddModal();
+
+	LoadComboBoxKhoaHoc_AddModal();
+
+
+	
 
 </script>
 </body>
