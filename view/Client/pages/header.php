@@ -14,7 +14,17 @@ if (strcmp(end($page_word), 'dangnhap.php') != 0) {
 if (isset($_COOKIE['jwt'])){
     $jwt = $_COOKIE['jwt'];
     $dataToken = CheckCookie::read_data_token($jwt);
-    $quyenNguoiDung = $dataToken['user_data']->aud; 
+
+    if ($dataToken['status'] == 1 ){
+        $quyenNguoiDung = $dataToken['user_data']->aud; 
+    }else{
+        setcookie("jwt", "", time() -3600);
+        setcookie("hoTen", "", time() -3600);
+        setcookie("maSo", "", time() -3600);
+
+        header('Location: dangnhap.php');
+    }
+   
     
 }
 
