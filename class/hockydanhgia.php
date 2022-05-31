@@ -44,6 +44,25 @@
             
         }
 
+        // READ single 2
+        public function getSingleHocKyDanhGia_theoHocKyNamHoc(){
+            $sqlQuery = "SELECT maHocKyDanhGia, hocKyXet, namHocXet FROM ". $this->db_table ."
+                        WHERE hocKyXet = ? AND namHocXet = ? LIMIT 0,1";
+            $stmt = $this->conn->prepare($sqlQuery);
+            $stmt->bindParam(1, $this->hocKyXet );
+            $stmt->bindParam(2, $this->namHocXet );
+            $stmt->execute();
+
+            $dataRow = $stmt->fetch(PDO::FETCH_ASSOC);
+            
+            if ($dataRow != null){
+                $this->maHocKyDanhGia  = $dataRow['maHocKyDanhGia'];
+                $this->hocKyXet = $dataRow['hocKyXet'];
+                $this->namHocXet = $dataRow['namHocXet'];
+            }
+            
+        }
+
         // CREATE
         public function createHocKyDanhGia(){
             $sqlQuery = "INSERT INTO

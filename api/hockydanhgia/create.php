@@ -29,21 +29,30 @@ if ($data["status"] == 1) {
             $item->hocKyXet = $data->hocKyXet;
             $item->namHocXet = $data->namHocXet;
 
-            $upload_path = './upload/'.$item->maHocKyDanhGia.'/';
+            // $upload_path = './upload/'.$item->maHocKyDanhGia.'/';
 
-            //$upload_path = './upload/'.$item->maHocKyDanhGia.'/'.$item->maSinhVien.'/';
+            // //$upload_path = './upload/'.$item->maHocKyDanhGia.'/'.$item->maSinhVien.'/';
 
-            if (!is_dir($upload_path)){
-                mkdir($upload_path, 0777, true);
-            }
+            // if (!is_dir($upload_path)){
+            //     mkdir($upload_path, 0777, true);
+            // }
 
             if ($item->createHocKyDanhGia()) {
-                echo 'hockydanhgia created successfully.';
+                http_response_code(200);
+                echo json_encode(
+                    array("message" => "hockydanhgia tạo thành công.")
+                );
             } else {
-                echo 'hockydanhgia could not be created.';
+                http_response_code(500);
+                echo json_encode(
+                    array("message" => "hockydanhgia tạo KHÔNG thành công.")
+                );
             }
         } else {
-            echo 'No data posted.';
+            http_response_code(403);
+            echo json_encode(
+                array("message" => "Không có dữ liệu gửi lên.")
+            );
         }
     } else {
         http_response_code(403);

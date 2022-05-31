@@ -142,7 +142,7 @@
             $stmt = $this->conn->prepare($sqlQuery);
         
             // sanitize (Lọc dữ liệu đầu vào tránh SQLInjection, XSS)
-            $this->maHoatDong  =htmlspecialchars(strip_tags($this->maHoatDong));
+            $this->maHoatDong = htmlspecialchars(strip_tags($this->maHoatDong));
             $this->maTieuChi3=htmlspecialchars(strip_tags($this->maTieuChi3));
             $this->maTieuChi2=htmlspecialchars(strip_tags($this->maTieuChi2));
             $this->maKhoa=htmlspecialchars(strip_tags($this->maKhoa));

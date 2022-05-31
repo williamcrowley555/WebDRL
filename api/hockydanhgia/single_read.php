@@ -19,24 +19,57 @@ if ($data["status"] == 1) {
     //if ($checkQuyen->checkQuyen_CTSV($data["user_data"]->aud)) {
         $database = new Database();
         $db = $database->getConnection();
-        $item = new HocKyDanhGia($db);
-        $item->maHocKyDanhGia = isset($_GET['maHocKyDanhGia']) ? $_GET['maHocKyDanhGia'] : die(); //Lấy id từ phương thức GET
 
-        $item->getSingleHocKyDanhGia();
-        if ($item->hocKyXet != null) {
-            // create array
-            $hockydanhgia_arr = array(
-                "maHocKyDanhGia" =>  $item->maHocKyDanhGia,
-                "hocKyXet" => $item->hocKyXet,
-                "namHocXet" => $item->namHocXet
-            );
+        if (isset($_GET['maHocKyDanhGia'])){
+            $item = new HocKyDanhGia($db);
+            $item->maHocKyDanhGia = isset($_GET['maHocKyDanhGia']) ? $_GET['maHocKyDanhGia'] : die(); //Lấy id từ phương thức GET
+    
+            $item->getSingleHocKyDanhGia();
+            if ($item->hocKyXet != null) {
+                // create array
+                $hockydanhgia_arr = array(
+                    "maHocKyDanhGia" =>  $item->maHocKyDanhGia,
+                    "hocKyXet" => $item->hocKyXet,
+                    "namHocXet" => $item->namHocXet
+                );
+    
+                http_response_code(200);
+                echo json_encode($hockydanhgia_arr);
+            } else {
+                http_response_code(404);
+                echo json_encode(
+                    array("message" => "Không tìm thấy dữ liệu.")
+                );
+            }
+        }else{
 
-            http_response_code(200);
-            echo json_encode($hockydanhgia_arr);
-        } else {
-            http_response_code(404);
-            echo json_encode("hockydanhgia not found.");
+            if (isset($_GET['hocKyXet']) && isset($_GET['namHocXet'])){
+                $item = new HocKyDanhGia($db);
+                $item->hocKyXet = isset($_GET['hocKyXet']) ? $_GET['hocKyXet'] : die(); //Lấy id từ phương thức GET
+                $item->namHocXet = isset($_GET['namHocXet']) ? $_GET['namHocXet'] : die();
+
+                $item->getSingleHocKyDanhGia_theoHocKyNamHoc();
+                if ($item->maHocKyDanhGia != null) {
+                    // create array
+                    $hockydanhgia_arr = array(
+                        "maHocKyDanhGia" =>  $item->maHocKyDanhGia,
+                        "hocKyXet" => $item->hocKyXet,
+                        "namHocXet" => $item->namHocXet
+                    );
+        
+                    http_response_code(200);
+                    echo json_encode($hockydanhgia_arr);
+                } else {
+                    http_response_code(404);
+                    echo json_encode(
+                        array("message" => "Không tìm thấy dữ liệu.")
+                    );
+                }
+
+            }
+
         }
+        
     // } else {
     //     http_response_code(403);
     //     echo json_encode(

@@ -35,7 +35,7 @@
                     $countRow++;
                     $e = array(
                         "soThuTu" => $countRow,
-                        "maThongBao " => $maThongBao ,
+                        "maThongBao" => $maThongBao ,
                         "ngaySinhVienDanhGia" => $ngaySinhVienDanhGia,
                         "ngaySinhVienKetThucDanhGia" => $ngaySinhVienKetThucDanhGia,
                         "ngayCoVanDanhGia" => $ngayCoVanDanhGia,

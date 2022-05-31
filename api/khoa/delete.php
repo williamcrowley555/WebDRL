@@ -28,12 +28,18 @@
                 $item->maKhoa = $data->maKhoa;
             
                 if($item->deleteKhoa()){
-                    echo json_encode("Khoa deleted.");
+                    echo json_encode(
+                        array("message" => "Xóa Khoa thành công.")
+                    );
                 } else{
-                    echo json_encode("Data could not be deleted");
+                    echo json_encode(
+                        array("message" => "Xóa Khoa KHÔNG thành công.")
+                    );
                 }
             }else{
-                echo 'No data posted.';
+                echo json_encode(
+                    array("message" => "Không có dữ liệu upload lên.")
+                );
             }
         } else {
             http_response_code(403);

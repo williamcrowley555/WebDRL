@@ -81,7 +81,7 @@ function GetListHoatdongdanhgia() {
                         success: function (result_tieuchi2) {
                             
                             htmlData +=
-                                "<tr>\
+                                "<tr >\
                                 <td class='cell'>" + data[i].soThuTu + "</td>\
                                 <td class='cell'><span class='truncate'>" + data[i].maHoatDong + "</span></td>\
                                 <td class='cell'>" + data[i].tenHoatDong + "</td>\
@@ -95,7 +95,7 @@ function GetListHoatdongdanhgia() {
                                 <td class='cell'>" + data[i].thoiGianBatDauDiemDanh + "</td>\
                                 <td class='cell'><img src='"+ data[i].maQRDiaDiem +"' style='width: 40%;' /></td>\
                                 <td class='cell'>\
-                                    <a class='btn' href='#' style='color: white;width: max-content;margin: 5px;background: dodgerblue;'>Bắt đầu điểm danh</a>\
+                                    <button type='button' class='btn_BatDauDiemDanh btn' style='color: white;width: max-content;margin: 5px;background: dodgerblue;'  data-id='" + data[i].maHoatDong + "' >Bắt đầu điểm danh</button>\
                                     <a class='btn bg-warning' href='#' style='color: white;margin: 5px;'>Chỉnh sửa</a>\
                                 </td>\
                                 </tr>";
@@ -129,7 +129,7 @@ function GetListHoatdongdanhgia() {
                         success: function (result_tieuchi3) {
                            
                             htmlData +=
-                                "<tr>\
+                                "<tr >\
                                 <td class='cell'>" + data[i].soThuTu + "</td>\
                                 <td class='cell'><span class='truncate'>" + data[i].maHoatDong + "</span></td>\
                                 <td class='cell'>" + data[i].tenHoatDong + "</td>\
@@ -143,7 +143,7 @@ function GetListHoatdongdanhgia() {
                                 <td class='cell'>" + data[i].thoiGianBatDauDiemDanh + "</td>\
                                 <td class='cell'><img src='"+ data[i].maQRDiaDiem +"' style='width: 40%;' /></td>\
                                 <td class='cell'>\
-                                    <a class='btn' href='#' style='color: white;width: max-content;margin: 5px;background: dodgerblue;'>Bắt đầu điểm danh</a>\
+                                    <button type='button' class='btn_BatDauDiemDanh btn' style='color: white;width: max-content;margin: 5px;background: dodgerblue;'  data-id='" + data[i].maHoatDong + "' >Bắt đầu điểm danh</button>\
                                     <a class='btn bg-warning' href='#' style='color: white;margin: 5px;'>Chỉnh sửa</a>\
                                 </td>\
                                 </tr>";
@@ -414,13 +414,13 @@ function ThemMoi() {
                                 icon: "success",
                                 title: "Tạo thành công!",
                                 text: '',
-                                timer: 3000,
+                                timer: 2000,
                                 timerProgressBar: true,
                             });
 
                             setTimeout(function(){
                                 location.reload();
-                            }, 3000);
+                            }, 2000);
 
                         },
                         error: function (errorMessage) {
@@ -522,6 +522,111 @@ function ThemMoi() {
 }
 
 
-function DiemDanhHoatDong(params) {
+function DiemDanhHoatDong(input_MaHoatDong) {
+
+    Swal.fire({
+        title: "Xác nhận bắt đầu điểm danh hoạt động mã  "+ input_MaHoatDong + " ?",
+        showDenyButton: true,
+        confirmButtonText: 'Xác nhận',
+        denyButtonText: `Đóng`,
+      }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                url: "../../api/hoatdongdanhgia/single_read.php?maHoatDong=" + input_MaHoatDong,
+                type: "GET",
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                async: false,
+                headers: { 'Authorization': jwtCookie },
+                success: function (result) {
+                    var _input_maTieuChi3 = result.maTieuChi3;
+                    var _input_maTieuChi2 = result.maTieuChi2;
+                    var _input_maKhoa = result.maKhoa;
+                    var _input_tenHoatDong = result.tenHoatDong;
+                    var _input_diemNhanDuoc = result.diemNhanDuoc;
+                    var _input_diaDiemDienRaHoatDong = result.diaDiemDienRaHoatDong;
+                    var _input_maHocKyDanhGia = result.maHocKyDanhGia;
+                    var _input_thoiGianBatDauHoatDong = result.thoiGianBatDauHoatDong;
+                    var _input_thoiGianKetThucHoatDong = result.thoiGianKetThucHoatDong;
+        
+                    var _temp_maQRDiaDiem = result.maQRDiaDiem.split('/');
+                    //lấy tên của ảnh từ url
+                    var _input_maQRDiaDiem = _temp_maQRDiaDiem[_temp_maQRDiaDiem.length - 1];
+                    
+                    var _temp_thoiGianBatDauDiemDanh = new Date();
+                    //lấy thời gian hiện tại, convert Datetime JS sang MySQL datetime
+                    var _input_thoiGianBatDauDiemDanh = _temp_thoiGianBatDauDiemDanh.toISOString().split('T')[0] + ' ' + _temp_thoiGianBatDauDiemDanh.toTimeString().split(' ')[0];
+                
+                    var dataPost = {
+                        maHoatDong: input_MaHoatDong,
+                        maTieuChi3: _input_maTieuChi3,
+                        maTieuChi2: _input_maTieuChi2,
+                        maKhoa: _input_maKhoa,
+                        tenHoatDong: _input_tenHoatDong,
+                        diemNhanDuoc: _input_diemNhanDuoc,
+                        diaDiemDienRaHoatDong: _input_diaDiemDienRaHoatDong,
+                        maHocKyDanhGia: _input_maHocKyDanhGia,
+                        maQRDiaDiem: _input_maQRDiaDiem,
+                        thoiGianBatDauHoatDong: _input_thoiGianBatDauHoatDong,
+                        thoiGianKetThucHoatDong: _input_thoiGianKetThucHoatDong,
+                        thoiGianBatDauDiemDanh: _input_thoiGianBatDauDiemDanh
+                    }
+        
+                    //Ajax update
+                    $.ajax({
+                        url: "../../api/hoatdongdanhgia/update.php",
+                        type: "POST",
+                        contentType: "application/json;charset=utf-8",
+                        dataType: "json",
+                        data: JSON.stringify(dataPost),
+                        async: false,
+                        headers: { 'Authorization': jwtCookie },
+                        success: function (result_Create) {
+                            Swal.fire({
+                                icon: "success",
+                                title: "Bắt đầu điểm danh thành công!",
+                                text: "Hoạt động  " + input_MaHoatDong +" đã bắt đầu điểm danh!",
+                                timer: 2500,
+                                timerProgressBar: true,
+                            });
+        
+                            setTimeout(function(){
+                                location.reload();
+                            }, 2500);
+                
+                            
+                
+                        },
+                        error: function (errorMessage) {
+                            //checkLoiDangNhap(errorMessage.responseJSON.message);
+                
+                            Swal.fire({
+                                icon: "error",
+                                title: "Lỗi",
+                                text: errorMessage.responseText,
+                                //timer: 5000,
+                                timerProgressBar: true,
+                            });
+                        },
+                    });
+        
+                },
+                error: function (errorMessage) {
+                    //checkLoiDangNhap(errorMessage.responseJSON.message);
+        
+                    Swal.fire({
+                        icon: "error",
+                        title: "Lỗi",
+                        text: errorMessage.responseText,
+                        //timer: 5000,
+                        timerProgressBar: true,
+                    });
+                },
+            });
+        } 
+      })
+
     
+
+
 }

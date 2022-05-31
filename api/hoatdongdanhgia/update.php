@@ -42,10 +42,14 @@ if ($data["status"] == 1) {
 
             if ($item->updateHoatDongDanhGia()) {
                 http_response_code(200);
-                echo json_encode("HoatDongDanhGia data updated.");
+                echo json_encode(
+                    array("message" => "Hoatdongdanhgia cập nhật thành công!")
+                ); 
             } else {
                 http_response_code(500);
-                echo json_encode("Data could not be updated");
+                echo json_encode(
+                    array("message" => "Hoatdongdanhgia cập nhật KHÔNG thành công!")
+                );
             }
         } else {
             http_response_code(404);
