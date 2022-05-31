@@ -20,6 +20,16 @@ function thongBaoLoi(message){
     });
 }
 
+function thongBaoInfo(message){
+    Swal.fire({
+      icon: "info",
+      title: "Thông báo",
+      text: message,
+      //timer: 5000,
+      timerProgressBar: true,
+    });
+}
+
 var jwtCookie = getCookie("jwt");
 
 
@@ -123,7 +133,7 @@ function TraCuuDiemRenLuyen() {
     
             },
             error: function (errorMessage_tc3) {
-              thongBaoLoi(errorMessage_tc3.responseJSON.message);
+                thongBaoInfo(errorMessage_tc3.responseJSON.message);
             },
         });
     }
