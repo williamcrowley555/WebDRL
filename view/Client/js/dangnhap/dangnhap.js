@@ -81,6 +81,16 @@ function Login(inputLogin_MSSV, inputLogin_MatKhau) {
   }
 }
 
+//Logout
+function DangXuat() {
+  
+    
+
+}
+
+
+
+
 function deleteAllCookies() {
   var cookies = document.cookie.split(";");
 

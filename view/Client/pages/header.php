@@ -222,7 +222,7 @@ if (isset($_COOKIE['jwt'])){
                                 </a>
                                 <ul class='dropdown-menu' aria-labelledby='navbarDropdownMenuLink'>
                                     <li>
-                                        <a class='dropdown-item' href='#' style='text-transform: uppercase;'><img src='../images/logout.png' width='15px' > Đăng xuất</a>
+                                        <button class='dropdown-item' id='btn_DangXuat' onclick='return DangXuat();' style='text-transform: uppercase;'><img src='../images/logout.png' width='15px' > Đăng xuất</button>
                                     </li>
                                 </ul>
                             </li>";
@@ -258,4 +258,7 @@ if (isset($_COOKIE['jwt'])){
         setTimeout(function() {
             $('.loader_bg').fadeToggle();
         }, 1000);
+
+
+
     </script>
