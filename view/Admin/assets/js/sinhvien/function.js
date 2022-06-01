@@ -293,7 +293,7 @@ function TimKiemSinhVien(maSinhVien) {
         <td class='cell'>" + result_SV.ngaySinh + "</td>\
         <td class='cell'>" + result_SV.he + "</td>\
         <td class='cell'>" + result_SV.maLop + "</td>\
-        <td class='cell'><button type=button' class='btn btn-info btn_DatLaiMatKhau' data-bs-toggle='modal' data-bs-target='#DatLaiMatKhauModal' style='color: white;' data-id='" + data[i].maSinhVien +
+        <td class='cell'><button type=button' class='btn btn-info btn_DatLaiMatKhau' data-bs-toggle='modal' data-bs-target='#DatLaiMatKhauModal' style='color: white;' data-id='" + result_SV.maSinhVien +
                       "' >Đặt lại mật khẩu</button></td>\
         </tr>";
 
