@@ -127,7 +127,7 @@ function TraCuuDiemRenLuyen() {
                         });
                     },
                     error: function (errorMessage_tc3) {
-                        thongBaoLoi(errorMessage_tc3.responseJSON.message);
+                        thongBaoInfo(errorMessage_tc3.responseJSON.message);
                     },
                 });
     

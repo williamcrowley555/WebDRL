@@ -19,17 +19,7 @@ function thongBaoLoi(message){
   });
 }
 
-function changeNumberHandle(val, number)
-{
-  if (number < 0){
-    number = 0;
-  }
 
-  if (Number(val.value) > number)
-  {
-    val.value = number
-  }
-}
 
 
 var jwtCookie = getCookie("jwt");
