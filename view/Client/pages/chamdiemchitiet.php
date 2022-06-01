@@ -263,7 +263,39 @@ if (!isset($_GET['maHocKy'])) {
             if ((bac_HocKyDangXet - bac_HocKyTruoc) > 1 ){
                 $('#TC3_7').val($('#TC3_7').attr('max_value'));
             }
+
+
+            //Kích hoạt sự kiên onchange manually vì value set bằng javascript kh hoạt động onchange
+            input_TC3_1 = document.getElementById('TC3_1');
+            ev_TC3_1 = document.createEvent('Event');
+            ev_TC3_1.initEvent('change', true, false);
+            input_TC3_1.dispatchEvent(ev_TC3_1);
+
+            input_TC3_2 = document.getElementById('TC3_2');
+            ev_TC3_2 = document.createEvent('Event');
+            ev_TC3_2.initEvent('change', true, false);
+            input_TC3_2.dispatchEvent(ev_TC3_2);
+
+            input_TC3_3 = document.getElementById('TC3_3');
+            ev_TC3_3 = document.createEvent('Event');
+            ev_TC3_3.initEvent('change', true, false);
+            input_TC3_3.dispatchEvent(ev_TC3_3);
+
+            input_TC3_4 = document.getElementById('TC3_4');
+            ev_TC3_4 = document.createEvent('Event');
+            ev_TC3_4.initEvent('change', true, false);
+            input_TC3_4.dispatchEvent(ev_TC3_4);
+
+            input_TC3_5 = document.getElementById('TC3_5');
+            ev_TC3_5 = document.createEvent('Event');
+            ev_TC3_5.initEvent('change', true, false);
+            input_TC3_5.dispatchEvent(ev_TC3_5);
+
+            
         }
+
+
+        
 
 
 
