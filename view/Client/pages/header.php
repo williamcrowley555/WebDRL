@@ -19,6 +19,7 @@ if (isset($_COOKIE['jwt'])){
         $quyenNguoiDung = $dataToken['user_data']->aud; 
     }else{
         setcookie("jwt", "", time() -3600);
+        
         setcookie("hoTen", "", time() -3600);
         setcookie("maSo", "", time() -3600);
 

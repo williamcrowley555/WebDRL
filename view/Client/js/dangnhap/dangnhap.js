@@ -83,7 +83,51 @@ function Login(inputLogin_MSSV, inputLogin_MatKhau) {
 
 //Logout
 function DangXuat() {
+  var _input_MaSo = getCookie('maSo');
+
+  var dataPost = {
+    maSo: _input_MaSo
+  }
+
+  $.ajax({
+    url: "../../../api/auth/logout.php",
+    data: JSON.stringify(dataPost),
+    type: "POST",
+    contentType: "application/json;charset=utf-8",
+    dataType: "json",
+    async: false,
+    success: function (result) {
+
+      deleteAllCookies();
+
+      Swal.fire({
+          icon: "success",
+          title: "Đăng xuất thành công!",
+          text:"Đang chuyển hướng...",
+          timer: 1000,
+          timerProgressBar: true,
+          showConfirmButton: false,
+      });
+      
+      
+      
+       setTimeout(function () {
+          window.location.href = 'dangnhap.php';
+       }, 1000);
+
+    },
+    error: function (errorMessage) {
+      Swal.fire({
+        icon: "error",
+        title: "Lỗi đăng nhập",
+        text: errorMessage.responseText,
+        timer: 3000,
+        timerProgressBar: true,
+      });
+    },
+  });
   
+
     
 
 }
