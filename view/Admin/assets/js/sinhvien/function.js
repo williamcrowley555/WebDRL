@@ -47,14 +47,14 @@ function GetListSinhVien(maKhoa, maLop) {
     if (maKhoa == "tatcakhoa") {
       $("#id_tbodySinhVien tr").remove();
       $.ajax({
-        url: "../../api/sinhvien/read.php",
+        url: urlapi_sinhvien_read,
         async: false,
         type: "GET",
         contentType: "application/json;charset=utf-8",
         dataType: "json",
         headers: { Authorization: jwtCookie },
         success: function (result) {
-          $("#id_tbodySinhVien").find("tr").remove();
+          //$("#id_tbodySinhVien").find("tr").remove();
 
           $("#idPhanTrang").pagination({
             dataSource: result["sinhvien"],
@@ -65,7 +65,7 @@ function GetListSinhVien(maKhoa, maLop) {
             callback: function (data, pagination) {
               var htmlData = "";
               var countSinhVien = 0;
-              // htmlData = "<tr></tr>"
+
               for (let i = 0; i < data.length; i++) {
                 countSinhVien += 1;
 
@@ -77,7 +77,7 @@ function GetListSinhVien(maKhoa, maLop) {
                   <td class='cell'>" + data[i].ngaySinh + "</td>\
                   <td class='cell'>" + data[i].he + "</td>\
                   <td class='cell'>" + data[i].maLop + "</td>\
-                  <td class='cell'><button type=button' class='btn btn-info btn_DatLaiMatKhau' data-bs-toggle='modal' data-bs-target='#DatLaiMatKhauModal' style='color: white;' data-id='" + data[i].maSinhVien +
+                  <td class='cell'><button  type='button' id='id_btnReset' class='btn btn-info btn_DatLaiMatKhau' data-bs-toggle='modal' data-bs-target='#DatLaiMatKhauModal' style='color: white;' data-id='" + data[i].maSinhVien +
                   "' >Đặt lại mật khẩu</button></td>\
                                     </tr>";
               }
@@ -110,7 +110,7 @@ function GetListSinhVien(maKhoa, maLop) {
           $("#id_tbodySinhVien tr").remove();
 
           $.ajax({
-            url: "../../api/lop/read.php?maKhoa=" + maKhoa,
+            url: urlapi_lop_read_maKhoa + maKhoa,
             async: false,
             type: "GET",
             contentType: "application/json;charset=utf-8",
@@ -122,7 +122,7 @@ function GetListSinhVien(maKhoa, maLop) {
                   var get_maLop = result_Lop[index_Lop][p].maLop;
 
                   $.ajax({
-                    url: "../../api/sinhvien/read.php?maLop=" + get_maLop,
+                    url: urlapi_sinhvien_read_maLop + get_maLop,
                     async: false,
                     type: "GET",
                     contentType: "application/json;charset=utf-8",
@@ -150,7 +150,7 @@ function GetListSinhVien(maKhoa, maLop) {
                               <td class='cell'>" + data[i].ngaySinh + "</td>\
                               <td class='cell'>" + data[i].he + "</td>\
                               <td class='cell'>" + data[i].maLop +
-                              "<td class='cell'><button type=button' class='btn btn-info btn_DatLaiMatKhau' data-bs-toggle='modal' data-bs-target='#DatLaiMatKhauModal' style='color: white;' data-id='" + data[i].maSinhVien +
+                              "<td class='cell'><button type='button'  class='btn btn-info btn_DatLaiMatKhau' data-bs-toggle='modal' data-bs-target='#DatLaiMatKhauModal' style='color: white;' data-id='" + data[i].maSinhVien +
                               "' >Đặt lại mật khẩu</button></td>\
                               </tr>";
                           }
@@ -201,7 +201,7 @@ function GetListSinhVien(maKhoa, maLop) {
         } else {
           $("#id_tbodySinhVien tr").remove();
           $.ajax({
-            url: "../../api/sinhvien/read.php?maLop=" + maLop,
+            url: urlapi_sinhvien_read_maLop + maLop,
             async: false,
             type: "GET",
             contentType: "application/json;charset=utf-8",
@@ -240,7 +240,7 @@ function GetListSinhVien(maKhoa, maLop) {
                       "</td>\
                                                     <td class='cell'>" +
                       data[i].maLop +
-                      "<td class='cell'><button type=button' class='btn btn-info btn_DatLaiMatKhau' data-bs-toggle='modal' data-bs-target='#DatLaiMatKhauModal' style='color: white;' data-id='" + data[i].maSinhVien +
+                      "<td class='cell'><button type='button' class='btn btn-info btn_DatLaiMatKhau' data-bs-toggle='modal' data-bs-target='#DatLaiMatKhauModal' style='color: white;' data-id='" + data[i].maSinhVien +
                       "' >Đặt lại mật khẩu</button></td>\
                                                     </tr>";
                   }
@@ -277,13 +277,14 @@ function TimKiemSinhVien(maSinhVien) {
   $("#id_tbodySinhVien tr").remove();
 
   $.ajax({
-    url: "../../api/sinhvien/single_read.php?maSinhVien=" + maSinhVien,
+    url: urlapi_sinhvien_single_read + maSinhVien,
     async: false,
     type: "GET",
     contentType: "application/json;charset=utf-8",
     dataType: "json",
     headers: { Authorization: jwtCookie },
     success: function (result_SV) {
+
       var htmlData = "";
 
       htmlData +=
@@ -293,11 +294,12 @@ function TimKiemSinhVien(maSinhVien) {
         <td class='cell'>" + result_SV.ngaySinh + "</td>\
         <td class='cell'>" + result_SV.he + "</td>\
         <td class='cell'>" + result_SV.maLop + "</td>\
-        <td class='cell'><button type=button' class='btn btn-info btn_DatLaiMatKhau' data-bs-toggle='modal' data-bs-target='#DatLaiMatKhauModal' style='color: white;' data-id='" + result_SV.maSinhVien +
-                      "' >Đặt lại mật khẩu</button></td>\
+        <td class='cell'><button type='button'  class='btn btn-info btn_DatLaiMatKhau' data-bs-toggle='modal' data-bs-target='#DatLaiMatKhauModal' style='color: white;' data-id='" + result_SV.maSinhVien +"' >Đặt lại mật khẩu</button></td>\
         </tr>";
 
       $("#id_tbodySinhVien").html(htmlData);
+
+      $("#idPhanTrang").empty();
 
     },
     error: function (errorMessage) {
@@ -319,7 +321,7 @@ function TimKiemSinhVien(maSinhVien) {
 function LoadComboBoxThongTinKhoa() {
   //Load khoa
   $.ajax({
-    url: "../../api/khoa/read.php",
+    url: urlapi_khoa_read,
     type: "GET",
     contentType: "application/json;charset=utf-8",
     dataType: "json",
@@ -362,7 +364,7 @@ function LoadComboBoxThongTinLopTheoKhoa(maKhoa) {
   if (maKhoa != "tatcakhoa") {
     //Load khoa
     $.ajax({
-      url: "../../api/lop/read.php?maKhoa=" + maKhoa,
+      url: urlapi_lop_read_maKhoa + maKhoa,
       type: "GET",
       contentType: "application/json;charset=utf-8",
       dataType: "json",
@@ -408,7 +410,7 @@ function LoadComboBoxThongTinLopTheoKhoa(maKhoa) {
 function LoadComboBoxThongTinLop() {
   //Load lớp
   $.ajax({
-    url: "../../api/lop/read.php",
+    url: urlapi_lop_read,
     type: "GET",
     contentType: "application/json;charset=utf-8",
     dataType: "json",
@@ -425,6 +427,10 @@ function LoadComboBoxThongTinLop() {
           );
         }
       });
+
+      $("#select_Lop_Add").addClass("selectpicker");
+      $("#select_Lop_Add").attr("data-live-search", "true");
+      
     },
     error: function (errorMessage) {
       checkLoiDangNhap(errorMessage.responseJSON.message);
@@ -463,7 +469,7 @@ function ThemMoi() {
 
 
     $.ajax({
-      url: "../../api/sinhvien/create.php",
+      url: urlapi_sinhvien_create,
       type: "POST",
       contentType: "application/json;charset=utf-8",
       dataType: "json",
@@ -482,7 +488,7 @@ function ThemMoi() {
         });
 
         setTimeout(() => {
-          location.reload();
+          GetListSinhVien('tatcakhoa', 'tatcalop');
         }, 2000);
 
       },
@@ -520,7 +526,7 @@ function DatLaiMatKhau() {
     }else{
 
       $.ajax({
-        url: "../../api/sinhvien/single_read.php?maSinhVien=" + maSinhVien_Update,
+        url: urlapi_sinhvien_single_read + maSinhVien_Update,
         type: "GET",
         contentType: "application/json;charset=utf-8",
         dataType: "json",
@@ -545,7 +551,7 @@ function DatLaiMatKhau() {
         
 
          $.ajax({
-          url: "../../api/sinhvien/update.php",
+          url: urlapi_sinhvien_update,
           type: "POST",
           contentType: "application/json;charset=utf-8",
           dataType: "json",
@@ -564,7 +570,7 @@ function DatLaiMatKhau() {
             });
     
             setTimeout(() => {
-              location.reload();
+              GetListSinhVien('tatcakhoa', 'tatcalop');
             }, 2000);
     
           },

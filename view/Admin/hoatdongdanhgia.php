@@ -1,7 +1,22 @@
-<?php include_once('header.php'); ?>
+<script>
+		//remove class active
+		$("#menu-button-ThongKe").removeClass("active");
+		$("#menu-button-SinhVien").removeClass("active");
+		$("#menu-button-Lop").removeClass("active");
+		$("#menu-button-Khoa").removeClass("active");
+		$("#menu-button-PhieuRenLuyen").removeClass("active");
+		$("#menu-button-CoVanHocTap").removeClass("active");
+		$("#menu-button-TieuChiDanhGia").removeClass("active");
+		$("#menu-button-ThongBaoDanhGia").removeClass("active");
+		
+		//add class active
+		$("#menu-button-HoatDongDanhGia").addClass("active");
 
+		//set title
+		document.title = "Hoạt động đánh giá | Web điểm rèn luyện";
+		
 
-<div class="app-wrapper">
+</script>
 
 	<div class="app-content pt-3 p-md-3 p-lg-4">
 		<div class="container-xl">
@@ -106,8 +121,11 @@
 								</div>
 
 								<div class="mb-3">
-									<label for="input_DiaDiemHoatDong" class="form-label" style="color: black; font-weight: 500;">Địa điểm diễn ra hoạt động (nếu có)</label>
+								<!-- <div class="ui-widget"> -->
+									<label for="input_DiaDiemHoatDong" class="form-label" style="color: black; font-weight: 500;">Địa điểm diễn ra hoạt động</label>
 									<input type="text" class="form-control" id="input_DiaDiemHoatDong" placeholder="Nhập địa điểm hoạt động...">
+								<!-- </div> -->
+									
 								</div>
 
 								<div class="mb-3">
@@ -193,50 +211,71 @@
 	</footer>
 	<!--//app-footer-->
 
-</div>
-<!--//app-wrapper-->
-
-
-<!-- Javascript -->
-<script src="assets/plugins/popper.min.js"></script>
-<script src="assets/plugins/bootstrap/js/bootstrap.min.js"></script>
-<script src="assets/js/sweetalert2.all.min.js"></script>
-
-<!-- Charts JS -->
-<script src="assets/plugins/chart.js/chart.min.js"></script>
-<script src="assets/js/index-charts.js"></script>
 
 <!-- Page Specific JS -->
-<script src="assets/js/app.js"></script>
 <script src="assets/js/hoatdongdanhgia/function.js"></script>
 
-<script src="assets/js/jquery-3.6.0.js"></script>
-<!-- Pagination -->
-<script src="assets/js/pagination.min.js"></script>
-
-<link rel="stylesheet" href="assets/css/pagination.css" />
+<style>
+	.ui-autocomplete { position: absolute; cursor: default;z-index:9999 !important;}  
+</style>
 <script>
-	setTimeout(function() {
-		$('.loader_bg').fadeToggle();
-	}, 1000);
+	
 
 	//hàm trong function.js
 	GetListHoatdongdanhgia();
 
 	LoadThongTinThemMoi();
 
-	$(document).ready(function(){
-		$('.btn_BatDauDiemDanh').on('click', function(){
+	$(document).on("click", ".btn_BatDauDiemDanh" ,function() {
 			var maHoatDong = $(this).attr('data-id');
 
 			DiemDanhHoatDong(maHoatDong);
-		})
-	});
+	})
 
+	
+
+	//Get Goong maps API
+	$('#input_DiaDiemHoatDong').on('keyup', function(){
+    	var valueInput = $('#input_DiaDiemHoatDong').val();
+    	GetPlaces(valueInput);
+
+    })
+
+
+    function GetPlaces(valueInput) {
+
+		$.ajax({
+			url: "https://rsapi.goong.io/Place/AutoComplete?api_key=dnYBxO8AsdreIU1gMpHztjTI8U3qMwzYfIgdu6lh&location=21.013715429594125,%20105.79829597455202&input="+ valueInput,
+			async: false,
+			type: "GET",
+			contentType: "application/json;charset=utf-8",
+			dataType: "json",
+			success: function (result_SV) {
+				console.log(result_SV);
+
+				var availableTags = [];
+
+				for (var i = 0; i < result_SV['predictions'].length;i++){
+					//console.log(result_SV['predictions'][i].description);
+					availableTags.push(result_SV['predictions'][i].description);
+				}
+				
+			
+				$("#input_DiaDiemHoatDong").autocomplete({
+					delay: 800,
+					source: availableTags
+				});
+
+			},
+			error: function (errorMessage) {
+				
+			},
+		});
+
+
+    }
 
 
 </script>
-</body>
 
 
-</html>

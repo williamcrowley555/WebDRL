@@ -45,8 +45,8 @@
 
         //Sinh vien
         $obj_CTSV = new PhongCongTacSinhVien($db);
-        $obj_CTSV->taiKhoan = $taiKhoan;
-        $obj_CTSV->matKhau = md5($matKhau);
+        $obj_CTSV->taiKhoan = htmlspecialchars(strip_tags($taiKhoan));
+        $obj_CTSV->matKhau = htmlspecialchars(strip_tags(md5($matKhau)));
 
         $sqlQuery_CTSV = "SELECT * FROM phongcongtacsinhvien 
                     WHERE taiKhoan = ? AND matKhau = ? LIMIT 0,1";

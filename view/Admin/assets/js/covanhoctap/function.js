@@ -38,7 +38,7 @@ function GetListCVHT() {
         
 
         $.ajax({
-            url: "../../api/covanhoctap/read.php",
+            url: urlapi_covanhoctap_read,
             type: "GET",
             contentType: "application/json;charset=utf-8",
             dataType: "json",
@@ -146,7 +146,7 @@ function ThemCVHT() {
                 console.log(postData);
         
                 $.ajax({
-                    url: "../../api/covanhoctap/create.php",
+                    url: urlapi_covanhoctap_create,
                     type: "POST",
                     contentType: "application/json;charset=utf-8",
                     dataType: "json",
@@ -221,7 +221,7 @@ function DatLaiMatKhau() {
       }else{
   
         $.ajax({
-          url: "../../api/covanhoctap/single_read.php?maCoVanHocTap=" + maCoVanHocTap_Update,
+          url: urlapi_covanhoctap_single_read + maCoVanHocTap_Update,
           type: "GET",
           contentType: "application/json;charset=utf-8",
           dataType: "json",
@@ -242,7 +242,7 @@ function DatLaiMatKhau() {
           
   
            $.ajax({
-            url: "../../api/covanhoctap/update.php",
+            url: urlapi_covanhoctap_update,
             type: "POST",
             contentType: "application/json;charset=utf-8",
             dataType: "json",
@@ -261,7 +261,7 @@ function DatLaiMatKhau() {
               });
       
               setTimeout(() => {
-                location.reload();
+                GetListCVHT();
               }, 2000);
       
             },

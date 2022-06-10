@@ -30,8 +30,6 @@ if (isset($_COOKIE['jwt'])){
 }
 
 
-
-
 ?>
 
 
@@ -150,6 +148,8 @@ if (isset($_COOKIE['jwt'])){
 
     <!-- Custom Script -->
     <script src="../js/dangnhap/dangnhap.js"></script>
+
+    <script src="../../config/urlapi.js" ></script>
    
 
 </head>
@@ -159,7 +159,7 @@ if (isset($_COOKIE['jwt'])){
     <div class="loader"></div>
 </div>
 
-<body data-bs-spy="scroll" data-bs-target="#navbarExample">
+<body data-bs-spy="scroll" data-bs-target="#navbarExample" >
 
     <!-- Navigation -->
     <nav id="navbarExample" class="navbar navbar-expand-lg fixed-top navbar-light" aria-label="Main navigation" style="background: white;">
@@ -259,7 +259,6 @@ if (isset($_COOKIE['jwt'])){
         setTimeout(function() {
             $('.loader_bg').fadeToggle();
         }, 1000);
-
 
 
     </script>

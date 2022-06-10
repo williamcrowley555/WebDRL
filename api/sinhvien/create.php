@@ -40,7 +40,7 @@
                 } else{
                     http_response_code(404);
                     echo json_encode(
-                        array("message" => "sinhvien tạo KHÔNG thành công.")
+                        array("message" => "Mã sinh viên vừa tạo đã bị trùng! Vui lòng nhập mã khác!")
                     );
                 }
             }else{

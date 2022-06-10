@@ -47,7 +47,7 @@ function GetListPhieurenluyen() {
     $("#id_tbodyPhieuRenLuyen tr").remove();
 
         $.ajax({
-            url: "../../api/phieurenluyen/read.php",
+            url: urlapi_phieurenluyen_read,
             type: "GET",
             contentType: "application/json;charset=utf-8",
             dataType: "json",
@@ -95,7 +95,7 @@ function GetListPhieurenluyen() {
                 Swal.fire({
                     icon: 'error',
                     title: 'Lỗi',
-                    text: errorMessage.responseText,
+                    text: errorMessage.responseJSON.message,
                     //timer: 5000,
                     timerProgressBar: true
                 })
@@ -125,7 +125,7 @@ function SetTrangThaiDuyet(value) {
 function LoadComboBoxThongTinKhoa() {
     //Load khoa
     $.ajax({
-      url: "../../api/khoa/read.php",
+      url: urlapi_khoa_read,
       type: "GET",
       contentType: "application/json;charset=utf-8",
       dataType: "json",

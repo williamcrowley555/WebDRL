@@ -214,7 +214,7 @@ function getTieuChiDanhGia() {
                           "<tr>\
                                             <td><em>" +
                             result_tc2[index_tc2][k].noidung +
-                            "<br>Điểm TBC học kỳ trước: <input type='number' step='0.01 ' onchange='changeNumberHandle(this,4)' id='inputTBCHocKyTruoc' name='diemTrungBinhChungHKTruoc' style='width: 100px;margin-right: 30px' />Điểm TBC học kỳ đang xét: <input type='number' step='0.01 ' onchange='changeNumberHandle(this,4)' id='inputTBCHocKyDangXet' name='diemTrungBinhChungHKXet' style='width: 100px;' /> </em></td>\
+                            "<br>Điểm TBC học kỳ trước: <input type='number' step='0.01' onchange='changeNumberHandle(this,4)' id='inputTBCHocKyTruoc' name='diemTrungBinhChungHKTruoc' style='width: 100px;margin-right: 30px' />Điểm TBC học kỳ đang xét: <input type='number' step='0.01' onchange='changeNumberHandle(this,4)' id='inputTBCHocKyDangXet' name='diemTrungBinhChungHKXet' style='width: 100px;' /> </em></td>\
                                             <td></td>\
                                             <td></td>\
                                             </tr>"
@@ -346,7 +346,7 @@ function getTieuChiDanhGia() {
             <td style='font-weight: bold;' >ĐIỂM TỔNG CỘNG (tối đa không quá 100 điểm): </span>\
             </td>\
             <td><em></em></td>\
-            <td><input type='number' style='width: 100px' onchange='changeNumberHandle(this, 100)' id='input_diemtongcong' name='diemTongCong' disabled/></td>\
+            <td><input type='number' style='width: 100px' onchange='changeNumberHandle(this, 100)' id='input_diemtongcong' name='diemTongCong' readonly='true'/></td>\
         </tr>"
   );
 

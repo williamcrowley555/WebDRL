@@ -50,7 +50,7 @@ function GetListLop(maKhoa) {
         $("#id_tbodyLop tr").remove();
 
         $.ajax({
-            url: "../../api/lop/read.php",
+            url: urlapi_lop_read,
             type: "GET",
             contentType: "application/json;charset=utf-8",
             dataType: "json",
@@ -109,7 +109,7 @@ function GetListLop(maKhoa) {
         $("#id_tbodyLop tr").remove();
 
         $.ajax({
-            url: "../../api/lop/read.php?maKhoa=" + maKhoa,
+            url: urlapi_lop_read_maKhoa + maKhoa,
             type: "GET",
             contentType: "application/json;charset=utf-8",
             dataType: "json",
@@ -174,7 +174,7 @@ function TimKiemLop(maLop) {
     $("#id_tbodyLop tr").remove();
   
     $.ajax({
-      url: "../../api/lop/single_read.php?maLop=" + maLop,
+      url: urlapi_lop_single_read + maLop,
       async: false,
       type: "GET",
       contentType: "application/json;charset=utf-8",
@@ -216,7 +216,7 @@ function TimKiemLop(maLop) {
 function LoadComboBoxThongTinKhoa() {
     //Load khoa
     $.ajax({
-      url: "../../api/khoa/read.php",
+      url: urlapi_khoa_read,
       type: "GET",
       contentType: "application/json;charset=utf-8",
       dataType: "json",
@@ -268,7 +268,7 @@ function LoadComboBoxThongTinKhoa() {
 function LoadComboBoxCoVanHocTap_AddModal() {
   //Load CVHT
   $.ajax({
-    url: "../../api/covanhoctap/read.php",
+    url: urlapi_covanhoctap_read,
     type: "GET",
     contentType: "application/json;charset=utf-8",
     dataType: "json",
@@ -311,7 +311,7 @@ function LoadComboBoxCoVanHocTap_AddModal() {
 function LoadComboBoxKhoaHoc_AddModal() {
   //Load Khóa học
   $.ajax({
-    url: "../../api/khoahoc/read.php",
+    url: urlapi_khoahoc_read,
     type: "GET",
     contentType: "application/json;charset=utf-8",
     dataType: "json",
@@ -372,7 +372,7 @@ function ThemMoi() {
 
 
     $.ajax({
-      url: "../../api/lop/create.php",
+      url: urlapi_lop_create,
       type: "POST",
       contentType: "application/json;charset=utf-8",
       dataType: "json",
@@ -391,7 +391,7 @@ function ThemMoi() {
         });
 
         setTimeout(() => {
-          location.reload();
+          GetListLop("tatcakhoa");
         }, 2000);
   
       },

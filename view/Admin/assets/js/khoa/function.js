@@ -35,7 +35,7 @@ function GetListKhoa() {
         var jwtCookie = getCookie("jwt");
 
         $.ajax({
-            url: "../../api/khoa/read.php",
+            url: urlapi_khoa_read,
             type: "GET",
             contentType: "application/json;charset=utf-8",
             dataType: "json",

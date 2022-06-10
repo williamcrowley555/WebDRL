@@ -50,7 +50,7 @@ function Login() {
         };
         
         $.ajax({
-            url: "../../api/auth/login_admin.php",
+            url: urlapi_login_admin,
             data: JSON.stringify(objLogin),
             type: "POST",
             contentType: "application/json;charset=utf-8",

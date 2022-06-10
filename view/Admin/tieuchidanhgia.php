@@ -1,7 +1,22 @@
-<?php include_once('header.php'); ?>
+<script>
+		//remove class active
+		$("#menu-button-ThongKe").removeClass("active");
+		$("#menu-button-SinhVien").removeClass("active");
+		$("#menu-button-HoatDongDanhGia").removeClass("active");
+		$("#menu-button-Khoa").removeClass("active");
+		$("#menu-button-PhieuRenLuyen").removeClass("active");
+		$("#menu-button-CoVanHocTap").removeClass("active");
+		$("#menu-button-Lop").removeClass("active");
+		$("#menu-button-ThongBaoDanhGia").removeClass("active");
+		
+		//add class active
+		$("#menu-button-TieuChiDanhGia").addClass("active");
 
+		//set title
+		document.title = "Tiêu chí đánh giá | Web điểm rèn luyện";
+		
 
-<div class="app-wrapper">
+</script>
 
 	<div class="app-content pt-3 p-md-3 p-lg-4">
 		<div class="container-xl">
@@ -116,32 +131,14 @@
 	</footer>
 	<!--//app-footer-->
 
-</div>
-<!--//app-wrapper-->
 
-
-<!-- Javascript -->
-<script src="assets/plugins/popper.min.js"></script>
-<script src="assets/plugins/bootstrap/js/bootstrap.min.js"></script>
-<script src="assets/js/sweetalert2.all.min.js"></script>
-
-<!-- Charts JS -->
-<script src="assets/plugins/chart.js/chart.min.js"></script>
-<script src="assets/js/index-charts.js"></script>
 
 <!-- Page Specific JS -->
-<script src="assets/js/app.js"></script>
 <script src="assets/js/tieuchidanhgia/function.js"></script>
 
-<script src="assets/js/jquery-3.6.0.js"></script>
-<!-- Pagination -->
-<script src="assets/js/pagination.min.js"></script>
 
-<link rel="stylesheet" href="assets/css/pagination.css"/>
 <script>
-	setTimeout(function() {
-		$('.loader_bg').fadeToggle();
-	}, 1000);
+	
 
 	var tieuChi_selected = "tieuchicap1";
 	//hàm trong function.js
@@ -157,7 +154,3 @@
  
 
 </script>
-</body>
-
-
-</html>

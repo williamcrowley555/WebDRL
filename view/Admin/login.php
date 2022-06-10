@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en"> 
 <head>
-    <title>Đăng nhập | CTSV</title>
+    <title>Đăng nhập | Web điểm rèn luyện</title>
     
     <!-- Meta -->
     <meta charset="utf-8">
@@ -17,6 +17,8 @@
 	<script src="assets/js/sweetalert2.all.min.js"></script>
 
 	<script src="assets/js/auth_login.js"></script>
+
+	<script src="../config/urlapi.js" ></script>
     
     <!-- App CSS -->  
     <link id="theme-style" rel="stylesheet" href="assets/css/portal.css">

@@ -48,7 +48,7 @@ function GetListThongBaoDanhGia() {
     var jwtCookie = getCookie("jwt");
 
     $.ajax({
-      url: "../../api/thongbaodanhgia/read.php",
+      url: urlapi_thongbaodanhgia_read,
       type: "GET",
       contentType: "application/json;charset=utf-8",
       dataType: "json",
@@ -70,7 +70,7 @@ function GetListThongBaoDanhGia() {
 
                 //Ajax load học kỳ
                     $.ajax({
-                        url: "../../api/hockydanhgia/single_read.php?maHocKyDanhGia=" + data[i].maHocKyDanhGia,
+                        url: urlapi_hockydanhgia_single_read + data[i].maHocKyDanhGia,
                         type: "GET",
                         contentType: "application/json;charset=utf-8",
                         dataType: "json",
@@ -159,7 +159,7 @@ function ThemMoi() {
 
             //check học kỳ tồn tại chưa trước
             $.ajax({
-                url: "../../api/hockydanhgia/read.php",
+                url: urlapi_hockydanhgia_read,
                 type: "GET",
                 contentType: "application/json;charset=utf-8",
                 dataType: "json",
@@ -183,7 +183,7 @@ function ThemMoi() {
 
                                 //tạo học kỳ đánh giá trước
                                 $.ajax({
-                                    url: "../../api/hockydanhgia/create.php",
+                                    url: urlapi_hockydanhgia_create,
                                     type: "POST",
                                     contentType: "application/json;charset=utf-8",
                                     dataType: "json",
@@ -222,7 +222,7 @@ function ThemMoi() {
                     }
 
                     $.ajax({
-                        url: "../../api/thongbaodanhgia/create.php",
+                        url: urlapi_thongbaodanhgia_create,
                         type: "POST",
                         contentType: "application/json;charset=utf-8",
                         dataType: "json",
@@ -240,7 +240,7 @@ function ThemMoi() {
                             });
 
                             setTimeout(function(){
-                                location.reload();
+                                GetListThongBaoDanhGia();
                             }, 2000);
 
                         },
@@ -297,7 +297,7 @@ function DiemDanhHoatDong(input_MaHoatDong) {
       }).then((result) => {
         if (result.isConfirmed) {
             $.ajax({
-                url: "../../api/hoatdongdanhgia/single_read.php?maHoatDong=" + input_MaHoatDong,
+                url: urlapi_hoatdongdanhgia_single_read + input_MaHoatDong,
                 type: "GET",
                 contentType: "application/json;charset=utf-8",
                 dataType: "json",
@@ -339,7 +339,7 @@ function DiemDanhHoatDong(input_MaHoatDong) {
         
                     //Ajax update
                     $.ajax({
-                        url: "../../api/hoatdongdanhgia/update.php",
+                        url: urlapi_hoatdongdanhgia_update,
                         type: "POST",
                         contentType: "application/json;charset=utf-8",
                         dataType: "json",
@@ -356,7 +356,7 @@ function DiemDanhHoatDong(input_MaHoatDong) {
                             });
         
                             setTimeout(function(){
-                                location.reload();
+                                GetListThongBaoDanhGia();
                             }, 2500);
                 
                             

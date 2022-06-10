@@ -29,7 +29,7 @@
 
     <div style="width: 100%;">
         <div class="container">
-            <div class="row" style="margin: 0 auto;text-align: center;background: white;border-radius: 10px;">
+            <div class="row" style="margin: 0 auto;text-align: center;background: white;border-radius: 10px;width: fit-content;">
                 <form style="padding: 48px;" id="formLogin">
                     <!-- Email input -->
                     <div class="form-outline mb-4">

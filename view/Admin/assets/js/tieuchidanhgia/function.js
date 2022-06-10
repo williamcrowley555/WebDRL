@@ -45,7 +45,7 @@ function GetListTieuChi(tieuChi) {
     if (getCookie("jwt")!= null){
         var jwtCookie = getCookie("jwt");
         $.ajax({
-            url: "../../api/"+tieuChi+"/read.php",
+            url: host_domain_url + "/"+tieuChi+"/read.php",
             type: "GET",
             contentType: "application/json;charset=utf-8",
             dataType: "json",
@@ -135,7 +135,7 @@ function LoadComboBoxThongTinLopTheoKhoa(maKhoa) {
     if (maKhoa != "tatcakhoa") {
       //Load khoa
       $.ajax({
-        url: "../../api/lop/read.php?maKhoa=" + maKhoa,
+        url: urlapi_lop_read_maKhoa + maKhoa,
         type: "GET",
         contentType: "application/json;charset=utf-8",
         dataType: "json",

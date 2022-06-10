@@ -1,13 +1,28 @@
-<?php include_once('header.php'); ?>
+
+<script>
+		//remove class active
+		$("#menu-button-ThongKe").removeClass("active");
+		$("#menu-button-SinhVien").removeClass("active");
+		$("#menu-button-Lop").removeClass("active");
+		$("#menu-button-Khoa").removeClass("active");
+		$("#menu-button-PhieuRenLuyen").removeClass("active");
+		$("#menu-button-HoatDongDanhGia").removeClass("active");
+		$("#menu-button-TieuChiDanhGia").removeClass("active");
+		$("#menu-button-ThongBaoDanhGia").removeClass("active");
 
 
-<div class="app-wrapper">
+		//add class active
+		$("#menu-button-CoVanHocTap").addClass("active");
+		
+		//add title header
+		document.title = "Cố vấn học tập | Web điểm rèn luyện";
 
+</script>
 	<div class="app-content pt-3 p-md-3 p-lg-4">
 		<div class="container-xl">
 
 			<h1 class="app-page-title">.</h1>
-			<h1 class="app-page-title"><img src="assets/images/icons/presentation.png" alt="" width="30px">  Cố vấn học tập</h1>
+			<h1 class="app-page-title"><img src="assets/images/icons/presentation.png" alt="" width="30px"> <span id="title-main-page" >Cố vấn học tập</span> </h1>
 
 			<div class="row g-4 mb-4">
 
@@ -186,52 +201,25 @@
 	</footer>
 	<!--//app-footer-->
 
-</div>
-<!--//app-wrapper-->
-
-
-<!-- Javascript -->
-<script src="assets/plugins/popper.min.js"></script>
-<script src="assets/plugins/bootstrap/js/bootstrap.min.js"></script>
-<script src="assets/js/sweetalert2.all.min.js"></script>
-
-<!-- Charts JS -->
-<script src="assets/plugins/chart.js/chart.min.js"></script>
-<script src="assets/js/index-charts.js"></script>
 
 <!-- Page Specific JS -->
-<script src="assets/js/app.js"></script>
 <script src="assets/js/covanhoctap/function.js"></script>
 
-
-<script src="assets/js/jquery-3.6.0.js"></script>
-<!-- Pagination -->
-<script src="assets/js/pagination.min.js"></script>
-
-<link rel="stylesheet" href="assets/css/pagination.css"/>
 <script>
-	setTimeout(function() {
-		$('.loader_bg').fadeToggle();
-	}, 1000);
+	
 
 	//hàm trong function.js
 	GetListCVHT();
  
 
 	//Dat lai mat khau
-	$(document).ready(function(){
-		$('.btn_DatLaiMatKhau').on('click', function(){
+	$(document).on("click", ".btn_DatLaiMatKhau" ,function() {
 			var maSinhVien = $(this).attr('data-id');
 		
 			$('#input_CoVanHocTap_Update').val(maSinhVien);
 			
 		
-		})
-	});
+	})
 
 
 </script>
-</body>
-
-
-</html>

@@ -254,7 +254,7 @@ if (!isset($_GET['maHocKy'])) {
                 bac_HocKyTruoc = 1;
             }
 
-            console.log(bac_HocKyDangXet + "---" + bac_HocKyTruoc)
+            //console.log(bac_HocKyDangXet + "---" + bac_HocKyTruoc)
             //So sanh bac
             if ((bac_HocKyDangXet - bac_HocKyTruoc) == 1 ){
                 $('#TC3_6').val($('#TC3_6').attr('max_value'));
@@ -357,16 +357,17 @@ if (!isset($_GET['maHocKy'])) {
                             formData.append("maHocKyDanhGia", _inputMaHocKyDanhGia);
                             formData.append("xepLoai", _inputXepLoai);
 
+                 
                             //Tạo phiếu rèn luyện trước
                             $.ajax({
                                 url: "../../../api/phieurenluyen/create.php",
+                                data: formData,
                                 async: false,
                                 type: "POST",
                                 contentType: false,
                                 cache: false,
                                 processData: false,
                                 //dataType: "json",
-                                data: formData,
                                 headers: {
                                     Authorization: jwtCookie,
                                 },
