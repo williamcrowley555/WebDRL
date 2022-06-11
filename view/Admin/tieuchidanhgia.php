@@ -39,17 +39,12 @@
 						</div>
 
 							
-							<!-- <div class="col-auto">
-								<form class="table-search-form row gx-1 align-items-center">
-									<div class="col-auto">
-										<input type="text" id="search-orders" name="searchorders" class="form-control search-orders" placeholder="Nhập mã tiêu chí">
-									</div>
-									<div class="col-auto">
-										<button type="submit" class="btn app-btn-secondary">Tìm kiếm</button>
-									</div>
-								</form>
+			
+								<div class="col-auto" style="padding-left: 15px;">
+										<button class="btn app-btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#AddModal">Thêm mới</button>
+								</div>
 
-							</div> -->
+						
 							<!--//col-->
 							
 
