@@ -6,7 +6,7 @@
     <header id="header" class="header">
         <div class="container">
             <div class="row">
-                <h3 style="text-transform: uppercase;">Tra cứu điểm rèn luyện trực tuyến</h3>
+                <h3 style="text-transform: uppercase;"><img src="../images/score-icon.png" alt="icon phieu diem" width="35px" >  Tra cứu điểm rèn luyện trực tuyến</h3>
             </div>
             <!-- end of row -->
         </div>

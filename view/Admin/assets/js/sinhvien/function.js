@@ -417,6 +417,9 @@ function LoadComboBoxThongTinLop() {
     async: false,
     headers: { Authorization: jwtCookie },
     success: function (result_Lop) {
+      $("#select_Lop_Add").addClass("selectpicker");
+      $("#select_Lop_Add").attr("data-live-search", "true");
+
       $("#select_Lop_Add").find("option").remove();
 
       $.each(result_Lop, function (index_Lop) {
@@ -428,8 +431,7 @@ function LoadComboBoxThongTinLop() {
         }
       });
 
-      $("#select_Lop_Add").addClass("selectpicker");
-      $("#select_Lop_Add").attr("data-live-search", "true");
+      
       
     },
     error: function (errorMessage) {

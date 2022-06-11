@@ -68,22 +68,14 @@ function Login() {
                         document.cookie = 'quyen=' + quyen;
                         document.cookie = 'jwt=' + result['jwt'];
                 
-                        const Toast = Swal.mixin({
-                            toast: true,
-                            position: 'top-end',
-                            showConfirmButton: false,
-                            timer: 2000,
-                            timerProgressBar: true,
-                            didOpen: (toast) => {
-                              toast.addEventListener('mouseenter', Swal.stopTimer)
-                              toast.addEventListener('mouseleave', Swal.resumeTimer)
-                            }
-                          })
-                          
-                          Toast.fire({
+                         
+                        Swal.fire({
                             icon: 'success',
-                            title: 'Đăng nhập thành công'
-                          })
+                            title: 'Đăng nhập thành công',
+                            text: "",
+                            timer: 3000,
+                            timerProgressBar: true
+                        })
                        
                         setTimeout(function() {
                             location.href = "index.php";

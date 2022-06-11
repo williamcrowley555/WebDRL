@@ -16,14 +16,17 @@
 	<!-- Goong.io maps API -->
 	<script src="https://cdn.jsdelivr.net/npm/@goongmaps/goong-js@1.0.9/dist/goong-js.js"></script>
 	<link href="https://cdn.jsdelivr.net/npm/@goongmaps/goong-js@1.0.9/dist/goong-js.css" rel="stylesheet" />
+
 	
+
 	<script src="assets/js/jquery-3.6.0.js"></script>
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
 	<script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+	
 
-    
 	<script src="assets/plugins/popper.min.js"></script>
 	<script src="assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+	
 	
 	<script src="assets/js/sweetalert2.all.min.js"></script>
 	
@@ -39,14 +42,16 @@
 
 	<script src="../config/urlapi.js" ></script>
 
-	<!-- <script src="assets/bootstrap-select/dist/css/bootstrap-select.min.css"></script>
-	<script src="assets/bootstrap-select/dist/js/bootstrap-select.min.js"></script> -->
+	<script src="assets/bootstrap-select/dist/css/bootstrap-select.min.css"></script>
+	<script src="assets/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
 
-	<!-- Latest compiled and minified CSS -->
+	<!-- Latest compiled and minified CSS
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.14.0-beta3/css/bootstrap-select.min.css">
 
-	<!-- Latest compiled and minified JavaScript -->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.14.0-beta3/js/bootstrap-select.min.js"></script>
+	 Latest compiled and minified JavaScript -->
+	<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.14.0-beta3/js/bootstrap-select.min.js"></script> -->
+
+
 
     
     <!-- App CSS -->  

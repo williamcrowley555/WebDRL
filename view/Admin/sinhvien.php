@@ -100,7 +100,7 @@
 
 								<div class="mb-3">
 									<label for="select_Lop_Add" class="form-label" style="color: black; font-weight: 500;">Lớp</label>
-									<select class="form-select" aria-label="Default select example" id="select_Lop_Add" >
+									<select class="form-select" aria-label="Default select example" id="select_Lop_Add"  >
 
 									</select>
 								</div>

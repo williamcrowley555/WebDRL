@@ -26,6 +26,9 @@ const urlapi_sinhvien_update = host_domain_url + "/sinhvien/update.php";
 //READ
 const urlapi_khoa_read = host_domain_url + "/khoa/read.php";
 
+//SINGLE READ//
+const urlapi_khoa_single_read = host_domain_url + "/khoa/single_read.php?maKhoa=";
+
 
 //---------------LOP---------------//----------------------------------
 //---------//
@@ -89,17 +92,37 @@ const urlapi_hoatdongdanhgia_create = host_domain_url + "/hoatdongdanhgia/create
 const urlapi_hoatdongdanhgia_update = host_domain_url + "/hoatdongdanhgia/update.php";
 
 
+//---------------THAM GIA HOAT DONG---------------//----------------------------------
+//---------//
+
+
+//READ
+const urlapi_thamgiahoatdong_read = host_domain_url + "/thamgiahoatdong/read.php";
+
+
+
 //---------------PHIEU REN LUYEN---------------//----------------------------------
 //---------//
 
 //READ
 const urlapi_phieurenluyen_read = host_domain_url + "/phieurenluyen/read.php";
 
+//SINGLE READ
+const urlapi_phieurenluyen_single_read = host_domain_url + "/phieurenluyen/single_read.php?maPhieuRenLuyen=";
+
 //CREATE
 const urlapi_phieurenluyen_create = host_domain_url + "/phieurenluyen/create.php";
 
 //UPDATE
 const urlapi_phieurenluyen_update = host_domain_url + "/phieurenluyen/update.php";
+
+
+//---------------CHAM DIEM REN LUYEN---------------//----------------------------------
+//---------//
+
+//READ
+const urlapi_chamdiemrenluyen_read = host_domain_url + "/chamdiemrenluyen/read.php";
+const urlapi_chamdiemrenluyen_read_maPhieuRenLuyen = urlapi_chamdiemrenluyen_read + "?maPhieuRenLuyen=";
 
 
 //---------------CO VAN HOC TAP---------------//----------------------------------

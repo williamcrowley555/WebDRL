@@ -25,6 +25,14 @@
             return $stmt;
         }
 
+        // GET ALL HOAT DONG THEO MA SINH VIEN
+        public function getAllThamGiaHoatDong_MaSinhVien($maSinhVien){
+            $sqlQuery = "SELECT maThamGiaHoatDong, maHoatDong, maSinhVienThamGia FROM " . $this->db_table . " WHERE maSinhVienThamGia = ". $maSinhVien;
+            $stmt = $this->conn->prepare($sqlQuery);
+            $stmt->execute();
+            return $stmt;
+        }
+
         // READ single
         public function getSingleThamGiaHoatDong(){
             $sqlQuery = "SELECT maThamGiaHoatDong, maHoatDong, maSinhVienThamGia FROM ". $this->db_table ."
