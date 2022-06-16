@@ -393,6 +393,9 @@ function ThemMoi() {
         setTimeout(() => {
           GetListLop("tatcakhoa");
         }, 2000);
+
+        $('#input_MaLop').val('');
+        $('#input_TenLop').val('');
   
       },
       error: function (errorMessage) {

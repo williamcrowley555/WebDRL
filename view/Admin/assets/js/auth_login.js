@@ -77,7 +77,7 @@ function Login() {
                             timerProgressBar: true
                         })
                        
-                        setTimeout(function() {
+                        window.setTimeout(function() {
                             location.href = "index.php";
                         }, 2000);
                         break;

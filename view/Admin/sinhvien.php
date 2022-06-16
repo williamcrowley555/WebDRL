@@ -1,4 +1,6 @@
+<script src="assets/js/check_token.js"></script>
 <script>
+
 		//remove class active
 		$("#menu-button-ThongKe").removeClass("active");
 		$("#menu-button-Lop").removeClass("active");
@@ -272,6 +274,13 @@
 		$('#input_MaSinhVien_Update').val(maSinhVien);
 
 	})
+
+
+	var select_box_element = document.querySelector('#select_Lop_Add');
+
+	dselect(select_box_element,{
+		search: true
+	});
 
 
 </script>

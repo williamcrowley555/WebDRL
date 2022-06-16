@@ -243,6 +243,16 @@ function ThemMoi() {
                                 GetListThongBaoDanhGia();
                             }, 2000);
 
+                            $('#input_HocKyXet').val('');
+                            $('#input_NamHocXet').val('');
+                            $('#input_NgayThongBao').val('');
+                            $('#input_NgaySinhVienDanhGia').val('');
+                            $('#input_NgaySinhVienKetThucDanhGia').val('');
+                            $('#input_NgayCoVanDanhGia').val('');
+                            $('#input_NgayCoVanKetThucDanhGia').val('');
+                            $('#input_NgayKhoaDanhGia').val('');
+                            $('#input_NgayKhoaKetThucDanhGia').val('');
+
                         },
                         error: function (errorMessage) {
                             //checkLoiDangNhap(errorMessage.responseJSON.message);

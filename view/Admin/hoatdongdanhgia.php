@@ -1,3 +1,4 @@
+<script src="assets/js/check_token.js"></script>
 <script>
 		//remove class active
 		$("#menu-button-ThongKe").removeClass("active");
@@ -274,6 +275,25 @@
 
 
     }
+
+
+	var select_box_element_HocKyDanhGia = document.querySelector('#select_HocKyDanhGia');
+
+	dselect(select_box_element_HocKyDanhGia,{
+		search: true
+	});
+
+	var select_box_element_Khoa = document.querySelector('#select_Khoa');
+
+	dselect(select_box_element_Khoa,{
+		search: true
+	});
+
+	var select_box_element_TieuChi = document.querySelector('#select_TieuChi');
+
+	dselect(select_box_element_TieuChi,{
+		search: true
+	});
 
 
 </script>

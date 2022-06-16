@@ -1,4 +1,6 @@
+<script src="assets/js/check_token.js"></script>
 <script>
+
 		//remove class active
 		$("#menu-button-Lop").removeClass("active");
 		$("#menu-button-SinhVien").removeClass("active");

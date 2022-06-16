@@ -1,3 +1,4 @@
+<script src="assets/js/check_token.js"></script>
 <script>
 		//remove class active
 		$("#menu-button-ThongKe").removeClass("active");
@@ -218,6 +219,23 @@
 	LoadComboBoxKhoaHoc_AddModal();
 
 
+	var select_box_element_Khoa = document.querySelector('#select_Khoa_Add');
+
+	dselect(select_box_element_Khoa,{
+		search: true
+	});
+
+	var select_box_element_CVHT = document.querySelector('#select_CVHT_Add');
+
+	dselect(select_box_element_CVHT,{
+		search: true
+	});
+
+	var select_box_element_KhoaHoc = document.querySelector('#select_KhoaHoc_Add');
+
+	dselect(select_box_element_KhoaHoc,{
+		search: true
+	});
 	
 
 </script>

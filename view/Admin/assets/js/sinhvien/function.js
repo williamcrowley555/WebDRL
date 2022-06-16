@@ -417,8 +417,6 @@ function LoadComboBoxThongTinLop() {
     async: false,
     headers: { Authorization: jwtCookie },
     success: function (result_Lop) {
-      $("#select_Lop_Add").addClass("selectpicker");
-      $("#select_Lop_Add").attr("data-live-search", "true");
 
       $("#select_Lop_Add").find("option").remove();
 
@@ -431,7 +429,7 @@ function LoadComboBoxThongTinLop() {
         }
       });
 
-      
+     
       
     },
     error: function (errorMessage) {
@@ -469,7 +467,6 @@ function ThemMoi() {
       he: "Đại học"
     }
 
-
     $.ajax({
       url: urlapi_sinhvien_create,
       type: "POST",
@@ -484,7 +481,7 @@ function ThemMoi() {
         Swal.fire({
           icon: "success",
           title: "Tạo thành công!",
-          text: '',
+          text: 'Sinh viên mã ' + _input_MaSinhVien + ' đã được tạo!',
           timer: 2000,
           timerProgressBar: true,
         });
@@ -493,6 +490,10 @@ function ThemMoi() {
           GetListSinhVien('tatcakhoa', 'tatcalop');
         }, 2000);
 
+        $('#input_MaSinhVien').val('');
+        $('#input_HoTenSinhVien').val('');
+        $('#input_NgaySinh').val('');
+   
       },
       error: function (errorMessage) {
         checkLoiDangNhap(errorMessage.responseJSON.message);

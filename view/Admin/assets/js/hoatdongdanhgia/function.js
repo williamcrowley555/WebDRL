@@ -422,6 +422,10 @@ function ThemMoi() {
                                 GetListHoatdongdanhgia();
                             }, 2000);
 
+                            $('#input_TenHoatDong').val('');
+                            $('#input_DiemNhanDuoc').val('');
+                            $('#input_DiaDiemHoatDong').val('');
+                            
                         },
                         error: function (errorMessage) {
                             checkLoiDangNhap(errorMessage.responseJSON.message);

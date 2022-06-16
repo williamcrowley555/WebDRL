@@ -330,6 +330,7 @@ button:not(:disabled),
 [type="reset"]:not(:disabled),
 [type="submit"]:not(:disabled) {
   cursor: pointer;
+  text-align: left;
 }
 ::-moz-focus-inner {
   padding: 0;
@@ -9954,7 +9955,7 @@ button.close:focus {
   padding: 0.5rem 1rem;
 }
 .dropdown-menu .dropdown-item:hover {
-  color: #252930;
+  color: #212529;
 }
 .dropdown-menu .dropdown-item:hover,
 .dropdown-menu .dropdown-item:focus {
@@ -9962,7 +9963,7 @@ button.close:focus {
 }
 .dropdown-menu .dropdown-item.active,
 .dropdown-menu .dropdown-item:active {
-  background: #fafbff;
+  background: #607ae4;
 }
 .dropdown-divider {
   border-top-color: #e7e9ed;
