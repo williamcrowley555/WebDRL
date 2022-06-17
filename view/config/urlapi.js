@@ -1,6 +1,9 @@
 //HOST DOMAIN
 const host_domain_url = 'http://localhost/WebDRL/api';
 
+//const host_domain_url = 'https://5674-115-73-162-67.ap.ngrok.io/WebDRL/api';
+
+
 //---------------SINH VIEN---------------//----------------------------------
 //---------//
 
@@ -36,6 +39,7 @@ const urlapi_khoa_single_read = host_domain_url + "/khoa/single_read.php?maKhoa=
 //READ
 const urlapi_lop_read = host_domain_url + "/lop/read.php";
 const urlapi_lop_read_maKhoa = urlapi_lop_read + "?maKhoa=";
+const urlapi_lop_read_maCVHT = urlapi_lop_read + "?maCoVanHocTap=";
 
 //SINGLE READ
 const urlapi_lop_single_read = host_domain_url + "/lop/single_read.php?maLop=";
@@ -52,6 +56,9 @@ const urlapi_lop_update = host_domain_url + "/lop/update.php";
 
 //READ
 const urlapi_thongbaodanhgia_read = host_domain_url + "/thongbaodanhgia/read.php";
+
+//SINGLE READ (maHocKyDanhGia)
+const urlapi_thongbaodanhgia_single_read_MaHKDG = host_domain_url + "/thongbaodanhgia/single_read.php?maHocKyDanhGia=";
 
 //CREATE
 const urlapi_thongbaodanhgia_create = host_domain_url + "/thongbaodanhgia/create.php";
@@ -98,6 +105,13 @@ const urlapi_hoatdongdanhgia_update = host_domain_url + "/hoatdongdanhgia/update
 
 //READ
 const urlapi_thamgiahoatdong_read = host_domain_url + "/thamgiahoatdong/read.php";
+const urlapi_thamgiahoatdong_read_MaSV = urlapi_thamgiahoatdong_read + "?maSinhVienThamGia=";
+
+//SINGLE READ (maHoatDong & maSinhVienThamGia)
+const urlapi_thamgiahoatdong_single_read = host_domain_url + "/thamgiahoatdong/single_read.php?maHoatDong=";
+
+//CREATE
+const urlapi_thamgiahoatdong_create = host_domain_url + "/thamgiahoatdong/create.php";
 
 
 
@@ -106,9 +120,15 @@ const urlapi_thamgiahoatdong_read = host_domain_url + "/thamgiahoatdong/read.php
 
 //READ
 const urlapi_phieurenluyen_read = host_domain_url + "/phieurenluyen/read.php";
+const urlapi_phieurenluyen_read_MaSV = urlapi_phieurenluyen_read + "?maSinhVien=";
+
 
 //SINGLE READ
 const urlapi_phieurenluyen_single_read = host_domain_url + "/phieurenluyen/single_read.php?maPhieuRenLuyen=";
+
+//SINGLE READ (maHocKyDanhGia AND maSinhVien)
+const urlapi_phieurenluyen_single_read_MaHKDG_MaSV = host_domain_url + "/phieurenluyen/single_read.php?maHocKyDanhGia=";
+
 
 //CREATE
 const urlapi_phieurenluyen_create = host_domain_url + "/phieurenluyen/create.php";
@@ -204,6 +224,17 @@ const urlapi_tieuchicap3_update = host_domain_url + "/tieuchicap3/update.php";
 
 //LOGIN
 const urlapi_login_admin = host_domain_url + "/auth/login_admin.php";
+
+
+//---------------LOGIN CLIENT---------------//----------------------------------
+//---------//
+
+//LOGIN
+const urlapi_login_client = host_domain_url + "/auth/login.php";
+
+//LOGOUT
+const urlapi_logout_client = host_domain_url + "/auth/logout.php";
+
 
 
 

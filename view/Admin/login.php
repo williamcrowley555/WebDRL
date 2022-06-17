@@ -72,7 +72,7 @@
 								
 							</div><!--//form-group-->
 							<div class="text-center">
-								<button type="button" id="btnLogin" class="btn app-btn-primary w-100 theme-btn mx-auto" onclick="Login()">ĐĂNG NHẬP</button>
+								<button type="button" id="btnLogin" class="btn app-btn-primary w-100 theme-btn mx-auto" style="text-align: center;" onclick="Login()">ĐĂNG NHẬP</button>
 							</div>
 						</form>
 						

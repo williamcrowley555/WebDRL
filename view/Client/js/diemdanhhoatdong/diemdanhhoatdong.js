@@ -36,7 +36,7 @@ function HienThiThongTin() {
     if (GET_maHoatDong.trim() != ''){
       
       $.ajax({
-        url: "../../../api/hoatdongdanhgia/single_read.php?maHoatDong=" + GET_maHoatDong,
+        url: urlapi_hoatdongdanhgia_single_read + GET_maHoatDong,
         async: false,
         type: "GET",
         contentType: "application/json;charset=utf-8",
@@ -94,7 +94,7 @@ function HienThiThongTin() {
 function getThongTinHoatDong(){
 
     $.ajax({
-        url: "../../../api/hoatdongdanhgia/single_read.php?maHoatDong=" + GET_maHoatDong,
+        url: urlapi_hoatdongdanhgia_single_read + GET_maHoatDong,
         async: false,
         type: "GET",
         contentType: "application/json;charset=utf-8",
@@ -117,7 +117,7 @@ function getThongTinHoatDong(){
 
 
             $.ajax({
-              url: "../../../api/hockydanhgia/single_read.php?maHocKyDanhGia=" + maHocKyDanhGia,
+              url: urlapi_hockydanhgia_single_read + maHocKyDanhGia,
               async: false,
               type: "GET",
               contentType: "application/json;charset=utf-8",
@@ -130,7 +130,7 @@ function getThongTinHoatDong(){
                   var namHocXet = result_HKDG.namHocXet;
 
                   $.ajax({
-                    url: "../../../api/khoa/single_read.php?maKhoa=" + maKhoa,
+                    url: urlapi_khoa_single_read + maKhoa,
                     async: false,
                     type: "GET",
                     contentType: "application/json;charset=utf-8",
@@ -145,7 +145,7 @@ function getThongTinHoatDong(){
                         //Tiêu chí 2
                         if (maTieuChi2 != 0){
                             $.ajax({
-                              url: "../../../api/tieuchicap2/single_read.php?matc2=" + maTieuChi2,
+                              url: urlapi_tieuchicap2_single_read + maTieuChi2,
                               async: false,
                               type: "GET",
                               contentType: "application/json;charset=utf-8",
@@ -165,7 +165,7 @@ function getThongTinHoatDong(){
                         //Tiêu chí 3
                         if (maTieuChi3 != 0){
                             $.ajax({
-                              url: "../../../api/tieuchicap3/single_read.php?matc3=" + maTieuChi3,
+                              url: urlapi_tieuchicap3_single_read + maTieuChi3,
                               async: false,
                               type: "GET",
                               contentType: "application/json;charset=utf-8",
@@ -301,7 +301,7 @@ function DiemDanh() {
     }
 
     $.ajax({
-        url: "../../../api/thamgiahoatdong/create.php",
+        url: urlapi_thamgiahoatdong_create,
         async: false,
         type: "POST",
         contentType: "application/json;charset=utf-8",
@@ -344,7 +344,7 @@ function checkDiemDanh() {
   var _maSinhVienThamGia = getCookie('maSo');
 
   $.ajax({
-      url: "../../../api/thamgiahoatdong/single_read.php?maHoatDong="+ GET_maHoatDong +"&maSinhVienThamGia=" + _maSinhVienThamGia,
+      url: urlapi_thamgiahoatdong_single_read + GET_maHoatDong +"&maSinhVienThamGia=" + _maSinhVienThamGia,
       async: false,
       type: "GET",
       contentType: "application/json;charset=utf-8",

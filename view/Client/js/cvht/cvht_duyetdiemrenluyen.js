@@ -43,7 +43,7 @@ if (getCookie('maSo') != null){
 function getThongTinLopCoVan() {
     
     $.ajax({
-        url: "../../../api/lop/read.php?maCoVanHocTap=" + maSo,
+        url: urlapi_lop_read_maCVHT + maSo,
         async: false,
         type: "GET",
         contentType: "application/json;charset=utf-8",
@@ -60,7 +60,7 @@ function getThongTinLopCoVan() {
                     var maKhoaHoc = result[index][p].maKhoaHoc;
                     
                     $.ajax({
-                        url: "../../../api/khoa/single_read.php?maKhoa=" + maKhoa,
+                        url: urlapi_khoa_single_read + maKhoa,
                         async: false,
                         type: "GET",
                         contentType: "application/json;charset=utf-8",

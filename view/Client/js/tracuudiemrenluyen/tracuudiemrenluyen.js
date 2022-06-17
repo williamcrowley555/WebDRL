@@ -41,7 +41,7 @@ function TraCuuDiemRenLuyen() {
         thongBaoLoi('Vui lòng nhập mã số sinh viên!');
     }else{
         $.ajax({
-            url: "../../../api/sinhvien/single_read.php?maSinhVien=" + _input_MSSVTraCuu,
+            url: urlapi_sinhvien_single_read + _input_MSSVTraCuu,
             async: false,
             type: "GET",
             contentType: "application/json;charset=utf-8",
@@ -53,7 +53,7 @@ function TraCuuDiemRenLuyen() {
                 var hoTenSinhVien = result_SV.hoTenSinhVien;
 
                 $.ajax({
-                    url: "../../../api/phieurenluyen/read.php?maSinhVien=" + _input_MSSVTraCuu,
+                    url: urlapi_phieurenluyen_read_MaSV + _input_MSSVTraCuu,
                     async: false,
                     type: "GET",
                     contentType: "application/json;charset=utf-8",
@@ -91,7 +91,7 @@ function TraCuuDiemRenLuyen() {
                                 }
     
                                 $.ajax({
-                                    url: "../../../api/hockydanhgia/single_read.php?maHocKyDanhGia=" + maHocKyDanhGia,
+                                    url: urlapi_hockydanhgia_single_read + maHocKyDanhGia,
                                     async: false,
                                     type: "GET",
                                     contentType: "application/json;charset=utf-8",

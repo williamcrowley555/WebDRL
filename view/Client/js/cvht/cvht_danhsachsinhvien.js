@@ -33,7 +33,7 @@ if (GET_MaLop != null || GET_MaHocKy.trim() != ''){
 
 //Check mã lớp hợp lệ
 $.ajax({
-    url: "../../../api/lop/single_read.php?maLop=" + GET_MaLop,
+    url: urlapi_lop_single_read + GET_MaLop,
     async: false,
     type: "GET",
     contentType: "application/json;charset=utf-8",
@@ -55,7 +55,7 @@ $.ajax({
 //--------------------------------//
 function LoadComboBoxHocKy() {
     $.ajax({
-        url: "../../../api/hockydanhgia/read.php",
+        url: urlapi_hockydanhgia_read,
         async: false,
         type: "GET",
         contentType: "application/json;charset=utf-8",
@@ -96,7 +96,7 @@ function getDanhSachDRLSinhVienLopTheoHocKy(maLop, maHocKyDanhGia) {
     
     //Ajax sinh vien
     $.ajax({
-        url: "../../../api/sinhvien/read.php?maLop=" + maLop,
+        url: urlapi_sinhvien_read_maLop + maLop,
         async: false,
         type: "GET",
         contentType: "application/json;charset=utf-8",
@@ -116,7 +116,7 @@ function getDanhSachDRLSinhVienLopTheoHocKy(maLop, maHocKyDanhGia) {
 
                    //Ajax phieurenluyen
                     $.ajax({
-                        url: "../../../api/phieurenluyen/single_read.php?maHocKyDanhGia=" + maHocKyDanhGia +"&maSinhVien="+ maSinhVien +"",
+                        url: urlapi_phieurenluyen_single_read_MaHKDG_MaSV + maHocKyDanhGia +"&maSinhVien="+ maSinhVien +"",
                         async: false,
                         type: "GET",
                         contentType: "application/json;charset=utf-8",
@@ -128,7 +128,7 @@ function getDanhSachDRLSinhVienLopTheoHocKy(maLop, maHocKyDanhGia) {
                             //Nếu tìm thấy thì xử lý ở đây ngược lại xử lý ở error
                             //coVanDuyet = 0 thì đã chấm nhưng cố vấn chưa duyệt, ngược lại = 1 là đã duyệt
                             $.ajax({
-                                url: "../../../api/thongbaodanhgia/single_read.php?maHocKyDanhGia=" + maHocKyDanhGia,
+                                url: urlapi_thongbaodanhgia_single_read_MaHKDG + maHocKyDanhGia,
                                 async: false,
                                 type: "GET",
                                 contentType: "application/json;charset=utf-8",

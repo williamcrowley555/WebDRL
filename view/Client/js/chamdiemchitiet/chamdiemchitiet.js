@@ -63,7 +63,7 @@ function HienThiThongTinVaDanhGia() {
   if (GET_MaHocKy != null) {
     if (GET_MaHocKy.trim() != "") {
       $.ajax({
-        url: "../../../api/thongbaodanhgia/read.php",
+        url: urlapi_thongbaodanhgia_read,
         async: false,
         type: "GET",
         contentType: "application/json;charset=utf-8",
@@ -138,7 +138,7 @@ function HienThiThongTinVaDanhGia() {
 function getTieuChiDanhGia() {
   //Ajax tieuchicap1
   $.ajax({
-    url: "../../../api/tieuchicap1/read.php",
+    url: urlapi_tieuchicap1_read,
     async: false,
     type: "GET",
     contentType: "application/json;charset=utf-8",
@@ -163,7 +163,7 @@ function getTieuChiDanhGia() {
 
           //Ajax tieuchicap2
           $.ajax({
-            url: "../../../api/tieuchicap2/read.php",
+            url: urlapi_tieuchicap2_read,
             async: false,
             type: "GET",
             contentType: "application/json;charset=utf-8",
@@ -234,7 +234,7 @@ function getTieuChiDanhGia() {
 
                     //Ajax tieuchicap3
                     $.ajax({
-                      url: "../../../api/tieuchicap3/read.php",
+                      url: urlapi_tieuchicap3_read,
                       async: false,
                       type: "GET",
                       contentType: "application/json;charset=utf-8",
@@ -366,7 +366,7 @@ function getThongTinNguoiDung() {
     var maSo = getCookie("maSo");
 
     $.ajax({
-      url: "../../../api/sinhvien/single_read.php?maSinhVien=" + maSo,
+      url: urlapi_sinhvien_single_read + maSo,
       async: false,
       type: "GET",
       contentType: "application/json;charset=utf-8",
@@ -381,7 +381,7 @@ function getThongTinNguoiDung() {
         var he = result["he"];
 
         $.ajax({
-          url: "../../../api/lop/single_read.php?maLop=" + maLop,
+          url: urlapi_lop_single_read + maLop,
           async: false,
           type: "GET",
           contentType: "application/json;charset=utf-8",
@@ -393,7 +393,7 @@ function getThongTinNguoiDung() {
             var maKhoa = result_Lop["maKhoa"];
 
             $.ajax({
-              url: "../../../api/khoa/single_read.php?maKhoa=" + maKhoa,
+              url: urlapi_khoa_single_read + maKhoa,
               async: false,
               type: "GET",
               contentType: "application/json;charset=utf-8",
@@ -406,7 +406,7 @@ function getThongTinNguoiDung() {
 
                 $.ajax({
                   url:
-                    "../../../api/hockydanhgia/single_read.php?maHocKyDanhGia=" +
+                  urlapi_hockydanhgia_single_read +
                     GET_MaHocKy,
                   async: false,
                   type: "GET",
@@ -541,7 +541,7 @@ function LoadThongTinSinhVienDanhGia() {
 
   $.ajax({
     url:
-      "../../../api/phieurenluyen/single_read.php?maPhieuRenLuyen=" +
+    urlapi_phieurenluyen_single_read +
       maPhieuRenLuyen,
     async: false,
     type: "GET",
@@ -562,7 +562,7 @@ function LoadThongTinSinhVienDanhGia() {
 
       $.ajax({
         url:
-          "../../../api/chamdiemrenluyen/read.php?maPhieuRenLuyen=" +
+        urlapi_chamdiemrenluyen_read_maPhieuRenLuyen +
           maPhieuRenLuyen,
         async: false,
         type: "GET",

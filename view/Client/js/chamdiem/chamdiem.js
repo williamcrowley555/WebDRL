@@ -37,7 +37,7 @@ if (getCookie('maSo') != null){
 function getThongTinHocKyDanhGia() {
     
     $.ajax({
-        url: "../../../api/thongbaodanhgia/read.php",
+        url: urlapi_thongbaodanhgia_read,
         async: false,
         type: "GET",
         contentType: "application/json;charset=utf-8",
@@ -57,7 +57,7 @@ function getThongTinHocKyDanhGia() {
                     var ngayHienTai = new Date((today.getFullYear()) +"-" +(today.getMonth() +1) + "-" + (today.getDate()));
 
                     $.ajax({
-                        url: "../../../api/hockydanhgia/single_read.php?maHocKyDanhGia=" + maHocKyDanhGia,
+                        url: urlapi_hockydanhgia_single_read + maHocKyDanhGia,
                         async: false,
                         type: "GET",
                         contentType: "application/json;charset=utf-8",
@@ -78,7 +78,7 @@ function getThongTinHocKyDanhGia() {
                                         
                                     //kiểm tra xem có tồn tại phiếu rèn luyện chưa, nếu có = đã chấm 
                                     $.ajax({
-                                        url: "../../../api/phieurenluyen/single_read.php?maHocKyDanhGia="+ maHocKyDanhGia_HKDG +"&maSinhVien=" + getCookie('maSo'),
+                                        url: urlapi_phieurenluyen_single_read_MaHKDG_MaSV + maHocKyDanhGia_HKDG +"&maSinhVien=" + getCookie('maSo'),
                                         async: false,
                                         type: "GET",
                                         contentType: "application/json;charset=utf-8",
@@ -176,7 +176,7 @@ function getThongTinHocKyDanhGia() {
                                 }else{
                                     //kiểm tra xem có tồn tại phiếu rèn luyện chưa, nếu có = đã chấm 
                                     $.ajax({
-                                        url: "../../../api/phieurenluyen/single_read.php?maHocKyDanhGia="+ maHocKyDanhGia_HKDG +"&maSinhVien=" + getCookie('maSo'),
+                                        url: urlapi_phieurenluyen_single_read_MaHKDG_MaSV + maHocKyDanhGia_HKDG +"&maSinhVien=" + getCookie('maSo'),
                                         async: false,
                                         type: "GET",
                                         contentType: "application/json;charset=utf-8",

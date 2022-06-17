@@ -36,7 +36,7 @@ function Login(inputLogin_MSSV, inputLogin_MatKhau) {
     };
 
     $.ajax({
-      url: "../../../api/auth/login.php",
+      url: urlapi_login_client,
       data: JSON.stringify(objLogin),
       type: "POST",
       contentType: "application/json;charset=utf-8",
@@ -90,7 +90,7 @@ function DangXuat() {
   }
 
   $.ajax({
-    url: "../../../api/auth/logout.php",
+    url: urlapi_logout_client,
     data: JSON.stringify(dataPost),
     type: "POST",
     contentType: "application/json;charset=utf-8",
