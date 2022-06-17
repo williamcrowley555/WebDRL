@@ -212,7 +212,7 @@
 					        <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
 					        <a class="nav-link"  onclick="LoadContentMainPage('hoatdongdanhgia.php');" id="menu-button-HoatDongDanhGia" >
 						        <span class="nav-icon">
-									<img src="assets/images/icons/class.png" alt="icon hoạt động" width="10%">
+									<img src="assets/images/icons/crowd.png" alt="icon hoạt động" width="10%">
 						         </span>
 		                         <span class="nav-link-text">Hoạt động đánh giá</span>
 					        </a><!--//nav-link-->

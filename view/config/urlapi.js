@@ -106,6 +106,7 @@ const urlapi_hoatdongdanhgia_update = host_domain_url + "/hoatdongdanhgia/update
 //READ
 const urlapi_thamgiahoatdong_read = host_domain_url + "/thamgiahoatdong/read.php";
 const urlapi_thamgiahoatdong_read_MaSV = urlapi_thamgiahoatdong_read + "?maSinhVienThamGia=";
+const urlapi_thamgiahoatdong_read_MaHD = urlapi_thamgiahoatdong_read + "?maHoatDong=";
 
 //SINGLE READ (maHoatDong & maSinhVienThamGia)
 const urlapi_thamgiahoatdong_single_read = host_domain_url + "/thamgiahoatdong/single_read.php?maHoatDong=";

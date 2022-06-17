@@ -23,7 +23,7 @@
 		<div class="container-xl">
 
 			<h1 class="app-page-title">.</h1>
-			<h1 class="app-page-title"><img src="assets/images/icons/class.png" alt="" width="30px"> Hoạt động đánh giá</h1>
+			<h1 class="app-page-title"><img src="assets/images/icons/crowd.png" alt="" width="30px"> Hoạt động đánh giá</h1>
 
 			<div class="row g-4 mb-4">
 
@@ -150,6 +150,59 @@
 				</div>
 
 
+				<!-- Modal danh sách tham gia -->
+				<div class="modal fade" id="DanhSachThamGiaModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+					<div class="modal-dialog modal-lg">
+						<div class="modal-content">
+							<div class="modal-header">
+								<img src="assets/images/icons/lists.png" width="25px" style="padding-right: 5px;">
+								<h5 class="modal-title" id="exampleModalLabel"> Danh sách sinh viên tham gia</h5>
+								<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+							</div>
+							<div class="modal-body">
+
+								<div class="mb-3">
+									<label class="form-label" style="color: black; font-weight: 500;">Mã hoạt động: </label>
+									<span id="DSSV_text_MaHoatDong" ></span>
+								</div>
+
+								<div class="mb-3">
+									<label class="form-label" style="color: black; font-weight: 500;">Tên hoạt động: </label>
+									<span id="DSSV_text_TenHoatDong" ></span>
+								</div>
+
+								<div class="mb-3">
+									<label class="form-label" style="color: black; font-weight: 500;">Tổng số sinh viên tham gia: </label>
+									<span id="DSSV_text_TongSoSVThamGia" ></span>
+								</div>
+
+								<h6>---DANH SÁCH---</h6>
+								<div class="table-responsive">
+								<table class="table app-table-hover mb-0 text-left">
+									<thead>
+										<tr>
+											<th class="cell">STT</th>
+											<th class="cell">Mã sinh viên</th>
+											<th class="cell">Tên sinh viên</th>
+											<th class="cell">Thời gian điểm danh</th>
+										</tr>
+									</thead>
+									<tbody id="id_tbody_DanhSachThamGia">
+										
+									</tbody>
+								</table>
+							</div>
+
+
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+							</div>
+						</div>
+					</div>
+				</div>
+
+
 				<div class="tab-pane fade show active" id="orders-all" role="tabpanel" aria-labelledby="orders-all-tab">
 					<div class="app-card app-card-orders-table shadow-sm mb-5">
 						<div class="app-card-body">
@@ -231,6 +284,17 @@
 			var maHoatDong = $(this).attr('data-id');
 
 			DiemDanhHoatDong(maHoatDong);
+	})
+
+	$(document).on("click", ".btn_DanhSachThamGia" ,function() {
+			var maHoatDong = $(this).attr('data-id');
+			var tenHoatDong = $(this).attr('data-name-id');
+
+			$('#DSSV_text_MaHoatDong').text(maHoatDong);
+			$('#DSSV_text_TenHoatDong').text(tenHoatDong);
+
+
+			LoadDanhSachThamGia(maHoatDong);
 	})
 
 	

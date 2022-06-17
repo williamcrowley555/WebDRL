@@ -93,8 +93,9 @@ function GetListHoatdongdanhgia() {
                                 <td class='cell'>" + data[i].thoiGianBatDauHoatDong + "</td>\
                                 <td class='cell'>" + data[i].thoiGianKetThucHoatDong + "</td>\
                                 <td class='cell'>" + data[i].thoiGianBatDauDiemDanh + "</td>\
-                                <td class='cell'><img src='"+ data[i].maQRDiaDiem +"' style='width: 40%;' /></td>\
+                                <td class='cell'><img src='"+ data[i].maQRDiaDiem +"' style='width: 50%;' /></td>\
                                 <td class='cell'>\
+                                <button type='button' class='btn_DanhSachThamGia btn' style='color: white;width: max-content;margin: 5px;background: #656566;'  data-id='" + data[i].maHoatDong + "' data-name-id='" + data[i].tenHoatDong + "' data-bs-toggle='modal' data-bs-target='#DanhSachThamGiaModal' >Danh sách tham gia</button>\
                                     <button type='button' class='btn_BatDauDiemDanh btn' style='color: white;width: max-content;margin: 5px;background: dodgerblue;'  data-id='" + data[i].maHoatDong + "' >Bắt đầu điểm danh</button>\
                                     <a class='btn bg-warning' href='#' style='color: white;margin: 5px;'>Chỉnh sửa</a>\
                                 </td>\
@@ -141,8 +142,9 @@ function GetListHoatdongdanhgia() {
                                 <td class='cell'>" + data[i].thoiGianBatDauHoatDong + "</td>\
                                 <td class='cell'>" + data[i].thoiGianKetThucHoatDong + "</td>\
                                 <td class='cell'>" + data[i].thoiGianBatDauDiemDanh + "</td>\
-                                <td class='cell'><img src='"+ data[i].maQRDiaDiem +"' style='width: 40%;' /></td>\
+                                <td class='cell'><img src='"+ data[i].maQRDiaDiem +"' style='width: 50%;' /></td>\
                                 <td class='cell'>\
+                                    <button type='button' class='btn_DanhSachThamGia btn' style='color: white;width: max-content;margin: 5px;background: #656566;'  data-id='" + data[i].maHoatDong + "' data-name-id='" + data[i].tenHoatDong + "' data-bs-toggle='modal' data-bs-target='#DanhSachThamGiaModal' >Danh sách tham gia</button>\
                                     <button type='button' class='btn_BatDauDiemDanh btn' style='color: white;width: max-content;margin: 5px;background: dodgerblue;'  data-id='" + data[i].maHoatDong + "' >Bắt đầu điểm danh</button>\
                                     <a class='btn bg-warning' href='#' style='color: white;margin: 5px;'>Chỉnh sửa</a>\
                                 </td>\
@@ -764,6 +766,75 @@ function DiemDanhHoatDong(input_MaHoatDong) {
       })
 
     
+
+
+}
+
+
+
+function LoadDanhSachThamGia(maHoatDong) {
+    $('#id_tbody_DanhSachThamGia tr').remove();
+
+    $.ajax({
+        url: urlapi_thamgiahoatdong_read_MaHD + maHoatDong,
+        type: "GET",
+        contentType: "application/json;charset=utf-8",
+        dataType: "json",
+        async: false,
+        headers: { 'Authorization': jwtCookie },
+        success: function (result_data) {
+           
+
+            $.each(result_data, function (index_data) {
+                for (var b = 0; b < result_data[index_data].length; b++) {
+                    var soThuTuSV = result_data[index_data][b].soThuTu;
+                    var maSinhVienThamGia = result_data[index_data][b].maSinhVienThamGia;
+
+                    $.ajax({
+                        url: urlapi_sinhvien_single_read + maSinhVienThamGia,
+                        type: "GET",
+                        contentType: "application/json;charset=utf-8",
+                        dataType: "json",
+                        async: false,
+                        headers: { 'Authorization': jwtCookie },
+                        success: function (result_data_sv) {
+
+                            var tenSinhVienThamGia = result_data_sv.hoTenSinhVien;
+                
+                            $('#id_tbody_DanhSachThamGia').append('<tr>\
+                                <td>'+ soThuTuSV +'</td>\
+                                <td>'+ maSinhVienThamGia +'</td>\
+                                <td>'+ tenSinhVienThamGia +'</td>\
+                                <td>2022</td>\
+                            </tr>');
+                          
+                
+                        },
+                        error: function (errorMessage) {
+                            //checkLoiDangNhap(errorMessage.responseJSON.message);
+                
+                            console.log(errorMessage.responseJSON.message)
+                        },
+                    });
+
+
+                }
+            });
+
+            $('#DSSV_text_TongSoSVThamGia').text(result_data.itemCount);
+            
+
+        },
+        error: function (errorMessage) {
+            //checkLoiDangNhap(errorMessage.responseJSON.message);
+            $('#DSSV_text_TongSoSVThamGia').text('0');
+            
+            $('#id_tbody_DanhSachThamGia').append('<tr>\
+                <td colspan=4 style="text-align:center">Không tìm thấy kết quả.</td>\
+            </tr>');
+            console.log(errorMessage.responseJSON.message)
+        },
+    });
 
 
 }

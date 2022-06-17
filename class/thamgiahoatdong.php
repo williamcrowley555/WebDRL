@@ -27,7 +27,15 @@
 
         // GET ALL HOAT DONG THEO MA SINH VIEN
         public function getAllThamGiaHoatDong_MaSinhVien($maSinhVien){
-            $sqlQuery = "SELECT maThamGiaHoatDong, maHoatDong, maSinhVienThamGia FROM " . $this->db_table . " WHERE maSinhVienThamGia = ". $maSinhVien;
+            $sqlQuery = "SELECT maThamGiaHoatDong, maHoatDong, maSinhVienThamGia FROM " . $this->db_table . " WHERE maSinhVienThamGia = '". $maSinhVien."'";
+            $stmt = $this->conn->prepare($sqlQuery);
+            $stmt->execute();
+            return $stmt;
+        }
+
+         // GET ALL HOAT DONG THEO MA HOAT DONG
+         public function getAllThamGiaHoatDong_MaHoatDong($maHoatDong){
+            $sqlQuery = "SELECT maThamGiaHoatDong, maHoatDong, maSinhVienThamGia FROM " . $this->db_table . " WHERE maHoatDong = '". $maHoatDong ."'";
             $stmt = $this->conn->prepare($sqlQuery);
             $stmt->execute();
             return $stmt;

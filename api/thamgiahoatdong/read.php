@@ -14,18 +14,18 @@ $checkQuyen = new checkQuyen();
 // kiểm tra đăng nhập thành công 
 if ($data["status"] == 1) {
     //if ($checkQuyen->checkQuyen_CTSV($data["user_data"]->aud)) {
-        
 
-        if (isset($_GET['maSinhVienThamGia'])){
-            $maSinhVienThamGia = isset($_GET['maSinhVienThamGia']) ? $_GET['maSinhVienThamGia'] : die();
+        if (isset($_GET['maHoatDong'])){
+            $maHoatDong = isset($_GET['maHoatDong']) ? $_GET['maHoatDong'] : die();
 
             $database = new Database();
             $db = $database->getConnection();
 
             $items = new ThamGiaHoatDong($db);
-            $stmt = $items->getAllThamGiaHoatDong_MaSinhVien($maSinhVienThamGia);
+            $stmt = $items->getAllThamGiaHoatDong_MaHoatDong($maHoatDong);
             $itemCount = $stmt->rowCount();
-    
+            
+
             if ($itemCount > 0) {
                 $thamgiahoatdongArr = array();
                 $thamgiahoatdongArr["thamgiahoatdong"] = array(); //tạo object json 
@@ -55,40 +55,84 @@ if ($data["status"] == 1) {
 
 
         }else{
-            $database = new Database();
-            $db = $database->getConnection();
 
-            $items = new ThamGiaHoatDong($db);
-            $stmt = $items->getAllThamGiaHoatDong();
-            $itemCount = $stmt->rowCount();
-
-
-            if ($itemCount > 0) {
-                $thamgiahoatdongArr = array();
-                $thamgiahoatdongArr["thamgiahoatdong"] = array(); //tạo object json 
-                $thamgiahoatdongArr["itemCount"] = $itemCount;
+            if (isset($_GET['maSinhVienThamGia'])){
+                $maSinhVienThamGia = isset($_GET['maSinhVienThamGia']) ? $_GET['maSinhVienThamGia'] : die();
     
-                $countRow = 0;
+                $database = new Database();
+                $db = $database->getConnection();
     
-                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                    extract($row);
-                     $countRow++;
-                        $e = array(
-                        "soThuTu" => $countRow,
-                        "maThamGiaHoatDong" => $maThamGiaHoatDong,
-                        "maHoatDong" => $maHoatDong,
-                        "maSinhVienThamGia" => $maSinhVienThamGia
+                $items = new ThamGiaHoatDong($db);
+                $stmt = $items->getAllThamGiaHoatDong_MaSinhVien($maSinhVienThamGia);
+                $itemCount = $stmt->rowCount();
+        
+                if ($itemCount > 0) {
+                    $thamgiahoatdongArr = array();
+                    $thamgiahoatdongArr["thamgiahoatdong"] = array(); //tạo object json 
+                    $thamgiahoatdongArr["itemCount"] = $itemCount;
+        
+                    $countRow = 0;
+        
+                    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                        extract($row);
+                         $countRow++;
+                            $e = array(
+                            "soThuTu" => $countRow,
+                            "maThamGiaHoatDong" => $maThamGiaHoatDong,
+                            "maHoatDong" => $maHoatDong,
+                            "maSinhVienThamGia" => $maSinhVienThamGia
+                        );
+                        array_push($thamgiahoatdongArr["thamgiahoatdong"], $e);
+                    }
+                    http_response_code(200);
+                    echo json_encode($thamgiahoatdongArr);
+                } else {
+                    http_response_code(404);
+                    echo json_encode(
+                        array("message" => "Không tìm thấy kết quả.")
                     );
-                    array_push($thamgiahoatdongArr["thamgiahoatdong"], $e);
                 }
-                echo json_encode($thamgiahoatdongArr);
-            } else {
-                http_response_code(404);
-                echo json_encode(
-                    array("message" => "Không tìm thấy kết quả.")
-                );
+    
+    
+            }else{
+                $database = new Database();
+                $db = $database->getConnection();
+    
+                $items = new ThamGiaHoatDong($db);
+                $stmt = $items->getAllThamGiaHoatDong();
+                $itemCount = $stmt->rowCount();
+    
+    
+                if ($itemCount > 0) {
+                    $thamgiahoatdongArr = array();
+                    $thamgiahoatdongArr["thamgiahoatdong"] = array(); //tạo object json 
+                    $thamgiahoatdongArr["itemCount"] = $itemCount;
+        
+                    $countRow = 0;
+        
+                    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                        extract($row);
+                         $countRow++;
+                            $e = array(
+                            "soThuTu" => $countRow,
+                            "maThamGiaHoatDong" => $maThamGiaHoatDong,
+                            "maHoatDong" => $maHoatDong,
+                            "maSinhVienThamGia" => $maSinhVienThamGia
+                        );
+                        array_push($thamgiahoatdongArr["thamgiahoatdong"], $e);
+                    }
+                    echo json_encode($thamgiahoatdongArr);
+                } else {
+                    http_response_code(404);
+                    echo json_encode(
+                        array("message" => "Không tìm thấy kết quả.")
+                    );
+                }
             }
         }
+
+
+        
 
        
         
