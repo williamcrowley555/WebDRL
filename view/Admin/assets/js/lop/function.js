@@ -72,13 +72,15 @@ function GetListLop(maKhoa) {
                             count += 1;
                             
                             htmlData += "<tr>\
-                                <td class='cell'>"+ data[i].soThuTu +"</td>\
-                                <td class='cell'><span class='truncate'>"+ data[i].maLop +"</span></td>\
-                                <td class='cell'>"+ data[i].tenLop +"</td>\
-                                <td class='cell'>"+ data[i].maKhoa +"</td>\
-                                <td class='cell'>"+ data[i].maCoVanHocTap +"</td>\
-                                <td class='cell'>"+ data[i].maKhoaHoc +"</td>\
-                                <td class='cell'><a class='btn bg-warning' href='#' style='color: white;'>Chỉnh sửa</a></td>\
+                                  <td class='cell'>"+ data[i].soThuTu +"</td>\
+                                  <td class='cell'><span class='truncate'>"+ data[i].maLop +"</span></td>\
+                                  <td class='cell'>"+ data[i].tenLop +"</td>\
+                                  <td class='cell'>"+ data[i].maKhoa +"</td>\
+                                  <td class='cell'>"+ data[i].maCoVanHocTap +"</td>\
+                                  <td class='cell'>"+ data[i].maKhoaHoc +"</td>\
+                                  <td class='cell'>\
+                                    <button class='btn bg-warning btn_ChinhSua' style='color: white;' data-bs-toggle='modal' data-bs-target='#ChinhSuaModal' data-id = '"+ data[i].maLop +"' >Chỉnh sửa</button>\
+                                  </td>\
                                 </tr>";
                            
                         }
@@ -137,7 +139,9 @@ function GetListLop(maKhoa) {
                                 <td class='cell'>"+ data[i].maKhoa +"</td>\
                                 <td class='cell'>"+ data[i].maCoVanHocTap +"</td>\
                                 <td class='cell'>"+ data[i].maKhoaHoc +"</td>\
-                                <td class='cell'><a class='btn bg-warning' href='#' style='color: white;'>Chỉnh sửa</a></td>\
+                                <td class='cell'>\
+                                  <button class='btn bg-warning btn_ChinhSua' style='color: white;' data-bs-toggle='modal' data-bs-target='#ChinhSuaModal' data-id = '"+ data[i].maLop +"' >Chỉnh sửa</button>\
+                                </td>\
                                 </tr>";
                            
                         }
@@ -190,7 +194,9 @@ function TimKiemLop(maLop) {
             <td class='cell'>"+ result_Lop.maKhoa +"</td>\
             <td class='cell'>"+ result_Lop.maCoVanHocTap +"</td>\
             <td class='cell'>"+ result_Lop.maKhoaHoc +"</td>\
-            <td class='cell'><a class='btn bg-warning' href='#' style='color: white;'>Chỉnh sửa</a></td>\
+            <td class='cell'>\
+              <button class='btn bg-warning btn_ChinhSua' style='color: white;' data-bs-toggle='modal' data-bs-target='#ChinhSuaModal' data-id = '"+ data[i].maLop +"' >Chỉnh sửa</button>\
+             </td>\
         </tr>"
   
         $("#id_tbodyLop").html(htmlData);
@@ -223,7 +229,10 @@ function LoadComboBoxThongTinKhoa() {
       async: false,
       headers: { Authorization: jwtCookie },
       success: function (result_Khoa) {
+
         $("#select_Khoa").find("option").remove();
+        $("#select_Khoa_Add").find("option").remove();
+        $("#edit_select_Khoa_Add").find("option").remove();
   
         $("#select_Khoa").append(
           "<option selected value='tatcakhoa'>Tất cả khoa</option>"
@@ -246,8 +255,21 @@ function LoadComboBoxThongTinKhoa() {
                 result_Khoa[index_Khoa][p].tenKhoa +
                 "</option>"
             );
+
+            $("#edit_select_Khoa_Add").append(
+              "<option value='" +
+                result_Khoa[index_Khoa][p].maKhoa +
+                "'>" +
+                result_Khoa[index_Khoa][p].tenKhoa +
+                "</option>"
+            );
+
           }
         });
+
+
+       
+
       },
       error: function (errorMessage) {
         checkLoiDangNhap(errorMessage.responseJSON.message);
@@ -276,11 +298,21 @@ function LoadComboBoxCoVanHocTap_AddModal() {
     headers: { Authorization: jwtCookie },
     success: function (result_CVHT) {
       $("#select_CVHT_Add").find("option").remove();
+      $("#edit_select_CVHT_Add").find("option").remove();
 
       $.each(result_CVHT, function (index_CVHT) {
         for (var p = 0; p < result_CVHT[index_CVHT].length; p++) {
 
           $("#select_CVHT_Add").append(
+            "<option value='" +
+              result_CVHT[index_CVHT][p].maCoVanHocTap +
+              "'>" + result_CVHT[index_CVHT][p].maCoVanHocTap + " - " +
+              result_CVHT[index_CVHT][p].hoTenCoVan +
+              "</option>"
+          );
+
+
+          $("#edit_select_CVHT_Add").append(
             "<option value='" +
               result_CVHT[index_CVHT][p].maCoVanHocTap +
               "'>" + result_CVHT[index_CVHT][p].maCoVanHocTap + " - " +
@@ -319,6 +351,7 @@ function LoadComboBoxKhoaHoc_AddModal() {
     headers: { Authorization: jwtCookie },
     success: function (result_KhoaHoc) {
       $("#select_KhoaHoc_Add").find("option").remove();
+      $("#edit_select_KhoaHoc_Add").find("option").remove();
 
       $.each(result_KhoaHoc, function (index_KhoaHoc) {
         for (var p = 0; p < result_KhoaHoc[index_KhoaHoc].length; p++) {
@@ -331,6 +364,13 @@ function LoadComboBoxKhoaHoc_AddModal() {
           );
 
           
+          $("#edit_select_KhoaHoc_Add").append(
+            "<option value='" +
+            result_KhoaHoc[index_KhoaHoc][p].maKhoaHoc +
+              "'>" + result_KhoaHoc[index_KhoaHoc][p].maKhoaHoc + 
+              "</option>"
+          );
+
         }
       });
     },
@@ -405,6 +445,131 @@ function ThemMoi() {
           icon: "error",
           title: "Lỗi",
           text: errorMessage.responseJSON.message,
+          //timer: 5000,
+          timerProgressBar: true,
+        });
+      },
+    });
+
+
+  }
+
+
+
+
+}
+
+
+function LoadThongTinChinhSua(maLop) {
+  
+  $.ajax({
+    url: urlapi_lop_single_read + maLop, 
+    type: "GET",
+    contentType: "application/json;charset=utf-8",
+    dataType: "json",
+    async: false,
+    headers: { Authorization: jwtCookie },
+    success: function (result_data) {
+      
+      $('#edit_input_TenLop').val(result_data.tenLop);
+
+      var edit_select_CVHT_Add = document.getElementById("edit_select_CVHT_Add");
+      for (var i = 0; i < edit_select_CVHT_Add.options.length; i++)
+      {
+          if (edit_select_CVHT_Add.options[i].value === result_data.maCoVanHocTap ) {
+            edit_select_CVHT_Add.options[i].selected = true;
+          }
+      }
+
+      var edit_select_Khoa_Add = document.getElementById("edit_select_Khoa_Add");
+      for (var i = 0; i < edit_select_Khoa_Add.options.length; i++)
+      {
+          if (edit_select_Khoa_Add.options[i].value === result_data.maKhoa ) {
+            edit_select_Khoa_Add.options[i].selected = true;
+          }
+      }
+
+      var edit_select_KhoaHoc_Add = document.getElementById("edit_select_KhoaHoc_Add");
+      for (var i = 0; i < edit_select_KhoaHoc_Add.options.length; i++)
+      {
+          if (edit_select_KhoaHoc_Add.options[i].value === result_data.maKhoaHoc ) {
+            edit_select_KhoaHoc_Add.options[i].selected = true;
+          }
+      }
+  
+      
+    },
+    error: function (errorMessage) {
+      //checkLoiDangNhap(errorMessage.responseJSON.message);
+
+      Swal.fire({
+        icon: "error",
+        title: "Lỗi",
+        text: errorMessage.responseJSON.message,
+        //timer: 5000,
+        timerProgressBar: true,
+      });
+    },
+  });
+
+
+
+}
+
+
+function ChinhSua() {
+  var _edit_input_MaLop = $('#edit_input_MaLop').val();
+  var _edit_input_TenLop = $('#edit_input_TenLop').val();
+  var _edit_select_Khoa_Add = $('#edit_select_Khoa_Add option:selected').val();
+  var _edit_select_CVHT_Add = $('#edit_select_CVHT_Add option:selected').val();
+  var _edit_select_KhoaHoc_Add = $('#edit_select_KhoaHoc_Add option:selected').val();
+
+  if (_edit_input_MaLop == '' || _edit_input_MaLop == ''){
+    ThongBaoLoi("Vui lòng nhập đầy đủ thông tin!");
+
+  }else{
+
+    var dataPost ={
+      maLop: _edit_input_MaLop,
+      tenLop: _edit_input_TenLop,
+      maKhoa: _edit_select_Khoa_Add,
+      maCoVanHocTap: _edit_select_CVHT_Add,
+      maKhoaHoc: _edit_select_KhoaHoc_Add
+    }
+
+
+    $.ajax({
+      url: urlapi_lop_update,
+      type: "POST",
+      contentType: "application/json;charset=utf-8",
+      dataType: "json",
+      data: JSON.stringify(dataPost),
+      async: false,
+      headers: { Authorization: jwtCookie },
+      success: function (result_update) {
+        $('#ChinhSuaModal').modal('hide');
+        
+        Swal.fire({
+          icon: "success",
+          title: "Chỉnh sửa thành công lớp mã lớp "+ _edit_input_MaLop +"!",
+          text: '',
+          timer: 2000,
+          timerProgressBar: true,
+        });
+
+        setTimeout(() => {
+          GetListLop("tatcakhoa");
+        }, 2000);
+
+  
+      },
+      error: function (errorMessage) {
+        checkLoiDangNhap(errorMessage.responseJSON.message);
+  
+        Swal.fire({
+          icon: "error",
+          title: "Lỗi",
+          text: errorMessage.responseText,
           //timer: 5000,
           timerProgressBar: true,
         });

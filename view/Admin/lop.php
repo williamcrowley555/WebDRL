@@ -121,6 +121,59 @@
 					</div>
 				</div>
 
+
+				<!-- Modal chỉnh sửa -->
+				<div class="modal fade" id="ChinhSuaModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<img src="assets/images/icons/edit.png" width="25px" style="padding-right: 5px;">
+								<h5 class="modal-title" id="exampleModalLabel"> Chỉnh sửa lớp</h5>
+								<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+							</div>
+							<div class="modal-body">
+
+								<div class="mb-3">
+									<label for="edit_input_MaLop" class="form-label" style="color: black; font-weight: 500;">Mã lớp</label>
+									<input type="text" class="form-control mb-2" id="edit_input_MaLop" placeholder="Nhập mã lớp..." readonly>
+								</div>
+
+								<div class="mb-3">
+									<label for="edit_input_TenLop" class="form-label" style="color: black; font-weight: 500;">Tên lớp</label>
+									<input type="text" class="form-control" id="edit_input_TenLop" placeholder="Nhập tên lớp...">
+								</div>
+
+								<div class="mb-3">
+									<label for="edit_select_Khoa_Add" class="form-label" style="color: black; font-weight: 500;">Khoa</label>
+									<select class="form-select" aria-label="Default select example" id="edit_select_Khoa_Add">
+
+									</select>
+								</div>
+
+								<div class="mb-3">
+									<label for="edit_select_CVHT_Add" class="form-label" style="color: black; font-weight: 500;">Cố vấn học tập</label>
+									<select class="form-select edit_select_CVHT_Add" aria-label="Default select example" id="edit_select_CVHT_Add">
+
+									</select>
+								</div>
+
+								<div class="mb-3">
+									<label for="edit_select_KhoaHoc_Add" class="form-label" style="color: black; font-weight: 500;">Khóa học</label>
+									<select class="form-select" aria-label="Default select example" id="edit_select_KhoaHoc_Add">
+
+									</select>
+								</div>
+
+
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+								<button type="button" class="btn btn-warning" style='color: white;' onclick="return ChinhSua()">Chỉnh sửa</button>
+							</div>
+						</div>
+					</div>
+				</div>
+
 				
 
 				<div class="tab-pane fade show active" id="orders-all" role="tabpanel" aria-labelledby="orders-all-tab">
@@ -219,11 +272,13 @@
 	LoadComboBoxKhoaHoc_AddModal();
 
 
+	//add modal
 	var select_box_element_Khoa = document.querySelector('#select_Khoa_Add');
 
 	dselect(select_box_element_Khoa,{
 		search: true
 	});
+
 
 	var select_box_element_CVHT = document.querySelector('#select_CVHT_Add');
 
@@ -231,11 +286,47 @@
 		search: true
 	});
 
+
 	var select_box_element_KhoaHoc = document.querySelector('#select_KhoaHoc_Add');
 
 	dselect(select_box_element_KhoaHoc,{
 		search: true
 	});
 	
+
+	
+
+	//Xử lý chỉnh sửa
+	$(document).on("click", ".btn_ChinhSua" ,function() {
+
+		let maLop_edit = $(this).attr('data-id');
+
+		$('#edit_input_MaLop').val(maLop_edit);
+
+		LoadThongTinChinhSua(maLop_edit);
+
+		//edit modal
+		var edit_select_box_element_Khoa = document.querySelector('#edit_select_Khoa_Add');
+
+		dselect(edit_select_box_element_Khoa,{
+			search: true
+		});
+
+		var edit_select_box_element_CVHT = document.querySelector('#edit_select_CVHT_Add');
+
+		dselect(edit_select_box_element_CVHT,{
+			search: true
+		});
+
+		var edit_select_box_element_KhoaHoc = document.querySelector('#edit_select_KhoaHoc_Add');
+
+		dselect(edit_select_box_element_KhoaHoc,{	
+			search: true
+		});
+
+
+	})
+
+
 
 </script>

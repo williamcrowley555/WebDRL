@@ -34,13 +34,22 @@
                 $item->maKhoaHoc = $data->maKhoaHoc;
                 
                 if($item->updateLop()){
-                    echo json_encode("Lop data updated.");
+                    http_response_code(200);
+                    echo json_encode(
+                        array("message" => "Lớp cập nhật thành công!")
+                    );
                 } else{
-                    echo json_encode("Data could not be updated");
+                    http_response_code(500);
+                    echo json_encode(
+                        array("message" => "Lớp cập nhật KHÔNG thành công!")
+                    );
                 }
     
             }else{
-                echo 'No data posted.';
+                http_response_code(404);
+                echo json_encode(
+                    array("message" => "Không có dữ liệu gửi lên!")
+                );
             }
         } else {
             http_response_code(403);
