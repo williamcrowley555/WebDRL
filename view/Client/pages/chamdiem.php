@@ -26,14 +26,25 @@
             <div class="row" style="margin: 0 auto;text-align: center;background: white;border-radius: 10px;">
                 <div style="padding: 48px;">
                     <div class="form-outline mb-4">
-                        <div class="row justify-content-center" style="padding-bottom: 30px;">
+                        
+                        <div class="row justify-content-center" style="padding-bottom: 20px;">
                             <div class="col-6">
                                <span style="font-weight: bold;">Họ tên sinh viên: </span><span id="text_HoTen" ></span>
                             </div>
                             <div class="col-4">
                                 <span style="font-weight: bold;">Mã số sinh viên: </span><span id="text_MaSo"></span> 
                             </div>
-                          </div>
+
+                        </div>
+
+                        <div class="row justify-content-center" style="padding-bottom: 30px;">
+                            <div class="col-6">
+                               <span style="font-weight: bold;">Họ tên cố vấn: </span><span id="text_HoTenCoVan" ></span> (<span id="text_MaCoVan" ></span>)
+                            </div>
+                            <div class="col-4">
+                                <span style="font-weight: bold;">Lớp: </span><span id="text_maLop"></span> 
+                            </div>
+                        </div>
 
                           <table class="table align-middle mb-0 bg-white table-hover">
                             <thead class="bg-light">
@@ -56,12 +67,12 @@
                             </tbody>
                           </table>
 
-                          
-                    </div>
+                    </div>  
                 </div>
             </div>
-            <!-- end of row -->
         </div>
+            <!-- end of row -->
+    </div>
 
         <!-- end of container -->
   

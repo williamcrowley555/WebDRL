@@ -31,6 +31,77 @@ if (getCookie('hoTen') != null){
 
 if (getCookie('maSo') != null){
     $('#text_MaSo').text(getCookie('maSo'));
+
+    getThongTinCoVanSinhVien(getCookie('maSo'));
+}
+
+
+
+function getThongTinCoVanSinhVien(maSinhVien) {
+    
+    
+    $.ajax({
+        url: urlapi_sinhvien_single_read + maSinhVien,
+        async: false,
+        type: "GET",
+        contentType: "application/json;charset=utf-8",
+        dataType: "json",
+        headers: {
+            Authorization: jwtCookie,
+        },
+        success: function (result_sv) {
+            var maLop_sv = result_sv.maLop;
+
+            $.ajax({
+                url: urlapi_lop_single_read + maLop_sv,
+                async: false,
+                type: "GET",
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                headers: {
+                    Authorization: jwtCookie,
+                },
+                success: function (result_lop) {
+                    var maCoVanHocTap_lop = result_lop.maCoVanHocTap;
+        
+                    $.ajax({
+                        url: urlapi_covanhoctap_single_read + maCoVanHocTap_lop,
+                        async: false,
+                        type: "GET",
+                        contentType: "application/json;charset=utf-8",
+                        dataType: "json",
+                        headers: {
+                            Authorization: jwtCookie,
+                        },
+                        success: function (result_cvht) {
+                         
+                            $('#text_maLop').text(maLop_sv);
+                            $('#text_HoTenCoVan').text(result_cvht.hoTenCoVan);
+                            $('#text_MaCoVan').text(result_cvht.maCoVanHocTap);
+                            
+                            
+                        },
+                        error: function (errorMessage) {
+                            thongBaoLoi(errorMessage.responseJSON.message);
+                        },
+                    });
+                    
+        
+        
+                },
+                error: function (errorMessage) {
+                    thongBaoLoi(errorMessage.responseJSON.message);
+                },
+            });
+
+
+        },
+        error: function (errorMessage) {
+            thongBaoLoi(errorMessage.responseJSON.message);
+        },
+    });
+
+
 }
 
 // function lấy thông tin thông báo đánh giá, học kỳ đánh giá

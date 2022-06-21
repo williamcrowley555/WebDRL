@@ -46,7 +46,10 @@
                     );
                 }
             } else {
-                echo 'Không có dữ liệu được gửi lên.';
+                http_response_code(404);
+                echo json_encode(
+                    array("message" => "Không có dữ liệu được gửi lên..")
+                );
             }
 
         // } else {
