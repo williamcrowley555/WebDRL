@@ -25,28 +25,55 @@ if ($data["status"] == 1) {
         $data = json_decode(file_get_contents("php://input"));
 
         if ($data != null) {
-            $item->maSinhVien  = $data->maSinhVien;
 
-            //values
-            $item->hoTenSinhVien = $data->hoTenSinhVien;
-            $item->ngaySinh = $data->ngaySinh;
-            $item->he = $data->he;
-            $item->matKhauSinhVien = md5($data->matKhauSinhVien);
-            $item->maLop = $data->maLop;
+            //Nếu có gửi matKhauSinhVien thì -> chức năng đặt lại mật khẩu, ngược lại là chức năng chỉnh sửa
+            if (isset($data->matKhauSinhVien)){
+                $item->maSinhVien  = $data->maSinhVien;
 
-            if ($item->updateSinhVien()) {
-                http_response_code(200);
-                echo json_encode(
-                    array("message" => "sinhvien cập nhật thành công.")
-                );
-            } else {
-                http_response_code(500);
-                echo json_encode(
-                    array("message" => "sinhvien cập nhật KHÔNG thành công.")
-                );
+                //values
+                $item->hoTenSinhVien = $data->hoTenSinhVien;
+                $item->ngaySinh = $data->ngaySinh;
+                $item->he = $data->he;
+                $item->matKhauSinhVien = md5($data->matKhauSinhVien);
+                $item->maLop = $data->maLop;
+    
+                if ($item->updateSinhVien()) {
+                    http_response_code(200);
+                    echo json_encode(
+                        array("message" => "sinhvien cập nhật thành công.")
+                    );
+                } else {
+                    http_response_code(500);
+                    echo json_encode(
+                        array("message" => "sinhvien cập nhật KHÔNG thành công.")
+                    );
+                }
+            }else{
+                $item->maSinhVien  = $data->maSinhVien;
+
+                //values
+                $item->hoTenSinhVien = $data->hoTenSinhVien;
+                $item->ngaySinh = $data->ngaySinh;
+                $item->he = $data->he;
+                $item->maLop = $data->maLop;
+
+                if ($item->updateSinhVien_KhongMatKhau()) {
+                    http_response_code(200);
+                    echo json_encode(
+                        array("message" => "sinhvien cập nhật thành công.")
+                    );
+                } else {
+                    http_response_code(500);
+                    echo json_encode(
+                        array("message" => "sinhvien cập nhật KHÔNG thành công.")
+                    );
+                }
             }
+
+
+            
         } else {
-            http_response_code(403);
+            http_response_code(404);
             echo json_encode(
                 array("message" => "Không có dữ liệu gửi lên.")
             );

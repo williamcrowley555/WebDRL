@@ -44,7 +44,7 @@
             $dataRow = $stmt->fetch(PDO::FETCH_ASSOC);
             
             if ($dataRow != null){
-                $this->maThongBao    = $dataRow['maThongBao   '];
+                $this->maThongBao = $dataRow['maThongBao'];
                 $this->ngaySinhVienDanhGia = $dataRow['ngaySinhVienDanhGia'];
                 $this->ngaySinhVienKetThucDanhGia = $dataRow['ngaySinhVienKetThucDanhGia'];
                 $this->ngayCoVanDanhGia = $dataRow['ngayCoVanDanhGia'];
@@ -156,7 +156,7 @@
         
         
             // bind data
-            $stmt->bindParam(":maThongBao   ", $this->maThongBao   );
+            $stmt->bindParam(":maThongBao", $this->maThongBao   );
             $stmt->bindParam(":ngaySinhVienDanhGia", $this->ngaySinhVienDanhGia);
             $stmt->bindParam(":ngaySinhVienKetThucDanhGia", $this->ngaySinhVienKetThucDanhGia);
             $stmt->bindParam(":ngayCoVanDanhGia", $this->ngayCoVanDanhGia);
@@ -175,7 +175,7 @@
 
         // DELETE
         function deleteThongBaoDanhGia(){
-            $sqlQuery = "DELETE FROM " . $this->db_table . " WHERE maThongBao    = ?";
+            $sqlQuery = "DELETE FROM " . $this->db_table . " WHERE maThongBao = ?";
             $stmt = $this->conn->prepare($sqlQuery);
         
             $this->maThongBao   =htmlspecialchars(strip_tags($this->maThongBao   ));

@@ -114,7 +114,7 @@
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-							<button type="button" class="btn btn-primary" style='color: white;' onclick="return ThemMoi()">Thêm mới</button>
+							<button type="button" class="btn btn-primary" style='color: white;' onclick="return ThemMoi_Lop()">Thêm mới</button>
 						</div>
 					</div>
 				</div>
@@ -167,9 +167,9 @@
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-							<button type="button" class="btn btn-warning" style='color: white;' onclick="return ChinhSua()">Chỉnh sửa</button>
+							<button type="button" class="btn btn-warning" style='color: white;' onclick="return ChinhSua_Lop()">Chỉnh sửa</button>
 						</div>
-					</div>
+					</div>	
 				</div>
 			</div>
 
@@ -264,7 +264,7 @@
 	});
 
 
-	LoadComboBoxThongTinKhoa();
+	LoadComboBoxThongTinKhoa_Lop();
 
 	LoadComboBoxCoVanHocTap_AddModal();
 
@@ -296,13 +296,13 @@
 
 
 	//Xử lý chỉnh sửa
-	$(document).on("click", ".btn_ChinhSua", function() {
+	$(document).on("click", ".btn_ChinhSua_Lop", function() {
 
 		let maLop_edit = $(this).attr('data-id');
 
 		$('#edit_input_MaLop').val(maLop_edit);
 
-		LoadThongTinChinhSua(maLop_edit);
+		LoadThongTinChinhSua_Lop(maLop_edit);
 
 		//edit modal
 		var edit_select_box_element_Khoa = document.querySelector('#edit_select_Khoa_Add');

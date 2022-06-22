@@ -87,7 +87,7 @@ function GetListLop(maKhoa) {
                 data[i].maKhoaHoc +
                 "</td>\
                                   <td class='cell'>\
-                                    <button class='btn bg-warning btn_ChinhSua' style='color: white;' data-bs-toggle='modal' data-bs-target='#ChinhSuaModal' data-id = '" +
+                                    <button class='btn bg-warning btn_ChinhSua_Lop' style='color: white;' data-bs-toggle='modal' data-bs-target='#ChinhSuaModal' data-id = '" +
                 data[i].maLop +
                 "' >Chỉnh sửa</button>\
                                   </td>\
@@ -155,7 +155,7 @@ function GetListLop(maKhoa) {
                 data[i].maKhoaHoc +
                 "</td>\
                                 <td class='cell'>\
-                                  <button class='btn bg-warning btn_ChinhSua' style='color: white;' data-bs-toggle='modal' data-bs-target='#ChinhSuaModal' data-id = '" +
+                                  <button class='btn bg-warning btn_ChinhSua_Lop' style='color: white;' data-bs-toggle='modal' data-bs-target='#ChinhSuaModal' data-id = '" +
                 data[i].maLop +
                 "' >Chỉnh sửa</button>\
                                 </td>\
@@ -213,7 +213,7 @@ function TimKiemLop(maLop) {
         result_Lop.maKhoaHoc +
         "</td>\
             <td class='cell'>\
-              <button class='btn bg-warning btn_ChinhSua' style='color: white;' data-bs-toggle='modal' data-bs-target='#ChinhSuaModal' data-id = '" +
+              <button class='btn bg-warning btn_ChinhSua_Lop' style='color: white;' data-bs-toggle='modal' data-bs-target='#ChinhSuaModal' data-id = '" +
         data[i].maLop +
         "' >Chỉnh sửa</button>\
              </td>\
@@ -237,7 +237,7 @@ function TimKiemLop(maLop) {
   });
 }
 
-function LoadComboBoxThongTinKhoa() {
+function LoadComboBoxThongTinKhoa_Lop() {
   //Load khoa
   $.ajax({
     url: urlapi_khoa_read,
@@ -289,7 +289,7 @@ function LoadComboBoxThongTinKhoa() {
       Swal.fire({
         icon: "error",
         title: "Lỗi",
-        text: errorMessage.responseText,
+        text: errorMessage.responseJSON.message,
         //timer: 5000,
         timerProgressBar: true,
       });
@@ -340,7 +340,7 @@ function LoadComboBoxCoVanHocTap_AddModal() {
       Swal.fire({
         icon: "error",
         title: "Lỗi",
-        text: errorMessage.responseText,
+        text: errorMessage.responseJSON.message,
         //timer: 5000,
         timerProgressBar: true,
       });
@@ -387,7 +387,7 @@ function LoadComboBoxKhoaHoc_AddModal() {
       Swal.fire({
         icon: "error",
         title: "Lỗi",
-        text: errorMessage.responseText,
+        text: errorMessage.responseJSON.message,
         //timer: 5000,
         timerProgressBar: true,
       });
@@ -395,7 +395,7 @@ function LoadComboBoxKhoaHoc_AddModal() {
   });
 }
 
-function ThemMoi() {
+function ThemMoi_Lop() {
   var _input_MaLop = $("#input_MaLop").val();
   var _input_TenLop = $("#input_TenLop").val();
   var _select_Khoa_Add = $("#select_Khoa_Add option:selected").val();
@@ -454,7 +454,7 @@ function ThemMoi() {
   }
 }
 
-function LoadThongTinChinhSua(maLop) {
+function LoadThongTinChinhSua_Lop(maLop) {
   $.ajax({
     url: urlapi_lop_single_read + maLop,
     type: "GET",
@@ -510,7 +510,7 @@ function LoadThongTinChinhSua(maLop) {
   });
 }
 
-function ChinhSua() {
+function ChinhSua_Lop() {
   var _edit_input_MaLop = $("#edit_input_MaLop").val();
   var _edit_input_TenLop = $("#edit_input_TenLop").val();
   var _edit_select_Khoa_Add = $("#edit_select_Khoa_Add option:selected").val();
@@ -559,7 +559,7 @@ function ChinhSua() {
         Swal.fire({
           icon: "error",
           title: "Lỗi",
-          text: errorMessage.responseText,
+          text: errorMessage.responseJSON.message,
           //timer: 5000,
           timerProgressBar: true,
         });

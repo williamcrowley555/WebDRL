@@ -141,6 +141,66 @@
 					</div>
 				</div>
 
+				<!-- Modal Chỉnh sửa -->
+				<div class="modal fade" id="ChinhSuaModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<img src="assets/images/icons/edit.png" width="25px" style="padding-right: 5px;">
+								<h5 class="modal-title" id="exampleModalLabel"> Chỉnh sửa thông báo đánh giá</h5>
+								<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+							</div>
+							<div class="modal-body">
+
+								<div class="mb-3">
+									<label for="edit_input_MaThongBao" class="form-label" style="color: black; font-weight: 500;">Mã thông báo</label>
+									<input type="text" class="form-control" id="edit_input_MaThongBao" placeholder="Nhập mã thông báo..." readonly>
+								</div>
+
+								<div class="mb-3">
+									<label for="edit_input_NgayThongBao" class="form-label" style="color: black; font-weight: 500;">Ngày thông báo</label>
+									<input type="date" class="form-control" id="edit_input_NgayThongBao" placeholder="Nhập ngày thông báo...">
+								</div>
+
+								<div class="mb-3">
+									<label for="edit_input_NgaySinhVienDanhGia" class="form-label" style="color: black; font-weight: 500;"><img src="assets/images/icons/student1.png" alt="Student text" width="15px" /> Ngày sinh viên đánh giá</label>
+									<input type="date" class="form-control" id="edit_input_NgaySinhVienDanhGia" placeholder="Nhập ngày sinh viên đánh giá...">
+								</div>
+
+								<div class="mb-3">
+									<label for="edit_input_NgaySinhVienKetThucDanhGia" class="form-label" style="color: black; font-weight: 500;">Ngày sinh viên kết thúc đánh giá</label>
+									<input type="date" class="form-control" id="edit_input_NgaySinhVienKetThucDanhGia" placeholder="Nhập ngày sinh viên kết thúc đánh giá...">
+								</div>
+
+								<div class="mb-3">
+									<label for="edit_input_NgayCoVanDanhGia" class="form-label" style="color: black; font-weight: 500;"><img src="assets/images/icons/presentation2.png" alt="cố vấn text" width="15px" /> Ngày cố vấn đánh giá</label>
+									<input type="date" class="form-control" id="edit_input_NgayCoVanDanhGia" placeholder="Nhập ngày cố vấn đánh giá...">
+								</div>
+
+								<div class="mb-3">
+									<label for="edit_input_NgayCoVanKetThucDanhGia" class="form-label" style="color: black; font-weight: 500;"> Ngày cố vấn kết thúc đánh giá</label>
+									<input type="date" class="form-control" id="edit_input_NgayCoVanKetThucDanhGia" placeholder="Nhập ngày cố vấn kết thúc đánh giá...">
+								</div>
+
+								<div class="mb-3">
+									<label for="edit_input_NgayKhoaDanhGia" class="form-label" style="color: black; font-weight: 500;"><img src="assets/images/icons/office-worker.png" alt="khoa text" width="15px" /> Ngày Khoa đánh giá</label>
+									<input type="date" class="form-control" id="edit_input_NgayKhoaDanhGia" placeholder="Nhập ngày khoa đánh giá...">
+								</div>
+
+								<div class="mb-3">
+									<label for="edit_input_NgayKhoaKetThucDanhGia" class="form-label" style="color: black; font-weight: 500;">Ngày Khoa kết thúc đánh giá</label>
+									<input type="date" class="form-control" id="edit_input_NgayKhoaKetThucDanhGia" placeholder="Nhập ngày Khoa kết thúc đánh giá...">
+								</div>
+								
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+								<button type="button" class="btn btn-warning" style='color: white;' onclick="return ChinhSua_ThongBaoDanhGia()">Chỉnh sửa</button>
+							</div>
+						</div>
+					</div>
+				</div>
+
 
 				<div class="tab-pane fade show active" id="orders-all" role="tabpanel" aria-labelledby="orders-all-tab">
 					<div class="app-card app-card-orders-table shadow-sm mb-5">
@@ -215,13 +275,14 @@
 
 	//LoadThongTinThemMoi();
 
-	// $(document).ready(function(){
-	// 	$('.btn_BatDauDiemDanh').on('click', function(){
-	// 		var maHoatDong = $(this).attr('data-id');
+	$(document).on("click", ".btn_ChinhSua_ThongBaoDanhGia" ,function() {
+		var maThongBao = $(this).attr('data-id');
+		
+		$('#edit_input_MaThongBao').val(maThongBao);
 
-	// 		DiemDanhHoatDong(maHoatDong);
-	// 	})
-	// });
+		LoadThongTinChinhSua_ThongBaoDanhGia(maThongBao);
+		
+	})
 
 
 

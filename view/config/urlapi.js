@@ -42,12 +42,17 @@ const urlapi_cvht_update = host_domain_url + "/covanhoctap/update.php";
 //---------------KHOA---------------//----------------------------------
 //---------//
 
+//CREATE
+const urlapi_khoa_create = host_domain_url + "/khoa/create.php";
+
 //READ
 const urlapi_khoa_read = host_domain_url + "/khoa/read.php";
 
 //SINGLE READ//
-const urlapi_khoa_single_read =
-  host_domain_url + "/khoa/single_read.php?maKhoa=";
+const urlapi_khoa_single_read = host_domain_url + "/khoa/single_read.php?maKhoa=";
+
+//UPDATE
+const urlapi_khoa_update = host_domain_url + "/khoa/update.php";
 
 //---------------LOP---------------//----------------------------------
 //---------//
@@ -76,6 +81,10 @@ const urlapi_thongbaodanhgia_read =
 //SINGLE READ (maHocKyDanhGia)
 const urlapi_thongbaodanhgia_single_read_MaHKDG =
   host_domain_url + "/thongbaodanhgia/single_read.php?maHocKyDanhGia=";
+
+  //SINGLE READ (maThongBao)
+const urlapi_thongbaodanhgia_single_read_MaThongBao =
+host_domain_url + "/thongbaodanhgia/single_read.php?maThongBao=";
 
 //CREATE
 const urlapi_thongbaodanhgia_create =
@@ -109,16 +118,13 @@ const urlapi_hoatdongdanhgia_read =
   host_domain_url + "/hoatdongdanhgia/read.php";
 
 //SINGLE READ
-const urlapi_hoatdongdanhgia_single_read =
-  host_domain_url + "/hoatdongdanhgia/single_read.php?maHoatDong=";
+const urlapi_hoatdongdanhgia_single_read = host_domain_url + "/hoatdongdanhgia/single_read.php?maHoatDong=";
 
 //CREATE
-const urlapi_hoatdongdanhgia_create =
-  host_domain_url + "/hoatdongdanhgia/create.php";
+const urlapi_hoatdongdanhgia_create = host_domain_url + "/hoatdongdanhgia/create.php";
 
 //UPDATE
-const urlapi_hoatdongdanhgia_update =
-  host_domain_url + "/hoatdongdanhgia/update.php";
+const urlapi_hoatdongdanhgia_update = host_domain_url + "/hoatdongdanhgia/update.php";
 
 //---------------THAM GIA HOAT DONG---------------//----------------------------------
 //---------//

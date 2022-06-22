@@ -131,7 +131,6 @@
                         tenHoatDong = :tenHoatDong,
                         diemNhanDuoc = :diemNhanDuoc,
                         diaDiemDienRaHoatDong = :diaDiemDienRaHoatDong,
-                        maQRDiaDiem = :maQRDiaDiem,
                         maHocKyDanhGia = :maHocKyDanhGia,
                         thoiGianBatDauDiemDanh = :thoiGianBatDauDiemDanh,
                         thoiGianBatDauHoatDong = :thoiGianBatDauHoatDong,
@@ -149,7 +148,6 @@
             $this->tenHoatDong=htmlspecialchars(strip_tags($this->tenHoatDong));
             $this->diemNhanDuoc=htmlspecialchars(strip_tags($this->diemNhanDuoc));
             $this->diaDiemDienRaHoatDong=htmlspecialchars(strip_tags($this->diaDiemDienRaHoatDong));
-            $this->maQRDiaDiem=htmlspecialchars(strip_tags($this->maQRDiaDiem));
             $this->maHocKyDanhGia=htmlspecialchars(strip_tags($this->maHocKyDanhGia));
             $this->thoiGianBatDauDiemDanh=htmlspecialchars(strip_tags($this->thoiGianBatDauDiemDanh));
             $this->thoiGianBatDauHoatDong=htmlspecialchars(strip_tags($this->thoiGianBatDauHoatDong));
@@ -164,7 +162,6 @@
             $stmt->bindParam(":tenHoatDong", $this->tenHoatDong);
             $stmt->bindParam(":diemNhanDuoc", $this->diemNhanDuoc);
             $stmt->bindParam(":diaDiemDienRaHoatDong", $this->diaDiemDienRaHoatDong);
-            $stmt->bindParam(":maQRDiaDiem", $this->maQRDiaDiem);
             $stmt->bindParam(":maHocKyDanhGia", $this->maHocKyDanhGia);
             $stmt->bindParam(":thoiGianBatDauDiemDanh", $this->thoiGianBatDauDiemDanh);
             $stmt->bindParam(":thoiGianBatDauHoatDong", $this->thoiGianBatDauHoatDong);

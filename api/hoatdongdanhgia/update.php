@@ -35,7 +35,6 @@ if ($data["status"] == 1) {
             $item->diemNhanDuoc = $data->diemNhanDuoc;
             $item->diaDiemDienRaHoatDong = $data->diaDiemDienRaHoatDong;
             $item->maHocKyDanhGia = $data->maHocKyDanhGia;
-            $item->maQRDiaDiem = $data->maQRDiaDiem;
             $item->thoiGianBatDauDiemDanh = $data->thoiGianBatDauDiemDanh;
             $item->thoiGianBatDauHoatDong = $data->thoiGianBatDauHoatDong;
             $item->thoiGianKetThucHoatDong = $data->thoiGianKetThucHoatDong;

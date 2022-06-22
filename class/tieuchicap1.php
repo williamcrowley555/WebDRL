@@ -73,7 +73,7 @@
                         ". $this->db_table ."
                     SET
                         noidung = :noidung, 
-                        diemtoida = :diemtoida, 
+                        diemtoida = :diemtoida
                     WHERE 
                         matc1 = :matc1";
         

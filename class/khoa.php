@@ -71,6 +71,7 @@
             $sqlQuery = "INSERT INTO
                         ". $this->db_table ."
                     SET
+                        maKhoa = :maKhoa,
                         tenKhoa = :tenKhoa, 
                         taiKhoanKhoa = :taiKhoanKhoa, 
                         matKhauKhoa = :matKhauKhoa";
@@ -78,11 +79,13 @@
             $stmt = $this->conn->prepare($sqlQuery);
         
             // sanitize (Lọc dữ liệu đầu vào tránh SQLInjection, XSS)
+            $this->maKhoa=htmlspecialchars(strip_tags($this->maKhoa));
             $this->tenKhoa=htmlspecialchars(strip_tags($this->tenKhoa));
             $this->taiKhoanKhoa=htmlspecialchars(strip_tags($this->taiKhoanKhoa));
             $this->matKhauKhoa=htmlspecialchars(strip_tags($this->matKhauKhoa));
         
             // bind data
+            $stmt->bindParam(":maKhoa", $this->maKhoa);
             $stmt->bindParam(":tenKhoa", $this->tenKhoa);
             $stmt->bindParam(":taiKhoanKhoa", $this->taiKhoanKhoa);
             $stmt->bindParam(":matKhauKhoa", $this->matKhauKhoa);
@@ -118,6 +121,32 @@
             $stmt->bindParam(":taiKhoanKhoa", $this->taiKhoanKhoa);
             $stmt->bindParam(":matKhauKhoa", $this->matKhauKhoa);
         
+            if($stmt->execute()){
+               return true;
+            }
+            return false;
+        }
+
+
+        // UPDATE
+        public function updateKhoa_KhongMatKhau(){
+            $sqlQuery = "UPDATE
+                        ". $this->db_table ."
+                    SET
+                        tenKhoa = :tenKhoa
+                    WHERE 
+                        maKhoa = :maKhoa";
+        
+            $stmt = $this->conn->prepare($sqlQuery);
+        
+            // sanitize (Lọc dữ liệu đầu vào tránh SQLInjection, XSS)
+            $this->maKhoa=htmlspecialchars(strip_tags($this->maKhoa));
+            $this->tenKhoa=htmlspecialchars(strip_tags($this->tenKhoa));
+ 
+            // bind data
+            $stmt->bindParam(":maKhoa", $this->maKhoa);
+            $stmt->bindParam(":tenKhoa", $this->tenKhoa);
+         
             if($stmt->execute()){
                return true;
             }

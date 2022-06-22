@@ -35,6 +35,9 @@
         
             $item->getSingleHoatDongDanhGia();
             if($item->maTieuChi3 != null){
+                $temp_ThoiGianBatDauHoatDong = new DateTime($item->thoiGianBatDauHoatDong);
+                $temp_ThoiGianKetThucHoatDong = new DateTime($item->thoiGianKetThucHoatDong);
+
                 // create array
                 $hoatdongdanhgia_arr = array(
                     "maHoatDong" =>  $item->maHoatDong,
@@ -47,8 +50,8 @@
                     "thoiGianBatDauDiemDanh" => $item->thoiGianBatDauDiemDanh,
                     "diaDiemDienRaHoatDong" => $item->diaDiemDienRaHoatDong,
                     "maQRDiaDiem" =>  $urlFile.$item->maQRDiaDiem,
-                    "thoiGianBatDauHoatDong" =>  $item->thoiGianBatDauHoatDong,
-                    "thoiGianKetThucHoatDong" =>  $item->thoiGianKetThucHoatDong   
+                    "thoiGianBatDauHoatDong" =>  $temp_ThoiGianBatDauHoatDong->format('Y-m-d\TH:i'),
+                    "thoiGianKetThucHoatDong" =>  $temp_ThoiGianKetThucHoatDong->format('Y-m-d\TH:i')
                 );
             
                 http_response_code(200);

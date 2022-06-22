@@ -114,7 +114,7 @@
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-							<button type="button" class="btn btn-primary" style='color: white;' onclick="return ThemMoi()">Thêm mới</button>
+							<button type="button" class="btn btn-primary" style='color: white;' onclick="return ThemMoi_SinhVien()">Thêm mới</button>
 						</div>
 					</div>
 				</div>
@@ -163,7 +163,7 @@
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-							<button type="button" class="btn btn-warning" style='color: white;' onclick="return ChinhSua()">Chỉnh sửa</button>
+							<button type="button" class="btn btn-warning" style='color: white;' onclick="return ChinhSua_SinhVien()">Chỉnh sửa</button>
 						</div>
 					</div>
 				</div>
@@ -199,7 +199,7 @@
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-							<button type="button" class="btn btn-info" style='color: white;' onclick="return DatLaiMatKhau()">Đặt lại mật khẩu</button>
+							<button type="button" class="btn btn-info" style='color: white;' onclick="return DatLaiMatKhau_SinhVien()">Đặt lại mật khẩu</button>
 						</div>
 					</div>
 				</div>
@@ -301,9 +301,9 @@
 
 	});
 
-	LoadComboBoxThongTinLop(); //Load combobox trong modal thêm mới
+	LoadComboBoxThongTinLop_SinhVien(); //Load combobox trong modal thêm mới
 
-	LoadComboBoxThongTinKhoa();
+	LoadComboBoxThongTinKhoa_SinhVien();
 
 	$('#select_Khoa').on('change', function() {
 		var maLop_selected = $('#select_Khoa').val();
@@ -314,7 +314,7 @@
 
 
 	//Dat lai mat khau
-	$(document).on("click", ".btn_DatLaiMatKhau", function() {
+	$(document).on("click", ".btn_DatLaiMatKhau_SinhVien", function() {
 
 		let maSinhVien = $(this).attr('data-id');
 
@@ -330,25 +330,14 @@
 	});
 
 	//Xử lý chỉnh sửa
-	$(document).on("click", ".btn_ChinhSua", function() {
+	$(document).on("click", ".btn_ChinhSua_SinhVien", function() {
 
 		let maSinhVien_edit = $(this).attr('data-id');
 
 		$('#edit_input_MaSinhVien').val(maSinhVien_edit);
 
-		LoadThongTinChinhSua(maSinhVien_edit);
+		LoadThongTinChinhSua_SinhVien(maSinhVien_edit);
 
-		//edit modal
-		var edit_select_Lop = document.querySelector('#edit_select_Lop');
-
-		dselect(edit_select_Lop, {
-			search: true
-		});
-
-		var edit_select_He = document.querySelector('#edit_select_He');
-
-		dselect(edit_select_He, {
-			search: true
-		});
+		
 	})
 </script>

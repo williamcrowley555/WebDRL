@@ -25,24 +25,47 @@
             $data = json_decode(file_get_contents("php://input"));
             
             if ($data != null){
-                $item->maCoVanHocTap  = $data->maCoVanHocTap ;
+
+                if (isset($data->matKhauTaiKhoanCoVan)){
+                    $item->maCoVanHocTap  = $data->maCoVanHocTap ;
             
-                //values
-                $item->hoTenCoVan = $data->hoTenCoVan;
-                $item->soDienThoai = $data->soDienThoai;
-                $item->matKhauTaiKhoanCoVan = md5($data->matKhauTaiKhoanCoVan);
-                
-                if($item->updateCVHT()){
-                    http_response_code(200);
-                    echo json_encode(
-                        array("message" => "Cố vấn học tập cập nhật thành công!")
-                    );
-                } else{
-                    http_response_code(404);
-                    echo json_encode(
-                        array("message" => "Cố vấn học tập cập nhật KHÔNG thành công!")
-                    );
+                    //values
+                    $item->hoTenCoVan = $data->hoTenCoVan;
+                    $item->soDienThoai = $data->soDienThoai;
+                    $item->matKhauTaiKhoanCoVan = md5($data->matKhauTaiKhoanCoVan);
+                    
+                    if($item->updateCVHT()){
+                        http_response_code(200);
+                        echo json_encode(
+                            array("message" => "Cố vấn học tập cập nhật thành công!")
+                        );
+                    } else{
+                        http_response_code(404);
+                        echo json_encode(
+                            array("message" => "Cố vấn học tập cập nhật KHÔNG thành công!")
+                        );
+                    }
+                }else{
+                    $item->maCoVanHocTap  = $data->maCoVanHocTap;
+            
+                    //values
+                    $item->hoTenCoVan = $data->hoTenCoVan;
+                    $item->soDienThoai = $data->soDienThoai;
+                    
+                    if($item->updateCVHT_KhongMatKhau()){
+                        http_response_code(200);
+                        echo json_encode(
+                            array("message" => "Cố vấn học tập cập nhật thành công!")
+                        );
+                    } else{
+                        http_response_code(404);
+                        echo json_encode(
+                            array("message" => "Cố vấn học tập cập nhật KHÔNG thành công!")
+                        );
+                    }
                 }
+
+                
     
             }else{
                 http_response_code(404);

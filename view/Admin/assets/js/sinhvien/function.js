@@ -88,11 +88,11 @@ function GetListSinhVien(maKhoa, maLop) {
                   <td class='cell'>" +
                   data[i].maLop +
                   "</td>\
-                  <td class='cell'><button  type='button' id='id_btnReset' class='btn btn-info btn_DatLaiMatKhau' data-bs-toggle='modal' data-bs-target='#DatLaiMatKhauModal' style='color: white;' data-id='" +
+                  <td class='cell'><button  type='button' id='id_btnReset' class='btn btn-info btn_DatLaiMatKhau_SinhVien' data-bs-toggle='modal' data-bs-target='#DatLaiMatKhauModal' style='color: white;' data-id='" +
                   data[i].maSinhVien +
                   "' >Đặt lại mật khẩu</button></td>\
                   <td class='cell'>\
-                  <button class='btn bg-warning btn_ChinhSua' style='color: white;' data-bs-toggle='modal' data-bs-target='#ChinhSuaModal' data-id = '" +
+                  <button class='btn bg-warning btn_ChinhSua_SinhVien' style='color: white;' data-bs-toggle='modal' data-bs-target='#ChinhSuaModal' data-id = '" +
                   data[i].maSinhVien +
                   "' >Chỉnh sửa</button>\
                 </td>\
@@ -106,13 +106,16 @@ function GetListSinhVien(maKhoa, maLop) {
         error: function (errorMessage) {
           checkLoiDangNhap(errorMessage.responseJSON.message);
 
-          Swal.fire({
-            icon: "error",
-            title: "Lỗi",
-            text: errorMessage.responseText,
-            timer: 5000,
-            timerProgressBar: true,
-          });
+          var htmlData = "";
+          $("#id_tbodySinhVien").html(htmlData);
+          $("#idPhanTrang").empty();
+          // Swal.fire({
+          //   icon: "error",
+          //   title: "Lỗi",
+          //   text: errorMessage.responseText,
+          //   timer: 5000,
+          //   timerProgressBar: true,
+          // });
         },
         statusCode: {
           403: function (xhr) {
@@ -134,6 +137,7 @@ function GetListSinhVien(maKhoa, maLop) {
             dataType: "json",
             headers: { Authorization: jwtCookie },
             success: function (result_Lop) {
+              var result_SVALL = [];
               $.each(result_Lop, function (index_Lop) {
                 for (var p = 0; p < result_Lop[index_Lop].length; p++) {
                   var get_maLop = result_Lop[index_Lop][p].maLop;
@@ -146,63 +150,21 @@ function GetListSinhVien(maKhoa, maLop) {
                     dataType: "json",
                     headers: { Authorization: jwtCookie },
                     success: function (result_SV) {
-                      $("#idPhanTrang").pagination({
-                        dataSource: result_SV["sinhvien"],
-                        pageSize: 10,
-                        autoHidePrevious: true,
-                        autoHideNext: true,
-
-                        callback: function (data, pagination) {
-                          var htmlData = "";
-                          var countSinhVien = 0;
-                          // htmlData = "<tr></tr>"
-                          for (let i = 0; i < data.length; i++) {
-                            countSinhVien += 1;
-
-                            htmlData +=
-                              "<tr>\
-                              <td class='cell'>" +
-                              data[i].soThuTu +
-                              "</td>\
-                              <td class='cell'><span class='truncate'>" +
-                              data[i].maSinhVien +
-                              "</span></td>\
-                              <td class='cell'>" +
-                              data[i].hoTenSinhVien +
-                              "</td>\
-                              <td class='cell'>" +
-                              data[i].ngaySinh +
-                              "</td>\
-                              <td class='cell'>" +
-                              data[i].he +
-                              "</td>\
-                              <td class='cell'>" +
-                              data[i].maLop +
-                              "<td class='cell'><button type='button'  class='btn btn-info btn_DatLaiMatKhau' data-bs-toggle='modal' data-bs-target='#DatLaiMatKhauModal' style='color: white;' data-id='" +
-                              data[i].maSinhVien +
-                              "' >Đặt lại mật khẩu</button></td>\
-                              <td class='cell'>\
-                              <button class='btn bg-warning btn_ChinhSua' style='color: white;' data-bs-toggle='modal' data-bs-target='#ChinhSuaModal' data-id = '" +
-                              data[i].maSinhVien +
-                              "' >Chỉnh sửa</button>\
-                            </td>\
-                              </tr>";
-                          }
-
-                          $("#id_tbodySinhVien").html(htmlData);
-                        },
-                      });
+                      result_SVALL.concat(result_SV['sinhvien']);
                     },
                     error: function (errorMessage) {
                       checkLoiDangNhap(errorMessage.responseJSON.message);
 
-                      Swal.fire({
-                        icon: "error",
-                        title: "Lỗi",
-                        text: errorMessage.responseJSON.message,
-                        timer: 5000,
-                        timerProgressBar: true,
-                      });
+                      var htmlData = "";
+                      $("#id_tbodySinhVien").html(htmlData);
+                      $("#idPhanTrang").empty();
+                      // Swal.fire({
+                      //   icon: "error",
+                      //   title: "Lỗi",
+                      //   text: errorMessage.responseJSON.message,
+                      //   timer: 5000,
+                      //   timerProgressBar: true,
+                      // });
                     },
                     statusCode: {
                       403: function (xhr) {
@@ -213,17 +175,67 @@ function GetListSinhVien(maKhoa, maLop) {
                   });
                 }
               });
+
+              $("#idPhanTrang").pagination({
+                dataSource: result_SVALL,
+                pageSize: 10,
+                autoHidePrevious: true,
+                autoHideNext: true,
+
+                callback: function (data, pagination) {
+                  var htmlData = "";
+                  var countSinhVien = 0;
+                  // htmlData = "<tr></tr>"
+                  for (let i = 0; i < data.length; i++) {
+                    countSinhVien += 1;
+
+                    htmlData +=
+                      "<tr>\
+                      <td class='cell'>" +
+                      data[i].soThuTu +
+                      "</td>\
+                      <td class='cell'><span class='truncate'>" +
+                      data[i].maSinhVien +
+                      "</span></td>\
+                      <td class='cell'>" +
+                      data[i].hoTenSinhVien +
+                      "</td>\
+                      <td class='cell'>" +
+                      data[i].ngaySinh +
+                      "</td>\
+                      <td class='cell'>" +
+                      data[i].he +
+                      "</td>\
+                      <td class='cell'>" +
+                      data[i].maLop +
+                      "<td class='cell'><button type='button'  class='btn btn-info btn_DatLaiMatKhau_SinhVien' data-bs-toggle='modal' data-bs-target='#DatLaiMatKhauModal' style='color: white;' data-id='" +
+                      data[i].maSinhVien +
+                      "' >Đặt lại mật khẩu</button></td>\
+                      <td class='cell'>\
+                      <button class='btn bg-warning btn_ChinhSua_SinhVien' style='color: white;' data-bs-toggle='modal' data-bs-target='#ChinhSuaModal' data-id = '" +
+                      data[i].maSinhVien +
+                      "' >Chỉnh sửa</button>\
+                    </td>\
+                      </tr>";
+                  }
+
+                  $("#id_tbodySinhVien").html(htmlData);
+                },
+              });
             },
             error: function (errorMessage) {
               checkLoiDangNhap(errorMessage.responseJSON.message);
 
-              Swal.fire({
-                icon: "error",
-                title: "Lỗi",
-                text: errorMessage.responseJSON.message,
-                timer: 5000,
-                timerProgressBar: true,
-              });
+              var htmlData = "";
+              $("#id_tbodySinhVien").html(htmlData);
+              $("#idPhanTrang").empty();
+              // Swal.fire({
+              //   icon: "error",
+              //   title: "Lỗi",
+              //   text: errorMessage.responseJSON.message,
+              //   timer: 5000,
+              //   timerProgressBar: true,
+              // });
             },
             statusCode: {
               403: function (xhr) {
@@ -274,11 +286,11 @@ function GetListSinhVien(maKhoa, maLop) {
                       "</td>\
                                                     <td class='cell'>" +
                       data[i].maLop +
-                      "<td class='cell'><button type='button' class='btn btn-info btn_DatLaiMatKhau' data-bs-toggle='modal' data-bs-target='#DatLaiMatKhauModal' style='color: white;' data-id='" +
+                      "<td class='cell'><button type='button' class='btn btn-info btn_DatLaiMatKhau_SinhVien' data-bs-toggle='modal' data-bs-target='#DatLaiMatKhauModal' style='color: white;' data-id='" +
                       data[i].maSinhVien +
                       "' >Đặt lại mật khẩu</button></td>\
                       <td class='cell'>\
-                      <button class='btn bg-warning btn_ChinhSua' style='color: white;' data-bs-toggle='modal' data-bs-target='#ChinhSuaModal' data-id = '" +
+                      <button class='btn bg-warning btn_ChinhSua_SinhVien' style='color: white;' data-bs-toggle='modal' data-bs-target='#ChinhSuaModal' data-id = '" +
                       data[i].maSinhVien +
                       "' >Chỉnh sửa</button>\
                     </td>\
@@ -292,13 +304,17 @@ function GetListSinhVien(maKhoa, maLop) {
             error: function (errorMessage) {
               checkLoiDangNhap(errorMessage.responseJSON.message);
 
-              Swal.fire({
-                icon: "error",
-                title: "Lỗi",
-                text: errorMessage.responseJSON.message,
-                timer: 5000,
-                timerProgressBar: true,
-              });
+              var htmlData = "";
+              $("#id_tbodySinhVien").html(htmlData);
+              $("#idPhanTrang").empty();
+
+              // Swal.fire({
+              //   icon: "error",
+              //   title: "Lỗi",
+              //   text: errorMessage.responseJSON.message,
+              //   timer: 5000,
+              //   timerProgressBar: true,
+              // });
             },
             statusCode: {
               403: function (xhr) {
@@ -348,11 +364,11 @@ function TimKiemSinhVien(maSinhVien) {
         data[i].maLop +
         "' >Chỉnh sửa</button>\
       </td>\
-        <td class='cell'><button type='button'  class='btn btn-info btn_DatLaiMatKhau' data-bs-toggle='modal' data-bs-target='#DatLaiMatKhauModal' style='color: white;' data-id='" +
+        <td class='cell'><button type='button'  class='btn btn-info btn_DatLaiMatKhau_SinhVien' data-bs-toggle='modal' data-bs-target='#DatLaiMatKhauModal' style='color: white;' data-id='" +
         result_SV.maSinhVien +
         "' >Đặt lại mật khẩu</button></td>\
         <td class='cell'>\
-        <button class='btn bg-warning btn_ChinhSua' style='color: white;' data-bs-toggle='modal' data-bs-target='#ChinhSuaModal' data-id = '" +
+        <button class='btn bg-warning btn_ChinhSua_SinhVien' style='color: white;' data-bs-toggle='modal' data-bs-target='#ChinhSuaModal' data-id = '" +
         data[i].maSinhVien +
         "' >Chỉnh sửa</button>\
       </td>\
@@ -368,6 +384,7 @@ function TimKiemSinhVien(maSinhVien) {
       var htmlData = "";
 
       $("#id_tbodySinhVien").html(htmlData);
+      $("#idPhanTrang").empty();
     },
     statusCode: {
       403: function (xhr) {
@@ -378,7 +395,7 @@ function TimKiemSinhVien(maSinhVien) {
   });
 }
 
-function LoadComboBoxThongTinKhoa() {
+function LoadComboBoxThongTinKhoa_SinhVien() {
   //Load khoa
   $.ajax({
     url: urlapi_khoa_read,
@@ -409,13 +426,16 @@ function LoadComboBoxThongTinKhoa() {
     error: function (errorMessage) {
       checkLoiDangNhap(errorMessage.responseJSON.message);
 
-      Swal.fire({
-        icon: "error",
-        title: "Lỗi",
-        text: errorMessage.responseJSON.message,
-        //timer: 5000,
-        timerProgressBar: true,
-      });
+       var htmlData = "";
+        $("#id_tbodySinhVien").html(htmlData);
+        $("#idPhanTrang").empty();
+      // Swal.fire({
+      //   icon: "error",
+      //   title: "Lỗi",
+      //   text: errorMessage.responseJSON.message,
+      //   //timer: 5000,
+      //   timerProgressBar: true,
+      // });
     },
   });
 }
@@ -452,13 +472,16 @@ function LoadComboBoxThongTinLopTheoKhoa(maKhoa) {
       error: function (errorMessage) {
         checkLoiDangNhap(errorMessage.responseJSON.message);
 
-        Swal.fire({
-          icon: "error",
-          title: "Lỗi",
-          text: errorMessage.responseJSON.message,
-          //timer: 5000,
-          timerProgressBar: true,
-        });
+        var htmlData = "";
+        $("#id_tbodySinhVien").html(htmlData);
+        $("#idPhanTrang").empty();
+        // Swal.fire({
+        //   icon: "info",
+        //   title: "Thông báo",
+        //   text: errorMessage.responseJSON.message,
+        //   //timer: 5000,
+        //   timerProgressBar: true,
+        // });
       },
     });
   } else {
@@ -467,7 +490,7 @@ function LoadComboBoxThongTinLopTheoKhoa(maKhoa) {
   }
 }
 
-function LoadComboBoxThongTinLop() {
+function LoadComboBoxThongTinLop_SinhVien() {
   //Load lớp
   $.ajax({
     url: urlapi_lop_read,
@@ -508,8 +531,8 @@ function LoadComboBoxThongTinLop() {
       checkLoiDangNhap(errorMessage.responseJSON.message);
 
       Swal.fire({
-        icon: "error",
-        title: "Lỗi",
+        icon: "info",
+        title: "Thông báo",
         text: errorMessage.responseJSON.message,
         //timer: 5000,
         timerProgressBar: true,
@@ -518,7 +541,7 @@ function LoadComboBoxThongTinLop() {
   });
 }
 
-function ThemMoi() {
+function ThemMoi_SinhVien() {
   var _input_MaSinhVien = $("#input_MaSinhVien").val();
   var _input_HoTenSinhVien = $("#input_HoTenSinhVien").val();
   var _input_NgaySinh = $("#input_NgaySinh").val();
@@ -582,7 +605,7 @@ function ThemMoi() {
   }
 }
 
-function DatLaiMatKhau() {
+function DatLaiMatKhau_SinhVien() {
   var maSinhVien_Update = $("#input_MaSinhVien_Update").val();
 
   var _input_MatKhauMoi = $("#input_MatKhauMoi").val();
@@ -639,6 +662,9 @@ function DatLaiMatKhau() {
               setTimeout(() => {
                 GetListSinhVien("tatcakhoa", "tatcalop");
               }, 2000);
+
+              $("#input_MatKhauMoi").val("");
+              $("#input_NhapLaiMatKhauMoi").val("");
             },
             error: function (errorMessage) {
               checkLoiDangNhap(errorMessage.responseJSON.message);
@@ -668,7 +694,8 @@ function DatLaiMatKhau() {
     }
   }
 }
-function LoadThongTinChinhSua(maSinhVien) {
+
+function LoadThongTinChinhSua_SinhVien(maSinhVien) {
   $.ajax({
     url: urlapi_sinhvien_single_read + maSinhVien,
     type: "GET",
@@ -688,7 +715,7 @@ function LoadThongTinChinhSua(maSinhVien) {
       }
 
       var _edit_select_He = document.getElementById("edit_select_He");
-      for (var i = 0; i < edit_select_Khoa_Add.options.length; i++) {
+      for (var i = 0; i < _edit_select_He.options.length; i++) {
         if (_edit_select_He.options[i].value === result_data.he) {
           _edit_select_He.options[i].selected = true;
         }
@@ -696,13 +723,29 @@ function LoadThongTinChinhSua(maSinhVien) {
 
       var _edit_input_NgaySinh = document.getElementById("edit_input_NgaySinh");
       _edit_input_NgaySinh.value = result_data.ngaySinh;
+
+
+
+      //load searchable field
+      var edit_select_Lop = document.querySelector('#edit_select_Lop');
+
+      dselect(edit_select_Lop, {
+        search: true
+      });
+
+      var edit_select_He = document.querySelector('#edit_select_He');
+
+      dselect(edit_select_He, {
+        search: true
+      });
+
     },
     error: function (errorMessage) {
       //checkLoiDangNhap(errorMessage.responseJSON.message);
 
       Swal.fire({
-        icon: "error",
-        title: "Lỗi",
+        icon: "info",
+        title: "Thông báo",
         text: errorMessage.responseJSON.message,
         //timer: 5000,
         timerProgressBar: true,
@@ -710,14 +753,15 @@ function LoadThongTinChinhSua(maSinhVien) {
     },
   });
 }
-function ChinhSua() {
+
+function ChinhSua_SinhVien() {
   var _edit_input_MaSinhVien = $("#edit_input_MaSinhVien").val();
   var _edit_input_TenSinhVien = $("#edit_input_TenSinhVien").val();
   var _edit_input_NgaySinh = $("#edit_input_NgaySinh").val();
   var _edit_select_Lop = $("#edit_select_Lop option:selected").val();
-  var _edit_select_He = $("#edit_select_He option:selected").val();
+  var _edit_select_He = $("#edit_select_He option:selected").text();
 
-  if (_edit_input_MaLop == "" || _edit_input_MaLop == "") {
+  if (_edit_input_MaSinhVien == "" || _edit_input_TenSinhVien == "" || _edit_input_NgaySinh == "") {
     ThongBaoLoi("Vui lòng nhập đầy đủ thông tin!");
   } else {
     var dataPost = {
@@ -725,7 +769,7 @@ function ChinhSua() {
       hoTenSinhVien: _edit_input_TenSinhVien,
       ngaySinh: _edit_input_NgaySinh,
       he: _edit_select_He,
-      maLop: _edit_select_Lop,
+      maLop: _edit_select_Lop
     };
 
     $.ajax({
@@ -757,7 +801,7 @@ function ChinhSua() {
         }, 2000);
       },
       error: function (errorMessage) {
-        checkLoiDangNhap(errorMessage.responseJSON.message);
+        //checkLoiDangNhap(errorMessage.responseJSON.message);
 
         Swal.fire({
           icon: "error",

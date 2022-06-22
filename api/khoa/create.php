@@ -25,17 +25,24 @@
     
             if ($data != null){
                 //set các biến bằng data nhận từ user
+                $item->maKhoa = $data->maKhoa;
                 $item->tenKhoa = $data->tenKhoa;
                 $item->taiKhoanKhoa = $data->taiKhoanKhoa;
                 $item->matKhauKhoa = md5($data->matKhauKhoa);
     
                 if($item->createKhoa()){
-                    echo 'Khoa created successfully.';
+                    echo json_encode(
+                        array("message" => "Khoa tạo thành công")
+                    );
                 } else{
-                    echo 'Khoa could not be created.';
+                    echo json_encode(
+                        array("message" => "Khoa tạo KHÔNG thành công")
+                    );
                 }
             }else{
-                echo 'No data posted.';
+                echo json_encode(
+                    array("message" => "Không có dữ liệu gửi lên.")
+                );
             }
         } else {
             http_response_code(403);

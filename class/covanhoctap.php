@@ -106,6 +106,35 @@
             return false;
         }
 
+
+        // UPDATE
+        public function updateCVHT_KhongMatKhau(){
+            $sqlQuery = "UPDATE
+                        ". $this->db_table ."
+                    SET
+                        hoTenCoVan = :hoTenCoVan, 
+                        soDienThoai = :soDienThoai
+                    WHERE 
+                        maCoVanHocTap = :maCoVanHocTap";
+        
+            $stmt = $this->conn->prepare($sqlQuery);
+        
+            // sanitize (Lọc dữ liệu đầu vào tránh SQLInjection, XSS)
+            $this->maCoVanHocTap=htmlspecialchars(strip_tags($this->maCoVanHocTap));
+            $this->hoTenCoVan=htmlspecialchars(strip_tags($this->hoTenCoVan));
+            $this->soDienThoai=htmlspecialchars(strip_tags($this->soDienThoai));
+       
+            // bind data
+            $stmt->bindParam(":maCoVanHocTap", $this->maCoVanHocTap);
+            $stmt->bindParam(":hoTenCoVan", $this->hoTenCoVan);
+            $stmt->bindParam(":soDienThoai", $this->soDienThoai);
+   
+            if($stmt->execute()){
+               return true;
+            }
+            return false;
+        }
+
         // DELETE
         function deleteCVHT(){
             $sqlQuery = "DELETE FROM " . $this->db_table . " WHERE maCoVanHocTap = ?";

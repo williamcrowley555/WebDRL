@@ -86,23 +86,36 @@
 						<div class="modal-body">
 
 							<div class="mb-3">
-								<label for="edit_input_MaTieuChi" class="form-label" style="color: black; font-weight: 500;">Mã Tiêu Chí</label>
+								<label for="edit_input_CapTieuChi" class="form-label" style="color: black; font-weight: 500;">Cấp tiêu chí </label>
+								<input type="text" class="form-control mb-2" id="edit_input_CapTieuChi" placeholder="Nhập cấp tiêu chí..." readonly>
+							</div>
+
+							<div class="mb-3">
+								<label for="edit_input_MaTieuChi" class="form-label" style="color: black; font-weight: 500;">Mã tiêu chí</label>
 								<input type="text" class="form-control mb-2" id="edit_input_MaTieuChi" placeholder="Nhập mã lớp..." readonly>
 							</div>
 
 							<div class="mb-3">
-								<label for="edit_input_TenTieuChi" class="form-label" style="color: black; font-weight: 500;">Tên Tiêu Chí</label>
-								<input type="text" class="form-control" id="edit_input_TenTieuChi" placeholder="Nhập tên lớp...">
+								<label for="edit_input_TenTieuChi" class="form-label" style="color: black; font-weight: 500;">Tên tiêu chí</label>
+								<input type="text" class="form-control" id="edit_input_TenTieuChi" placeholder="Nhập tên tiêu chí...">
 							</div>
 
 							<div class="mb-3">
 								<label for="edit_input_Diem" class="form-label" style="color: black; font-weight: 500;">Điểm</label>
-								<input type="text" class="form-control" id="edit_input_Diem" placeholder="Nhập tên lớp...">
+								<input type="number" class="form-control" id="edit_input_Diem" placeholder="Nhập điểm...">
 							</div>
+
+							<div class="mb-3">
+								<label for="edit_select_TieuChiCapTren" class="form-label" style="color: black; font-weight: 500;">Tiêu chí cấp trên</label>
+								<select class="form-select" aria-label="Default select example" id="edit_select_TieuChiCapTren">
+
+								</select>
+							</div>
+
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-							<button type="button" class="btn btn-warning" style='color: white;' onclick="return ChinhSua()">Chỉnh sửa</button>
+							<button type="button" class="btn btn-warning" style='color: white;' onclick="return ChinhSua_TieuChiDanhGia()">Chỉnh sửa</button>
 						</div>
 					</div>
 				</div>
@@ -115,13 +128,15 @@
 				<div class="app-card app-card-orders-table shadow-sm mb-5">
 					<div class="app-card-body">
 						<div class="table-responsive">
-							<table class="table app-table-hover mb-0 text-left">
-								<thead>
+							<table class="table app-table-hover mb-0 text-left" >
+								<thead id="id_theadTieuChi">
 									<tr id="coloum_table">
-										<th class="cell">STT</th>
-										<th class="cell">Mã Tiêu Chí</th>
-										<th class="cell">Tên Tiêu Chí</th>
+										<th class="cell">Số thứ tự</th>
+										<th class="cell">Mã tiêu chí</th>
+										<th class="cell">Tên tiêu chí</th>
 										<th class="cell">Điểm</th>
+										<th class="cell">Mã tiêu chí trên</th>
+										<th class="cell"></th>
 									</tr>
 								</thead>
 								<tbody id="id_tbodyLop">
@@ -180,33 +195,41 @@
 
 	});
 
+	var select_TieuChi_search = document.getElementById('selected_tieuchi');
+
+    dselect(select_TieuChi_search, {
+          search: true
+    })
+
 	//Xử lý chỉnh sửa
-	$(document).on("click", ".btn_ChinhSua", function() {
+	$(document).on("click", ".btn_ChinhSua_TieuChiDanhGia", function() {
 
-		let maTieuChi = $(this).attr('data-id');
+		var maTieuChi = $(this).attr('data-id');
+		var get_tieuchicap = $(this).attr('data-tieuchicap');
+		var get_tentieuchi = $(this).attr('data-tentieuchi');
+		var get_diem = $(this).attr('data-diem');
+		var get_tieuchicaptren = $(this).attr('data-tieuchicaptren');
 
+		$('#edit_input_CapTieuChi').val(get_tieuchicap);
 		$('#edit_input_MaTieuChi').val(maTieuChi);
+		$('#edit_input_TenTieuChi').val(get_tentieuchi);
+		$('#edit_input_Diem').val(get_diem);
 
-		LoadThongTinChinhSua(maTieuChi);
+		LoadTieuChiCapTren_ChinhSuaModal(get_tieuchicap, get_tieuchicaptren);
 
+		var select_TieuChiCapTren_search = document.getElementById('edit_select_TieuChiCapTren');
+
+		dselect(select_TieuChiCapTren_search, {
+			search: true
+		})
 		//edit modal
-		var edit_select_box_element_Khoa = document.querySelector('#edit_select_Khoa_Add');
+		// var edit_select_box_element_Khoa = document.querySelector('#edit_select_Khoa_Add');
 
-		dselect(edit_select_box_element_Khoa, {
-			search: true
-		});
+		// dselect(edit_select_box_element_Khoa, {
+		// 	search: true
+		// });
 
-		var edit_select_box_element_CVHT = document.querySelector('#edit_select_CVHT_Add');
-
-		dselect(edit_select_box_element_CVHT, {
-			search: true
-		});
-
-		var edit_select_box_element_KhoaHoc = document.querySelector('#edit_select_KhoaHoc_Add');
-
-		dselect(edit_select_box_element_KhoaHoc, {
-			search: true
-		});
+		
 
 
 	})

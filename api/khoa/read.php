@@ -35,8 +35,8 @@
                     $e = array(
                         "soThuTu" => $countRow,
                         "maKhoa" => $maKhoa,
-                        "tenKhoa" => $tenKhoa
-                        //"taiKhoanKhoa" => $taiKhoanKhoa
+                        "tenKhoa" => $tenKhoa,
+                        "taiKhoanKhoa" => $taiKhoanKhoa
                         // "matKhauKhoa" => $matKhauKhoa
                     );
                     array_push($khoaArr["khoa"], $e);

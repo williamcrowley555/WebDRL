@@ -27,6 +27,18 @@ function checkLoiDangNhap(message) {
   }
 }
 
+function ThongBaoLoi(message) {
+  Swal.fire({
+    icon: "error",
+    title: "Lỗi",
+    text: message,
+    timer: 5000,
+    timerProgressBar: true,
+    showCloseButton: true,
+  });
+}
+
+
 var jwtCookie = getCookie("jwt");
 
 //Cố vấn học tập//
@@ -67,11 +79,11 @@ function GetListCVHT() {
                                 <td class='cell'>" +
                 data[i].soDienThoai +
                 "</td>\
-                                <td class='cell'><button type=button' class='btn btn-info btn_DatLaiMatKhau' data-bs-toggle='modal' data-bs-target='#DatLaiMatKhauModal' style='color: white;' data-id='" +
+                                <td class='cell'><button type=button' class='btn btn-info btn_DatLaiMatKhau_CVHT' data-bs-toggle='modal' data-bs-target='#DatLaiMatKhauModal' style='color: white;' data-id='" +
                 data[i].maCoVanHocTap +
                 "' >Đặt lại mật khẩu</button></td>\
                         <td class='cell'>\
-                        <button class='btn bg-warning btn_ChinhSua' style='color: white;' data-bs-toggle='modal' data-bs-target='#ChinhSuaModal' data-id = '" +
+                        <button class='btn bg-warning btn_ChinhSua_CVHT' style='color: white;' data-bs-toggle='modal' data-bs-target='#ChinhSuaModal' data-id = '" +
                 data[i].maCoVanHocTap +
                 "' >Chỉnh sửa</button>\
                       </td>\
@@ -196,7 +208,7 @@ function ThemCVHT() {
   }
 }
 
-function DatLaiMatKhau() {
+function DatLaiMatKhau_CVHT() {
   var maCoVanHocTap_Update = $("#input_CoVanHocTap_Update").val();
 
   var _input_MatKhauMoi = $("#input_MatKhauMoi").val();
@@ -240,7 +252,7 @@ function DatLaiMatKhau() {
 
               Swal.fire({
                 icon: "success",
-                title: "Đặt lại mật khẩu thành công!",
+                title: "Đặt lại mật khẩu thành công Cố vấn học tập mã "+ _input_MaCoVanHocTap +"!",
                 text: "",
                 timer: 2000,
                 timerProgressBar: true,
@@ -249,36 +261,42 @@ function DatLaiMatKhau() {
               setTimeout(() => {
                 GetListCVHT();
               }, 2000);
+
+              $("#input_MatKhauMoi").val("");
+              $("#input_NhapLaiMatKhauMoi").val("");
             },
             error: function (errorMessage) {
               checkLoiDangNhap(errorMessage.responseJSON.message);
 
-              Swal.fire({
-                icon: "error",
-                title: "Lỗi",
-                text: errorMessage.responseJSON.message,
-                //timer: 5000,
-                timerProgressBar: true,
-              });
+              console.log(errorMessage.responseJSON.message);
+              // Swal.fire({
+              //   icon: "error",
+              //   title: "Lỗi",
+              //   text: errorMessage.responseJSON.message,
+              //   //timer: 5000,
+              //   timerProgressBar: true,
+              // });
             },
           });
         },
         error: function (errorMessage) {
           checkLoiDangNhap(errorMessage.responseJSON.message);
 
-          Swal.fire({
-            icon: "error",
-            title: "Lỗi",
-            text: errorMessage.responseJSON.message,
-            //timer: 5000,
-            timerProgressBar: true,
-          });
+          console.log(errorMessage.responseJSON.message);
+          // Swal.fire({
+          //   icon: "error",
+          //   title: "Lỗi",
+          //   text: errorMessage.responseJSON.message,
+          //   //timer: 5000,
+          //   timerProgressBar: true,
+          // });
         },
       });
     }
   }
 }
-function LoadThongTinChinhSua(maCVHT) {
+
+function LoadThongTinChinhSua_CVHT(maCVHT) {
   $.ajax({
     url: urlapi_cvht_single_read + maCVHT,
     type: "GET",
@@ -289,10 +307,10 @@ function LoadThongTinChinhSua(maCVHT) {
     success: function (result_data) {
       $("#edit_input_TenCVHT").val(result_data.hoTenCoVan);
       $("#edit_input_sdt").val(result_data.soDienThoai);
-      var matKhauTaiKhoanCoVan = result_data.matKhauTaiKhoanCoVan;
+
     },
     error: function (errorMessage) {
-      //checkLoiDangNhap(errorMessage.responseJSON.message);
+      checkLoiDangNhap(errorMessage.responseJSON.message);
 
       Swal.fire({
         icon: "error",
@@ -305,23 +323,22 @@ function LoadThongTinChinhSua(maCVHT) {
   });
 }
 
-function ChinhSua() {
+function ChinhSua_CVHT() {
   var edit_input_MaCVHT = $("#edit_input_MaCVHT").val();
   var edit_input_TenCVHT = $("#edit_input_TenCVHT").val();
   var edit_input_sdt = $("#edit_input_sdt").val();
 
-  if (_edit_input_MaLop == "" || _edit_input_MaLop == "") {
+  if (edit_input_MaCVHT == "" || edit_input_TenCVHT == "" || edit_input_sdt == "") {
     ThongBaoLoi("Vui lòng nhập đầy đủ thông tin!");
   } else {
     var dataPost = {
       maCoVanHocTap: edit_input_MaCVHT,
       hoTenCoVan: edit_input_TenCVHT,
-      soDienThoai: edit_input_sdt,
-      matKhauTaiKhoanCoVan: matKhauTaiKhoanCoVan,
+      soDienThoai: edit_input_sdt
     };
 
     $.ajax({
-      url: urlapi_lop_update,
+      url: urlapi_covanhoctap_update,
       type: "POST",
       contentType: "application/json;charset=utf-8",
       dataType: "json",
@@ -333,14 +350,14 @@ function ChinhSua() {
 
         Swal.fire({
           icon: "success",
-          title: "Chỉnh sửa thành công lớp mã lớp " + _edit_input_MaLop + "!",
+          title: "Chỉnh sửa thành công Cố vấn học tập mã " + edit_input_MaCVHT + "!",
           text: "",
           timer: 2000,
           timerProgressBar: true,
         });
 
         setTimeout(() => {
-          GetListLop("tatcakhoa");
+          GetListCVHT();
         }, 2000);
       },
       error: function (errorMessage) {
@@ -349,7 +366,7 @@ function ChinhSua() {
         Swal.fire({
           icon: "error",
           title: "Lỗi",
-          text: errorMessage.responseText,
+          text: errorMessage.responseJSON.message,
           //timer: 5000,
           timerProgressBar: true,
         });

@@ -34,7 +34,6 @@
 							<select class="form-select w-auto">
 								<option selected value="option-1">Tất cả khoa</option>
 								<option value="option-2">Công nghệ thông tin</option>
-								<option value="option-3">Điện tử viễn thông</option>
 							</select>
 						</div>
 
@@ -116,19 +115,19 @@
 					<div class="modal-content">
 						<div class="modal-header">
 							<img src="assets/images/icons/edit.png" width="25px" style="padding-right: 5px;">
-							<h5 class="modal-title" id="exampleModalLabel"> Chỉnh sửa CVHT</h5>
+							<h5 class="modal-title" id="exampleModalLabel"> Chỉnh sửa Cố vấn học tập</h5>
 							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 						</div>
 						<div class="modal-body">
 
 							<div class="mb-3">
 								<label for="edit_input_MaCVHT" class="form-label" style="color: black; font-weight: 500;">Mã cố vấn học tập</label>
-								<input type="text" class="form-control mb-2" id="edit_input_MaCVHT" placeholder="" readonly>
+								<input type="text" class="form-control mb-2" id="edit_input_MaCVHT" placeholder="Nhập mã cố vấn học tập..." readonly>
 							</div>
 
 							<div class="mb-3">
-								<label for="edit_input_TenCVHT" class="form-label" style="color: black; font-weight: 500;">Tên CVHT</label>
-								<input type="text" class="form-control" id="edit_input_TenCVHT" placeholder="Nhập tên CVHT...">
+								<label for="edit_input_TenCVHT" class="form-label" style="color: black; font-weight: 500;">Tên Cố vấn học tập</label>
+								<input type="text" class="form-control" id="edit_input_TenCVHT" placeholder="Nhập tên Cố vấn học tập...">
 							</div>
 
 							<div class="mb-3">
@@ -140,7 +139,7 @@
 
 						<div class="modal-footer">
 							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-							<button type="button" class="btn btn-warning" style='color: white;' onclick="return ChinhSua()">Chỉnh sửa</button>
+							<button type="button" class="btn btn-warning" style='color: white;' onclick="return ChinhSua_CVHT()">Chỉnh sửa</button>
 						</div>
 					</div>
 				</div>
@@ -177,7 +176,7 @@
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-							<button type="button" class="btn btn-info" style='color: white;' onclick="return DatLaiMatKhau()">Đặt lại mật khẩu</button>
+							<button type="button" class="btn btn-info" style='color: white;' onclick="return DatLaiMatKhau_CVHT()">Đặt lại mật khẩu</button>
 						</div>
 					</div>
 				</div>
@@ -246,21 +245,21 @@
 
 
 	//Dat lai mat khau
-	$(document).on("click", ".btn_DatLaiMatKhau", function() {
-		var maSinhVien = $(this).attr('data-id');
+	$(document).on("click", ".btn_DatLaiMatKhau_CVHT", function() {
+		var maCVHT = $(this).attr('data-id');
 
-		$('#input_CoVanHocTap_Update').val(maSinhVien);
+		$('#input_CoVanHocTap_Update').val(maCVHT);
 
 
 	})
 
 	//Xử lý chỉnh sửa
-	$(document).on("click", ".btn_ChinhSua", function() {
+	$(document).on("click", ".btn_ChinhSua_CVHT", function() {
 
-		let maCVHT_edit = $(this).attr('data-id');
+		var maCVHT_edit = $(this).attr('data-id');
 
 		$('#edit_input_MaCVHT').val(maCVHT_edit);
 
-		LoadThongTinChinhSua(maCVHT_edit);
+		LoadThongTinChinhSua_CVHT(maCVHT_edit);
 	})
 </script>

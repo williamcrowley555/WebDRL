@@ -67,7 +67,9 @@
                     }
                 }else{
                     http_response_code(404);
-                    echo json_encode("thongbaodanhgia không tìm thấy.");
+                    echo json_encode(
+                        array("message" => "thongbaodanhgia không tìm thấy.")
+                    );
                 }
             }
 

@@ -33,13 +33,22 @@
                 $item->diemtoida = $data->diemtoida;
                 
                 if($item->updateTC1()){
-                    echo json_encode("tieuchicap1 cập nhật thành công.");
+                    http_response_code(200);
+                    echo json_encode(
+                        array("message" => "tieuchicap1 cập nhật thành công..")
+                    );
                 } else{
-                    echo json_encode("tieuchicap1 cập nhật thất bại.");
+                    http_response_code(500);
+                    echo json_encode(
+                        array("message" => "tieuchicap1 cập nhật thất bại.")
+                    );
                 }
     
             }else{
-                echo 'Không có dữ liệu được gửi lên.';
+                http_response_code(404);
+                echo json_encode(
+                    array("message" => "Không có dữ liệu được gửi lên.")
+                );
             }
 
         }else{

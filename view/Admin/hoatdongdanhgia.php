@@ -150,6 +150,76 @@
 				</div>
 
 
+
+				<!-- Modal chỉnh sửa -->
+				<div class="modal fade" id="ChinhSuaModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<img src="assets/images/icons/edit.png" width="25px" style="padding-right: 5px;">
+								<h5 class="modal-title" id="exampleModalLabel"> Chỉnh sửa hoạt động đánh giá</h5>
+								<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+							</div>
+							<div class="modal-body">
+
+								<div class="mb-3">
+									<label for="edit_input_MaHoatDong" class="form-label" style="color: black; font-weight: 500;">Mã hoạt động</label>
+									<input type="text" class="form-control" id="edit_input_MaHoatDong" placeholder="Nhập mã hoạt động..." readonly>
+								</div>
+								
+								<div class="mb-3">
+									<label for="edit_input_TenHoatDong" class="form-label" style="color: black; font-weight: 500;">Tên hoạt động</label>
+									<input type="text" class="form-control" id="edit_input_TenHoatDong" placeholder="Nhập tên hoạt động...">
+								</div>
+
+								<div class="mb-3">
+									<label for="edit_select_Khoa" class="form-label" style="color: black; font-weight: 500;">Khoa tổ chức</label>
+									<select class="form-select" aria-label="Default select example" id="edit_select_Khoa">
+
+									</select>
+								</div>
+
+								<div class="mb-3">
+									<label for="edit_select_TieuChi" class="form-label" style="color: black; font-weight: 500;">Tiêu chí được cộng điểm</label>
+									<select class="form-select" aria-label="Default select example" id="edit_select_TieuChi">
+
+									</select>
+								</div>
+
+								<div class="mb-3">
+									<label for="edit_input_DiemNhanDuoc" class="form-label" style="color: black; font-weight: 500;">Điểm nhận được</label>
+									<input type="number" class="form-control" id="edit_input_DiemNhanDuoc" placeholder="Nhập điểm nhận được...">
+								</div>
+
+								<div class="mb-3">
+								<!-- <div class="ui-widget"> -->
+									<label for="edit_input_DiaDiemHoatDong" class="form-label" style="color: black; font-weight: 500;">Địa điểm diễn ra hoạt động</label>
+									<input type="text" class="form-control" id="edit_input_DiaDiemHoatDong" placeholder="Nhập địa điểm hoạt động...">
+								<!-- </div> -->
+									
+								</div>
+
+								<div class="mb-3">
+									<label for="edit_input_ThoiGianBatDau" class="form-label" style="color: black; font-weight: 500;">Thời gian bắt đầu</label>
+									<input type="datetime-local" class="form-control" id="edit_input_ThoiGianBatDau" placeholder="Nhập thời gian bắt đầu...">
+								</div>
+
+								<div class="mb-3">
+									<label for="edit_input_ThoiGianKetThuc" class="form-label" style="color: black; font-weight: 500;">Thời gian kết thúc</label>
+									<input type="datetime-local" class="form-control" id="edit_input_ThoiGianKetThuc" placeholder="Nhập thời gian kết thúc...">
+								</div>
+
+
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+								<button type="button" class="btn btn-warning" style='color: white;' onclick="return ChinhSua_HoatDong()">Chỉnh sửa</button>
+							</div>
+						</div>
+					</div>
+				</div>
+
+
 				<!-- Modal danh sách tham gia -->
 				<div class="modal fade" id="DanhSachThamGiaModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 					<div class="modal-dialog modal-lg">
@@ -295,6 +365,16 @@
 
 
 			LoadDanhSachThamGia(maHoatDong);
+	})
+
+
+	$(document).on("click", ".btn_ChinhSua_HoatDong" ,function() {
+			var maHoatDong = $(this).attr('data-id');
+		
+			$('#edit_input_MaHoatDong').val(maHoatDong);
+
+			LoadThongTinChinhSua_HoatDong(maHoatDong);
+		
 	})
 
 	

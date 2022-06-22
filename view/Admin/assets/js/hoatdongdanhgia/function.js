@@ -95,9 +95,9 @@ function GetListHoatdongdanhgia() {
                                 <td class='cell'>" + data[i].thoiGianBatDauDiemDanh + "</td>\
                                 <td class='cell'><img src='"+ data[i].maQRDiaDiem +"' style='width: 50%;' /></td>\
                                 <td class='cell'>\
-                                <button type='button' class='btn_DanhSachThamGia btn' style='color: white;width: max-content;margin: 5px;background: #656566;'  data-id='" + data[i].maHoatDong + "' data-name-id='" + data[i].tenHoatDong + "' data-bs-toggle='modal' data-bs-target='#DanhSachThamGiaModal' >Danh sách tham gia</button>\
+                                    <button type='button' class='btn_DanhSachThamGia btn' style='color: white;width: max-content;margin: 5px;background: #656566;'  data-id='" + data[i].maHoatDong + "' data-name-id='" + data[i].tenHoatDong + "' data-bs-toggle='modal' data-bs-target='#DanhSachThamGiaModal' >Danh sách tham gia</button>\
                                     <button type='button' class='btn_BatDauDiemDanh btn' style='color: white;width: max-content;margin: 5px;background: dodgerblue;'  data-id='" + data[i].maHoatDong + "' >Bắt đầu điểm danh</button>\
-                                    <a class='btn bg-warning' href='#' style='color: white;margin: 5px;'>Chỉnh sửa</a>\
+                                    <button type='button' class='btn bg-warning btn_ChinhSua_HoatDong' style='color: white;width: max-content;margin: 5px;'  data-id='" + data[i].maHoatDong + "'  data-bs-toggle='modal' data-bs-target='#ChinhSuaModal'>Chỉnh sửa</button>\
                                 </td>\
                                 </tr>";
                         
@@ -146,7 +146,7 @@ function GetListHoatdongdanhgia() {
                                 <td class='cell'>\
                                     <button type='button' class='btn_DanhSachThamGia btn' style='color: white;width: max-content;margin: 5px;background: #656566;'  data-id='" + data[i].maHoatDong + "' data-name-id='" + data[i].tenHoatDong + "' data-bs-toggle='modal' data-bs-target='#DanhSachThamGiaModal' >Danh sách tham gia</button>\
                                     <button type='button' class='btn_BatDauDiemDanh btn' style='color: white;width: max-content;margin: 5px;background: dodgerblue;'  data-id='" + data[i].maHoatDong + "' >Bắt đầu điểm danh</button>\
-                                    <a class='btn bg-warning' href='#' style='color: white;margin: 5px;'>Chỉnh sửa</a>\
+                                    <button type='button' class='btn bg-warning btn_ChinhSua_HoatDong' style='color: white;width: max-content;margin: 5px;'  data-id='" + data[i].maHoatDong + "'  data-bs-toggle='modal' data-bs-target='#ChinhSuaModal'>Chỉnh sửa</button>\
                                 </td>\
                                 </tr>";
                 
@@ -167,9 +167,6 @@ function GetListHoatdongdanhgia() {
                 }
 
                 
-                
-
-
 
                 
             }
@@ -211,7 +208,7 @@ function LoadThongTinThemMoi() {
                 for (var p = 0; p < result_Khoa[index_Khoa].length; p++) {
                     
                     $('#select_Khoa').append("<option value='"+ result_Khoa[index_Khoa][p].maKhoa +"'>"+ result_Khoa[index_Khoa][p].tenKhoa +"</option>");
-
+                    $('#edit_select_Khoa').append("<option value='"+ result_Khoa[index_Khoa][p].maKhoa +"'>"+ result_Khoa[index_Khoa][p].tenKhoa +"</option>");
                 }
             });
 
@@ -246,6 +243,7 @@ function LoadThongTinThemMoi() {
                     
                     if (result_TC2[index_TC2][p].diemtoida > 0){
                         $('#select_TieuChi').append("<option value='TC2_"+ result_TC2[index_TC2][p].matc2 +"'>"+ result_TC2[index_TC2][p].noidung +"</option>");
+                        $('#edit_select_TieuChi').append("<option value='TC2_"+ result_TC2[index_TC2][p].matc2 +"'>"+ result_TC2[index_TC2][p].noidung +"</option>");
                     }
         
                 }
@@ -266,6 +264,7 @@ function LoadThongTinThemMoi() {
                             
                             if (result_TC3[index_TC3][k].diem > 0){
                                 $('#select_TieuChi').append("<option value='TC3_"+ result_TC3[index_TC3][k].matc3 +"'>"+ result_TC3[index_TC3][k].noidung +"</option>");
+                                $('#edit_select_TieuChi').append("<option value='TC3_"+ result_TC3[index_TC3][k].matc3 +"'>"+ result_TC3[index_TC3][k].noidung +"</option>");
                             }
                 
                         }
@@ -315,7 +314,7 @@ function LoadThongTinThemMoi() {
                 for (var b = 0; b < result_HocKy[index_HocKy].length; b++) {
                     
                     $('#select_HocKyDanhGia').append("<option value='"+ result_HocKy[index_HocKy][b].maHocKyDanhGia +"'> "+ result_HocKy[index_HocKy][b].hocKyXet + " - "+ result_HocKy[index_HocKy][b].namHocXet +"</option>");
-
+                    $('#edit_select_HocKyDanhGia').append("<option value='"+ result_HocKy[index_HocKy][b].maHocKyDanhGia +"'> "+ result_HocKy[index_HocKy][b].hocKyXet + " - "+ result_HocKy[index_HocKy][b].namHocXet +"</option>");
                 }
             });
 
@@ -836,5 +835,231 @@ function LoadDanhSachThamGia(maHoatDong) {
         },
     });
 
+
+}
+
+
+
+function LoadThongTinChinhSua_HoatDong(maHoatDong) {
+    
+    $.ajax({
+        url: urlapi_hoatdongdanhgia_single_read + maHoatDong,
+        type: "GET",
+        contentType: "application/json;charset=utf-8",
+        dataType: "json",
+        async: false,
+        headers: { Authorization: jwtCookie },
+        success: function (result_data) {
+          $("#edit_input_TenHoatDong").val(result_data.tenHoatDong);
+    
+          var _edit_select_Khoa = document.getElementById("edit_select_Khoa");
+    
+          for (var i = 0; i < _edit_select_Khoa.options.length; i++) {
+            if (_edit_select_Khoa.options[i].value === result_data.maKhoa) {
+                _edit_select_Khoa.options[i].selected = true;
+            }
+          }
+    
+          var _edit_select_TieuChi = document.getElementById("edit_select_TieuChi");
+          for (var i = 0; i < _edit_select_TieuChi.options.length; i++) {
+            if (_edit_select_TieuChi.options[i].value === ("TC2_" + result_data.maTieuChi2) || _edit_select_TieuChi.options[i].value === ("TC3_" + result_data.maTieuChi3)) {
+                _edit_select_TieuChi.options[i].selected = true;
+            }
+          }
+    
+          $("#edit_input_DiemNhanDuoc").val(result_data.diemNhanDuoc);
+          $("#edit_input_DiaDiemHoatDong").val(result_data.diaDiemDienRaHoatDong);
+          $("#edit_input_ThoiGianBatDau").val(result_data.thoiGianBatDauHoatDong);
+          $("#edit_input_ThoiGianKetThuc").val(result_data.thoiGianKetThucHoatDong);
+    
+    
+          dselect(_edit_select_Khoa, {
+            search: true
+          });
+
+          dselect(_edit_select_TieuChi, {
+            search: true
+          });
+    
+        
+        },
+        error: function (errorMessage) {
+          //checkLoiDangNhap(errorMessage.responseJSON.message);
+    
+          Swal.fire({
+            icon: "info",
+            title: "Thông báo",
+            text: errorMessage.responseJSON.message,
+            //timer: 5000,
+            timerProgressBar: true,
+          });
+        },
+      });
+
+}
+
+
+function ChinhSua_HoatDong() {
+
+    var _edit_input_MaHoatDong = $('#edit_input_MaHoatDong').val();
+    var _edit_input_TenHoatDong = $('#edit_input_TenHoatDong').val();
+    var _edit_select_Khoa = $('#edit_select_Khoa option:selected').val();
+    var _edit_select_TieuChi = $('#edit_select_TieuChi option:selected').val();
+    var _edit_input_DiemNhanDuoc = $('#edit_input_DiemNhanDuoc').val();
+    var _edit_input_DiaDiemHoatDong = $('#edit_input_DiaDiemHoatDong').val();
+    var _edit_input_ThoiGianBatDau = $('#edit_input_ThoiGianBatDau').val();
+    var _edit_input_ThoiGianKetThuc = $('#edit_input_ThoiGianKetThuc').val();
+
+    if (_edit_input_TenHoatDong == '' || _edit_input_DiemNhanDuoc == '' ||  _edit_input_DiaDiemHoatDong == '' || 
+    _edit_input_ThoiGianBatDau == '' || _edit_input_ThoiGianKetThuc == ''  ){
+        ThongBaoLoi("Vui lòng nhập đầy đủ thông tin!");
+
+    }else{
+
+        $.ajax({
+            url: urlapi_hoatdongdanhgia_single_read + _edit_input_MaHoatDong,
+            type: "GET",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            async: false,
+            headers: { 'Authorization': jwtCookie },
+            success: function (result_data) {
+                
+                var _edit_maTieuChi_sliced = _edit_select_TieuChi.slice(0,3);
+                var _edit_value_maTieuChi = _edit_select_TieuChi.slice(4,_edit_select_TieuChi.length);
+
+                //Tạo hoạt động đánh giá
+                if (_edit_maTieuChi_sliced == 'TC2'){
+                    var dataPost = {
+                        maHoatDong: _edit_input_MaHoatDong,
+                        maTieuChi2: _edit_value_maTieuChi,
+                        maTieuChi3: null,
+                        maHocKyDanhGia: result_data.maHocKyDanhGia,
+                        tenHoatDong: _edit_input_TenHoatDong,
+                        maKhoa: _edit_select_Khoa,
+                        diemNhanDuoc: _edit_input_DiemNhanDuoc,
+                        diaDiemDienRaHoatDong: _edit_input_DiaDiemHoatDong,
+                        thoiGianBatDauHoatDong: _edit_input_ThoiGianBatDau,
+                        thoiGianKetThucHoatDong: _edit_input_ThoiGianKetThuc,
+                        thoiGianBatDauDiemDanh: result_data.thoiGianBatDauDiemDanh
+                    }
+
+
+                    $.ajax({
+                        url: urlapi_hoatdongdanhgia_update,
+                        type: "POST",
+                        contentType: "application/json;charset=utf-8",
+                        dataType: "json",
+                        data: JSON.stringify(dataPost),
+                        async: false,
+                        headers: { 'Authorization': jwtCookie },
+                        success: function (result_update) {
+                            $('#ChinhSuaModal').modal('hide');
+
+                            Swal.fire({
+                                icon: "success",
+                                title: "Chỉnh sửa thành công hoạt động mã "+ _edit_input_MaHoatDong +" !",
+                                text: '',
+                                timer: 2000,
+                                timerProgressBar: true,
+                            });
+
+                            setTimeout(function(){
+                                GetListHoatdongdanhgia();
+                            }, 2000);
+
+                        },
+                        error: function (errorMessage) {
+                            checkLoiDangNhap(errorMessage.responseJSON.message);
+
+                            Swal.fire({
+                                icon: "error",
+                                title: "Lỗi",
+                                text: errorMessage.responseJSON.message,
+                                //timer: 5000,
+                                timerProgressBar: true,
+                            });
+                        },
+                    });
+
+
+
+                }
+        
+                if (maTieuChi_sliced == 'TC3'){
+                    var dataPost = {
+                        maHoatDong: _edit_input_MaHoatDong,
+                        maTieuChi2: null,
+                        maTieuChi3: _edit_value_maTieuChi,
+                        maHocKyDanhGia: result_data.maHocKyDanhGia,
+                        tenHoatDong: _edit_input_TenHoatDong,
+                        maKhoa: _edit_select_Khoa,
+                        diemNhanDuoc: _edit_input_DiemNhanDuoc,
+                        diaDiemDienRaHoatDong: _edit_input_DiaDiemHoatDong,
+                        thoiGianBatDauHoatDong: _edit_input_ThoiGianBatDau,
+                        thoiGianKetThucHoatDong: _edit_input_ThoiGianKetThuc,
+                        thoiGianBatDauDiemDanh: result_data.thoiGianBatDauDiemDanh
+                    }
+
+
+                    $.ajax({
+                        url: urlapi_hoatdongdanhgia_update,
+                        type: "POST",
+                        contentType: "application/json;charset=utf-8",
+                        dataType: "json",
+                        data: JSON.stringify(dataPost),
+                        async: false,
+                        headers: { 'Authorization': jwtCookie },
+                        success: function (result_update) {
+                            $('#ChinhSuaModal').modal('hide');
+
+                            Swal.fire({
+                                icon: "success",
+                                title: "Chỉnh sửa thành công hoạt động mã "+ _edit_input_MaHoatDong +" !",
+                                text: '',
+                                timer: 2000,
+                                timerProgressBar: true,
+                            });
+
+                            setTimeout(function(){
+                                GetListHoatdongdanhgia();
+                            }, 2000);
+
+                        },
+                        error: function (errorMessage) {
+                            checkLoiDangNhap(errorMessage.responseJSON.message);
+
+                            Swal.fire({
+                                icon: "error",
+                                title: "Lỗi",
+                                text: errorMessage.responseJSON.message,
+                                //timer: 5000,
+                                timerProgressBar: true,
+                            });
+                        },
+                    });
+
+                }
+        
+                
+            
+            },
+            error: function (errorMessage) {
+                checkLoiDangNhap(errorMessage.responseJSON.message);
+
+                    Swal.fire({
+                        icon: "error",
+                        title: "Lỗi",
+                        text: errorMessage.responseJSON.message,
+                        //timer: 5000,
+                        timerProgressBar: true,
+                    });
+               
+            },
+        });
+        
+
+
+   }
 
 }

@@ -25,25 +25,45 @@ if ($data["status"] == 1) {
         $data = json_decode(file_get_contents("php://input"));
 
         if ($data != null) {
-            $item->maKhoa = $data->maKhoa;
 
-            //values
-            $item->tenKhoa = $data->tenKhoa;
-            $item->taiKhoanKhoa = $data->taiKhoanKhoa;
-            $item->matKhauKhoa = $data->matKhauKhoa;
+            if (isset($data->matKhauKhoa)){
+                $item->maKhoa = $data->maKhoa;
 
-            if ($item->updateKhoa()) {
-                echo json_encode(
-                    array("message" =>  "Khoa data updated.")
-                );
-            } else {
-                echo json_encode(
-                    array("message" => "Data could not be updated")
-                );
+                //values
+                $item->tenKhoa = $data->tenKhoa;
+                $item->taiKhoanKhoa = $data->taiKhoanKhoa;
+                $item->matKhauKhoa = md5($data->matKhauKhoa);
+    
+                if ($item->updateKhoa()) {
+                    echo json_encode(
+                        array("message" =>  "Khoa cập nhật thành công.")
+                    );
+                } else {
+                    echo json_encode(
+                        array("message" => "Khoa cập nhật KHÔNG thành công.")
+                    );
+                }
+            }else{
+                $item->maKhoa = $data->maKhoa;
+
+                //values
+                $item->tenKhoa = $data->tenKhoa;
+                
+                if ($item->updateKhoa_KhongMatKhau()) {
+                    echo json_encode(
+                        array("message" =>  "Khoa cập nhật thành công.")
+                    );
+                } else {
+                    echo json_encode(
+                        array("message" => "Khoa cập nhật KHÔNG thành công.")
+                    );
+                }
             }
+
+            
         } else {
             echo json_encode(
-                array("message" => "No data posted.")
+                array("message" => "Không có dữ liệu gửi lên.")
             );
         }
     } else {

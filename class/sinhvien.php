@@ -141,6 +141,7 @@ class SinhVien
         $stmt = $this->conn->prepare($sqlQuery);
 
         // sanitize (Lọc dữ liệu đầu vào tránh SQLInjection, XSS)
+        $this->maSinhVien = htmlspecialchars(strip_tags($this->maSinhVien));
         $this->hoTenSinhVien = htmlspecialchars(strip_tags($this->hoTenSinhVien));
         $this->ngaySinh = htmlspecialchars(strip_tags($this->ngaySinh));
         $this->he = htmlspecialchars(strip_tags($this->he));
@@ -154,6 +155,43 @@ class SinhVien
         $stmt->bindParam(":ngaySinh", $this->ngaySinh);
         $stmt->bindParam(":he", $this->he);
         $stmt->bindParam(":matKhauSinhVien", $this->matKhauSinhVien);
+        $stmt->bindParam(":maLop", $this->maLop);
+
+
+        if ($stmt->execute()) {
+            return true;
+        }
+        return false;
+    }
+
+    // UPDATE
+    public function updateSinhVien_KhongMatKhau()
+    {
+        $sqlQuery = "UPDATE
+                        " . $this->db_table . "
+                    SET
+                        hoTenSinhVien = :hoTenSinhVien, 
+                        ngaySinh = :ngaySinh, 
+                        he = :he,
+                        maLop = :maLop
+                    WHERE 
+                        maSinhVien  = :maSinhVien ";
+
+        $stmt = $this->conn->prepare($sqlQuery);
+
+        // sanitize (Lọc dữ liệu đầu vào tránh SQLInjection, XSS)
+        $this->maSinhVien = htmlspecialchars(strip_tags($this->maSinhVien));
+        $this->hoTenSinhVien = htmlspecialchars(strip_tags($this->hoTenSinhVien));
+        $this->ngaySinh = htmlspecialchars(strip_tags($this->ngaySinh));
+        $this->he = htmlspecialchars(strip_tags($this->he));
+        $this->maLop = htmlspecialchars(strip_tags($this->maLop));
+
+
+        // bind data
+        $stmt->bindParam(":maSinhVien", $this->maSinhVien);
+        $stmt->bindParam(":hoTenSinhVien", $this->hoTenSinhVien);
+        $stmt->bindParam(":ngaySinh", $this->ngaySinh);
+        $stmt->bindParam(":he", $this->he);
         $stmt->bindParam(":maLop", $this->maLop);
 
 
