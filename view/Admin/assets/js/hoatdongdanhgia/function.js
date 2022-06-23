@@ -694,10 +694,21 @@ function DiemDanhHoatDong(input_MaHoatDong) {
                     //lấy tên của ảnh từ url
                     var _input_maQRDiaDiem = _temp_maQRDiaDiem[_temp_maQRDiaDiem.length - 1];
                     
-                    var _temp_thoiGianBatDauDiemDanh = new Date();
+                    var _temp_thoiGianBatDauDiemDanh_others = new Date();
+                    
+                    var _temp_thoiGianBatDauDiemDanh = new Date().toLocaleDateString();
+
+                    var _str_temp_TGBD = _temp_thoiGianBatDauDiemDanh.split('/');
+
+                    var year_temp = _str_temp_TGBD[2];
+                    var month_temp =  _str_temp_TGBD[1];
+                    var day_temp =  _str_temp_TGBD[0];
+
+                    
                     //lấy thời gian hiện tại, convert Datetime JS sang MySQL datetime
-                    var _input_thoiGianBatDauDiemDanh = _temp_thoiGianBatDauDiemDanh.toISOString().split('T')[0] + ' ' + _temp_thoiGianBatDauDiemDanh.toTimeString().split(' ')[0];
+                    var _input_thoiGianBatDauDiemDanh = year_temp + '-' + month_temp + '-' + day_temp + ' ' + _temp_thoiGianBatDauDiemDanh_others.toTimeString().split(' ')[0];
                 
+
                     var dataPost = {
                         maHoatDong: input_MaHoatDong,
                         maTieuChi3: _input_maTieuChi3,
@@ -791,6 +802,7 @@ function LoadDanhSachThamGia(maHoatDong) {
                 for (var b = 0; b < result_data[index_data].length; b++) {
                     var soThuTuSV = result_data[index_data][b].soThuTu;
                     var maSinhVienThamGia = result_data[index_data][b].maSinhVienThamGia;
+                    var thoiGianDiemDanh = result_data[index_data][b].thoiGianDiemDanh;
 
                     $.ajax({
                         url: urlapi_sinhvien_single_read + maSinhVienThamGia,
@@ -807,7 +819,7 @@ function LoadDanhSachThamGia(maHoatDong) {
                                 <td>'+ soThuTuSV +'</td>\
                                 <td>'+ maSinhVienThamGia +'</td>\
                                 <td>'+ tenSinhVienThamGia +'</td>\
-                                <td>2022</td>\
+                                <td>'+ thoiGianDiemDanh +'</td>\
                             </tr>');
                           
                 

@@ -30,6 +30,7 @@
                 //values
                 $item->maHoatDong = $data->maHoatDong;
                 $item->maSinhVienThamGia = $data->maSinhVienThamGia;
+                $item->thoiGianDiemDanh = $data->thoiGianDiemDanh;
                 
                 if($item->updateThamGiaHoatDong()){
                     echo json_encode("thamgiahoatdong data updated.");

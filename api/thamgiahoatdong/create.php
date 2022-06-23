@@ -27,6 +27,7 @@ if ($data["status"] == 1) {
             //set các biến bằng data nhận từ user
             $item->maHoatDong = $data->maHoatDong;
             $item->maSinhVienThamGia = $data->maSinhVienThamGia;
+            $item->thoiGianDiemDanh = $data->thoiGianDiemDanh;
 
             if ($item->createThamGiaHoatDong()) {
                 http_response_code(200);

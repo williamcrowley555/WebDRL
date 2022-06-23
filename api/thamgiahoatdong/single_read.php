@@ -30,7 +30,8 @@
                     $thamgiahoatdong_arr = array(
                         "maThamGiaHoatDong" =>  $item->maThamGiaHoatDong,
                         "maHoatDong" => $item->maHoatDong,
-                        "maSinhVienThamGia" => $item->maSinhVienThamGia
+                        "maSinhVienThamGia" => $item->maSinhVienThamGia,
+                        "thoiGianDiemDanh" => $item->thoiGianDiemDanh
                     );
                 
                     http_response_code(200);

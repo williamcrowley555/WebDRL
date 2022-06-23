@@ -40,7 +40,8 @@ if ($data["status"] == 1) {
                         "soThuTu" => $countRow,
                         "maThamGiaHoatDong" => $maThamGiaHoatDong,
                         "maHoatDong" => $maHoatDong,
-                        "maSinhVienThamGia" => $maSinhVienThamGia
+                        "maSinhVienThamGia" => $maSinhVienThamGia,
+                        "thoiGianDiemDanh" => $thoiGianDiemDanh
                     );
                     array_push($thamgiahoatdongArr["thamgiahoatdong"], $e);
                 }

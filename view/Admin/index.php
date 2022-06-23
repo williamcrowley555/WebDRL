@@ -145,18 +145,6 @@
 				    <ul class="app-menu list-unstyled accordion" id="menu-accordion">
 
 
-
-					    <li class="nav-item" style="cursor: pointer;">
-					        <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-					        <a class="nav-link"  onclick="LoadContentMainPage('thongke.php');" id="menu-button-ThongKe" >
-						        <span class="nav-icon">
-									<img src="assets/images/icons/home.png" alt="icon tổng quan/thống kê" width="10%">
-						         </span>
-		                         <span class="nav-link-text">Thống kê</span>
-					        </a><!--//nav-link-->
-					    </li><!--//nav-item-->
-
-
 						<li class="nav-item" style="cursor: pointer;">
 					        <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
 					        <a class="nav-link "  onclick="LoadContentMainPage('sinhvien.php');" id="menu-button-SinhVien">
@@ -257,7 +245,7 @@
 	<script>
 		$(document).ready(function() {
 
-			LoadContentMainPage("thongke.php");
+			LoadContentMainPage("sinhvien.php");
 			
 		});
 		
