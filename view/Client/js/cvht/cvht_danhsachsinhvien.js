@@ -92,6 +92,7 @@ function LoadComboBoxHocKy() {
 
 
 
+
 function getDanhSachDRLSinhVienLopTheoHocKy(maLop, maHocKyDanhGia) {
     
     //Ajax sinh vien

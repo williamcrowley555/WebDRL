@@ -47,8 +47,10 @@ if (!isset($_GET['maHocKy']) && !isset($_GET['maSinhVien'])) {
                                         <th scope="col"><strong>NỘI DUNG ĐÁNH GIÁ</strong></th>
                                         <th scope="col"><strong>Điểm tối đa</strong></th>
                                         <th scope="col"><strong>Điểm SV tự đánh giá</strong></th>
-                                        <th scope="col"><strong>Điểm lớp đánh giá</strong></th>
-                                        <th scope="col"><strong>Ghi chú</strong></th>
+                                        <th scope="col"><strong>Điểm Lớp đánh giá</strong></th>
+                                        <th scope="col"><strong>Điểm Khoa đánh giá</strong></th>
+                                        <th scope="col"><strong>Điểm nhận từ hoạt động</strong></th>
+                                        <th scope="col"><strong>Minh chứng ngoài (nếu có)</strong></th>
                                     </tr>
                                 </thead>
                                 <tbody id="tbody_noiDungDanhGia">
@@ -72,6 +74,69 @@ if (!isset($_GET['maHocKy']) && !isset($_GET['maSinhVien'])) {
 
     <!-- end of container -->
 
+    <!-- Modal xem danh sách hoạt động-->
+    <div class="modal fade" id="XemDanhSachHoatDongModal" tabindex="-1" aria-labelledby="XemDanhSachHoatDongModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Danh sách hoạt động đã tham gia</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+                    <div>
+                        <span style="font-weight: 700">Tiêu chí được cộng: </span><span id="id_thamgiahd_tieuChiDuocCong"></span>
+                    </div>
+
+                    <hr>
+                    <div class="table-responsive">
+                        <table class="table app-table-hover mb-0 text-left table-hover">
+                            <thead>
+                                <tr>
+                                    <th class="cell">Mã hoạt động</th>
+                                    <th class="cell">Tên hoạt động</th>
+                                    <th class="cell">Điểm nhận được</th>
+                                </tr>
+                            </thead>
+                            <tbody id="id_tbody_DanhSachThamGiaHoatDong">
+
+
+                                <!-- <tr>
+                                        <td colspan="4" style="text-align:center">Không tìm thấy kết quả.</td>
+                                    </tr> -->
+                            </tbody>
+                        </table>
+                    </div>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="AnhMinhChungModal" tabindex="-1" aria-labelledby="AnhMinhChungModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ảnh minh chứng</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+                   <img src="#" alt="" srcset="" id="id_img_modal" width="300px" />
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Footer -->
     <div class="footer">
@@ -117,12 +182,13 @@ if (!isset($_GET['maHocKy']) && !isset($_GET['maSinhVien'])) {
         HienThiThongTinVaDanhGia();
         LoadThongTinSinhVienDanhGia();
 
-       // var diemTong_XepLoai = Number($('#CVHT_input_diemtongcong').val());
-        //$("#text_XepLoai").text(TinhXepLoai(diemTong_XepLoai));
         
         //Code tự tính điểm tổng cộng-------------------//
         let calDiemTongCong_SinhVien = 0;
+        let calDiemTongCong_CVHT = 0;
+        let calDiemTongCong_Khoa = 0;
         let calDiemTongTieuChi1 = 0;
+        let calDiemTongTieuChi1_Khoa = 0;
         let calDiemTongTieuChi1_SinhVien = 0;
         $("#tbody_noiDungDanhGia").find("input").each(function() {
             var tieuChi = this.id.slice(0, 8);
@@ -135,6 +201,15 @@ if (!isset($_GET['maHocKy']) && !isset($_GET['maSinhVien'])) {
                 if (this.value != null) {
                    // calDiemTongCong += Number(this.value);
                     calDiemTongTieuChi1 += Number(this.value);
+                    calDiemTongCong_CVHT += Number(this.value);
+                }
+            }
+
+            if (tieuChi == 'Khoa_TC2' || tieuChi == 'Khoa_TC3') {
+                if (this.value != null) {
+                   // calDiemTongCong += Number(this.value);
+                   calDiemTongTieuChi1_Khoa += Number(this.value);
+                   calDiemTongCong_Khoa += Number(this.value);
                 }
             }
 
@@ -154,275 +229,129 @@ if (!isset($_GET['maHocKy']) && !isset($_GET['maSinhVien'])) {
                 $('#' + this.id).val(calDiemTongTieuChi1);
                 calDiemTongTieuChi1 = 0;
             }
+
+            if (idDiemTongTieuChi1 == 'Khoa_TongCong_TC1') {
+                $('#' + this.id).val(calDiemTongTieuChi1_Khoa);
+                calDiemTongTieuChi1_Khoa = 0;
+            }
             
         });
 
         $("#input_diemtongcong").val(calDiemTongCong_SinhVien);
+        $("#CVHT_input_diemtongcong").val(calDiemTongCong_CVHT);
+        $("#Khoa_input_diemtongcong").val(calDiemTongCong_Khoa);
        
-        //onchange
-        $('#tbody_noiDungDanhGia').find("input").on('change', function() {
-            let calDiemTongCong = 0;
-            let calDiemTongTieuChi1 = 0;
-            $("#tbody_noiDungDanhGia").find("input").each(function() {
-                var tieuChi = this.id.slice(0, 8);
-
-                var idDiemTongTieuChi1 = this.id.slice(0, 17);
-
-                if (tieuChi == 'CVHT_TC2' || tieuChi == 'CVHT_TC3') {
-                    if (this.value != null) {
-                        calDiemTongCong += Number(this.value);
-                        calDiemTongTieuChi1 += Number(this.value);
-                    }
-                }
-
-                if (idDiemTongTieuChi1 == 'CVHT_TongCong_TC1') {
-                    $('#' + this.id).val(calDiemTongTieuChi1);
-                    calDiemTongTieuChi1 = 0;
-                }
-
-
-            });
-
-            $('#CVHT_input_diemtongcong').val(calDiemTongCong);
-
-            
-            var diemTong_XepLoai = Number($('#CVHT_input_diemtongcong').val());
-
-            $("#text_XepLoai").text(TinhXepLoai(diemTong_XepLoai));
-
         
-
-        });
+       
         //Code tự tính điểm tổng cộng-------------------//
 
+        $('#inputTBCHocKyDangXet').on('change', function() {
+            TuDongDienDiemTBC();
+
+        });
+
+        $('#inputTBCHocKyTruoc').on('change', function() {
+            TuDongDienDiemTBC();
+
+        });
 
 
-        function DuyetDiemRenLuyen() {
-            var url = new URL(window.location.href);
-            var GET_MaHocKy = url.searchParams.get("maHocKy");
-            var GET_MaSinhVien = url.searchParams.get("maSinhVien");
-            var GET_MaLop = $('#text_MaLop').text();
+        function TuDongDienDiemTBC() {
+            var TBCHocKyDangXet = $('#inputTBCHocKyDangXet').val();
+            var TBCHocKyTruoc = $('#inputTBCHocKyTruoc').val();
+            var bac_HocKyDangXet = 0;
+            var bac_HocKyTruoc = 0;
 
-            $("form#formDanhGiaDRL").on("submit", function(e) {
-                e.preventDefault();
+            $('#CVHT_TC3_1').val('');
+            $('#CVHT_TC3_2').val('');
+            $('#CVHT_TC3_3').val('');
+            $('#CVHT_TC3_4').val('');
+            $('#CVHT_TC3_5').val('');
+            $('#CVHT_TC3_6').val('');
+            $('#CVHT_TC3_7').val('');
 
+            //Hoc ky dang xet
+            if ((TBCHocKyDangXet >= 3.60) && (TBCHocKyDangXet <= 4)) {
+                $('#CVHT_TC3_1').val($('#CVHT_TC3_1').attr('max_value'));
+                bac_HocKyDangXet = 4;
+            }
 
-                Swal.fire({
-                    title: 'Xác nhận duyệt điểm rèn luyện?',
-                    showDenyButton: true,
-                    confirmButtonText: 'Xác nhận',
-                    denyButtonText: `Đóng`,
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        if (checkValidateInput()) {
-                            var _inputMaSinhVien = GET_MaSinhVien;
-                            var _inputDiemTBCHKTruoc = $("#inputTBCHocKyTruoc").val();
-                            var _inputDiemTBCHKDangXet = $("#inputTBCHocKyDangXet").val();
-                            var _inputMaHocKyDanhGia = $("#input_maHocKyDanhGia").val();
-                            var _inputDiemTongCong = Number($('#input_diemtongcong').val());
-                            var _inputXepLoai = '';
+            if ((TBCHocKyDangXet >= 3.20) && (TBCHocKyDangXet <= 3.59)) {
+                $('#CVHT_TC3_2').val($('#CVHT_TC3_2').attr('max_value'));
+                bac_HocKyDangXet = 3;
+            }
 
+            if ((TBCHocKyDangXet >= 2.50) && (TBCHocKyDangXet <= 3.19)) {
+                $('#CVHT_TC3_3').val($('#CVHT_TC3_3').attr('max_value'));
+                bac_HocKyDangXet = 2;
+            }
 
-                            var _inputMaPhieuRenLuyen = "PRL" + _inputMaHocKyDanhGia + _inputMaSinhVien;
-                            //vd: maPhieuRenLuyen = PRLHK121223118410262
+            if ((TBCHocKyDangXet >= 2) && (TBCHocKyDangXet <= 2.49)) {
+                $('#CVHT_TC3_4').val($('#CVHT_TC3_4').attr('max_value'));
+                bac_HocKyDangXet = 1;
+            }
 
-                            _inputXepLoai = $("#text_XepLoai").text();
-                            
-                            var formData = new FormData(document.getElementById('formDanhGiaDRL'));
-                            formData.append("maPhieuRenLuyen", _inputMaPhieuRenLuyen);
-                            formData.append("maSinhVien", _inputMaSinhVien);
-                            formData.append("maHocKyDanhGia", _inputMaHocKyDanhGia);
-                            formData.append("xepLoai", _inputXepLoai);
-                            formData.append("coVanDuyet", 1);
-                            formData.append("khoaDuyet", 0);
-                     
-                            //update phiếu rèn luyện trước
-                            $.ajax({
-                                url: "../../../api/phieurenluyen/update.php",
-                                async: false,
-                                type: "POST",
-                                contentType: false,
-                                cache: false,
-                                processData: false,
-                                //dataType: "json",
-                                data: formData,
-                                headers: {
-                                    Authorization: jwtCookie,
-                                },
-                                success: function(resultUpdate) {
-                                
-                                    $.ajax({
-                                        url: "../../../api/chamdiemrenluyen/read.php?maPhieuRenLuyen=" + _inputMaPhieuRenLuyen,
-                                        async: false,
-                                        type: "GET",
-                                        contentType: "application/json;charset=utf-8",
-                                        dataType: "json",
-                                        headers: {
-                                            Authorization: jwtCookie,
-                                        },
-                                        success: function(resultGET) {
-                                            $.each(resultGET, function (index_GET) {
-                                                for (var q = 0;q < resultGET[index_GET].length;q++) {
-                                                    var maTieuChi3 = resultGET[index_GET][q].maTieuChi3;
-                                                    var maTieuChi2 = resultGET[index_GET][q].maTieuChi2;
-                                                    var diemSinhVienDanhGia = resultGET[index_GET][q].diemSinhVienDanhGia;
-                                                    var maChamDiemRenLuyen = resultGET[index_GET][q].maChamDiemRenLuyen;
+            if (TBCHocKyDangXet < 2) {
+                $('#CVHT_TC3_5').val($('#CVHT_TC3_5').attr('max_value'));
+            }
 
 
-                                                    //Vòng lặp input để tạo các hàng giá trị của chamdiemrenluyen theo mã phiếu điểm rèn luyện
-                                                    $("#tbody_noiDungDanhGia").find("input").each(function() {
-                                                        if (this.value != "") {
-                                                            var _inputDiemDanhGia = this.value;
-                                                            var tieuChi = this.id.slice(0, 8);
-
-                                                            //Chưa xử lý thêm ghi chú (thêm 1 switch case trước switch case tiêu chí này)
-                                                            if (tieuChi == "CVHT_TC2") {
-                                                                var _inputMaTieuChi2 = this.id.slice(9, this.id.length);
-
-                                                                //Cập nhật row
-                                                                if (maTieuChi2 === _inputMaTieuChi2 ){
-                                                                        
-                                                                    var dataPost_ChamDiemRenLuyen = {
-                                                                        maChamDiemRenLuyen: maChamDiemRenLuyen,
-                                                                        maPhieuRenLuyen: _inputMaPhieuRenLuyen,
-                                                                        maTieuChi3: null,
-                                                                        maTieuChi2: _inputMaTieuChi2,
-                                                                        maSinhVien: _inputMaSinhVien,
-                                                                        diemSinhVienDanhGia: diemSinhVienDanhGia,
-                                                                        diemLopDanhGia: _inputDiemDanhGia,
-                                                                        ghiChu: null
-                                                                    };
 
 
-                                                                    $.ajax({
-                                                                        url: "../../../api/chamdiemrenluyen/update.php",
-                                                                        async: false,
-                                                                        type: "POST",
-                                                                        contentType: "application/json;charset=utf-8",
-                                                                        dataType: "json",
-                                                                        data: JSON.stringify(dataPost_ChamDiemRenLuyen),
-                                                                        headers: {
-                                                                            Authorization: jwtCookie,
-                                                                        },
-                                                                        success: function(resultCreate_ChamDiemRenLuyen) {
-                                                                            //console.log(resultCreate_ChamDiemRenLuyen);
-                                                                        },
-                                                                        error: function(errorMessage) {
-                                                                            Swal.fire({
-                                                                                icon: "error",
-                                                                                title: "Lỗi",
-                                                                                text: errorMessage.responseText,
-                                                                                //timer: 5000,
-                                                                                timerProgressBar: true,
-                                                                            });
-                                                                        },
-                                                                    });
-                                                                
+            //Hoc ky truoc//
+            if ((TBCHocKyTruoc >= 3.60) && (TBCHocKyTruoc <= 4)) {
+                bac_HocKyTruoc = 4;
+            }
 
-                                                                }
-   
-                                                            }
+            if ((TBCHocKyTruoc >= 3.20) && (TBCHocKyTruoc <= 3.59)) {
+                bac_HocKyTruoc = 3;
+            }
 
-                                                            if (tieuChi == "CVHT_TC3"){
-                                                                var _inputMaTieuChi3 = this.id.slice(9, this.id.length);
+            if ((TBCHocKyTruoc >= 2.50) && (TBCHocKyTruoc <= 3.19)) {
+                bac_HocKyTruoc = 2;
+            }
 
-                                                                //Nếu đã có row rồi thì cập nhật cột diemLopDanhGia, ngược lại tạo row mới
-                                                                if (maTieuChi3 === _inputMaTieuChi3 ){
-                                                                        
-                                                                    var dataPost_ChamDiemRenLuyen = {
-                                                                        maChamDiemRenLuyen: maChamDiemRenLuyen,
-                                                                        maPhieuRenLuyen: _inputMaPhieuRenLuyen,
-                                                                        maTieuChi3: _inputMaTieuChi3,
-                                                                        maTieuChi2: null,
-                                                                        maSinhVien: _inputMaSinhVien,
-                                                                        diemSinhVienDanhGia: diemSinhVienDanhGia,
-                                                                        diemLopDanhGia: _inputDiemDanhGia,
-                                                                        ghiChu: null
-                                                                    };
+            if ((TBCHocKyTruoc >= 2) && (TBCHocKyTruoc <= 2.49)) {
+                bac_HocKyTruoc = 1;
+            }
 
-                                                                    $.ajax({
-                                                                        url: "../../../api/chamdiemrenluyen/update.php",
-                                                                        async: false,
-                                                                        type: "POST",
-                                                                        contentType: "application/json;charset=utf-8",
-                                                                        dataType: "json",
-                                                                        data: JSON.stringify(dataPost_ChamDiemRenLuyen),
-                                                                        headers: {
-                                                                            Authorization: jwtCookie,
-                                                                        },
-                                                                        success: function(resultCreate_ChamDiemRenLuyen) {
-                                                                            //console.log(resultCreate_ChamDiemRenLuyen);
-                                                                        },
-                                                                        error: function(errorMessage) {
-                                                                            Swal.fire({
-                                                                                icon: "error",
-                                                                                title: "Lỗi",
-                                                                                text: errorMessage.responseText,
-                                                                                //timer: 5000,
-                                                                                timerProgressBar: true,
-                                                                            });
-                                                                        },
-                                                                    });
+            //console.log(bac_HocKyDangXet + "---" + bac_HocKyTruoc)
+            //So sanh bac
+            if ((bac_HocKyDangXet - bac_HocKyTruoc) == 1) {
+                $('#CVHT_TC3_6').val($('#CVHT_TC3_6').attr('max_value'));
+            }
 
-                                                                }
-                                                            }
-
-                                                        }
-
-                                                    });
-
-                                                
-                                                }
-                                            });
-                                        
-
-                                        },
-                                        error: function(errorMessage) {
-                                            Swal.fire({
-                                                icon: "error",
-                                                title: "Lỗi",
-                                                text: errorMessage.responseText,
-                                                //timer: 5000,
-                                                timerProgressBar: true,
-                                            });
-                                        },
-                                    });
+            if ((bac_HocKyDangXet - bac_HocKyTruoc) > 1) {
+                $('#CVHT_TC3_6').val($('#CVHT_TC3_6').attr('max_value'));
+            }
 
 
-                                    Swal.fire({
-                                        icon: "success",
-                                        title: "Chấm điểm rèn luyện thành công!",
-                                        text: "Đang chuyển hướng...",
-                                        timer: 2500,
-                                        timerProgressBar: true,
-                                    });
+            //Kích hoạt sự kiên onchange manually vì value set bằng javascript kh hoạt động onchange
+            input_TC3_1 = document.getElementById('CVHT_TC3_1');
+            ev_TC3_1 = document.createEvent('Event');
+            ev_TC3_1.initEvent('change', true, false);
+            input_TC3_1.dispatchEvent(ev_TC3_1);
 
-                                    window.setTimeout(function() {
-                                        window.location.href = 'cvht_danhsachsinhvien.php?maLop=' + GET_MaLop;
-                                    }, 2500);
+            input_TC3_2 = document.getElementById('CVHT_TC3_2');
+            ev_TC3_2 = document.createEvent('Event');
+            ev_TC3_2.initEvent('change', true, false);
+            input_TC3_2.dispatchEvent(ev_TC3_2);
 
+            input_TC3_3 = document.getElementById('CVHT_TC3_3');
+            ev_TC3_3 = document.createEvent('Event');
+            ev_TC3_3.initEvent('change', true, false);
+            input_TC3_3.dispatchEvent(ev_TC3_3);
 
-                                },
-                                error: function(errorMessage_tc3) {
+            input_TC3_4 = document.getElementById('CVHT_TC3_4');
+            ev_TC3_4 = document.createEvent('Event');
+            ev_TC3_4.initEvent('change', true, false);
+            input_TC3_4.dispatchEvent(ev_TC3_4);
 
-                                    console.log(errorMessage_tc3.responseText);
-                                    Swal.fire({
-                                        icon: "error",
-                                        title: "Lỗi",
-                                        text: errorMessage_tc3.responseText,
-                                        //timer: 5000,
-                                        timerProgressBar: true,
-                                    });
-                                },
-                            });
+            input_TC3_5 = document.getElementById('CVHT_TC3_5');
+            ev_TC3_5 = document.createEvent('Event');
+            ev_TC3_5.initEvent('change', true, false);
+            input_TC3_5.dispatchEvent(ev_TC3_5);
 
-
-                        }
-
-                    }
-                })
-
-            });
 
         }
 
@@ -453,6 +382,67 @@ if (!isset($_GET['maHocKy']) && !isset($_GET['maSinhVien'])) {
                 return 'Kém';
             }
         }
+
+
+        function javascriptInputFile() {
+            var inputs = document.querySelectorAll('.inputfile');
+            Array.prototype.forEach.call(inputs, function(input) {
+                var label = input.nextElementSibling,
+                    labelVal = label.innerHTML;
+
+                input.addEventListener('change', function(e) {
+                    var fileName = '';
+                    if (this.files && this.files.length > 1)
+                        fileName = (this.getAttribute('data-multiple-caption') || '').replace('{count}', this.files.length);
+                    else
+                        fileName = e.target.value.split('\\').pop();
+
+                    if (fileName)
+                        label.querySelector('span').innerHTML = fileName;
+                    else
+                        label.innerHTML = labelVal;
+                });
+
+                // Firefox bug fix
+                input.addEventListener('focus', function() {
+                    input.classList.add('has-focus');
+                });
+                input.addEventListener('blur', function() {
+                    input.classList.remove('has-focus');
+                });
+            });
+        }
+
+
+        javascriptInputFile();
+
+
+        //Xem danh sách hoạt động tham gia
+        $(document).on("click", ".btn_XemDanhSachHoatDong", function() {
+
+            let thamgiahd_maTieuChi = $(this).attr('data-tieuchi-id');
+            let thamgiahd_tenTieuChi = $(this).attr('data-tentieuchi');
+            let thamgiahd_maHocKyDanhGia = $('#input_maHocKyDanhGia').val();
+       
+            $('#id_thamgiahd_tieuChiDuocCong').text(thamgiahd_tenTieuChi);
+
+            LoadDanhSachHoatDongDaThamGia(thamgiahd_maHocKyDanhGia, thamgiahd_maTieuChi);
+
+
+        })
+
+
+
+        $(document).on("click", ".btn_AnhMinhChung", function() {
+            let img_id = $(this).attr('data-img-id');
+            let src_img_id = $("#"+img_id).attr('src');
+
+            $('#id_img_modal').attr("src", src_img_id);
+
+       
+        })
+
+
     </script>
 
     <!-- MDB -->

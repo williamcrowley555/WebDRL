@@ -364,14 +364,17 @@ function ThemMoi() {
                 var maxID_MaHoatDong = 0;
                 $.each(result, function (index) {
                     for (var b = 0; b < result[index].length; b++) {
+                        
                         //Mã hoạt động ví dụ: HD1
-                        if ((result[index][b].maHoatDong).slice(2,3) > maxID_MaHoatDong ){
-                            maxID_MaHoatDong = (result[index][b].maHoatDong).slice(2,3);
+                        if (Number((result[index][b].maHoatDong).slice(2,result[index][b].maHoatDong.length)) > Number(maxID_MaHoatDong) ){
+                            maxID_MaHoatDong = Number((result[index][b].maHoatDong).slice(2,result[index][b].maHoatDong.length));
                         }
+
+                        
                     }
                 });
 
-                var maHoatDongNew = "HD" + (Number(maxID_MaHoatDong) + 1);
+                var maHoatDongNew = "HD" + (Number(maxID_MaHoatDong) + Number(1));
 
                 var maTieuChi_sliced = _input_MaTieuChi.slice(0,3);
                 var _value_maTieuChi = _input_MaTieuChi.slice(4,_input_MaTieuChi.length);
@@ -398,7 +401,7 @@ function ThemMoi() {
                         url: urlCreate
                     }
 
-                    //console.log(dataPost);
+                    console.log(dataPost);
 
                     $.ajax({
                         url: urlapi_hoatdongdanhgia_create,

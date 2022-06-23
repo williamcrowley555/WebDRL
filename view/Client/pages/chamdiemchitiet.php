@@ -51,8 +51,8 @@ if (!isset($_GET['maHocKy'])) {
                                         <th scope="col"><strong>NỘI DUNG ĐÁNH GIÁ</strong></th>
                                         <th scope="col"><strong>Điểm tối đa</strong></th>
                                         <th scope="col"><strong>Điểm SV tự đánh giá</strong></th>
-                                        <!-- <th scope="col"><strong>Điểm lớp đánh giá</strong></th> -->
-                                        <!-- <th scope="col"><strong>Ghi chú</strong></th> -->
+                                        <th scope="col"><strong>Điểm nhận từ hoạt động</strong></th>
+                                        <th scope="col"><strong>Minh chứng ngoài (nếu có) (ảnh .png, .jpg, .jpeg)</strong></th>
                                     </tr>
                                 </thead>
                                 <tbody id="tbody_noiDungDanhGia">
@@ -76,6 +76,50 @@ if (!isset($_GET['maHocKy'])) {
     </div>
 
     <!-- end of container -->
+
+
+    <!-- Modal xem danh sách hoạt động-->
+    <div class="modal fade" id="XemDanhSachHoatDongModal" tabindex="-1" aria-labelledby="XemDanhSachHoatDongModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Danh sách hoạt động đã tham gia</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+                    <div>
+                    <span style="font-weight: 700" >Tiêu chí được cộng: </span><span id="id_thamgiahd_tieuChiDuocCong" ></span>
+                    </div>
+                    
+                    <hr>
+                    <div class="table-responsive">
+                        <table class="table app-table-hover mb-0 text-left table-hover">
+                            <thead>
+                                <tr>
+                                    <th class="cell">Mã hoạt động</th>
+                                    <th class="cell">Tên hoạt động</th>
+                                    <th class="cell">Điểm nhận được</th>
+                                </tr>
+                            </thead>
+                            <tbody id="id_tbody_DanhSachThamGiaHoatDong">
+                                
+
+                                <!-- <tr>
+                                    <td colspan="4" style="text-align:center">Không tìm thấy kết quả.</td>
+                                </tr> -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
     <!-- Footer -->
@@ -121,6 +165,11 @@ if (!isset($_GET['maHocKy'])) {
     <script>
         HienThiThongTinVaDanhGia();
 
+        var loadhoatdongtruoc_maHocKyDanhGia = $('#input_maHocKyDanhGia').val();
+        var loadhoatdongtruoc_maSinhVien = getCookie("maSo");
+        LoadDiemNhanDuocCuaHoatDong_LenForm(loadhoatdongtruoc_maHocKyDanhGia, loadhoatdongtruoc_maSinhVien);
+
+
         //Code tự tính điểm tổng cộng
         let calDiemTongCong = 0;
         let calDiemTongTieuChi1 = 0;
@@ -138,6 +187,10 @@ if (!isset($_GET['maHocKy'])) {
             if (idDiemTongTieuChi1_SinhVien == 'TongCong_TC1') {
                 $('#' + this.id).val(calDiemTongTieuChi1);
                 calDiemTongTieuChi1 = 0;
+            }
+
+            if (calDiemTongCong <= 100) {
+                $('#input_diemtongcong').val(calDiemTongCong);
             }
 
         });
@@ -193,7 +246,7 @@ if (!isset($_GET['maHocKy'])) {
 
         });
 
-       
+
 
         function TuDongDienDiemTBC() {
             var TBCHocKyDangXet = $('#inputTBCHocKyDangXet').val();
@@ -256,11 +309,11 @@ if (!isset($_GET['maHocKy'])) {
 
             //console.log(bac_HocKyDangXet + "---" + bac_HocKyTruoc)
             //So sanh bac
-            if ((bac_HocKyDangXet - bac_HocKyTruoc) == 1 ){
+            if ((bac_HocKyDangXet - bac_HocKyTruoc) == 1) {
                 $('#TC3_6').val($('#TC3_6').attr('max_value'));
             }
 
-            if ((bac_HocKyDangXet - bac_HocKyTruoc) > 1 ){
+            if ((bac_HocKyDangXet - bac_HocKyTruoc) > 1) {
                 $('#TC3_7').val($('#TC3_7').attr('max_value'));
             }
 
@@ -291,11 +344,8 @@ if (!isset($_GET['maHocKy'])) {
             ev_TC3_5.initEvent('change', true, false);
             input_TC3_5.dispatchEvent(ev_TC3_5);
 
-            
+
         }
-
-
-        
 
 
 
@@ -357,10 +407,10 @@ if (!isset($_GET['maHocKy'])) {
                             formData.append("maHocKyDanhGia", _inputMaHocKyDanhGia);
                             formData.append("xepLoai", _inputXepLoai);
 
-                 
+
                             //Tạo phiếu rèn luyện trước
                             $.ajax({
-                                url: "../../../api/phieurenluyen/create.php",
+                                url: urlapi_phieurenluyen_create,
                                 data: formData,
                                 async: false,
                                 type: "POST",
@@ -381,98 +431,96 @@ if (!isset($_GET['maHocKy'])) {
                                         var tieuChi = this.id.slice(0, 3);
 
                                         //Chưa xử lý thêm ghi chú (thêm 1 switch case trước switch case tiêu chí này)
-                                        switch (tieuChi) {
-                                            case "TC2": {
-                                                var _inputMaTieuChi2 = this.id.slice(4, this.id.length);
+                                        if (tieuChi == "TC2"){
+                                            var _inputMaTieuChi2 = this.id.slice(4, this.id.length);
 
-                                                var dataPost_ChamDiemRenLuyen = {
-                                                    maPhieuRenLuyen: _inputMaPhieuRenLuyen,
-                                                    maTieuChi3: null,
-                                                    maTieuChi2: _inputMaTieuChi2,
-                                                    maSinhVien: _inputMaSinhVien,
-                                                    diemSinhVienDanhGia: _inputDiemSVDanhGia,
-                                                    diemLopDanhGia: null,
-                                                    ghiChu: null
-                                                };
+                                            var stringFormIDTemp = "formDanhGiaDRL_"+ this.id;
 
-                                                //console.log(dataPost_ChamDiemRenLuyen);
+                                            var formData_TC2 = new FormData(document.getElementById(stringFormIDTemp));
+                                            formData_TC2.append("maPhieuRenLuyen", _inputMaPhieuRenLuyen);
+                                            formData_TC2.append("maTieuChi3", 0);
+                                            formData_TC2.append("maTieuChi2", _inputMaTieuChi2);
+                                            formData_TC2.append("maSinhVien", _inputMaSinhVien);
+                                            formData_TC2.append("diemSinhVienDanhGia", _inputDiemSVDanhGia);
+                                            formData_TC2.append("diemLopDanhGia", null);
+                                            formData_TC2.append("diemKhoaDanhGia", null);
+                                            formData_TC2.append("ghiChu", "");
 
-                                                $.ajax({
-                                                    url: "../../../api/chamdiemrenluyen/create.php",
-                                                    async: false,
-                                                    type: "POST",
-                                                    contentType: "application/json;charset=utf-8",
-                                                    dataType: "json",
-                                                    data: JSON.stringify(dataPost_ChamDiemRenLuyen),
-                                                    headers: {
-                                                        Authorization: jwtCookie,
-                                                    },
-                                                    success: function(resultCreate_ChamDiemRenLuyen) {
-                                                        //console.log(resultCreate_ChamDiemRenLuyen);
-                                                    },
-                                                    error: function(errorMessage) {
-                                                        Swal.fire({
-                                                            icon: "error",
-                                                            title: "Lỗi",
-                                                            text: errorMessage.responseText,
-                                                            //timer: 5000,
-                                                            timerProgressBar: true,
-                                                        });
-                                                    },
-                                                });
 
-                                                break;
-                                            }
+                                            $.ajax({
+                                                url: urlapi_chamdiemrenluyen_create,
+                                                data: formData_TC2,
+                                                async: false,
+                                                type: "POST",
+                                                contentType: false,
+                                                cache: false,
+                                                processData: false,
+                                                //dataType: "json",
+                                                headers: {
+                                                    Authorization: jwtCookie,
+                                                },
+                                                success: function(resultCreate_ChamDiemRenLuyen) {
+                                                    //console.log(resultCreate_ChamDiemRenLuyen);
+                                                },
+                                                error: function(errorMessage) {
+                                                    Swal.fire({
+                                                        icon: "error",
+                                                        title: "Thông báo",
+                                                        text: errorMessage.responseText,
+                                                        //timer: 5000,
+                                                        timerProgressBar: true,
+                                                    });
+                                                },
+                                            });
 
-                                            case "TC3": {
-                                                var _inputMaTieuChi3 = this.id.slice(4, this.id.length);
-
-                                                var dataPost_ChamDiemRenLuyen = {
-                                                    maPhieuRenLuyen: _inputMaPhieuRenLuyen,
-                                                    maTieuChi3: _inputMaTieuChi3,
-                                                    maSinhVien: _inputMaSinhVien,
-                                                    diemSinhVienDanhGia: _inputDiemSVDanhGia,
-                                                    maTieuChi2: null,
-                                                    ghiChu: null,
-                                                    diemLopDanhGia: null
-
-                                                };
-
-                                                //console.log(dataPost_ChamDiemRenLuyen);
-
-                                                $.ajax({
-                                                    url: "../../../api/chamdiemrenluyen/create.php",
-                                                    async: false,
-                                                    type: "POST",
-                                                    contentType: "application/json;charset=utf-8",
-                                                    dataType: "json",
-                                                    data: JSON.stringify(dataPost_ChamDiemRenLuyen),
-                                                    headers: {
-                                                        Authorization: jwtCookie,
-                                                    },
-                                                    success: function(resultCreate_ChamDiemRenLuyen) {
-                                                        //console.log(resultCreate_ChamDiemRenLuyen);
-                                                    },
-                                                    error: function(errorMessage) {
-                                                        Swal.fire({
-                                                            icon: "error",
-                                                            title: "Lỗi",
-                                                            text: errorMessage.responseText,
-                                                            //timer: 5000,
-                                                            timerProgressBar: true,
-                                                        });
-                                                    },
-                                                });
-
-                                                break;
-                                            }
-
-                                            default: {
-                                                break;
-                                            }
                                         }
 
-                                        //}
+
+                                        if (tieuChi == "TC3"){
+                                            var _inputMaTieuChi3 = this.id.slice(4, this.id.length);
+
+                                            var stringFormIDTemp_2 = document.getElementById("formDanhGiaDRL_"+ this.id);
+
+                                            var formData_TC3 = new FormData(stringFormIDTemp_2);
+                                            formData_TC3.append("maPhieuRenLuyen", _inputMaPhieuRenLuyen);
+                                            formData_TC3.append("maTieuChi3", _inputMaTieuChi3);
+                                            formData_TC3.append("maTieuChi2", 0);
+                                            formData_TC3.append("maSinhVien", _inputMaSinhVien);
+                                            formData_TC3.append("diemSinhVienDanhGia", _inputDiemSVDanhGia);
+                                            formData_TC3.append("diemLopDanhGia", null);
+                                            formData_TC3.append("diemKhoaDanhGia", null);
+                                            formData_TC3.append("ghiChu", "");
+
+                                            //console.log(dataPost_ChamDiemRenLuyen);
+
+                                            $.ajax({
+                                                url: urlapi_chamdiemrenluyen_create,
+                                                data: formData_TC3,
+                                                async: false,
+                                                type: "POST",
+                                                contentType: false,
+                                                cache: false,
+                                                processData: false,
+                                                //dataType: "json",
+                                                headers: {
+                                                    Authorization: jwtCookie,
+                                                },
+                                                success: function(resultCreate_ChamDiemRenLuyen) {
+                                                    //console.log(resultCreate_ChamDiemRenLuyen);
+                                                },
+                                                error: function(errorMessage) {
+                                                    Swal.fire({
+                                                        icon: "error",
+                                                        title: "Thông báo",
+                                                        text: errorMessage.responseText,
+                                                        //timer: 5000,
+                                                        timerProgressBar: true,
+                                                    });
+                                                },
+                                            });
+                                        }
+
+                                        
                                     });
 
                                     Swal.fire({
@@ -494,7 +542,7 @@ if (!isset($_GET['maHocKy'])) {
                                     console.log(errorMessage_tc3.responseJSON.message);
                                     Swal.fire({
                                         icon: "error",
-                                        title: "Lỗi",
+                                        title: "Thông báo",
                                         text: errorMessage_tc3.responseJSON.message,
                                         //timer: 5000,
                                         timerProgressBar: true,
@@ -511,6 +559,57 @@ if (!isset($_GET['maHocKy'])) {
             });
 
         }
+
+
+
+        function javascriptInputFile() {
+            var inputs = document.querySelectorAll('.inputfile');
+            Array.prototype.forEach.call(inputs, function(input) {
+                var label = input.nextElementSibling,
+                    labelVal = label.innerHTML;
+
+                input.addEventListener('change', function(e) {
+                    var fileName = '';
+                    if (this.files && this.files.length > 1)
+                        fileName = (this.getAttribute('data-multiple-caption') || '').replace('{count}', this.files.length);
+                    else
+                        fileName = e.target.value.split('\\').pop();
+
+                    if (fileName)
+                        label.querySelector('span').innerHTML = fileName;
+                    else
+                        label.innerHTML = labelVal;
+                });
+
+                // Firefox bug fix
+                input.addEventListener('focus', function() {
+                    input.classList.add('has-focus');
+                });
+                input.addEventListener('blur', function() {
+                    input.classList.remove('has-focus');
+                });
+            });
+        }
+
+        javascriptInputFile();
+
+     
+        //Xem danh sách hoạt động tham gia
+        $(document).on("click", ".btn_XemDanhSachHoatDong" ,function() {
+
+            let thamgiahd_maTieuChi = $(this).attr('data-tieuchi-id');
+            let thamgiahd_tenTieuChi = $(this).attr('data-tentieuchi');
+            let thamgiahd_maHocKyDanhGia = $('#input_maHocKyDanhGia').val();
+            let thamgiahd_maSinhVien = getCookie("maSo");
+
+            $('#id_thamgiahd_tieuChiDuocCong').text(thamgiahd_tenTieuChi);
+
+            LoadDanhSachHoatDongDaThamGia(thamgiahd_maHocKyDanhGia, thamgiahd_maTieuChi, thamgiahd_maSinhVien);
+
+
+        })
+
+
     </script>
 
     <!-- MDB -->

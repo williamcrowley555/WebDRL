@@ -407,7 +407,7 @@
 				
 			
 				$("#input_DiaDiemHoatDong").autocomplete({
-					delay: 800,
+					delay: 1000,
 					source: availableTags
 				});
 

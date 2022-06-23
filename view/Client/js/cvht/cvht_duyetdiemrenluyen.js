@@ -79,7 +79,7 @@ function getThongTinLopCoVan() {
                                     <td><p class='fw-normal mb-1'>" + maKhoaHoc +"</p></td>\
                                     <td><p class='fw-normal mb-1'>" + tenKhoa +"</p></td>\
                                     <td>\
-                                        <a href='cvht_danhsachsinhvien.php?maLop="+ maLop +"' ><button type='button' class='btn btn-light' style='color: black;'>Xem danh sách</button></a>\
+                                        <a href='cvht_danhsachsinhvien.php?maLop="+ maLop +"' ><button type='button' class='btn btn-light' style='color: black;width:max-content;'>Xem danh sách</button></a>\
                                     </td>\
                                 </tr>");
                                     

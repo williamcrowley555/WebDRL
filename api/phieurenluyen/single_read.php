@@ -36,7 +36,24 @@ if ($data["status"] == 1) {
             $item->getSinglePhieuRenLuyen();
             if ($item->maPhieuRenLuyen != null) {
 
-                if ($item->fileDinhKem != null){
+                // if ($item->fileDinhKem != null){
+                //     // create array
+                //     $phieurenluyen_arr = array(
+                //         "maPhieuRenLuyen" =>  $item->maPhieuRenLuyen,
+                //         "xepLoai" => $item->xepLoai,
+                //         "diemTongCong" => $item->diemTongCong,
+                //         "maSinhVien" => $item->maSinhVien,
+                //         "diemTrungBinhChungHKTruoc" => $item->diemTrungBinhChungHKTruoc,
+                //         "diemTrungBinhChungHKXet" => $item->diemTrungBinhChungHKXet,
+                //         "maHocKyDanhGia" => $item->maHocKyDanhGia,
+                //         "coVanDuyet" => $item->coVanDuyet,
+                //         "khoaDuyet" => $item->khoaDuyet,
+                //         "fileDinhKem" => $urlFile.$item->maHocKyDanhGia."/".$item->maSinhVien.'/'.$item->fileDinhKem
+                //     );
+
+                //     http_response_code(200);
+                //     echo json_encode($phieurenluyen_arr);
+                // }else{
                     // create array
                     $phieurenluyen_arr = array(
                         "maPhieuRenLuyen" =>  $item->maPhieuRenLuyen,
@@ -47,34 +64,17 @@ if ($data["status"] == 1) {
                         "diemTrungBinhChungHKXet" => $item->diemTrungBinhChungHKXet,
                         "maHocKyDanhGia" => $item->maHocKyDanhGia,
                         "coVanDuyet" => $item->coVanDuyet,
-                        "khoaDuyet" => $item->khoaDuyet,
-                        "fileDinhKem" => $urlFile.$item->maHocKyDanhGia."/".$item->maSinhVien.'/'.$item->fileDinhKem
+                        "khoaDuyet" => $item->khoaDuyet
+                        //"fileDinhKem" => $item->fileDinhKem
                     );
 
                     http_response_code(200);
                     echo json_encode($phieurenluyen_arr);
-                }else{
-                    // create array
-                    $phieurenluyen_arr = array(
-                        "maPhieuRenLuyen" =>  $item->maPhieuRenLuyen,
-                        "xepLoai" => $item->xepLoai,
-                        "diemTongCong" => $item->diemTongCong,
-                        "maSinhVien" => $item->maSinhVien,
-                        "diemTrungBinhChungHKTruoc" => $item->diemTrungBinhChungHKTruoc,
-                        "diemTrungBinhChungHKXet" => $item->diemTrungBinhChungHKXet,
-                        "maHocKyDanhGia" => $item->maHocKyDanhGia,
-                        "coVanDuyet" => $item->coVanDuyet,
-                        "khoaDuyet" => $item->khoaDuyet,
-                        "fileDinhKem" => $item->fileDinhKem
-                    );
-
-                    http_response_code(200);
-                    echo json_encode($phieurenluyen_arr);
-                }
+                //}
                 
             } else {
                 http_response_code(404);
-                echo json_encode("phieurenluyen not found.");
+                echo json_encode("phieurenluyen không tìm thấy.");
             }
         }else{
             if (isset($_GET['maHocKyDanhGia']) && isset($_GET['maSinhVien']) ){
@@ -84,7 +84,24 @@ if ($data["status"] == 1) {
                 $item->getSinglePhieuRenLuyen_TheoMaHocKyVaMSSV();
                 if ($item->maPhieuRenLuyen != null) {
                     // create array
-                    if ($item->fileDinhKem != null){
+                    // if ($item->fileDinhKem != null){
+                    //     // create array
+                    //     $phieurenluyen_arr = array(
+                    //         "maPhieuRenLuyen" =>  $item->maPhieuRenLuyen,
+                    //         "xepLoai" => $item->xepLoai,
+                    //         "diemTongCong" => $item->diemTongCong,
+                    //         "maSinhVien" => $item->maSinhVien,
+                    //         "diemTrungBinhChungHKTruoc" => $item->diemTrungBinhChungHKTruoc,
+                    //         "diemTrungBinhChungHKXet" => $item->diemTrungBinhChungHKXet,
+                    //         "maHocKyDanhGia" => $item->maHocKyDanhGia,
+                    //         "coVanDuyet" => $item->coVanDuyet,
+                    //         "khoaDuyet" => $item->khoaDuyet,
+                    //         "fileDinhKem" => $urlFile.$item->maHocKyDanhGia."/".$item->maSinhVien.'/'.$item->fileDinhKem
+                    //     );
+    
+                    //     http_response_code(200);
+                    //     echo json_encode($phieurenluyen_arr);
+                    // }else{
                         // create array
                         $phieurenluyen_arr = array(
                             "maPhieuRenLuyen" =>  $item->maPhieuRenLuyen,
@@ -95,35 +112,18 @@ if ($data["status"] == 1) {
                             "diemTrungBinhChungHKXet" => $item->diemTrungBinhChungHKXet,
                             "maHocKyDanhGia" => $item->maHocKyDanhGia,
                             "coVanDuyet" => $item->coVanDuyet,
-                            "khoaDuyet" => $item->khoaDuyet,
-                            "fileDinhKem" => $urlFile.$item->maHocKyDanhGia."/".$item->maSinhVien.'/'.$item->fileDinhKem
+                            "khoaDuyet" => $item->khoaDuyet
+                            //"fileDinhKem" => $item->fileDinhKem
                         );
     
                         http_response_code(200);
                         echo json_encode($phieurenluyen_arr);
-                    }else{
-                        // create array
-                        $phieurenluyen_arr = array(
-                            "maPhieuRenLuyen" =>  $item->maPhieuRenLuyen,
-                            "xepLoai" => $item->xepLoai,
-                            "diemTongCong" => $item->diemTongCong,
-                            "maSinhVien" => $item->maSinhVien,
-                            "diemTrungBinhChungHKTruoc" => $item->diemTrungBinhChungHKTruoc,
-                            "diemTrungBinhChungHKXet" => $item->diemTrungBinhChungHKXet,
-                            "maHocKyDanhGia" => $item->maHocKyDanhGia,
-                            "coVanDuyet" => $item->coVanDuyet,
-                            "khoaDuyet" => $item->khoaDuyet,
-                            "fileDinhKem" => $item->fileDinhKem
-                        );
-    
-                        http_response_code(200);
-                        echo json_encode($phieurenluyen_arr);
-                    }
+                    //}
                 } else {
                 
                     http_response_code(404);
                     echo json_encode(
-                        array("message" => "phieurenluyen not found!")
+                        array("message" => "phieurenluyen không tìm thấy!")
                     );
                 }
             }

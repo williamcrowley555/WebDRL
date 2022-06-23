@@ -178,6 +178,14 @@ const urlapi_chamdiemrenluyen_read =
 const urlapi_chamdiemrenluyen_read_maPhieuRenLuyen =
   urlapi_chamdiemrenluyen_read + "?maPhieuRenLuyen=";
 
+
+  //CREATE
+const urlapi_chamdiemrenluyen_create = host_domain_url + "/chamdiemrenluyen/create.php";
+
+  //CREATE
+  const urlapi_chamdiemrenluyen_update = host_domain_url + "/chamdiemrenluyen/update.php";
+
+
 //---------------CO VAN HOC TAP---------------//----------------------------------
 //---------//
 

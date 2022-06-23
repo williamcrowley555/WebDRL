@@ -138,7 +138,7 @@ if (isset($_COOKIE['jwt'])){
     <link href="../css/swiper.css" rel="stylesheet">
     <link href="../css/styles.css" rel="stylesheet">
     <script src="../js/jquery-3.6.0.js"></script>
-
+    
     <script src="../js/sweetalert2.all.min.js"></script>
 
     <!-- Favicon  -->

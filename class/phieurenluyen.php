@@ -6,7 +6,7 @@ class PhieuRenLuyen
     // Table
     private $db_table = "phieurenluyen";
     // Columns
-    //public $maPhieuRenLuyen;
+    public $maPhieuRenLuyen; //
     public $xepLoai;
     public $diemTongCong;
     public $maSinhVien;
@@ -15,7 +15,6 @@ class PhieuRenLuyen
     public $maHocKyDanhGia;
     public $coVanDuyet;
     public $khoaDuyet;
-    public $fileDinhKem;
 
     // Db connection
     public function __construct($db)
@@ -29,7 +28,7 @@ class PhieuRenLuyen
     // GET ALL
     public function getAllPhieuRenLuyen()
     {
-        $sqlQuery = "SELECT maPhieuRenLuyen, xepLoai, diemTongCong, maSinhVien, diemTrungBinhChungHKTruoc, diemTrungBinhChungHKXet, maHocKyDanhGia, coVanDuyet, khoaDuyet, fileDinhKem FROM " . $this->db_table . "";
+        $sqlQuery = "SELECT maPhieuRenLuyen, xepLoai, diemTongCong, maSinhVien, diemTrungBinhChungHKTruoc, diemTrungBinhChungHKXet, maHocKyDanhGia, coVanDuyet, khoaDuyet FROM " . $this->db_table . "";
         $stmt = $this->conn->prepare($sqlQuery);
         $stmt->execute();
         return $stmt;
@@ -38,7 +37,7 @@ class PhieuRenLuyen
     // GET ALL THEO MSSV
     public function getAllPhieuRenLuyen_TheoMSSV($maSinhVien)
     {
-        $sqlQuery = "SELECT maPhieuRenLuyen, xepLoai, diemTongCong, maSinhVien, diemTrungBinhChungHKTruoc, diemTrungBinhChungHKXet, maHocKyDanhGia, coVanDuyet, khoaDuyet, fileDinhKem FROM " . $this->db_table . "
+        $sqlQuery = "SELECT maPhieuRenLuyen, xepLoai, diemTongCong, maSinhVien, diemTrungBinhChungHKTruoc, diemTrungBinhChungHKXet, maHocKyDanhGia, coVanDuyet, khoaDuyet FROM " . $this->db_table . "
                     WHERE maSinhVien = ? ";
         $stmt = $this->conn->prepare($sqlQuery);
         $stmt->bindParam(1, $maSinhVien);
@@ -49,7 +48,7 @@ class PhieuRenLuyen
     // READ single
     public function getSinglePhieuRenLuyen()
     {
-        $sqlQuery = "SELECT maPhieuRenLuyen, xepLoai, diemTongCong, maSinhVien, diemTrungBinhChungHKTruoc, diemTrungBinhChungHKXet, maHocKyDanhGia, coVanDuyet, khoaDuyet, fileDinhKem FROM " . $this->db_table . "
+        $sqlQuery = "SELECT maPhieuRenLuyen, xepLoai, diemTongCong, maSinhVien, diemTrungBinhChungHKTruoc, diemTrungBinhChungHKXet, maHocKyDanhGia, coVanDuyet, khoaDuyet FROM " . $this->db_table . "
                         WHERE maPhieuRenLuyen = ? LIMIT 0,1";
         $stmt = $this->conn->prepare($sqlQuery);
         $stmt->bindParam(1, $this->maPhieuRenLuyen);
@@ -67,13 +66,12 @@ class PhieuRenLuyen
             $this->maHocKyDanhGia = $dataRow['maHocKyDanhGia'];
             $this->coVanDuyet = $dataRow['coVanDuyet'];
             $this->khoaDuyet = $dataRow['khoaDuyet'];
-            $this->fileDinhKem = $dataRow['fileDinhKem'];
         }
     }
 
     public function getSinglePhieuRenLuyen_TheoMaHocKyVaMSSV()
     {
-        $sqlQuery = "SELECT maPhieuRenLuyen, xepLoai, diemTongCong, maSinhVien, diemTrungBinhChungHKTruoc, diemTrungBinhChungHKXet, maHocKyDanhGia, coVanDuyet, khoaDuyet, fileDinhKem FROM " . $this->db_table . "
+        $sqlQuery = "SELECT maPhieuRenLuyen, xepLoai, diemTongCong, maSinhVien, diemTrungBinhChungHKTruoc, diemTrungBinhChungHKXet, maHocKyDanhGia, coVanDuyet, khoaDuyet FROM " . $this->db_table . "
                         WHERE maHocKyDanhGia = ? AND maSinhVien = ? LIMIT 0,1";
         $stmt = $this->conn->prepare($sqlQuery);
         $stmt->bindParam(1, $this->maHocKyDanhGia);
@@ -92,7 +90,6 @@ class PhieuRenLuyen
             $this->maHocKyDanhGia = $dataRow['maHocKyDanhGia'];
             $this->coVanDuyet = $dataRow['coVanDuyet'];
             $this->khoaDuyet = $dataRow['khoaDuyet'];
-            $this->fileDinhKem = $dataRow['fileDinhKem'];
         }
     }
 
@@ -112,7 +109,6 @@ class PhieuRenLuyen
                         diemTrungBinhChungHKXet = :diemTrungBinhChungHKXet,
                         coVanDuyet = :coVanDuyet,
                         khoaDuyet = :khoaDuyet,
-                        fileDinhKem = :fileDinhKem,
                         maHocKyDanhGia = :maHocKyDanhGia";
 
 
@@ -128,7 +124,6 @@ class PhieuRenLuyen
         $this->maHocKyDanhGia = htmlspecialchars(strip_tags($this->maHocKyDanhGia));
         $this->coVanDuyet = htmlspecialchars(strip_tags($this->coVanDuyet));
         $this->khoaDuyet = htmlspecialchars(strip_tags($this->khoaDuyet));
-        $this->fileDinhKem = htmlspecialchars(strip_tags($this->fileDinhKem));
 
         // bind data
         $stmt->bindParam(":maPhieuRenLuyen", $this->maPhieuRenLuyen);
@@ -140,7 +135,6 @@ class PhieuRenLuyen
         $stmt->bindParam(":maHocKyDanhGia", $this->maHocKyDanhGia);
         $stmt->bindParam(":coVanDuyet", $this->coVanDuyet);
         $stmt->bindParam(":khoaDuyet", $this->khoaDuyet);
-        $stmt->bindParam(":fileDinhKem", $this->fileDinhKem);
 
         if ($stmt->execute()) {
             return true;
@@ -210,8 +204,7 @@ class PhieuRenLuyen
                         diemTrungBinhChungHKXet = :diemTrungBinhChungHKXet,
                         maHocKyDanhGia = :maHocKyDanhGia,
                         coVanDuyet = :coVanDuyet,
-                        khoaDuyet = :khoaDuyet,
-                        fileDinhKem = :fileDinhKem
+                        khoaDuyet = :khoaDuyet
                     WHERE 
                         maPhieuRenLuyen = :maPhieuRenLuyen";
 
@@ -227,7 +220,6 @@ class PhieuRenLuyen
         $this->maHocKyDanhGia = htmlspecialchars(strip_tags($this->maHocKyDanhGia));
         $this->coVanDuyet = htmlspecialchars(strip_tags($this->coVanDuyet));
         $this->khoaDuyet = htmlspecialchars(strip_tags($this->khoaDuyet));
-        $this->fileDinhKem = htmlspecialchars(strip_tags($this->fileDinhKem));
        
         // bind data
         $stmt->bindParam(":maPhieuRenLuyen", $this->maPhieuRenLuyen);
@@ -239,8 +231,6 @@ class PhieuRenLuyen
         $stmt->bindParam(":maHocKyDanhGia", $this->maHocKyDanhGia);
         $stmt->bindParam(":coVanDuyet", $this->coVanDuyet);
         $stmt->bindParam(":khoaDuyet", $this->khoaDuyet);
-        $stmt->bindParam(":fileDinhKem", $this->fileDinhKem);
-
 
         if ($stmt->execute()) {
             return true;

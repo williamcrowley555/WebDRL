@@ -12,6 +12,12 @@
     $data = $read_data->read_token();
     $checkQuyen = new checkQuyen();
 
+    //get domain dùng cho link file
+    if(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') $url = "https://";   
+    else $url = "http://";   
+    
+    $url .= $_SERVER['HTTP_HOST'];   
+
 
     // kiểm tra đăng nhập thành công 
     if ($data["status"] == 1) {
@@ -35,30 +41,75 @@
                 $ChamDiemRenLuyenArr["ChamDiemRenLuyen"] = array(); //tạo object json 
                 $ChamDiemRenLuyenArr["itemCount"] = $itemCount;
 
+                $urlFile = $url.dirname($_SERVER['PHP_SELF'])."/upload/";
+
                 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                     
                     extract($row);
                     $countRow++;
-                    $e = array(
-                        "soThuTu" => $countRow,
-                        "maChamDiemRenLuyen" =>  $maChamDiemRenLuyen,
-                        "maPhieuRenLuyen" =>  $maPhieuRenLuyen,
-                        "maTieuChi3" => $maTieuChi3,
-                        "maTieuChi2" => $maTieuChi2,
-                        "maSinhVien" => $maSinhVien,
-                        "diemSinhVienDanhGia" => $diemSinhVienDanhGia,
-                        "diemLopDanhGia" => $diemLopDanhGia,
-                        "ghiChu" => $ghiChu
+
+                    if ($fileMinhChung != null){
+                        if ($maTieuChi3 != 0){
+                            $e = array(
+                                "soThuTu" => $countRow,
+                                "maChamDiemRenLuyen" =>  $maChamDiemRenLuyen,
+                                "maPhieuRenLuyen" =>  $maPhieuRenLuyen,
+                                "maTieuChi3" => $maTieuChi3,
+                                "maTieuChi2" => $maTieuChi2,
+                                "maSinhVien" => $maSinhVien,
+                                "diemSinhVienDanhGia" => $diemSinhVienDanhGia,
+                                "diemLopDanhGia" => $diemLopDanhGia,
+                                "diemKhoaDanhGia" => $diemKhoaDanhGia,
+                                "fileMinhChung" => $urlFile.$maPhieuRenLuyen.'/tieuchi3_'.$maTieuChi3.'/'.$fileMinhChung,
+                                "ghiChu" => $ghiChu
+                            
+                            );
+                        }
+
+                        if ($maTieuChi2 != 0){
+                            $e = array(
+                                "soThuTu" => $countRow,
+                                "maChamDiemRenLuyen" =>  $maChamDiemRenLuyen,
+                                "maPhieuRenLuyen" =>  $maPhieuRenLuyen,
+                                "maTieuChi3" => $maTieuChi3,
+                                "maTieuChi2" => $maTieuChi2,
+                                "maSinhVien" => $maSinhVien,
+                                "diemSinhVienDanhGia" => $diemSinhVienDanhGia,
+                                "diemLopDanhGia" => $diemLopDanhGia,
+                                "diemKhoaDanhGia" => $diemKhoaDanhGia,
+                                "fileMinhChung" => $urlFile.$maPhieuRenLuyen.'/tieuchi2_'.$maTieuChi2.'/'.$fileMinhChung,
+                                "ghiChu" => $ghiChu
+                            
+                            );
+                        }
+                        
+                        array_push($ChamDiemRenLuyenArr["ChamDiemRenLuyen"], $e);
+
+                    }else{
+                        $e = array(
+                            "soThuTu" => $countRow,
+                            "maChamDiemRenLuyen" =>  $maChamDiemRenLuyen,
+                            "maPhieuRenLuyen" =>  $maPhieuRenLuyen,
+                            "maTieuChi3" => $maTieuChi3,
+                            "maTieuChi2" => $maTieuChi2,
+                            "maSinhVien" => $maSinhVien,
+                            "diemSinhVienDanhGia" => $diemSinhVienDanhGia,
+                            "diemLopDanhGia" => $diemLopDanhGia,
+                            "diemKhoaDanhGia" => $diemKhoaDanhGia,
+                            "fileMinhChung" => $fileMinhChung,
+                            "ghiChu" => $ghiChu
+                        
+                        );
+                        array_push($ChamDiemRenLuyenArr["ChamDiemRenLuyen"], $e);
+                    }
                     
-                    );
-                    array_push($ChamDiemRenLuyenArr["ChamDiemRenLuyen"], $e);
                 }
                     http_response_code(200);
                     echo json_encode($ChamDiemRenLuyenArr);
                 } else {
                     http_response_code(404);
                     echo json_encode(
-                        array("message" => "No record found.")
+                        array("message" => "Không có dữ liệu.")
                     );
                 }
         
@@ -75,31 +126,78 @@
                     $ChamDiemRenLuyenArr["ChamDiemRenLuyen"] = array(); //tạo object json 
                     $ChamDiemRenLuyenArr["itemCount"] = $itemCount;
     
+                    $urlFile = $url.dirname($_SERVER['PHP_SELF'])."/upload/";
+    
                     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                        
                         extract($row);
                         $countRow++;
-                        $e = array(
-                            "soThuTu" => $countRow,
-                            "maChamDiemRenLuyen" =>  $maChamDiemRenLuyen,
-                            "maPhieuRenLuyen" =>  $maPhieuRenLuyen,
-                            "maTieuChi3" => $maTieuChi3,
-                            "maTieuChi2" => $maTieuChi2,
-                            "maSinhVien" => $maSinhVien,
-                            "diemSinhVienDanhGia" => $diemSinhVienDanhGia,
-                            "diemLopDanhGia" => $diemLopDanhGia,
-                            "ghiChu" => $ghiChu
+    
+                        if ($fileMinhChung != null){
+
+                            if ($maTieuChi3 != 0){
+                                $e = array(
+                                    "soThuTu" => $countRow,
+                                    "maChamDiemRenLuyen" =>  $maChamDiemRenLuyen,
+                                    "maPhieuRenLuyen" =>  $maPhieuRenLuyen,
+                                    "maTieuChi3" => $maTieuChi3,
+                                    "maTieuChi2" => $maTieuChi2,
+                                    "maSinhVien" => $maSinhVien,
+                                    "diemSinhVienDanhGia" => $diemSinhVienDanhGia,
+                                    "diemLopDanhGia" => $diemLopDanhGia,
+                                    "diemKhoaDanhGia" => $diemKhoaDanhGia,
+                                    "fileMinhChung" => $urlFile.$maPhieuRenLuyen.'/tieuchi3_'.$maTieuChi3.'/'.$fileMinhChung,
+                                    "ghiChu" => $ghiChu
+                                
+                                );
+                            }
+
+                            if ($maTieuChi2 != 0){
+                                $e = array(
+                                    "soThuTu" => $countRow,
+                                    "maChamDiemRenLuyen" =>  $maChamDiemRenLuyen,
+                                    "maPhieuRenLuyen" =>  $maPhieuRenLuyen,
+                                    "maTieuChi3" => $maTieuChi3,
+                                    "maTieuChi2" => $maTieuChi2,
+                                    "maSinhVien" => $maSinhVien,
+                                    "diemSinhVienDanhGia" => $diemSinhVienDanhGia,
+                                    "diemLopDanhGia" => $diemLopDanhGia,
+                                    "diemKhoaDanhGia" => $diemKhoaDanhGia,
+                                    "fileMinhChung" => $urlFile.$maPhieuRenLuyen.'/tieuchi2_'.$maTieuChi2.'/'.$fileMinhChung,
+                                    "ghiChu" => $ghiChu
+                                
+                                );
+                            }
+                            
+                            array_push($ChamDiemRenLuyenArr["ChamDiemRenLuyen"], $e);
+    
+                        }else{
+                            $e = array(
+                                "soThuTu" => $countRow,
+                                "maChamDiemRenLuyen" =>  $maChamDiemRenLuyen,
+                                "maPhieuRenLuyen" =>  $maPhieuRenLuyen,
+                                "maTieuChi3" => $maTieuChi3,
+                                "maTieuChi2" => $maTieuChi2,
+                                "maSinhVien" => $maSinhVien,
+                                "diemSinhVienDanhGia" => $diemSinhVienDanhGia,
+                                "diemLopDanhGia" => $diemLopDanhGia,
+                                "diemKhoaDanhGia" => $diemKhoaDanhGia,
+                                "fileMinhChung" => $fileMinhChung,
+                                "ghiChu" => $ghiChu
+                            
+                            );
+                            array_push($ChamDiemRenLuyenArr["ChamDiemRenLuyen"], $e);
+                        }
                         
-                        );
-                        array_push($ChamDiemRenLuyenArr["ChamDiemRenLuyen"], $e);
                     }
-                    http_response_code(200);
-                    echo json_encode($ChamDiemRenLuyenArr);
-                } else {
-                    http_response_code(404);
-                    echo json_encode(
-                        array("message" => "No record found.")
-                    );
-                }
+                        http_response_code(200);
+                        echo json_encode($ChamDiemRenLuyenArr);
+                    } else {
+                        http_response_code(404);
+                        echo json_encode(
+                            array("message" => "Không có dữ liệu.")
+                        );
+                    }
             }
 
             

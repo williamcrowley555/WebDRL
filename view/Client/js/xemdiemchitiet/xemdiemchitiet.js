@@ -19,17 +19,39 @@ function thongBaoLoi(message){
   });
 }
 
-function changeNumberHandle(val, number)
-{
-  if (number < 0){
-    number = 0;
-  }
-  
-  if (Number(val.value) > number)
-  {
-    val.value = number
+
+function changeNumberHandle(val, number) {
+  if (val.value != "") {
+    if (isNaN(val.value) == false) {
+      //console.log(val.value);
+
+      if (number < 0) {
+        if (Number(val.value) < number) {
+          val.value = number;
+        } else {
+          if (Number(val.value) > 0) {
+            val.value = 0;
+          }
+        }
+      } else {
+        if (Number(val.value) > number) {
+          val.value = number;
+        } else {
+          if (Number(val.value) < 0) {
+            val.value = 0;
+          }
+        }
+      }
+
+      
+    } else {
+      val.value = 0;
+    }
+  } else {
+    val.value = 0;
   }
 }
+
 
 
 var jwtCookie = getCookie("jwt");
@@ -102,160 +124,363 @@ function HienThiThongTinVaDanhGia() {
 //------------------------------------------------//
 //Show tiêu chí đánh giá
 function getTieuChiDanhGia() {
-    //Ajax tieuchicap1
-    $.ajax({
-        url: urlapi_tieuchicap1_read,
-        async: false,
-        type: "GET",
-        contentType: "application/json;charset=utf-8",
-        dataType: "json",
-        headers: {
-        Authorization: jwtCookie,
-        },
-        success: function (result) {
-         
-            $.each(result, function (index) {
-            for (var i = 0; i < result[index].length; i++) {
-            //console.log(result[index][i].noidung);
+  //Ajax tieuchicap1
+  $.ajax({
+    url: urlapi_tieuchicap1_read,
+    async: false,
+    type: "GET",
+    contentType: "application/json;charset=utf-8",
+    dataType: "json",
+    headers: {
+      Authorization: jwtCookie,
+    },
+    success: function (result) {
+      $.each(result, function (index) {
+        for (var i = 0; i < result[index].length; i++) {
+          //console.log(result[index][i].noidung);
 
-                $("#tbody_noiDungDanhGia").append("<tr>\
-                <td style='font-weight: bold;'>" +result[index][i].noidung + "</td>\
+          $("#tbody_noiDungDanhGia").append(
+            "<tr>\
+                <td style='font-weight: bold;'>" +
+              result[index][i].noidung +
+              "</td>\
                 <td></td>\
                 <td></td>\
                 <td></td>\
                 <td></td>\
-                </tr>");
+                <td></td>\
+                <td></td>\
+                </tr>"
+          );
 
-            //Ajax tieuchicap2
-            $.ajax({
-                url: urlapi_tieuchicap2_read,
-                async: false,
-                type: "GET",
-                contentType: "application/json;charset=utf-8",
-                dataType: "json",
-                headers: {
-                Authorization: jwtCookie,
-                },
-                success: function (result_tc2) {
-                    $.each(result_tc2, function (index_tc2) {
-                        for (var k = 0; k < result_tc2[index_tc2].length; k++) {
-                            if (result[index][i].matc1 === result_tc2[index_tc2][k].matc1) {
-                            
-                                if (result_tc2[index_tc2][k].diemtoida != 0) {
-                                    $("#tbody_noiDungDanhGia").append("<tr>\
-                                        <td><em>" + result_tc2[index_tc2][k].noidung +"</em></td>\
-                                        <td><em>" +result_tc2[index_tc2][k].diemtoida +"đ</em></td>\
-                                        <td><input type='number' style='width: 100px;' onchange='changeNumberHandle(this,"+ result_tc2[index_tc2][k].diemtoida +")' id='TC2_" + result_tc2[index_tc2][k].matc2 +"' disabled/></td>\
-                                        <td><input type='number' style='width: 100px;' onchange='changeNumberHandle(this,"+ result_tc2[index_tc2][k].diemtoida +")' id='CVHT_TC2_" + result_tc2[index_tc2][k].matc2 +"' disabled/></td>\
-                                        <td></td>\
-                                    </tr>");
+          //Ajax tieuchicap2
+          $.ajax({
+            url: urlapi_tieuchicap2_read,
+            async: false,
+            type: "GET",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            headers: {
+              Authorization: jwtCookie,
+            },
+            success: function (result_tc2) {
+              $.each(result_tc2, function (index_tc2) {
+                for (var k = 0; k < result_tc2[index_tc2].length; k++) {
+                  if (
+                    result[index][i].matc1 === result_tc2[index_tc2][k].matc1
+                  ) {
+                    if (result_tc2[index_tc2][k].diemtoida != 0) {
+                      var min_value_tc2 = 0;
+                      //get min value
+                      if (result_tc2[index_tc2][k].diemtoida > 0) {
+                        min_value_tc2 = 0;
+                      } else {
+                        min_value_tc2 = result_tc2[index_tc2][k].diemtoida;
+                      }
 
-                                    // <td><input type='text' style='width: 100px;'  id='ghiChuTC2_" + result_tc2[index_tc2][k].matc2 +"' /></td>\
-                                    
-                                } else {
-                                    if (result_tc2[index_tc2][k].noidung == "1.Kết quả học tập: ") {
-                                        $("#tbody_noiDungDanhGia").append("<tr>\
-                                            <td><em>" + result_tc2[index_tc2][k].noidung +"<br>Điểm TBC học kỳ trước: <input type='text' id='inputTBCHocKyTruoc' name='diemTrungBinhChungHKTruoc' style='width: 100px;margin-right: 30px' disabled/>Điểm TBC học kỳ đang xét: <input type='text' id='inputTBCHocKyDangXet' name='diemTrungBinhChungHKXet' style='width: 100px;' disabled/> </em></td>\
+                      $("#tbody_noiDungDanhGia").append(
+                        "<tr>\
+                          <td><em>" + result_tc2[index_tc2][k].noidung + "</em></td>\
+                          <td><em>" + result_tc2[index_tc2][k].diemtoida + "đ</em></td>\
+                          <td>\
+                            <input type='number' style='width: 100px;' onchange='changeNumberHandle(this," + result_tc2[index_tc2][k].diemtoida + ")' max_value='" + result_tc2[index_tc2][k].diemtoida + "'    \
+                            min='" + min_value_tc2 + "' id='TC2_" + result_tc2[index_tc2][k].matc2 + "' disabled/> \
+                          </td>\
+                          <td>\
+                            <input type='number' style='width: 100px;' onchange='changeNumberHandle(this," + result_tc2[index_tc2][k].diemtoida + ")' max_value='" + result_tc2[index_tc2][k].diemtoida + "'    \
+                            min='" + min_value_tc2 + "' id='CVHT_TC2_" + result_tc2[index_tc2][k].matc2 + "' disabled/> \
+                          </td>\
+                          <td>\
+                          <input type='number' style='width: 100px;' onchange='changeNumberHandle(this," + result_tc2[index_tc2][k].diemtoida + ")' max_value='" + result_tc2[index_tc2][k].diemtoida + "'    \
+                            min='" + min_value_tc2 + "' id='Khoa_TC2_" + result_tc2[index_tc2][k].matc2 + "' disabled/> \
+                          </td>\
+                          <td>\
+                            <button type='button' class='btn btn-light btn_XemDanhSachHoatDong' style='color: black;width: max-content;' data-bs-toggle='modal' data-bs-target='#XemDanhSachHoatDongModal' data-tieuchi-id='TC2_" + result_tc2[index_tc2][k].matc2 + "' data-tentieuchi='"+ result_tc2[index_tc2][k].noidung +"' >Danh sách</button>\
+                          </td>\
+                          <td>\
+                          <div class='box'>\
+                          <a href='#' id='show_file_minhchung_TC2_"+ result_tc2[index_tc2][k].matc2 +"' target='_blank' style='display:none' ></a>\
+                          <button type='button' class='btn btn-light btn_AnhMinhChung' data-bs-toggle='modal' data-bs-target='#AnhMinhChungModal' data-img-id='img_file_minhchung_TC2_"+ result_tc2[index_tc2][k].matc2 +"' ><img src='#' id='img_file_minhchung_TC2_"+ result_tc2[index_tc2][k].matc2 +"' width='100px' /></button>\
+                          <form id='formDanhGiaDRL_TC2_"+ result_tc2[index_tc2][k].matc2 +"' method='post' enctype='multipart/form-data'>\
+                          </form>\
+                        </div>\
+                          </td>\
+                        </tr>"
+                      );
+
+                      // <td><input type='text' style='width: 100px;'  id='ghiChuTC2_" + result_tc2[index_tc2][k].matc2 +"' /></td>\
+                    } else {
+                      if (
+                        result_tc2[index_tc2][k].noidung ==
+                        "1.Kết quả học tập: "
+                      ) {
+                        $("#tbody_noiDungDanhGia").append(
+                          "<tr>\
+                                            <td><em>" +
+                            result_tc2[index_tc2][k].noidung +
+                            "<br>Điểm TBC học kỳ trước: <input type='number' step='0.01' onchange='changeNumberHandle(this,4)' id='inputTBCHocKyTruoc' name='diemTrungBinhChungHKTruoc' style='width: 100px;margin-right: 30px;margin-bottom: 15px;' disabled/><br>Điểm TBC học kỳ đang xét: <input type='number' step='0.01' onchange='changeNumberHandle(this,4)' id='inputTBCHocKyDangXet' name='diemTrungBinhChungHKXet' style='width: 100px;' disabled/> </em></td>\
                                             <td></td>\
                                             <td></td>\
                                             <td></td>\
                                             <td></td>\
+                                            <td></td>\
+                                            <td><a href='#' id='show_file_minhchung_TC2_"+ result_tc2[index_tc2][k].matc2 +"' target='_blank' ></a>\
+                                            <form id='formDanhGiaDRL_TC2_"+ result_tc2[index_tc2][k].matc2 +"' method='post' enctype='multipart/form-data'></form></td>\
                                             </tr>"
-                                    );
-                                    } else {
-                                        $("#tbody_noiDungDanhGia").append("<tr>\
-                                            <td><em>" + result_tc2[index_tc2][k].noidung +"</em></td>\
+                        );
+                      } else {
+                        $("#tbody_noiDungDanhGia").append(
+                          "<tr>\
+                                            <td><em>" +
+                            result_tc2[index_tc2][k].noidung +
+                            "</em></td>\
                                             <td></td>\
                                             <td></td>\
                                             <td></td>\
                                             <td></td>\
+                                            <td></td>\
+                                            <td> <a href='#' id='show_file_minhchung_TC2_"+ result_tc2[index_tc2][k].matc2 +"' target='_blank' ></a>\
+                                            <form id='formDanhGiaDRL_TC2_"+ result_tc2[index_tc2][k].matc2 +"' method='post' enctype='multipart/form-data'></form></td>\
                                             </tr>"
-                                        );
-                                    }
-                                }
+                        );
+                      }
+                    }
 
-                                //Ajax tieuchicap3
-                                $.ajax({
-                                    url: urlapi_tieuchicap3_read,
-                                    async: false,
-                                    type: "GET",
-                                    contentType: "application/json;charset=utf-8",
-                                    dataType: "json",
-                                    headers: {
-                                        Authorization: jwtCookie,
-                                    },
-                                    success: function (result_tc3) {
-                                        $.each(result_tc3, function (index_tc3) {
-                                        for (var p = 0;p < result_tc3[index_tc3].length;p++) {
-                                            if (result_tc2[index_tc2][k].matc2 ===result_tc3[index_tc3][p].matc2) {
-                                            // console.log(result_tc3[index_tc3][p].noidung);
+                    //Ajax tieuchicap3
+                    $.ajax({
+                      url: urlapi_tieuchicap3_read,
+                      async: false,
+                      type: "GET",
+                      contentType: "application/json;charset=utf-8",
+                      dataType: "json",
+                      headers: {
+                        Authorization: jwtCookie,
+                      },
+                      success: function (result_tc3) {
+                        $.each(result_tc3, function (index_tc3) {
+                          for (
+                            var p = 0;
+                            p < result_tc3[index_tc3].length;
+                            p++
+                          ) {
+                            if (
+                              result_tc2[index_tc2][k].matc2 ===
+                              result_tc3[index_tc3][p].matc2
+                            ) {
+                              // console.log(result_tc3[index_tc3][p].noidung);
 
-                                            $("#tbody_noiDungDanhGia").append("<tr>\
-                                                <td>" +result_tc3[index_tc3][p].noidung +"</span></td>\
-                                                <td><em>" + result_tc3[index_tc3][p].diem + "đ</em></td>\
-                                                <td><input type='number' style='width: 100px;' onchange='changeNumberHandle(this,"+ result_tc3[index_tc3][p].diem +")' id='TC3_" + result_tc3[index_tc3][p].matc3 + "' disabled /></td>\
-                                                <td><input type='number' style='width: 100px;' onchange='changeNumberHandle(this,"+ result_tc3[index_tc3][p].diem +")' id='CVHT_TC3_" + result_tc3[index_tc3][p].matc3 + "' disabled/></td>\
-                                                <td></td>\
-                                                </tr>");
-                                            }
+                              var min_value = 0;
+                              var disabled_string = "";
+                              //get min value
+                              if (result_tc3[index_tc3][p].diem > 0) {
+                                min_value = 0;
+                              } else {
+                                min_value = result_tc3[index_tc3][p].diem;
+                              }
 
-                                            // <td><input type='text' style='width: 100px;'  id='ghiChuTC3_" + result_tc3[index_tc3][p].matc3 + "' /></td>\
-                                        }
-                                        });
-                                    },
-                                    error: function (errorMessage_tc3) {
-                                      thongBaoLoi(errorMessage_tc3.responseJSON.message);
-                                    },
-                                });
+                              if (
+                                (result_tc3[index_tc3][p].noidung.localeCompare("a. Điểm trung bình chung học kì từ  3,60 đến 4,00") == 0)  ||
+                                (result_tc3[index_tc3][p].noidung.localeCompare("b. Điểm trung bình chung học kì từ  3,20 đến 3,59") == 0) ||
+                                (result_tc3[index_tc3][p].noidung.localeCompare("c. Điểm trung bình chung học kì từ  2,50 đến 3,19") == 0) ||
+                                (result_tc3[index_tc3][p].noidung.localeCompare("d. Điểm trung bình chung học kì từ  2,00 đến 2,49") == 0) ||
+                                (result_tc3[index_tc3][p].noidung.localeCompare("đ. Điểm trung bình chung học kì  dưới 2,00") == 0) ||
+                                (result_tc3[index_tc3][p].noidung.localeCompare("a. Kết quả học tập tăng một bậc so với học kỳ trước,  ĐTBCHK từ  2,00 trở lên") == 0) ||
+                                (result_tc3[index_tc3][p].noidung.localeCompare("b. Kết quả học tập tăng hai bậc so với học kỳ trước,  ĐTBCHK từ  2,00 trở lên") == 0) 
+                         
+                              ) {
+                                disabled_string = "readonly";
+                              }
+
+                              if (
+                                (result_tc3[index_tc3][p].noidung.localeCompare("a. Điểm trung bình chung học kì từ  3,60 đến 4,00") == 0)  ||
+                                (result_tc3[index_tc3][p].noidung.localeCompare("b. Điểm trung bình chung học kì từ  3,20 đến 3,59") == 0) ||
+                                (result_tc3[index_tc3][p].noidung.localeCompare("c. Điểm trung bình chung học kì từ  2,50 đến 3,19") == 0) ||
+                                (result_tc3[index_tc3][p].noidung.localeCompare("d. Điểm trung bình chung học kì từ  2,00 đến 2,49") == 0) ||
+                                (result_tc3[index_tc3][p].noidung.localeCompare("đ. Điểm trung bình chung học kì  dưới 2,00") == 0) ||
+                                (result_tc3[index_tc3][p].noidung.localeCompare("a. Kết quả học tập tăng một bậc so với học kỳ trước,  ĐTBCHK từ  2,00 trở lên") == 0) ||
+                                (result_tc3[index_tc3][p].noidung.localeCompare("b. Kết quả học tập tăng hai bậc so với học kỳ trước,  ĐTBCHK từ  2,00 trở lên") == 0) ||
+                                (result_tc3[index_tc3][p].noidung.localeCompare("c. Sinh viên năm thứ I, nếu có kết quả học tập HK I từ 2,00 trở lên") == 0) 
+                              ) {
+                        
+
+                                $("#tbody_noiDungDanhGia").append(
+                                  "<tr>\
+                                                  <td>" +
+                                    result_tc3[index_tc3][p].noidung +
+                                    "</span></td>\
+                                                  <td><em>" +
+                                    result_tc3[index_tc3][p].diem +
+                                    "đ</em></td>\
+                                                  <td><input type='number' style='width: 100px;' onchange='changeNumberHandle(this," +
+                                    result_tc3[index_tc3][p].diem +
+                                    ")' max_value='" +
+                                    result_tc3[index_tc3][p].diem+
+                                    "'  id='TC3_" +
+                                    result_tc3[index_tc3][p].matc3 +
+                                    "' " +
+                                    disabled_string +
+                                    " disabled/></td>\
+                                    <td><input type='number' style='width: 100px;' onchange='changeNumberHandle(this," +
+                                    result_tc3[index_tc3][p].diem +
+                                    ")' max_value='" +
+                                    result_tc3[index_tc3][p].diem+
+                                    "'  id='CVHT_TC3_" +
+                                    result_tc3[index_tc3][p].matc3 +
+                                    "' " +
+                                    disabled_string +
+                                    " disabled/></td>\
+                                    <td><input type='number' style='width: 100px;' onchange='changeNumberHandle(this," +
+                                    result_tc3[index_tc3][p].diem +
+                                    ")' max_value='" +
+                                    result_tc3[index_tc3][p].diem+
+                                    "'  id='Khoa_TC3_" +
+                                    result_tc3[index_tc3][p].matc3 +
+                                    "' " +
+                                    disabled_string +
+                                    " disabled/></td>\
+                                    <td></td>\
+                                    <td> <a href='#' id='show_file_minhchung_TC3_"+ result_tc3[index_tc3][p].matc3 +"' target='_blank' style='display:none' ></a>\
+                                    <form id='formDanhGiaDRL_TC3_"+ result_tc3[index_tc3][p].matc3 +"' method='post' enctype='multipart/form-data'></form>\</td>\
+                                                  </tr>"
+                                );
+                              }else{
+                                $("#tbody_noiDungDanhGia").append(
+                                  "<tr>\
+                                                  <td>" +
+                                    result_tc3[index_tc3][p].noidung +
+                                    "</span></td>\
+                                                  <td><em>" +
+                                    result_tc3[index_tc3][p].diem +
+                                    "đ</em></td>\
+                                                  <td><input type='number' style='width: 100px;' onchange='changeNumberHandle(this," +
+                                    result_tc3[index_tc3][p].diem +
+                                    ")' max_value='" +
+                                    result_tc3[index_tc3][p].diem+
+                                    "'  id='TC3_" +
+                                    result_tc3[index_tc3][p].matc3 +
+                                    "' " +
+                                    disabled_string +
+                                    "  disabled /></td>\
+                                    <td><input type='number' style='width: 100px;' onchange='changeNumberHandle(this," +
+                                    result_tc3[index_tc3][p].diem +
+                                    ")' max_value='" +
+                                    result_tc3[index_tc3][p].diem+
+                                    "'  id='CVHT_TC3_" +
+                                    result_tc3[index_tc3][p].matc3 +
+                                    "' " +
+                                    disabled_string +
+                                    " disabled/></td>\
+                                    <td><input type='number' style='width: 100px;' onchange='changeNumberHandle(this," +
+                                    result_tc3[index_tc3][p].diem +
+                                    ")' max_value='" +
+                                    result_tc3[index_tc3][p].diem+
+                                    "'  id='Khoa_TC3_" +
+                                    result_tc3[index_tc3][p].matc3 +
+                                    "' " +
+                                    disabled_string +
+                                    " disabled/></td>\
+                                    <td>\
+                                      <button type='button' class='btn btn-light btn_XemDanhSachHoatDong' style='color: black;width: max-content;' data-bs-toggle='modal' data-bs-target='#XemDanhSachHoatDongModal' data-tieuchi-id='TC3_" + result_tc3[index_tc3][p].matc3 + "' data-tentieuchi='"+ result_tc3[index_tc3][p].noidung +"' >Danh sách</button>\
+                                    </td>\
+                                    <td>\
+                                    <div class='box'>\
+                                        <a href='#' id='show_file_minhchung_TC3_"+ result_tc3[index_tc3][p].matc3 +"' target='_blank' style='display: none' ></a>\
+                                        <button type='button' class='btn btn-light btn_AnhMinhChung' data-bs-toggle='modal' data-bs-target='#AnhMinhChungModal' data-img-id='img_file_minhchung_TC3_"+ result_tc3[index_tc3][p].matc3 +"' ><img src='#' id='img_file_minhchung_TC3_"+ result_tc3[index_tc3][p].matc3 +"' width='100px' /></button>\
+                                        <form id='formDanhGiaDRL_TC3_"+ result_tc3[index_tc3][p].matc3 +"' method='post' enctype='multipart/form-data'>\
+                                      </form>\
+                                      </div>\
+                                  </td>\
+                                      </tr>"
+                                );
+                              }
+
+
+                              
                             }
-                        }
-                    });
-                },
-                error: function (errorMessage_tc2) {
-                    thongBaoLoi(errorMessage_tc2.responseJSON.message);
-                },
-            });
 
-            $("#tbody_noiDungDanhGia").append(
-                "<tr style='background: darkseagreen;' >\
-                <td style='font-weight: bold;' ><span>Cộng: </span>\
+                            // <td><input type='text' style='width: 100px;'  id='ghiChuTC3_" + result_tc3[index_tc3][p].matc3 + "' /></td>\
+                          }
+                        });
+                      },
+                      error: function (errorMessage_tc3) {
+                        thongBaoLoi(errorMessage_tc3.responseText);
+                      },
+                    });
+                  }
+                }
+              });
+            },
+            error: function (errorMessage_tc2) {
+              thongBaoLoi(errorMessage_tc2.responseText);
+            },
+          });
+
+          $("#tbody_noiDungDanhGia").append(
+            "<tr style='background: darkseagreen;' >\
+                <td style='font-weight: bold;' >Cộng: </span>\
                 </td>\
                 <td><em></em></td>\
-                <td><input type='number' style='width: 100px' onchange='changeNumberHandle(this,"+ result[index][i].diemtoida +")' id='TongCong_TC1_" + result[index][i].matc1 +"' disabled/></td>\
-                <td><input type='number' style='width: 100px' onchange='changeNumberHandle(this,"+ result[index][i].diemtoida +")' id='CVHT_TongCong_TC1_" + result[index][i].matc1 +"' disabled/></td>\
+                <td><input type='number' style='width: 100px' onchange='changeNumberHandle(this," +
+              result[index][i].diemtoida +
+              ")' max-value='" +
+              result[index][i].diemtoida +
+              "' min='0' max='" +
+              result[index][i].diemtoida +
+              "' id='TongCong_TC1_" +
+              result[index][i].matc1 +
+              "' disabled/></td>\
+              <td><input type='number' style='width: 100px' onchange='changeNumberHandle(this," +
+              result[index][i].diemtoida +
+              ")' max-value='" +
+              result[index][i].diemtoida +
+              "' min='0' max='" +
+              result[index][i].diemtoida +
+              "' id='CVHT_TongCong_TC1_" +
+              result[index][i].matc1 +
+              "' disabled/></td>\
+              <td><input type='number' style='width: 100px' onchange='changeNumberHandle(this," +
+              result[index][i].diemtoida +
+              ")' max-value='" +
+              result[index][i].diemtoida +
+              "' min='0' max='" +
+              result[index][i].diemtoida +
+              "' id='Khoa_TongCong_TC1_" +
+              result[index][i].matc1 +
+              "' disabled/></td>\
+              <td></td>\
+              <td></td>\
                 </tr>"
-            );
-            }
+          );
+        }
+      });
+    },
+    error: function (errorMessage) {
+      thongBaoLoi(errorMessage.responseText);
+    },
+  });
 
-           
-            });
-        },
-        error: function (errorMessage) {
-            thongBaoLoi(errorMessage.responseJSON.message);
-        },
-    });
-
-    $("#tbody_noiDungDanhGia").append(
-        "<tr>\
+  $("#tbody_noiDungDanhGia").append(
+    "<tr>\
             <td style='font-weight: bold;' >ĐIỂM TỔNG CỘNG (tối đa không quá 100 điểm): </span>\
             </td>\
             <td><em></em></td>\
-            <td><input type='number' style='width: 100px' onchange='changeNumberHandle(this, 100)' id='input_diemtongcong'  disabled/></td>\
-            <td><input type='number' style='width: 100px' onchange='changeNumberHandle(this, 100)' id='CVHT_input_diemtongcong' name='diemTongCong' disabled/></td>\
-        </tr>"
-    );
-
-    $("#tbody_noiDungDanhGia").append(
-        "<tr>\
-            <td style='font-weight: bold;' >FILE MINH CHỨNG ĐÍNH KÈM (NẾU CÓ): </span>\
-            <a href='#' id='input_fileDinhKem' name='fileDinhKem' ></a>\
-            <br> <span>Chỉ nhận file định dạng .zip và .rar (file nén)</span>\
-            </td>\
+            <td><input type='number' style='width: 100px' onchange='changeNumberHandle(this, 100)' id='input_diemtongcong' readonly='true' disabled/></td>\
+            <td><input type='number' style='width: 100px' onchange='changeNumberHandle(this, 100)' id='CVHT_input_diemtongcong' name='diemTongCong' readonly='true' disabled/></td>\
+            <td><input type='number' style='width: 100px' onchange='changeNumberHandle(this, 100)' id='Khoa_input_diemtongcong' name='Khoa_diemTongCong' readonly='true' disabled/></td>\
             <td></td>\
-            <td style='font-weight: bold;text-transform: uppercase;' colspan='2' >Xếp loại: <span id='text_XepLoai' ></span></td>\
-            <td style='font-weight: bold;'  ><span></span></td>\
-        </tr>"
-    );
+            <td></td>\
+            </tr>"
+  );
+
+  $("#tbody_noiDungDanhGia").append(
+      "<tr>\
+          <td style='font-weight: bold;text-transform: uppercase;font-size: 18px;'  >ĐIỂM: <span id='text_diemTongCong' ></span></td>\
+          <td></td>\
+          <td style='font-weight: bold;text-transform: uppercase;' colspan='2' >Xếp loại: <span id='text_XepLoai' ></span></td>\
+          <td></td>\
+          <td style='font-weight: bold;'  ><span></span></td>\
+      </tr>"
+  );
 
 
 }
@@ -421,107 +646,203 @@ function checkValidateInput(){
 
   //Load thông tin sinh viên đã đánh giá
   function LoadThongTinSinhVienDanhGia() {
-    
     var maPhieuRenLuyen = "PRL" + GET_MaHocKy + GET_MaSinhVien;
-
+  
     $.ajax({
-        url: urlapi_phieurenluyen_single_read + maPhieuRenLuyen,
-        async: false,
-        type: "GET",
-        contentType: "application/json;charset=utf-8",
-        dataType: "json",
-        headers: {
+      url:
+      urlapi_phieurenluyen_single_read +
+        maPhieuRenLuyen,
+      async: false,
+      type: "GET",
+      contentType: "application/json;charset=utf-8",
+      dataType: "json",
+      headers: {
+        Authorization: jwtCookie,
+      },
+      success: function (result_PRL) {
+  
+        var xepLoai = result_PRL.xepLoai;
+        var diemTongCong = result_PRL.diemTongCong;
+        var diemTrungBinhChungHKTruoc = result_PRL.diemTrungBinhChungHKTruoc;
+        var diemTrungBinhChungHKXet = result_PRL.diemTrungBinhChungHKXet;
+        
+  
+        $.ajax({
+          url:
+          urlapi_chamdiemrenluyen_read_maPhieuRenLuyen +
+            maPhieuRenLuyen,
+          async: false,
+          type: "GET",
+          contentType: "application/json;charset=utf-8",
+          dataType: "json",
+          headers: {
             Authorization: jwtCookie,
-        },
-        success: function (result_PRL) {
-           var xepLoai = result_PRL.xepLoai;
-           var diemTongCong = result_PRL.diemTongCong;
-           var diemTrungBinhChungHKTruoc = result_PRL.diemTrungBinhChungHKTruoc;
-           var diemTrungBinhChungHKXet = result_PRL.diemTrungBinhChungHKXet;
-           var coVanDuyet = result_PRL.coVanDuyet;
-           var fileDinhKem = result_PRL.fileDinhKem;
-           var fileDinhKem_Name = fileDinhKem.substring(fileDinhKem.lastIndexOf('/') + 1);
-          
-           console.log(xepLoai);
+          },
+          success: function (result_CD) {
+            $("#inputTBCHocKyTruoc").val(diemTrungBinhChungHKTruoc);
+            $("#inputTBCHocKyDangXet").val(diemTrungBinhChungHKXet);
+            
+            $("#text_XepLoai").text(xepLoai);
+            $("#text_diemTongCong").text(diemTongCong);
+            
+  
+            $.each(result_CD, function (index_cd) {
+              for (var p = 0; p < result_CD[index_cd].length; p++) {
+  
+                var maTieuChi2 = result_CD[index_cd][p].maTieuChi2;
+                var maTieuChi3 = result_CD[index_cd][p].maTieuChi3;
+                var diemSinhVienDanhGia = result_CD[index_cd][p].diemSinhVienDanhGia;
+                var diemLopDanhGia = result_CD[index_cd][p].diemLopDanhGia;
+                var diemKhoaDanhGia = result_CD[index_cd][p].diemKhoaDanhGia;
+  
+                var fileMinhChung = result_CD[index_cd][p].fileMinhChung;
+                var fileMinhChung_Name = fileMinhChung.substring(
+                  fileMinhChung.lastIndexOf("/") + 1
+                );
+  
+                
+                $("#tbody_noiDungDanhGia")
+                  .find("input")
+                  .each(function () {
+                    var tieuChi = this.id.slice(0, 3);
+                    var maTieuChi = this.id.slice(4, 9);
+  
+                    if (tieuChi == "TC2") {
+                      if (maTieuChi2 == maTieuChi) {
+                        $("#" + this.id).val(diemSinhVienDanhGia);
+  
+                        $("#show_file_minhchung_"+ this.id).text(fileMinhChung_Name);
+                        $("#show_file_minhchung_"+ this.id).attr("href", fileMinhChung);
 
-           $.ajax({
-            url: urlapi_chamdiemrenluyen_read_maPhieuRenLuyen + maPhieuRenLuyen,
+                        $("#img_file_minhchung_"+ this.id).attr("src", fileMinhChung);
+  
+                        
+                          $("#CVHT_" + this.id).val(diemLopDanhGia);
+                       
+                          $("#Khoa_" + this.id).val(diemKhoaDanhGia);
+                       
+                       
+                      }
+                    }
+  
+                    if (tieuChi == "TC3") {
+                      if (maTieuChi3 == maTieuChi) {
+                        $("#" + this.id).val(diemSinhVienDanhGia);
+  
+                        $("#show_file_minhchung_"+ this.id).text(fileMinhChung_Name);
+                        $("#show_file_minhchung_"+ this.id).attr("href", fileMinhChung);
+
+                        $("#img_file_minhchung_"+ this.id).attr("src", fileMinhChung);
+  
+  
+                          $("#CVHT_" + this.id).val(diemLopDanhGia);
+                       
+                          $("#Khoa_" + this.id).val(diemKhoaDanhGia);
+                      
+                      }
+                    }
+                  });
+              }
+            });
+          },
+          error: function (errorMessage_tc3) {
+            thongBaoLoi(errorMessage_tc3.responseText);
+          },
+        });
+  
+      },
+      error: function (errorMessage_tc3) {
+        thongBaoLoi(errorMessage_tc3.responseText);
+      },
+    });
+  }
+
+
+
+
+  //hàm dùng khi onclick modal
+function LoadDanhSachHoatDongDaThamGia(maHocKyDanhGia, maTieuChi) {
+  var tieuChi_sliced_truoc = maTieuChi.slice(0, 3);
+  var tieuChi_sliced_value = maTieuChi.slice(4, maTieuChi.length);
+  var maSinhVien = GET_MaSinhVien;
+
+  $('#id_tbody_DanhSachThamGiaHoatDong tr').remove();
+  $.ajax({
+    url: urlapi_thamgiahoatdong_read_MaSV + maSinhVien,
+    async: false,
+    type: "GET",
+    contentType: "application/json;charset=utf-8",
+    dataType: "json",
+    headers: {
+      Authorization: jwtCookie,
+    },
+    success: function (result_CD) {
+     
+      $.each(result_CD, function (index_cd) {
+        for (var p = 0; p < result_CD[index_cd].length; p++) {
+
+          var thamgiahd_maHoatDong = result_CD[index_cd][p].maHoatDong;
+         
+          $.ajax({
+            url: urlapi_hoatdongdanhgia_single_read + thamgiahd_maHoatDong,
             async: false,
             type: "GET",
             contentType: "application/json;charset=utf-8",
             dataType: "json",
             headers: {
-                Authorization: jwtCookie,
+              Authorization: jwtCookie,
             },
-            success: function (result_CD) {
-              $("#inputTBCHocKyTruoc").val(diemTrungBinhChungHKTruoc);
-              $("#inputTBCHocKyDangXet").val(diemTrungBinhChungHKXet);
-              //$("#input_diemtongcong").val(diemTongCong);
-              if (coVanDuyet == 1){
-                $("#CVHT_input_diemtongcong").val(diemTongCong);
-              }
-              
-              $("#text_XepLoai").text(xepLoai);
-              $("#input_fileDinhKem").text(fileDinhKem_Name);
-              $("#input_fileDinhKem").attr("href", fileDinhKem);
+            success: function (result_hoatdongdanhgia) {
+             
+              if (result_hoatdongdanhgia.maHocKyDanhGia == maHocKyDanhGia){
 
-
-              $.each(result_CD, function (index_cd) {
-                for (var p = 0;p < result_CD[index_cd].length;p++) {
-                  var maTieuChi2 = result_CD[index_cd][p].maTieuChi2;
-                  var maTieuChi3 = result_CD[index_cd][p].maTieuChi3;
-                  var diemSinhVienDanhGia = result_CD[index_cd][p].diemSinhVienDanhGia;
-                  var diemLopDanhGia = result_CD[index_cd][p].diemLopDanhGia;
-
-                  $('#tbody_noiDungDanhGia').find('input').each(function () {
-                      var tieuChi = this.id.slice(0, 3);
-                      var maTieuChi = this.id.slice(4,9);
-
-                      if (tieuChi == 'TC2'){
-                        if (maTieuChi2 == maTieuChi){
-                          $("#" + this.id).val(diemSinhVienDanhGia);
-                          
-                          if (diemLopDanhGia != 0){
-                            $("#CVHT_" + this.id).val(diemLopDanhGia);
-                          }else{
-                            $("#CVHT_" + this.id).val(0);
-                          }
-                          
-                        }
-                      }
-
-                      if (tieuChi == 'TC3'){
-                        if (maTieuChi3 == maTieuChi){
-                          $("#" + this.id).val(diemSinhVienDanhGia);
-
-                          if (diemLopDanhGia != 0){
-                            $("#CVHT_" + this.id).val(diemLopDanhGia);
-                          }else{
-                            $("#CVHT_" + this.id).val(0);
-                          }
-                        }
-                      }
-            
-                  });
-
+                if(tieuChi_sliced_truoc == 'TC2'){
+                    if (tieuChi_sliced_value == result_hoatdongdanhgia.maTieuChi2){
+                        $('#id_tbody_DanhSachThamGiaHoatDong').append("<tr>\
+                        <td>"+ thamgiahd_maHoatDong +"</td>\
+                        <td>"+ result_hoatdongdanhgia.tenHoatDong +"</td>\
+                        <td>"+ result_hoatdongdanhgia.diemNhanDuoc +"</td>\
+                      </tr>");
+                    }
 
                 }
-              });
-    
+
+                if (tieuChi_sliced_truoc == 'TC3'){
+                  if (tieuChi_sliced_value == result_hoatdongdanhgia.maTieuChi3){
+                      $('#id_tbody_DanhSachThamGiaHoatDong').append("<tr>\
+                      <td>"+ thamgiahd_maHoatDong +"</td>\
+                      <td>"+ result_hoatdongdanhgia.tenHoatDong +"</td>\
+                      <td>"+ result_hoatdongdanhgia.diemNhanDuoc +"</td>\
+                    </tr>");
+                  }
+
+                }
+
+                
+              }
+              
+              
             },
             error: function (errorMessage_tc3) {
-              thongBaoLoi(errorMessage_tc3.responseJSON.message);
+              thongBaoLoi(errorMessage_tc3.responseText);
             },
           });
 
-         
-        },
-        error: function (errorMessage_tc3) {
-          thongBaoLoi(errorMessage_tc3.responseJSON.message);
-        },
-    });
+
+        }
+      });
+
+    },
+    error: function (errorMessage_tc3) {
+      $('#id_tbody_DanhSachThamGiaHoatDong').append("<tr>\
+      <td colspan='4' style='text-align:center'>Không tìm thấy kết quả.</td>\
+      </tr>");
+
+      //thongBaoLoi(errorMessage_tc3.responseText);
+    },
+  });
 
 
-
-  }
+  
+}
 

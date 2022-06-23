@@ -28,7 +28,7 @@
                     <div class="form-outline mb-4">
                         <div class="row justify-content-center" style="padding-bottom: 30px;">
                             <div class="col-4">
-                               <span style="font-weight: bold;">Họ tên: </span><span id="text_HoTen" ></span>
+                               <span style="font-weight: bold;">Họ tên cố vấn: </span><span id="text_HoTen" ></span>
                             </div>
                             <div class="col-4">
                                 <span style="font-weight: bold;">Mã số: </span><span id="text_MaSo"></span> 

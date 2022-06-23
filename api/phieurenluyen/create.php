@@ -25,13 +25,6 @@
             $data = json_decode(file_get_contents("php://input")); //lấy request data từ user 
 
 
-            $fileName = $_FILES['fileDinhKem']['name'];
-            $tempPath = $_FILES['fileDinhKem']['tmp_name'];
-            $fileSize = $_FILES['fileDinhKem']['size'];
-
-
-            //Nếu không có file đính kèm thì chạy code này, ngược lại thì chạy code ở else
-            if (empty($fileName)){
                 if (isset($_POST['maPhieuRenLuyen']) && isset($_POST['maSinhVien']) &&
                     isset($_POST['diemTrungBinhChungHKTruoc']) && isset($_POST['diemTrungBinhChungHKXet']) 
                     && isset($_POST['maHocKyDanhGia']) && isset($_POST['diemTongCong'])){
@@ -46,128 +39,25 @@
                     $item->maHocKyDanhGia = $_POST['maHocKyDanhGia'];
                     $item->coVanDuyet = null;
                     $item->khoaDuyet = null;
-                    $item->fileDinhKem = null;
-        
+          
                         
                     if ($item->createPhieuRenLuyen()) {
                         http_response_code(200);
                         echo json_encode(array(
-                            "message"=>"phieurenluyen created successful"
+                            "message"=>"phieurenluyen tạo thành công."
                         ));
                     } else {
                         echo json_encode(array(
-                            "message"=>"phieurenluyen could not be created."
+                            "message"=>"phieurenluyen tạo KHÔNG thành công."
                         ));
                     }
         
                 } else {
                     echo json_encode(
-                        array("message" => "No data posted!")
+                        array("message" => "Không có dữ liệu được gửi lên!")
                     );
                 }
-            }else{
-                
-                $fileExt = strtolower(pathinfo($fileName, PATHINFO_EXTENSION)); // lấy phần mở rộng (đuôi file)
-
-                $valid_extensions = array('zip','rar');
-
-                if (in_array($fileExt, $valid_extensions)){
-                    
-                        
-                        //fileSize nhỏ hơn 10MB
-                        if ($fileSize < 10000000){
-                           
-                            if (isset($_POST['maPhieuRenLuyen']) && isset($_POST['maSinhVien']) &&
-                                isset($_POST['diemTrungBinhChungHKTruoc']) && isset($_POST['diemTrungBinhChungHKXet']) 
-                                && isset($_POST['maHocKyDanhGia']) && isset($_POST['diemTongCong'])){
-
-                                //set các biến bằng data nhận từ user
-                                $item->maPhieuRenLuyen = $_POST['maPhieuRenLuyen'];
-                                $item->xepLoai = $_POST['xepLoai'];
-                                $item->diemTongCong = $_POST['diemTongCong'];
-                                $item->maSinhVien = $_POST['maSinhVien'];
-                                $item->diemTrungBinhChungHKTruoc = $_POST['diemTrungBinhChungHKTruoc'];
-                                $item->diemTrungBinhChungHKXet = $_POST['diemTrungBinhChungHKXet'];
-                                $item->maHocKyDanhGia = $_POST['maHocKyDanhGia'];
-                                $item->coVanDuyet = null;
-                                $item->khoaDuyet = null;
-                                $item->fileDinhKem = $fileName;
-                    
-                                $upload_path = './upload/'.$item->maHocKyDanhGia.'/'.$item->maSinhVien.'/';
-
-                                if (!is_dir($upload_path)){ //check folder có tồn tại trong folder upload chưa
-                                    mkdir($upload_path, 0777, true); //tạo folder chứa file của user nếu chưa có
-                                
-                                    if (!file_exists($upload_path.$fileName)){
-                                        if ($item->createPhieuRenLuyen()) {
-
-                                            move_uploaded_file($tempPath, $upload_path.$fileName);
-        
-                                            http_response_code(200);
-                                            echo json_encode(array(
-                                                "message"=>"phieurenluyen created successful"
-                                            ));
-                                        } else {
-                                            echo json_encode(array(
-                                                "message"=>"phieurenluyen could not be created."
-                                            ));
-                                        }
-                                    }else{
-                                        echo json_encode(array(
-                                            "message"=>"File đã tồn tại trên server."
-                                        ));
-                                    }
-                                }else{
-                                    if (!file_exists($upload_path.$fileName)){
-                                        if ($item->createPhieuRenLuyen()) {
-
-                                            move_uploaded_file($tempPath, $upload_path.$fileName);
-        
-                                            http_response_code(200);
-                                            echo json_encode(array(
-                                                "message"=>"phieurenluyen created successful"
-                                            ));
-                                        } else {
-                                            http_response_code(500);
-                                            echo json_encode(array(
-                                                "message"=>"phieurenluyen could not be created."
-                                            ));
-                                        }
-                                    }else{
-                                        http_response_code(500);
-                                        echo json_encode(array(
-                                        "message"=>"File đã tồn tại trên server."
-                                    ));
-                                    }
-                                }
-
-                    
-                            } else {
-                                http_response_code(500);
-                                echo json_encode(
-                                    array("message" => "No data posted!")
-                                );
-                            }
-
-
-                        }else{
-                            http_response_code(500);
-                            echo json_encode(
-                                array("message" => "File quá lớn, chỉ chấp nhận file nhỏ hơn 10MB")
-                            );
-                        }
-
-                }else{
-                    http_response_code(500);
-                    echo json_encode(
-                        array("message" => "Chỉ chấp nhận file định dạng .zip, .rar")
-                    );
-                }
-
-
-            }
-
-            
+    
 
         // } else {
         //     http_response_code(403);

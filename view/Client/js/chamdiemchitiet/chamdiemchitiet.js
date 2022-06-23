@@ -12,7 +12,7 @@ function getCookie(cName) {
 function thongBaoLoi(message) {
   Swal.fire({
     icon: "error",
-    title: "Lỗi",
+    title: "Thông báo",
     text: message,
     //timer: 5000,
     timerProgressBar: true,
@@ -158,6 +158,8 @@ function getTieuChiDanhGia() {
               "</td>\
                 <td></td>\
                 <td></td>\
+                <td></td>\
+                <td></td>\
                 </tr>"
           );
 
@@ -188,20 +190,25 @@ function getTieuChiDanhGia() {
 
                       $("#tbody_noiDungDanhGia").append(
                         "<tr>\
-                                        <td><em>" +
-                          result_tc2[index_tc2][k].noidung +
-                          "</em></td>\
-                                        <td><em>" +
-                          result_tc2[index_tc2][k].diemtoida +
-                          "đ</em></td>\
-                                        <td><input type='number' style='width: 100px;' onchange='changeNumberHandle(this," +
-                          result_tc2[index_tc2][k].diemtoida +
-                          ")'  min='" +
-                          min_value_tc2 +
-                          "' id='TC2_" +
-                          result_tc2[index_tc2][k].matc2 +
-                          "' /></td>\
-                                    </tr>"
+                          <td><em>" + result_tc2[index_tc2][k].noidung + "</em></td>\
+                          <td><em>" + result_tc2[index_tc2][k].diemtoida + "đ</em></td>\
+                          <td>\
+                            <input type='number' style='width: 100px;' onchange='changeNumberHandle(this," + result_tc2[index_tc2][k].diemtoida + ")' max_value='" + result_tc2[index_tc2][k].diemtoida + "'    \
+                            min='" + min_value_tc2 + "' id='TC2_" + result_tc2[index_tc2][k].matc2 + "' /> \
+                          </td>\
+                          <td>\
+                            <button type='button' class='btn btn-light btn_XemDanhSachHoatDong' style='color: black;width: max-content;' data-bs-toggle='modal' data-bs-target='#XemDanhSachHoatDongModal' data-tieuchi-id='TC2_" + result_tc2[index_tc2][k].matc2 + "' data-tentieuchi='"+ result_tc2[index_tc2][k].noidung +"' >Danh sách</button>\
+                          </td>\
+                          <td>\
+                          <div class='box'>\
+                          <a href='#' id='show_file_minhchung_TC2_"+ result_tc2[index_tc2][k].matc2 +"' target='_blank' ></a>\
+                          <form id='formDanhGiaDRL_TC2_"+ result_tc2[index_tc2][k].matc2 +"' method='post' enctype='multipart/form-data'>\
+                            <input type='file' id='file_minhchung_TC2_"+ result_tc2[index_tc2][k].matc2 +"' name='fileMinhChung' class='inputfile inputfile-1' accept='.png,.jpg,.jpeg' data-multiple-caption='{count} files selected' >\
+                            <label for='file_minhchung_TC2_"+ result_tc2[index_tc2][k].matc2 +"'><svg xmlns='http://www.w3.org/2000/svg' width='20' height='17' viewBox='0 0 20 17'><path d='M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z'></path></svg> <span>Chọn tệp…</span></label>\
+                          </form>\
+                        </div>\
+                          </td>\
+                        </tr>"
                       );
 
                       // <td><input type='text' style='width: 100px;'  id='ghiChuTC2_" + result_tc2[index_tc2][k].matc2 +"' /></td>\
@@ -214,9 +221,12 @@ function getTieuChiDanhGia() {
                           "<tr>\
                                             <td><em>" +
                             result_tc2[index_tc2][k].noidung +
-                            "<br>Điểm TBC học kỳ trước: <input type='number' step='0.01' onchange='changeNumberHandle(this,4)' id='inputTBCHocKyTruoc' name='diemTrungBinhChungHKTruoc' style='width: 100px;margin-right: 30px' />Điểm TBC học kỳ đang xét: <input type='number' step='0.01' onchange='changeNumberHandle(this,4)' id='inputTBCHocKyDangXet' name='diemTrungBinhChungHKXet' style='width: 100px;' /> </em></td>\
+                            "<br>Điểm TBC học kỳ trước: <input type='number' step='0.01' onchange='changeNumberHandle(this,4)' id='inputTBCHocKyTruoc' name='diemTrungBinhChungHKTruoc' style='width: 100px;margin-right: 30px;margin-bottom: 15px;' /><br>Điểm TBC học kỳ đang xét: <input type='number' step='0.01' onchange='changeNumberHandle(this,4)' id='inputTBCHocKyDangXet' name='diemTrungBinhChungHKXet' style='width: 100px;' /> </em></td>\
                                             <td></td>\
                                             <td></td>\
+                                            <td></td>\
+                                            <td><a href='#' id='show_file_minhchung_TC2_"+ result_tc2[index_tc2][k].matc2 +"' target='_blank' ></a>\
+                                            <form id='formDanhGiaDRL_TC2_"+ result_tc2[index_tc2][k].matc2 +"' method='post' enctype='multipart/form-data'></form></td>\
                                             </tr>"
                         );
                       } else {
@@ -227,6 +237,9 @@ function getTieuChiDanhGia() {
                             "</em></td>\
                                             <td></td>\
                                             <td></td>\
+                                            <td></td>\
+                                            <td> <a href='#' id='show_file_minhchung_TC2_"+ result_tc2[index_tc2][k].matc2 +"' target='_blank' ></a>\
+                                            <form id='formDanhGiaDRL_TC2_"+ result_tc2[index_tc2][k].matc2 +"' method='post' enctype='multipart/form-data'></form></td>\
                                             </tr>"
                         );
                       }
@@ -274,30 +287,79 @@ function getTieuChiDanhGia() {
                                 (result_tc3[index_tc3][p].noidung.localeCompare("b. Kết quả học tập tăng hai bậc so với học kỳ trước,  ĐTBCHK từ  2,00 trở lên") == 0) 
                          
                               ) {
-                                disabled_string = "disabled";
+                                disabled_string = "readonly";
                               }
 
-                              //console.log(result_tc3[index_tc3][p].noidung);
+                              if (
+                                (result_tc3[index_tc3][p].noidung.localeCompare("a. Điểm trung bình chung học kì từ  3,60 đến 4,00") == 0)  ||
+                                (result_tc3[index_tc3][p].noidung.localeCompare("b. Điểm trung bình chung học kì từ  3,20 đến 3,59") == 0) ||
+                                (result_tc3[index_tc3][p].noidung.localeCompare("c. Điểm trung bình chung học kì từ  2,50 đến 3,19") == 0) ||
+                                (result_tc3[index_tc3][p].noidung.localeCompare("d. Điểm trung bình chung học kì từ  2,00 đến 2,49") == 0) ||
+                                (result_tc3[index_tc3][p].noidung.localeCompare("đ. Điểm trung bình chung học kì  dưới 2,00") == 0) ||
+                                (result_tc3[index_tc3][p].noidung.localeCompare("a. Kết quả học tập tăng một bậc so với học kỳ trước,  ĐTBCHK từ  2,00 trở lên") == 0) ||
+                                (result_tc3[index_tc3][p].noidung.localeCompare("b. Kết quả học tập tăng hai bậc so với học kỳ trước,  ĐTBCHK từ  2,00 trở lên") == 0) ||
+                                (result_tc3[index_tc3][p].noidung.localeCompare("c. Sinh viên năm thứ I, nếu có kết quả học tập HK I từ 2,00 trở lên") == 0) 
+                              ) {
+                        
 
-                              $("#tbody_noiDungDanhGia").append(
-                                "<tr>\
-                                                <td>" +
-                                  result_tc3[index_tc3][p].noidung +
-                                  "</span></td>\
-                                                <td><em>" +
-                                  result_tc3[index_tc3][p].diem +
-                                  "đ</em></td>\
-                                                <td><input type='number' style='width: 100px;' onchange='changeNumberHandle(this," +
-                                  result_tc3[index_tc3][p].diem +
-                                  ")' max_value='" +
-                                  result_tc3[index_tc3][p].diem+
-                                  "'  id='TC3_" +
-                                  result_tc3[index_tc3][p].matc3 +
-                                  "' " +
-                                  disabled_string +
-                                  " /></td>\
-                                                </tr>"
-                              );
+                                $("#tbody_noiDungDanhGia").append(
+                                  "<tr>\
+                                                  <td>" +
+                                    result_tc3[index_tc3][p].noidung +
+                                    "</span></td>\
+                                                  <td><em>" +
+                                    result_tc3[index_tc3][p].diem +
+                                    "đ</em></td>\
+                                                  <td><input type='number' style='width: 100px;' onchange='changeNumberHandle(this," +
+                                    result_tc3[index_tc3][p].diem +
+                                    ")' max_value='" +
+                                    result_tc3[index_tc3][p].diem+
+                                    "'  id='TC3_" +
+                                    result_tc3[index_tc3][p].matc3 +
+                                    "' " +
+                                    disabled_string +
+                                    " /></td>\
+                                    <td></td>\
+                                    <td> <a href='#' id='show_file_minhchung_TC3_"+ result_tc3[index_tc3][p].matc3 +"' target='_blank' ></a>\
+                                    <form id='formDanhGiaDRL_TC3_"+ result_tc3[index_tc3][p].matc3 +"' method='post' enctype='multipart/form-data'></form>\</td>\
+                                                  </tr>"
+                                );
+                              }else{
+                                $("#tbody_noiDungDanhGia").append(
+                                  "<tr>\
+                                                  <td>" +
+                                    result_tc3[index_tc3][p].noidung +
+                                    "</span></td>\
+                                                  <td><em>" +
+                                    result_tc3[index_tc3][p].diem +
+                                    "đ</em></td>\
+                                                  <td><input type='number' style='width: 100px;' onchange='changeNumberHandle(this," +
+                                    result_tc3[index_tc3][p].diem +
+                                    ")' max_value='" +
+                                    result_tc3[index_tc3][p].diem+
+                                    "'  id='TC3_" +
+                                    result_tc3[index_tc3][p].matc3 +
+                                    "' " +
+                                    disabled_string +
+                                    " /></td>\
+                                    <td>\
+                                      <button type='button' class='btn btn-light btn_XemDanhSachHoatDong' style='color: black;width: max-content;' data-bs-toggle='modal' data-bs-target='#XemDanhSachHoatDongModal' data-tieuchi-id='TC3_" + result_tc3[index_tc3][p].matc3 + "' data-tentieuchi='"+ result_tc3[index_tc3][p].noidung +"' >Danh sách</button>\
+                                    </td>\
+                                    <td>\
+                                    <div class='box'>\
+                                        <a href='#' id='show_file_minhchung_TC3_"+ result_tc3[index_tc3][p].matc3 +"' target='_blank' ></a>\
+                                        <form id='formDanhGiaDRL_TC3_"+ result_tc3[index_tc3][p].matc3 +"' method='post' enctype='multipart/form-data'>\
+                                        <input type='file' name='fileMinhChung' id='file_minhchung_TC3_"+ result_tc3[index_tc3][p].matc3 +"' class='inputfile inputfile-1' accept='.png,.jpg,.jpeg' data-multiple-caption='{count} files selected' >\
+                                        <label for='file_minhchung_TC3_"+ result_tc3[index_tc3][p].matc3 +"'><svg xmlns='http://www.w3.org/2000/svg' width='20' height='17' viewBox='0 0 20 17'><path d='M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z'></path></svg> <span>Chọn tệp…</span></label>\
+                                      </form>\
+                                      </div>\
+                                  </td>\
+                                      </tr>"
+                                );
+                              }
+
+
+                              
                             }
 
                             // <td><input type='text' style='width: 100px;'  id='ghiChuTC3_" + result_tc3[index_tc3][p].matc3 + "' /></td>\
@@ -331,6 +393,8 @@ function getTieuChiDanhGia() {
               "' id='TongCong_TC1_" +
               result[index][i].matc1 +
               "' disabled/></td>\
+              <td></td>\
+              <td></td>\
                 </tr>"
           );
         }
@@ -347,18 +411,12 @@ function getTieuChiDanhGia() {
             </td>\
             <td><em></em></td>\
             <td><input type='number' style='width: 100px' onchange='changeNumberHandle(this, 100)' id='input_diemtongcong' name='diemTongCong' readonly='true'/></td>\
-        </tr>"
+            <td></td>\
+            <td></td>\
+            </tr>"
   );
 
-  $("#tbody_noiDungDanhGia").append(
-    "<tr>\
-            <td style='font-weight: bold;' >FILE MINH CHỨNG ĐÍNH KÈM (NẾU CÓ): </span>\
-            <input type='file' id='input_fileDinhKem' name='fileDinhKem' />\
-            <a href='#' id='input_fileDinhKem_show' name='fileDinhKem_show' ></a>\
-            <br> <span>Chỉ nhận file định dạng .zip và .rar (file nén)</span>\
-            </td>\
-        </tr>"
-  );
+  
 }
 
 function getThongTinNguoiDung() {
@@ -535,7 +593,7 @@ function checkValidateInput() {
 
 //Chấm điểm rèn luyện
 
-//Load thông tin sinh viên đã đánh giá
+//Load thông tin sinh viên đã đánh giá (chamlaichitiet)
 function LoadThongTinSinhVienDanhGia() {
   var maPhieuRenLuyen = "PRL" + GET_MaHocKy + getCookie("maSo");
 
@@ -551,14 +609,12 @@ function LoadThongTinSinhVienDanhGia() {
       Authorization: jwtCookie,
     },
     success: function (result_PRL) {
+
       var xepLoai = result_PRL.xepLoai;
       var diemTongCong = result_PRL.diemTongCong;
       var diemTrungBinhChungHKTruoc = result_PRL.diemTrungBinhChungHKTruoc;
       var diemTrungBinhChungHKXet = result_PRL.diemTrungBinhChungHKXet;
-      var fileDinhKem = result_PRL.fileDinhKem;
-      var fileDinhKem_Name = fileDinhKem.substring(
-        fileDinhKem.lastIndexOf("/") + 1
-      );
+      
 
       $.ajax({
         url:
@@ -577,17 +633,22 @@ function LoadThongTinSinhVienDanhGia() {
           $("#input_diemtongcong").val(diemTongCong);
           $("#CVHT_input_diemtongcong").val(diemTongCong);
           $("#text_XepLoai").text(xepLoai);
-          $("#input_fileDinhKem_show").text(fileDinhKem_Name);
-          $("#input_fileDinhKem_show").attr("href", fileDinhKem);
+          
 
           $.each(result_CD, function (index_cd) {
             for (var p = 0; p < result_CD[index_cd].length; p++) {
+
               var maTieuChi2 = result_CD[index_cd][p].maTieuChi2;
               var maTieuChi3 = result_CD[index_cd][p].maTieuChi3;
-              var diemSinhVienDanhGia =
-                result_CD[index_cd][p].diemSinhVienDanhGia;
+              var diemSinhVienDanhGia = result_CD[index_cd][p].diemSinhVienDanhGia;
               var diemLopDanhGia = result_CD[index_cd][p].diemLopDanhGia;
 
+              var fileMinhChung = result_CD[index_cd][p].fileMinhChung;
+              var fileMinhChung_Name = fileMinhChung.substring(
+                fileMinhChung.lastIndexOf("/") + 1
+              );
+
+              
               $("#tbody_noiDungDanhGia")
                 .find("input")
                 .each(function () {
@@ -597,6 +658,9 @@ function LoadThongTinSinhVienDanhGia() {
                   if (tieuChi == "TC2") {
                     if (maTieuChi2 == maTieuChi) {
                       $("#" + this.id).val(diemSinhVienDanhGia);
+
+                      $("#show_file_minhchung_"+ this.id).text(fileMinhChung_Name);
+                      $("#show_file_minhchung_"+ this.id).attr("href", fileMinhChung);
 
                       if (diemLopDanhGia != 0) {
                         $("#CVHT_" + this.id).val(diemLopDanhGia);
@@ -610,6 +674,9 @@ function LoadThongTinSinhVienDanhGia() {
                     if (maTieuChi3 == maTieuChi) {
                       $("#" + this.id).val(diemSinhVienDanhGia);
 
+                      $("#show_file_minhchung_"+ this.id).text(fileMinhChung_Name);
+                      $("#show_file_minhchung_"+ this.id).attr("href", fileMinhChung);
+
                       if (diemLopDanhGia != 0) {
                         $("#CVHT_" + this.id).val(diemLopDanhGia);
                       } else {
@@ -622,12 +689,202 @@ function LoadThongTinSinhVienDanhGia() {
           });
         },
         error: function (errorMessage_tc3) {
+          window.location.href = 'chamdiem.php'; //nếu chưa chấm thì kh được phép vào trang chamlaichitiet
           thongBaoLoi(errorMessage_tc3.responseText);
         },
       });
+
     },
     error: function (errorMessage_tc3) {
-      thongBaoLoi(errorMessage_tc3.responseText);
+      window.location.href = 'chamdiem.php'; //nếu chưa chấm thì kh được phép vào trang chamlaichitiet
     },
   });
+}
+
+
+//hàm dùng khi onclick modal
+function LoadDanhSachHoatDongDaThamGia(maHocKyDanhGia, maTieuChi, maSinhVien) {
+  var tieuChi_sliced_truoc = maTieuChi.slice(0, 3);
+  var tieuChi_sliced_value = maTieuChi.slice(4, maTieuChi.length);
+
+  $('#id_tbody_DanhSachThamGiaHoatDong tr').remove();
+  $.ajax({
+    url: urlapi_thamgiahoatdong_read_MaSV + maSinhVien,
+    async: false,
+    type: "GET",
+    contentType: "application/json;charset=utf-8",
+    dataType: "json",
+    headers: {
+      Authorization: jwtCookie,
+    },
+    success: function (result_CD) {
+     
+      $.each(result_CD, function (index_cd) {
+        for (var p = 0; p < result_CD[index_cd].length; p++) {
+
+          var thamgiahd_maHoatDong = result_CD[index_cd][p].maHoatDong;
+         
+          $.ajax({
+            url: urlapi_hoatdongdanhgia_single_read + thamgiahd_maHoatDong,
+            async: false,
+            type: "GET",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            headers: {
+              Authorization: jwtCookie,
+            },
+            success: function (result_hoatdongdanhgia) {
+             
+              if (result_hoatdongdanhgia.maHocKyDanhGia == maHocKyDanhGia){
+
+                if(tieuChi_sliced_truoc == 'TC2'){
+                    if (tieuChi_sliced_value == result_hoatdongdanhgia.maTieuChi2){
+                        $('#id_tbody_DanhSachThamGiaHoatDong').append("<tr>\
+                        <td>"+ thamgiahd_maHoatDong +"</td>\
+                        <td>"+ result_hoatdongdanhgia.tenHoatDong +"</td>\
+                        <td>"+ result_hoatdongdanhgia.diemNhanDuoc +"</td>\
+                      </tr>");
+                    }
+
+                }
+
+                if (tieuChi_sliced_truoc == 'TC3'){
+                  if (tieuChi_sliced_value == result_hoatdongdanhgia.maTieuChi3){
+                      $('#id_tbody_DanhSachThamGiaHoatDong').append("<tr>\
+                      <td>"+ thamgiahd_maHoatDong +"</td>\
+                      <td>"+ result_hoatdongdanhgia.tenHoatDong +"</td>\
+                      <td>"+ result_hoatdongdanhgia.diemNhanDuoc +"</td>\
+                    </tr>");
+                  }
+
+                }
+
+                
+              }
+              
+              
+            },
+            error: function (errorMessage_tc3) {
+              thongBaoLoi(errorMessage_tc3.responseText);
+            },
+          });
+
+
+        }
+      });
+
+    },
+    error: function (errorMessage_tc3) {
+      $('#id_tbody_DanhSachThamGiaHoatDong').append("<tr>\
+      <td colspan='4' style='text-align:center'>Không tìm thấy kết quả.</td>\
+      </tr>");
+
+      //thongBaoLoi(errorMessage_tc3.responseText);
+    },
+  });
+
+
+  
+}
+
+
+function LoadDiemNhanDuocCuaHoatDong_LenForm(maHocKyDanhGia, maSinhVien) { //Load điểm nhận được từ hoạt động lên form sẵn 
+
+  $.ajax({
+    url: urlapi_thamgiahoatdong_read_MaSV + maSinhVien,
+    async: false,
+    type: "GET",
+    contentType: "application/json;charset=utf-8",
+    dataType: "json",
+    headers: {
+      Authorization: jwtCookie,
+    },
+    success: function (result_CD) {
+      
+      $.each(result_CD, function (index_cd) {
+        for (var p = 0; p < result_CD[index_cd].length; p++) {
+          var tongDiemHoatDong_TrenTieuChi = 0;
+          var thamgiahd_maHoatDong = result_CD[index_cd][p].maHoatDong;
+         
+          $.ajax({
+            url: urlapi_hoatdongdanhgia_single_read + thamgiahd_maHoatDong,
+            async: false,
+            type: "GET",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            headers: {
+              Authorization: jwtCookie,
+            },
+            success: function (result_hoatdongdanhgia) {
+             
+              if (result_hoatdongdanhgia.maHocKyDanhGia == maHocKyDanhGia){
+               
+                  $("#tbody_noiDungDanhGia")
+                  .find("input")
+                  .each(function () {
+                    var tieuChi = this.id.slice(0, 3);
+                    var maTieuChi = this.id.slice(4, 9);
+                    var max_value = $(this).attr('max_value');
+                    
+                    if (tieuChi == "TC2") {
+                      if (result_hoatdongdanhgia.maTieuChi2 == maTieuChi) {
+
+                        if (this.value != null){
+                          tongDiemHoatDong_TrenTieuChi = Number(this.value) + Number(result_hoatdongdanhgia.diemNhanDuoc);
+                        } 
+
+                        if (Number(tongDiemHoatDong_TrenTieuChi) > Number(max_value)){
+                          $("#" + this.id).val(max_value);
+                  
+                        }else{
+                          $("#" + this.id).val(tongDiemHoatDong_TrenTieuChi);
+                       
+                        }
+                       
+
+                      }
+                    }
+
+                    if (tieuChi == "TC3") {
+                      if (result_hoatdongdanhgia.maTieuChi3 == maTieuChi) {
+                        
+                        if (this.value != null){
+                          tongDiemHoatDong_TrenTieuChi = Number(this.value) + Number(result_hoatdongdanhgia.diemNhanDuoc);
+                        }
+
+                        if (Number(tongDiemHoatDong_TrenTieuChi) > Number(max_value)){
+                          $("#" + this.id).val(max_value);
+                       
+                        }else{
+                          $("#" + this.id).val(tongDiemHoatDong_TrenTieuChi);
+                          
+                        }
+
+                      }
+                    }
+                  });
+                
+              }
+              
+              
+            },
+            error: function (errorMessage_tc3) {
+              thongBaoLoi(errorMessage_tc3.responseText);
+            },
+          });
+
+
+        }
+        
+      });
+
+    },
+    error: function (errorMessage_tc3) {
+      
+
+      //thongBaoLoi(errorMessage_tc3.responseText);
+    },
+  });
+
+
 }

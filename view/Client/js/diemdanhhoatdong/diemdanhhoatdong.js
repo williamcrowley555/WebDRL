@@ -294,10 +294,12 @@ function DiemDanh() {
 
   if (_text_thoiGianDiemDanh != "Đã hết thời gian điểm danh!"){
     var _maSinhVienThamGia = getCookie('maSo');
+    var _thoiGianDiemDanh = new Date().toISOString().slice(0, 19).replace('T', ' ');
 
     var dataPost = {
       maHoatDong: GET_maHoatDong,
-      maSinhVienThamGia: _maSinhVienThamGia
+      maSinhVienThamGia: _maSinhVienThamGia,
+      thoiGianDiemDanh: _thoiGianDiemDanh
     }
 
     $.ajax({
