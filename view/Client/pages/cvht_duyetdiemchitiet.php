@@ -233,9 +233,13 @@ if (!isset($_GET['maHocKy']) && !isset($_GET['maSinhVien'])) {
 
             });
 
-            $('#CVHT_input_diemtongcong').val(calDiemTongCong);
+            if (calDiemTongCong > 100){
+			    $("#CVHT_input_diemtongcong").val(100);
+            }else{
+                $("#CVHT_input_diemtongcong").val(calDiemTongCong);
+            }
+           
 
-            
             var diemTong_XepLoai = Number($('#CVHT_input_diemtongcong').val());
 
             $("#text_XepLoai").text(TinhXepLoai(diemTong_XepLoai));

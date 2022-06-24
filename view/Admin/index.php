@@ -70,6 +70,55 @@
 		}
 
 
+		//Logout
+		function DangXuat() {
+			var _input_MaSo = getCookie('taiKhoan');
+
+			var dataPost = {
+				maSo: _input_MaSo
+			}
+
+			$.ajax({
+				url: urlapi_logout_client,
+				data: JSON.stringify(dataPost),
+				type: "POST",
+				contentType: "application/json;charset=utf-8",
+				dataType: "json",
+				async: false,
+				success: function (result) {
+
+				deleteAllCookies();
+
+				Swal.fire({
+					icon: "success",
+					title: "Đăng xuất thành công!",
+					text:"Đang chuyển hướng...",
+					timer: 1000,
+					timerProgressBar: true,
+					showConfirmButton: false,
+				});
+				
+				
+				
+				setTimeout(function () {
+					window.location.href = 'login.php';
+				}, 1000);
+
+				},
+				error: function (errorMessage) {
+				Swal.fire({
+					icon: "error",
+					title: "Lỗi đăng xuất",
+					text: errorMessage.responseText,
+					timer: 3000,
+					timerProgressBar: true,
+				});
+				},
+			});
+		
+
+		}
+
 
 		
 	</script>
@@ -118,13 +167,13 @@
 				            <a class="dropdown-toggle" id="user-dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false"><img src="assets/images/user.png" alt="user profile"></a>
 				            <ul class="dropdown-menu" aria-labelledby="user-dropdown-toggle">
 								
-								<li><a class="dropdown-item" href="#">
+								<li><a class="dropdown-item" href="" onclick='return DangXuat();'>
 									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-right" viewBox="0 0 16 16">
 										<path fill-rule="evenodd" d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0v2z"/>
 										<path fill-rule="evenodd" d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/>
 								 	 </svg> 
 								  
-								  Đăng xuất</a></li>
+								Đăng xuất</a></li>
 							</ul>
 			            </div><!--//app-user-dropdown--> 
 		            </div><!--//app-utilities-->
@@ -142,89 +191,10 @@
 		        </div><!--//app-branding-->  
 		        
 			    <nav id="app-nav-main" class="app-nav app-nav-main flex-grow-1">
-				    <ul class="app-menu list-unstyled accordion" id="menu-accordion">
+				    <ul class="app-menu list-unstyled accordion" id="menu-accordion" >
 
 
-						<li class="nav-item" style="cursor: pointer;">
-					        <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-					        <a class="nav-link "  onclick="LoadContentMainPage('sinhvien.php');" id="menu-button-SinhVien">
-						        <span class="nav-icon">
-									<img src="assets/images/icons/group.png" alt="icon sinh viên" width="10%">
-						         </span>
-		                         <span class="nav-link-text">Sinh viên</span>
-					        </a><!--//nav-link-->
-					    </li><!--//nav-item-->
-
-						<li class="nav-item" style="cursor: pointer;">
-					        <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-					        <a class="nav-link "  onclick="LoadContentMainPage('lop.php');" id="menu-button-Lop" >
-						        <span class="nav-icon">
-									<img src="assets/images/icons/class.png" alt="icon lớp" width="10%">
-						         </span>
-		                         <span class="nav-link-text">Lớp</span>
-					        </a><!--//nav-link-->
-					    </li><!--//nav-item-->
-
-						<li class="nav-item" style="cursor: pointer;">
-					        <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-					        <a class="nav-link"  onclick="LoadContentMainPage('covanhoctap.php');" id="menu-button-CoVanHocTap">
-						        <span class="nav-icon">
-									<img src="assets/images/icons/presentation.png" alt="icon cố vấn học tập" width="10%">
-						         </span>
-		                         <span class="nav-link-text">Cố vấn học tập</span>
-					        </a><!--//nav-link-->
-					    </li><!--//nav-item-->
-
-
-						<li class="nav-item" style="cursor: pointer;">
-					        <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-					        <a class="nav-link"  onclick="LoadContentMainPage('khoa.php');" id="menu-button-Khoa" >
-						        <span class="nav-icon">
-									<img src="assets/images/icons/user.png" alt="icon khoa" width="10%">
-						         </span>
-		                         <span class="nav-link-text">Khoa</span>
-					        </a><!--//nav-link-->
-					    </li><!--//nav-item-->
-
-						<li class="nav-item" style="cursor: pointer;">
-					        <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-					        <a class="nav-link" onclick="LoadContentMainPage('phieurenluyen.php');" id="menu-button-PhieuRenLuyen" >
-						        <span class="nav-icon">
-									<img src="assets/images/icons/document.png" alt="icon phiếu chấm điểm" width="10%">
-						         </span>
-		                         <span class="nav-link-text">Phiếu rèn luyện</span>
-					        </a><!--//nav-link-->
-					    </li><!--//nav-item-->
-
-						<li class="nav-item" style="cursor: pointer;">
-					        <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-					        <a class="nav-link"  onclick="LoadContentMainPage('hoatdongdanhgia.php');" id="menu-button-HoatDongDanhGia" >
-						        <span class="nav-icon">
-									<img src="assets/images/icons/crowd.png" alt="icon hoạt động" width="10%">
-						         </span>
-		                         <span class="nav-link-text">Hoạt động đánh giá</span>
-					        </a><!--//nav-link-->
-					    </li><!--//nav-item-->
-
-						<li class="nav-item" style="cursor: pointer;">
-					        <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-					        <a class="nav-link "  onclick="LoadContentMainPage('tieuchidanhgia.php');" id="menu-button-TieuChiDanhGia">
-						        <span class="nav-icon">
-									<img src="assets/images/icons/society.png" alt="icon tiêu chí" width="10%">
-						         </span>
-		                         <span class="nav-link-text">Tiêu chí đánh giá</span>
-					        </a><!--//nav-link-->
-					    </li><!--//nav-item-->
-
-						<li class="nav-item" style="cursor: pointer;">
-					        <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-					        <a class="nav-link "  onclick="LoadContentMainPage('thongbaodanhgia.php');" id="menu-button-ThongBaoDanhGia" >
-						        <span class="nav-icon">
-									<img src="assets/images/icons/social.png" alt="icon thông báo đánh giá" width="10%">
-						         </span>
-		                         <span class="nav-link-text">Thông báo đánh giá</span>
-					        </a><!--//nav-link-->
-					    </li><!--//nav-item-->
+						
 
 				    </ul><!--//app-menu-->
 			    </nav><!--//app-nav-->
@@ -249,7 +219,137 @@
 			
 		});
 		
+		
+
+		var _getQuyen = getCookie('quyen');
+		
+		console.log(_getQuyen);
+
+		$('#menu_feature li').empty();
+		if (_getQuyen.localeCompare('ctsv') === 0 ){
+			$('#menu-accordion').append("<li class='nav-item' style='cursor: pointer;'>\
+					        <a class='nav-link'  onclick='LoadContentMainPage(\"sinhvien.php\");' id='menu-button-SinhVien'>\
+						        <span class='nav-icon'>\
+									<img src='assets/images/icons/group.png' alt='icon sinh viên' width='10%'>\
+						         </span>\
+		                         <span class='nav-link-text'>Sinh viên</span>\
+					        </a>\
+					    </li>\
+						<li class='nav-item' style='cursor: pointer;'>\
+					        <a class='nav-link'  onclick='LoadContentMainPage(\"lop.php\");' id='menu-button-Lop' >\
+						        <span class='nav-icon'>\
+									<img src='assets/images/icons/class.png' alt='icon lớp' width='10%'>\
+						         </span>\
+		                         <span class='nav-link-text'>Lớp</span>\
+					        </a>\
+					    </li>\
+						<li class='nav-item' style='cursor: pointer;'>\
+					        <a class='nav-link' onclick='LoadContentMainPage(\"covanhoctap.php\");' id='menu-button-CoVanHocTap'>\
+						        <span class='nav-icon'>\
+									<img src='assets/images/icons/presentation.png' alt='icon cố vấn học tập' width='10%'>\
+						         </span>\
+		                         <span class='nav-link-text'>Cố vấn học tập</span>\
+					        </a>\
+					    </li>\
+						<li class='nav-item' style='cursor: pointer;'>\
+					        <a class='nav-link' onclick='LoadContentMainPage(\"khoa.php\");' id='menu-button-Khoa' >\
+						        <span class='nav-icon'>\
+									<img src='assets/images/icons/user.png' alt='icon khoa' width='10%'>\
+						         </span>\
+		                         <span class='nav-link-text'>Khoa</span>\
+					        </a>\
+					    </li>\
+						<li class='nav-item' style='cursor: pointer;'>\
+					        <a class='nav-link' onclick='LoadContentMainPage(\"phieurenluyen.php\");' id='menu-button-PhieuRenLuyen' >\
+						        <span class='nav-icon'>\
+									<img src='assets/images/icons/document.png' alt='icon phiếu chấm điểm' width='10%'>\
+						         </span>\
+		                         <span class='nav-link-text'>Phiếu rèn luyện</span>\
+					        </a>\
+					    </li>\
+						<li class='nav-item' style='cursor: pointer;'>\
+					        <a class='nav-link'  onclick='LoadContentMainPage(\"hoatdongdanhgia.php\");' id='menu-button-HoatDongDanhGia' >\
+						        <span class='nav-icon'>\
+									<img src='assets/images/icons/crowd.png' alt='icon hoạt động' width='10%'>\
+						         </span>\
+		                         <span class='nav-link-text'>Hoạt động đánh giá</span>\
+					        </a>\
+					    </li>\
+						<li class='nav-item' style='cursor: pointer;'>\
+					        <a class='nav-link'  onclick='LoadContentMainPage(\"tieuchidanhgia.php\");' id='menu-button-TieuChiDanhGia'>\
+						        <span class='nav-icon'>\
+									<img src='assets/images/icons/society.png' alt='icon tiêu chí' width='10%'>\
+						         </span>\
+		                         <span class='nav-link-text'>Tiêu chí đánh giá</span>\
+					        </a>\
+					    </li>\
+						<li class='nav-item' style='cursor: pointer;'>\
+					        <a class='nav-link'  onclick='LoadContentMainPage(\"thongbaodanhgia.php\");' id='menu-button-ThongBaoDanhGia' >\
+						        <span class='nav-icon'>\
+									<img src='assets/images/icons/social.png' alt='icon thông báo đánh giá' width='10%'>\
+						         </span>\
+		                         <span class='nav-link-text'>Thông báo đánh giá</span>\
+					        </a>\
+					    </li>");
+
+		}else{
+			if (_getQuyen.localeCompare('khoa') === 0 ){
+				$('#menu-accordion').append("<li class='nav-item' style='cursor: pointer;'>\
+					        <a class='nav-link'  onclick='LoadContentMainPage(\"sinhvien.php\");' id='menu-button-SinhVien'>\
+						        <span class='nav-icon'>\
+									<img src='assets/images/icons/group.png' alt='icon sinh viên' width='10%'>\
+						         </span>\
+		                         <span class='nav-link-text'>Sinh viên</span>\
+					        </a>\
+					    </li>\
+						<li class='nav-item' style='cursor: pointer;'>\
+					        <a class='nav-link'  onclick='LoadContentMainPage(\"lop.php\");' id='menu-button-Lop' >\
+						        <span class='nav-icon'>\
+									<img src='assets/images/icons/class.png' alt='icon lớp' width='10%'>\
+						         </span>\
+		                         <span class='nav-link-text'>Lớp</span>\
+					        </a>\
+					    </li>\
+						<li class='nav-item' style='cursor: pointer;'>\
+					        <a class='nav-link' onclick='LoadContentMainPage(\"covanhoctap.php\");' id='menu-button-CoVanHocTap'>\
+						        <span class='nav-icon'>\
+									<img src='assets/images/icons/presentation.png' alt='icon cố vấn học tập' width='10%'>\
+						         </span>\
+		                         <span class='nav-link-text'>Cố vấn học tập</span>\
+					        </a>\
+					    </li>\
+						<li class='nav-item' style='cursor: pointer;'>\
+					        <a class='nav-link' onclick='LoadContentMainPage(\"khoa.php\");' id='menu-button-Khoa' >\
+						        <span class='nav-icon'>\
+									<img src='assets/images/icons/user.png' alt='icon khoa' width='10%'>\
+						         </span>\
+		                         <span class='nav-link-text'>Khoa</span>\
+					        </a>\
+					    </li>\
+						<li class='nav-item' style='cursor: pointer;'>\
+					        <a class='nav-link' onclick='LoadContentMainPage(\"phieurenluyen.php\");' id='menu-button-PhieuRenLuyen' >\
+						        <span class='nav-icon'>\
+									<img src='assets/images/icons/document.png' alt='icon phiếu chấm điểm' width='10%'>\
+						         </span>\
+		                         <span class='nav-link-text'>Phiếu rèn luyện</span>\
+					        </a>\
+					    </li>\
+						<li class='nav-item' style='cursor: pointer;'>\
+					        <a class='nav-link'  onclick='LoadContentMainPage(\"hoatdongdanhgia.php\");' id='menu-button-HoatDongDanhGia' >\
+						        <span class='nav-icon'>\
+									<img src='assets/images/icons/crowd.png' alt='icon hoạt động' width='10%'>\
+						         </span>\
+		                         <span class='nav-link-text'>Hoạt động đánh giá</span>\
+					        </a>\
+					    </li>\
+						");
+			}
+			
+		}
+
+
 	</script>
+	
 </body>
 <script>
 	

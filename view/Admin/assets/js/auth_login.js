@@ -83,6 +83,30 @@ function Login() {
                         break;
 
                     }
+
+                    case 'khoa':{
+                        // deleteAllCookies();
+                         
+                         document.cookie = 'taiKhoan=' + result['0']['taiKhoanKhoa'];
+                         document.cookie = 'hoTenNhanVien=' + result['0']['tenKhoa'];
+                         document.cookie = 'quyen=' + quyen;
+                         document.cookie = 'jwt=' + result['jwt'];
+                 
+                          
+                         Swal.fire({
+                             icon: 'success',
+                             title: 'Đăng nhập thành công',
+                             text: "",
+                             timer: 3000,
+                             timerProgressBar: true
+                         })
+                        
+                         setTimeout(function() {
+                             window.location.href = "index.php";
+                         }, 2000);
+                         break;
+ 
+                     }
                          
                     
                     default:{

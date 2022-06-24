@@ -178,7 +178,23 @@ function getDanhSachDRLSinhVienLopTheoHocKy(maLop, maHocKyDanhGia) {
                                              </tr>");
                                         }
                                     }else{
-                                        $("#tbody_DanhSachDiemTheoKy").append("<tr>\
+                                        if (result_PRL.coVanDuyet == 0){
+                                            $("#tbody_DanhSachDiemTheoKy").append("<tr>\
+                                                <td>" + soThuTu +"</td>\
+                                                <td><p class='fw-normal mb-1'>" + maSinhVien +"</p></td>\
+                                                <td><p class='fw-normal mb-1'>"+ hoTenSinhVien +"</p></td>\
+                                                <td><p class='fw-normal mb-1'>"+ new Date(ngaySinhSV).toLocaleDateString() +"</p></td>\
+                                                <td><span class='badge badge-success' style='color: black;font-size: smaller;'>Đã chấm</span></td>\
+                                                <td><span class='badge badge-success' style='color: black;font-size: smaller;'>Chưa duyệt</span></td>\
+                                                <td>"+ result_PRL.diemTongCong +"</td>\
+                                                <td>"+ result_PRL.xepLoai +"</td>\
+                                                <td>\
+                                                    <a href='xemdiemchitiet.php?maHocKy="+ maHocKyDanhGia +"&maSinhVien="+ maSinhVien +"' ><button type='button' class='btn btn-light' style='color: black;width: max-content;'>Xem chi tiết</button></a>\
+                                                </td>\
+                                             </tr>");
+            
+                                        }else{
+                                            $("#tbody_DanhSachDiemTheoKy").append("<tr>\
                                                 <td>" + soThuTu +"</td>\
                                                 <td><p class='fw-normal mb-1'>" + maSinhVien +"</p></td>\
                                                 <td><p class='fw-normal mb-1'>"+ hoTenSinhVien +"</p></td>\
@@ -191,6 +207,8 @@ function getDanhSachDRLSinhVienLopTheoHocKy(maLop, maHocKyDanhGia) {
                                                     <a href='xemdiemchitiet.php?maHocKy="+ maHocKyDanhGia +"&maSinhVien="+ maSinhVien +"' ><button type='button' class='btn btn-light' style='color: black;width: max-content;'>Xem chi tiết</button></a>\
                                                 </td>\
                                              </tr>");
+                                        }
+                                        
                                     }
 
                                    

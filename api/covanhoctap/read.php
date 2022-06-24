@@ -17,7 +17,7 @@ $checkQuyen = new checkQuyen();
 
 // kiểm tra đăng nhập thành công và có phải giáo viên không
 if ($data["status"] == 1) {
-    if ($checkQuyen->checkQuyen_CTSV($data["user_data"]->aud)) {
+    if ($checkQuyen->checkQuyen_Khoa_CTSV($data["user_data"]->aud)) {
         $items = new CVHT($db);
         $stmt = $items->getAllCVHT();
         $itemCount = $stmt->rowCount();

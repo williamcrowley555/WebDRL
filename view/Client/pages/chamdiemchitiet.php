@@ -230,6 +230,8 @@ if (!isset($_GET['maHocKy'])) {
 
             if (calDiemTongCong <= 100) {
                 $('#input_diemtongcong').val(calDiemTongCong);
+            }else{
+                $('#input_diemtongcong').val(100);
             }
 
 

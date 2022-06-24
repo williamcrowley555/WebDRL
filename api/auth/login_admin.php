@@ -12,6 +12,7 @@
     include_once '../../config/database.php';
     include_once '../../class/user_token.php';
     include_once '../../class/phongcongtacsinhvien.php';
+    include_once '../../class/khoa.php';
 
     // $data example:
     // {
@@ -28,8 +29,13 @@
         if (check_login($input_taiKhoan, $input_matKhau)){
             http_response_code(200);
         }else{
-            http_response_code(404);
-            echo "Sai thông tin đăng nhập!";
+            if (check_login_khoa($input_taiKhoan, $input_matKhau)){
+                http_response_code(200);
+            }else{
+                http_response_code(404);
+                echo "Sai thông tin đăng nhập!";
+            }
+           
         }
        
 
@@ -43,7 +49,7 @@
         $database = new Database();
         $db = $database->getConnection();
 
-        //Sinh vien
+ 
         $obj_CTSV = new PhongCongTacSinhVien($db);
         $obj_CTSV->taiKhoan = htmlspecialchars(strip_tags($taiKhoan));
         $obj_CTSV->matKhau = htmlspecialchars(strip_tags(md5($matKhau)));
@@ -85,6 +91,69 @@
                 "taiKhoan" =>  $obj_CTSV->taiKhoan,
                 "hoTenNhanVien" => $obj_CTSV->hoTenNhanVien,
                 "quyen" => $obj_CTSV->quyen
+            );
+    
+            echo json_encode(array(
+                "login_status"=> 1,
+                "jwt"=> $jwt,
+                "message"=>"Login successful",
+                $arr
+            )); 
+    
+            return true;
+            
+        }
+
+        return false;
+        
+    }
+
+
+
+    //---Check login------
+    function check_login_khoa($taiKhoan, $matKhau){
+        $database = new Database();
+        $db = $database->getConnection();
+
+ 
+        $obj_Khoa = new Khoa($db);
+        $obj_Khoa->taiKhoanKhoa = htmlspecialchars(strip_tags($taiKhoan));
+        $obj_Khoa->matKhauKhoa = htmlspecialchars(strip_tags(md5($matKhau)));
+
+        $sqlQuery_CTSV = "SELECT * FROM khoa 
+                    WHERE taiKhoanKhoa = ? AND matKhauKhoa = ? LIMIT 0,1";
+        $stmt = $database->conn->prepare($sqlQuery_CTSV);
+        $stmt->bindParam(1, $obj_Khoa->taiKhoanKhoa);
+        $stmt->bindParam(2, $obj_Khoa->matKhauKhoa);
+        $stmt->execute();
+        $dataRow_CTSV = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($dataRow_CTSV != null){
+            $obj_Khoa->taiKhoanKhoa  = $dataRow_CTSV['taiKhoanKhoa'];
+            $obj_Khoa->tenKhoa = $dataRow_CTSV['tenKhoa'];
+            $obj_Khoa->quyen = $dataRow_CTSV['quyen'];
+
+            $jwt = create_token("khoa",$obj_Khoa,"taiKhoanKhoa","tenKhoa", "quyen");
+
+            //Them phien dang nhap vao table user_token
+            $objUserToken = new UserToken($db);
+            $objUserToken->maSo = $obj_Khoa->taiKhoanKhoa;
+            $objUserToken->token = $jwt;
+            $objUserToken->quyen = $obj_Khoa->quyen;
+            $objUserToken->thoiGianDangNhap = date("Y-m-d H:i:s");
+            $objUserToken->thoiGianHetHan = date("Y-m-d H:i:s", strtotime('+24 hours'));
+
+
+            if ($objUserToken->checkUserExist($objUserToken->maSo)){
+                $objUserToken->deleteUserToken($objUserToken->maSo);
+            }
+               
+            $objUserToken->createUserToken();
+
+            $arr = array( 
+                "taiKhoanKhoa" =>  $obj_Khoa->taiKhoanKhoa,
+                "tenKhoa" => $obj_Khoa->tenKhoa,
+                "quyen" => $obj_Khoa->quyen
             );
     
             echo json_encode(array(
