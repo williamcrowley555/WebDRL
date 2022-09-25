@@ -1,6 +1,7 @@
 <?php
     class Database{
         private $host = "localhost";
+        private $port = "3307";
         private $database_name = "diemrenluyen";
         private $username = "root";
         private $password = "";
@@ -9,7 +10,7 @@
         public function getConnection(){
             $this->conn = null;
             try{
-                $this->conn = new PDO("mysql:host=" . $this->host . ";dbname=" . $this->database_name, $this->username, $this->password);
+                $this->conn = new PDO("mysql:host=" . $this->host . ":" . $this->port . ";dbname=" . $this->database_name, $this->username, $this->password);
                 $this->conn->exec("set names utf8");
                 //echo "Database connected";
             }catch(PDOException $exception){
@@ -20,9 +21,5 @@
 
      
     }
-
-   
-
-
 
 ?>
