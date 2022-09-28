@@ -21,7 +21,7 @@ if ($data["status"] == 1) {
         if (isset($_GET["maKhoa"])){
             $items = new Lop($db);
     
-            $GET_maKhoa = isset($_GET['maKhoa']) ? $_GET['maKhoa'] : die(); //Lấy id từ phương thức GET
+            $GET_maKhoa = $_GET['maKhoa']; //Lấy id từ phương thức GET
             
             $stmt = $items->getAllLopTheoMaKhoa($GET_maKhoa);
             $itemCount = $stmt->rowCount();

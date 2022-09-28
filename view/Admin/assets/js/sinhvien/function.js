@@ -46,7 +46,7 @@ function GetListSinhVien(maKhoa, maLop) {
     if (maKhoa == "tatcakhoa") {
       $("#id_tbodySinhVien tr").remove();
       $.ajax({
-        url: urlapi_sinhvien_read,
+        url: urlapi_sinhvien_read_maLop + (maLop ? maLop : ""),
         async: false,
         type: "GET",
         contentType: "application/json;charset=utf-8",
@@ -106,16 +106,10 @@ function GetListSinhVien(maKhoa, maLop) {
         error: function (errorMessage) {
           checkLoiDangNhap(errorMessage.responseJSON.message);
 
+          console.log(this.url);
           var htmlData = "";
           $("#id_tbodySinhVien").html(htmlData);
           $("#idPhanTrang").empty();
-          // Swal.fire({
-          //   icon: "error",
-          //   title: "Lỗi",
-          //   text: errorMessage.responseText,
-          //   timer: 5000,
-          //   timerProgressBar: true,
-          // });
         },
         statusCode: {
           403: function (xhr) {
@@ -130,51 +124,51 @@ function GetListSinhVien(maKhoa, maLop) {
           $("#id_tbodySinhVien tr").remove();
 
           $.ajax({
-            url: urlapi_lop_read_maKhoa + maKhoa,
+            url: urlapi_sinhvien_read_maKhoa + maKhoa,
             async: false,
             type: "GET",
             contentType: "application/json;charset=utf-8",
             dataType: "json",
             headers: { Authorization: jwtCookie },
-            success: function (result_Lop) {
-              var result_SVALL = [];
-              $.each(result_Lop, function (index_Lop) {
-                for (var p = 0; p < result_Lop[index_Lop].length; p++) {
-                  var get_maLop = result_Lop[index_Lop][p].maLop;
+            success: function (result_AllSinhVien) {
+              var result_SVALL = result_AllSinhVien["sinhvien"];
+              // $.each(result_Lop, function (index_Lop) {
+              //   for (var p = 0; p < result_Lop[index_Lop].length; p++) {
+              //     var get_maLop = result_Lop[index_Lop][p].maLop;
 
-                  $.ajax({
-                    url: urlapi_sinhvien_read_maLop + get_maLop,
-                    async: false,
-                    type: "GET",
-                    contentType: "application/json;charset=utf-8",
-                    dataType: "json",
-                    headers: { Authorization: jwtCookie },
-                    success: function (result_SV) {
-                      result_SVALL.concat(result_SV['sinhvien']);
-                    },
-                    error: function (errorMessage) {
-                      checkLoiDangNhap(errorMessage.responseJSON.message);
+              //     $.ajax({
+              //       url: urlapi_sinhvien_read_maLop + get_maLop,
+              //       async: false,
+              //       type: "GET",
+              //       contentType: "application/json;charset=utf-8",
+              //       dataType: "json",
+              //       headers: { Authorization: jwtCookie },
+              //       success: function (result_SV) {
+              //         result_SVALL.concat(result_SV["sinhvien"]);
+              //       },
+              //       error: function (errorMessage) {
+              //         checkLoiDangNhap(errorMessage.responseJSON.message);
 
-                      var htmlData = "";
-                      $("#id_tbodySinhVien").html(htmlData);
-                      $("#idPhanTrang").empty();
-                      // Swal.fire({
-                      //   icon: "error",
-                      //   title: "Lỗi",
-                      //   text: errorMessage.responseJSON.message,
-                      //   timer: 5000,
-                      //   timerProgressBar: true,
-                      // });
-                    },
-                    statusCode: {
-                      403: function (xhr) {
-                        //deleteAllCookies();
-                        //location.href = 'login.php';
-                      },
-                    },
-                  });
-                }
-              });
+              //         var htmlData = "";
+              //         $("#id_tbodySinhVien").html(htmlData);
+              //         $("#idPhanTrang").empty();
+              //         // Swal.fire({
+              //         //   icon: "error",
+              //         //   title: "Lỗi",
+              //         //   text: errorMessage.responseJSON.message,
+              //         //   timer: 5000,
+              //         //   timerProgressBar: true,
+              //         // });
+              //       },
+              //       statusCode: {
+              //         403: function (xhr) {
+              //           //deleteAllCookies();
+              //           //location.href = 'login.php';
+              //         },
+              //       },
+              //     });
+              //   }
+              // });
 
               $("#idPhanTrang").pagination({
                 dataSource: result_SVALL,
@@ -247,7 +241,7 @@ function GetListSinhVien(maKhoa, maLop) {
         } else {
           $("#id_tbodySinhVien tr").remove();
           $.ajax({
-            url: urlapi_sinhvien_read_maLop + maLop,
+            url: urlapi_sinhvien_read_maKhoa + maKhoa + "&maLop=" + maLop,
             async: false,
             type: "GET",
             contentType: "application/json;charset=utf-8",
@@ -324,6 +318,86 @@ function GetListSinhVien(maKhoa, maLop) {
             },
           });
         }
+      } else {
+        $("#id_tbodySinhVien tr").remove();
+        $.ajax({
+          url: urlapi_sinhvien_read_maKhoa + maKhoa,
+          async: false,
+          type: "GET",
+          contentType: "application/json;charset=utf-8",
+          dataType: "json",
+          headers: { Authorization: jwtCookie },
+          success: function (result) {
+            $("#idPhanTrang").pagination({
+              dataSource: result["sinhvien"],
+              pageSize: 10,
+              autoHidePrevious: true,
+              autoHideNext: true,
+
+              callback: function (data, pagination) {
+                var htmlData = "";
+                var countSinhVien = 0;
+
+                for (let i = 0; i < data.length; i++) {
+                  countSinhVien += 1;
+
+                  htmlData +=
+                    "<tr>\
+                  <td class='cell'>" +
+                    data[i].soThuTu +
+                    "</td>\
+                  <td class='cell'><span class='truncate'>" +
+                    data[i].maSinhVien +
+                    "</span></td>\
+                  <td class='cell'>" +
+                    data[i].hoTenSinhVien +
+                    "</td>\
+                  <td class='cell'>" +
+                    data[i].ngaySinh +
+                    "</td>\
+                  <td class='cell'>" +
+                    data[i].he +
+                    "</td>\
+                  <td class='cell'>" +
+                    data[i].maLop +
+                    "</td>\
+                  <td class='cell'><button  type='button' id='id_btnReset' class='btn btn-info btn_DatLaiMatKhau_SinhVien' data-bs-toggle='modal' data-bs-target='#DatLaiMatKhauModal' style='color: white;' data-id='" +
+                    data[i].maSinhVien +
+                    "' >Đặt lại mật khẩu</button></td>\
+                  <td class='cell'>\
+                  <button class='btn bg-warning btn_ChinhSua_SinhVien' style='color: white;' data-bs-toggle='modal' data-bs-target='#ChinhSuaModal' data-id = '" +
+                    data[i].maSinhVien +
+                    "' >Chỉnh sửa</button>\
+                </td>\
+                                    </tr>";
+                }
+
+                $("#id_tbodySinhVien").html(htmlData);
+              },
+            });
+          },
+          error: function (errorMessage) {
+            checkLoiDangNhap(errorMessage.responseJSON.message);
+
+            console.log(this.url);
+            var htmlData = "";
+            $("#id_tbodySinhVien").html(htmlData);
+            $("#idPhanTrang").empty();
+            // Swal.fire({
+            //   icon: "error",
+            //   title: "Lỗi",
+            //   text: errorMessage.responseText,
+            //   timer: 5000,
+            //   timerProgressBar: true,
+            // });
+          },
+          statusCode: {
+            403: function (xhr) {
+              //deleteAllCookies();
+              //location.href = 'login.php';
+            },
+          },
+        });
       }
     }
   }
@@ -331,58 +405,67 @@ function GetListSinhVien(maKhoa, maLop) {
 
 function TimKiemSinhVien(maSinhVien) {
   $("#id_tbodySinhVien tr").remove();
-
   $.ajax({
-    url: urlapi_sinhvien_single_read + maSinhVien,
+    url: urlapi_sinhvien_read_mssv + maSinhVien,
     async: false,
     type: "GET",
     contentType: "application/json;charset=utf-8",
     dataType: "json",
     headers: { Authorization: jwtCookie },
-    success: function (result_SV) {
-      var htmlData = "";
+    success: function (result) {
+      $("#idPhanTrang").pagination({
+        dataSource: result["sinhvien"],
+        pageSize: 10,
+        autoHidePrevious: true,
+        autoHideNext: true,
 
-      htmlData +=
-        "<tr><td class='cell'>1</td>\
-        <td class='cell'><span class='truncate'>" +
-        result_SV.maSinhVien +
-        "</span></td>\
-        <td class='cell'>" +
-        result_SV.hoTenSinhVien +
-        "</td>\
-        <td class='cell'>" +
-        result_SV.ngaySinh +
-        "</td>\
-        <td class='cell'>" +
-        result_SV.he +
-        "</td>\
-        <td class='cell'>" +
-        result_SV.maLop +
-        "</td>\
-        <td class='cell'>\
-        <button class='btn bg-warning btn_ChinhSua' style='color: white;' data-bs-toggle='modal' data-bs-target='#ChinhSuaModal' data-id = '" +
-        data[i].maLop +
-        "' >Chỉnh sửa</button>\
-      </td>\
-        <td class='cell'><button type='button'  class='btn btn-info btn_DatLaiMatKhau_SinhVien' data-bs-toggle='modal' data-bs-target='#DatLaiMatKhauModal' style='color: white;' data-id='" +
-        result_SV.maSinhVien +
-        "' >Đặt lại mật khẩu</button></td>\
-        <td class='cell'>\
-        <button class='btn bg-warning btn_ChinhSua_SinhVien' style='color: white;' data-bs-toggle='modal' data-bs-target='#ChinhSuaModal' data-id = '" +
-        data[i].maSinhVien +
-        "' >Chỉnh sửa</button>\
-      </td>\
-        </tr>";
+        callback: function (data, pagination) {
+          var htmlData = "";
+          var countSinhVien = 0;
 
-      $("#id_tbodySinhVien").html(htmlData);
+          for (let i = 0; i < data.length; i++) {
+            countSinhVien += 1;
 
-      $("#idPhanTrang").empty();
+            htmlData +=
+              "<tr>\
+            <td class='cell'>" +
+              data[i].soThuTu +
+              "</td>\
+            <td class='cell'><span class='truncate'>" +
+              data[i].maSinhVien +
+              "</span></td>\
+            <td class='cell'>" +
+              data[i].hoTenSinhVien +
+              "</td>\
+            <td class='cell'>" +
+              data[i].ngaySinh +
+              "</td>\
+            <td class='cell'>" +
+              data[i].he +
+              "</td>\
+            <td class='cell'>" +
+              data[i].maLop +
+              "</td>\
+            <td class='cell'><button  type='button' id='id_btnReset' class='btn btn-info btn_DatLaiMatKhau_SinhVien' data-bs-toggle='modal' data-bs-target='#DatLaiMatKhauModal' style='color: white;' data-id='" +
+              data[i].maSinhVien +
+              "' >Đặt lại mật khẩu</button></td>\
+            <td class='cell'>\
+            <button class='btn bg-warning btn_ChinhSua_SinhVien' style='color: white;' data-bs-toggle='modal' data-bs-target='#ChinhSuaModal' data-id = '" +
+              data[i].maSinhVien +
+              "' >Chỉnh sửa</button>\
+          </td>\
+                              </tr>";
+          }
+
+          $("#id_tbodySinhVien").html(htmlData);
+        },
+      });
     },
     error: function (errorMessage) {
       checkLoiDangNhap(errorMessage.responseJSON.message);
 
+      console.log(this.url);
       var htmlData = "";
-
       $("#id_tbodySinhVien").html(htmlData);
       $("#idPhanTrang").empty();
     },
@@ -426,9 +509,9 @@ function LoadComboBoxThongTinKhoa_SinhVien() {
     error: function (errorMessage) {
       checkLoiDangNhap(errorMessage.responseJSON.message);
 
-       var htmlData = "";
-        $("#id_tbodySinhVien").html(htmlData);
-        $("#idPhanTrang").empty();
+      var htmlData = "";
+      $("#id_tbodySinhVien").html(htmlData);
+      $("#idPhanTrang").empty();
       // Swal.fire({
       //   icon: "error",
       //   title: "Lỗi",
@@ -442,6 +525,7 @@ function LoadComboBoxThongTinKhoa_SinhVien() {
 
 function LoadComboBoxThongTinLopTheoKhoa(maKhoa) {
   if (maKhoa != "tatcakhoa") {
+    $("#select_Lop").find("option").remove();
     //Load khoa
     $.ajax({
       url: urlapi_lop_read_maKhoa + maKhoa,
@@ -451,8 +535,6 @@ function LoadComboBoxThongTinLopTheoKhoa(maKhoa) {
       async: false,
       headers: { Authorization: jwtCookie },
       success: function (result_Lop) {
-        $("#select_Lop").find("option").remove();
-
         $("#select_Lop").append(
           "<option selected value='tatcalop'>Tất cả lớp</option>"
         );
@@ -475,17 +557,10 @@ function LoadComboBoxThongTinLopTheoKhoa(maKhoa) {
         var htmlData = "";
         $("#id_tbodySinhVien").html(htmlData);
         $("#idPhanTrang").empty();
-        // Swal.fire({
-        //   icon: "info",
-        //   title: "Thông báo",
-        //   text: errorMessage.responseJSON.message,
-        //   //timer: 5000,
-        //   timerProgressBar: true,
-        // });
       },
     });
   } else {
-    LoadComboBoxThongTinKhoa();
+    //LoadComboBoxThongTinKhoa();
     $("#select_Lop").find("option").remove();
   }
 }
@@ -724,21 +799,18 @@ function LoadThongTinChinhSua_SinhVien(maSinhVien) {
       var _edit_input_NgaySinh = document.getElementById("edit_input_NgaySinh");
       _edit_input_NgaySinh.value = result_data.ngaySinh;
 
-
-
       //load searchable field
-      var edit_select_Lop = document.querySelector('#edit_select_Lop');
+      var edit_select_Lop = document.querySelector("#edit_select_Lop");
 
       dselect(edit_select_Lop, {
-        search: true
+        search: true,
       });
 
-      var edit_select_He = document.querySelector('#edit_select_He');
+      var edit_select_He = document.querySelector("#edit_select_He");
 
       dselect(edit_select_He, {
-        search: true
+        search: true,
       });
-
     },
     error: function (errorMessage) {
       //checkLoiDangNhap(errorMessage.responseJSON.message);
@@ -761,7 +833,11 @@ function ChinhSua_SinhVien() {
   var _edit_select_Lop = $("#edit_select_Lop option:selected").val();
   var _edit_select_He = $("#edit_select_He option:selected").text();
 
-  if (_edit_input_MaSinhVien == "" || _edit_input_TenSinhVien == "" || _edit_input_NgaySinh == "") {
+  if (
+    _edit_input_MaSinhVien == "" ||
+    _edit_input_TenSinhVien == "" ||
+    _edit_input_NgaySinh == ""
+  ) {
     ThongBaoLoi("Vui lòng nhập đầy đủ thông tin!");
   } else {
     var dataPost = {
@@ -769,7 +845,7 @@ function ChinhSua_SinhVien() {
       hoTenSinhVien: _edit_input_TenSinhVien,
       ngaySinh: _edit_input_NgaySinh,
       he: _edit_select_He,
-      maLop: _edit_select_Lop
+      maLop: _edit_select_Lop,
     };
 
     $.ajax({

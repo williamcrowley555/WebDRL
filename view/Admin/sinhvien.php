@@ -49,7 +49,7 @@
 									<input type="text" id="input_timKiemMaSinhVien" name="" class="form-control" placeholder="Nhập mã số sinh viên...">
 								</div>
 								<div class="col-auto">
-									<button type="button" onclick="return TimKiemSinhVien($('#input_timKiemMaSinhVien').val());" class="btn app-btn-secondary">Tìm kiếm</button>
+									<button type="button" id="btn_timKiemMaSinhVien" class="btn app-btn-secondary">Tìm kiếm</button>
 								</div>
 
 								<div class="col-auto" style="padding-left: 15px;">
@@ -272,45 +272,63 @@
 	var maKhoa_selected = 'tatcakhoa';
 	var maLop_selected = 'tatcalop';
 
+	function xuLyTimKiemMSSV() {
+		var _input_timKiemMaSinhVien = $('#input_timKiemMaSinhVien').val().trim();
+
+		if (_input_timKiemMaSinhVien != '') {
+			if(Number(_input_timKiemMaSinhVien)){
+				TimKiemSinhVien(_input_timKiemMaSinhVien);
+			} else {
+				Swal.fire({
+					icon: "error",
+					title: "Lỗi",
+					text: "Mã số sinh viên không hợp lệ!",
+					//timer: 5000,
+					timerProgressBar: true,
+				});
+			}
+		}
+	}
+
 	//hàm trong function.js
 	GetListSinhVien(maKhoa_selected, maLop_selected);
 
 	$('#select_Khoa').on('change', function() {
+		$('#input_timKiemMaSinhVien').val('');
+
 		var maKhoa_selected = $('#select_Khoa').val();
+		
+		LoadComboBoxThongTinLopTheoKhoa(maKhoa_selected);
+
 		var maLop_selected = $('#select_Lop').val();
 
 		GetListSinhVien(maKhoa_selected, maLop_selected);
-
 	});
 
 	$('#select_Lop').on('change', function() {
+		$('#input_timKiemMaSinhVien').val('');
+		
 		var maKhoa_selected = $('#select_Khoa').val();
 		var maLop_selected = $('#select_Lop').val();
 
 		GetListSinhVien(maKhoa_selected, maLop_selected);
-
 	});
 
-	$('#input_timKiemMaSinhVien').on('change', function() {
-		var _input_timKiemMaSinhVien = $('#input_timKiemMaSinhVien').val();
+	$('#btn_timKiemMaSinhVien').on('click', function() {
+		xuLyTimKiemMSSV();
+	});
 
-		if (_input_timKiemMaSinhVien != '') {
-			TimKiemSinhVien(_input_timKiemMaSinhVien);
+	$('#input_timKiemMaSinhVien').keypress(function (e) {
+		var key = e.which;
+		if(key == 13)  // the 'Enter' code
+		{
+			$('#btn_timKiemMaSinhVien').click();
 		}
-
-
-	});
+	}); 
 
 	LoadComboBoxThongTinLop_SinhVien(); //Load combobox trong modal thêm mới
 
 	LoadComboBoxThongTinKhoa_SinhVien();
-
-	$('#select_Khoa').on('change', function() {
-		var maLop_selected = $('#select_Khoa').val();
-
-		LoadComboBoxThongTinLopTheoKhoa(maLop_selected);
-
-	});
 
 
 	//Dat lai mat khau
@@ -319,7 +337,6 @@
 		let maSinhVien = $(this).attr('data-id');
 
 		$('#input_MaSinhVien_Update').val(maSinhVien);
-
 	})
 
 

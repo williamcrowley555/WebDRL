@@ -52,6 +52,53 @@ class SinhVien
         return $stmt;
     }
 
+    // GET ALL THEO MAKHOA & MALOP
+    public function getAllSinhVienTheoMaKhoaVaMaLop($maKhoa, $maLop)
+    {
+        $sqlQuery = "SELECT maSinhVien, hoTenSinhVien, ngaySinh, he, sinhvien.maLop 
+                            FROM sinhvien LEFT JOIN lop ON sinhvien.maLop = lop.maLop 
+                            WHERE maKhoa = ? AND sinhvien.maLop = ?";
+
+
+        if (@$_GET['page'] && @$_GET['row_per_page']) {
+            $page = $_GET['page'];
+            $row_per_page = $_GET['row_per_page'];
+
+            $begin = ($page * $row_per_page) - $row_per_page;
+
+            $sqlQuery .= " LIMIT " . $begin . "," . $row_per_page . "";
+        }
+
+        $stmt = $this->conn->prepare($sqlQuery);
+        $stmt->bindParam(1, $maKhoa);
+        $stmt->bindParam(2, $maLop);
+        $stmt->execute();
+        return $stmt;
+    }
+
+    // GET ALL THEO MAKHOA 
+    public function getAllSinhVienTheoMaKhoa($maKhoa)
+    {
+        $sqlQuery = "SELECT maSinhVien, hoTenSinhVien, ngaySinh, he, sinhvien.maLop 
+                        FROM sinhvien LEFT JOIN lop ON sinhvien.maLop = lop.maLop 
+                        WHERE maKhoa = ?";
+                            
+
+        if (@$_GET['page'] && @$_GET['row_per_page']) {
+            $page = $_GET['page'];
+            $row_per_page = $_GET['row_per_page'];
+
+            $begin = ($page * $row_per_page) - $row_per_page;
+
+            $sqlQuery .= " LIMIT " . $begin . "," . $row_per_page . "";
+        }
+
+        $stmt = $this->conn->prepare($sqlQuery);
+        $stmt->bindParam(1, $maKhoa);
+        $stmt->execute();
+        return $stmt;
+    }
+
     // GET ALL SINHVIEN THEO MALOP
     public function getAllSinhVienTheoMaLop($maLop)
     {
@@ -60,6 +107,17 @@ class SinhVien
 
         $stmt = $this->conn->prepare($sqlQuery);
         $stmt->bindParam(1, $maLop);
+        $stmt->execute();
+        return $stmt;
+    }
+
+    // GET ALL SINHVIEN THEO MA SO SINH VIEN
+    public function getAllSinhVienTheoMSSV($mssv)
+    {
+        $sqlQuery = "SELECT maSinhVien, hoTenSinhVien, ngaySinh, he, maLop FROM " . $this->db_table . " 
+                        WHERE maSinhVien LIKE '%$mssv%'";
+
+        $stmt = $this->conn->prepare($sqlQuery);
         $stmt->execute();
         return $stmt;
     }
