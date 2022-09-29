@@ -734,13 +734,6 @@ function DatLaiMatKhau_SinhVien() {
                 timer: 2000,
                 timerProgressBar: true,
               });
-
-              setTimeout(() => {
-                GetListSinhVien("tatcakhoa", "tatcalop");
-              }, 2000);
-
-              $("#input_MatKhauMoi").val("");
-              $("#input_NhapLaiMatKhauMoi").val("");
             },
             error: function (errorMessage) {
               checkLoiDangNhap(errorMessage.responseJSON.message);
@@ -753,6 +746,18 @@ function DatLaiMatKhau_SinhVien() {
                 timerProgressBar: true,
               });
             },
+          });
+
+          // Delete token cua sinh VIEN
+          $.ajax({
+            url: urlapi_logout_client,
+            data: JSON.stringify({ maSo: maSinhVien_Update }),
+            type: "POST",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            async: false,
+            success: function (result) {},
+            error: function (errorMessage) {},
           });
         },
         error: function (errorMessage) {

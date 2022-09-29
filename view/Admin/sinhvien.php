@@ -206,7 +206,7 @@
 							</div>
 
 							<div class="mb-3 form-group">
-								<label for="input_NhapLaiMatKhauMoi" class="form-label" style="color: black; font-weight: 500;">Nhập lại Mật khẩu mới</label>
+								<label for="input_NhapLaiMatKhauMoi" class="form-label" style="color: black; font-weight: 500;">Nhập lại mật khẩu mới</label>
 								<input type="password" name="input_NhapLaiMatKhauMoi" class="form-control" id="input_NhapLaiMatKhauMoi" placeholder="Nhập lại mật khẩu mới...">
 								<span class="invalid-feedback"></span>
 							</div>
@@ -396,6 +396,8 @@
 		let maSinhVien = $(this).attr('data-id');
 
 		$('#input_MaSinhVien_Update').val(maSinhVien);
+		$("#input_MatKhauMoi").val("");
+		$("#input_NhapLaiMatKhauMoi").val("");
 	})
 
 
