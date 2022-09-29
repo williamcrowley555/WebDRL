@@ -621,6 +621,7 @@ function ThemMoi_SinhVien() {
   var _input_HoTenSinhVien = $("#input_HoTenSinhVien").val();
   var _input_NgaySinh = $("#input_NgaySinh").val();
   var _input_MaLop = $("#select_Lop_Add option:selected").val();
+  var _select_He_Add = $("#select_He_Add option:selected").text();
 
   if (
     _input_MaSinhVien == "" ||
@@ -635,7 +636,7 @@ function ThemMoi_SinhVien() {
       ngaySinh: _input_NgaySinh,
       maLop: _input_MaLop,
       matKhauSinhVien: _input_MaSinhVien,
-      he: "Đại học",
+      he: _select_He_Add,
     };
 
     $.ajax({
@@ -652,7 +653,7 @@ function ThemMoi_SinhVien() {
         Swal.fire({
           icon: "success",
           title: "Tạo thành công!",
-          text: "Sinh viên mã " + _input_MaSinhVien + " đã được tạo!",
+          text: "Sinh viên mã số " + _input_MaSinhVien + " đã được tạo!",
           timer: 2000,
           timerProgressBar: true,
         });
@@ -862,7 +863,7 @@ function ChinhSua_SinhVien() {
         Swal.fire({
           icon: "success",
           title:
-            "Chỉnh sửa thành công sinh viên mã sinh viên " +
+            "Chỉnh sửa thành công sinh viên mã số " +
             _edit_input_MaSinhVien +
             "!",
           text: "",

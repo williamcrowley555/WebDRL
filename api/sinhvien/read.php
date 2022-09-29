@@ -188,7 +188,7 @@ if ($data["status"] == 1) {
             }
         } else {
             $items = new SinhVien($db);
-            $stmt = $items->getAllSinhVienTheoMSSV($mssv);
+            $stmt = $items->getSinhVienTheoMSSV($mssv, false);
             $itemCount = $stmt->rowCount();
     
             $totalRecords = $items->getAllSinhVienNoPaging()->rowCount();

@@ -111,11 +111,12 @@ class SinhVien
         return $stmt;
     }
 
-    // GET ALL SINHVIEN THEO MA SO SINH VIEN
-    public function getAllSinhVienTheoMSSV($mssv)
+    // GET SINHVIEN THEO MA SO SINH VIEN
+    public function getSinhVienTheoMSSV($mssv, $isEqual)
     {
         $sqlQuery = "SELECT maSinhVien, hoTenSinhVien, ngaySinh, he, maLop FROM " . $this->db_table . " 
-                        WHERE maSinhVien LIKE '%$mssv%'";
+                        WHERE maSinhVien" . 
+                        ($isEqual ? " = '$mssv'" : " LIKE '%$mssv%'");
 
         $stmt = $this->conn->prepare($sqlQuery);
         $stmt->execute();
