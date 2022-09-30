@@ -206,7 +206,7 @@
 	
     </header><!--//app-header-->
 
-	<div class="app-wrapper" id="content-main-page" >
+	<div class="app-wrapper" id="" >
 
 	
 	</div>

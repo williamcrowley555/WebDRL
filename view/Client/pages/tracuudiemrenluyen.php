@@ -17,25 +17,25 @@
 
 
         <div class="container">
-            <div class="row" style="margin: 0 auto;text-align: center;background: white;border-radius: 10px;">
+            <!-- <div class="row" style="margin: 0 auto;text-align: center;background: white;border-radius: 10px;">
                 <div style="padding: 48px;">
-                    <!-- Email input -->
+                    <!!-- Email input --!!>
                     <div class="form-outline mb-4">
                         <input type="text" id="input_MSSVTraCuu" class="form-control" />
                         <label class="form-label" for="">Nhập mã số sinh viên</label>
                     </div>
 
-                    <!-- Submit button -->
+                    <!!-- Submit button --!!>
                     <button type="button" class="btn btn-primary btn-block" style="width: fit-content;" onclick="return TraCuuDiemRenLuyen();" >Tra cứu</button>
                 </div>
-            </div>
+            </div>-->
          
             <!-- end of row -->
             <div class="row" style="margin: 0 auto;margin-top: 15px;text-align: center;background: white;border-radius: 10px;display: none;" id="id_NoiDungKetQuaTraCuu" >
                 <div style="padding: 48px;">
                     <div class="form-outline mb-4">
                         
-                        <h5 style="text-transform: uppercase">---Kết quả tìm kiếm---</h5>
+                        <h5 style="text-transform: uppercase">---Các phiếu điểm rèn luyện của sinh viên---</h5>
 
                         <div class="row justify-content-center" style="padding-bottom: 30px;">
                             <div class="col-4">

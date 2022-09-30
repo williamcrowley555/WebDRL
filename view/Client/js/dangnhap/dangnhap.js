@@ -47,7 +47,7 @@ function Login(inputLogin_MSSV, inputLogin_MatKhau) {
 
         //deleteAllCookies();
 
-        document.cookie= "jwt = " + result["jwt"];
+        document.cookie = "jwt = " + result["jwt"];
         document.cookie = "maSo = " + result[0]["maSo"];
         document.cookie = "hoTen = " + result[0]["hoTen"];
 

@@ -138,6 +138,9 @@
             var inputMatKhau_value = $("#inputLogin_MatKhau").val();
 
             Login(inputMSSV_value, inputMatKhau_value);
+            
+            
+
         });
     })
 
