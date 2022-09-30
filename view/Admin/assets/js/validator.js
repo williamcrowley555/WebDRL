@@ -264,3 +264,15 @@ Validator.isDateOfBirth = function (selector, message) {
     },
   };
 };
+
+Validator.isPhoneNumber = function (selector, message) {
+  return {
+    selector: selector,
+    test: function (value) {
+      var regex = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,5}$/im;
+      return regex.test(value)
+        ? undefined
+        : message || "Số điện thoại không hợp lệ";
+    },
+  };
+};

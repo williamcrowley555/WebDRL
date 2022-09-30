@@ -47,12 +47,8 @@
                     "message" =>  $th->getMessage()
                 );           
             }
-
-
             
         }
-
-        
 
         public function CheckAuthLogin(){
           
@@ -74,16 +70,8 @@
             }
             
         }
-    
-        
-
-        
 
     }
-
-   
-
-    
 ?>
 
 
