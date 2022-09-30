@@ -115,12 +115,8 @@
 				});
 				},
 			});
-		
-
 		}
 
-
-		
 	</script>
 	
 </head> 
@@ -219,11 +215,7 @@
 			
 		});
 		
-		
-
 		var _getQuyen = getCookie('quyen');
-		
-		console.log(_getQuyen);
 
 		$('#menu_feature li').empty();
 		if (_getQuyen.localeCompare('ctsv') === 0 ){

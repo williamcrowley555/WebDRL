@@ -18,29 +18,43 @@
     if($data["status"]==1){
         //if ($checkQuyen->checkQuyen_CTSV($data["user_data"]->aud)) {
        
-            $database = new Database();
-            $db = $database->getConnection();
-            $item = new SinhVien($db);
-
-            $item->maSinhVien = isset($_GET['maSinhVien']) ? $_GET['maSinhVien'] : die(); //Lấy id từ phương thức GET
-        
-            $item->getSingleSinhVien();
-            if($item->hoTenSinhVien != null){
-                // create array
-                $sinhvien_arr = array(
-                    "maSinhVien" =>  $item->maSinhVien,
-                    "hoTenSinhVien" => $item->hoTenSinhVien,
-                    "ngaySinh" => $item->ngaySinh,
-                    "he" => $item->he,
-                    "maLop" => $item->maLop
-                );
-            
-                http_response_code(200);
-                echo json_encode($sinhvien_arr);
-            }else{
-                http_response_code(404);
-                echo json_encode(array("message" => "Không tìm thấy kết quả."));
+            if (isset($_GET['mssv'])) {
+                $mssv = $_GET['mssv'];
+            } else {
+                $mssv = null;
             }
+
+            if ($mssv != null) {
+                $database = new Database();
+                $db = $database->getConnection();
+
+                $items = new SinhVien($db);
+                $stmt = $items->getSinhVienTheoMSSV($mssv, true);
+                $itemCount = $stmt->rowCount();
+        
+                if ($itemCount > 0) {
+                    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+                    extract($row);
+                    $sv = array(
+                        "maSinhVien" => $maSinhVien,
+                        "hoTenSinhVien" => $hoTenSinhVien,
+                        "ngaySinh" => $ngaySinh,
+                        "he" => $he,
+                        "maLop" => $maLop
+                    );
+                    
+                    
+                    http_response_code(200);
+                    echo json_encode($sv);
+                } else {
+                    http_response_code(404);
+                    echo json_encode(
+                        array("message" => "Không tìm thấy kết quả.")
+                    );
+                }
+            }
+            
         // } else {
         //     http_response_code(403);
         //     echo json_encode(

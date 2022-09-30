@@ -16,52 +16,179 @@ $checkQuyen = new checkQuyen();
 if ($data["status"] == 1) {
     if ($checkQuyen->checkQuyen_CVHT_Khoa_CTSV($data["user_data"]->aud)) {
 
-        if (isset($_GET['maLop'])){
-            $maLop = isset($_GET['maLop']) ? $_GET['maLop'] : die();
+        if (isset($_GET['maKhoa'])) {
+            $maKhoa = $_GET['maKhoa'] == "tatcakhoa" ? null : $_GET['maKhoa'];
+        } else {
+            $maKhoa = null;
+        }
 
-            $database = new Database();
-            $db = $database->getConnection();
-    
-            $items = new SinhVien($db);
-            $stmt = $items->getAllSinhVienTheoMaLop($maLop);
-            $itemCount = $stmt->rowCount();
-    
-            if ($itemCount > 0) {
-                $sinhvienArr = array();
-                $sinhvienArr["sinhvien"] = array(); //tạo object json 
-                $sinhvienArr["itemCount"] = $itemCount;
+        if (isset($_GET['maLop'])) {
+            $maLop = $_GET['maLop'] == "tatcalop" ? null : $_GET['maLop'];
+        } else {
+            $maLop = null;
+        }
+
+        if (isset($_GET['mssv'])) {
+            $mssv = $_GET['mssv'];
+        } else {
+            $mssv = null;
+        }
+        
+        $database = new Database();
+        $db = $database->getConnection();
+
+        if ($mssv == null) {
+            if ($maKhoa != null) {
+                if ($maLop != null){
+                    $items = new SinhVien($db);
+                    $stmt = $items->getAllSinhVienTheoMaKhoaVaMaLop($maKhoa, $maLop);
+                    $itemCount = $stmt->rowCount();
             
-                $countRow = 0;
+                    if ($itemCount > 0) {
     
-                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                    extract($row);
-                    $countRow++;
-                    $e = array(
-                        "soThuTu" => $countRow,
-                        "maSinhVien" => $maSinhVien,
-                        "hoTenSinhVien" => $hoTenSinhVien,
-                        "ngaySinh" => $ngaySinh,
-                        "he" => $he,
-                        "maLop" => $maLop
-                    );
-                    array_push($sinhvienArr["sinhvien"], $e);
+                        $sinhvienArr = array();
+                        $sinhvienArr["sinhvien"] = array(); //tạo object json 
+                        $sinhvienArr["itemCount"] = $itemCount;
+                    
+                        $countRow = 0;
+            
+                        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                            extract($row);
+                            $countRow++;
+                            $e = array(
+                                "soThuTu" => $countRow,
+                                "maSinhVien" => $maSinhVien,
+                                "hoTenSinhVien" => $hoTenSinhVien,
+                                "ngaySinh" => $ngaySinh,
+                                "he" => $he,
+                                "maLop" => $maLop
+                            );
+                            array_push($sinhvienArr["sinhvien"], $e);
+                        }
+                        http_response_code(200);
+                        echo json_encode($sinhvienArr);
+                    } else {
+                        http_response_code(404);
+                        echo json_encode(
+                            array("message" => "Không tìm thấy kết quả.")
+                        );
+                    }
+        
+                } else {
+                    $items = new SinhVien($db);
+                    $stmt = $items->getAllSinhVienTheoMaKhoa($maKhoa);
+                    $itemCount = $stmt->rowCount();
+            
+                    $totalRecords = $items->getAllSinhVienNoPaging()->rowCount();
+            
+                    //echo json_encode($itemCount); //print itemCount
+                    if ($itemCount > 0) {
+                        $sinhvienArr = array();
+                        $sinhvienArr["sinhvien"] = array(); //tạo object json 
+                        $sinhvienArr["itemCount"] = $itemCount;
+                        $sinhvienArr["totalRecords"] = $totalRecords;
+            
+                        $countRow = 0;
+            
+                        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                            extract($row);
+                            $countRow++;
+                            $e = array(
+                                "soThuTu" => $countRow,
+                                "maSinhVien" => $maSinhVien,
+                                "hoTenSinhVien" => $hoTenSinhVien,
+                                "ngaySinh" => $ngaySinh,
+                                "he" => $he,
+                                "maLop" => $maLop
+                            );
+                            array_push($sinhvienArr["sinhvien"], $e);
+                        }
+                        http_response_code(200);
+                        echo json_encode($sinhvienArr);
+                    } else {
+                        http_response_code(404);
+                        echo json_encode(
+                            array("message" => "Không tìm thấy kết quả.")
+                        );
+                    }
                 }
-                http_response_code(200);
-                echo json_encode($sinhvienArr);
             } else {
-                http_response_code(404);
-                echo json_encode(
-                    array("message" => "Không tìm thấy kết quả.")
-                );
+                if ($maLop != null){
+                    $items = new SinhVien($db);
+                    $stmt = $items->getAllSinhVienTheoMaLop($maLop);
+                    $itemCount = $stmt->rowCount();
+            
+                    if ($itemCount > 0) {
+                        $sinhvienArr = array();
+                        $sinhvienArr["sinhvien"] = array(); //tạo object json 
+                        $sinhvienArr["itemCount"] = $itemCount;
+                    
+                        $countRow = 0;
+            
+                        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                            extract($row);
+                            $countRow++;
+                            $e = array(
+                                "soThuTu" => $countRow,
+                                "maSinhVien" => $maSinhVien,
+                                "hoTenSinhVien" => $hoTenSinhVien,
+                                "ngaySinh" => $ngaySinh,
+                                "he" => $he,
+                                "maLop" => $maLop
+                            );
+                            array_push($sinhvienArr["sinhvien"], $e);
+                        }
+                        http_response_code(200);
+                        echo json_encode($sinhvienArr);
+                    } else {
+                        http_response_code(404);
+                        echo json_encode(
+                            array("message" => "Không tìm thấy kết quả.")
+                        );
+                    }
+        
+                } else {
+                    $items = new SinhVien($db);
+                    $stmt = $items->getAllSinhVien();
+                    $itemCount = $stmt->rowCount();
+            
+                    $totalRecords = $items->getAllSinhVienNoPaging()->rowCount();
+            
+                    //echo json_encode($itemCount); //print itemCount
+                    if ($itemCount > 0) {
+                        $sinhvienArr = array();
+                        $sinhvienArr["sinhvien"] = array(); //tạo object json 
+                        $sinhvienArr["itemCount"] = $itemCount;
+                        $sinhvienArr["totalRecords"] = $totalRecords;
+            
+                        $countRow = 0;
+            
+                        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                            extract($row);
+                            $countRow++;
+                            $e = array(
+                                "soThuTu" => $countRow,
+                                "maSinhVien" => $maSinhVien,
+                                "hoTenSinhVien" => $hoTenSinhVien,
+                                "ngaySinh" => $ngaySinh,
+                                "he" => $he,
+                                "maLop" => $maLop
+                            );
+                            array_push($sinhvienArr["sinhvien"], $e);
+                        }
+                        http_response_code(200);
+                        echo json_encode($sinhvienArr);
+                    } else {
+                        http_response_code(404);
+                        echo json_encode(
+                            array("message" => "Không tìm thấy kết quả.")
+                        );
+                    }
+                }
             }
-
-
-        }else{
-            $database = new Database();
-            $db = $database->getConnection();
-    
+        } else {
             $items = new SinhVien($db);
-            $stmt = $items->getAllSinhVien();
+            $stmt = $items->getSinhVienTheoMSSV($mssv, false);
             $itemCount = $stmt->rowCount();
     
             $totalRecords = $items->getAllSinhVienNoPaging()->rowCount();
@@ -97,8 +224,6 @@ if ($data["status"] == 1) {
                 );
             }
         }
-
-        
     } else {
         http_response_code(403);
         echo json_encode(

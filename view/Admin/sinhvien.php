@@ -49,7 +49,7 @@
 									<input type="text" id="input_timKiemMaSinhVien" name="" class="form-control" placeholder="Nhập mã số sinh viên...">
 								</div>
 								<div class="col-auto">
-									<button type="button" onclick="return TimKiemSinhVien($('#input_timKiemMaSinhVien').val());" class="btn app-btn-secondary">Tìm kiếm</button>
+									<button type="button" id="btn_timKiemMaSinhVien" class="btn app-btn-secondary">Tìm kiếm</button>
 								</div>
 
 								<div class="col-auto" style="padding-left: 15px;">
@@ -74,7 +74,7 @@
 
 			<!-- Modal thêm -->
 			<div class="modal fade" id="AddModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-				<div class="modal-dialog">
+				<form action="" class="modal-dialog" id="AddForm">
 					<div class="modal-content">
 						<div class="modal-header">
 							<img src="assets/images/icons/add.png" width="25px" style="padding-right: 5px;">
@@ -83,28 +83,39 @@
 						</div>
 						<div class="modal-body">
 
-							<div class="mb-3">
+							<div class="mb-3 form-group">
 								<label for="input_MaSinhVien" class="form-label" style="color: black; font-weight: 500;">Mã sinh viên</label>
-								<input type="text" class="form-control mb-2" id="input_MaSinhVien" placeholder="Nhập mã sinh viên...">
+								<input type="text" name="maSinhVien" class="form-control mb-2" id="input_MaSinhVien" placeholder="Nhập mã sinh viên...">
+								<span class="invalid-feedback"></span>
 							</div>
 
-							<div class="mb-3">
+							<div class="mb-3 form-group">
 								<label for="input_HoTenSinhVien" class="form-label" style="color: black; font-weight: 500;">Họ tên sinh viên</label>
-								<input type="text" class="form-control" id="input_HoTenSinhVien" placeholder="Nhập họ tên sinh viên...">
+								<input type="text" name="hoTenSinhVien" class="form-control" id="input_HoTenSinhVien" placeholder="Nhập họ tên sinh viên...">
+								<span class="invalid-feedback"></span>
 							</div>
 
-							<div class="mb-3">
+							<div class="mb-3 form-group">
 								<label for="input_NgaySinh" class="form-label" style="color: black; font-weight: 500;">Ngày sinh</label>
-								<input type="date" class="form-control" id="input_NgaySinh" placeholder="Nhập ngày sinh...">
+								<input type="date" name="ngaySinh" class="form-control" id="input_NgaySinh" placeholder="Nhập ngày sinh...">
+								<span class="invalid-feedback"></span>
 							</div>
 
-							<div class="mb-3">
+							<div class="mb-3 form-group">
 								<label for="select_Lop_Add" class="form-label" style="color: black; font-weight: 500;">Lớp</label>
-								<select class="form-select" aria-label="Default select example" id="select_Lop_Add">
-
-								</select>
+								<select class="form-select" name="maLop" aria-label="Default select example" id="select_Lop_Add"></select>
+								<span class="invalid-feedback"></span>
 							</div>
-							<p></p>
+
+							<div class="mb-3 form-group">
+								<label for="edit_select_He" class="form-label" style="color: black; font-weight: 500;">Hệ</label>
+								<select class="form-select edit_select_He" name="he" aria-label="Default select example" id="select_He_Add">
+									<option value="dai_hoc">Đại học</option>
+									<option value="cao_dang">Cao đẳng</option>
+								</select>
+								<span class="invalid-feedback"></span>
+							</div>
+
 							<hr>
 							<div class="mb-3">
 								<span style="color: black; font-weight: bold; text-transform: uppercase;font-size: 15px;">Mật khẩu đăng nhập mặc định là Mã sinh viên!</span>
@@ -114,15 +125,15 @@
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-							<button type="button" class="btn btn-primary" style='color: white;' onclick="return ThemMoi_SinhVien()">Thêm mới</button>
+							<button type="submit" class="btn btn-primary" style='color: white;'>Thêm mới</button>
 						</div>
 					</div>
-				</div>
+				</form>
 			</div>
 
 			<!-- Modal chỉnh sửa -->
 			<div class="modal fade" id="ChinhSuaModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-				<div class="modal-dialog">
+				<form action="" class="modal-dialog" id="EditForm">
 					<div class="modal-content">
 						<div class="modal-header">
 							<img src="assets/images/icons/edit.png" width="25px" style="padding-right: 5px;">
@@ -131,47 +142,50 @@
 						</div>
 						<div class="modal-body">
 
-							<div class="mb-3">
+							<div class="mb-3 form-group">
 								<label for="edit_input_MaSinhVien" class="form-label" style="color: black; font-weight: 500;">Mã sinh viên</label>
-								<input type="text" class="form-control mb-2" id="edit_input_MaSinhVien" placeholder=" mã sinh viên..." readonly>
+								<input type="text" name="maSinhVien" class="form-control mb-2" id="edit_input_MaSinhVien" placeholder="Nhập mã sinh viên..." readonly>
+								<span class="invalid-feedback"></span>
 							</div>
 
-							<div class="mb-3">
-								<label for="edit_input_TenSinhVien" class="form-label" style="color: black; font-weight: 500;">Tên sinh viên</label>
-								<input type="text" class="form-control" id="edit_input_TenSinhVien" placeholder="Nhập tên sinh viên...">
+							<div class="mb-3 form-group">
+								<label for="edit_input_TenSinhVien" class="form-label" style="color: black; font-weight: 500;">Họ tên sinh viên</label>
+								<input type="text" name="hoTenSinhVien" class="form-control" id="edit_input_TenSinhVien" placeholder="Nhập tên sinh viên...">
+								<span class="invalid-feedback"></span>
 							</div>
 
-							<div class="mb-3">
+							<div class="mb-3 form-group">
 								<label for="edit_input_NgaySinh" class="form-label" style="color: black; font-weight: 500;">Ngày sinh:</label>
-								<input type="date" class="form-control mb-2" id="edit_input_NgaySinh" name="birthday">
+								<input type="date" name="ngaySinh" class="form-control mb-2" id="edit_input_NgaySinh" name="birthday">
+								<span class="invalid-feedback"></span>
 							</div>
 
-							<div class="mb-3">
+							<div class="mb-3 form-group">
 								<label for="edit_select_Lop" class="form-label" style="color: black; font-weight: 500;">Lớp</label>
-								<select class="form-select" aria-label="Default select example" id="edit_select_Lop">
-
-								</select>
+								<select class="form-select" name="maLop" aria-label="Default select example" id="edit_select_Lop"></select>
+								<span class="invalid-feedback"></span>
 							</div>
 
-							<div class="mb-3">
+							<div class="mb-3 form-group">
 								<label for="edit_select_He" class="form-label" style="color: black; font-weight: 500;">Hệ</label>
-								<select class="form-select edit_select_He" aria-label="Default select example" id="edit_select_He">
+								<select class="form-select edit_select_He" name="he" aria-label="Default select example" id="edit_select_He">
 									<option value="dai_hoc">Đại học</option>
 									<option value="cao_dang">Cao đẳng</option>
 								</select>
+								<span class="invalid-feedback"></span>
 							</div>
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-							<button type="button" class="btn btn-warning" style='color: white;' onclick="return ChinhSua_SinhVien()">Chỉnh sửa</button>
+							<button type="submit" class="btn btn-warning" style='color: white;'>Chỉnh sửa</button>
 						</div>
 					</div>
-				</div>
+				</form>
 			</div>
 
 			<!-- Modal reset password -->
 			<div class="modal fade" id="DatLaiMatKhauModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-				<div class="modal-dialog">
+				<form action="" class="modal-dialog" id="ChangePasswordForm">
 					<div class="modal-content">
 						<div class="modal-header">
 							<h5 class="modal-title" id="exampleModalLabel"> Đặt lại mật khẩu</h5>
@@ -185,24 +199,26 @@
 							</div>
 
 
-							<div class="mb-3">
+							<div class="mb-3 form-group">
 								<label for="input_MatKhauMoi" class="form-label" style="color: black; font-weight: 500;">Mật khẩu mới</label>
-								<input type="password" class="form-control" id="input_MatKhauMoi" placeholder="Nhập mật khẩu mới...">
+								<input type="password" name="input_MatKhauMoi" class="form-control" id="input_MatKhauMoi" placeholder="Nhập mật khẩu mới...">
+								<span class="invalid-feedback"></span>
 							</div>
 
-							<div class="mb-3">
-								<label for="input_NhapLaiMatKhauMoi" class="form-label" style="color: black; font-weight: 500;">Nhập lại Mật khẩu mới</label>
-								<input type="password" class="form-control" id="input_NhapLaiMatKhauMoi" placeholder="Nhập lại mật khẩu mới...">
+							<div class="mb-3 form-group">
+								<label for="input_NhapLaiMatKhauMoi" class="form-label" style="color: black; font-weight: 500;">Nhập lại mật khẩu mới</label>
+								<input type="password" name="input_NhapLaiMatKhauMoi" class="form-control" id="input_NhapLaiMatKhauMoi" placeholder="Nhập lại mật khẩu mới...">
+								<span class="invalid-feedback"></span>
 							</div>
 
 
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-							<button type="button" class="btn btn-info" style='color: white;' onclick="return DatLaiMatKhau_SinhVien()">Đặt lại mật khẩu</button>
+							<button type="submit" class="btn btn-info" style='color: white;'>Đặt lại mật khẩu</button>
 						</div>
 					</div>
-				</div>
+				</form>
 			</div>
 
 			<div class="tab-pane fade show active" id="orders-all" role="tabpanel" aria-labelledby="orders-all-tab">
@@ -263,54 +279,115 @@
 <script src="assets/js/sinhvien/function.js"></script>
 
 
+<!-- Form Validator -->
+<script src="./assets/js/validator.js"></script>
+
 
 <script>
-	// setTimeout(function() {
-	// 	$('.loader_bg').fadeToggle();
-	// }, 1000);
+	Validator({
+        form: '#AddForm',
+        formGroupSelector: '.form-group',
+        errorSelector: '.invalid-feedback',
+        rules: [
+          Validator.isRequired('#input_MaSinhVien', 'Vui lòng nhập mã số sinh viên'),
+          Validator.isNumber('#input_MaSinhVien', 'Mã số sinh viên chỉ bao gồm các ký tự số'),
+          Validator.minLength('#input_MaSinhVien', 10, "Mã số sinh viên phải có tối thiểu 10 chữ số"),
+          Validator.isRequired('#input_HoTenSinhVien', 'Vui lòng nhập họ tên sinh viên'),
+          Validator.isCharacters('#input_HoTenSinhVien', 'Họ tên sinh viên chỉ bao gồm các ký tự chữ'),
+          Validator.isDateOfBirth('#input_NgaySinh'),
+        ],
+        onSubmit: ThemMoi_SinhVien
+    })
+	  
+	Validator({
+        form: '#EditForm',
+        formGroupSelector: '.form-group',
+        errorSelector: '.invalid-feedback',
+        rules: [
+          Validator.isRequired('#edit_input_MaSinhVien', 'Vui lòng nhập mã số sinh viên'),
+          Validator.isNumber('#edit_input_MaSinhVien', 'Mã số sinh viên chỉ bao gồm các ký tự số'),
+          Validator.minLength('#edit_input_MaSinhVien', 10, "Mã số sinh viên phải có tối thiểu 10 chữ số"),
+          Validator.isRequired('#edit_input_TenSinhVien', 'Vui lòng nhập họ tên sinh viên'),
+          Validator.isCharacters('#edit_input_TenSinhVien', 'Họ tên sinh viên chỉ bao gồm các ký tự chữ'),
+          Validator.isDateOfBirth('#edit_input_NgaySinh'),
+        ],
+        onSubmit: ChinhSua_SinhVien
+    })
+	  
+	Validator({
+		form: '#ChangePasswordForm',
+		formGroupSelector: '.form-group',
+		errorSelector: '.invalid-feedback',
+		rules: [
+			Validator.minLength('#input_MatKhauMoi', 6, "Mật khẩu phải có tối thiểu 6 ký tự"),
+			Validator.isRequired('#input_NhapLaiMatKhauMoi'),
+			Validator.isConfirmed('#input_NhapLaiMatKhauMoi', function() {
+				return document.querySelector('#ChangePasswordForm #input_MatKhauMoi').value;
+			}, 'Mật khẩu nhập lại không chính xác'),
+		],
+		onSubmit: DatLaiMatKhau_SinhVien
+	})
 
 	var maKhoa_selected = 'tatcakhoa';
 	var maLop_selected = 'tatcalop';
+
+	function xuLyTimKiemMSSV() {
+		var _input_timKiemMaSinhVien = $('#input_timKiemMaSinhVien').val().trim();
+
+		if (_input_timKiemMaSinhVien != '') {
+			if(Number(_input_timKiemMaSinhVien)){
+				TimKiemSinhVien(_input_timKiemMaSinhVien);
+			} else {
+				Swal.fire({
+					icon: "error",
+					title: "Lỗi",
+					text: "Mã số sinh viên không hợp lệ!",
+					//timer: 5000,
+					timerProgressBar: true,
+				});
+			}
+		}
+	}
 
 	//hàm trong function.js
 	GetListSinhVien(maKhoa_selected, maLop_selected);
 
 	$('#select_Khoa').on('change', function() {
+		$('#input_timKiemMaSinhVien').val('');
+
 		var maKhoa_selected = $('#select_Khoa').val();
+		
+		LoadComboBoxThongTinLopTheoKhoa(maKhoa_selected);
+
 		var maLop_selected = $('#select_Lop').val();
 
 		GetListSinhVien(maKhoa_selected, maLop_selected);
-
 	});
 
 	$('#select_Lop').on('change', function() {
+		$('#input_timKiemMaSinhVien').val('');
+		
 		var maKhoa_selected = $('#select_Khoa').val();
 		var maLop_selected = $('#select_Lop').val();
 
 		GetListSinhVien(maKhoa_selected, maLop_selected);
-
 	});
 
-	$('#input_timKiemMaSinhVien').on('change', function() {
-		var _input_timKiemMaSinhVien = $('#input_timKiemMaSinhVien').val();
+	$('#btn_timKiemMaSinhVien').on('click', function() {
+		xuLyTimKiemMSSV();
+	});
 
-		if (_input_timKiemMaSinhVien != '') {
-			TimKiemSinhVien(_input_timKiemMaSinhVien);
+	$('#input_timKiemMaSinhVien').keypress(function (e) {
+		var key = e.which;
+		if(key == 13)  // the 'Enter' code
+		{
+			$('#btn_timKiemMaSinhVien').click();
 		}
-
-
-	});
+	}); 
 
 	LoadComboBoxThongTinLop_SinhVien(); //Load combobox trong modal thêm mới
 
 	LoadComboBoxThongTinKhoa_SinhVien();
-
-	$('#select_Khoa').on('change', function() {
-		var maLop_selected = $('#select_Khoa').val();
-
-		LoadComboBoxThongTinLopTheoKhoa(maLop_selected);
-
-	});
 
 
 	//Dat lai mat khau
@@ -319,7 +396,8 @@
 		let maSinhVien = $(this).attr('data-id');
 
 		$('#input_MaSinhVien_Update').val(maSinhVien);
-
+		$("#input_MatKhauMoi").val("");
+		$("#input_NhapLaiMatKhauMoi").val("");
 	})
 
 
@@ -337,7 +415,5 @@
 		$('#edit_input_MaSinhVien').val(maSinhVien_edit);
 
 		LoadThongTinChinhSua_SinhVien(maSinhVien_edit);
-
-		
 	})
 </script>

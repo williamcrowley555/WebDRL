@@ -79,6 +79,27 @@
             return false;
         }
 
+        public function isExprired($token){
+            $sqlQuery = "SELECT thoiGianHetHan FROM ". $this->db_table ."
+                        WHERE token = ? LIMIT 0,1";
+            $stmt = $this->conn->prepare($sqlQuery);
+            $stmt->bindParam(1, $token);
+            $stmt->execute();
+
+            $dataRow = $stmt->fetch(PDO::FETCH_ASSOC);
+            
+            if ($dataRow != null){
+                $today = date("Y-m-d H:i:s");
+
+                if ($dataRow['thoiGianHetHan'] > $today) 
+                    return false;
+                else
+                    return true;
+            }
+            
+            return false;
+        }
+
         // CREATE
         public function createUserToken(){
             $sqlQuery = "INSERT INTO
