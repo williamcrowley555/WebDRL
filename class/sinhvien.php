@@ -112,7 +112,7 @@ class SinhVien
     }
 
     // GET SINHVIEN THEO MA SO SINH VIEN
-    public function getSinhVienTheoMSSV($mssv, $isEqual)
+    public function getSinhVienTheoMSSV($mssv, $isEqual = true)
     {
         $sqlQuery = "SELECT maSinhVien, hoTenSinhVien, ngaySinh, he, maLop FROM " . $this->db_table . " 
                         WHERE maSinhVien" . 

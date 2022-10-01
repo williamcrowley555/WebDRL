@@ -43,7 +43,7 @@
 									<input type="text" id="input_timKiemMaLop" name="" class="form-control" placeholder="Nhập mã lớp...">
 								</div>
 								<div class="col-auto">
-									<button type="button" onclick="return TimKiemLop($('#input_timKiemMaSinhVien').val());" class="btn app-btn-secondary">Tìm kiếm</button>
+									<button type="button" id="btn_timKiemMaLop" class="btn app-btn-secondary">Tìm kiếm</button>
 								</div>
 
 								<div class="col-auto" style="padding-left: 15px;">
@@ -70,7 +70,7 @@
 
 			<!-- Modal thêm -->
 			<div class="modal fade" id="AddModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-				<div class="modal-dialog">
+				<form action="" class="modal-dialog" id="AddForm">
 					<div class="modal-content">
 						<div class="modal-header">
 							<img src="assets/images/icons/add.png" width="25px" style="padding-right: 5px;">
@@ -79,33 +79,35 @@
 						</div>
 						<div class="modal-body">
 
-							<div class="mb-3">
+							<div class="mb-3 form-group">
 								<label for="input_MaLop" class="form-label" style="color: black; font-weight: 500;">Mã lớp</label>
-								<input type="text" class="form-control mb-2" id="input_MaLop" placeholder="Nhập mã lớp...">
+								<input type="text" name="maLop" class="form-control mb-2" id="input_MaLop" placeholder="Nhập mã lớp...">
+								<span class="invalid-feedback"></span>
 							</div>
 
-							<div class="mb-3">
+							<div class="mb-3 form-group">
 								<label for="input_TenLop" class="form-label" style="color: black; font-weight: 500;">Tên lớp</label>
-								<input type="text" class="form-control" id="input_TenLop" placeholder="Nhập tên lớp...">
+								<input type="text" name="tenLop" class="form-control" id="input_TenLop" placeholder="Nhập tên lớp...">
+								<span class="invalid-feedback"></span>
 							</div>
 
-							<div class="mb-3">
+							<div class="mb-3 form-group">
 								<label for="select_Khoa_Add" class="form-label" style="color: black; font-weight: 500;">Khoa</label>
-								<select class="form-select" aria-label="Default select example" id="select_Khoa_Add">
+								<select class="form-select" name="maKhoa" aria-label="Default select example" id="select_Khoa_Add">
 
 								</select>
 							</div>
 
-							<div class="mb-3">
+							<div class="mb-3 form-group">
 								<label for="select_CVHT_Add" class="form-label" style="color: black; font-weight: 500;">Cố vấn học tập</label>
-								<select class="form-select" aria-label="Default select example" id="select_CVHT_Add">
+								<select class="form-select" name="maCoVanHocTap" aria-label="Default select example" id="select_CVHT_Add">
 
 								</select>
 							</div>
 
-							<div class="mb-3">
+							<div class="mb-3 form-group">
 								<label for="select_KhoaHoc_Add" class="form-label" style="color: black; font-weight: 500;">Khóa học</label>
-								<select class="form-select" aria-label="Default select example" id="select_KhoaHoc_Add">
+								<select class="form-select" name="maKhoaHoc" aria-label="Default select example" id="select_KhoaHoc_Add">
 
 								</select>
 							</div>
@@ -114,16 +116,16 @@
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-							<button type="button" class="btn btn-primary" style='color: white;' onclick="return ThemMoi_Lop()">Thêm mới</button>
+							<button type="submit" class="btn btn-primary" style='color: white;'>Thêm mới</button>
 						</div>
 					</div>
-				</div>
+				</form>
 			</div>
 
 
 			<!-- Modal chỉnh sửa -->
 			<div class="modal fade" id="ChinhSuaModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-				<div class="modal-dialog">
+				<form action="" class="modal-dialog" id="EditForm">
 					<div class="modal-content">
 						<div class="modal-header">
 							<img src="assets/images/icons/edit.png" width="25px" style="padding-right: 5px;">
@@ -132,33 +134,35 @@
 						</div>
 						<div class="modal-body">
 
-							<div class="mb-3">
+							<div class="mb-3 form-group">
 								<label for="edit_input_MaLop" class="form-label" style="color: black; font-weight: 500;">Mã lớp</label>
-								<input type="text" class="form-control mb-2" id="edit_input_MaLop" placeholder="Nhập mã lớp..." readonly>
+								<input type="text" name="maLop" class="form-control mb-2" id="edit_input_MaLop" placeholder="Nhập mã lớp..." readonly>
+								<span class="invalid-feedback"></span>
 							</div>
 
-							<div class="mb-3">
+							<div class="mb-3 form-group">
 								<label for="edit_input_TenLop" class="form-label" style="color: black; font-weight: 500;">Tên lớp</label>
-								<input type="text" class="form-control" id="edit_input_TenLop" placeholder="Nhập tên lớp...">
+								<input type="text" name="tenLop" class="form-control" id="edit_input_TenLop" placeholder="Nhập tên lớp...">
+								<span class="invalid-feedback"></span>
 							</div>
 
-							<div class="mb-3">
+							<div class="mb-3 form-group">
 								<label for="edit_select_Khoa_Add" class="form-label" style="color: black; font-weight: 500;">Khoa</label>
-								<select class="form-select" aria-label="Default select example" id="edit_select_Khoa_Add">
+								<select class="form-select" name="maKhoa" aria-label="Default select example" id="edit_select_Khoa_Add">
 
 								</select>
 							</div>
 
-							<div class="mb-3">
+							<div class="mb-3 form-group">
 								<label for="edit_select_CVHT_Add" class="form-label" style="color: black; font-weight: 500;">Cố vấn học tập</label>
-								<select class="form-select edit_select_CVHT_Add" aria-label="Default select example" id="edit_select_CVHT_Add">
+								<select class="form-select edit_select_CVHT_Add" name="maCoVanHocTap" aria-label="Default select example" id="edit_select_CVHT_Add">
 
 								</select>
 							</div>
 
-							<div class="mb-3">
+							<div class="mb-3 form-group">
 								<label for="edit_select_KhoaHoc_Add" class="form-label" style="color: black; font-weight: 500;">Khóa học</label>
-								<select class="form-select" aria-label="Default select example" id="edit_select_KhoaHoc_Add">
+								<select class="form-select" name="maKhoaHoc" aria-label="Default select example" id="edit_select_KhoaHoc_Add">
 
 								</select>
 							</div>
@@ -167,10 +171,10 @@
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-							<button type="button" class="btn btn-warning" style='color: white;' onclick="return ChinhSua_Lop()">Chỉnh sửa</button>
+							<button type="submit" class="btn btn-warning" style='color: white;'>Chỉnh sửa</button>
 						</div>
 					</div>	
-				</div>
+				</form>
 			</div>
 
 
@@ -234,9 +238,32 @@
 <script src="assets/js/lop/function.js"></script>
 
 <script>
-	// setTimeout(function() {
-	// 	$('.loader_bg').fadeToggle();
-	// }, 1000);
+	
+	Validator({
+        form: '#AddForm',
+        formGroupSelector: '.form-group',
+        errorSelector: '.invalid-feedback',
+        rules: [
+          Validator.isRequired('#input_MaLop', 'Vui lòng nhập mã lớp'),
+          Validator.isNotSpecialChars('#input_MaLop', 'Mã lớp chỉ bao gồm các ký tự chữ, số và không bao gồm khoảng trắng', false),
+          Validator.minLength('#input_MaLop', 7, "Mã lớp phải có tối thiểu 7 ký tự"),
+          Validator.isRequired('#input_TenLop', 'Vui lòng nhập tên lớp'),
+        ],
+        onSubmit: ThemMoi_Lop
+    })
+	  
+	Validator({
+        form: '#EditForm',
+        formGroupSelector: '.form-group',
+        errorSelector: '.invalid-feedback',
+        rules: [
+          Validator.isRequired('#edit_input_MaLop', 'Vui lòng nhập mã lớp'),
+          Validator.isNotSpecialChars('#edit_input_MaLop', 'Mã lớp chỉ bao gồm các ký tự chữ, số và không bao gồm khoảng trắng', false),
+          Validator.minLength('#edit_input_MaLop', 7, "Mã lớp phải có tối thiểu 7 ký tự"),
+          Validator.isRequired('#edit_input_TenLop', 'Vui lòng nhập tên lớp'),
+        ],
+        onSubmit: ChinhSua_Lop
+    })
 
 	//hàm trong function.js
 	var maKhoa = 'tatcakhoa';
@@ -245,8 +272,30 @@
 		GetListLop(maKhoa);
 	}
 
+	function onlyLettersAndNumbers(str) {
+		return /^[A-Za-z0-9]*$/.test(str);
+	}
+
+	function xuLyTimKiemMaLop() {
+		var _input_timKiemMaLop = $('#input_timKiemMaLop').val().trim();
+
+		if (_input_timKiemMaLop != '') {
+			if(onlyLettersAndNumbers(_input_timKiemMaLop)){
+				TimKiemLop(_input_timKiemMaLop);
+			} else {
+				Swal.fire({
+					icon: "error",
+					title: "Lỗi",
+					text: "Mã lớp không hợp lệ!",
+					//timer: 5000,
+					timerProgressBar: true,
+				});
+			}
+		}
+	}
+
 	$('#select_Khoa').on('change', function() {
-		var maKhoa = $('#id_tbodyLop').val();
+		var maKhoa = $('#select_Khoa').val();
 
 		if (maKhoa != '') {
 			GetListLop(maKhoa);
@@ -254,14 +303,17 @@
 
 	});
 
-	$('#input_timKiemMaLop').on('change', function() {
-		var maLop = $('#input_timKiemMaLop').val();
-
-		if (maLop != '') {
-			TimKiemLop(maLop);
-		}
-
+	$('#btn_timKiemMaLop').on('click', function() {
+		xuLyTimKiemMaLop();
 	});
+
+	$('#input_timKiemMaLop').keypress(function (e) {
+		var key = e.which;
+		if(key == 13)  // the 'Enter' code
+		{
+			$('#btn_timKiemMaLop').click();
+		}
+	}); 
 
 
 	LoadComboBoxThongTinKhoa_Lop();
@@ -292,9 +344,6 @@
 		search: true
 	});
 
-
-
-
 	//Xử lý chỉnh sửa
 	$(document).on("click", ".btn_ChinhSua_Lop", function() {
 
@@ -322,7 +371,6 @@
 		dselect(edit_select_box_element_KhoaHoc, {
 			search: true
 		});
-
 
 	})
 </script>

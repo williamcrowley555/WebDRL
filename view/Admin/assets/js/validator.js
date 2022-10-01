@@ -20,6 +20,9 @@ function Validator(options) {
     ).querySelector(options.errorSelector);
     var errorMessage;
 
+    // Loại bỏ khoảng trắng của input value
+    inputElement.value = inputElement.value.trim();
+
     // Lấy ra các rules của selector
     var rules = selectorRules[rule.selector];
 
@@ -85,9 +88,7 @@ function Validator(options) {
           ).querySelector(options.errorSelector);
 
           errorElement.innerText = "";
-          getParent(inputElement, options.formGroupSelector).classList.remove(
-            "invalid"
-          );
+          inputElement.classList.remove("is-invalid");
         };
       });
     });
@@ -247,6 +248,30 @@ Validator.isCharacters = function (selector, message) {
       return regex.test(removeAscent(value))
         ? undefined
         : message || "Trường này chỉ bao gồm ký tự chữ";
+    },
+  };
+};
+
+Validator.isNotSpecialChars = function (
+  selector,
+  message,
+  hasWhiteSpace = true
+) {
+  return {
+    selector: selector,
+    test: function (value) {
+      const regexWithWhiteSpace = /^[_A-z0-9]*((-|\s)*[_A-z0-9])*$/g;
+      const regexWithoutWhiteSpace = /^[_A-z0-9]*([_A-z0-9])*$/g;
+      var regex = regexWithWhiteSpace;
+
+      if (!hasWhiteSpace) regex = regexWithoutWhiteSpace;
+
+      return regex.test(value)
+        ? undefined
+        : message ||
+            ("Trường này chỉ bao gồm các ký tự chữ, số và " + hasWhiteSpace
+              ? "khoảng trắng"
+              : "không bao gồm khoảng trắng");
     },
   };
 };

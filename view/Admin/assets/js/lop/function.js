@@ -27,7 +27,7 @@ function ThongBaoLoi(message) {
     icon: "error",
     title: "Lỗi",
     text: message,
-    //timer: 5000,
+    timer: 2000,
     timerProgressBar: true,
     showCloseButton: true,
   });
@@ -169,13 +169,9 @@ function GetListLop(maKhoa) {
       error: function (errorMessage) {
         checkLoiDangNhap(errorMessage.responseJSON.message);
 
-        Swal.fire({
-          icon: "error",
-          title: "Lỗi",
-          text: errorMessage.responseText,
-          //timer: 5000,
-          timerProgressBar: true,
-        });
+        $("#idPhanTrang").empty();
+
+        ThongBaoLoi(errorMessage.responseJSON.message);
       },
     });
   }
@@ -185,48 +181,65 @@ function TimKiemLop(maLop) {
   $("#id_tbodyLop tr").remove();
 
   $.ajax({
-    url: urlapi_lop_single_read + maLop,
+    url: urlapi_lop_read_maLop + maLop,
     async: false,
     type: "GET",
     contentType: "application/json;charset=utf-8",
     dataType: "json",
     headers: { Authorization: jwtCookie },
-    success: function (result_Lop) {
-      var htmlData = "";
+    success: function (result) {
+      console.log(result);
+      $("#idPhanTrang").pagination({
+        dataSource: result["lop"],
+        pageSize: 10,
+        autoHidePrevious: true,
+        autoHideNext: true,
 
-      htmlData +=
-        "<tr>\
-            <td class='cell'>1</td>\
-            <td class='cell'><span class='truncate'>" +
-        result_Lop.maLop +
-        "</span></td>\
-            <td class='cell'>" +
-        result_Lop.tenLop +
-        "</td>\
-            <td class='cell'>" +
-        result_Lop.maKhoa +
-        "</td>\
-            <td class='cell'>" +
-        result_Lop.maCoVanHocTap +
-        "</td>\
-            <td class='cell'>" +
-        result_Lop.maKhoaHoc +
-        "</td>\
-            <td class='cell'>\
-              <button class='btn bg-warning btn_ChinhSua_Lop' style='color: white;' data-bs-toggle='modal' data-bs-target='#ChinhSuaModal' data-id = '" +
-        data[i].maLop +
-        "' >Chỉnh sửa</button>\
-             </td>\
-        </tr>";
+        callback: function (data, pagination) {
+          var htmlData = "";
+          var count = 0;
 
-      $("#id_tbodyLop").html(htmlData);
+          for (let i = 0; i < data.length; i++) {
+            count += 1;
+
+            htmlData +=
+              "<tr>\
+                              <td class='cell'>" +
+              data[i].soThuTu +
+              "</td>\
+                              <td class='cell'><span class='truncate'>" +
+              data[i].maLop +
+              "</span></td>\
+                              <td class='cell'>" +
+              data[i].tenLop +
+              "</td>\
+                              <td class='cell'>" +
+              data[i].maKhoa +
+              "</td>\
+                              <td class='cell'>" +
+              data[i].maCoVanHocTap +
+              "</td>\
+                              <td class='cell'>" +
+              data[i].maKhoaHoc +
+              "</td>\
+                              <td class='cell'>\
+                                <button class='btn bg-warning btn_ChinhSua_Lop' style='color: white;' data-bs-toggle='modal' data-bs-target='#ChinhSuaModal' data-id = '" +
+              data[i].maLop +
+              "' >Chỉnh sửa</button>\
+                              </td>\
+                              </tr>";
+          }
+
+          $("#id_tbodyLop").html(htmlData);
+        },
+      });
     },
     error: function (errorMessage) {
       checkLoiDangNhap(errorMessage.responseJSON.message);
 
-      var htmlData = "";
+      $("#idPhanTrang").empty();
 
-      $("#id_tbodyLop").html(htmlData);
+      ThongBaoLoi(errorMessage.responseJSON.message);
     },
     statusCode: {
       403: function (xhr) {
