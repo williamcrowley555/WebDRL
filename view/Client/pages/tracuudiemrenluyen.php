@@ -17,7 +17,7 @@
 
 
         <div class="container">
-            <!-- <div class="row" style="margin: 0 auto;text-align: center;background: white;border-radius: 10px;">
+            <div class="row" style="margin: 0 auto;text-align: center;background: white;border-radius: 10px; display: none;" id="id_TraCuu">
                 <div style="padding: 48px;">
                     <!!-- Email input --!!>
                     <div class="form-outline mb-4">
@@ -26,16 +26,16 @@
                     </div>
 
                     <!!-- Submit button --!!>
-                    <button type="button" class="btn btn-primary btn-block" style="width: fit-content;" onclick="return TraCuuDiemRenLuyen();" >Tra cứu</button>
+                    <button type="button" class="btn btn-primary btn-block" style="width: fit-content;" onclick="TraCuuDiemRenLuyen($('#input_MSSVTraCuu').val());" >Tra cứu</button>
                 </div>
-            </div>-->
+            </div>
          
             <!-- end of row -->
             <div class="row" style="margin: 0 auto;margin-top: 15px;text-align: center;background: white;border-radius: 10px;display: none;" id="id_NoiDungKetQuaTraCuu" >
                 <div style="padding: 48px;">
                     <div class="form-outline mb-4">
                         
-                        <h5 style="text-transform: uppercase">---Các phiếu điểm rèn luyện của sinh viên---</h5>
+                        <h5 style="text-transform: uppercase">--- Các phiếu điểm rèn luyện của sinh viên ---</h5>
 
                         <div class="row justify-content-center" style="padding-bottom: 30px;">
                             <div class="col-4">
@@ -47,7 +47,7 @@
                             </div>
                         </div>
 
-                        <table class="table align-middle mb-0 bg-white table-hover">
+                        <table class="table align-middle mb-0 bg-white table-hover" id="tbody_ketQua">
                             <thead class="bg-light">
                                 <tr>
                                     <th>Học kỳ</th>
@@ -66,6 +66,10 @@
 
                     </div>
                 </div>
+            </div>
+
+            <div class="row" style="margin: 0 auto;margin-top: 15px;text-align: center;background: white;border-radius: 10px;display: none;" id="id_KhongTimThaySinhVien">
+                <!-- Không tìm thấy mã sinh viên -->
             </div>
 
             
