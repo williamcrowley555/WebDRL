@@ -106,10 +106,11 @@ function GetListSinhVien(maKhoa, maLop) {
         error: function (errorMessage) {
           checkLoiDangNhap(errorMessage.responseJSON.message);
 
-          console.log(this.url);
           var htmlData = "";
           $("#id_tbodySinhVien").html(htmlData);
           $("#idPhanTrang").empty();
+
+          ThongBaoLoi(errorMessage.responseJSON.message);
         },
         statusCode: {
           403: function (xhr) {
@@ -132,43 +133,6 @@ function GetListSinhVien(maKhoa, maLop) {
             headers: { Authorization: jwtCookie },
             success: function (result_AllSinhVien) {
               var result_SVALL = result_AllSinhVien["sinhvien"];
-              // $.each(result_Lop, function (index_Lop) {
-              //   for (var p = 0; p < result_Lop[index_Lop].length; p++) {
-              //     var get_maLop = result_Lop[index_Lop][p].maLop;
-
-              //     $.ajax({
-              //       url: urlapi_sinhvien_read_maLop + get_maLop,
-              //       async: false,
-              //       type: "GET",
-              //       contentType: "application/json;charset=utf-8",
-              //       dataType: "json",
-              //       headers: { Authorization: jwtCookie },
-              //       success: function (result_SV) {
-              //         result_SVALL.concat(result_SV["sinhvien"]);
-              //       },
-              //       error: function (errorMessage) {
-              //         checkLoiDangNhap(errorMessage.responseJSON.message);
-
-              //         var htmlData = "";
-              //         $("#id_tbodySinhVien").html(htmlData);
-              //         $("#idPhanTrang").empty();
-              //         // Swal.fire({
-              //         //   icon: "error",
-              //         //   title: "Lỗi",
-              //         //   text: errorMessage.responseJSON.message,
-              //         //   timer: 5000,
-              //         //   timerProgressBar: true,
-              //         // });
-              //       },
-              //       statusCode: {
-              //         403: function (xhr) {
-              //           //deleteAllCookies();
-              //           //location.href = 'login.php';
-              //         },
-              //       },
-              //     });
-              //   }
-              // });
 
               $("#idPhanTrang").pagination({
                 dataSource: result_SVALL,
@@ -223,13 +187,8 @@ function GetListSinhVien(maKhoa, maLop) {
               var htmlData = "";
               $("#id_tbodySinhVien").html(htmlData);
               $("#idPhanTrang").empty();
-              // Swal.fire({
-              //   icon: "error",
-              //   title: "Lỗi",
-              //   text: errorMessage.responseJSON.message,
-              //   timer: 5000,
-              //   timerProgressBar: true,
-              // });
+
+              ThongBaoLoi(errorMessage.responseJSON.message);
             },
             statusCode: {
               403: function (xhr) {
@@ -302,13 +261,7 @@ function GetListSinhVien(maKhoa, maLop) {
               $("#id_tbodySinhVien").html(htmlData);
               $("#idPhanTrang").empty();
 
-              // Swal.fire({
-              //   icon: "error",
-              //   title: "Lỗi",
-              //   text: errorMessage.responseJSON.message,
-              //   timer: 5000,
-              //   timerProgressBar: true,
-              // });
+              ThongBaoLoi(errorMessage.responseJSON.message);
             },
             statusCode: {
               403: function (xhr) {
@@ -379,17 +332,11 @@ function GetListSinhVien(maKhoa, maLop) {
           error: function (errorMessage) {
             checkLoiDangNhap(errorMessage.responseJSON.message);
 
-            console.log(this.url);
             var htmlData = "";
             $("#id_tbodySinhVien").html(htmlData);
             $("#idPhanTrang").empty();
-            // Swal.fire({
-            //   icon: "error",
-            //   title: "Lỗi",
-            //   text: errorMessage.responseText,
-            //   timer: 5000,
-            //   timerProgressBar: true,
-            // });
+
+            ThongBaoLoi(errorMessage.responseJSON.message);
           },
           statusCode: {
             403: function (xhr) {
@@ -464,7 +411,6 @@ function TimKiemSinhVien(maSinhVien) {
     error: function (errorMessage) {
       checkLoiDangNhap(errorMessage.responseJSON.message);
 
-      console.log(this.url);
       var htmlData = "";
       $("#id_tbodySinhVien").html(htmlData);
       $("#idPhanTrang").empty();

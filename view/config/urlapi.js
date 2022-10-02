@@ -63,6 +63,7 @@ const urlapi_khoa_update = host_domain_url + "/khoa/update.php";
 const urlapi_lop_read = host_domain_url + "/lop/read.php";
 const urlapi_lop_read_maKhoa = urlapi_lop_read + "?maKhoa=";
 const urlapi_lop_read_maCVHT = urlapi_lop_read + "?maCoVanHocTap=";
+const urlapi_lop_read_maLop = urlapi_lop_read + "?maLop=";
 
 //SINGLE READ
 const urlapi_lop_single_read = host_domain_url + "/lop/single_read.php?maLop=";
