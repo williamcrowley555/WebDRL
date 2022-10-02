@@ -31,22 +31,21 @@
 
 						<div class="col-auto">
 
-							<select class="form-select w-auto">
-								<option selected value="option-1">Tất cả khoa</option>
-								<option value="option-2">Công nghệ thông tin</option>
+							<select class="form-select w-auto" id="select_Khoa">
+
 							</select>
 						</div>
 
 
 						<div class="col-auto">
-							<form class="table-search-form row gx-1 align-items-center">
+							<div class="table-search-form row gx-1 align-items-center">
 								<div class="col-auto">
-									<input type="text" id="search-orders" name="searchorders" class="form-control search-orders" placeholder="Nhập mã lớp...">
+									<input type="text" id="input_timKiemMaCVHT" name="searchorders" class="form-control search-orders" placeholder="Nhập mã cố vấn học tập...">
 								</div>
 								<div class="col-auto">
-									<button type="submit" class="btn app-btn-secondary">Tìm kiếm</button>
+									<button type="button" id="btn_timKiemMaCVHT" class="btn app-btn-secondary">Tìm kiếm</button>
 								</div>
-							</form>
+							</div>
 
 						</div>
 						<!--//col-->
@@ -63,7 +62,7 @@
 
 			<!-- Modal thêm -->
 			<div class="modal fade" id="AddModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-				<div class="modal-dialog">
+				<form class="modal-dialog" id="AddForm">
 					<div class="modal-content">
 						<div class="modal-header">
 							<img src="assets/images/icons/add.png" width="25px" style="padding-right: 5px;">
@@ -72,46 +71,51 @@
 						</div>
 						<div class="modal-body">
 
-							<div class="mb-3">
+							<div class="mb-3 form-group">
 								<label for="inputMaCoVanHocTap" class="form-label" style="color: black; font-weight: 500;">Mã cố vấn học tập</label>
-								<input type="text" class="form-control" id="inputMaCoVanHocTap" placeholder="Nhập mã cố vấn học tập...">
+								<input type="text" class="form-control" name="maCoVanHocTap" id="inputMaCoVanHocTap" placeholder="Nhập mã cố vấn học tập...">
+								<span class="invalid-feedback"></span>
 							</div>
 
-							<div class="mb-3">
+							<div class="mb-3 form-group">
 								<label for="inputMaCoVanHocTap" class="form-label" style="color: black; font-weight: 500;">Họ tên cố vấn học tập</label>
-								<input type="text" class="form-control" id="inputTenCoVanHocTap" placeholder="Nhập họ tên cố vấn học tập...">
+								<input type="text" class="form-control" name="hoTenCoVan" id="inputTenCoVanHocTap" placeholder="Nhập họ tên cố vấn học tập...">
+								<span class="invalid-feedback"></span>
 							</div>
 
-							<div class="mb-3">
+							<div class="mb-3 form-group">
 								<label for="inputMaCoVanHocTap" class="form-label" style="color: black; font-weight: 500;">Số điện thoại</label>
-								<input type="text" class="form-control" id="inputSoDienThoai" placeholder="Nhập số điện thoại...">
+								<input type="text" class="form-control" name="soDienThoai" id="inputSoDienThoai" placeholder="Nhập số điện thoại...">
+								<span class="invalid-feedback"></span>
 							</div>
 
 							<hr>
 							<span style="text-transform: uppercase;color: black;"><img src="assets/images/icons/lock.png" alt="" style="width: 20px;"> Thông tin mật khẩu</span>
 							<hr>
 
-							<div class="mb-3">
-								<label for="inputMaCoVanHocTap" class="form-label" style="color: black; font-weight: 500;">Mật khẩu mới</label>
-								<input type="password" class="form-control" id="inputMatKhauMoi" placeholder="Nhập mật khẩu...">
+							<div class="mb-3 form-group">
+								<label for="inputMaCoVanHocTap" class="form-label" style="color: black; font-weight: 500;">Mật khẩu</label>
+								<input type="password" class="form-control" name="matKhauTaiKhoanCoVan" id="inputMatKhauMoi" placeholder="Nhập mật khẩu...">
+								<span class="invalid-feedback"></span>
 							</div>
 
-							<div class="mb-3">
+							<div class="mb-3 form-group">
 								<label for="inputMaCoVanHocTap" class="form-label" style="color: black; font-weight: 500;">Nhập lại mật khẩu</label>
-								<input type="password" class="form-control" id="inputNhapLaiMatKhau" placeholder="Nhập lại mật khẩu...">
+								<input type="password" class="form-control" name="nhapLaiMatKhauTaiKhoanCoVan" id="inputNhapLaiMatKhau" placeholder="Nhập lại mật khẩu...">
+								<span class="invalid-feedback"></span>
 							</div>
 
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-							<button type="button" class="btn btn-primary" style='color: white;' onclick="ThemCVHT()">Thêm mới</button>
+							<button type="submit" class="btn btn-primary" style='color: white;'>Thêm mới</button>
 						</div>
 					</div>
-				</div>
+				</form>
 			</div>
 			<!-- Modal chỉnh sửa -->
 			<div class="modal fade" id="ChinhSuaModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-				<div class="modal-dialog">
+				<form class="modal-dialog" id="EditForm">
 					<div class="modal-content">
 						<div class="modal-header">
 							<img src="assets/images/icons/edit.png" width="25px" style="padding-right: 5px;">
@@ -120,35 +124,38 @@
 						</div>
 						<div class="modal-body">
 
-							<div class="mb-3">
+							<div class="mb-3 form-group">
 								<label for="edit_input_MaCVHT" class="form-label" style="color: black; font-weight: 500;">Mã cố vấn học tập</label>
-								<input type="text" class="form-control mb-2" id="edit_input_MaCVHT" placeholder="Nhập mã cố vấn học tập..." readonly>
+								<input type="text" class="form-control mb-2" name="maCoVanHocTap" id="edit_input_MaCVHT" placeholder="Nhập mã cố vấn học tập..." readonly>
+								<span class="invalid-feedback"></span>
 							</div>
 
-							<div class="mb-3">
-								<label for="edit_input_TenCVHT" class="form-label" style="color: black; font-weight: 500;">Tên Cố vấn học tập</label>
-								<input type="text" class="form-control" id="edit_input_TenCVHT" placeholder="Nhập tên Cố vấn học tập...">
+							<div class="mb-3 form-group">
+								<label for="edit_input_TenCVHT" class="form-label" style="color: black; font-weight: 500;">Họ tên cố vấn học tập</label>
+								<input type="text" class="form-control" name="hoTenCoVan" id="edit_input_TenCVHT" placeholder="Nhập họ tên cố vấn học tập...">
+								<span class="invalid-feedback"></span>
 							</div>
 
-							<div class="mb-3">
+							<div class="mb-3 form-group">
 								<label for="edit_input_sdt" class="form-label" style="color: black; font-weight: 500;">Số điện thoại</label>
-								<input type="text" class="form-control" id="edit_input_sdt" placeholder="Nhập tên Số điện thoại...">
+								<input type="text" class="form-control" name="soDienThoai" id="edit_input_sdt" placeholder="Nhập số điện thoại...">
+								<span class="invalid-feedback"></span>
 							</div>
 						</div>
 
 
 						<div class="modal-footer">
 							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-							<button type="button" class="btn btn-warning" style='color: white;' onclick="return ChinhSua_CVHT()">Chỉnh sửa</button>
+							<button type="submit" class="btn btn-warning" style='color: white;'>Chỉnh sửa</button>
 						</div>
 					</div>
-				</div>
+				</form>
 			</div>
 
 
 			<!-- Modal reset password -->
 			<div class="modal fade" id="DatLaiMatKhauModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-				<div class="modal-dialog">
+				<form class="modal-dialog" id="ChangePasswordForm">
 					<div class="modal-content">
 						<div class="modal-header">
 							<h5 class="modal-title" id="exampleModalLabel"> Đặt lại mật khẩu</h5>
@@ -156,30 +163,33 @@
 						</div>
 						<div class="modal-body">
 
-							<div class="mb-3">
+							<div class="mb-3 form-group">
 								<label for="input_CoVanHocTap_Update" class="form-label" style="color: black; font-weight: 500;">Mã cố vấn học tập</label>
-								<input type="text" class="form-control mb-2" id="input_CoVanHocTap_Update" placeholder="Nhập mã cố vấn học tập..." disabled>
+								<input type="text" class="form-control mb-2" name="maCoVanHocTap" id="input_CoVanHocTap_Update" placeholder="Nhập mã cố vấn học tập..." disabled>
+								<span class="invalid-feedback"></span>
 							</div>
 
 
-							<div class="mb-3">
+							<div class="mb-3 form-group">
 								<label for="input_MatKhauMoi" class="form-label" style="color: black; font-weight: 500;">Mật khẩu mới</label>
-								<input type="password" class="form-control" id="input_MatKhauMoi" placeholder="Nhập mật khẩu mới...">
+								<input type="password" class="form-control" name="matKhauTaiKhoanCoVan" id="input_MatKhauMoi" placeholder="Nhập mật khẩu mới...">
+								<span class="invalid-feedback"></span>
 							</div>
 
-							<div class="mb-3">
+							<div class="mb-3 form-group">
 								<label for="input_NhapLaiMatKhauMoi" class="form-label" style="color: black; font-weight: 500;">Nhập lại Mật khẩu mới</label>
-								<input type="password" class="form-control" id="input_NhapLaiMatKhauMoi" placeholder="Nhập lại mật khẩu mới...">
+								<input type="password" class="form-control" name="nhapLaiMatKhauTaiKhoanCoVan" id="input_NhapLaiMatKhauMoi" placeholder="Nhập lại mật khẩu mới...">
+								<span class="invalid-feedback"></span>
 							</div>
 
 
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-							<button type="button" class="btn btn-info" style='color: white;' onclick="return DatLaiMatKhau_CVHT()">Đặt lại mật khẩu</button>
+							<button type="submit" class="btn btn-info" style='color: white;'>Đặt lại mật khẩu</button>
 						</div>
 					</div>
-				</div>
+				</form>
 			</div>
 
 
@@ -240,17 +250,112 @@
 <script src="assets/js/covanhoctap/function.js"></script>
 
 <script>
-	//hàm trong function.js
-	GetListCVHT();
 
+	Validator({
+        form: '#AddForm',
+        formGroupSelector: '.form-group',
+        errorSelector: '.invalid-feedback',
+        rules: [
+			Validator.isRequired('#inputMaCoVanHocTap', 'Vui lòng nhập mã cố vấn học tập'),
+			Validator.isNumber('#inputMaCoVanHocTap', 'Mã cố vấn học tập chỉ bao gồm các ký tự số'),
+			Validator.minLength('#inputMaCoVanHocTap', 5, "Mã cố vấn học tập phải có tối thiểu 5 chữ số"),
+			Validator.isRequired('#inputTenCoVanHocTap', 'Vui lòng nhập họ tên cố vấn học tập'),
+			Validator.isCharacters('#inputTenCoVanHocTap', 'Họ tên cố vấn học tập chỉ bao gồm các ký tự chữ'),
+			Validator.isRequired('#inputSoDienThoai', 'Vui lòng nhập số điện thoại'),
+			Validator.isPhoneNumber('#inputSoDienThoai'),
+			Validator.minLength('#inputMatKhauMoi', 5, "Mật khẩu phải có tối thiểu 5 ký tự"),
+			Validator.isRequired('#inputNhapLaiMatKhau'),
+			Validator.isConfirmed('#inputNhapLaiMatKhau', function() {
+				return document.querySelector('#AddForm #inputMatKhauMoi').value;
+			}, 'Mật khẩu nhập lại không chính xác'),
+        ],
+        onSubmit: ThemCVHT
+    })
+	  
+	Validator({
+        form: '#EditForm',
+        formGroupSelector: '.form-group',
+        errorSelector: '.invalid-feedback',
+        rules: [
+			Validator.isRequired('#edit_input_MaCVHT', 'Vui lòng nhập mã cố vấn học tập'),
+			Validator.isNumber('#edit_input_MaCVHT', 'Mã cố vấn học tập chỉ bao gồm các ký tự số'),
+			Validator.minLength('#edit_input_MaCVHT', 5, "Mã cố vấn học tập phải có tối thiểu 5 chữ số"),
+			Validator.isRequired('#edit_input_TenCVHT', 'Vui lòng nhập họ tên cố vấn học tập'),
+			Validator.isCharacters('#edit_input_TenCVHT', 'Họ tên cố vấn học tập chỉ bao gồm các ký tự chữ'),
+			Validator.isRequired('#edit_input_sdt', 'Vui lòng nhập số điện thoại'),
+			Validator.isPhoneNumber('#edit_input_sdt'),
+        ],
+        onSubmit: ChinhSua_CVHT
+    })
+	  
+	Validator({
+		form: '#ChangePasswordForm',
+		formGroupSelector: '.form-group',
+		errorSelector: '.invalid-feedback',
+		rules: [
+			Validator.minLength('#input_MatKhauMoi', 5, "Mật khẩu phải có tối thiểu 5 ký tự"),
+			Validator.isRequired('#input_NhapLaiMatKhauMoi'),
+			Validator.isConfirmed('#input_NhapLaiMatKhauMoi', function() {
+				return document.querySelector('#ChangePasswordForm #input_MatKhauMoi').value;
+			}, 'Mật khẩu nhập lại không chính xác'),
+		],
+		onSubmit: DatLaiMatKhau_CVHT
+	})
+
+	var maKhoa_selected = 'tatcakhoa';
+
+	function xuLyTimKiemMaCVHT() {
+		var _input_timKiemMaCVHT = $('#input_timKiemMaCVHT').val().trim();
+
+		if (_input_timKiemMaCVHT != '') {
+			if(Number(_input_timKiemMaCVHT)){
+				TimKiemCoVanHocTap(_input_timKiemMaCVHT);
+			} else {
+				Swal.fire({
+					icon: "error",
+					title: "Lỗi",
+					text: "Mã cố vấn học tập không hợp lệ!",
+					timer: 2000,
+					timerProgressBar: true,
+				});
+			}
+		}
+	}
+
+	//hàm trong function.js
+	GetListCVHT(maKhoa_selected);
+
+	LoadComboBoxThongTinKhoa_CVHT();
+
+	$('#select_Khoa').on('change', function() {
+		$('#input_timKiemMaCVHT').val('');
+
+		var maKhoa_selected = $('#select_Khoa').val();
+
+		GetListCVHT(maKhoa_selected);
+	});
+
+	$('#btn_timKiemMaCVHT').on('click', function() {
+		xuLyTimKiemMaCVHT();
+	});
+
+	$('#input_timKiemMaCVHT').keypress(function (e) {
+		var key = e.which;
+		if(key == 13)  // the 'Enter' code
+		{
+			$('#btn_timKiemMaCVHT').click();
+		}
+	}); 
 
 	//Dat lai mat khau
 	$(document).on("click", ".btn_DatLaiMatKhau_CVHT", function() {
 		var maCVHT = $(this).attr('data-id');
 
 		$('#input_CoVanHocTap_Update').val(maCVHT);
-
-
+		$("#ChangePasswordForm #input_MatKhauMoi").val("");
+      	$("#ChangePasswordForm #input_MatKhauMoi").removeClass("is-invalid");
+		$("#ChangePasswordForm #input_NhapLaiMatKhauMoi").val("");
+      	$("#ChangePasswordForm #input_NhapLaiMatKhauMoi").removeClass("is-invalid");
 	})
 
 	//Xử lý chỉnh sửa

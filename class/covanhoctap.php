@@ -26,6 +26,40 @@
             return $stmt;
         }
 
+        // GET ALL THEO MAKHOA 
+        public function getAllCVHTTheoMaKhoa($maKhoa)
+        {
+            $sqlQuery = "SELECT maCoVanHocTap, hoTenCoVan, soDienThoai, matKhauTaiKhoanCoVan 
+                            FROM " . $this->db_table . " WHERE maKhoa = ?";
+                                
+    
+            if (@$_GET['page'] && @$_GET['row_per_page']) {
+                $page = $_GET['page'];
+                $row_per_page = $_GET['row_per_page'];
+    
+                $begin = ($page * $row_per_page) - $row_per_page;
+    
+                $sqlQuery .= " LIMIT " . $begin . "," . $row_per_page . "";
+            }
+    
+            $stmt = $this->conn->prepare($sqlQuery);
+            $stmt->bindParam(1, $maKhoa);
+            $stmt->execute();
+            return $stmt;
+        }
+
+        // GET CO VAN HOC TAP THEO MA CVHT
+        public function getCVHTTheoMaCVHT($maCVHT, $isEqual = true)
+        {
+            $sqlQuery = "SELECT maCoVanHocTap, hoTenCoVan, soDienThoai, matKhauTaiKhoanCoVan FROM " . $this->db_table . " 
+                            WHERE maCoVanHocTap" . 
+                            ($isEqual ? " = '$maCVHT'" : " LIKE '%$maCVHT%'");
+    
+            $stmt = $this->conn->prepare($sqlQuery);
+            $stmt->execute();
+            return $stmt;
+        }
+
         // READ single
         public function getSingleCVHT(){
             $sqlQuery = "SELECT maCoVanHocTap, hoTenCoVan, soDienThoai, matKhauTaiKhoanCoVan FROM ". $this->db_table ."

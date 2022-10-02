@@ -240,14 +240,17 @@ Validator.isNumber = function (selector, message) {
   };
 };
 
-Validator.isCharacters = function (selector, message) {
+Validator.isCharacters = function (selector, message, hasWhiteSpace = true) {
   return {
     selector: selector,
     test: function (value) {
       var regex = /^[A-Za-z\s]+$/;
       return regex.test(removeAscent(value))
         ? undefined
-        : message || "Trường này chỉ bao gồm ký tự chữ";
+        : message ||
+            ("Trường này chỉ bao gồm các ký tự chữ và " + hasWhiteSpace
+              ? "khoảng trắng"
+              : "không bao gồm khoảng trắng");
     },
   };
 };

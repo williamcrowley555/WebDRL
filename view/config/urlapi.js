@@ -27,8 +27,9 @@ const urlapi_sinhvien_update = host_domain_url + "/sinhvien/update.php";
 
 //READ
 const urlapi_cvht_read = host_domain_url + "/covanhoctap/read.php";
-// const urlapi_cvht_read_maKhoa = urlapi_cvht_read + "?maKhoa=";
+const urlapi_cvht_read_maKhoa = urlapi_cvht_read + "?maKhoa=";
 // const urlapi_cvht_read_maLop = urlapi_cvht_read + "?maLop=";
+const urlapi_cvht_read_maCVHT = urlapi_cvht_read + "?maCVHT=";
 
 //SINGLE READ//
 const urlapi_cvht_single_read =

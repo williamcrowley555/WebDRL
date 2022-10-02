@@ -287,7 +287,7 @@
 					icon: "error",
 					title: "Lỗi",
 					text: "Mã lớp không hợp lệ!",
-					//timer: 5000,
+					timer: 2000,
 					timerProgressBar: true,
 				});
 			}
