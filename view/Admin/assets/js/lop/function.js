@@ -250,29 +250,35 @@ function TimKiemLop(maLop) {
 }
 
 function GetMaLopCoSoLopLonNhat(maKhoa, maKhoaHoc, callback) {
-  $.ajax({
-    url:
-      urlapi_lop_single_read + "&maKhoa=" + maKhoa + "&maKhoaHoc=" + maKhoaHoc,
-    async: false,
-    type: "GET",
-    contentType: "application/json;charset=utf-8",
-    dataType: "json",
-    headers: { Authorization: jwtCookie },
-    success: function (result) {
-      callback(result.maLop);
-    },
-    error: function (errorMessage) {
-      checkLoiDangNhap(errorMessage.responseJSON.message);
-
-      callback(maKhoa + "1" + maKhoaHoc.substring(1));
-    },
-    statusCode: {
-      403: function (xhr) {
-        //deleteAllCookies();
-        //location.href = 'login.php';
+  if (maKhoa && maKhoaHoc) {
+    $.ajax({
+      url:
+        urlapi_lop_single_read +
+        "&maKhoa=" +
+        maKhoa +
+        "&maKhoaHoc=" +
+        maKhoaHoc,
+      async: false,
+      type: "GET",
+      contentType: "application/json;charset=utf-8",
+      dataType: "json",
+      headers: { Authorization: jwtCookie },
+      success: function (result) {
+        callback(result.maLop);
       },
-    },
-  });
+      error: function (errorMessage) {
+        checkLoiDangNhap(errorMessage.responseJSON.message);
+
+        callback(maKhoa + "1" + maKhoaHoc.substring(1));
+      },
+      statusCode: {
+        403: function (xhr) {
+          //deleteAllCookies();
+          //location.href = 'login.php';
+        },
+      },
+    });
+  }
 }
 
 function LoadComboBoxThongTinKhoa_Lop() {

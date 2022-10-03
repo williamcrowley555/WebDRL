@@ -193,7 +193,7 @@
 						</div>
 						<div class="modal-body">
 
-							<div class="mb-3">
+							<div class="mb-3 form-group">
 								<label for="input_MaSinhVien_Update" class="form-label" style="color: black; font-weight: 500;">Mã sinh viên</label>
 								<input type="text" class="form-control mb-2" id="input_MaSinhVien_Update" placeholder="Nhập mã sinh viên..." disabled>
 							</div>
@@ -417,5 +417,9 @@
 		$('#edit_input_MaSinhVien').val(maSinhVien_edit);
 
 		LoadThongTinChinhSua_SinhVien(maSinhVien_edit);
+
+		$("#EditForm #edit_input_MaSinhVien").removeClass("is-invalid");
+      	$("#EditForm #edit_input_TenSinhVien").removeClass("is-invalid");
+      	$("#EditForm #edit_input_NgaySinh").removeClass("is-invalid");
 	})
 </script>

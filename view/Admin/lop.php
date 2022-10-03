@@ -392,6 +392,8 @@
 			search: true
 		});
 
+		$("#EditForm #edit_input_MaLop").removeClass("is-invalid");
+		$("#EditForm #edit_input_TenLop").removeClass("is-invalid");
 	})
 
 	$('#AddModal #select_Khoa_Add').on('change', function() {

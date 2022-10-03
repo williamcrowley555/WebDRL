@@ -395,5 +395,9 @@
 		dselect(edit_select_box_element_Khoa, {
 			search: true
 		});
+
+		$("#EditForm #edit_input_MaCVHT").removeClass("is-invalid");
+		$("#EditForm #edit_input_TenCVHT").removeClass("is-invalid");
+		$("#EditForm #edit_input_sdt").removeClass("is-invalid");
 	})
 </script>

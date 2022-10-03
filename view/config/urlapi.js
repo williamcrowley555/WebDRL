@@ -44,15 +44,16 @@ const urlapi_cvht_update = host_domain_url + "/covanhoctap/update.php";
 //---------------KHOA---------------//----------------------------------
 //---------//
 
-//CREATE
-const urlapi_khoa_create = host_domain_url + "/khoa/create.php";
-
 //READ
 const urlapi_khoa_read = host_domain_url + "/khoa/read.php";
+const urlapi_khoa_read_maKhoa = urlapi_khoa_read + "?maKhoa=";
 
 //SINGLE READ//
 const urlapi_khoa_single_read =
   host_domain_url + "/khoa/single_read.php?maKhoa=";
+
+//CREATE
+const urlapi_khoa_create = host_domain_url + "/khoa/create.php";
 
 //UPDATE
 const urlapi_khoa_update = host_domain_url + "/khoa/update.php";
