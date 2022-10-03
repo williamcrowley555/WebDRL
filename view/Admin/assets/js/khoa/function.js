@@ -375,13 +375,7 @@ function ThemMoi_Khoa() {
         error: function (errorMessage) {
           checkLoiDangNhap(errorMessage.responseJSON.message);
 
-          Swal.fire({
-            icon: "error",
-            title: "Lỗi",
-            text: errorMessage.responseJSON.message,
-            //timer: 5000,
-            timerProgressBar: true,
-          });
+          ThongBaoLoi(errorMessage.responseJSON.message);
         },
       });
     }
