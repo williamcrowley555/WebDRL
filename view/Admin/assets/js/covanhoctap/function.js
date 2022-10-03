@@ -82,6 +82,9 @@ function GetListCVHT(maKhoa) {
                                     <td class='cell'>" +
                     data[i].soDienThoai +
                     "</td>\
+                                    <td class='cell'>" +
+                    data[i].maKhoa +
+                    "</td>\
                                     <td class='cell'><button type=button' class='btn btn-info btn_DatLaiMatKhau_CVHT' data-bs-toggle='modal' data-bs-target='#DatLaiMatKhauModal' style='color: white;' data-id='" +
                     data[i].maCoVanHocTap +
                     "' >Đặt lại mật khẩu</button></td>\
@@ -146,6 +149,9 @@ function GetListCVHT(maKhoa) {
                                     <td class='cell'>" +
                     data[i].soDienThoai +
                     "</td>\
+                                    <td class='cell'>" +
+                    data[i].maKhoa +
+                    "</td>\
                                     <td class='cell'><button type=button' class='btn btn-info btn_DatLaiMatKhau_CVHT' data-bs-toggle='modal' data-bs-target='#DatLaiMatKhauModal' style='color: white;' data-id='" +
                     data[i].maCoVanHocTap +
                     "' >Đặt lại mật khẩu</button></td>\
@@ -181,7 +187,6 @@ function GetListCVHT(maKhoa) {
 
 function TimKiemCoVanHocTap(maCVHT) {
   $("#id_tbodyData tr").remove();
-  console.log("tin kiem");
   $.ajax({
     url: urlapi_cvht_read_maCVHT + maCVHT,
     async: false,
@@ -190,7 +195,6 @@ function TimKiemCoVanHocTap(maCVHT) {
     dataType: "json",
     headers: { Authorization: jwtCookie },
     success: function (result) {
-      console.log(result);
       $("#idPhanTrang").pagination({
         dataSource: result["covanhoctap"],
         pageSize: 10,
@@ -217,6 +221,9 @@ function TimKiemCoVanHocTap(maCVHT) {
               "</td>\
                               <td class='cell'>" +
               data[i].soDienThoai +
+              "</td>\
+                              <td class='cell'>" +
+              data[i].maKhoa +
               "</td>\
                               <td class='cell'><button type=button' class='btn btn-info btn_DatLaiMatKhau_CVHT' data-bs-toggle='modal' data-bs-target='#DatLaiMatKhauModal' style='color: white;' data-id='" +
               data[i].maCoVanHocTap +
@@ -262,6 +269,8 @@ function LoadComboBoxThongTinKhoa_CVHT() {
     headers: { Authorization: jwtCookie },
     success: function (result_Khoa) {
       $("#select_Khoa").find("option").remove();
+      $("#select_Khoa_Add").find("option").remove();
+      $("#select_Khoa_Edit").find("option").remove();
 
       $("#select_Khoa").append(
         "<option selected value='tatcakhoa'>Tất cả khoa</option>"
@@ -270,6 +279,22 @@ function LoadComboBoxThongTinKhoa_CVHT() {
       $.each(result_Khoa, function (index_Khoa) {
         for (var p = 0; p < result_Khoa[index_Khoa].length; p++) {
           $("#select_Khoa").append(
+            "<option value='" +
+              result_Khoa[index_Khoa][p].maKhoa +
+              "'>" +
+              result_Khoa[index_Khoa][p].tenKhoa +
+              "</option>"
+          );
+
+          $("#select_Khoa_Add").append(
+            "<option value='" +
+              result_Khoa[index_Khoa][p].maKhoa +
+              "'>" +
+              result_Khoa[index_Khoa][p].tenKhoa +
+              "</option>"
+          );
+
+          $("#select_Khoa_Edit").append(
             "<option value='" +
               result_Khoa[index_Khoa][p].maKhoa +
               "'>" +
@@ -294,6 +319,7 @@ function ThemCVHT() {
     var _inputMaCoVanHocTap = $("#inputMaCoVanHocTap").val();
     var _inputTenCoVanHocTap = $("#inputTenCoVanHocTap").val();
     var _inputSoDienThoai = $("#inputSoDienThoai").val();
+    var _select_Khoa_Add = $("#select_Khoa_Add option:selected").val();
     var _inputMatKhauMoi = $("#inputMatKhauMoi").val();
     var _inputNhapLaiMatKhau = $("#inputNhapLaiMatKhau").val();
 
@@ -327,10 +353,9 @@ function ThemCVHT() {
           maCoVanHocTap: _inputMaCoVanHocTap,
           hoTenCoVan: _inputTenCoVanHocTap,
           soDienThoai: _inputSoDienThoai,
+          maKhoa: _select_Khoa_Add,
           matKhauTaiKhoanCoVan: _inputMatKhauMoi,
         };
-
-        console.log(postData);
 
         $.ajax({
           url: urlapi_covanhoctap_create,
@@ -360,7 +385,7 @@ function ThemCVHT() {
             $("#inputNhapLaiMatKhau").val("");
 
             //load lại danh sách
-            GetListCVHT("tatcakhoa");
+            GetListCVHT($("#select_Khoa").val());
           },
           error: function (errorMessage) {
             checkLoiDangNhap(errorMessage.responseJSON.message);
@@ -444,29 +469,11 @@ function DatLaiMatKhau_CVHT() {
             },
             error: function (errorMessage) {
               checkLoiDangNhap(errorMessage.responseJSON.message);
-
-              console.log(errorMessage.responseJSON.message);
-              // Swal.fire({
-              //   icon: "error",
-              //   title: "Lỗi",
-              //   text: errorMessage.responseJSON.message,
-              //   //timer: 5000,
-              //   timerProgressBar: true,
-              // });
             },
           });
         },
         error: function (errorMessage) {
           checkLoiDangNhap(errorMessage.responseJSON.message);
-
-          console.log(errorMessage.responseJSON.message);
-          // Swal.fire({
-          //   icon: "error",
-          //   title: "Lỗi",
-          //   text: errorMessage.responseJSON.message,
-          //   //timer: 5000,
-          //   timerProgressBar: true,
-          // });
         },
       });
     }
@@ -484,6 +491,13 @@ function LoadThongTinChinhSua_CVHT(maCVHT) {
     success: function (result_data) {
       $("#edit_input_TenCVHT").val(result_data.hoTenCoVan);
       $("#edit_input_sdt").val(result_data.soDienThoai);
+
+      var select_Khoa_Edit = document.getElementById("select_Khoa_Edit");
+      for (var i = 0; i < select_Khoa_Edit.options.length; i++) {
+        if (select_Khoa_Edit.options[i].value === result_data.maKhoa) {
+          select_Khoa_Edit.options[i].selected = true;
+        }
+      }
     },
     error: function (errorMessage) {
       checkLoiDangNhap(errorMessage.responseJSON.message);
@@ -503,6 +517,7 @@ function ChinhSua_CVHT() {
   var edit_input_MaCVHT = $("#edit_input_MaCVHT").val();
   var edit_input_TenCVHT = $("#edit_input_TenCVHT").val();
   var edit_input_sdt = $("#edit_input_sdt").val();
+  var _select_Khoa_Edit = $("#select_Khoa_Edit option:selected").val();
 
   if (
     edit_input_MaCVHT == "" ||
@@ -515,6 +530,7 @@ function ChinhSua_CVHT() {
       maCoVanHocTap: edit_input_MaCVHT,
       hoTenCoVan: edit_input_TenCVHT,
       soDienThoai: edit_input_sdt,
+      maKhoa: _select_Khoa_Edit,
     };
 
     $.ajax({
@@ -538,7 +554,7 @@ function ChinhSua_CVHT() {
         });
 
         setTimeout(() => {
-          GetListCVHT("tatcakhoa");
+          GetListCVHT($("#select_Khoa").val());
         }, 2000);
       },
       error: function (errorMessage) {

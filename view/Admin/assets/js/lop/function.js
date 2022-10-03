@@ -446,7 +446,7 @@ function ThemMoi_Lop() {
         });
 
         setTimeout(() => {
-          GetListLop("tatcakhoa");
+          GetListLop($("#select_Khoa").val());
         }, 2000);
 
         $("#input_MaLop").val("");
@@ -563,7 +563,7 @@ function ChinhSua_Lop() {
         });
 
         setTimeout(() => {
-          GetListLop("tatcakhoa");
+          GetListLop($("#select_Khoa").val());
         }, 2000);
       },
       error: function (errorMessage) {

@@ -605,7 +605,7 @@ function ThemMoi_SinhVien() {
         });
 
         setTimeout(() => {
-          GetListSinhVien("tatcakhoa", "tatcalop");
+          GetListSinhVien($("#select_Khoa").val(), $("#select_Lop").val());
         }, 2000);
 
         $("#input_MaSinhVien").val("");
@@ -823,9 +823,7 @@ function ChinhSua_SinhVien() {
         });
 
         setTimeout(() => {
-          var maKhoa_selected = "tatcakhoa";
-          var maLop_selected = "tatcalop";
-          GetListSinhVien(maKhoa_selected, maLop_selected);
+          GetListSinhVien($("#select_Khoa").val(), $("#select_Lop").val());
         }, 2000);
       },
       error: function (errorMessage) {

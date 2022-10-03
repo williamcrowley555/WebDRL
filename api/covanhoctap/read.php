@@ -52,6 +52,7 @@ if ($data["status"] == 1) {
                             "maCoVanHocTap" => $maCoVanHocTap,
                             "hoTenCoVan" => $hoTenCoVan,
                             "soDienThoai" => $soDienThoai,
+                            "maKhoa" => $maKhoa,
                             "matKhauTaiKhoanCoVan" => $matKhauTaiKhoanCoVan
                         );
                         array_push($covanhoctapArr["covanhoctap"], $e);
@@ -84,6 +85,7 @@ if ($data["status"] == 1) {
                             "maCoVanHocTap" => $maCoVanHocTap,
                             "hoTenCoVan" => $hoTenCoVan,
                             "soDienThoai" => $soDienThoai,
+                            "maKhoa" => $maKhoa,
                             "matKhauTaiKhoanCoVan" => $matKhauTaiKhoanCoVan
                         );
                         array_push($covanhoctapArr["covanhoctap"], $e);
@@ -117,6 +119,7 @@ if ($data["status"] == 1) {
                         "maCoVanHocTap" => $maCoVanHocTap,
                         "hoTenCoVan" => $hoTenCoVan,
                         "soDienThoai" => $soDienThoai,
+                        "maKhoa" => $maKhoa,
                         "matKhauTaiKhoanCoVan" => $matKhauTaiKhoanCoVan
                     );
                     array_push($covanhoctapArr["covanhoctap"], $e);

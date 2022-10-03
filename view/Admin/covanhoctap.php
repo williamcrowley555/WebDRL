@@ -89,6 +89,13 @@
 								<span class="invalid-feedback"></span>
 							</div>
 
+							<div class="mb-3 form-group">
+								<label for="select_Khoa_Add" class="form-label" style="color: black; font-weight: 500;">Khoa</label>
+								<select class="form-select" name="maKhoa" aria-label="Default select example" id="select_Khoa_Add">
+
+								</select>
+							</div>
+
 							<hr>
 							<span style="text-transform: uppercase;color: black;"><img src="assets/images/icons/lock.png" alt="" style="width: 20px;"> Thông tin mật khẩu</span>
 							<hr>
@@ -140,6 +147,13 @@
 								<label for="edit_input_sdt" class="form-label" style="color: black; font-weight: 500;">Số điện thoại</label>
 								<input type="text" class="form-control" name="soDienThoai" id="edit_input_sdt" placeholder="Nhập số điện thoại...">
 								<span class="invalid-feedback"></span>
+							</div>
+
+							<div class="mb-3 form-group">
+								<label for="select_Khoa_Edit" class="form-label" style="color: black; font-weight: 500;">Khoa</label>
+								<select class="form-select" name="maKhoa" aria-label="Default select example" id="select_Khoa_Edit">
+
+								</select>
 							</div>
 						</div>
 
@@ -205,6 +219,7 @@
 										<th class="cell">Mã cố vấn học tập</th>
 										<th class="cell">Họ tên cố vấn</th>
 										<th class="cell">Số điện thoại</th>
+										<th class="cell">Mã khoa</th>
 										<th class="cell"></th>
 									</tr>
 								</thead>
@@ -327,6 +342,13 @@
 
 	LoadComboBoxThongTinKhoa_CVHT();
 
+	//add modal
+	var select_box_element_Khoa = document.querySelector('#select_Khoa_Add');
+
+	dselect(select_box_element_Khoa, {
+		search: true
+	});
+
 	$('#select_Khoa').on('change', function() {
 		$('#input_timKiemMaCVHT').val('');
 
@@ -366,5 +388,12 @@
 		$('#edit_input_MaCVHT').val(maCVHT_edit);
 
 		LoadThongTinChinhSua_CVHT(maCVHT_edit);
+
+		//edit modal
+		var edit_select_box_element_Khoa = document.querySelector('#select_Khoa_Edit');
+
+		dselect(edit_select_box_element_Khoa, {
+			search: true
+		});
 	})
 </script>

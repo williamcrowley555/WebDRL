@@ -24,33 +24,35 @@
             
             $data = json_decode(file_get_contents("php://input"));
             
-            if ($data != null){
+            if ($data != null) {
 
-                if (isset($data->matKhauTaiKhoanCoVan)){
+                if (isset($data->matKhauTaiKhoanCoVan)) {
                     $item->maCoVanHocTap  = $data->maCoVanHocTap ;
             
                     //values
                     $item->hoTenCoVan = $data->hoTenCoVan;
                     $item->soDienThoai = $data->soDienThoai;
+                    $item->maKhoa = $data->maKhoa;
                     $item->matKhauTaiKhoanCoVan = md5($data->matKhauTaiKhoanCoVan);
                     
-                    if($item->updateCVHT()){
+                    if($item->updateCVHT()) {
                         http_response_code(200);
                         echo json_encode(
                             array("message" => "Cố vấn học tập cập nhật thành công!")
                         );
-                    } else{
+                    } else {
                         http_response_code(404);
                         echo json_encode(
                             array("message" => "Cố vấn học tập cập nhật KHÔNG thành công!")
                         );
                     }
-                }else{
+                } else {
                     $item->maCoVanHocTap  = $data->maCoVanHocTap;
             
                     //values
                     $item->hoTenCoVan = $data->hoTenCoVan;
                     $item->soDienThoai = $data->soDienThoai;
+                    $item->maKhoa = $data->maKhoa;
                     
                     if($item->updateCVHT_KhongMatKhau()){
                         http_response_code(200);
@@ -64,10 +66,7 @@
                         );
                     }
                 }
-
-                
-    
-            }else{
+            } else {
                 http_response_code(404);
                 echo json_encode(
                     array("message" => "Không có dữ liệu gửi lên!")
@@ -85,6 +84,4 @@
             array("message" => "Vui lòng đăng nhập trước!")
         );
     }
-       
-    
 ?>
