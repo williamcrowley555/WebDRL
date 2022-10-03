@@ -188,7 +188,6 @@ function TimKiemLop(maLop) {
     dataType: "json",
     headers: { Authorization: jwtCookie },
     success: function (result) {
-      console.log(result);
       $("#idPhanTrang").pagination({
         dataSource: result["lop"],
         pageSize: 10,
@@ -240,6 +239,32 @@ function TimKiemLop(maLop) {
       $("#idPhanTrang").empty();
 
       ThongBaoLoi(errorMessage.responseJSON.message);
+    },
+    statusCode: {
+      403: function (xhr) {
+        //deleteAllCookies();
+        //location.href = 'login.php';
+      },
+    },
+  });
+}
+
+function GetMaLopCoSoLopLonNhat(maKhoa, maKhoaHoc, callback) {
+  $.ajax({
+    url:
+      urlapi_lop_single_read + "&maKhoa=" + maKhoa + "&maKhoaHoc=" + maKhoaHoc,
+    async: false,
+    type: "GET",
+    contentType: "application/json;charset=utf-8",
+    dataType: "json",
+    headers: { Authorization: jwtCookie },
+    success: function (result) {
+      callback(result.maLop);
+    },
+    error: function (errorMessage) {
+      checkLoiDangNhap(errorMessage.responseJSON.message);
+
+      callback(maKhoa + "1" + maKhoaHoc.substring(1));
     },
     statusCode: {
       403: function (xhr) {
