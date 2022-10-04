@@ -188,7 +188,6 @@ function TimKiemLop(maLop) {
     dataType: "json",
     headers: { Authorization: jwtCookie },
     success: function (result) {
-      console.log(result);
       $("#idPhanTrang").pagination({
         dataSource: result["lop"],
         pageSize: 10,
@@ -248,6 +247,38 @@ function TimKiemLop(maLop) {
       },
     },
   });
+}
+
+function GetMaLopCoSoLopLonNhat(maKhoa, maKhoaHoc, callback) {
+  if (maKhoa && maKhoaHoc) {
+    $.ajax({
+      url:
+        urlapi_lop_single_read +
+        "&maKhoa=" +
+        maKhoa +
+        "&maKhoaHoc=" +
+        maKhoaHoc,
+      async: false,
+      type: "GET",
+      contentType: "application/json;charset=utf-8",
+      dataType: "json",
+      headers: { Authorization: jwtCookie },
+      success: function (result) {
+        callback(result.maLop);
+      },
+      error: function (errorMessage) {
+        checkLoiDangNhap(errorMessage.responseJSON.message);
+
+        callback(maKhoa + "1" + maKhoaHoc.substring(1));
+      },
+      statusCode: {
+        403: function (xhr) {
+          //deleteAllCookies();
+          //location.href = 'login.php';
+        },
+      },
+    });
+  }
 }
 
 function LoadComboBoxThongTinKhoa_Lop() {
@@ -446,7 +477,7 @@ function ThemMoi_Lop() {
         });
 
         setTimeout(() => {
-          GetListLop("tatcakhoa");
+          GetListLop($("#select_Khoa").val());
         }, 2000);
 
         $("#input_MaLop").val("");
@@ -563,7 +594,7 @@ function ChinhSua_Lop() {
         });
 
         setTimeout(() => {
-          GetListLop("tatcakhoa");
+          GetListLop($("#select_Khoa").val());
         }, 2000);
       },
       error: function (errorMessage) {

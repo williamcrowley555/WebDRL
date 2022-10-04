@@ -47,7 +47,7 @@
 								</div>
 
 								<div class="col-auto" style="padding-left: 15px;">
-									<button class="btn app-btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#AddModal">Thêm mới</button>
+									<button class="btn app-btn-primary btn_Them_Lop" type="button" data-bs-toggle="modal" data-bs-target="#AddModal">Thêm mới</button>
 								</div>
 
 								<div class="col-auto" style="padding-left: 15px;">
@@ -81,7 +81,7 @@
 
 							<div class="mb-3 form-group">
 								<label for="input_MaLop" class="form-label" style="color: black; font-weight: 500;">Mã lớp</label>
-								<input type="text" name="maLop" class="form-control mb-2" id="input_MaLop" placeholder="Nhập mã lớp...">
+								<input type="text" name="maLop" class="form-control mb-2" id="input_MaLop" placeholder="Mã lớp sẽ tự động nhập..." readonly>
 								<span class="invalid-feedback"></span>
 							</div>
 
@@ -136,7 +136,7 @@
 
 							<div class="mb-3 form-group">
 								<label for="edit_input_MaLop" class="form-label" style="color: black; font-weight: 500;">Mã lớp</label>
-								<input type="text" name="maLop" class="form-control mb-2" id="edit_input_MaLop" placeholder="Nhập mã lớp..." readonly>
+								<input type="text" name="maLop" class="form-control mb-2" id="edit_input_MaLop" placeholder="Mã lớp sẽ tự động nhập..." readonly>
 								<span class="invalid-feedback"></span>
 							</div>
 
@@ -287,9 +287,22 @@
 					icon: "error",
 					title: "Lỗi",
 					text: "Mã lớp không hợp lệ!",
-					//timer: 5000,
+					timer: 2000,
 					timerProgressBar: true,
 				});
+			}
+		}
+	}
+
+	function xuLyTaoMaLop(maLopSelector) {
+		return function(data) {
+			const maLop = data.substring(0, 6);
+			const sttLop = Number(data.substring(6));
+
+			if(sttLop == null) {
+				$(maLopSelector).val(maLop + 1);
+			} else {
+				$(maLopSelector).val(maLop + (sttLop + 1));
 			}
 		}
 	}
@@ -344,6 +357,13 @@
 		search: true
 	});
 
+	//Xử lý thêm
+	$(document).on("click", ".btn_Them_Lop", function() {
+		GetMaLopCoSoLopLonNhat($('#AddModal #select_Khoa_Add').find(":selected").val(), 
+								$('#AddModal #select_KhoaHoc_Add').find(":selected").val(), 
+								xuLyTaoMaLop("#AddModal #input_MaLop"));
+	})
+
 	//Xử lý chỉnh sửa
 	$(document).on("click", ".btn_ChinhSua_Lop", function() {
 
@@ -372,5 +392,25 @@
 			search: true
 		});
 
+		$("#EditForm #edit_input_MaLop").removeClass("is-invalid");
+		$("#EditForm #edit_input_TenLop").removeClass("is-invalid");
 	})
+
+	$('#AddModal #select_Khoa_Add').on('change', function() {
+		GetMaLopCoSoLopLonNhat($('#AddModal #select_Khoa_Add').find(":selected").val(), 
+								$('#AddModal #select_KhoaHoc_Add').find(":selected").val(), 
+								xuLyTaoMaLop("#AddModal #input_MaLop"));
+	});
+
+	$('#AddModal #select_KhoaHoc_Add').on('change', function() {
+		GetMaLopCoSoLopLonNhat($('#AddModal #select_Khoa_Add').find(":selected").val(), 
+								$('#AddModal #select_KhoaHoc_Add').find(":selected").val(), 
+								xuLyTaoMaLop("#AddModal #input_MaLop"));
+	});
+
+	// $('#ChinhSuaModal #edit_select_Khoa_Add').on('change', function() {
+	// 	GetMaLopCoSoLopLonNhat($('#ChinhSuaModal #edit_select_Khoa_Add').val(), 
+	// 							$('#ChinhSuaModal #edit_select_KhoaHoc_Add').val(), 
+	// 							xuLyTaoMaLop("#ChinhSuaModal #edit_input_MaLop"));
+	// });
 </script>

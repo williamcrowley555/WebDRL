@@ -193,7 +193,7 @@
 						</div>
 						<div class="modal-body">
 
-							<div class="mb-3">
+							<div class="mb-3 form-group">
 								<label for="input_MaSinhVien_Update" class="form-label" style="color: black; font-weight: 500;">Mã sinh viên</label>
 								<input type="text" class="form-control mb-2" id="input_MaSinhVien_Update" placeholder="Nhập mã sinh viên..." disabled>
 							</div>
@@ -289,12 +289,12 @@
         formGroupSelector: '.form-group',
         errorSelector: '.invalid-feedback',
         rules: [
-          Validator.isRequired('#input_MaSinhVien', 'Vui lòng nhập mã số sinh viên'),
-          Validator.isNumber('#input_MaSinhVien', 'Mã số sinh viên chỉ bao gồm các ký tự số'),
-          Validator.minLength('#input_MaSinhVien', 10, "Mã số sinh viên phải có tối thiểu 10 chữ số"),
-          Validator.isRequired('#input_HoTenSinhVien', 'Vui lòng nhập họ tên sinh viên'),
-          Validator.isCharacters('#input_HoTenSinhVien', 'Họ tên sinh viên chỉ bao gồm các ký tự chữ'),
-          Validator.isDateOfBirth('#input_NgaySinh'),
+			Validator.isRequired('#input_MaSinhVien', 'Vui lòng nhập mã số sinh viên'),
+			Validator.isNumber('#input_MaSinhVien', 'Mã số sinh viên chỉ bao gồm các ký tự số'),
+			Validator.minLength('#input_MaSinhVien', 10, "Mã số sinh viên phải có tối thiểu 10 chữ số"),
+			Validator.isRequired('#input_HoTenSinhVien', 'Vui lòng nhập họ tên sinh viên'),
+			Validator.isCharacters('#input_HoTenSinhVien', 'Họ tên sinh viên chỉ bao gồm các ký tự chữ'),
+			Validator.isDateOfBirth('#input_NgaySinh'),
         ],
         onSubmit: ThemMoi_SinhVien
     })
@@ -304,12 +304,12 @@
         formGroupSelector: '.form-group',
         errorSelector: '.invalid-feedback',
         rules: [
-          Validator.isRequired('#edit_input_MaSinhVien', 'Vui lòng nhập mã số sinh viên'),
-          Validator.isNumber('#edit_input_MaSinhVien', 'Mã số sinh viên chỉ bao gồm các ký tự số'),
-          Validator.minLength('#edit_input_MaSinhVien', 10, "Mã số sinh viên phải có tối thiểu 10 chữ số"),
-          Validator.isRequired('#edit_input_TenSinhVien', 'Vui lòng nhập họ tên sinh viên'),
-          Validator.isCharacters('#edit_input_TenSinhVien', 'Họ tên sinh viên chỉ bao gồm các ký tự chữ'),
-          Validator.isDateOfBirth('#edit_input_NgaySinh'),
+			Validator.isRequired('#edit_input_MaSinhVien', 'Vui lòng nhập mã số sinh viên'),
+			Validator.isNumber('#edit_input_MaSinhVien', 'Mã số sinh viên chỉ bao gồm các ký tự số'),
+			Validator.minLength('#edit_input_MaSinhVien', 10, "Mã số sinh viên phải có tối thiểu 10 chữ số"),
+			Validator.isRequired('#edit_input_TenSinhVien', 'Vui lòng nhập họ tên sinh viên'),
+			Validator.isCharacters('#edit_input_TenSinhVien', 'Họ tên sinh viên chỉ bao gồm các ký tự chữ'),
+			Validator.isDateOfBirth('#edit_input_NgaySinh'),
         ],
         onSubmit: ChinhSua_SinhVien
     })
@@ -342,7 +342,7 @@
 					icon: "error",
 					title: "Lỗi",
 					text: "Mã số sinh viên không hợp lệ!",
-					//timer: 5000,
+					timer: 2000,
 					timerProgressBar: true,
 				});
 			}
@@ -396,8 +396,10 @@
 		let maSinhVien = $(this).attr('data-id');
 
 		$('#input_MaSinhVien_Update').val(maSinhVien);
-		$("#input_MatKhauMoi").val("");
-		$("#input_NhapLaiMatKhauMoi").val("");
+		$("#ChangePasswordForm #input_MatKhauMoi").val("");
+      	$("#ChangePasswordForm #input_MatKhauMoi").removeClass("is-invalid");
+		$("#ChangePasswordForm #input_NhapLaiMatKhauMoi").val("");
+      	$("#ChangePasswordForm #input_NhapLaiMatKhauMoi").removeClass("is-invalid");
 	})
 
 
@@ -415,5 +417,9 @@
 		$('#edit_input_MaSinhVien').val(maSinhVien_edit);
 
 		LoadThongTinChinhSua_SinhVien(maSinhVien_edit);
+
+		$("#EditForm #edit_input_MaSinhVien").removeClass("is-invalid");
+      	$("#EditForm #edit_input_TenSinhVien").removeClass("is-invalid");
+      	$("#EditForm #edit_input_NgaySinh").removeClass("is-invalid");
 	})
 </script>

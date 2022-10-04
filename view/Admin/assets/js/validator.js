@@ -217,6 +217,28 @@ Validator.minLength = function (selector, min, message) {
   };
 };
 
+Validator.maxLength = function (selector, max, message) {
+  return {
+    selector: selector,
+    test: function (value) {
+      return value.length <= max
+        ? undefined
+        : message || `Vui lòng nhập tối đa ${max} ký tự`;
+    },
+  };
+};
+
+Validator.exactLength = function (selector, exact, message) {
+  return {
+    selector: selector,
+    test: function (value) {
+      return value.length == exact
+        ? undefined
+        : message || `Vui lòng nhập đủ ${exact} ký tự`;
+    },
+  };
+};
+
 Validator.isConfirmed = function (selector, getConfirmedValue, message) {
   return {
     selector: selector,
@@ -240,14 +262,17 @@ Validator.isNumber = function (selector, message) {
   };
 };
 
-Validator.isCharacters = function (selector, message) {
+Validator.isCharacters = function (selector, message, hasWhiteSpace = true) {
   return {
     selector: selector,
     test: function (value) {
       var regex = /^[A-Za-z\s]+$/;
       return regex.test(removeAscent(value))
         ? undefined
-        : message || "Trường này chỉ bao gồm ký tự chữ";
+        : message ||
+            ("Trường này chỉ bao gồm các ký tự chữ và " + hasWhiteSpace
+              ? "khoảng trắng"
+              : "không bao gồm khoảng trắng");
     },
   };
 };

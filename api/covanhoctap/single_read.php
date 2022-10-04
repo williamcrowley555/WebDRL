@@ -15,7 +15,7 @@
     $checkQuyen = new checkQuyen();
 
     // kiểm tra đăng nhập thành công 
-    if($data["status"]==1){
+    if($data["status"]==1) {
         //if ($checkQuyen->checkQuyen_CTSV($data["user_data"]->aud)) {
             $database = new Database();
             $db = $database->getConnection();
@@ -23,20 +23,21 @@
             $item->maCoVanHocTap = isset($_GET['maCoVanHocTap']) ? $_GET['maCoVanHocTap'] : die(); //Lấy id từ phương thức GET
         
             $item->getSingleCVHT();
-            if($item->hoTenCoVan != null){
+
+            if($item->hoTenCoVan != null) {
                 // create array
                 $covanhoctap_arr = array(
                     "maCoVanHocTap" =>  $item->maCoVanHocTap,
                     "hoTenCoVan" => $item->hoTenCoVan,
                     "soDienThoai" => $item->soDienThoai,
+                    "maKhoa" => $item->maKhoa,
                     "matKhauTaiKhoanCoVan" => $item->matKhauTaiKhoanCoVan
                 );
             
                 http_response_code(200);
                 echo json_encode($covanhoctap_arr);
             }
-            
-            else{
+            else {
                 http_response_code(404);
                 echo json_encode(
                     array("message" => "Không có dữ liệu.")

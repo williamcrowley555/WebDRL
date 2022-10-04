@@ -35,8 +35,9 @@
                         array("message" => "Khoa tạo thành công")
                     );
                 } else{
+                    http_response_code(404);
                     echo json_encode(
-                        array("message" => "Khoa tạo KHÔNG thành công")
+                        array("message" => "Mã khoa vừa tạo đã bị trùng! Vui lòng nhập mã khác!")
                     );
                 }
             }else{

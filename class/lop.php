@@ -61,10 +61,14 @@
         
         // READ single
         public function getSingleLop(){
-            $sqlQuery = "SELECT maLop, tenLop, maKhoa, maCoVanHocTap, maKhoaHoc FROM ". $this->db_table ."
-                        WHERE maLop = ? LIMIT 0,1";
+            $sqlQuery = "SELECT maLop, tenLop, maKhoa, maCoVanHocTap, maKhoaHoc FROM ". $this->db_table .
+                            ($this->maLop ? " WHERE maLop = '$this->maLop'" : "") . 
+                            (($this->maKhoa && $this->maKhoaHoc) ? 
+                                (" WHERE maLop LIKE '%$this->maKhoa" . "1" . substr($this->maKhoaHoc, 1) . "%' ORDER BY maLop DESC") 
+                                : 
+                                "") .
+                            " LIMIT 0,1";
             $stmt = $this->conn->prepare($sqlQuery);
-            $stmt->bindParam(1, $this->maLop);
             $stmt->execute();
 
             $dataRow = $stmt->fetch(PDO::FETCH_ASSOC);
