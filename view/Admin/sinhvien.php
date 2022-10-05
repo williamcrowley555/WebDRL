@@ -290,10 +290,11 @@
         errorSelector: '.invalid-feedback',
         rules: [
 			Validator.isRequired('#input_MaSinhVien', 'Vui lòng nhập mã số sinh viên'),
-			Validator.isNumber('#input_MaSinhVien', 'Mã số sinh viên chỉ bao gồm các ký tự số'),
+			Validator.isPositiveNumber('#input_MaSinhVien', 'Mã số sinh viên chỉ bao gồm các ký tự số'),
 			Validator.minLength('#input_MaSinhVien', 10, "Mã số sinh viên phải có tối thiểu 10 chữ số"),
 			Validator.isRequired('#input_HoTenSinhVien', 'Vui lòng nhập họ tên sinh viên'),
 			Validator.isCharacters('#input_HoTenSinhVien', 'Họ tên sinh viên chỉ bao gồm các ký tự chữ'),
+			Validator.isRequired('#input_NgaySinh', 'Vui lòng nhập ngày sinh'),
 			Validator.isDateOfBirth('#input_NgaySinh'),
         ],
         onSubmit: ThemMoi_SinhVien
@@ -305,10 +306,11 @@
         errorSelector: '.invalid-feedback',
         rules: [
 			Validator.isRequired('#edit_input_MaSinhVien', 'Vui lòng nhập mã số sinh viên'),
-			Validator.isNumber('#edit_input_MaSinhVien', 'Mã số sinh viên chỉ bao gồm các ký tự số'),
+			Validator.isPositiveNumber('#edit_input_MaSinhVien', 'Mã số sinh viên chỉ bao gồm các ký tự số'),
 			Validator.minLength('#edit_input_MaSinhVien', 10, "Mã số sinh viên phải có tối thiểu 10 chữ số"),
 			Validator.isRequired('#edit_input_TenSinhVien', 'Vui lòng nhập họ tên sinh viên'),
 			Validator.isCharacters('#edit_input_TenSinhVien', 'Họ tên sinh viên chỉ bao gồm các ký tự chữ'),
+			Validator.isRequired('#edit_input_NgaySinh', 'Vui lòng nhập ngày sinh'),
 			Validator.isDateOfBirth('#edit_input_NgaySinh'),
         ],
         onSubmit: ChinhSua_SinhVien

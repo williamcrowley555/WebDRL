@@ -239,6 +239,39 @@ Validator.exactLength = function (selector, exact, message) {
   };
 };
 
+Validator.minNumber = function (selector, min, message) {
+  return {
+    selector: selector,
+    test: function (value) {
+      return Number(value) >= min
+        ? undefined
+        : message || `Vui lòng nhập số lớn hơn ${min}`;
+    },
+  };
+};
+
+Validator.maxNumber = function (selector, max, message) {
+  return {
+    selector: selector,
+    test: function (value) {
+      return Number(value) <= max
+        ? undefined
+        : message || `Vui lòng nhập số nhỏ hơn ${max}`;
+    },
+  };
+};
+
+Validator.exactNumber = function (selector, exact, message) {
+  return {
+    selector: selector,
+    test: function (value) {
+      return Number(value) == exact
+        ? undefined
+        : message || `Vui lòng nhập số ${exact}`;
+    },
+  };
+};
+
 Validator.isConfirmed = function (selector, getConfirmedValue, message) {
   return {
     selector: selector,
@@ -254,10 +287,31 @@ Validator.isNumber = function (selector, message) {
   return {
     selector: selector,
     test: function (value) {
-      var regex = /^\d+$/;
-      return regex.test(value)
+      return Number(value)
         ? undefined
         : message || "Trường này chỉ bao gồm các ký tự số";
+    },
+  };
+};
+
+Validator.isPositiveNumber = function (selector, message) {
+  return {
+    selector: selector,
+    test: function (value) {
+      return Number(value) > 0
+        ? undefined
+        : message || "Trường này phải là số dương";
+    },
+  };
+};
+
+Validator.isNegativeNumber = function (selector, message) {
+  return {
+    selector: selector,
+    test: function (value) {
+      return Number(value) < 0
+        ? undefined
+        : message || "Trường này phải là số âm";
     },
   };
 };
@@ -311,6 +365,62 @@ Validator.isDateOfBirth = function (selector, message) {
       return inputDate <= todaysDate
         ? undefined
         : message || "Ngày sinh không hợp lệ";
+    },
+  };
+};
+
+Validator.isEventDay = function (
+  selector,
+  getComparedDateValue,
+  message,
+  isGreater = false
+) {
+  return {
+    selector: selector,
+    test: function (value) {
+      var startDate;
+      var endDate;
+
+      if (isGreater) {
+        startDate = new Date(getComparedDateValue()).getTime();
+        endDate = new Date(value).getTime();
+      } else {
+        startDate = new Date(value).getTime();
+        endDate = new Date(getComparedDateValue()).getTime();
+      }
+
+      return startDate < endDate
+        ? undefined
+        : message ||
+            (isGreater
+              ? "Thời gian kết thúc phải diễn ra sau thời gian bắt đầu"
+              : "Thời gian bắt đầu phải diễn ra trước thời gian kết thúc");
+    },
+  };
+};
+
+Validator.isInDateRange = function (
+  selector,
+  getFromValue,
+  getToValue,
+  message
+) {
+  return {
+    selector: selector,
+    test: function (value) {
+      var from = new Date(getFromValue());
+      var to = new Date(getToValue());
+      var comparedDate = new Date(value);
+
+      return from.setHours(0, 0, 0, 0) <= comparedDate.getTime() &&
+        comparedDate.getTime() <= to.setHours(0, 0, 0, 0)
+        ? undefined
+        : message ||
+            `Thời gian nhập vào phải nằm trong khoảng thời gian` +
+              ` từ ${from.getDate()}-${
+                from.getMonth() + 1
+              }-${from.getFullYear()}` +
+              ` đến ${to.getDate()}-${to.getMonth() + 1}-${to.getFullYear()}`;
     },
   };
 };

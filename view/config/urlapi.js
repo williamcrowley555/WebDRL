@@ -121,6 +121,7 @@ const urlapi_hockydanhgia_update = host_domain_url + "/hockydanhgia/update.php";
 //READ
 const urlapi_hoatdongdanhgia_read =
   host_domain_url + "/hoatdongdanhgia/read.php";
+const urlapi_hoatdongdanhgia_read_maHD = urlapi_hoatdongdanhgia_read + "?maHD=";
 
 //SINGLE READ
 const urlapi_hoatdongdanhgia_single_read =

@@ -324,7 +324,6 @@
 		}
         
        
-       
 		var diemTong_XepLoai = Number($('#Khoa_input_diemtongcong').val());
 
         $("#text_XepLoai").text(TinhXepLoai(diemTong_XepLoai));
@@ -336,19 +335,15 @@
 		//onchange
         $('#tbody_noiDungDanhGia').find("input").on('change', function() {
             TinhDiemTongCong();
-        
-
         });
 
 
 		$('#inputTBCHocKyDangXet').on('change', function() {
             TuDongDienDiemTBC();
-
         });
 
         $('#inputTBCHocKyTruoc').on('change', function() {
             TuDongDienDiemTBC();
-
         });
 
 
@@ -390,9 +385,6 @@
             if (TBCHocKyDangXet < 2) {
                 $('#Khoa_TC3_5').val($('#Khoa_TC3_5').attr('max_value'));
             }
-
-
-
 
             //Hoc ky truoc//
             if ((TBCHocKyTruoc >= 3.60) && (TBCHocKyTruoc <= 4)) {
@@ -451,8 +443,6 @@
 
         }
 	
-
-
 		function TinhXepLoai(diemTong_XepLoai) {
             if (diemTong_XepLoai >= 90 && diemTong_XepLoai <= 100) {
                 return 'Xuất sắc';
@@ -478,7 +468,6 @@
                 return 'Kém';
             }
         }
-
 
 	$(document).on("click", ".btn_XemVaDuyet", function() {
 
@@ -508,7 +497,6 @@
 
 
 	})
-
 	
 	$(document).on("click", ".btn_AnhMinhChung", function() {
             let img_id = $(this).attr('data-img-id');
@@ -518,9 +506,6 @@
 
        
         })
-
-
-
 
 	//Duyệt điểm
 	function DuyetDiemRenLuyen() {

@@ -29,8 +29,8 @@
         // GET ALL THEO MAKHOA 
         public function getKhoaTheoMaKhoa($maKhoa, $isEqual = true){
             $sqlQuery = "SELECT maKhoa, tenKhoa, taiKhoanKhoa, matKhauKhoa FROM " . $this->db_table . " 
-                            WHERE maKhoa" . 
-                            ($isEqual ? " = '$maKhoa'" : " LIKE '%$maKhoa%'");
+                            WHERE UPPER(maKhoa)" . 
+                            ($isEqual ? " = UPPER('$maKhoa')" : " LIKE UPPER('%$maKhoa%')");
     
             $stmt = $this->conn->prepare($sqlQuery);
             $stmt->execute();
