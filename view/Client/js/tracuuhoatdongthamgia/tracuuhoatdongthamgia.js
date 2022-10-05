@@ -1,3 +1,18 @@
+const maSo = getCookie("maSo");
+var jwtCookie = getCookie("jwt");
+if(maSo.length == 10) { //Nếu là sinh viên
+    TraCuuHoatDong(maSo);
+} 
+else if (maSo.length == 5) { // Nếu là cố vấn học tập
+     $("#id_TraCuu").css('display','');
+}
+
+ $('#input_MSSVTraCuu').on('keypress', function(event) {
+     if (event.keyCode == 13) {
+         TraCuuHoatDong($(this).val());
+    }
+})
+
 //helpers
 function getCookie(cName) {
     const name = cName + "=";
@@ -34,8 +49,9 @@ var jwtCookie = getCookie("jwt");
 
 
 //------------------------------//
-function TraCuuHoatDong() {
-    var _input_MSSVTraCuu = $('#input_MSSVTraCuu').val();
+function TraCuuHoatDong(_input_MSSVTraCuu = '') {
+    $('#tbody_hocKyDanhGia').empty();
+    $('#id_KhongTimThaySinhVien').empty();
 
     if (_input_MSSVTraCuu == ''){
         thongBaoLoi('Vui lòng nhập mã số sinh viên!');
@@ -134,7 +150,8 @@ function TraCuuHoatDong() {
                                                 
                                     },
                                     error: function (errorMessage_tc3) {
-                                        thongBaoLoi(errorMessage_tc3.responseJSON.message);
+                                        
+                                        //thongBaoLoi(errorMessage_tc3.responseJSON.message);
                                     },
                                 });
     
@@ -143,13 +160,25 @@ function TraCuuHoatDong() {
                         });
                     },
                     error: function (errorMessage_tc3) {
-                        thongBaoInfo(errorMessage_tc3.responseJSON.message);
+                        $("#id_NoiDungKetQuaTraCuu").css('display','none');
+                        $('#id_KhongTimThaySinhVien').css('display','');
+                        $('#id_KhongTimThaySinhVien').append("\
+                            <h5 style=\"text-transform: uppercase\">--- Các hoạt động của sinh viên ---</h5>\
+                            <p class=\"text-center\"> Không tìm thấy hoạt động tham gia của sinh viên có mã sinh viên là " + _input_MSSVTraCuu +"</p>"
+                        );
+                        //thongBaoInfo(errorMessage_tc3.responseJSON.message);
                     },
                 });
     
             },
             error: function (errorMessage_tc3) {
-                thongBaoInfo(errorMessage_tc3.responseJSON.message);
+                $("#id_NoiDungKetQuaTraCuu").css('display','none');
+                $('#id_KhongTimThaySinhVien').css('display','');
+                $('#id_KhongTimThaySinhVien').append("\
+                    <h5 style=\"text-transform: uppercase\">--- Các hoạt động tham gia của sinh viên ---</h5>\
+                    <p class=\"text-center\"> Không tìm thấy sinh viên có mã sinh viên là " + _input_MSSVTraCuu +"</p>"
+                );
+                //thongBaoInfo(errorMessage_tc3.responseJSON.message);
             },
         });
     }

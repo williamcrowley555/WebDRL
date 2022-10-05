@@ -2,9 +2,9 @@
 const maSo = getCookie("maSo");
 var jwtCookie = getCookie("jwt");
 if(maSo.length == 10) { //Nếu là sinh viên
-    var _input_MSSVTraCuu = $('#input_MSSVTraCuu').val();
-
-    TraCuuDiemRenLuyen(_input_MSSVTraCuu);
+    //var _input_MSSVTraCuu = $('#input_MSSVTraCuu').val();
+    //console.log("MSSV: " + _input_MSSVTraCuu);
+    TraCuuDiemRenLuyen(maSo);
 } 
 else if (maSo.length == 5) { // Nếu là cố vấn học tập
     $("#id_TraCuu").css('display','');

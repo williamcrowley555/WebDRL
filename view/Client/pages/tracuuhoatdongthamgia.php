@@ -16,7 +16,7 @@
     <!-- end of header -->
 
     <div class="container">
-            <div class="row" style="margin: 0 auto;text-align: center;background: white;border-radius: 10px;">
+            <div class="row" style="margin: 0 auto;text-align: center;background: white;border-radius: 10px; display:none;" id="id_TraCuu">
                 <div style="padding: 48px;">
                     <!-- Email input -->
                     <div class="form-outline mb-4">
@@ -25,7 +25,7 @@
                     </div>
 
                     <!-- Submit button -->
-                    <button type="button" class="btn btn-primary btn-block" style="width: fit-content;" onclick="return TraCuuHoatDong();" >Tra cứu</button>
+                    <button type="button" class="btn btn-primary btn-block" style="width: fit-content;" onclick="TraCuuHoatDong($('#input_MSSVTraCuu').val());" >Tra cứu</button>
                 </div>
             </div>
          
@@ -68,7 +68,10 @@
                     </div>
                 </div>
             </div>
-
+            
+            <div class="row" style="margin: 0 auto;margin-top: 15px;text-align: center;background: white;border-radius: 10px;display: none;" id="id_KhongTimThaySinhVien">
+                <!-- Không tìm thấy mã sinh viên -->
+            </div>
             
         </div>
 
