@@ -27,7 +27,7 @@ function ThongBaoLoi(message) {
     icon: "error",
     title: "Lỗi",
     text: message,
-    //timer: 5000,
+    timer: 2000,
     timerProgressBar: true,
     showCloseButton: true,
   });
@@ -752,102 +752,109 @@ function DiemDanhHoatDong(input_MaHoatDong) {
         async: false,
         headers: { Authorization: jwtCookie },
         success: function (result) {
-          var _input_maTieuChi3 = result.maTieuChi3;
-          var _input_maTieuChi2 = result.maTieuChi2;
-          var _input_maKhoa = result.maKhoa;
-          var _input_tenHoatDong = result.tenHoatDong;
-          var _input_diemNhanDuoc = result.diemNhanDuoc;
-          var _input_diaDiemDienRaHoatDong = result.diaDiemDienRaHoatDong;
-          var _input_maHocKyDanhGia = result.maHocKyDanhGia;
-          var _input_thoiGianBatDauHoatDong = result.thoiGianBatDauHoatDong;
-          var _input_thoiGianKetThucHoatDong = result.thoiGianKetThucHoatDong;
+          //lấy ngày hiện tại
+          var today = new Date();
 
-          var _temp_maQRDiaDiem = result.maQRDiaDiem.split("/");
-          //lấy tên của ảnh từ url
-          var _input_maQRDiaDiem =
-            _temp_maQRDiaDiem[_temp_maQRDiaDiem.length - 1];
+          if (
+            today.getTime() >=
+              new Date(result.thoiGianBatDauHoatDong).getTime() &&
+            today.getTime() <=
+              new Date(result.thoiGianKetThucHoatDong).getTime()
+          ) {
+            //vẫn còn trong thời gian
+            var _input_maTieuChi3 = result.maTieuChi3;
+            var _input_maTieuChi2 = result.maTieuChi2;
+            var _input_maKhoa = result.maKhoa;
+            var _input_tenHoatDong = result.tenHoatDong;
+            var _input_diemNhanDuoc = result.diemNhanDuoc;
+            var _input_diaDiemDienRaHoatDong = result.diaDiemDienRaHoatDong;
+            var _input_maHocKyDanhGia = result.maHocKyDanhGia;
+            var _input_thoiGianBatDauHoatDong = result.thoiGianBatDauHoatDong;
+            var _input_thoiGianKetThucHoatDong = result.thoiGianKetThucHoatDong;
 
-          var _temp_thoiGianBatDauDiemDanh_others = new Date();
+            var _temp_maQRDiaDiem = result.maQRDiaDiem.split("/");
+            //lấy tên của ảnh từ url
+            var _input_maQRDiaDiem =
+              _temp_maQRDiaDiem[_temp_maQRDiaDiem.length - 1];
 
-          var _temp_thoiGianBatDauDiemDanh = new Date().toLocaleDateString();
+            var _temp_thoiGianBatDauDiemDanh_others = new Date();
 
-          var _str_temp_TGBD = _temp_thoiGianBatDauDiemDanh.split("/");
+            var _temp_thoiGianBatDauDiemDanh = new Date().toLocaleDateString();
 
-          var year_temp = _str_temp_TGBD[2];
-          var month_temp = _str_temp_TGBD[1];
-          var day_temp = _str_temp_TGBD[0];
+            var _str_temp_TGBD = _temp_thoiGianBatDauDiemDanh.split("/");
 
-          //lấy thời gian hiện tại, convert Datetime JS sang MySQL datetime
-          var _input_thoiGianBatDauDiemDanh =
-            year_temp +
-            "-" +
-            month_temp +
-            "-" +
-            day_temp +
-            " " +
-            _temp_thoiGianBatDauDiemDanh_others.toTimeString().split(" ")[0];
+            var year_temp = _str_temp_TGBD[2];
+            var month_temp = _str_temp_TGBD[1];
+            var day_temp = _str_temp_TGBD[0];
 
-          var dataPost = {
-            maHoatDong: input_MaHoatDong,
-            maTieuChi3: _input_maTieuChi3,
-            maTieuChi2: _input_maTieuChi2,
-            maKhoa: _input_maKhoa,
-            tenHoatDong: _input_tenHoatDong,
-            diemNhanDuoc: _input_diemNhanDuoc,
-            diaDiemDienRaHoatDong: _input_diaDiemDienRaHoatDong,
-            maHocKyDanhGia: _input_maHocKyDanhGia,
-            maQRDiaDiem: _input_maQRDiaDiem,
-            thoiGianBatDauHoatDong: _input_thoiGianBatDauHoatDong,
-            thoiGianKetThucHoatDong: _input_thoiGianKetThucHoatDong,
-            thoiGianBatDauDiemDanh: _input_thoiGianBatDauDiemDanh,
-          };
+            //lấy thời gian hiện tại, convert Datetime JS sang MySQL datetime
+            var _input_thoiGianBatDauDiemDanh =
+              year_temp +
+              "-" +
+              month_temp +
+              "-" +
+              day_temp +
+              " " +
+              _temp_thoiGianBatDauDiemDanh_others.toTimeString().split(" ")[0];
 
-          //Ajax update
-          $.ajax({
-            url: urlapi_hoatdongdanhgia_update,
-            type: "POST",
-            contentType: "application/json;charset=utf-8",
-            dataType: "json",
-            data: JSON.stringify(dataPost),
-            async: false,
-            headers: { Authorization: jwtCookie },
-            success: function (result_Create) {
-              Swal.fire({
-                icon: "success",
-                title: "Bắt đầu điểm danh thành công!",
-                text:
-                  "Hoạt động  " + input_MaHoatDong + " đã bắt đầu điểm danh!",
-                timer: 2500,
-                timerProgressBar: true,
-              });
+            var dataPost = {
+              maHoatDong: input_MaHoatDong,
+              maTieuChi3: _input_maTieuChi3,
+              maTieuChi2: _input_maTieuChi2,
+              maKhoa: _input_maKhoa,
+              tenHoatDong: _input_tenHoatDong,
+              diemNhanDuoc: _input_diemNhanDuoc,
+              diaDiemDienRaHoatDong: _input_diaDiemDienRaHoatDong,
+              maHocKyDanhGia: _input_maHocKyDanhGia,
+              maQRDiaDiem: _input_maQRDiaDiem,
+              thoiGianBatDauHoatDong: _input_thoiGianBatDauHoatDong,
+              thoiGianKetThucHoatDong: _input_thoiGianKetThucHoatDong,
+              thoiGianBatDauDiemDanh: _input_thoiGianBatDauDiemDanh,
+            };
 
-              setTimeout(function () {
-                GetListHoatdongdanhgia();
-              }, 2500);
-            },
-            error: function (errorMessage) {
-              //checkLoiDangNhap(errorMessage.responseJSON.message);
+            // Điểm danh
+            $.ajax({
+              url: urlapi_hoatdongdanhgia_update,
+              type: "POST",
+              contentType: "application/json;charset=utf-8",
+              dataType: "json",
+              data: JSON.stringify(dataPost),
+              async: false,
+              headers: { Authorization: jwtCookie },
+              success: function (result_Create) {
+                Swal.fire({
+                  icon: "success",
+                  title: "Bắt đầu điểm danh thành công!",
+                  text:
+                    "Hoạt động  " + input_MaHoatDong + " đã bắt đầu điểm danh!",
+                  timer: 2500,
+                  timerProgressBar: true,
+                });
 
-              Swal.fire({
-                icon: "error",
-                title: "Lỗi",
-                text: errorMessage.responseText,
-                //timer: 5000,
-                timerProgressBar: true,
-              });
-            },
-          });
+                setTimeout(function () {
+                  GetListHoatdongdanhgia();
+                }, 2500);
+              },
+              error: function (errorMessage) {
+                //checkLoiDangNhap(errorMessage.responseJSON.message);
+
+                Swal.fire({
+                  icon: "error",
+                  title: "Lỗi",
+                  text: errorMessage.responseText,
+                  //timer: 5000,
+                  timerProgressBar: true,
+                });
+              },
+            });
+          } else {
+            ThongBaoLoi("Hoạt động chưa mở hoặc đã kết thúc!");
+          }
         },
         error: function (errorMessage) {
           //checkLoiDangNhap(errorMessage.responseJSON.message);
 
-          Swal.fire({
-            icon: "error",
-            title: "Lỗi",
-            text: errorMessage.responseText,
-            //timer: 5000,
-            timerProgressBar: true,
-          });
+          ThongBaoLoi(errorMessage.responseJSON.message);
         },
       });
     }

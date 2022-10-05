@@ -413,7 +413,7 @@ Validator.isInDateRange = function (
       var comparedDate = new Date(value);
 
       return from.setHours(0, 0, 0, 0) <= comparedDate.getTime() &&
-        comparedDate.getTime() <= to.setHours(0, 0, 0, 0)
+        comparedDate.getTime() <= to.setHours(23, 59, 59, 999)
         ? undefined
         : message ||
             `Thời gian nhập vào phải nằm trong khoảng thời gian` +

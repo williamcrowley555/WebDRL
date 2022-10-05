@@ -50,19 +50,24 @@
 								</div>
 
 								<div class="table-search-form row gx-1 align-items-center">
-									<div class="col-auto">
+									<div class="col-auto me-3">
 										<p></p>
-										<span style="font-weight: 700;">Lọc theo thời gian: </button>
-									</div>
-									<div class="col-auto">
-										<span style="font-weight: 700;">Thời gian bắt đầu</span>
-										<input type="datetime-local" id="search-orders" name="searchorders" class="form-control search-orders" placeholder="Nhập mã hoạt động...">
-									</div>
-									<div class="col-auto">
-										<span style="font-weight: 700;">Thời gian bắt đầu</span>
-										<input type="datetime-local" id="search-orders" name="searchorders" class="form-control search-orders" placeholder="Nhập mã hoạt động...">
+										<span style="font-weight: 700;">Lọc theo khoảng thời gian: </button>
 									</div>
 
+									<div class="col-auto me-3">
+										<span style="font-weight: 700;">Từ:</span>
+										<input type="datetime-local" id="fromDateFilter" class="form-control search-orders" placeholder="Nhập thời gian bắt đầu...">
+									</div>
+
+									<div class="col-auto me-3">
+										<span style="font-weight: 700;">Đến:</span>
+										<input type="datetime-local" id="toDateFilter" class="form-control search-orders" placeholder="Nhập thời gian kết thúc...">
+									</div>
+
+									<div class="col-auto mt-auto">
+										<button type="button" id="btnDateFilter" class="btn app-btn-primary btn-primary" data-bs-toggle="modal">Lọc</button>
+									</div>
 								</div>
 							</div>
 
@@ -392,7 +397,7 @@
 					var namHoc = _input_MaHocKy.substring(_input_MaHocKy.indexOf(" - ") + 3);
 					var splittedNamHoc = namHoc.split('-');
 
-					return `${splittedNamHoc[1]}-01-01`;
+					return `${splittedNamHoc[1]}-12-31`;
 				}
 			),
 			Validator.isInDateRange(
@@ -409,7 +414,7 @@
 					var namHoc = _input_MaHocKy.substring(_input_MaHocKy.indexOf(" - ") + 3);
 					var splittedNamHoc = namHoc.split('-');
 
-					return `${splittedNamHoc[1]}-01-01`;
+					return `${splittedNamHoc[1]}-12-31`;
 				}
 			),
         ],
@@ -450,7 +455,7 @@
 					var namHoc = _input_MaHocKy.substring(_input_MaHocKy.indexOf(" - ") + 3);
 					var splittedNamHoc = namHoc.split('-');
 
-					return `${splittedNamHoc[1]}-01-01`;
+					return `${splittedNamHoc[1]}-12-31`;
 				}
 			),
 			Validator.isInDateRange(
@@ -467,7 +472,7 @@
 					var namHoc = _input_MaHocKy.substring(_input_MaHocKy.indexOf(" - ") + 3);
 					var splittedNamHoc = namHoc.split('-');
 
-					return `${splittedNamHoc[1]}-01-01`;
+					return `${splittedNamHoc[1]}-12-31`;
 				}
 			),
         ],
@@ -547,6 +552,26 @@
 		$("#EditForm #edit_input_ThoiGianKetThuc").removeClass("is-invalid");
 	})
 
+	$(document).on("click", "#btnDateFilter" ,function() {
+		var inputFrom = $('#fromDateFilter').val();
+		var inputTo = $('#toDateFilter').val();
+
+		var from = new Date(inputFrom).getTime();
+		var to = new Date(inputTo).getTime();
+
+		if(from < to) {
+			
+		} else {
+			Swal.fire({
+				icon: "error",
+				title: "Lỗi",
+				text: 'Khoảng thời gian không hợp lệ!',
+				timer: 2000,
+				timerProgressBar: true,
+				showCloseButton: true,
+			});
+		}
+	})
 
 	//Get Goong maps API
 	$('#input_DiaDiemHoatDong').on('keyup', function(){
