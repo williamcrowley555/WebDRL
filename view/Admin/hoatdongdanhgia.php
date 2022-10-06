@@ -503,6 +503,13 @@
 		}
 	}
 
+	function convertToDateTimeFormat(date) {
+		const offsetMs = date.getTimezoneOffset() * 60 * 1000;
+		const dateLocal = new Date(date.getTime() - offsetMs);
+
+		return dateLocal.toISOString().slice(0, 19).replace(/-/g, "-").replace("T", " ");
+  	}
+
 	//hàm trong function.js
 	GetListHoatdongdanhgia();
 
@@ -552,15 +559,19 @@
 		$("#EditForm #edit_input_ThoiGianKetThuc").removeClass("is-invalid");
 	})
 
+	// Xử lý lọc hoạt động theo khoảng thời gian
 	$(document).on("click", "#btnDateFilter" ,function() {
 		var inputFrom = $('#fromDateFilter').val();
 		var inputTo = $('#toDateFilter').val();
 
-		var from = new Date(inputFrom).getTime();
-		var to = new Date(inputTo).getTime();
+		const fromDate = new Date(inputFrom);
+		const toDate = new Date(inputTo);
 
-		if(from < to) {
-			
+		if(fromDate.getTime() < toDate.getTime()) {
+			const from = convertToDateTimeFormat(fromDate);
+			const to = convertToDateTimeFormat(toDate);
+
+			LocHoatDong(from, to);
 		} else {
 			Swal.fire({
 				icon: "error",

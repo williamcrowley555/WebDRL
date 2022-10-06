@@ -22,6 +22,18 @@
 
     // kiểm tra đăng nhập thành công 
     if($data["status"]==1){
+
+        if (isset($_GET['from'])) {
+            $from = $_GET['from'];
+        } else {
+            $from = null;
+        }
+
+        if (isset($_GET['to'])) {
+            $to = $_GET['to'];
+        } else {
+            $to = null;
+        }
        
         if (isset($_GET['maHD'])) {
             $maHD = $_GET['maHD'];
@@ -29,7 +41,55 @@
             $maHD = null;
         }
 
-        if ($maHD == null) {
+        if($from != null && $to != null) {
+            $from = str_replace("%20", " ", $from);
+            $to = str_replace("%20", " ", $to);
+
+            $items = new HoatDongDanhGia($db);
+            $stmt = $items->getHoatDongTheoKhoangThoiGian($from, $to);
+            $itemCount = $stmt->rowCount();
+    
+    
+            if($itemCount > 0){
+                $hoatdongdanhgiaArr = array();
+                $hoatdongdanhgiaArr["hoatdongdanhgia"] = array(); //tạo object json 
+                $hoatdongdanhgiaArr["itemCount"] = $itemCount;
+    
+                $urlFile = $url.dirname($_SERVER['PHP_SELF'])."/QRImages/";
+    
+                $countRow = 0;
+    
+                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+                    extract($row);
+                    $countRow++;
+                    $e = array(
+                        "soThuTu" => $countRow,
+                        "maHoatDong" => $maHoatDong ,
+                        "maTieuChi3" => $maTieuChi3,
+                        "maTieuChi2" => $maTieuChi2,
+                        "maKhoa" => $maKhoa,
+                        "tenHoatDong" => $tenHoatDong,
+                        "diemNhanDuoc" => $diemNhanDuoc,
+                        "diaDiemDienRaHoatDong" => $diaDiemDienRaHoatDong,
+                        "maHocKyDanhGia" => $maHocKyDanhGia,
+                        "thoiGianBatDauDiemDanh" => $thoiGianBatDauDiemDanh,
+                        "maQRDiaDiem" => $urlFile.$maQRDiaDiem,
+                        "thoiGianBatDauHoatDong" => $thoiGianBatDauHoatDong,
+                        "thoiGianKetThucHoatDong" => $thoiGianKetThucHoatDong,
+                        "noiDungTieuChi" => $noiDungTieuChi,
+                    );
+                    array_push($hoatdongdanhgiaArr["hoatdongdanhgia"], $e);
+                }
+                http_response_code(200);
+                echo json_encode($hoatdongdanhgiaArr);
+            }
+            else{
+                http_response_code(404);
+                echo json_encode(
+                    array("message" => "Không tìm thấy dữ liệu.")
+                );
+            }
+        } else if ($maHD == null) {
             $items = new HoatDongDanhGia($db);
             $stmt = $items->getAllHoatDongDanhGia();
             $itemCount = $stmt->rowCount();

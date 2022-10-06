@@ -231,6 +231,98 @@ function TimKiemHoatDong(maHD) {
   });
 }
 
+function LocHoatDong(from, to) {
+  if (from && to) {
+    $.ajax({
+      url: urlapi_hoatdongdanhgia_read + `?from=${from}&to=${to}`,
+      type: "GET",
+      contentType: "application/json;charset=utf-8",
+      dataType: "json",
+      async: true,
+      headers: { Authorization: jwtCookie },
+      success: function (result) {
+        $("#id_tbodyLop tr").remove();
+
+        $("#idPhanTrang").pagination({
+          dataSource: result["hoatdongdanhgia"],
+          pageSize: 10,
+          autoHidePrevious: true,
+          autoHideNext: true,
+
+          callback: function (data, pagination) {
+            var htmlData = "";
+            var count = 0;
+
+            for (let i = 0; i < data.length; i++) {
+              count += 1;
+
+              htmlData +=
+                "<tr >\
+                              <td class='cell'>" +
+                data[i].soThuTu +
+                "</td>\
+                              <td class='cell'><span class='truncate'>" +
+                data[i].maHoatDong +
+                "</span></td>\
+                              <td class='cell'>" +
+                data[i].tenHoatDong +
+                "</td>\
+                              <td class='cell'>" +
+                data[i].maKhoa +
+                "</td>\
+                              <td class='cell'>" +
+                data[i].noiDungTieuChi +
+                "</td>\
+                              <td class='cell'>" +
+                data[i].diemNhanDuoc +
+                "</td>\
+                              <td class='cell'>" +
+                data[i].diaDiemDienRaHoatDong +
+                "</td>\
+                              <td class='cell'>" +
+                data[i].maHocKyDanhGia +
+                "</td>\
+                              <td class='cell'>" +
+                data[i].thoiGianBatDauHoatDong +
+                "</td>\
+                              <td class='cell'>" +
+                data[i].thoiGianKetThucHoatDong +
+                "</td>\
+                              <td class='cell'>" +
+                data[i].thoiGianBatDauDiemDanh +
+                "</td>\
+                              <td class='cell'><img src='" +
+                data[i].maQRDiaDiem +
+                "' style='width: 50%;' /></td>\
+                              <td class='cell'>\
+                                  <button type='button' class='btn_DanhSachThamGia btn' style='color: white;width: max-content;margin: 5px;background: #656566;'  data-id='" +
+                data[i].maHoatDong +
+                "' data-name-id='" +
+                data[i].tenHoatDong +
+                "' data-bs-toggle='modal' data-bs-target='#DanhSachThamGiaModal' >Danh sách tham gia</button>\
+                                  <button type='button' class='btn_BatDauDiemDanh btn' style='color: white;width: max-content;margin: 5px;background: dodgerblue;'  data-id='" +
+                data[i].maHoatDong +
+                "' >Bắt đầu điểm danh</button>\
+                                  <button type='button' class='btn bg-warning btn_ChinhSua_HoatDong' style='color: white;width: max-content;margin: 5px;'  data-id='" +
+                data[i].maHoatDong +
+                "'  data-bs-toggle='modal' data-bs-target='#ChinhSuaModal'>Chỉnh sửa</button>\
+                              </td>\
+                              </tr>";
+            }
+
+            $("#id_tbodyLop").html(htmlData);
+          },
+        });
+      },
+      error: function (errorMessage) {
+        checkLoiDangNhap(errorMessage.responseJSON.message);
+
+        ThongBaoLoi(errorMessage.responseJSON.message);
+      },
+    });
+  }
+}
+
 function LoadThongTinThemMoi() {
   //Load khoa
   $.ajax({
@@ -551,8 +643,6 @@ function ThemMoi_HoatDong() {
             url: urlCreate,
           };
 
-          //console.log(dataPost);
-
           $.ajax({
             url: urlapi_hoatdongdanhgia_create,
             type: "POST",
@@ -628,8 +718,6 @@ function ThemMoi_HoatDong() {
               url: urlCreate,
             };
 
-            //console.log(dataPost);
-
             $.ajax({
               url: urlapi_hoatdongdanhgia_create,
               type: "POST",
@@ -682,8 +770,6 @@ function ThemMoi_HoatDong() {
               thoiGianBatDauDiemDanh: null,
               url: urlCreate,
             };
-
-            //console.log(dataPost);
 
             $.ajax({
               url: urlapi_hoatdongdanhgia_create,
@@ -907,8 +993,6 @@ function LoadDanhSachThamGia(maHoatDong) {
             },
             error: function (errorMessage) {
               //checkLoiDangNhap(errorMessage.responseJSON.message);
-
-              console.log(errorMessage.responseJSON.message);
             },
           });
         }
@@ -925,7 +1009,6 @@ function LoadDanhSachThamGia(maHoatDong) {
                 <td colspan=4 style="text-align:center">Không tìm thấy kết quả.</td>\
             </tr>'
       );
-      console.log(errorMessage.responseJSON.message);
     },
   });
 }
