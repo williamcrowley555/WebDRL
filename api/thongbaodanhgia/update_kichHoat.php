@@ -26,19 +26,12 @@
             $data = json_decode(file_get_contents("php://input"));
             
             if ($data != null){
-                $item->maThongBao   = $data->maThongBao ;
+                $item->maThongBao = $data->maThongBao ;
             
-                //values
-                $item->ngaySinhVienDanhGia = $data->ngaySinhVienDanhGia;
-                $item->ngaySinhVienKetThucDanhGia = $data->ngaySinhVienKetThucDanhGia;
-                $item->ngayCoVanDanhGia = $data->ngayCoVanDanhGia;
-                $item->ngayCoVanKetThucDanhGia = $data->ngayCoVanKetThucDanhGia;
-                $item->ngayKhoaDanhGia = $data->ngayKhoaDanhGia;
-                $item->ngayKhoaKetThucDanhGia = $data->ngayKhoaKetThucDanhGia;
-                $item->ngayThongBao = $data->ngayThongBao;
-                $item->maHocKyDanhGia = $data->maHocKyDanhGia;
+                //value
+                $item->kichHoat = $data->kichHoat;
                 
-                if($item->updateThongBaoDanhGia()){
+                if($item->update_kichHoat_ThongBaoDanhGia()){
                     http_response_code(200);
                     echo json_encode(
                         array("message" => "Thông báo đánh giá cập nhật thành công.")

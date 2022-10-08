@@ -99,6 +99,9 @@ const urlapi_thongbaodanhgia_create =
 const urlapi_thongbaodanhgia_update =
   host_domain_url + "/thongbaodanhgia/update.php";
 
+const urlapi_thongbaodanhgia_update_kichHoat =
+  host_domain_url + "/thongbaodanhgia/update_kichHoat.php";
+
 //---------------HOC KY DANH GIA---------------//----------------------------------
 //---------//
 

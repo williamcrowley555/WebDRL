@@ -623,6 +623,7 @@
 
 	//LoadThongTinThemMoi();
 
+	// Xử lý chỉnh sửa thông báo đánh giá
 	$(document).on("click", ".btn_ChinhSua_ThongBaoDanhGia" ,function() {
 		var maThongBao = $(this).attr('data-id');
 		
@@ -638,5 +639,13 @@
 		$("#EditForm #edit_input_NgayCoVanKetThucDanhGia").removeClass("is-invalid");
 		$("#EditForm #edit_input_NgayKhoaDanhGia").removeClass("is-invalid");
 		$("#EditForm #edit_input_NgayKhoaKetThucDanhGia").removeClass("is-invalid");
+	})
+
+	
+	// Xử lý xóa thông báo đánh giá
+	$(document).on("click", ".btn_Xoa_ThongBaoDanhGia" ,function() {
+		var maThongBao = $(this).attr('data-id');
+
+		XoaThongBaoDanhGia(maThongBao);
 	})
 </script>

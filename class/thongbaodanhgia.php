@@ -26,19 +26,22 @@
         //Các chức năng
 
         // GET ALL
-        public function getAllThongBaoDanhGia(){
-            $sqlQuery = "SELECT maThongBao   , ngaySinhVienDanhGia, ngaySinhVienKetThucDanhGia, ngayCoVanDanhGia, ngayCoVanKetThucDanhGia, ngayKhoaDanhGia, ngayKhoaKetThucDanhGia, ngayThongBao, maHocKyDanhGia FROM " . $this->db_table . "";
+        public function getAllThongBaoDanhGia($kichHoat = 1){
+            $sqlQuery = "SELECT maThongBao, ngaySinhVienDanhGia, ngaySinhVienKetThucDanhGia, ngayCoVanDanhGia, ngayCoVanKetThucDanhGia, ngayKhoaDanhGia, ngayKhoaKetThucDanhGia, ngayThongBao, maHocKyDanhGia 
+            FROM " . $this->db_table . 
+            " WHERE kichHoat = ?";
             $stmt = $this->conn->prepare($sqlQuery);
+            $stmt->bindParam(1, $kichHoat);
             $stmt->execute();
             return $stmt;
         }
 
         // READ single
         public function getSingleThongBaoDanhGia(){
-            $sqlQuery = "SELECT maThongBao   , ngaySinhVienDanhGia, ngaySinhVienKetThucDanhGia, ngayCoVanDanhGia, ngayCoVanKetThucDanhGia, ngayKhoaDanhGia, ngayKhoaKetThucDanhGia, ngayThongBao, maHocKyDanhGia FROM ". $this->db_table ."
-                        WHERE maThongBao    = ? LIMIT 0,1";
+            $sqlQuery = "SELECT maThongBao, ngaySinhVienDanhGia, ngaySinhVienKetThucDanhGia, ngayCoVanDanhGia, ngayCoVanKetThucDanhGia, ngayKhoaDanhGia, ngayKhoaKetThucDanhGia, ngayThongBao, maHocKyDanhGia FROM ". $this->db_table ."
+                        WHERE maThongBao = ? LIMIT 0,1";
             $stmt = $this->conn->prepare($sqlQuery);
-            $stmt->bindParam(1, $this->maThongBao   );
+            $stmt->bindParam(1, $this->maThongBao);
             $stmt->execute();
 
             $dataRow = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -137,12 +140,12 @@
                         ngayThongBao = :ngayThongBao,
                         maHocKyDanhGia = :maHocKyDanhGia
                     WHERE 
-                        maThongBao    = :maThongBao   ";
+                        maThongBao = :maThongBao";
         
             $stmt = $this->conn->prepare($sqlQuery);
         
             // sanitize (Lọc dữ liệu đầu vào tránh SQLInjection, XSS)
-            $this->maThongBao   =htmlspecialchars(strip_tags($this->maThongBao   ));
+            $this->maThongBao=htmlspecialchars(strip_tags($this->maThongBao));
             $this->ngaySinhVienDanhGia=htmlspecialchars(strip_tags($this->ngaySinhVienDanhGia));
             $this->ngaySinhVienKetThucDanhGia=htmlspecialchars(strip_tags($this->ngaySinhVienKetThucDanhGia));
             $this->ngayCoVanDanhGia=htmlspecialchars(strip_tags($this->ngayCoVanDanhGia));
@@ -154,7 +157,7 @@
         
         
             // bind data
-            $stmt->bindParam(":maThongBao", $this->maThongBao   );
+            $stmt->bindParam(":maThongBao", $this->maThongBao);
             $stmt->bindParam(":ngaySinhVienDanhGia", $this->ngaySinhVienDanhGia);
             $stmt->bindParam(":ngaySinhVienKetThucDanhGia", $this->ngaySinhVienKetThucDanhGia);
             $stmt->bindParam(":ngayCoVanDanhGia", $this->ngayCoVanDanhGia);
@@ -163,6 +166,34 @@
             $stmt->bindParam(":ngayKhoaKetThucDanhGia", $this->ngayKhoaKetThucDanhGia);
             $stmt->bindParam(":ngayThongBao", $this->ngayThongBao);
             $stmt->bindParam(":maHocKyDanhGia", $this->maHocKyDanhGia);
+        
+        
+            if($stmt->execute()){
+               return true;
+            }
+            return false;
+        }
+        
+        // UPDATE trang thai kichHoat
+        public function update_kichHoat_ThongBaoDanhGia(){
+            $sqlQuery = "UPDATE
+                        ". $this->db_table ."
+                    SET
+                        kichHoat = :kichHoat " .
+                    ($this->kichHoat == '0' ? ', maHocKyDanhGia = NULL ' : '') .
+                    "WHERE 
+                        maThongBao = :maThongBao";
+        
+            $stmt = $this->conn->prepare($sqlQuery);
+        
+            // sanitize (Lọc dữ liệu đầu vào tránh SQLInjection, XSS)
+            $this->maThongBao=htmlspecialchars(strip_tags($this->maThongBao));
+            $this->kichHoat=htmlspecialchars(strip_tags($this->kichHoat));
+        
+        
+            // bind data
+            $stmt->bindParam(":maThongBao", $this->maThongBao);
+            $stmt->bindParam(":kichHoat", $this->kichHoat);
         
         
             if($stmt->execute()){

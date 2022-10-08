@@ -45,6 +45,8 @@ function GetListThongBaoDanhGia() {
   if (getCookie("jwt") != null) {
     var jwtCookie = getCookie("jwt");
 
+    $("#id_tbodyLop tr").remove();
+
     $.ajax({
       url: urlapi_thongbaodanhgia_read,
       type: "GET",
@@ -113,6 +115,9 @@ function GetListThongBaoDanhGia() {
                                     <button class='btn bg-warning btn_ChinhSua_ThongBaoDanhGia' style='color: white;margin: 5px;width: max-content;' data-id='" +
                     data[i].maThongBao +
                     "' data-bs-toggle='modal' data-bs-target='#ChinhSuaModal' >Chỉnh sửa</button>\
+                                    <button class='btn bg-danger btn_Xoa_ThongBaoDanhGia' style='color: white;width: max-content;margin: 5px;' data-id='" +
+                    data[i].maThongBao +
+                    "' >Xóa</button>\
                                 </td>\
                                 </tr>";
                 },
@@ -474,4 +479,54 @@ function ChinhSua_ThongBaoDanhGia() {
       },
     });
   }
+}
+
+function XoaThongBaoDanhGia(maThongBao) {
+  Swal.fire({
+    title: "Xác nhận xóa thông báo đánh giá mã  " + maThongBao + " ?",
+    showDenyButton: true,
+    confirmButtonText: "Xác nhận",
+    denyButtonText: `Đóng`,
+  }).then((result) => {
+    if (result.isConfirmed) {
+      var dataPost_ThongBaoDanhGia = {
+        maThongBao: maThongBao,
+        kichHoat: "0",
+      };
+
+      $.ajax({
+        url: urlapi_thongbaodanhgia_update_kichHoat,
+        type: "POST",
+        contentType: "application/json;charset=utf-8",
+        dataType: "json",
+        data: JSON.stringify(dataPost_ThongBaoDanhGia),
+        async: false,
+        headers: { Authorization: jwtCookie },
+        success: function (result_TBDG) {
+          Swal.fire({
+            icon: "success",
+            title: "Xóa thông báo đánh giá mã " + maThongBao + " thành công!",
+            text: "",
+            timer: 2000,
+            timerProgressBar: true,
+          });
+
+          setTimeout(function () {
+            GetListThongBaoDanhGia();
+          }, 2000);
+        },
+        error: function (errorMessage) {
+          //checkLoiDangNhap(errorMessage.responseJSON.message);
+
+          Swal.fire({
+            icon: "error",
+            title: "Lỗi",
+            text: "Xóa thông báo đánh giá mã " + maThongBao + " thất bại!",
+            //timer: 5000,
+            timerProgressBar: true,
+          });
+        },
+      });
+    }
+  });
 }
