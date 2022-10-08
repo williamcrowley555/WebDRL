@@ -309,7 +309,7 @@
 			Validator.isPositiveNumber('#select_HocKyXet', 'Học kỳ đánh giá chỉ bao gồm các giá trị: 1, 2, 3'),
 			Validator.minNumber('#select_HocKyXet', 1, "Học kỳ đánh giá chỉ bao gồm các giá trị: 1, 2, 3"),
 			Validator.maxNumber('#select_HocKyXet', 3, "Học kỳ đánh giá chỉ bao gồm các giá trị: 1, 2, 3"),
-			Validator.isRequired('#input_NamHocBatDau', 'Vui lòng nhập năm học bắt đầu'),
+			Validator.isRequired('#input_NamHocBatDau', 'Vui lòng nhập năm học bắt đầu và kết thúc'),
 			Validator.isPositiveNumber('#input_NamHocBatDau', 'Năm học bắt đầu chỉ bao gồm các ký tự số'),
 			Validator.minLength('#input_NamHocBatDau', 4, 'Năm học bắt đầu phải có tối thiểu 4 chữ số'),
 			Validator.compare(
@@ -319,7 +319,7 @@
 				}, 
 				`Năm học bắt đầu phải nhỏ hơn năm học kết thúc`, 
 				-1),
-			Validator.isRequired('#input_NamHocKetThuc', 'Vui lòng nhập năm học kết thúc'),
+			Validator.isRequired('#input_NamHocKetThuc', 'Vui lòng nhập năm học bắt đầu và kết thúc'),
 			Validator.isPositiveNumber('#input_NamHocKetThuc', 'Năm học kết thúc chỉ bao gồm các ký tự số'),
 			Validator.minLength('#input_NamHocKetThuc', 4, 'Năm học kết thúc phải có tối thiểu 4 chữ số'),
 			Validator.compare(
@@ -330,30 +330,121 @@
 				`Năm học kết thúc phải lớn hơn năm học bắt đầu`, 
 				1),
 			Validator.isRequired('#input_NgayThongBao', 'Vui lòng nhập ngày thông báo'),
+			Validator.isInDateRange(
+				'#input_NgayThongBao', 
+				function() {
+					var _input_namHocBatDau = $("#AddForm #input_NamHocBatDau").val();
+
+					return `${_input_namHocBatDau}-01-01`;
+				},
+				function() {
+					var _input_namHocKetThuc = $("#AddForm #input_NamHocKetThuc").val();
+
+					return `${_input_namHocKetThuc}-12-31`;
+				}
+			),
 			Validator.isRequired('#input_NgaySinhVienDanhGia', 'Vui lòng nhập ngày sinh viên đánh giá'),
 			Validator.isEventDay('#input_NgaySinhVienDanhGia', function() {
 				return document.querySelector('#AddForm #input_NgayThongBao').value;
 			}, "Ngày sinh viên đánh giá phải diễn ra sau ngày thông báo", true),
+			Validator.isInDateRange(
+				'#input_NgaySinhVienDanhGia', 
+				function() {
+					var _input_namHocBatDau = $("#AddForm #input_NamHocBatDau").val();
+
+					return `${_input_namHocBatDau}-01-01`;
+				},
+				function() {
+					var _input_namHocKetThuc = $("#AddForm #input_NamHocKetThuc").val();
+
+					return `${_input_namHocKetThuc}-12-31`;
+				}
+			),
 			Validator.isRequired('#input_NgaySinhVienKetThucDanhGia', 'Vui lòng nhập ngày sinh viên kết thúc đánh giá'),
 			Validator.isEventDay('#input_NgaySinhVienKetThucDanhGia', function() {
 				return document.querySelector('#AddForm #input_NgaySinhVienDanhGia').value;
 			}, "Ngày sinh viên kết thúc đánh giá phải diễn ra sau ngày sinh viên đánh giá", true),
+			Validator.isInDateRange(
+				'#input_NgaySinhVienKetThucDanhGia', 
+				function() {
+					var _input_namHocBatDau = $("#AddForm #input_NamHocBatDau").val();
+
+					return `${_input_namHocBatDau}-01-01`;
+				},
+				function() {
+					var _input_namHocKetThuc = $("#AddForm #input_NamHocKetThuc").val();
+
+					return `${_input_namHocKetThuc}-12-31`;
+				}
+			),
 			Validator.isRequired('#input_NgayCoVanDanhGia', 'Vui lòng nhập ngày cố vấn đánh giá'),
 			Validator.isEventDay('#input_NgayCoVanDanhGia', function() {
 				return document.querySelector('#AddForm #input_NgaySinhVienKetThucDanhGia').value;
 			}, "Ngày cố vấn đánh giá phải diễn ra sau ngày sinh viên kết thúc đánh giá", true),
+			Validator.isInDateRange(
+				'#input_NgayCoVanDanhGia', 
+				function() {
+					var _input_namHocBatDau = $("#AddForm #input_NamHocBatDau").val();
+
+					return `${_input_namHocBatDau}-01-01`;
+				},
+				function() {
+					var _input_namHocKetThuc = $("#AddForm #input_NamHocKetThuc").val();
+
+					return `${_input_namHocKetThuc}-12-31`;
+				}
+			),
 			Validator.isRequired('#input_NgayCoVanKetThucDanhGia', 'Vui lòng nhập ngày cố vấn kết thúc đánh giá'),
 			Validator.isEventDay('#input_NgayCoVanKetThucDanhGia', function() {
 				return document.querySelector('#AddForm #input_NgayCoVanDanhGia').value;
 			}, "Ngày cố vấn kết thúc đánh giá phải diễn ra sau ngày cố vấn đánh giá", true),
+			Validator.isInDateRange(
+				'#input_NgayCoVanKetThucDanhGia', 
+				function() {
+					var _input_namHocBatDau = $("#AddForm #input_NamHocBatDau").val();
+
+					return `${_input_namHocBatDau}-01-01`;
+				},
+				function() {
+					var _input_namHocKetThuc = $("#AddForm #input_NamHocKetThuc").val();
+
+					return `${_input_namHocKetThuc}-12-31`;
+				}
+			),
 			Validator.isRequired('#input_NgayKhoaDanhGia', 'Vui lòng nhập ngày khoa đánh giá'),
 			Validator.isEventDay('#input_NgayKhoaDanhGia', function() {
 				return document.querySelector('#AddForm #input_NgayCoVanKetThucDanhGia').value;
 			}, "Ngày khoa đánh giá phải diễn ra sau ngày cố vấn kết thúc đánh giá", true),
+			Validator.isInDateRange(
+				'#input_NgayKhoaDanhGia', 
+				function() {
+					var _input_namHocBatDau = $("#AddForm #input_NamHocBatDau").val();
+
+					return `${_input_namHocBatDau}-01-01`;
+				},
+				function() {
+					var _input_namHocKetThuc = $("#AddForm #input_NamHocKetThuc").val();
+
+					return `${_input_namHocKetThuc}-12-31`;
+				}
+			),
 			Validator.isRequired('#input_NgayKhoaKetThucDanhGia', 'Vui lòng nhập ngày khoa kết thúc đánh giá'),
 			Validator.isEventDay('#input_NgayKhoaKetThucDanhGia', function() {
 				return document.querySelector('#AddForm #input_NgayKhoaDanhGia').value;
 			}, "Ngày khoa kết thúc đánh giá phải diễn ra sau ngày khoa đánh giá", true),
+			Validator.isInDateRange(
+				'#input_NgayKhoaKetThucDanhGia', 
+				function() {
+					var _input_namHocBatDau = $("#AddForm #input_NamHocBatDau").val();
+
+					return `${_input_namHocBatDau}-01-01`;
+				},
+				function() {
+					var _input_namHocKetThuc = $("#AddForm #input_NamHocKetThuc").val();
+
+					return `${_input_namHocKetThuc}-12-31`;
+				}
+			),
         ],
         onSubmit: ThemMoi
     })
@@ -366,30 +457,163 @@
 			Validator.isRequired('#edit_input_MaThongBao', 'Vui lòng nhập mã thông báo'),
 			Validator.isNumber('#edit_input_MaThongBao', 'Mã thông báo chỉ bao gồm các ký tự số'),
 			Validator.isRequired('#edit_input_NgayThongBao', 'Vui lòng nhập ngày thông báo'),
+			Validator.isInDateRange(
+				'#edit_input_NgayThongBao', 
+				function() {
+					var _input_HocKyNamHocXet = $("#EditForm #edit_input_HocKyNamHocXet").val();
+					var nienKhoaIndex = _input_HocKyNamHocXet.indexOf("Năm học: ") + 9;
+					var nienKhoa = _input_HocKyNamHocXet.substring(nienKhoaIndex);
+					var namHocBatDau = nienKhoa.split("-")[0];
+
+					return `${namHocBatDau}-01-01`;
+				},
+				function() {
+					var _input_HocKyNamHocXet = $("#EditForm #edit_input_HocKyNamHocXet").val();
+					var nienKhoaIndex = _input_HocKyNamHocXet.indexOf("Năm học: ") + 9;
+					var nienKhoa = _input_HocKyNamHocXet.substring(nienKhoaIndex);
+					var namHocKetThuc = nienKhoa.split("-")[1];
+
+					return `${namHocKetThuc}-12-31`;
+				}
+			),
 			Validator.isRequired('#edit_input_NgaySinhVienDanhGia', 'Vui lòng nhập ngày sinh viên đánh giá'),
 			Validator.isEventDay('#edit_input_NgaySinhVienDanhGia', function() {
 				return document.querySelector('#EditForm #edit_input_NgayThongBao').value;
 			}, "Ngày sinh viên đánh giá phải diễn ra sau ngày thông báo", true),
+			Validator.isInDateRange(
+				'#edit_input_NgaySinhVienDanhGia', 
+				function() {
+					var _input_HocKyNamHocXet = $("#EditForm #edit_input_HocKyNamHocXet").val();
+					var nienKhoaIndex = _input_HocKyNamHocXet.indexOf("Năm học: ") + 9;
+					var nienKhoa = _input_HocKyNamHocXet.substring(nienKhoaIndex);
+					var namHocBatDau = nienKhoa.split("-")[0];
+
+					return `${namHocBatDau}-01-01`;
+				},
+				function() {
+					var _input_HocKyNamHocXet = $("#EditForm #edit_input_HocKyNamHocXet").val();
+					var nienKhoaIndex = _input_HocKyNamHocXet.indexOf("Năm học: ") + 9;
+					var nienKhoa = _input_HocKyNamHocXet.substring(nienKhoaIndex);
+					var namHocKetThuc = nienKhoa.split("-")[1];
+
+					return `${namHocKetThuc}-12-31`;
+				}
+			),
 			Validator.isRequired('#edit_input_NgaySinhVienKetThucDanhGia', 'Vui lòng nhập ngày sinh viên kết thúc đánh giá'),
 			Validator.isEventDay('#edit_input_NgaySinhVienKetThucDanhGia', function() {
 				return document.querySelector('#EditForm #edit_input_NgaySinhVienDanhGia').value;
 			}, "Ngày sinh viên kết thúc đánh giá phải diễn ra sau ngày sinh viên đánh giá", true),
+			Validator.isInDateRange(
+				'#edit_input_NgaySinhVienKetThucDanhGia', 
+				function() {
+					var _input_HocKyNamHocXet = $("#EditForm #edit_input_HocKyNamHocXet").val();
+					var nienKhoaIndex = _input_HocKyNamHocXet.indexOf("Năm học: ") + 9;
+					var nienKhoa = _input_HocKyNamHocXet.substring(nienKhoaIndex);
+					var namHocBatDau = nienKhoa.split("-")[0];
+
+					return `${namHocBatDau}-01-01`;
+				},
+				function() {
+					var _input_HocKyNamHocXet = $("#EditForm #edit_input_HocKyNamHocXet").val();
+					var nienKhoaIndex = _input_HocKyNamHocXet.indexOf("Năm học: ") + 9;
+					var nienKhoa = _input_HocKyNamHocXet.substring(nienKhoaIndex);
+					var namHocKetThuc = nienKhoa.split("-")[1];
+
+					return `${namHocKetThuc}-12-31`;
+				}
+			),
 			Validator.isRequired('#edit_input_NgayCoVanDanhGia', 'Vui lòng nhập ngày cố vấn đánh giá'),
 			Validator.isEventDay('#edit_input_NgayCoVanDanhGia', function() {
 				return document.querySelector('#EditForm #edit_input_NgaySinhVienKetThucDanhGia').value;
 			}, "Ngày cố vấn đánh giá phải diễn ra sau ngày sinh viên kết thúc đánh giá", true),
+			Validator.isInDateRange(
+				'#edit_input_NgayCoVanDanhGia', 
+				function() {
+					var _input_HocKyNamHocXet = $("#EditForm #edit_input_HocKyNamHocXet").val();
+					var nienKhoaIndex = _input_HocKyNamHocXet.indexOf("Năm học: ") + 9;
+					var nienKhoa = _input_HocKyNamHocXet.substring(nienKhoaIndex);
+					var namHocBatDau = nienKhoa.split("-")[0];
+
+					return `${namHocBatDau}-01-01`;
+				},
+				function() {
+					var _input_HocKyNamHocXet = $("#EditForm #edit_input_HocKyNamHocXet").val();
+					var nienKhoaIndex = _input_HocKyNamHocXet.indexOf("Năm học: ") + 9;
+					var nienKhoa = _input_HocKyNamHocXet.substring(nienKhoaIndex);
+					var namHocKetThuc = nienKhoa.split("-")[1];
+
+					return `${namHocKetThuc}-12-31`;
+				}
+			),
 			Validator.isRequired('#edit_input_NgayCoVanKetThucDanhGia', 'Vui lòng nhập ngày cố vấn kết thúc đánh giá'),
 			Validator.isEventDay('#edit_input_NgayCoVanKetThucDanhGia', function() {
 				return document.querySelector('#EditForm #edit_input_NgayCoVanDanhGia').value;
 			}, "Ngày cố vấn kết thúc đánh giá phải diễn ra sau ngày cố vấn đánh giá", true),
+			Validator.isInDateRange(
+				'#edit_input_NgayCoVanKetThucDanhGia', 
+				function() {
+					var _input_HocKyNamHocXet = $("#EditForm #edit_input_HocKyNamHocXet").val();
+					var nienKhoaIndex = _input_HocKyNamHocXet.indexOf("Năm học: ") + 9;
+					var nienKhoa = _input_HocKyNamHocXet.substring(nienKhoaIndex);
+					var namHocBatDau = nienKhoa.split("-")[0];
+
+					return `${namHocBatDau}-01-01`;
+				},
+				function() {
+					var _input_HocKyNamHocXet = $("#EditForm #edit_input_HocKyNamHocXet").val();
+					var nienKhoaIndex = _input_HocKyNamHocXet.indexOf("Năm học: ") + 9;
+					var nienKhoa = _input_HocKyNamHocXet.substring(nienKhoaIndex);
+					var namHocKetThuc = nienKhoa.split("-")[1];
+
+					return `${namHocKetThuc}-12-31`;
+				}
+			),
 			Validator.isRequired('#edit_input_NgayKhoaDanhGia', 'Vui lòng nhập ngày khoa đánh giá'),
 			Validator.isEventDay('#edit_input_NgayKhoaDanhGia', function() {
 				return document.querySelector('#EditForm #edit_input_NgayCoVanKetThucDanhGia').value;
 			}, "Ngày khoa đánh giá phải diễn ra sau ngày cố vấn kết thúc đánh giá", true),
+			Validator.isInDateRange(
+				'#edit_input_NgayKhoaDanhGia', 
+				function() {
+					var _input_HocKyNamHocXet = $("#EditForm #edit_input_HocKyNamHocXet").val();
+					var nienKhoaIndex = _input_HocKyNamHocXet.indexOf("Năm học: ") + 9;
+					var nienKhoa = _input_HocKyNamHocXet.substring(nienKhoaIndex);
+					var namHocBatDau = nienKhoa.split("-")[0];
+
+					return `${namHocBatDau}-01-01`;
+				},
+				function() {
+					var _input_HocKyNamHocXet = $("#EditForm #edit_input_HocKyNamHocXet").val();
+					var nienKhoaIndex = _input_HocKyNamHocXet.indexOf("Năm học: ") + 9;
+					var nienKhoa = _input_HocKyNamHocXet.substring(nienKhoaIndex);
+					var namHocKetThuc = nienKhoa.split("-")[1];
+
+					return `${namHocKetThuc}-12-31`;
+				}
+			),
 			Validator.isRequired('#edit_input_NgayKhoaKetThucDanhGia', 'Vui lòng nhập ngày khoa kết thúc đánh giá'),
 			Validator.isEventDay('#edit_input_NgayKhoaKetThucDanhGia', function() {
 				return document.querySelector('#EditForm #edit_input_NgayKhoaDanhGia').value;
 			}, "Ngày khoa kết thúc đánh giá phải diễn ra sau ngày khoa đánh giá", true),
+			Validator.isInDateRange(
+				'#edit_input_NgayKhoaKetThucDanhGia', 
+				function() {
+					var _input_HocKyNamHocXet = $("#EditForm #edit_input_HocKyNamHocXet").val();
+					var nienKhoaIndex = _input_HocKyNamHocXet.indexOf("Năm học: ") + 9;
+					var nienKhoa = _input_HocKyNamHocXet.substring(nienKhoaIndex);
+					var namHocBatDau = nienKhoa.split("-")[0];
+
+					return `${namHocBatDau}-01-01`;
+				},
+				function() {
+					var _input_HocKyNamHocXet = $("#EditForm #edit_input_HocKyNamHocXet").val();
+					var nienKhoaIndex = _input_HocKyNamHocXet.indexOf("Năm học: ") + 9;
+					var nienKhoa = _input_HocKyNamHocXet.substring(nienKhoaIndex);
+					var namHocKetThuc = nienKhoa.split("-")[1];
+
+					return `${namHocKetThuc}-12-31`;
+				}
+			),
         ],
         onSubmit: ChinhSua_ThongBaoDanhGia
     })
