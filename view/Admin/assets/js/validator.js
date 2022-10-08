@@ -316,6 +316,37 @@ Validator.isNegativeNumber = function (selector, message) {
   };
 };
 
+/**
+ * operation == 0 ==> So sánh bằng
+ * operation > 0 ==> So sánh lớn hơn
+ * operation < 0 ==> So sánh nhỏ hơn
+ */
+Validator.compare = function (
+  selector,
+  getComparedValue,
+  message,
+  operation = 0
+) {
+  return {
+    selector: selector,
+    test: function (value) {
+      if (operation > 0) {
+        return Number(value) > getComparedValue()
+          ? undefined
+          : message || `Giá trị nhập vào phải lớn hơn ${getComparedValue()}`;
+      } else if (operation < 0) {
+        return Number(value) < getComparedValue()
+          ? undefined
+          : message || `Giá trị nhập vào phải nhỏ hơn ${getComparedValue()}`;
+      }
+
+      return Number(value) == getComparedValue()
+        ? undefined
+        : message || `Giá trị nhập vào phải bằng ${getComparedValue()}`;
+    },
+  };
+};
+
 Validator.isCharacters = function (selector, message, hasWhiteSpace = true) {
   return {
     selector: selector,

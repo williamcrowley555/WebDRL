@@ -150,8 +150,9 @@ function GetListThongBaoDanhGia() {
 }
 
 function ThemMoi() {
-  var _input_HocKyXet = $("#input_HocKyXet").val();
-  var _input_NamHocXet = $("#input_NamHocXet").val();
+  var _select_HocKyXet = $("#select_HocKyXet option:selected").val();
+  var _input_NamHocXet =
+    $("#input_NamHocBatDau").val() + "-" + $("#input_NamHocKetThuc").val();
   var _input_NgayThongBao = $("#input_NgayThongBao").val();
   var _input_NgaySinhVienDanhGia = $("#input_NgaySinhVienDanhGia").val();
   var _input_NgaySinhVienKetThucDanhGia = $(
@@ -165,7 +166,7 @@ function ThemMoi() {
   var _input_NgayKhoaKetThucDanhGia = $("#input_NgayKhoaKetThucDanhGia").val();
 
   if (
-    _input_HocKyXet == "" ||
+    _select_HocKyXet == "" ||
     _input_NamHocXet == "" ||
     _input_NgayThongBao == "" ||
     _input_NgaySinhVienDanhGia == "" ||
@@ -181,125 +182,124 @@ function ThemMoi() {
     let regex = /[0-9]+-[0-9]+/i;
 
     if (regex.test(_input_NamHocXet)) {
-      //check học kỳ tồn tại chưa trước
+      var _input_MaHocKyDanhGia =
+        "HK" +
+        _select_HocKyXet +
+        _input_NamHocXet.split("-")[0].slice(2, 4) +
+        _input_NamHocXet.split("-")[1].slice(2, 4);
+
+      // Check có thông báo nào đã có maHocKyDanhGia này chưa
       $.ajax({
-        url: urlapi_hockydanhgia_read,
+        url: urlapi_thongbaodanhgia_single_read_MaHKDG + _input_MaHocKyDanhGia,
         type: "GET",
         contentType: "application/json;charset=utf-8",
         dataType: "json",
         async: false,
         headers: { Authorization: jwtCookie },
-        success: function (result_HKDG) {
-          var _input_MaHocKyDanhGia =
-            "HK" +
-            _input_HocKyXet +
-            _input_NamHocXet.split("-")[0].slice(2, 4) +
-            _input_NamHocXet.split("-")[1].slice(2, 4);
-
-          $.each(result_HKDG, function (index_HKDG) {
-            for (var p = 0; p < result_HKDG[index_HKDG].length; p++) {
-              if (
-                result_HKDG[index_HKDG][p].hocKyXet == _input_HocKyXet &&
-                result_HKDG[index_HKDG][p].namHocXet == _input_NamHocXet
-              ) {
-                ThongBaoLoi("Học kỳ vừa nhập đã tồn tại! Mời nhập lại!");
-              } else {
-                var dataPost_HocKyDanhGia = {
-                  maHocKyDanhGia: _input_MaHocKyDanhGia,
-                  hocKyXet: _input_HocKyXet,
-                  namHocXet: _input_NamHocXet,
-                };
-
-                //tạo học kỳ đánh giá trước
-                $.ajax({
-                  url: urlapi_hockydanhgia_create,
-                  type: "POST",
-                  contentType: "application/json;charset=utf-8",
-                  dataType: "json",
-                  data: JSON.stringify(dataPost_HocKyDanhGia),
-                  async: false,
-                  headers: { Authorization: jwtCookie },
-                  success: function (result_CreateHKDG) {},
-                  error: function (errorMessage) {
-                    //checkLoiDangNhap(errorMessage.responseJSON.message);
-
-                    Swal.fire({
-                      icon: "error",
-                      title: "Lỗi",
-                      text: errorMessage.responseJSON.message,
-                      //timer: 5000,
-                      timerProgressBar: true,
-                    });
-                  },
-                });
-              }
-            }
-          });
-
-          var dataPost_ThongBaoDanhGia = {
-            maHocKyDanhGia: _input_MaHocKyDanhGia,
-            ngayThongBao: _input_NgayThongBao,
-            ngaySinhVienDanhGia: _input_NgaySinhVienDanhGia,
-            ngaySinhVienKetThucDanhGia: _input_NgaySinhVienKetThucDanhGia,
-            ngayCoVanDanhGia: _input_NgayCoVanDanhGia,
-            ngayCoVanKetThucDanhGia: _input_NgayCoVanKetThucDanhGia,
-            ngayKhoaDanhGia: _input_NgayKhoaDanhGia,
-            ngayKhoaKetThucDanhGia: _input_NgayKhoaKetThucDanhGia,
-          };
-
-          $.ajax({
-            url: urlapi_thongbaodanhgia_create,
-            type: "POST",
-            contentType: "application/json;charset=utf-8",
-            dataType: "json",
-            data: JSON.stringify(dataPost_ThongBaoDanhGia),
-            async: false,
-            headers: { Authorization: jwtCookie },
-            success: function (result_CreateTBDG) {
-              Swal.fire({
-                icon: "success",
-                title: "Tạo thành công!",
-                text: "",
-                timer: 2000,
-                timerProgressBar: true,
-              });
-
-              setTimeout(function () {
-                GetListThongBaoDanhGia();
-              }, 2000);
-
-              $("#input_HocKyXet").val("");
-              $("#input_NamHocXet").val("");
-              $("#input_NgayThongBao").val("");
-              $("#input_NgaySinhVienDanhGia").val("");
-              $("#input_NgaySinhVienKetThucDanhGia").val("");
-              $("#input_NgayCoVanDanhGia").val("");
-              $("#input_NgayCoVanKetThucDanhGia").val("");
-              $("#input_NgayKhoaDanhGia").val("");
-              $("#input_NgayKhoaKetThucDanhGia").val("");
-            },
-            error: function (errorMessage) {
-              //checkLoiDangNhap(errorMessage.responseJSON.message);
-
-              Swal.fire({
-                icon: "error",
-                title: "Lỗi",
-                text: errorMessage.responseText,
-                //timer: 5000,
-                timerProgressBar: true,
-              });
-            },
-          });
+        success: function (result_thongBaoCheck) {
+          ThongBaoLoi(
+            `Thông báo đánh giá cho HK${_select_HocKyXet} - Năm học: ${_input_NamHocXet} đã tồn tại! \nVui lòng nhập lại!`
+          );
         },
         error: function (errorMessage) {
-          checkLoiDangNhap(errorMessage.responseJSON.message);
+          //check học kỳ tồn tại chưa trước
+          $.ajax({
+            url: urlapi_hockydanhgia_single_read + _input_MaHocKyDanhGia,
+            type: "GET",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            async: false,
+            headers: { Authorization: jwtCookie },
+            success: function (result_HKDG) {},
+            error: function (errorMessage) {
+              var dataPost_HocKyDanhGia = {
+                maHocKyDanhGia: _input_MaHocKyDanhGia,
+                hocKyXet: _select_HocKyXet,
+                namHocXet: _input_NamHocXet,
+              };
 
-          Swal.fire({
-            icon: "error",
-            title: "Lỗi",
-            text: errorMessage.responseJSON.message,
-            //timer: 5000,
-            timerProgressBar: true,
+              //tạo học kỳ đánh giá trước
+              $.ajax({
+                url: urlapi_hockydanhgia_create,
+                type: "POST",
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                data: JSON.stringify(dataPost_HocKyDanhGia),
+                async: false,
+                headers: { Authorization: jwtCookie },
+                success: function (result_CreateHKDG) {},
+                error: function (errorMessage) {
+                  //checkLoiDangNhap(errorMessage.responseJSON.message);
+
+                  Swal.fire({
+                    icon: "error",
+                    title: "Lỗi",
+                    text: errorMessage.responseJSON.message,
+                    //timer: 5000,
+                    timerProgressBar: true,
+                  });
+
+                  return;
+                },
+              });
+            },
+            complete() {
+              var dataPost_ThongBaoDanhGia = {
+                maHocKyDanhGia: _input_MaHocKyDanhGia,
+                ngayThongBao: _input_NgayThongBao,
+                ngaySinhVienDanhGia: _input_NgaySinhVienDanhGia,
+                ngaySinhVienKetThucDanhGia: _input_NgaySinhVienKetThucDanhGia,
+                ngayCoVanDanhGia: _input_NgayCoVanDanhGia,
+                ngayCoVanKetThucDanhGia: _input_NgayCoVanKetThucDanhGia,
+                ngayKhoaDanhGia: _input_NgayKhoaDanhGia,
+                ngayKhoaKetThucDanhGia: _input_NgayKhoaKetThucDanhGia,
+              };
+
+              $.ajax({
+                url: urlapi_thongbaodanhgia_create,
+                type: "POST",
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                data: JSON.stringify(dataPost_ThongBaoDanhGia),
+                async: false,
+                headers: { Authorization: jwtCookie },
+                success: function (result_CreateTBDG) {
+                  Swal.fire({
+                    icon: "success",
+                    title: "Tạo thành công!",
+                    text: "",
+                    timer: 2000,
+                    timerProgressBar: true,
+                  });
+
+                  setTimeout(function () {
+                    GetListThongBaoDanhGia();
+                  }, 2000);
+
+                  $("#select_HocKyXet").val("1").change();
+                  $("#input_NamHocBatDau").val("");
+                  $("#input_NamHocKetThuc").val("");
+                  $("#input_NgayThongBao").val("");
+                  $("#input_NgaySinhVienDanhGia").val("");
+                  $("#input_NgaySinhVienKetThucDanhGia").val("");
+                  $("#input_NgayCoVanDanhGia").val("");
+                  $("#input_NgayCoVanKetThucDanhGia").val("");
+                  $("#input_NgayKhoaDanhGia").val("");
+                  $("#input_NgayKhoaKetThucDanhGia").val("");
+                },
+                error: function (errorMessage) {
+                  //checkLoiDangNhap(errorMessage.responseJSON.message);
+
+                  Swal.fire({
+                    icon: "error",
+                    title: "Lỗi",
+                    text: errorMessage.responseText,
+                    //timer: 5000,
+                    timerProgressBar: true,
+                  });
+                },
+              });
+            },
           });
         },
       });
@@ -318,24 +318,44 @@ function LoadThongTinChinhSua_ThongBaoDanhGia(maThongBao) {
     async: false,
     headers: { Authorization: jwtCookie },
     success: function (result_data) {
-      $("#edit_input_NgayThongBao").val(result_data.ngayThongBao);
-      $("#edit_input_NgaySinhVienDanhGia").val(result_data.ngaySinhVienDanhGia);
-      $("#edit_input_NgaySinhVienKetThucDanhGia").val(
-        result_data.ngaySinhVienKetThucDanhGia
-      );
-      $("#edit_input_NgayCoVanDanhGia").val(result_data.ngayCoVanDanhGia);
-      $("#edit_input_NgayCoVanKetThucDanhGia").val(
-        result_data.ngayCoVanKetThucDanhGia
-      );
-      $("#edit_input_NgayKhoaDanhGia").val(result_data.ngayKhoaDanhGia);
-      $("#edit_input_NgayKhoaKetThucDanhGia").val(
-        result_data.ngayKhoaKetThucDanhGia
-      );
+      $.ajax({
+        url: urlapi_hockydanhgia_single_read + result_data.maHocKyDanhGia,
+        type: "GET",
+        contentType: "application/json;charset=utf-8",
+        dataType: "json",
+        async: false,
+        headers: { Authorization: jwtCookie },
+        success: function (result_HKDG) {
+          $("#edit_input_HocKyNamHocXet").val(
+            `Học kỳ: ${result_HKDG.hocKyXet} - Năm học: ${result_HKDG.namHocXet}`
+          );
+        },
+        error: function (errorMessage) {
+          checkLoiDangNhap(errorMessage.responseJSON.message);
+        },
+        complete: function () {
+          $("#edit_input_NgayThongBao").val(result_data.ngayThongBao);
+          $("#edit_input_NgaySinhVienDanhGia").val(
+            result_data.ngaySinhVienDanhGia
+          );
+          $("#edit_input_NgaySinhVienKetThucDanhGia").val(
+            result_data.ngaySinhVienKetThucDanhGia
+          );
+          $("#edit_input_NgayCoVanDanhGia").val(result_data.ngayCoVanDanhGia);
+          $("#edit_input_NgayCoVanKetThucDanhGia").val(
+            result_data.ngayCoVanKetThucDanhGia
+          );
+          $("#edit_input_NgayKhoaDanhGia").val(result_data.ngayKhoaDanhGia);
+          $("#edit_input_NgayKhoaKetThucDanhGia").val(
+            result_data.ngayKhoaKetThucDanhGia
+          );
 
-      var _edit_input_NgaySinh = document.getElementById(
-        "edit_input_NgayThongBao"
-      );
-      _edit_input_NgaySinh.value = result_data.ngayThongBao;
+          var _edit_input_NgaySinh = document.getElementById(
+            "edit_input_NgayThongBao"
+          );
+          _edit_input_NgaySinh.value = result_data.ngayThongBao;
+        },
+      });
     },
     error: function (errorMessage) {
       // checkLoiDangNhap(errorMessage.responseJSON.message);

@@ -54,7 +54,6 @@
                 $this->ngayThongBao = $dataRow['ngayThongBao'];
                 $this->maHocKyDanhGia = $dataRow['maHocKyDanhGia'];
             }
-            
         }
 
         //Get single thongbao qua maHocKyDanhGia
@@ -78,7 +77,6 @@
                 $this->ngayThongBao = $dataRow['ngayThongBao'];
                 $this->maHocKyDanhGia = $dataRow['maHocKyDanhGia'];
             }
-            
         }
 
         // CREATE
