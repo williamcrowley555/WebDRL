@@ -30,9 +30,15 @@
                 $item->diemtoida = $data->diemtoida;
 
                 if($item->createTC1()){
-                    echo 'tieuchicap1 tạo thành công.';
+                    http_response_code(200);
+                    echo json_encode(
+                        array("message" => "tieuchicap1 tạo thành công.")
+                    );
                 } else{
-                    echo 'tieuchicap1 tạo thất bại.';
+                    http_response_code(500);
+                    echo json_encode(
+                        array("message" => "tieuchicap1 tạo thất bại.")
+                    );
                 }
             }else{
                 echo 'Không có dữ liệu được gửi lên.';
