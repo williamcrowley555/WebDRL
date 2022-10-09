@@ -88,8 +88,19 @@ function GetListTieuChi(tieuChi) {
                   data[i].noidung +
                   "' data-diem = '" +
                   data[i].diemtoida +
-                  "' data-tieuchicaptren='' >Chỉnh sửa</button>\
-                </td>\
+                  "' data-tieuchicaptren='' >Chỉnh sửa</button>" +
+                  (data[i].kichHoat == "0"
+                    ? "<button class='btn bg-success btn_KichHoat_TieuChiDanhGia' style='color: white;width: max-content; margin: 5px;' data-id = '" +
+                      data[i].matc1 +
+                      "' data-tieuchicap = '" +
+                      tieuChi +
+                      "'>Kích hoạt</button>"
+                    : "<button class='btn bg-danger btn_VoHieuHoa_TieuChiDanhGia' style='color: white;width: max-content; margin: 5px;' data-id = '" +
+                      data[i].matc1 +
+                      "' data-tieuchicap = '" +
+                      tieuChi +
+                      "'>Vô hiệu hóa</button>") +
+                  "</td>\
                                     </tr>";
               }
             } else if (tieuChi == "tieuchicap2") {
@@ -114,7 +125,7 @@ function GetListTieuChi(tieuChi) {
                   data[i].matc1 +
                   "</td>\
                   <td class='cell'>\
-                  <button class='btn bg-warning btn_ChinhSua_TieuChiDanhGia' style='color: white;width: max-content;' data-bs-toggle='modal' data-bs-target='#ChinhSuaModal' data-id = '" +
+                  <button class='btn bg-warning btn_ChinhSua_TieuChiDanhGia' style='color: white;width: max-content; margin: 5px;' data-bs-toggle='modal' data-bs-target='#ChinhSuaModal' data-id = '" +
                   data[i].matc2 +
                   "' data-tieuchicap = '" +
                   tieuChi +
@@ -124,8 +135,20 @@ function GetListTieuChi(tieuChi) {
                   data[i].diemtoida +
                   "' data-tieuchicaptren = '" +
                   data[i].matc1 +
-                  "'   >Chỉnh sửa</button>\
-                </td>                                </tr>";
+                  "'   >Chỉnh sửa</button>" +
+                  (data[i].kichHoat == "0"
+                    ? "<button class='btn bg-success btn_KichHoat_TieuChiDanhGia' style='color: white;width: max-content; margin: 5px;' data-id = '" +
+                      data[i].matc2 +
+                      "' data-tieuchicap = '" +
+                      tieuChi +
+                      "'>Kích hoạt</button>"
+                    : "<button class='btn bg-danger btn_VoHieuHoa_TieuChiDanhGia' style='color: white;width: max-content; margin: 5px;' data-id = '" +
+                      data[i].matc2 +
+                      "' data-tieuchicap = '" +
+                      tieuChi +
+                      "'>Vô hiệu hóa</button>") +
+                  "</td>\
+                                    </tr>";
               }
             } else if (tieuChi == "tieuchicap3") {
               for (let i = 0; i < data.length; i++) {
@@ -149,7 +172,7 @@ function GetListTieuChi(tieuChi) {
                   data[i].matc2 +
                   "</td>\
                   <td class='cell'>\
-                  <button class='btn bg-warning btn_ChinhSua_TieuChiDanhGia' style='color: white;width: max-content;' data-bs-toggle='modal' data-bs-target='#ChinhSuaModal' data-id = '" +
+                  <button class='btn bg-warning btn_ChinhSua_TieuChiDanhGia' style='color: white;width: max-content; margin: 5px;' data-bs-toggle='modal' data-bs-target='#ChinhSuaModal' data-id = '" +
                   data[i].matc3 +
                   "' data-tieuchicap = '" +
                   tieuChi +
@@ -159,8 +182,20 @@ function GetListTieuChi(tieuChi) {
                   data[i].diem +
                   "'  data-tieuchicaptren = '" +
                   data[i].matc3 +
-                  "'  >Chỉnh sửa</button>\
-                </td>                                </tr>";
+                  "'  >Chỉnh sửa</button>" +
+                  (data[i].kichHoat == "0"
+                    ? "<button class='btn bg-success btn_KichHoat_TieuChiDanhGia' style='color: white;width: max-content; margin: 5px;' data-id = '" +
+                      data[i].matc3 +
+                      "' data-tieuchicap = '" +
+                      tieuChi +
+                      "'>Kích hoạt</button>"
+                    : "<button class='btn bg-danger btn_VoHieuHoa_TieuChiDanhGia' style='color: white;width: max-content; margin: 5px;' data-id = '" +
+                      data[i].matc3 +
+                      "' data-tieuchicap = '" +
+                      tieuChi +
+                      "'>Vô hiệu hóa</button>") +
+                  "</td>\
+                                    </tr>";
               }
             }
 
@@ -686,4 +721,298 @@ function ChinhSua_TieuChiDanhGia() {
         break;
     }
   }
+}
+
+function KichHoatTieuChiDanhGia(maTC, tieuChi) {
+  Swal.fire({
+    title: `Xác nhận kích hoạt tiêu chí cấp ${tieuChi.substr(
+      "tieuchicap".length
+    )} - mã ${maTC} ?`,
+    showDenyButton: true,
+    confirmButtonText: "Xác nhận",
+    denyButtonText: `Đóng`,
+  }).then((result) => {
+    if (result.isConfirmed) {
+      switch (tieuChi) {
+        case "tieuchicap1": {
+          var dataPost = {
+            matc1: maTC,
+            kichHoat: "1",
+          };
+
+          $.ajax({
+            url: urlapi_tieuchicap1_update_kichHoat,
+            type: "POST",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            data: JSON.stringify(dataPost),
+            async: false,
+            headers: { Authorization: jwtCookie },
+            success: function (result_update) {
+              Swal.fire({
+                icon: "success",
+                title: "Kích hoạt tiêu chí thành công!",
+                text: "",
+                timer: 2000,
+                timerProgressBar: true,
+              });
+
+              setTimeout(() => {
+                GetListTieuChi(tieuChi);
+              }, 2000);
+            },
+            error: function (errorMessage) {
+              checkLoiDangNhap(errorMessage.responseJSON.message);
+
+              Swal.fire({
+                icon: "error",
+                title: "Lỗi",
+                text: errorMessage.responseJSON.message,
+                //timer: 5000,
+                timerProgressBar: true,
+              });
+            },
+          });
+
+          break;
+        }
+
+        case "tieuchicap2": {
+          var dataPost = {
+            matc2: maTC,
+            kichHoat: "1",
+          };
+
+          $.ajax({
+            url: urlapi_tieuchicap2_update_kichHoat,
+            type: "POST",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            data: JSON.stringify(dataPost),
+            async: false,
+            headers: { Authorization: jwtCookie },
+            success: function (result_update) {
+              Swal.fire({
+                icon: "success",
+                title: "Kích hoạt tiêu chí thành công!",
+                text: "",
+                timer: 2000,
+                timerProgressBar: true,
+              });
+
+              setTimeout(() => {
+                GetListTieuChi(tieuChi);
+              }, 2000);
+            },
+            error: function (errorMessage) {
+              checkLoiDangNhap(errorMessage.responseJSON.message);
+
+              Swal.fire({
+                icon: "error",
+                title: "Lỗi",
+                text: errorMessage.responseJSON.message,
+                //timer: 5000,
+                timerProgressBar: true,
+              });
+            },
+          });
+
+          break;
+        }
+
+        case "tieuchicap3": {
+          var dataPost = {
+            matc3: maTC,
+            kichHoat: "1",
+          };
+
+          $.ajax({
+            url: urlapi_tieuchicap3_update_kichHoat,
+            type: "POST",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            data: JSON.stringify(dataPost),
+            async: false,
+            headers: { Authorization: jwtCookie },
+            success: function (result_update) {
+              Swal.fire({
+                icon: "success",
+                title: "Kích hoạt tiêu chí thành công!",
+                text: "",
+                timer: 2000,
+                timerProgressBar: true,
+              });
+
+              setTimeout(() => {
+                GetListTieuChi(tieuChi);
+              }, 2000);
+            },
+            error: function (errorMessage) {
+              checkLoiDangNhap(errorMessage.responseJSON.message);
+
+              Swal.fire({
+                icon: "error",
+                title: "Lỗi",
+                text: errorMessage.responseJSON.message,
+                //timer: 5000,
+                timerProgressBar: true,
+              });
+            },
+          });
+
+          break;
+        }
+
+        default:
+          break;
+      }
+    }
+  });
+}
+
+function VoHieuHoaTieuChiDanhGia(maTC, tieuChi) {
+  Swal.fire({
+    title: `Xác nhận vô hiệu hóa tiêu chí cấp ${tieuChi.substr(
+      "tieuchicap".length
+    )} - mã ${maTC} ?`,
+    showDenyButton: true,
+    confirmButtonText: "Xác nhận",
+    denyButtonText: `Đóng`,
+  }).then((result) => {
+    if (result.isConfirmed) {
+      switch (tieuChi) {
+        case "tieuchicap1": {
+          var dataPost = {
+            matc1: maTC,
+            kichHoat: "0",
+          };
+
+          $.ajax({
+            url: urlapi_tieuchicap1_update_kichHoat,
+            type: "POST",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            data: JSON.stringify(dataPost),
+            async: false,
+            headers: { Authorization: jwtCookie },
+            success: function (result_update) {
+              Swal.fire({
+                icon: "success",
+                title: "Vô hiệu hóa tiêu chí thành công!",
+                text: "",
+                timer: 2000,
+                timerProgressBar: true,
+              });
+
+              setTimeout(() => {
+                GetListTieuChi(tieuChi);
+              }, 2000);
+            },
+            error: function (errorMessage) {
+              checkLoiDangNhap(errorMessage.responseJSON.message);
+
+              Swal.fire({
+                icon: "error",
+                title: "Lỗi",
+                text: errorMessage.responseJSON.message,
+                //timer: 5000,
+                timerProgressBar: true,
+              });
+            },
+          });
+
+          break;
+        }
+
+        case "tieuchicap2": {
+          var dataPost = {
+            matc2: maTC,
+            kichHoat: "0",
+          };
+
+          $.ajax({
+            url: urlapi_tieuchicap2_update_kichHoat,
+            type: "POST",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            data: JSON.stringify(dataPost),
+            async: false,
+            headers: { Authorization: jwtCookie },
+            success: function (result_update) {
+              Swal.fire({
+                icon: "success",
+                title: "Vô hiệu hóa tiêu chí thành công!",
+                text: "",
+                timer: 2000,
+                timerProgressBar: true,
+              });
+
+              setTimeout(() => {
+                GetListTieuChi(tieuChi);
+              }, 2000);
+            },
+            error: function (errorMessage) {
+              checkLoiDangNhap(errorMessage.responseJSON.message);
+
+              Swal.fire({
+                icon: "error",
+                title: "Lỗi",
+                text: errorMessage.responseJSON.message,
+                //timer: 5000,
+                timerProgressBar: true,
+              });
+            },
+          });
+
+          break;
+        }
+
+        case "tieuchicap3": {
+          var dataPost = {
+            matc3: maTC,
+            kichHoat: "0",
+          };
+
+          $.ajax({
+            url: urlapi_tieuchicap3_update_kichHoat,
+            type: "POST",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            data: JSON.stringify(dataPost),
+            async: false,
+            headers: { Authorization: jwtCookie },
+            success: function (result_update) {
+              Swal.fire({
+                icon: "success",
+                title: "Vô hiệu hóa tiêu chí thành công!",
+                text: "",
+                timer: 2000,
+                timerProgressBar: true,
+              });
+
+              setTimeout(() => {
+                GetListTieuChi(tieuChi);
+              }, 2000);
+            },
+            error: function (errorMessage) {
+              checkLoiDangNhap(errorMessage.responseJSON.message);
+
+              Swal.fire({
+                icon: "error",
+                title: "Lỗi",
+                text: errorMessage.responseJSON.message,
+                //timer: 5000,
+                timerProgressBar: true,
+              });
+            },
+          });
+
+          break;
+        }
+
+        default:
+          break;
+      }
+    }
+  });
 }

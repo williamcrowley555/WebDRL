@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1:3307
--- Thời gian đã tạo: Th10 03, 2022 lúc 07:30 AM
+-- Thời gian đã tạo: Th10 08, 2022 lúc 06:30 PM
 -- Phiên bản máy phục vụ: 10.4.24-MariaDB
 -- Phiên bản PHP: 7.4.29
 
@@ -20,6 +20,31 @@ SET time_zone = "+00:00";
 --
 -- Cơ sở dữ liệu: `diemrenluyen`
 --
+CREATE DATABASE IF NOT EXISTS `diemrenluyen` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE `diemrenluyen`;
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `admin`
+--
+
+CREATE TABLE `admin` (
+  `id` int(11) NOT NULL,
+  `taiKhoan` varchar(255) NOT NULL,
+  `matKhau` varchar(255) NOT NULL,
+  `hoTen` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `soDienThoai` varchar(255) NOT NULL,
+  `quyen` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Đang đổ dữ liệu cho bảng `admin`
+--
+
+INSERT INTO `admin` (`id`, `taiKhoan`, `matKhau`, `hoTen`, `email`, `soDienThoai`, `quyen`) VALUES
+(1, 'admin', '21232f297a57a5a743894a0e4a801fc3 ', 'Admin', 'admin123@gmail.com', '0912345678', 'admin');
 
 -- --------------------------------------------------------
 
@@ -508,6 +533,28 @@ CREATE TABLE `phongcongtacsinhvien` (
 
 INSERT INTO `phongcongtacsinhvien` (`taiKhoan`, `matKhau`, `hoTenNhanVien`, `email`, `sodienthoai`, `diaChi`, `quyen`) VALUES
 ('ctsv1', '0bf27758133599500db277a95366941b', 'Nhân viên CTSV 1', 'ctsv1@edu.vn', '0562346234', '87 Nguyễn Văn Cừ, TP HCM', 'ctsv');
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `quyen`
+--
+
+CREATE TABLE `quyen` (
+  `maQuyen` varchar(255) NOT NULL,
+  `tenQuyen` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Đang đổ dữ liệu cho bảng `quyen`
+--
+
+INSERT INTO `quyen` (`maQuyen`, `tenQuyen`) VALUES
+('admin', 'Admin'),
+('ctsv', 'Công tác sinh viên'),
+('khoa', 'Khoa'),
+('cvht', 'Cố vấn học tập'),
+('sinhvien', 'Sinh viên');
 
 -- --------------------------------------------------------
 
@@ -3145,6 +3192,7 @@ CREATE TABLE `thongbaodanhgia` (
   `ngayKhoaKetThucDanhGia` date NOT NULL,
   `ngayThongBao` date NOT NULL,
   `maHocKyDanhGia` varchar(11) COLLATE utf8_unicode_ci NOT NULL,
+  `kichHoat` tinyint(1) NOT NULL DEFAULT 1,
   `taiKhoanCTSV` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -3152,8 +3200,8 @@ CREATE TABLE `thongbaodanhgia` (
 -- Đang đổ dữ liệu cho bảng `thongbaodanhgia`
 --
 
-INSERT INTO `thongbaodanhgia` (`maThongBao`, `ngaySinhVienDanhGia`, `ngaySinhVienKetThucDanhGia`, `ngayCoVanDanhGia`, `ngayCoVanKetThucDanhGia`, `ngayKhoaDanhGia`, `ngayKhoaKetThucDanhGia`, `ngayThongBao`, `maHocKyDanhGia`, `taiKhoanCTSV`) VALUES
-(2, '2022-05-19', '2022-06-22', '2022-06-23', '2022-07-09', '2022-07-10', '2022-07-17', '2022-05-19', 'HK22122', NULL);
+INSERT INTO `thongbaodanhgia` (`maThongBao`, `ngaySinhVienDanhGia`, `ngaySinhVienKetThucDanhGia`, `ngayCoVanDanhGia`, `ngayCoVanKetThucDanhGia`, `ngayKhoaDanhGia`, `ngayKhoaKetThucDanhGia`, `ngayThongBao`, `maHocKyDanhGia`, `kichHoat`, `taiKhoanCTSV`) VALUES
+(2, '2022-05-19', '2022-06-22', '2022-06-23', '2022-07-09', '2022-07-10', '2022-07-17', '2022-05-19', 'HK22122', 1, NULL);
 
 -- --------------------------------------------------------
 
@@ -3164,20 +3212,21 @@ INSERT INTO `thongbaodanhgia` (`maThongBao`, `ngaySinhVienDanhGia`, `ngaySinhVie
 CREATE TABLE `tieuchicap1` (
   `matc1` int(11) NOT NULL,
   `noidung` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `diemtoida` int(11) NOT NULL
+  `diemtoida` int(11) NOT NULL,
+  `kichHoat` tinyint(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `tieuchicap1`
 --
 
-INSERT INTO `tieuchicap1` (`matc1`, `noidung`, `diemtoida`) VALUES
-(1, 'I - Đánh giá về ý thức và kết quả học tập (tối đa 20 điểm).', 20),
-(2, 'II - Đánh giá về ý thức và kết quả chấp hành quy chế, nội quy, quy định trong nhà trường (tối đa 25 điểm).', 25),
-(3, 'III - Đánh giá về ý thức và kết quả tham gia các hoạt động chính trị - xã hội, văn hóa, văn nghệ, thể thao, phòng chống các tệ nạn xã hội (tối đa 20 điểm).', 20),
-(4, 'IV – Đánh giá ý thức công dân trong quan hệ cộng đồng (tối đa 25 điểm).', 25),
-(5, 'V - Đánh giá về ý thức và kết quả tham gia phụ trách lớp, các đoàn thể trong nhà trường (tối đa 10 điểm).', 10),
-(6, 'VI. Hoạt động khác', 30);
+INSERT INTO `tieuchicap1` (`matc1`, `noidung`, `diemtoida`, `kichHoat`) VALUES
+(1, 'I - Đánh giá về ý thức và kết quả học tập (tối đa 20 điểm).', 20, 1),
+(2, 'II - Đánh giá về ý thức và kết quả chấp hành quy chế, nội quy, quy định trong nhà trường (tối đa 25 điểm).', 25, 1),
+(3, 'III - Đánh giá về ý thức và kết quả tham gia các hoạt động chính trị - xã hội, văn hóa, văn nghệ, thể thao, phòng chống các tệ nạn xã hội (tối đa 20 điểm).', 20, 1),
+(4, 'IV – Đánh giá ý thức công dân trong quan hệ cộng đồng (tối đa 25 điểm).', 25, 1),
+(5, 'V - Đánh giá về ý thức và kết quả tham gia phụ trách lớp, các đoàn thể trong nhà trường (tối đa 10 điểm).', 10, 1),
+(6, 'VI. Hoạt động khác', 30, 1);
 
 -- --------------------------------------------------------
 
@@ -3189,44 +3238,45 @@ CREATE TABLE `tieuchicap2` (
   `matc2` int(11) NOT NULL,
   `noidung` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `diemtoida` int(11) NOT NULL,
-  `matc1` int(11) NOT NULL
+  `matc1` int(11) NOT NULL,
+  `kichHoat` tinyint(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `tieuchicap2`
 --
 
-INSERT INTO `tieuchicap2` (`matc2`, `noidung`, `diemtoida`, `matc1`) VALUES
-(1, '1.Kết quả học tập: ', 0, 1),
-(2, '2.Tinh thần vượt khó trong học tập:', 0, 1),
-(3, '3.Tham gia nghiên cứu khoa học (NCKH):', 0, 1),
-(4, '4.Tham gia rèn luyện nghiệp vụ (RLNV):', 0, 1),
-(5, '5. Tham gia các câu lạc bộ học thuật', 0, 1),
-(6, '6. Thành viên đội tuyển dự thi Olympic các môn học:', 0, 1),
-(7, '1. Chấp hành tốt nội quy, quy chế của nhà trường', 15, 2),
-(8, '2. Tham gia đầy đủ các buổi họp của trường, khoa, CVHT, lớp tổ chức', 10, 2),
-(9, '3. Một lần vi phạm quy chế, quy định của trường (có biên bản xử lý)', -10, 2),
-(10, '4. Vắng 01 buổi họp do trường, khoa, CVHT, lớp tổ chức không lý do', -5, 2),
-(11, '1. Tham gia các hoạt động chính trị – xã hội do nhà trường quy định:', 0, 3),
-(12, '2. Tham gia hoạt động văn hóa, văn nghệ, TDTT, phòng chống TNXH…', 5, 3),
-(13, '3. Tham gia trong đội tuyển văn nghệ, TDTT :', 0, 3),
-(14, '1. Chấp hành tốt các chủ trương, chính sách, pháp luật của nhà nước:', 10, 4),
-(15, '2. Được biểu dương người tốt, việc tốt ở nhà trường hoặc ở địa phương (có giấy chứng nhận)', 5, 4),
-(16, '3. Tham gia các hoạt động tình nguyện trung hạn: MHX, Tiếp sức mùa thi', 10, 4),
-(17, '4. Tham gia các công tác xã hội và các hoạt động tình nguyện ngắn ngày (có xác nhận của đơn vị tổ chức)', 10, 4),
-(18, '5. Có tinh thần chia sẻ, giúp đỡ người có khó khăn, hoạn nạn', 5, 4),
-(19, '6. Tham gia hiến máu tình nguyện', 5, 4),
-(20, '7. Tham gia hội thao GDQP –AN cấp quận, cấp TP', 5, 4),
-(21, '8. Vi phạm ATGT, trật tự công cộng (có giấy báo gửi về trường)', -10, 4),
-(22, '1. Lớp trưởng, BCH Đoàn trường, BCH Hội sinh viên trường', 10, 5),
-(23, '2. Lớp phó, BCH Đoàn khoa, BCH LCH SV; BCH CĐ, BCH chi hội lớp', 8, 5),
-(24, '3. Tổ trưởng, tổ phó', 3, 5),
-(25, '4. Đảng viên', 8, 5),
-(26, '5. Đối tượng Đảng', 5, 5),
-(27, '6. Đoàn viên TNCS Hồ Chí Minh', 3, 5),
-(28, '7. Được Đoàn thanh niên, Hội sinh viên biểu dương, khen thưởng', 0, 5),
-(29, '*Tham gia các họat động đặc biệt do nhà trường huy động', 15, 6),
-(30, '*Đạt giải thưởng trong các kì thi cấp tỉnh thành trở lên', 15, 6);
+INSERT INTO `tieuchicap2` (`matc2`, `noidung`, `diemtoida`, `matc1`, `kichHoat`) VALUES
+(1, '1.Kết quả học tập: ', 0, 1, 1),
+(2, '2.Tinh thần vượt khó trong học tập:', 0, 1, 1),
+(3, '3.Tham gia nghiên cứu khoa học (NCKH):', 0, 1, 1),
+(4, '4.Tham gia rèn luyện nghiệp vụ (RLNV):', 0, 1, 1),
+(5, '5. Tham gia các câu lạc bộ học thuật', 0, 1, 1),
+(6, '6. Thành viên đội tuyển dự thi Olympic các môn học:', 0, 1, 1),
+(7, '1. Chấp hành tốt nội quy, quy chế của nhà trường', 15, 2, 1),
+(8, '2. Tham gia đầy đủ các buổi họp của trường, khoa, CVHT, lớp tổ chức', 10, 2, 1),
+(9, '3. Một lần vi phạm quy chế, quy định của trường (có biên bản xử lý)', -10, 2, 1),
+(10, '4. Vắng 01 buổi họp do trường, khoa, CVHT, lớp tổ chức không lý do', -5, 2, 1),
+(11, '1. Tham gia các hoạt động chính trị – xã hội do nhà trường quy định:', 0, 3, 1),
+(12, '2. Tham gia hoạt động văn hóa, văn nghệ, TDTT, phòng chống TNXH…', 5, 3, 1),
+(13, '3. Tham gia trong đội tuyển văn nghệ, TDTT :', 0, 3, 1),
+(14, '1. Chấp hành tốt các chủ trương, chính sách, pháp luật của nhà nước:', 10, 4, 1),
+(15, '2. Được biểu dương người tốt, việc tốt ở nhà trường hoặc ở địa phương (có giấy chứng nhận)', 5, 4, 1),
+(16, '3. Tham gia các hoạt động tình nguyện trung hạn: MHX, Tiếp sức mùa thi', 10, 4, 1),
+(17, '4. Tham gia các công tác xã hội và các hoạt động tình nguyện ngắn ngày (có xác nhận của đơn vị tổ chức)', 10, 4, 1),
+(18, '5. Có tinh thần chia sẻ, giúp đỡ người có khó khăn, hoạn nạn', 5, 4, 1),
+(19, '6. Tham gia hiến máu tình nguyện', 5, 4, 1),
+(20, '7. Tham gia hội thao GDQP –AN cấp quận, cấp TP', 5, 4, 1),
+(21, '8. Vi phạm ATGT, trật tự công cộng (có giấy báo gửi về trường)', -10, 4, 1),
+(22, '1. Lớp trưởng, BCH Đoàn trường, BCH Hội sinh viên trường', 10, 5, 1),
+(23, '2. Lớp phó, BCH Đoàn khoa, BCH LCH SV; BCH CĐ, BCH chi hội lớp', 8, 5, 1),
+(24, '3. Tổ trưởng, tổ phó', 3, 5, 1),
+(25, '4. Đảng viên', 8, 5, 1),
+(26, '5. Đối tượng Đảng', 5, 5, 1),
+(27, '6. Đoàn viên TNCS Hồ Chí Minh', 3, 5, 1),
+(28, '7. Được Đoàn thanh niên, Hội sinh viên biểu dương, khen thưởng', 0, 5, 1),
+(29, '*Tham gia các họat động đặc biệt do nhà trường huy động', 15, 6, 1),
+(30, '*Đạt giải thưởng trong các kì thi cấp tỉnh thành trở lên', 15, 6, 1);
 
 -- --------------------------------------------------------
 
@@ -3238,42 +3288,43 @@ CREATE TABLE `tieuchicap3` (
   `matc3` int(11) NOT NULL,
   `noidung` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `diem` int(11) NOT NULL,
-  `matc2` int(11) NOT NULL
+  `matc2` int(11) NOT NULL,
+  `kichHoat` tinyint(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `tieuchicap3`
 --
 
-INSERT INTO `tieuchicap3` (`matc3`, `noidung`, `diem`, `matc2`) VALUES
-(1, 'a. Điểm trung bình chung học kì từ  3,60 đến 4,00', 14, 1),
-(2, 'b. Điểm trung bình chung học kì từ  3,20 đến 3,59', 12, 1),
-(3, 'c. Điểm trung bình chung học kì từ  2,50 đến 3,19', 10, 1),
-(4, 'd. Điểm trung bình chung học kì từ  2,00 đến 2,49', 2, 1),
-(5, 'đ. Điểm trung bình chung học kì  dưới 2,00', 0, 1),
-(6, 'a. Kết quả học tập tăng một bậc so với học kỳ trước,  ĐTBCHK từ  2,00 trở lên', 3, 2),
-(7, 'b. Kết quả học tập tăng hai bậc so với học kỳ trước,  ĐTBCHK từ  2,00 trở lên', 6, 2),
-(8, 'c. Sinh viên năm thứ I, nếu có kết quả học tập HK I từ 2,00 trở lên', 3, 2),
-(9, 'a. Khóa luận tốt nghiệp từ loại giỏi trở lên', 6, 3),
-(10, 'b. Đề tài NCKH cấp trường từ loại giỏi trở lên.', 6, 10),
-(11, 'c. Đề tài NCKH cấp trường từ loại đạt trở lên', 5, 3),
-(12, 'a. Tham gia hội thi RLNV cấp khoa', 2, 4),
-(13, 'b. Tham gia hội thi  RLNV cấp trường', 4, 4),
-(14, 'c. Tham gia hội thi  RLNV toàn quốc', 4, 4),
-(15, 'd. Tham gia đầy đủ các buổi hội thảo khoa học, báo cáo chuyên đề', 2, 4),
-(16, 'a. Ban chủ nhiệm câu lạc bộ cấp khoa', 4, 5),
-(17, 'b. Ban chủ nhiệm câu lạc bộ cấp trường', 6, 5),
-(18, 'c. Thành viên tham gia thường xuyên các câu lạc bộ học thuật', 2, 5),
-(19, 'a. Cấp khoa', 4, 6),
-(20, 'b. Cấp trường', 6, 6),
-(21, 'c. Cấp toàn quốc', 10, 6),
-(22, 'a. Tham gia đầy đủ các buổi sinh hoạt chính trị xã hội theo quy định', 10, 11),
-(23, 'b. Vắng mặt 01 buổi không lý do', -5, 11),
-(24, 'a. Cấp khoa', 5, 13),
-(25, 'b. Cấp trường', 10, 13),
-(26, 'c. Được khen thưởng cấp toàn quốc', 15, 13),
-(27, 'a. Cấp khoa', 5, 28),
-(28, 'b. Cấp trường, cấp thành phố', 10, 28);
+INSERT INTO `tieuchicap3` (`matc3`, `noidung`, `diem`, `matc2`, `kichHoat`) VALUES
+(1, 'a. Điểm trung bình chung học kì từ  3,60 đến 4,00', 14, 1, 1),
+(2, 'b. Điểm trung bình chung học kì từ  3,20 đến 3,59', 12, 1, 1),
+(3, 'c. Điểm trung bình chung học kì từ  2,50 đến 3,19', 10, 1, 1),
+(4, 'd. Điểm trung bình chung học kì từ  2,00 đến 2,49', 2, 1, 1),
+(5, 'đ. Điểm trung bình chung học kì  dưới 2,00', 0, 1, 1),
+(6, 'a. Kết quả học tập tăng một bậc so với học kỳ trước,  ĐTBCHK từ  2,00 trở lên', 3, 2, 1),
+(7, 'b. Kết quả học tập tăng hai bậc so với học kỳ trước,  ĐTBCHK từ  2,00 trở lên', 6, 2, 1),
+(8, 'c. Sinh viên năm thứ I, nếu có kết quả học tập HK I từ 2,00 trở lên', 3, 2, 1),
+(9, 'a. Khóa luận tốt nghiệp từ loại giỏi trở lên', 6, 3, 1),
+(10, 'b. Đề tài NCKH cấp trường từ loại giỏi trở lên.', 6, 10, 1),
+(11, 'c. Đề tài NCKH cấp trường từ loại đạt trở lên', 5, 3, 1),
+(12, 'a. Tham gia hội thi RLNV cấp khoa', 2, 4, 1),
+(13, 'b. Tham gia hội thi  RLNV cấp trường', 4, 4, 1),
+(14, 'c. Tham gia hội thi  RLNV toàn quốc', 4, 4, 1),
+(15, 'd. Tham gia đầy đủ các buổi hội thảo khoa học, báo cáo chuyên đề', 2, 4, 1),
+(16, 'a. Ban chủ nhiệm câu lạc bộ cấp khoa', 4, 5, 1),
+(17, 'b. Ban chủ nhiệm câu lạc bộ cấp trường', 6, 5, 1),
+(18, 'c. Thành viên tham gia thường xuyên các câu lạc bộ học thuật', 2, 5, 1),
+(19, 'a. Cấp khoa', 4, 6, 1),
+(20, 'b. Cấp trường', 6, 6, 1),
+(21, 'c. Cấp toàn quốc', 10, 6, 1),
+(22, 'a. Tham gia đầy đủ các buổi sinh hoạt chính trị xã hội theo quy định', 10, 11, 1),
+(23, 'b. Vắng mặt 01 buổi không lý do', -5, 11, 1),
+(24, 'a. Cấp khoa', 5, 13, 1),
+(25, 'b. Cấp trường', 10, 13, 1),
+(26, 'c. Được khen thưởng cấp toàn quốc', 15, 13, 1),
+(27, 'a. Cấp khoa', 5, 28, 1),
+(28, 'b. Cấp trường, cấp thành phố', 10, 28, 1);
 
 -- --------------------------------------------------------
 
@@ -3311,6 +3362,12 @@ INSERT INTO `user_token` (`stt`, `maSo`, `token`, `quyen`, `thoiGianDangNhap`, `
 --
 -- Chỉ mục cho các bảng đã đổ
 --
+
+--
+-- Chỉ mục cho bảng `admin`
+--
+ALTER TABLE `admin`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Chỉ mục cho bảng `chamdiemrenluyen`
@@ -3412,6 +3469,12 @@ ALTER TABLE `user_token`
 --
 -- AUTO_INCREMENT cho các bảng đã đổ
 --
+
+--
+-- AUTO_INCREMENT cho bảng `admin`
+--
+ALTER TABLE `admin`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT cho bảng `chamdiemrenluyen`

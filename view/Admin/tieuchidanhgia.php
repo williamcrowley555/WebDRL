@@ -163,7 +163,7 @@
 									<tr id="coloum_table">
 										<th class="cell">Số thứ tự</th>
 										<th class="cell">Mã tiêu chí</th>
-										<th class="cell">Tên tiêu chí</th>
+										<th class="cell" width="500">Tên tiêu chí</th>
 										<th class="cell">Điểm</th>
 										<th class="cell">Mã tiêu chí trên</th>
 										<th class="cell"></th>
@@ -340,5 +340,21 @@
 		dselect(edit_select_TieuChiCapTren_search, {
 			search: true
 		})
+	})
+
+	// Xử lý kích hoạt tiêu chí đánh giá
+	$(document).on("click", ".btn_KichHoat_TieuChiDanhGia" ,function() {
+		var maTC = $(this).attr('data-id');
+		var tieuChi = $(this).attr('data-tieuchicap');
+
+		KichHoatTieuChiDanhGia(maTC, tieuChi);
+	})
+		
+	// Xử lý vô hiệu hóa tiêu chí đánh giá
+	$(document).on("click", ".btn_VoHieuHoa_TieuChiDanhGia" ,function() {
+		var maTC = $(this).attr('data-id');
+		var tieuChi = $(this).attr('data-tieuchicap');
+
+		VoHieuHoaTieuChiDanhGia(maTC, tieuChi)
 	})
 </script>

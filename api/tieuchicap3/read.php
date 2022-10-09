@@ -38,7 +38,8 @@
                         "matc3" => $matc3 ,
                         "noidung" => $noidung	,
                         "diem" => $diem,
-                        "matc2" => $matc2
+                        "matc2" => $matc2,
+                        "kichHoat" => $kichHoat
                     );
                     array_push($tieuchicap3Arr["tieuchicap3"], $e);
                 }

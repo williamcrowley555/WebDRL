@@ -20,7 +20,7 @@
 
         // GET ALL
         public function getAllTC2(){
-            $sqlQuery = "SELECT * FROM " . $this->db_table . "";
+            $sqlQuery = "SELECT * FROM " . $this->db_table . " ORDER BY matc2 ASC, kichHoat DESC";
             $stmt = $this->conn->prepare($sqlQuery);
             $stmt->execute();
             return $stmt;
@@ -96,6 +96,31 @@
             $stmt->bindParam(":noidung", $this->noidung);
             $stmt->bindParam(":diemtoida", $this->diemtoida);
             $stmt->bindParam(":matc1", $this->matc1);
+        
+            if($stmt->execute()){
+               return true;
+            }
+            return false;
+        }
+
+        // UPDATE kichHoat
+        public function update_kichHoat_TC2(){
+            $sqlQuery = "UPDATE
+                        ". $this->db_table ."
+                    SET
+                        kichHoat = :kichHoat
+                    WHERE 
+                        matc2 = :matc2";
+        
+            $stmt = $this->conn->prepare($sqlQuery);
+        
+            // sanitize (Lọc dữ liệu đầu vào tránh SQLInjection, XSS)
+            $this->matc2=htmlspecialchars(strip_tags($this->matc2));
+            $this->kichHoat=htmlspecialchars(strip_tags($this->kichHoat));
+        
+            // bind data
+            $stmt->bindParam(":matc2", $this->matc2);
+            $stmt->bindParam(":kichHoat", $this->kichHoat);
         
             if($stmt->execute()){
                return true;
