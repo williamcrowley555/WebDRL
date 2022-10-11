@@ -56,8 +56,31 @@
 									<button class="btn app-btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#AddModal">Thêm mới</button>
 								</div>
 
-								<div class="col-auto" style="padding-left: 15px;">
-									<button class="btn app-btn-primary" type="button" data-bs-toggle="" data-bs-target="#" disabled>Import danh sách</button>
+								<div class="col-auto dropdown" style="padding-left: 15px;">
+									<button class="btn btn-danger text-white dropdown-toggle" type="button" id="dropdownImportButton" data-bs-toggle="dropdown" aria-expanded="false">
+										Import
+									</button>
+									<ul class="dropdown-menu" aria-labelledby="dropdownImportButton">
+										<li>
+											<form action="" method="POST" id="form_import_from_excel" enctype="multipart/form-data">
+												<input type="hidden" name="table_data" id="table_data" />
+												<button type="submit" class="dropdown-item" id="btn_import_from_excel">Import from Excel</button></li>
+											</form>
+									</ul>
+								</div>
+
+								<div class="col-auto dropdown" style="padding-left: 15px;">
+									<button class="btn btn-success text-white dropdown-toggle" type="button" id="dropdownExportButton" data-bs-toggle="dropdown" aria-expanded="false">
+										Export
+									</button>
+									<ul class="dropdown-menu" aria-labelledby="dropdownExportButton">
+										<li>
+											<form action="" method="POST" id="form_export_to_excel">
+												<input type="hidden" name="table_data" id="table_data" />
+												<button type="submit" name="btn_export_to_excel" class="dropdown-item">Export to Excel</button>
+											</form>
+										</li>
+									</ul>
 								</div>
 							</div>
 						</div>
@@ -228,13 +251,7 @@
 							<table class="table app-table-hover mb-0 text-left" id="my_table">
 								<thead>
 									<tr>
-										<th class="cell">STT</th>
-										<th class="cell">Mã số sinh viên</th>
-										<th class="cell">Họ tên sinh viên</th>
-										<th class="cell">Ngày sinh</th>
-										<th class="cell">Hệ</th>
-										<th class="cell">Lớp</th>
-										<th class="cell"></th>
+
 									</tr>
 								</thead>
 								<tbody id="id_tbodySinhVien">
@@ -330,6 +347,16 @@
 		onSubmit: DatLaiMatKhau_SinhVien
 	})
 
+	
+	tableTitle.forEach(function(title, index) {
+		$("#my_table>thead>tr").append(`<th class='cell'>${title}</th>`);
+
+		if(index == tableTitle.length - 1) {
+			$("#my_table>thead>tr").append(`<th class='cell'>Hành động</th>`);
+
+		}
+	});
+
 	var maKhoa_selected = 'tatcakhoa';
 	var maLop_selected = 'tatcalop';
 
@@ -424,4 +451,26 @@
       	$("#EditForm #edit_input_TenSinhVien").removeClass("is-invalid");
       	$("#EditForm #edit_input_NgaySinh").removeClass("is-invalid");
 	})
+
+	// Xử lý import form excel 
+	$('#form_import_from_excel').submit(function() {
+		$(this).attr('action', 'http://localhost/WebDRL/phpspreadsheet/import/import_sinhvien.php');
+
+
+		return true;
+	});
+
+	// Xử lý export to excel 
+	$('#form_export_to_excel').submit(function() {
+		$(this).attr('action', 'http://localhost/WebDRL/phpspreadsheet/export/export_sinhvien.php');
+
+		$("#form_export_to_excel #table_data").val(
+			JSON.stringify({
+				tableTitle: tableTitle,
+				tableContent: tableContent
+			})
+		);
+
+		return true;
+	});
 </script>

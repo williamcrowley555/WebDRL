@@ -1,3 +1,14 @@
+var tableTitle = [
+  "STT",
+  "Mã số sinh viên",
+  "Họ tên sinh viên",
+  "Ngày sinh",
+  "Hệ",
+  "Lớp",
+];
+
+var tableContent = [];
+
 function getCookie(cName) {
   const name = cName + "=";
   const cDecoded = decodeURIComponent(document.cookie); //to be careful
@@ -54,6 +65,8 @@ function GetListSinhVien(maKhoa, maLop) {
         headers: { Authorization: jwtCookie },
         success: function (result) {
           //$("#id_tbodySinhVien").find("tr").remove();
+
+          tableContent = result["sinhvien"];
 
           $("#idPhanTrang").pagination({
             dataSource: result["sinhvien"],
@@ -132,6 +145,8 @@ function GetListSinhVien(maKhoa, maLop) {
             dataType: "json",
             headers: { Authorization: jwtCookie },
             success: function (result_AllSinhVien) {
+              tableContent = result_AllSinhVien["sinhvien"];
+
               var result_SVALL = result_AllSinhVien["sinhvien"];
 
               $("#idPhanTrang").pagination({
@@ -207,6 +222,8 @@ function GetListSinhVien(maKhoa, maLop) {
             dataType: "json",
             headers: { Authorization: jwtCookie },
             success: function (result_SV) {
+              tableContent = result_SV["sinhvien"];
+
               $("#idPhanTrang").pagination({
                 dataSource: result_SV["sinhvien"],
                 pageSize: 10,
@@ -281,6 +298,8 @@ function GetListSinhVien(maKhoa, maLop) {
           dataType: "json",
           headers: { Authorization: jwtCookie },
           success: function (result) {
+            tableContent = result["sinhvien"];
+
             $("#idPhanTrang").pagination({
               dataSource: result["sinhvien"],
               pageSize: 10,
@@ -360,6 +379,8 @@ function TimKiemSinhVien(maSinhVien) {
     dataType: "json",
     headers: { Authorization: jwtCookie },
     success: function (result) {
+      tableContent = result["sinhvien"];
+
       $("#idPhanTrang").pagination({
         dataSource: result["sinhvien"],
         pageSize: 10,
