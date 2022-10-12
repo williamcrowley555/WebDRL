@@ -154,8 +154,9 @@ if (!isset($_GET['maHocKy'])) {
     <script src="../js/scripts.js"></script>
 
     <!-- Custom scripts -->
-    <script src="../js/chamdiemchitiet/chamdiemchitiet.js"></script>
-
+    <script type="text/javascript" src="../../SharedComponent/js/cookie.js"></script>
+    <script type="text/javascript" src="../../SharedComponent/js/ajax.js"></script>
+    <script type="text/javascript" src="../js/chamdiemchitiet/chamdiemchitiet.js"></script>
 
     <script>
         HienThiThongTinVaDanhGia();
@@ -172,20 +173,44 @@ if (!isset($_GET['maHocKy'])) {
             var tieuChi = this.id.slice(0, 3);
             var idDiemTongTieuChi1_SinhVien = this.id.slice(0, 12);
 
+            // console.log("id Diem tieu chi 1: " + idDiemTongTieuChi1_SinhVien);
+            // console.log ("tieuChi = " + tieuChi);
+            // console.log("diem = " + this.value);
+
             if (tieuChi == 'TC2' || tieuChi == 'TC3') {
                 if (this.value != null) {
-                    calDiemTongCong += Number(this.value);
-                    calDiemTongTieuChi1 += Number(this.value);
+                    //calDiemTongCong += Number(this.value);
+                    calDiemTongTieuChi1 += Number(this.value); // sai
                 }
             }
 
             if (idDiemTongTieuChi1_SinhVien == 'TongCong_TC1') {
-                $('#' + this.id).val(calDiemTongTieuChi1);
-                calDiemTongTieuChi1 = 0;
+                // Thêm dòng này
+                var diemToiDa_TC1 = $('#' + this.id).attr('max-value');
+                //console.log("diem toi da: " + diemToiDa_TC1);
+                if (calDiemTongTieuChi1 > diemToiDa_TC1) {
+                    $('#' + this.id).val(diemToiDa_TC1);
+                    //console.log("diem toi da = " + diemToiDa_TC1);
+                    calDiemTongCong += Number(diemToiDa_TC1);
+                    //console.log("diem tong cong = " + calDiemTongCong);
+                    calDiemTongTieuChi1 = 0;
+                } else {
+                    $('#' + this.id).val(calDiemTongTieuChi1);
+                    //console.log("diem tieu chi 1 = " + calDiemTongTieuChi1);
+                    calDiemTongCong += Number(calDiemTongTieuChi1);
+                    //console.log("diem tong cong = " + calDiemTongCong);
+                    calDiemTongTieuChi1 = 0;
+                }
+                // Hết thêm
+
+                //$('#' + this.id).val(calDiemTongTieuChi1);
+                //calDiemTongTieuChi1 = 0;
             }
 
             if (calDiemTongCong <= 100) {
                 $('#input_diemtongcong').val(calDiemTongCong);
+            } else {
+                $('#input_diemtongcong').val(100);
             }
 
         });
@@ -217,6 +242,7 @@ if (!isset($_GET['maHocKy'])) {
                     }
 
                     calDiemTongCong += Number(this.value);
+                    
 
                 }
 

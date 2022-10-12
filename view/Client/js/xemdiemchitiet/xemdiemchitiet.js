@@ -647,7 +647,7 @@ function checkValidateInput(){
   //Load thông tin sinh viên đã đánh giá
   function LoadThongTinSinhVienDanhGia() {
     var maPhieuRenLuyen = "PRL" + GET_MaHocKy + GET_MaSinhVien;
-  
+    console.log("maPhieuRenLuyen = " + maPhieuRenLuyen);
     $.ajax({
       url:
       urlapi_phieurenluyen_single_read +
@@ -660,7 +660,7 @@ function checkValidateInput(){
         Authorization: jwtCookie,
       },
       success: function (result_PRL) {
-  
+        
         var xepLoai = result_PRL.xepLoai;
         var diemTongCong = result_PRL.diemTongCong;
         var diemTrungBinhChungHKTruoc = result_PRL.diemTrungBinhChungHKTruoc;
