@@ -353,7 +353,6 @@
 			$("#Khoa_input_diemtongcong").val(calDiemTongCong_Khoa);
 			$('#text_diemTongCong').text(calDiemTongCong_Khoa);
 		}
-
 		var diemTong_XepLoai = Number($('#Khoa_input_diemtongcong').val());
 
         $("#text_XepLoai").text(TinhXepLoai(diemTong_XepLoai));
@@ -522,7 +521,6 @@
 
 		LoadDanhSachHoatDongDaThamGia(thamgiahd_maHocKyDanhGia, thamgiahd_maTieuChi);
 	})
-
 	
 	$(document).on("click", ".btn_AnhMinhChung", function() {
             let img_id = $(this).attr('data-img-id');

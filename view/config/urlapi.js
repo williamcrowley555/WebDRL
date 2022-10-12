@@ -99,6 +99,9 @@ const urlapi_thongbaodanhgia_create =
 const urlapi_thongbaodanhgia_update =
   host_domain_url + "/thongbaodanhgia/update.php";
 
+const urlapi_thongbaodanhgia_update_kichHoat =
+  host_domain_url + "/thongbaodanhgia/update_kichHoat.php";
+
 //---------------HOC KY DANH GIA---------------//----------------------------------
 //---------//
 
@@ -121,6 +124,7 @@ const urlapi_hockydanhgia_update = host_domain_url + "/hockydanhgia/update.php";
 //READ
 const urlapi_hoatdongdanhgia_read =
   host_domain_url + "/hoatdongdanhgia/read.php";
+const urlapi_hoatdongdanhgia_read_maHD = urlapi_hoatdongdanhgia_read + "?maHD=";
 
 //SINGLE READ
 const urlapi_hoatdongdanhgia_single_read =
@@ -233,6 +237,8 @@ const urlapi_tieuchicap1_create = host_domain_url + "/tieuchicap1/create.php";
 
 //UPDATE
 const urlapi_tieuchicap1_update = host_domain_url + "/tieuchicap1/update.php";
+const urlapi_tieuchicap1_update_kichHoat =
+  host_domain_url + "/tieuchicap1/update_kichHoat.php";
 
 //---------------TIEU CHI CAP 2---------------//----------------------------------
 //---------//
@@ -249,6 +255,8 @@ const urlapi_tieuchicap2_create = host_domain_url + "/tieuchicap2/create.php";
 
 //UPDATE
 const urlapi_tieuchicap2_update = host_domain_url + "/tieuchicap2/update.php";
+const urlapi_tieuchicap2_update_kichHoat =
+  host_domain_url + "/tieuchicap2/update_kichHoat.php";
 
 //---------------TIEU CHI CAP 3---------------//----------------------------------
 //---------//
@@ -265,6 +273,8 @@ const urlapi_tieuchicap3_create = host_domain_url + "/tieuchicap3/create.php";
 
 //UPDATE
 const urlapi_tieuchicap3_update = host_domain_url + "/tieuchicap3/update.php";
+const urlapi_tieuchicap3_update_kichHoat =
+  host_domain_url + "/tieuchicap3/update_kichHoat.php";
 
 //---------------LOGIN ADMIN---------------//----------------------------------
 //---------//

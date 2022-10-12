@@ -32,9 +32,15 @@
                 $item->matc2 = $data->matc2;
     
                 if($item->createTC3()){
-                    echo 'tieuchicap3 tạo thành công.';
+                    http_response_code(200);
+                    echo json_encode(
+                        array("message" => "tieuchicap3 tạo thành công.")
+                    );
                 } else{
-                    echo 'tieuchicap3 tạo thất bại.';
+                    http_response_code(500);
+                    echo json_encode(
+                        array("message" => "tieuchicap3 tạo thất bại.")
+                    );
                 }
             }else{
                 echo 'Không có dữ liệu được gửi lên.';

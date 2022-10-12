@@ -65,19 +65,19 @@
 
 							<div class="mb-3 form-group">
 								<label for="inputMaCoVanHocTap" class="form-label" style="color: black; font-weight: 500;">Mã khoa</label>
-								<input type="text" class="form-control" id="add_input_MaKhoa" placeholder="Nhập mã khoa...">
+								<input type="text" class="form-control" name="maKhoa" id="add_input_MaKhoa" placeholder="Nhập mã khoa...">
 								<span class="invalid-feedback"></span>
 							</div>
 
 							<div class="mb-3 form-group">
 								<label for="inputMaCoVanHocTap" class="form-label" style="color: black; font-weight: 500;">Tên khoa</label>
-								<input type="text" class="form-control" id="add_input_TenKhoa" placeholder="Nhập tên khoa...">
+								<input type="text" class="form-control" name="tenKhoa" id="add_input_TenKhoa" placeholder="Nhập tên khoa...">
 								<span class="invalid-feedback"></span>
 							</div>
 
 							<div class="mb-3 form-group">
 								<label for="inputMaCoVanHocTap" class="form-label" style="color: black; font-weight: 500;">Tài khoản khoa</label>
-								<input type="text" class="form-control" id="add_input_TaiKhoanKhoa" placeholder="Nhập tài khoản khoa...">
+								<input type="text" class="form-control" name="taiKhoanKhoa" id="add_input_TaiKhoanKhoa" placeholder="Nhập tài khoản khoa...">
 								<span class="invalid-feedback"></span>
 							</div>
 
@@ -87,13 +87,13 @@
 
 							<div class="mb-3 form-group">
 								<label for="inputMaCoVanHocTap" class="form-label" style="color: black; font-weight: 500;">Mật khẩu</label>
-								<input type="password" class="form-control" id="add_input_MatKhau" placeholder="Nhập mật khẩu...">
+								<input type="password" class="form-control" name="matKhauKhoa" id="add_input_MatKhau" placeholder="Nhập mật khẩu...">
 								<span class="invalid-feedback"></span>
 							</div>
 
 							<div class="mb-3 form-group">
 								<label for="inputMaCoVanHocTap" class="form-label" style="color: black; font-weight: 500;">Nhập lại mật khẩu</label>
-								<input type="password" class="form-control" id="add_input_NhapLaiMatKhau" placeholder="Nhập lại mật khẩu...">
+								<input type="password" class="form-control" name="nhapLaiMatKhauKhoa" id="add_input_NhapLaiMatKhau" placeholder="Nhập lại mật khẩu...">
 								<span class="invalid-feedback"></span>
 							</div>
 
@@ -119,13 +119,13 @@
 
 							<div class="mb-3 form-group">
 								<label for="edit_input_MaKhoa" class="form-label" style="color: black; font-weight: 500;">Mã khoa</label>
-								<input type="text" class="form-control mb-2" id="edit_input_MaKhoa" placeholder="Nhập mã lớp..." readonly>
+								<input type="text" class="form-control mb-2" name="maKhoa" id="edit_input_MaKhoa" placeholder="Nhập mã lớp..." readonly>
 								<span class="invalid-feedback"></span>
 							</div>
 							
 							<div class="mb-3 form-group">
 								<label for="edit_input_TenKhoa" class="form-label" style="color: black; font-weight: 500;">Tên khoa</label>
-								<input type="text" class="form-control mb-2" id="edit_input_TenKhoa" placeholder="Nhập tên khoa...">
+								<input type="text" class="form-control mb-2" name="tenKhoa" id="edit_input_TenKhoa" placeholder="Nhập tên khoa...">
 								<span class="invalid-feedback"></span>
 							</div>
 
@@ -149,19 +149,19 @@
 						<div class="modal-body">
 							<div class="mb-3 form-group">
 								<label for="input_MaKhoa" class="form-label" style="color: black; font-weight: 500;">Mã khoa</label>
-								<input type="text" class="form-control" id="input_MaKhoa_DLMK" placeholder="Nhập mã khoa..." disabled>
+								<input type="text" class="form-control" name="maKhoa" id="input_MaKhoa_DLMK" placeholder="Nhập mã khoa..." disabled>
 								<span class="invalid-feedback"></span>
 							</div>
 
 							<div class="mb-3 form-group">
 								<label for="input_MatKhauMoi" class="form-label" style="color: black; font-weight: 500;">Mật khẩu mới</label>
-								<input type="password" class="form-control" id="input_MatKhauMoi" placeholder="Nhập mật khẩu mới...">
+								<input type="password" class="form-control" name="matKhauKhoa" id="input_MatKhauMoi" placeholder="Nhập mật khẩu mới...">
 								<span class="invalid-feedback"></span>
 							</div>
 
 							<div class="mb-3 form-group">
 								<label for="input_NhapLaiMatKhau" class="form-label" style="color: black; font-weight: 500;">Nhập lại mật khẩu mới</label>
-								<input type="password" class="form-control" id="input_NhapLaiMatKhau" placeholder="Nhập lại mật khẩu mới...">
+								<input type="password" class="form-control" name="nhapLaiMatKhauKhoa" id="input_NhapLaiMatKhau" placeholder="Nhập lại mật khẩu mới...">
 								<span class="invalid-feedback"></span>
 							</div>
 						</div>
@@ -232,10 +232,13 @@
 <script src="assets/js/khoa/function.js"></script>
 
 
+<!-- Form Validator -->
+<script src="./assets/js/validator.js"></script>
+
+
 <script type="text/javascript">
 
-	
-Validator({
+	Validator({
         form: '#AddForm',
         formGroupSelector: '.form-group',
         errorSelector: '.invalid-feedback',

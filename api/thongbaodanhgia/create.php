@@ -38,12 +38,12 @@
                 if($item->createThongBaoDanhGia()){
                     http_response_code(200);
                     echo json_encode(
-                        array("message" => "ThongBaoDanhGia tạo thành công.")
+                        array("message" => "Thông báo đánh giá tạo thành công.")
                     );
                 } else{
                     http_response_code(500);
                     echo json_encode(
-                        array("message" => "ThongBaoDanhGia tạo KHÔNG thành công.")
+                        array("message" => "Thông báo đánh giá tạo thất bại.")
                     );
                 }
             }else{

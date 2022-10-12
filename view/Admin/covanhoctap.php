@@ -264,6 +264,10 @@
 <!-- Page Specific JS -->
 <script src="assets/js/covanhoctap/function.js"></script>
 
+
+<!-- Form Validator -->
+<script src="./assets/js/validator.js"></script>
+
 <script>
 
 	Validator({
@@ -272,7 +276,7 @@
         errorSelector: '.invalid-feedback',
         rules: [
 			Validator.isRequired('#inputMaCoVanHocTap', 'Vui lòng nhập mã cố vấn học tập'),
-			Validator.isNumber('#inputMaCoVanHocTap', 'Mã cố vấn học tập chỉ bao gồm các ký tự số'),
+			Validator.isPositiveNumber('#inputMaCoVanHocTap', 'Mã cố vấn học tập chỉ bao gồm các ký tự số'),
 			Validator.minLength('#inputMaCoVanHocTap', 5, "Mã cố vấn học tập phải có tối thiểu 5 chữ số"),
 			Validator.isRequired('#inputTenCoVanHocTap', 'Vui lòng nhập họ tên cố vấn học tập'),
 			Validator.isCharacters('#inputTenCoVanHocTap', 'Họ tên cố vấn học tập chỉ bao gồm các ký tự chữ'),
@@ -293,7 +297,7 @@
         errorSelector: '.invalid-feedback',
         rules: [
 			Validator.isRequired('#edit_input_MaCVHT', 'Vui lòng nhập mã cố vấn học tập'),
-			Validator.isNumber('#edit_input_MaCVHT', 'Mã cố vấn học tập chỉ bao gồm các ký tự số'),
+			Validator.isPositiveNumber('#edit_input_MaCVHT', 'Mã cố vấn học tập chỉ bao gồm các ký tự số'),
 			Validator.minLength('#edit_input_MaCVHT', 5, "Mã cố vấn học tập phải có tối thiểu 5 chữ số"),
 			Validator.isRequired('#edit_input_TenCVHT', 'Vui lòng nhập họ tên cố vấn học tập'),
 			Validator.isCharacters('#edit_input_TenCVHT', 'Họ tên cố vấn học tập chỉ bao gồm các ký tự chữ'),

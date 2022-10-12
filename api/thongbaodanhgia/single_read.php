@@ -18,12 +18,25 @@
     if($data["status"]==1){
 
        // if ($checkQuyen->checkQuyen_Khoa_CTSV($data["user_data"]->aud)){
+
+            if (isset($_GET['maThongBao'])) {
+                $maThongBao = $_GET['maThongBao'];
+            } else {
+                $maThongBao = null;
+            }
+
+            if (isset($_GET['maHocKyDanhGia'])) {
+                $maHocKyDanhGia = $_GET['maHocKyDanhGia'];
+            } else {
+                $maHocKyDanhGia = null;
+            }
+
             $database = new Database();
             $db = $database->getConnection();
             $item = new ThongBaoDanhGia($db);
 
-            if (isset($_GET["maThongBao"])){
-                $item->maThongBao = isset($_GET['maThongBao']) ? $_GET['maThongBao'] : die(); //Lấy id từ phương thức GET
+            if ($maThongBao != null){
+                $item->maThongBao = $maThongBao;
 
                 $item->getSingleThongBaoDanhGia();
                 if($item->ngaySinhVienDanhGia != null){
@@ -43,34 +56,32 @@
                     http_response_code(200);
                     echo json_encode($thongbaodanhgia_arr);
                 }
-            }else{
-                if (isset($_GET["maHocKyDanhGia"])){
-                    $item->maHocKyDanhGia = isset($_GET['maHocKyDanhGia']) ? $_GET['maHocKyDanhGia'] : die(); //Lấy id từ phương thức GET
-    
-                    $item->getSingleThongBaoDanhGia_HocKyDanhGia();
-                    if($item->ngaySinhVienDanhGia != null){
-                        // create array
-                        $thongbaodanhgia_arr = array(
-                            "maThongBao" =>  $item->maThongBao,
-                            "ngaySinhVienDanhGia" => $item->ngaySinhVienDanhGia,
-                            "ngaySinhVienKetThucDanhGia" => $item->ngaySinhVienKetThucDanhGia,
-                            "ngayCoVanDanhGia" => $item->ngayCoVanDanhGia,
-                            "ngayCoVanKetThucDanhGia" => $item->ngayCoVanKetThucDanhGia,
-                            "ngayKhoaDanhGia" => $item->ngayKhoaDanhGia,
-                            "ngayKhoaKetThucDanhGia" => $item->ngayKhoaKetThucDanhGia,
-                            "ngayThongBao" => $item->ngayThongBao,
-                            "maHocKyDanhGia" => $item->maHocKyDanhGia        
-                        );
-    
-                        http_response_code(200);
-                        echo json_encode($thongbaodanhgia_arr);
-                    }
-                }else{
-                    http_response_code(404);
-                    echo json_encode(
-                        array("message" => "thongbaodanhgia không tìm thấy.")
+            } else if ($maHocKyDanhGia != null) {
+                $item->maHocKyDanhGia = $maHocKyDanhGia;
+
+                $item->getSingleThongBaoDanhGia_HocKyDanhGia();
+                if($item->ngaySinhVienDanhGia != null){
+                    // create array
+                    $thongbaodanhgia_arr = array(
+                        "maThongBao" =>  $item->maThongBao,
+                        "ngaySinhVienDanhGia" => $item->ngaySinhVienDanhGia,
+                        "ngaySinhVienKetThucDanhGia" => $item->ngaySinhVienKetThucDanhGia,
+                        "ngayCoVanDanhGia" => $item->ngayCoVanDanhGia,
+                        "ngayCoVanKetThucDanhGia" => $item->ngayCoVanKetThucDanhGia,
+                        "ngayKhoaDanhGia" => $item->ngayKhoaDanhGia,
+                        "ngayKhoaKetThucDanhGia" => $item->ngayKhoaKetThucDanhGia,
+                        "ngayThongBao" => $item->ngayThongBao,
+                        "maHocKyDanhGia" => $item->maHocKyDanhGia        
                     );
+
+                    http_response_code(200);
+                    echo json_encode($thongbaodanhgia_arr);
                 }
+            } else {
+                http_response_code(404);
+                echo json_encode(
+                    array("message" => "Không tìm thấy dữ liệu.")
+                );
             }
 
         // }else{
@@ -86,6 +97,4 @@
             array("message" => "Vui lòng đăng nhập trước!")
         );
     }
-
-
 ?>

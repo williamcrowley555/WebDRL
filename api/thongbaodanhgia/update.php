@@ -41,12 +41,12 @@
                 if($item->updateThongBaoDanhGia()){
                     http_response_code(200);
                     echo json_encode(
-                        array("message" => "thongbaodanhgia cập nhật thành công.")
+                        array("message" => "Thông báo đánh giá cập nhật thành công.")
                     );
                 } else{
                     http_response_code(500);
                     echo json_encode(
-                        array("message" => "thongbaodanhgia cập nhật thất bại.")
+                        array("message" => "Thông báo đánh giá cập nhật thất bại.")
                     );
                 }
     
@@ -69,6 +69,4 @@
             array("message" => "Vui lòng đăng nhập trước!")
         );
     }
-    
-
 ?>

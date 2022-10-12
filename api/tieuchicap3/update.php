@@ -36,9 +36,15 @@
     
                 
                 if($item->updateTC3()){
-                    echo json_encode("tieuchicap3 cập nhật thành công.");
+                    http_response_code(200);
+                    echo json_encode(
+                        array("message" => "tieuchicap3 cập nhật thành công..")
+                    );
                 } else{
-                    echo json_encode("tieuchicap3 cập nhật thất bại.");
+                    http_response_code(500);
+                    echo json_encode(
+                        array("message" => "tieuchicap3 cập nhật thất bại.")
+                    );
                 }
     
             }else{

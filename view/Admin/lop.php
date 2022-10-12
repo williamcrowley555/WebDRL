@@ -233,9 +233,12 @@
 <!--//app-footer-->
 
 
-
 <!-- Page Specific JS -->
 <script src="assets/js/lop/function.js"></script>
+
+
+<!-- Form Validator -->
+<script src="./assets/js/validator.js"></script>
 
 <script>
 	

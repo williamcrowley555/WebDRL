@@ -31,12 +31,18 @@
                 $item->matc1 = $data->matc1;
     
                 if($item->createTC2()){
-                    echo 'tieuchicap2 tạo thành công.';
+                    http_response_code(200);
+                    echo json_encode(
+                        array("message" => "tieuchicap2 tạo thành công.")
+                    );
                 } else{
                     echo 'tieuchicap2 tạo thất bại.';
                 }
             }else{
-                echo 'Không có dữ liệu được gửi lên.';
+                http_response_code(500);
+                echo json_encode(
+                    array("message" => "tieuchicap2 tạo thất bại.")
+                );
             }
         }else{
             http_response_code(403);

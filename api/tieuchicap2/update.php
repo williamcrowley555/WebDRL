@@ -35,9 +35,15 @@
                 $item->matc1 = $data->matc1;
                 
                 if($item->updateTC2()){
-                    echo json_encode("tieuchicap2 tạo thành công.");
+                    http_response_code(200);
+                    echo json_encode(
+                        array("message" => "tieuchicap2 cập nhật thành công..")
+                    );
                 } else{
-                    echo json_encode("tieuchicap2 tạo thất bại");
+                    http_response_code(500);
+                    echo json_encode(
+                        array("message" => "tieuchicap2 cập nhật thất bại.")
+                    );
                 }
     
             }else{

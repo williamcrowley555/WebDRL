@@ -19,7 +19,7 @@
 
         // GET ALL
         public function getAllTC1(){
-            $sqlQuery = "SELECT matc1, noidung, diemtoida FROM " . $this->db_table . "";
+            $sqlQuery = "SELECT matc1, noidung, diemtoida, kichHoat FROM " . $this->db_table . " ORDER BY matc1 ASC, kichHoat DESC";
             $stmt = $this->conn->prepare($sqlQuery);
             $stmt->execute();
             return $stmt;
@@ -27,7 +27,7 @@
 
         // READ single
         public function getSingleTC1(){
-            $sqlQuery = "SELECT matc1, noidung, diemtoida FROM ". $this->db_table ."
+            $sqlQuery = "SELECT matc1, noidung, diemtoida, kichHoat FROM ". $this->db_table ."
                         WHERE matc1 = ? LIMIT 0,1";
             $stmt = $this->conn->prepare($sqlQuery);
             $stmt->bindParam(1, $this->matc1);
@@ -88,6 +88,31 @@
             $stmt->bindParam(":matc1", $this->matc1);
             $stmt->bindParam(":noidung", $this->noidung);
             $stmt->bindParam(":diemtoida", $this->diemtoida);
+        
+            if($stmt->execute()){
+               return true;
+            }
+            return false;
+        }
+
+        // UPDATE kichHoat
+        public function update_kichHoat_TC1(){
+            $sqlQuery = "UPDATE
+                        ". $this->db_table ."
+                    SET
+                        kichHoat = :kichHoat
+                    WHERE 
+                        matc1 = :matc1";
+        
+            $stmt = $this->conn->prepare($sqlQuery);
+        
+            // sanitize (Lọc dữ liệu đầu vào tránh SQLInjection, XSS)
+            $this->matc1=htmlspecialchars(strip_tags($this->matc1));
+            $this->kichHoat=htmlspecialchars(strip_tags($this->kichHoat));
+        
+            // bind data
+            $stmt->bindParam(":matc1", $this->matc1);
+            $stmt->bindParam(":kichHoat", $this->kichHoat);
         
             if($stmt->execute()){
                return true;

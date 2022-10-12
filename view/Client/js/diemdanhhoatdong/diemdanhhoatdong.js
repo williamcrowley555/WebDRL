@@ -307,51 +307,77 @@ function DiemDanh() {
   if (_text_thoiGianDiemDanh != "Đã hết thời gian điểm danh!") {
     var _maSinhVienThamGia = getCookie("maSo");
 
-    var _temp_thoiGianBatDauDiemDanh_others = new Date();
+    if (_maSinhVienThamGia) {
+      $.ajax({
+        url: urlapi_sinhvien_single_read + _maSinhVienThamGia,
+        type: "GET",
+        contentType: "application/json;charset=utf-8",
+        dataType: "json",
+        async: false,
+        headers: { Authorization: jwtCookie },
+        success: function (result_data) {
+          var _temp_thoiGianBatDauDiemDanh_others = new Date();
 
-    var _temp_thoiGianBatDauDiemDanh = new Date().toLocaleDateString();
+          var _temp_thoiGianBatDauDiemDanh = new Date().toLocaleDateString();
 
-    var _str_temp_TGBD = _temp_thoiGianBatDauDiemDanh.split("/");
+          var _str_temp_TGBD = _temp_thoiGianBatDauDiemDanh.split("/");
 
-    var year_temp = _str_temp_TGBD[2];
-    var month_temp = _str_temp_TGBD[1];
-    var day_temp = _str_temp_TGBD[0];
+          var year_temp = _str_temp_TGBD[2];
+          var month_temp = _str_temp_TGBD[1];
+          var day_temp = _str_temp_TGBD[0];
 
-    var _thoiGianDiemDanh = year_temp + '-' + month_temp + '-' + day_temp + ' ' + _temp_thoiGianBatDauDiemDanh_others.toTimeString().split(' ')[0];
+          var _thoiGianDiemDanh =
+            year_temp +
+            "-" +
+            month_temp +
+            "-" +
+            day_temp +
+            " " +
+            _temp_thoiGianBatDauDiemDanh_others.toTimeString().split(" ")[0];
 
-    var dataPost = {
-      maHoatDong: GET_maHoatDong,
-      maSinhVienThamGia: _maSinhVienThamGia,
-      thoiGianDiemDanh: _thoiGianDiemDanh,
-    };
+          var dataPost = {
+            maHoatDong: GET_maHoatDong,
+            maSinhVienThamGia: _maSinhVienThamGia,
+            thoiGianDiemDanh: _thoiGianDiemDanh,
+          };
 
-    $.ajax({
-      url: urlapi_thamgiahoatdong_create,
-      async: false,
-      type: "POST",
-      contentType: "application/json;charset=utf-8",
-      dataType: "json",
-      data: JSON.stringify(dataPost),
-      headers: {
-        Authorization: jwtCookie,
-      },
-      success: function (result_TGHD) {
-        Swal.fire({
-          icon: "success",
-          title: "Điểm danh thành công!",
-          text: "",
-          timer: 5000,
-          timerProgressBar: true,
-        });
+          $.ajax({
+            url: urlapi_thamgiahoatdong_create,
+            async: false,
+            type: "POST",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            data: JSON.stringify(dataPost),
+            headers: {
+              Authorization: jwtCookie,
+            },
+            success: function (result_TGHD) {
+              Swal.fire({
+                icon: "success",
+                title: "Điểm danh thành công!",
+                text: "",
+                timer: 5000,
+                timerProgressBar: true,
+              });
 
-        $("#btn_DiemDanh").remove();
+              $("#btn_DiemDanh").remove();
 
-        $("#text_TrangThaiDiemDanh").text("Đã điểm danh!");
-      },
-      error: function (errorMessage) {
-        thongBaoLoi(errorMessage.responseText);
-      },
-    });
+              $("#text_TrangThaiDiemDanh").text("Đã điểm danh!");
+            },
+            error: function (errorMessage) {
+              thongBaoLoi(errorMessage.responseText);
+            },
+          });
+        },
+        error: function (errorMessage) {
+          //checkLoiDangNhap(errorMessage.responseJSON.message);
+
+          thongBaoLoi("Phần điểm danh chỉ dành cho sinh viên!");
+        },
+      });
+    } else {
+      return;
+    }
   } else {
     $("#btn_DiemDanh").remove();
     thongBaoLoi("Đã hết thời gian điểm danh!");

@@ -51,8 +51,8 @@
         public function getLopTheoMaLop($maLop, $isEqual = true)
         {
             $sqlQuery = "SELECT maLop, tenLop, maKhoa, maCoVanHocTap, maKhoaHoc FROM " . $this->db_table . " 
-                            WHERE maLop" . 
-                            ($isEqual ? " = '$maLop'" : " LIKE '%$maLop%'");
+                            WHERE UPPER(maLop)" . 
+                            ($isEqual ? " = UPPER('$maLop')" : " LIKE UPPER('%$maLop%')");
 
             $stmt = $this->conn->prepare($sqlQuery);
             $stmt->execute();
@@ -62,9 +62,9 @@
         // READ single
         public function getSingleLop(){
             $sqlQuery = "SELECT maLop, tenLop, maKhoa, maCoVanHocTap, maKhoaHoc FROM ". $this->db_table .
-                            ($this->maLop ? " WHERE maLop = '$this->maLop'" : "") . 
+                            ($this->maLop ? " WHERE UPPER(maLop) = UPPER('$this->maLop')" : "") . 
                             (($this->maKhoa && $this->maKhoaHoc) ? 
-                                (" WHERE maLop LIKE '%$this->maKhoa" . "1" . substr($this->maKhoaHoc, 1) . "%' ORDER BY maLop DESC") 
+                                (" WHERE UPPER(maLop) LIKE UPPER('%$this->maKhoa" . "1" . substr($this->maKhoaHoc, 1) . "%') ORDER BY maLop DESC") 
                                 : 
                                 "") .
                             " LIMIT 0,1";
