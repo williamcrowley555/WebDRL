@@ -74,6 +74,7 @@
 
 							<div class="row justify-content-center" style="padding-bottom: 30px;text-align: start;" id="part_thongTinSinhVien">
 
+							
 							</div>
 
 							<h6 style="text-transform: uppercase; text-align: left;">--PHIẾU ĐÁNH GIÁ ĐIỂM RÈN LUYỆN--</h6>
@@ -273,7 +274,7 @@
                 if (this.value != null) {
                    // calDiemTongCong += Number(this.value);
                     calDiemTongTieuChi1 += Number(this.value);
-                    calDiemTongCong_CVHT += Number(this.value);
+                    //calDiemTongCong_CVHT += Number(this.value);
                 }
             }
 
@@ -281,30 +282,63 @@
                 if (this.value != null) {
                    // calDiemTongCong += Number(this.value);
                    calDiemTongTieuChi1_Khoa += Number(this.value);
-                   calDiemTongCong_Khoa += Number(this.value);
+                   //calDiemTongCong_Khoa += Number(this.value);
                 }
             }
 
             if (tieuChi_SinhVien == 'TC2' || tieuChi_SinhVien == 'TC3') {
                 if (this.value != null) {
                     calDiemTongTieuChi1_SinhVien += Number(this.value);
-                   calDiemTongCong_SinhVien += Number(this.value);
+                   //calDiemTongCong_SinhVien += Number(this.value);
                 }
             }
 
             if (idDiemTongTieuChi1_SinhVien == 'TongCong_TC1') {
-                $('#' + this.id).val(calDiemTongTieuChi1_SinhVien);
-                calDiemTongTieuChi1_SinhVien = 0;
+                // Thêm ở đây
+                var diemToiDa_TC1 = $('#' + this.id).attr('max-value');
+                if (calDiemTongTieuChi1_SinhVien > diemToiDa_TC1) {
+                    $('#' + this.id).val(diemToiDa_TC1);
+                    calDiemTongCong_SinhVien += Number(diemToiDa_TC1);
+                    calDiemTongTieuChi1_SinhVien = 0;
+                } else {
+                    $('#' + this.id).val(calDiemTongTieuChi1_SinhVien);
+                    calDiemTongCong_SinhVien += Number(calDiemTongTieuChi1_SinhVien);
+                    calDiemTongTieuChi1_SinhVien = 0;
+                }
+                // Kết thúc thêm
             }
 
             if (idDiemTongTieuChi1 == 'CVHT_TongCong_TC1') {
-                $('#' + this.id).val(calDiemTongTieuChi1);
-                calDiemTongTieuChi1 = 0;
+                // Thêm dòng này
+                var diemToiDa_TC1_CVHT = $('#' + this.id).attr('max-value');
+                if (calDiemTongTieuChi1 > diemToiDa_TC1_CVHT) {
+                    $('#' + this.id).val(diemToiDa_TC1_CVHT);
+                    calDiemTongCong_CVHT += Number(diemToiDa_TC1_CVHT);
+                    calDiemTongTieuChi1 = 0;
+                } else {
+                    $('#' + this.id).val(calDiemTongTieuChi1);
+                     calDiemTongCong_CVHT += Number(calDiemTongTieuChi1);
+                     calDiemTongTieuChi1 = 0;
+                }
+                // Kết thúc thêm
             }
 
             if (idDiemTongTieuChi1 == 'Khoa_TongCong_TC1') {
-                $('#' + this.id).val(calDiemTongTieuChi1_Khoa);
-                calDiemTongTieuChi1_Khoa = 0;
+                var diemToiDa_TC1_Khoa = $('#' + this.id).attr('max-value');
+                if (calDiemTongTieuChi1_Khoa > diemToiDa_TC1_Khoa) {
+                    console.log("diem tong tieu chi 1 khoa = " + calDiemTongTieuChi1_Khoa);
+                    console.log("diem toi da tieu chi 1 khoa = " + diemToiDa_TC1_Khoa);
+                    $('#' + this.id).val(diemToiDa_TC1_Khoa);
+                    calDiemTongCong_Khoa += Number(diemToiDa_TC1_Khoa);
+                    //console.log("diem tong cong Khoa = " + calDiemTongCong_Khoa);
+                    calDiemTongTieuChi1_Khoa = 0;
+                } else {
+                    $('#' + this.id).val(calDiemTongTieuChi1_Khoa);
+                     calDiemTongCong_Khoa += Number(calDiemTongTieuChi1_Khoa);
+                     calDiemTongTieuChi1_Khoa = 0;
+                }
+                //$('#' + this.id).val(calDiemTongTieuChi1_Khoa);
+                //calDiemTongTieuChi1_Khoa = 0;
             }
             
         });

@@ -1,10 +1,14 @@
+var jwtCookie = getCookie("jwt");
+var url = new URL(window.location.href);
+var GET_MaHocKy = url.searchParams.get("maHocKy");
+
 function getCookie(cName) {
   const name = cName + "=";
   const cDecoded = decodeURIComponent(document.cookie); //to be careful
   const cArr = cDecoded.split("; ");
   let res;
   cArr.forEach((val) => {
-    if (val.indexOf(name) === 0) res = val.substring(name.length);
+      if (val.indexOf(name) === 0) res = val.substring(name.length);
   });
   return res;
 }
@@ -50,11 +54,6 @@ function changeNumberHandle(val, number) {
     val.value = 0;
   }
 }
-
-var jwtCookie = getCookie("jwt");
-
-var url = new URL(window.location.href);
-var GET_MaHocKy = url.searchParams.get("maHocKy");
 
 //-----------------------------------------//
 function HienThiThongTinVaDanhGia() {
@@ -413,7 +412,7 @@ function getTieuChiDanhGia() {
             <td><input type='number' style='width: 100px' onchange='changeNumberHandle(this, 100)' id='input_diemtongcong' name='diemTongCong' readonly='true'/></td>\
             <td></td>\
             <td></td>\
-            </tr>"
+    </tr>"
   );
 
   
@@ -595,6 +594,7 @@ function checkValidateInput() {
 
 //Load thông tin sinh viên đã đánh giá (chamlaichitiet)
 function LoadThongTinSinhVienDanhGia() {
+
   var maPhieuRenLuyen = "PRL" + GET_MaHocKy + getCookie("maSo");
 
   $.ajax({
@@ -614,7 +614,6 @@ function LoadThongTinSinhVienDanhGia() {
       var diemTongCong = result_PRL.diemTongCong;
       var diemTrungBinhChungHKTruoc = result_PRL.diemTrungBinhChungHKTruoc;
       var diemTrungBinhChungHKXet = result_PRL.diemTrungBinhChungHKXet;
-      
 
       $.ajax({
         url:
