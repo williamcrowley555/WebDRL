@@ -311,12 +311,13 @@
 	}
 
 	$('#select_Khoa').on('change', function() {
+		$('#input_timKiemMaLop').val('');
+
 		var maKhoa = $('#select_Khoa').val();
 
 		if (maKhoa != '') {
 			GetListLop(maKhoa);
 		}
-
 	});
 
 	$('#btn_timKiemMaLop').on('click', function() {

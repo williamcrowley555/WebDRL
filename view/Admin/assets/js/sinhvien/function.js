@@ -119,6 +119,7 @@ function GetListSinhVien(maKhoa, maLop) {
         error: function (errorMessage) {
           checkLoiDangNhap(errorMessage.responseJSON.message);
 
+          tableContent = [];
           var htmlData = "";
           $("#id_tbodySinhVien").html(htmlData);
           $("#idPhanTrang").empty();
@@ -199,6 +200,7 @@ function GetListSinhVien(maKhoa, maLop) {
             error: function (errorMessage) {
               checkLoiDangNhap(errorMessage.responseJSON.message);
 
+              tableContent = [];
               var htmlData = "";
               $("#id_tbodySinhVien").html(htmlData);
               $("#idPhanTrang").empty();
@@ -274,6 +276,7 @@ function GetListSinhVien(maKhoa, maLop) {
             error: function (errorMessage) {
               checkLoiDangNhap(errorMessage.responseJSON.message);
 
+              tableContent = [];
               var htmlData = "";
               $("#id_tbodySinhVien").html(htmlData);
               $("#idPhanTrang").empty();
@@ -351,6 +354,7 @@ function GetListSinhVien(maKhoa, maLop) {
           error: function (errorMessage) {
             checkLoiDangNhap(errorMessage.responseJSON.message);
 
+            tableContent = [];
             var htmlData = "";
             $("#id_tbodySinhVien").html(htmlData);
             $("#idPhanTrang").empty();
@@ -432,6 +436,7 @@ function TimKiemSinhVien(maSinhVien) {
     error: function (errorMessage) {
       checkLoiDangNhap(errorMessage.responseJSON.message);
 
+      tableContent = [];
       var htmlData = "";
       $("#id_tbodySinhVien").html(htmlData);
       $("#idPhanTrang").empty();
@@ -476,6 +481,7 @@ function LoadComboBoxThongTinKhoa_SinhVien() {
     error: function (errorMessage) {
       checkLoiDangNhap(errorMessage.responseJSON.message);
 
+      tableContent = [];
       var htmlData = "";
       $("#id_tbodySinhVien").html(htmlData);
       $("#idPhanTrang").empty();
@@ -521,6 +527,7 @@ function LoadComboBoxThongTinLopTheoKhoa(maKhoa) {
       error: function (errorMessage) {
         checkLoiDangNhap(errorMessage.responseJSON.message);
 
+        tableContent = [];
         var htmlData = "";
         $("#id_tbodySinhVien").html(htmlData);
         $("#idPhanTrang").empty();
@@ -544,9 +551,18 @@ function LoadComboBoxThongTinLop_SinhVien() {
     success: function (result_Lop) {
       $("#select_Lop_Add").find("option").remove();
       $("#edit_select_Lop").find("option").remove();
+      $("#select_lop_import").find("option").remove();
 
       $.each(result_Lop, function (index_Lop) {
         for (var p = 0; p < result_Lop[index_Lop].length; p++) {
+          $("#edit_select_Lop").append(
+            "<option value='" +
+              result_Lop[index_Lop][p].maLop +
+              "'>" +
+              result_Lop[index_Lop][p].maLop +
+              "</option>"
+          );
+
           $("#select_Lop_Add").append(
             "<option value='" +
               result_Lop[index_Lop][p].maLop +
@@ -554,12 +570,8 @@ function LoadComboBoxThongTinLop_SinhVien() {
               result_Lop[index_Lop][p].maLop +
               "</option>"
           );
-        }
-      });
 
-      $.each(result_Lop, function (index_Lop) {
-        for (var p = 0; p < result_Lop[index_Lop].length; p++) {
-          $("#edit_select_Lop").append(
+          $("#select_lop_import").append(
             "<option value='" +
               result_Lop[index_Lop][p].maLop +
               "'>" +

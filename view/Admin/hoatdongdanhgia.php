@@ -561,6 +561,8 @@
 
 	// Xử lý lọc hoạt động theo khoảng thời gian
 	$(document).on("click", "#btnDateFilter" ,function() {
+		$('#inputTimKiem_MaHoatDong').val('');
+
 		var inputFrom = $('#fromDateFilter').val();
 		var inputTo = $('#toDateFilter').val();
 

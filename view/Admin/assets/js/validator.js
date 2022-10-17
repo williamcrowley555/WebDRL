@@ -351,7 +351,12 @@ Validator.isCharacters = function (selector, message, hasWhiteSpace = true) {
   return {
     selector: selector,
     test: function (value) {
-      var regex = /^[A-Za-z\s]+$/;
+      const regexWithWhiteSpace = /^[A-Za-z\s]+$/;
+      const regexWithoutWhiteSpace = /^[A-Za-z]+$/;
+      var regex = regexWithWhiteSpace;
+
+      if (!hasWhiteSpace) regex = regexWithoutWhiteSpace;
+
       return regex.test(removeAscent(value))
         ? undefined
         : message ||
@@ -391,9 +396,9 @@ Validator.isDateOfBirth = function (selector, message) {
     selector: selector,
     test: function (value) {
       var inputDate = new Date(value).setHours(0, 0, 0, 0);
-      var todaysDate = new Date().setHours(0, 0, 0, 0);
+      var todayDate = new Date().setHours(0, 0, 0, 0);
 
-      return inputDate <= todaysDate
+      return inputDate <= todayDate
         ? undefined
         : message || "Ngày sinh không hợp lệ";
     },

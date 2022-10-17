@@ -62,10 +62,8 @@
 									</button>
 									<ul class="dropdown-menu" aria-labelledby="dropdownImportButton">
 										<li>
-											<form action="" method="POST" id="form_import_from_excel" enctype="multipart/form-data">
-												<input type="hidden" name="table_data" id="table_data" />
-												<button type="submit" class="dropdown-item" id="btn_import_from_excel">Import from Excel</button></li>
-											</form>
+											<button type="submit" name="btn_import_from_excel" class="dropdown-item" data-bs-toggle='modal' data-bs-target='#ImportFromExcelModal'>Import from Excel</button>
+										</li>
 									</ul>
 								</div>
 
@@ -242,6 +240,69 @@
 						</div>
 					</div>
 				</form>
+			</div>
+
+			<!-- Modal import from excel -->
+			<div class="modal fade" id="ImportFromExcelModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+				<form action="" class="modal-dialog" id="form_import_from_excel">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="exampleModalLabel"> Import From Excel</h5>
+							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						</div>
+						<div class="modal-body">
+
+							<div class="mb-3 form-group">
+								<label for="select_lop_import" class="form-label" style="color: black; font-weight: 500;">Lớp</label>
+								<select class="form-select" name="lop" aria-label="Default select example" id="select_lop_import">
+								</select>
+								<span class="invalid-feedback"></span>
+							</div>
+
+							<div class="mb-3 form-group">
+								<label for="import_file" class="form-label" style="color: black; font-weight: 500;">Upload file</label>
+								<input type="file" name="import_file" class="form-control" id="import_file">
+								<span class="invalid-feedback"></span>
+							</div>
+
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+							<button type="submit" class="btn btn-primary" style='color: white;'>Import</button>
+						</div>
+					</div>
+				</form>
+			</div>
+
+			<!-- Modal error list of import from excel -->
+			<div class="modal fade" id="ImportErrorListModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+				<div class="modal-dialog modal-lg">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title"> Dach sách các dòng lỗi</h5>
+							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						</div>
+						<div class="modal-body">
+
+							<div class="table-responsive">
+								<table class="table app-table-hover mb-0 text-left" id="table_import_error_list">
+									<thead>
+										<tr>
+										
+										</tr>
+									</thead>
+									<tbody>
+
+									</tbody>
+								</table>
+							</div>
+
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+						</div>
+					</div>
+				</div>
 			</div>
 
 			<div class="tab-pane fade show active" id="orders-all" role="tabpanel" aria-labelledby="orders-all-tab">
@@ -431,10 +492,13 @@
       	$("#ChangePasswordForm #input_NhapLaiMatKhauMoi").removeClass("is-invalid");
 	})
 
-
 	var select_box_element = document.querySelector('#select_Lop_Add');
 
 	dselect(select_box_element, {
+		search: true
+	});
+
+	dselect(document.querySelector('#select_lop_import'), {
 		search: true
 	});
 
@@ -453,24 +517,109 @@
 	})
 
 	// Xử lý import form excel 
-	$('#form_import_from_excel').submit(function() {
-		$(this).attr('action', 'http://localhost/WebDRL/phpspreadsheet/import/import_sinhvien.php');
+	$('#form_import_from_excel').submit(function(e) {
+      	e.preventDefault();
 
+		if(document.getElementById("import_file").files.length == 0 ){
+			Swal.fire({
+				icon: "error",
+				title: "Lỗi",
+				text: "Vui lòng upload file excel để import!",
+				timer: 2000,
+				timerProgressBar: true,
+			});
+		} else {
+			var formData = new FormData(this);
+							
+			$("#ImportFromExcelModal").modal("hide");
+		
+			$.ajax({
+				url: 'http://localhost/WebDRL/phpspreadsheet/import/import_sinhvien.php',
+				type: "POST",
+				data: formData,
+    			processData: false, 
+                contentType: false,
+                enctype: 'multipart/form-data',
+                mimeType: 'multipart/form-data',
+				success: function (result) {
+					// console.log(result)
+					result = JSON.parse(result);
 
-		return true;
+					if(result.success) {
+						Swal.fire({
+							icon: "success",
+							title: "Thành công",
+							text: "Import thành công!",
+							timer: 2000,
+							timerProgressBar: true,
+							showCloseButton: true,
+						});
+					} else {
+						Swal.fire({
+							icon: "error",
+							title: "Import thất bại!",
+							text: result.message,
+							timerProgressBar: true,
+							showCloseButton: true,
+						}).then(function() {
+							$("#form_import_from_excel #import_file").val('');
+
+							if(result.invalidRows) {
+								const tableTitle = result.invalidRows.slice(0, 1);
+								const tableBody = result.invalidRows.slice(1);
+
+								$("#table_import_error_list thead tr th").remove();
+								$("#table_import_error_list tbody tr").remove();
+
+								tableTitle[0].forEach(function(title) {
+									$("#table_import_error_list>thead>tr").append(`<th class='cell'>${title}</th>`);
+								});
+								
+								tableBody.forEach(function(row) {
+									html = "<tr>";
+
+									row.forEach(function(data) {
+										html += `<td class='cell'>${data}</td>`;
+									});
+
+									html += "</tr>";
+
+									$("#table_import_error_list>tbody").append(html);
+								});
+
+								$("#ImportErrorListModal").modal("show");
+							}
+						});;
+					}
+				},
+			});
+		}
 	});
 
 	// Xử lý export to excel 
 	$('#form_export_to_excel').submit(function() {
-		$(this).attr('action', 'http://localhost/WebDRL/phpspreadsheet/export/export_sinhvien.php');
+		if(Array.isArray(tableContent) && tableContent.length > 0) {
+			$(this).attr('action', 'http://localhost/WebDRL/phpspreadsheet/export/export_sinhvien.php');
 
-		$("#form_export_to_excel #table_data").val(
-			JSON.stringify({
-				tableTitle: tableTitle,
-				tableContent: tableContent
-			})
-		);
+			$("#form_export_to_excel #table_data").val(
+				JSON.stringify({
+					tableTitle: tableTitle,
+					tableContent: tableContent
+				})
+			);
 
-		return true;
+			return true;
+		} else {
+			Swal.fire({
+				icon: "error",
+				title: "Lỗi",
+				text: "Không có dữ liệu để export!",
+				timer: 2000,
+				timerProgressBar: true,
+				showCloseButton: true,
+			});
+
+			return false;
+		}
 	});
 </script>

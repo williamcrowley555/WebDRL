@@ -20,7 +20,7 @@
             $database = new Database();
             $db = $database->getConnection();
     
-            $item = new SinhVien($db); //new Khoa object
+            $item = new SinhVien($db); //new SinhVien object
             $data = json_decode(file_get_contents("php://input")); //lấy request data từ user 
     
             if ($data != null){
