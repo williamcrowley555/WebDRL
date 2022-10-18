@@ -50,8 +50,29 @@
 									<button class="btn app-btn-primary btn_Them_Lop" type="button" data-bs-toggle="modal" data-bs-target="#AddModal">Thêm mới</button>
 								</div>
 
-								<div class="col-auto" style="padding-left: 15px;">
-									<button class="btn app-btn-primary" type="button" data-bs-toggle="" data-bs-target="#" disabled>Import danh sách</button>
+								<div class="col-auto dropdown" style="padding-left: 15px;">
+									<button class="btn btn-danger text-white dropdown-toggle" type="button" id="dropdownImportButton" data-bs-toggle="dropdown" aria-expanded="false">
+										Import
+									</button>
+									<ul class="dropdown-menu" aria-labelledby="dropdownImportButton">
+										<li>
+											<button type="submit" name="btn_import_from_excel" class="dropdown-item" data-bs-toggle='modal' data-bs-target='#ImportFromExcelModal'>Import from Excel</button>
+										</li>
+									</ul>
+								</div>
+
+								<div class="col-auto dropdown" style="padding-left: 15px;">
+									<button class="btn btn-success text-white dropdown-toggle" type="button" id="dropdownExportButton" data-bs-toggle="dropdown" aria-expanded="false">
+										Export
+									</button>
+									<ul class="dropdown-menu" aria-labelledby="dropdownExportButton">
+										<li>
+											<form action="" method="POST" id="form_export_to_excel">
+												<input type="hidden" name="table_data" id="table_data" />
+												<button type="submit" name="btn_export_to_excel" class="dropdown-item">Export to Excel</button>
+											</form>
+										</li>
+									</ul>
 								</div>
 							</div>
 
@@ -177,22 +198,77 @@
 				</form>
 			</div>
 
+			<!-- Modal import from excel -->
+			<div class="modal fade" id="ImportFromExcelModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+				<form action="" class="modal-dialog" id="form_import_from_excel">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="exampleModalLabel"> Import From Excel</h5>
+							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						</div>
+						<div class="modal-body">
 
+							<div class="mb-3 form-group">
+								<label for="select_khoa_import" class="form-label" style="color: black; font-weight: 500;">Khoa</label>
+								<select class="form-select" name="khoa" aria-label="Default select example" id="select_khoa_import">
+								</select>
+								<span class="invalid-feedback"></span>
+							</div>
+
+							<div class="mb-3 form-group">
+								<label for="import_file" class="form-label" style="color: black; font-weight: 500;">Upload file</label>
+								<input type="file" name="import_file" class="form-control" id="import_file">
+								<span class="invalid-feedback"></span>
+							</div>
+
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+							<button type="submit" class="btn btn-primary" style='color: white;'>Import</button>
+						</div>
+					</div>
+				</form>
+			</div>
+
+			<!-- Modal error list of import from excel -->
+			<div class="modal fade" id="ImportErrorListModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+				<div class="modal-dialog modal-lg">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title"> Dach sách các dòng lỗi</h5>
+							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						</div>
+						<div class="modal-body">
+
+							<div class="table-responsive">
+								<table class="table app-table-hover mb-0 text-left" id="table_import_error_list">
+									<thead>
+										<tr>
+										
+										</tr>
+									</thead>
+									<tbody>
+
+									</tbody>
+								</table>
+							</div>
+
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+						</div>
+					</div>
+				</div>
+			</div>
 
 			<div class="tab-pane fade show active" id="orders-all" role="tabpanel" aria-labelledby="orders-all-tab">
 				<div class="app-card app-card-orders-table shadow-sm mb-5">
 					<div class="app-card-body">
 						<div class="table-responsive">
-							<table class="table app-table-hover mb-0 text-left">
+							<table class="table app-table-hover mb-0 text-left" id="my_table">
 								<thead>
 									<tr>
-										<th class="cell">STT</th>
-										<th class="cell">Mã lớp</th>
-										<th class="cell">Tên lớp</th>
-										<th class="cell">Mã khoa</th>
-										<th class="cell">Mã cố vấn học tập</th>
-										<th class="cell">Mã khóa học</th>
-										<th class="cell"></th>
+
 									</tr>
 								</thead>
 								<tbody id="id_tbodyLop">
@@ -215,8 +291,6 @@
 
 			</div>
 			<!--//tab-pane-->
-
-
 
 		</div>
 		<!--//row-->
@@ -267,6 +341,15 @@
         ],
         onSubmit: ChinhSua_Lop
     })
+
+	tableTitle.forEach(function(title, index) {
+		$("#my_table>thead>tr").append(`<th class='cell'>${title}</th>`);
+
+		if(index == tableTitle.length - 1) {
+			$("#my_table>thead>tr").append(`<th class='cell'>Hành động</th>`);
+
+		}
+	});
 
 	//hàm trong function.js
 	var maKhoa = 'tatcakhoa';
@@ -417,4 +500,111 @@
 	// 							$('#ChinhSuaModal #edit_select_KhoaHoc_Add').val(), 
 	// 							xuLyTaoMaLop("#ChinhSuaModal #edit_input_MaLop"));
 	// });
+
+	// Xử lý import form excel 
+	$('#form_import_from_excel').submit(function(e) {
+		e.preventDefault();
+
+		if(document.getElementById("import_file").files.length == 0 ){
+			Swal.fire({
+				icon: "error",
+				title: "Lỗi",
+				text: "Vui lòng upload file excel để import!",
+				timer: 2000,
+				timerProgressBar: true,
+			});
+		} else {
+			var formData = new FormData(this);
+							
+			$("#ImportFromExcelModal").modal("hide");
+		
+			$.ajax({
+				url: 'http://localhost/WebDRL/phpspreadsheet/import/import_lop.php',
+				type: "POST",
+				data: formData,
+				processData: false, 
+				contentType: false,
+				enctype: 'multipart/form-data',
+				mimeType: 'multipart/form-data',
+				success: function (result) {
+					// console.log(result)
+					result = JSON.parse(result);
+
+					if(result.success) {
+						Swal.fire({
+							icon: "success",
+							title: "Thành công",
+							text: "Import thành công!",
+							timer: 2000,
+							timerProgressBar: true,
+							showCloseButton: true,
+						});
+					} else {
+						Swal.fire({
+							icon: "error",
+							title: "Import thất bại!",
+							text: result.message,
+							timerProgressBar: true,
+							showCloseButton: true,
+						}).then(function() {
+							$("#form_import_from_excel #import_file").val('');
+
+							if(result.invalidRows) {
+								const tableTitle = result.invalidRows.slice(0, 1);
+								const tableBody = result.invalidRows.slice(1);
+
+								$("#table_import_error_list thead tr th").remove();
+								$("#table_import_error_list tbody tr").remove();
+
+								tableTitle[0].forEach(function(title) {
+									$("#table_import_error_list>thead>tr").append(`<th class='cell'>${title}</th>`);
+								});
+								
+								tableBody.forEach(function(row) {
+									html = "<tr>";
+
+									row.forEach(function(data) {
+										html += `<td class='cell'>${data}</td>`;
+									});
+
+									html += "</tr>";
+
+									$("#table_import_error_list>tbody").append(html);
+								});
+
+								$("#ImportErrorListModal").modal("show");
+							}
+						});;
+					}
+				},
+			});
+		}
+	});
+
+	// Xử lý export to excel 
+	$('#form_export_to_excel').submit(function() {
+		if(Array.isArray(tableContent) && tableContent.length > 0) {
+			$(this).attr('action', 'http://localhost/WebDRL/phpspreadsheet/export/export_lop.php');
+
+			$("#form_export_to_excel #table_data").val(
+				JSON.stringify({
+					tableTitle: tableTitle,
+					tableContent: tableContent
+				})
+			);
+
+			return true;
+		} else {
+			Swal.fire({
+				icon: "error",
+				title: "Lỗi",
+				text: "Không có dữ liệu để export!",
+				timer: 2000,
+				timerProgressBar: true,
+				showCloseButton: true,
+			});
+
+			return false;
+		}
+	});
 </script>

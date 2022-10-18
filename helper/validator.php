@@ -71,6 +71,21 @@
                 ($hasWhiteSpace ? "khoảng trắng" : "không bao gồm khoảng trắng");
     }
 
+    function isNotSpecialChars($value, $hasWhiteSpace = true, $message = null) {
+        $regexWithWhiteSpace = "/^[A-Za-z0-9\s]+$/";
+        $regexWithoutWhiteSpace = "/^[A-Za-z0-9]+$/";
+
+        $regex = $regexWithWhiteSpace;
+
+        if (!$hasWhiteSpace) $regex = $regexWithoutWhiteSpace;
+
+        return preg_match($regex, $value)
+            ? null
+            : $message ??
+                "Trường này chỉ bao gồm các ký tự chữ, số và " . 
+                ($hasWhiteSpace ? "khoảng trắng" : "không bao gồm khoảng trắng");
+    }
+
     function isDateOfBirth($value, $message = null) {
         $today = date("Y-m-d");
       
