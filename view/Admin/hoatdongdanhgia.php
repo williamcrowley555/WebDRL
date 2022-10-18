@@ -310,7 +310,7 @@
 											<th class="cell">Thời gian kết thúc</th>
 											<th class="cell">Thời gian bắt đầu điểm danh</th>
 											<th class="cell">Mã QR điểm danh/checkin</th>
-											<th></th>
+											<th>Hành động</th>
 										</tr>
 									</thead>
 									<tbody id="id_tbodyLop">

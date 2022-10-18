@@ -83,4 +83,9 @@
         return $d && $d->format($format) === $date ? null : $message ?? "Ngày nhập vào phải theo định dạng $format";
     }
 
+    function isPhoneNumber($value, $message = null) {
+        $regex = "/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,5}$/im";
+
+        return preg_match($regex, $value) ? null : $message ?? "Số điện thoại không hợp lệ";
+    }
 ?>

@@ -254,7 +254,7 @@
 											<th class="cell">Ngày cố vấn kết thúc đánh giá</th>
 											<th class="cell"><img src="assets/images/icons/office-worker.png" alt="khoa text" width="15px" />Ngày Khoa đánh giá</th>
 											<th class="cell">Ngày Khoa kết thúc đánh giá</th>
-											<th></th>
+											<th>Hành động</th>
 										</tr>
 									</thead>
 									<tbody id="id_tbodyLop">

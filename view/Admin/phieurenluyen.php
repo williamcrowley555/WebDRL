@@ -136,7 +136,7 @@
 										<th class="cell">Xếp loại</th>
 										<th class="cell">Cố vấn duyệt</th>
 										<th class="cell">Khoa duyệt</th>
-										<th class="cell"></th>
+										<th class="cell">Hành động</th>
 									</tr>
 								</thead>
 								<tbody id="id_tbodyPhieuRenLuyen">

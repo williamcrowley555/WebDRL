@@ -166,7 +166,7 @@
 										<th class="cell" width="500">Tên tiêu chí</th>
 										<th class="cell">Điểm</th>
 										<th class="cell">Mã tiêu chí trên</th>
-										<th class="cell"></th>
+										<th class="cell">Hành động</th>
 									</tr>
 								</thead>
 								<tbody id="id_tbodyLop">
