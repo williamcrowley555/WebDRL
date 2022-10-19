@@ -36,7 +36,6 @@
 							</select>
 						</div>
 
-
 						<div class="col-auto">
 							<div class="table-search-form row gx-1 align-items-center">
 								<div class="col-auto">
@@ -59,7 +58,7 @@
 							</button>
 							<ul class="dropdown-menu" aria-labelledby="dropdownImportButton">
 								<li>
-									<button type="submit" name="btn_import_from_excel" class="dropdown-item" data-bs-toggle='modal' data-bs-target='#ImportFromExcelModal'>Import from Excel</button>
+									<button name="btn_import_from_excel" class="dropdown-item" data-bs-toggle='modal' data-bs-target='#ImportFromExcelModal'>Import from Excel</button>
 								</li>
 							</ul>
 						</div>
@@ -252,6 +251,10 @@
 								<label for="import_file" class="form-label" style="color: black; font-weight: 500;">Upload file</label>
 								<input type="file" name="import_file" class="form-control" id="import_file">
 								<span class="invalid-feedback"></span>
+							</div>
+
+							<div class="form-group">
+								<p class="mb-0 fw-bold text-body">Yêu cầu thứ tự các cột như sau: STT, Mã cố vấn học tập, Họ tên cố vấn, Số điện thoại, Mật khẩu (optional)</p>
 							</div>
 
 						</div>

@@ -48,6 +48,10 @@
         return strlen($value) >= $min ? null : $message ?? "Vui lòng nhập tối thiểu $min ký tự";
     }
 
+    function exactLength($value, $exact, $message = null) {
+        return strlen($value) == $exact ? null : $message ?? "Vui lòng nhập đủ $exact ký tự";
+    }
+
     function isNumber($value, $message = null) {
         return is_numeric($value) ? null : $message ?? "Trường này chỉ bao gồm các ký tự số";
     }

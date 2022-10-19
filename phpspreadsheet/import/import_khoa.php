@@ -2,7 +2,7 @@
     require '../../vendor/autoload.php';
     require '../../helper/validator.php';
     require '../../config/database.php';
-    require '../../class/covanhoctap.php';
+    require '../../class/khoa.php';
 
     use PhpOffice\PhpSpreadsheet\Spreadsheet;
     use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
@@ -29,52 +29,47 @@
         foreach($rows as $row) {
             // Skip the first row (table title)
             if($rowCount > 0) {
-                $item = new CVHT($db); //new CVHT object
-                $item->maCoVanHocTap = $row['1'];
-                $item->hoTenCoVan = $row['2'];
-                $item->soDienThoai = $row['3'];   
-                $item->matKhauTaiKhoanCoVan = isset($row['4']) ? md5($row['4']) : md5($row['1']);   
-                $item->maKhoa = $_POST["khoa"];
+                $item = new Khoa($db); //new Khoa object
+                $item->maKhoa = $row['1'];
+                $item->tenKhoa = $row['2'];
+                $item->taiKhoanKhoa = $row['3'];      
+                $item->matKhauKhoa = isset($row['4']) ? md5($row['4']) : md5($row['3']);   
 
-                // Validate maCoVanHocTap
+                // Validate maKhoa
                 if(
-                    ($errorMsg = isRequired($row['1'], "Mã cố vấn học tập không được để trống")) != null
+                    ($errorMsg = isRequired($row['1'], "Mã khoa không được để trống")) != null
                     || 
-                    ($errorMsg = isPositiveNumber($row['1'], "Mã cố vấn học tập chỉ bao gồm các ký tự số")) != null
+                    ($errorMsg = isCharacters($row['1'], false, "Mã khoa chỉ bao gồm các ký tự chữ")) != null
                     ||
-                    ($errorMsg = minLength($row['1'], 5, "Mã cố vấn học tập phải có tối thiểu 5 chữ số")) != null
+                    ($errorMsg = exactLength($row['1'], 3, "Mã khoa phải có đủ 3 chữ số")) != null
                 ) {
                     $success = false;
                     array_push($invalidRows, array($row['0'], $row['1'], $row['2'], $row['3'], isset($row['4']) ? $row['4'] : null, $errorMsg));
                     continue;
                 }
 
-                // Validate hoTenCoVan
+                // Validate tenKhoa
                 if(
-                    ($errorMsg = isRequired($row['2'], "Họ tên cố vấn học tập không được để trống")) != null
-                    || 
-                    ($errorMsg = isCharacters($row['2'], true, "Họ tên cố vấn học tập chỉ bao gồm các ký tự chữ")) != null
+                    ($errorMsg = isRequired($row['2'], "Tên khoa không được để trống")) != null
                 ) {
                     $success = false;
                     array_push($invalidRows, array($row['0'], $row['1'], $row['2'], $row['3'], isset($row['4']) ? $row['4'] : null, $errorMsg));
                     continue;
                 }
 
-                // Validate soDienThoai
+                // Validate taiKhoanKhoa
                 if(
-                    ($errorMsg = isRequired($row['3'], "Số điện thoại không được để trống")) != null
-                    || 
-                    ($errorMsg = isPhoneNumber($row['3'])) != null
+                    ($errorMsg = isRequired($row['3'], "Tài khoản khoa không được để trống")) != null
                 ) {
                     $success = false;
                     array_push($invalidRows, array($row['0'], $row['1'], $row['2'], $row['3'], isset($row['4']) ? $row['4'] : null, $errorMsg));
                     continue;
                 }
 
-                // Validate matKhauTaiKhoanCoVan
-                if($row['4']) {
+                // Validate matKhauKhoa
+                if(isset($row['4'])) {
                     if(
-                        ($errorMsg = minLength($row['4'], 5, "Mật khẩu phải có tối thiểu 5 ký tự")) != null
+                        ($errorMsg = minLength($row['4'], 4, "Mật khẩu phải có tối thiểu 4 ký tự")) != null
                     ) {
                         $success = false;
                         array_push($invalidRows, array($row['0'], $row['1'], $row['2'], $row['3'], isset($row['4']) ? $row['4'] : null, $errorMsg));
@@ -82,15 +77,15 @@
                     }
                 }
 
-                // Kiểm tra Mã cố vấn học tập đã tồn tại?
-                $stmt = $item->getCVHTTheoMaCVHT($row['1'], true);
+                // Kiểm tra Mã khoa đã tồn tại?
+                $stmt = $item->getKhoaTheoMaKhoa($row['1'], true);
                 $itemCount = $stmt->rowCount();
         
                 if ($itemCount > 0) {
                     $success = false;
-                    array_push($invalidRows, array($row['0'], $row['1'], $row['2'], $row['3'], isset($row['4']) ? $row['4'] : null, 'Mã cố vấn học tập đã tồn tại'));
+                    array_push($invalidRows, array($row['0'], $row['1'], $row['2'], $row['3'], isset($row['4']) ? $row['4'] : null, 'Mã khoa đã tồn tại'));
                 } else {
-                    $result = $item->createCVHT();
+                    $result = $item->createKhoa();
                     
                     if ($result) {
                         $successfulRowCount++; 
