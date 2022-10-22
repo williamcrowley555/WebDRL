@@ -1,22 +1,22 @@
 <script src="assets/js/check_token.js"></script>
 <script>
 		
-
-		//remove class active
-		$("#menu-button-ThongKe").removeClass("active");
-		$("#menu-button-SinhVien").removeClass("active");
-		$("#menu-button-HoatDongDanhGia").removeClass("active");
-		$("#menu-button-Khoa").removeClass("active");
-		$("#menu-button-PhieuRenLuyen").removeClass("active");
-		$("#menu-button-CoVanHocTap").removeClass("active");
-		$("#menu-button-TieuChiDanhGia").removeClass("active");
-		$("#menu-button-Lop").removeClass("active");
-		
-		//add class active
-		$("#menu-button-ThongBaoDanhGia").addClass("active");
-		
-		//set title
-		document.title = "Thông báo đánh giá | Web điểm rèn luyện";
+	//remove class active
+	$("#menu-button-ThongKe").removeClass("active");
+	$("#menu-button-SinhVien").removeClass("active");
+	$("#menu-button-HoatDongDanhGia").removeClass("active");
+	$("#menu-button-Khoa").removeClass("active");
+	$("#menu-button-PhieuRenLuyen").removeClass("active");
+	$("#menu-button-CoVanHocTap").removeClass("active");
+	$("#menu-button-TieuChiDanhGia").removeClass("active");
+	$("#menu-button-Lop").removeClass("active");
+	$("#menu-button-ThongKe").removeClass("active");
+	
+	//add class active
+	$("#menu-button-ThongBaoDanhGia").addClass("active");
+	
+	//set title
+	document.title = "Thông báo đánh giá | Web điểm rèn luyện";
 
 </script>
 
@@ -254,7 +254,7 @@
 											<th class="cell">Ngày cố vấn kết thúc đánh giá</th>
 											<th class="cell"><img src="assets/images/icons/office-worker.png" alt="khoa text" width="15px" />Ngày Khoa đánh giá</th>
 											<th class="cell">Ngày Khoa kết thúc đánh giá</th>
-											<th>Hành động</th>
+											<th class="cell">Hành động</th>
 										</tr>
 									</thead>
 									<tbody id="id_tbodyLop">

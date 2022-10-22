@@ -45,10 +45,9 @@
 
 	<script src="../config/urlapi.js" ></script>
 
-	
+	<!-- Chart -->
+	<script src="assets/plugins/chart.js/chart.min.js"></script> 
    
-
-
     <!-- App CSS -->  
     <link id="theme-style" rel="stylesheet" href="assets/css/portal.css">
 	
@@ -281,6 +280,14 @@
 									<img src='assets/images/icons/social.png' alt='icon thông báo đánh giá' width='10%'>\
 						         </span>\
 		                         <span class='nav-link-text'>Thông báo đánh giá</span>\
+					        </a>\
+					    </li>\
+						<li class='nav-item' style='cursor: pointer;'>\
+					        <a class='nav-link' onclick='LoadContentMainPage(\"thongke.php\");' id='menu-button-ThongKe' >\
+						        <span class='nav-icon'>\
+									<img src='assets/images/icons/analysis.png' alt='icon thống kê' width='25px'>\
+						         </span>\
+		                         <span class='nav-link-text'>Thống kê</span>\
 					        </a>\
 					    </li>");
 

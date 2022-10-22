@@ -276,6 +276,14 @@ const urlapi_tieuchicap3_update = host_domain_url + "/tieuchicap3/update.php";
 const urlapi_tieuchicap3_update_kichHoat =
   host_domain_url + "/tieuchicap3/update_kichHoat.php";
 
+//---------------THONG KE---------------//----------------------------------
+//---------//
+
+//READ
+const urlapi_thongkelop_read = host_domain_url + "/thongkelop/read.php";
+const urlapi_thongkesinhvien_read =
+  host_domain_url + "/thongkesinhvien/read.php";
+
 //---------------LOGIN ADMIN---------------//----------------------------------
 //---------//
 

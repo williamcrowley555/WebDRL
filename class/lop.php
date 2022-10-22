@@ -37,12 +37,23 @@
             return $stmt;
         }
         
-        //GET ALL LOP THEO MA Khoa
+        //GET ALL LOP THEO MA KHOA
         public function getAllLopTheoMaKhoa($maKhoa){
             $sqlQuery = "SELECT maLop, tenLop, maKhoa, maCoVanHocTap, maKhoaHoc FROM " . $this->db_table . " 
                         WHERE maKhoa = ? ";
             $stmt = $this->conn->prepare($sqlQuery);
             $stmt->bindParam(1, $maKhoa);
+            $stmt->execute();
+            return $stmt;
+        }
+        
+        //GET ALL LOP THEO MA KHOA & MA KHOA HOC
+        public function getAllLopTheoMaKhoaVaMaKhoaHoc($maKhoa, $maKhoaHoc){
+            $sqlQuery = "SELECT maLop, tenLop, maKhoa, maCoVanHocTap, maKhoaHoc FROM " . $this->db_table . " 
+                        WHERE maKhoa = ? AND maKhoaHoc = ?";
+            $stmt = $this->conn->prepare($sqlQuery);
+            $stmt->bindParam(1, $maKhoa);
+            $stmt->bindParam(2, $maKhoaHoc);
             $stmt->execute();
             return $stmt;
         }

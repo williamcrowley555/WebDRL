@@ -9,6 +9,7 @@
 	$("#menu-button-CoVanHocTap").removeClass("active");
 	$("#menu-button-TieuChiDanhGia").removeClass("active");
 	$("#menu-button-ThongBaoDanhGia").removeClass("active");
+	$("#menu-button-ThongKe").removeClass("active");
 
 	//add class active
 	$("#menu-button-PhieuRenLuyen").addClass("active");

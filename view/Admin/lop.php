@@ -9,6 +9,7 @@
 	$("#menu-button-CoVanHocTap").removeClass("active");
 	$("#menu-button-TieuChiDanhGia").removeClass("active");
 	$("#menu-button-ThongBaoDanhGia").removeClass("active");
+	$("#menu-button-ThongKe").removeClass("active");
 
 	//add class active
 	$("#menu-button-Lop").addClass("active");
@@ -351,7 +352,6 @@
 
 		if(index == tableTitle.length - 1) {
 			$("#my_table>thead>tr").append(`<th class='cell'>Hành động</th>`);
-
 		}
 	});
 

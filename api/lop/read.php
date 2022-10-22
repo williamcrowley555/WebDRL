@@ -24,6 +24,12 @@ if ($data["status"] == 1) {
             $GET_maKhoa = null;
         }
 
+        if (isset($_GET['maKhoaHoc'])) {
+            $GET_maKhoaHoc = $_GET['maKhoaHoc'];
+        } else {
+            $GET_maKhoaHoc = null;
+        }
+
         if (isset($_GET['maLop'])) {
             $GET_maLop = $_GET['maLop'];
         } else {
@@ -37,37 +43,72 @@ if ($data["status"] == 1) {
         }
 
         if ($GET_maKhoa != null) {
-            $items = new Lop($db);
+            if ($GET_maKhoaHoc != null) {
+                $items = new Lop($db);
             
-            $stmt = $items->getAllLopTheoMaKhoa($GET_maKhoa);
-            $itemCount = $stmt->rowCount();
-    
-            if ($itemCount > 0) {
-                $lopArr = array();
-                $lopArr["lop"] = array(); //tạo object json 
-                $lopArr["itemCount"] = $itemCount;
-                $countRow = 0;
-    
-                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                    extract($row);
-                    $countRow++;
-                    $e = array(
-                        "soThuTu" => $countRow,
-                        "maLop" => $maLop,
-                        "tenLop" => $tenLop,
-                        "maKhoa" => $maKhoa,
-                        "maCoVanHocTap" => $maCoVanHocTap,
-                        "maKhoaHoc" => $maKhoaHoc
+                $stmt = $items->getAllLopTheoMaKhoaVaMaKhoaHoc($GET_maKhoa, $GET_maKhoaHoc);
+                $itemCount = $stmt->rowCount();
+        
+                if ($itemCount > 0) {
+                    $lopArr = array();
+                    $lopArr["lop"] = array(); //tạo object json 
+                    $lopArr["itemCount"] = $itemCount;
+                    $countRow = 0;
+        
+                    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                        extract($row);
+                        $countRow++;
+                        $e = array(
+                            "soThuTu" => $countRow,
+                            "maLop" => $maLop,
+                            "tenLop" => $tenLop,
+                            "maKhoa" => $maKhoa,
+                            "maCoVanHocTap" => $maCoVanHocTap,
+                            "maKhoaHoc" => $maKhoaHoc
+                        );
+                        array_push($lopArr["lop"], $e);
+                    }
+                    http_response_code(200);
+                    echo json_encode($lopArr);
+                } else {
+                    http_response_code(404);
+                    echo json_encode(
+                        array("message" => "Không tìm thấy kết quả.")
                     );
-                    array_push($lopArr["lop"], $e);
                 }
-                http_response_code(200);
-                echo json_encode($lopArr);
             } else {
-                http_response_code(404);
-                echo json_encode(
-                    array("message" => "Không tìm thấy kết quả.")
-                );
+                $items = new Lop($db);
+            
+                $stmt = $items->getAllLopTheoMaKhoa($GET_maKhoa);
+                $itemCount = $stmt->rowCount();
+        
+                if ($itemCount > 0) {
+                    $lopArr = array();
+                    $lopArr["lop"] = array(); //tạo object json 
+                    $lopArr["itemCount"] = $itemCount;
+                    $countRow = 0;
+        
+                    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                        extract($row);
+                        $countRow++;
+                        $e = array(
+                            "soThuTu" => $countRow,
+                            "maLop" => $maLop,
+                            "tenLop" => $tenLop,
+                            "maKhoa" => $maKhoa,
+                            "maCoVanHocTap" => $maCoVanHocTap,
+                            "maKhoaHoc" => $maKhoaHoc
+                        );
+                        array_push($lopArr["lop"], $e);
+                    }
+                    http_response_code(200);
+                    echo json_encode($lopArr);
+                } else {
+                    http_response_code(404);
+                    echo json_encode(
+                        array("message" => "Không tìm thấy kết quả.")
+                    );
+                }
             }
         } else if ($GET_maCoVanHocTap != null) {
             $items = new Lop($db);

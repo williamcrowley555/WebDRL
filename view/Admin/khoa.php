@@ -9,6 +9,7 @@
 	$("#menu-button-CoVanHocTap").removeClass("active");
 	$("#menu-button-TieuChiDanhGia").removeClass("active");
 	$("#menu-button-ThongBaoDanhGia").removeClass("active");
+	$("#menu-button-ThongKe").removeClass("active");
 
 	//add class active
 	$("#menu-button-Khoa").addClass("active");
@@ -472,7 +473,7 @@
 				enctype: 'multipart/form-data',
 				mimeType: 'multipart/form-data',
 				success: function (result) {
-					console.log(result)
+					// console.log(result)
 					result = JSON.parse(result);
 
 					if(result.success) {
