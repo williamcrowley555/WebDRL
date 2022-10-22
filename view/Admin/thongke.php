@@ -203,9 +203,10 @@
 						<h4 class="mb-3 text-uppercase hoc-ky-danh-gia">Kết quả điểm rèn luyện</h4>
 
 						<div class="d-flex justify-content-between align-items-center mb-3">
-							<div class="d-inline">
-								<button type="button" id="btn_exportPDFTableSinhVien" class="btn btn-danger text-white">In PDF</button>
-							</div>
+							<form action="http://localhost/WebDRL/mpdf/export_ketQuaDRL.php" method="POST" id="form_exportPDFKetQuaDRL" class="d-inline">
+								<input type="hidden" name="data" class="data" />
+								<button type="submit" class="btn btn-danger text-white">In PDF</button>
+							</form>
 
 							<div class="d-inline">
 								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-funnel-fill" viewBox="0 0 16 16">
@@ -386,6 +387,34 @@
 					$("#tbodySinhVien").html(htmlData);
 				},
 			});
+	});
+
+	$('#form_exportPDFKetQuaDRL').submit(function() {
+		if(Array.isArray(tmpTableSinhVienContent) && tmpTableSinhVienContent.length > 0) {
+			var fileName = $(this).children('.data').attr('file-name');
+
+			$("#form_exportPDFKetQuaDRL .data").val(
+				JSON.stringify({
+					fileName: fileName,
+					classInfo: selectedClass,
+					tableTitle: tableSinhVienTitle,
+					tableContent: tmpTableSinhVienContent
+				})
+			);
+
+			return true;
+		} else {
+			Swal.fire({
+				icon: "error",
+				title: "Lỗi",
+				text: "Không có dữ liệu để in PDF!",
+				timer: 2000,
+				timerProgressBar: true,
+				showCloseButton: true,
+			});
+
+			return false;
+		}
 	});
 
 </script>

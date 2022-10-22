@@ -52,7 +52,7 @@
         
         // GET ALL KET QUA DRL SINH VIEN THEO MA LOP & MA HOC KY DANH GIA
         public function getAllKetQuaSinhVien($maLop, $maHocKyDanhGia){
-            $sqlQuery =  "SELECT sv.maSinhVien, sv.hoTenSinhVien, sv.ngaySinh, COALESCE(prl.diemTongCong, 0) AS diemTongCong, COALESCE(prl.xepLoai, 'Kém') AS xepLoai
+            $sqlQuery =  "SELECT sv.maSinhVien, sv.hoTenSinhVien, sv.ngaySinh, sv.maLop, COALESCE(prl.diemTongCong, 0) AS diemTongCong, COALESCE(prl.xepLoai, 'Kém') AS xepLoai
                             FROM (SELECT * 
                                     FROM sinhvien 
                                     WHERE maLop = '$maLop') AS sv

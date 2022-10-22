@@ -25,6 +25,8 @@ var tableLopContent = [];
 var tableSinhVienContent = [];
 var tmpTableSinhVienContent = [];
 
+var selectedClass = {};
+
 var chartData = {
   soLuongXuatSac: 0,
   soLuongTot: 0,
@@ -434,6 +436,8 @@ function ThongKeSinhVien(maLop, maHocKyDanhGia) {
     async: false,
     headers: { Authorization: jwtCookie },
     success: function (result) {
+      selectedClass = result;
+
       classInfoData = `<div class="col-md-8">
                           <p class="fw-bold">Mã lớp: <span class="fw-normal">${result.maLop}</span></p>
                           <p class="fw-bold">Tên lớp: <span class="fw-normal">${result.tenLop}</span></p>
@@ -483,9 +487,15 @@ function ThongKeSinhVien(maLop, maHocKyDanhGia) {
     success: function (result) {
       tableSinhVienContent = result["sinhvien"];
       tmpTableSinhVienContent = tableSinhVienContent;
+      selectedClass = { ...selectedClass, siSo: result["itemCount"] };
 
       $("#tabSinhVien #classInfo .col-md-4").append(
         `<p class="fw-bold">Sỉ số lớp: <span class="fw-normal">${result["itemCount"]}</span></p>`
+      );
+
+      $("#form_exportPDFKetQuaDRL .data").attr(
+        "file-name",
+        `ket_qua_drl_lop_${tmpTableSinhVienContent[0].maLop}_${maHocKyDanhGia}`
       );
 
       result["sinhvien"].forEach(function (data) {
@@ -534,6 +544,7 @@ function ThongKeSinhVien(maLop, maHocKyDanhGia) {
 
       tableSinhVienContent = [];
       tmpTableSinhVienContent = [];
+      selectedClass = {};
 
       $("#tabSinhVien #classInfo .col-md-4").append(
         `<p class="fw-bold">Sỉ số lớp: <span class="fw-normal">0</span></p>`
