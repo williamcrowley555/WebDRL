@@ -429,7 +429,7 @@ function ThongKeSinhVien(maLop, maHocKyDanhGia) {
 
   // Hiển thị thông tin lớp
   $.ajax({
-    url: urlapi_lop_single_read + maLop,
+    url: urlapi_lop_details_read + maLop,
     type: "GET",
     contentType: "application/json;charset=utf-8",
     dataType: "json",
@@ -438,13 +438,13 @@ function ThongKeSinhVien(maLop, maHocKyDanhGia) {
     success: function (result) {
       selectedClass = result;
 
-      classInfoData = `<div class="col-md-8">
+      classInfoData = `<div class="col-md-7">
                           <p class="fw-bold">Mã lớp: <span class="fw-normal">${result.maLop}</span></p>
                           <p class="fw-bold">Tên lớp: <span class="fw-normal">${result.tenLop}</span></p>
-                          <p class="fw-bold">Mã khoa: <span class="fw-normal">${result.maKhoa}</span></p>
+                          <p class="fw-bold">Khoa: <span class="fw-normal">${result.maKhoa} - ${result.tenKhoa}</span></p>
                         </div>
-                        <div class="col-md-4">
-                          <p class="fw-bold">Mã cố vấn học tập: <span class="fw-normal">${result.maCoVanHocTap}</span></p>
+                        <div class="col-md-5">
+                          <p class="fw-bold">Cố vấn học tập: <span class="fw-normal">${result.maCoVanHocTap} - ${result.hoTenCoVan}</span></p>
                           <p class="fw-bold">Mã khóa học: <span class="fw-normal">${result.maKhoaHoc}</span></p>
                         </div>`;
 
@@ -453,12 +453,12 @@ function ThongKeSinhVien(maLop, maHocKyDanhGia) {
     error: function (errorMessage) {
       checkLoiDangNhap(errorMessage.responseJSON.message);
 
-      classInfoData = `<div class="col-md-8">
+      classInfoData = `<div class="col-md-7">
                           <p class="fw-bold">Mã lớp: <span class="fw-normal">Không tìm thấy dữ liệu</span></p>
                           <p class="fw-bold">Tên lớp: <span class="fw-normal">Không tìm thấy dữ liệu</span></p>
                           <p class="fw-bold">Mã khoa: <span class="fw-normal">Không tìm thấy dữ liệu</span></p>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-5">
                           <p class="fw-bold">Mã cố vấn học tập: <span class="fw-normal">Không tìm thấy dữ liệu</span></p>
                           <p class="fw-bold">Mã khóa học: <span class="fw-normal">Không tìm thấy dữ liệu</span></p>
                         </div>`;
@@ -489,7 +489,7 @@ function ThongKeSinhVien(maLop, maHocKyDanhGia) {
       tmpTableSinhVienContent = tableSinhVienContent;
       selectedClass = { ...selectedClass, siSo: result["itemCount"] };
 
-      $("#tabSinhVien #classInfo .col-md-4").append(
+      $("#tabSinhVien #classInfo .col-md-5").append(
         `<p class="fw-bold">Sỉ số lớp: <span class="fw-normal">${result["itemCount"]}</span></p>`
       );
 
@@ -546,7 +546,7 @@ function ThongKeSinhVien(maLop, maHocKyDanhGia) {
       tmpTableSinhVienContent = [];
       selectedClass = {};
 
-      $("#tabSinhVien #classInfo .col-md-4").append(
+      $("#tabSinhVien #classInfo .col-md-5").append(
         `<p class="fw-bold">Sỉ số lớp: <span class="fw-normal">0</span></p>`
       );
 

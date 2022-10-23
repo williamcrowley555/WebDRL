@@ -70,6 +70,10 @@ const urlapi_lop_read_maLop = urlapi_lop_read + "?maLop=";
 //SINGLE READ
 const urlapi_lop_single_read = host_domain_url + "/lop/single_read.php?maLop=";
 
+//DETAILS READ
+const urlapi_lop_details_read =
+  host_domain_url + "/lop/details_read.php?maLop=";
+
 //CREATE
 const urlapi_lop_create = host_domain_url + "/lop/create.php";
 
@@ -162,6 +166,9 @@ const urlapi_thamgiahoatdong_create =
 
 //READ
 const urlapi_phieurenluyen_read = host_domain_url + "/phieurenluyen/read.php";
+const urlapi_phieurenluyen_read_MaPhieuRenLuyen =
+  urlapi_phieurenluyen_read + "?maPhieuRenLuyen=";
+const urlapi_phieurenluyen_read_MaLop = urlapi_phieurenluyen_read + "?maLop=";
 const urlapi_phieurenluyen_read_MaSV =
   urlapi_phieurenluyen_read + "?maSinhVien=";
 

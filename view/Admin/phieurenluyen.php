@@ -37,22 +37,21 @@
 							</select>
 						</div>
 
+                        <div class="col-auto">
+
+							<select class="form-select w-auto" id='select_Lop'>
+
+							</select>
+						</div>
 
 						<div class="col-auto">
-							<form class="table-search-form row gx-1 align-items-center">
-								<div class="col-auto">
-									<input type="text" id="search-orders" name="searchorders" class="form-control search-orders" placeholder="Nhập mã sinh viên">
-								</div>
-								<div class="col-auto">
-									<button type="submit" class="btn app-btn-secondary">Tìm kiếm</button>
-								</div>
-							</form>
+                            <input type="text" id="input_timKiemMaPhieuRenLuyen" name="" class="form-control" placeholder="Nhập mã phiếu rèn luyện">
+                        </div>
 
-						</div>
+                        <div class="col-auto">
+                            <button type="button" id="btn_timKiemMaPhieuRenLuyen" class="btn app-btn-secondary">Tìm kiếm</button>
+                        </div>
 						<!--//col-->
-						<div class="col-auto" style="padding-left: 15px;">
-							<button class="btn" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" style="background: #61a376;color: white;"><img src='assets/images/icons/pdf.png' width='17px' /> Xuất danh sách</button>
-						</div>
 
 					</div>
 					<!--//row-->
@@ -74,7 +73,6 @@
 							<h6 style="text-transform: uppercase; text-align: left;">--Thông tin sinh viên--</h6>
 
 							<div class="row justify-content-center" style="padding-bottom: 30px;text-align: start;" id="part_thongTinSinhVien">
-
 							
 							</div>
 
@@ -109,9 +107,6 @@
 
 								<div class="form-notch"><div class="form-notch-leading" style="width: 9px;"></div><div class="form-notch-middle" style="width: 0px;"></div><div class="form-notch-trailing"></div></div></div>
 							</form>
-
-							
-
 
 						</div>
 						<div class="modal-footer">
@@ -246,14 +241,71 @@
 <script src="assets/js/phieurenluyen/function.js"></script>
 
 <script>
-	//hàm trong function.js
-	GetListPhieurenluyen();
-
 	LoadComboBoxThongTinKhoa();
+
+    LoadComboBoxThongTinLopTheoKhoa($('#select_Khoa').val());
+
+	//hàm trong function.js
+	GetListPhieurenluyen($('#select_Lop').val());
 
 	getTieuChiDanhGia();
 
 	TinhDiemTongCong();
+
+    function onlyLettersAndNumbers(str) {
+		return /^[A-Za-z0-9]*$/.test(str);
+	}
+
+    function xuLyTimKiemMaPhieuRenLuyen() {
+        var _input_timKiemMaPhieuRenLuyen = $('#input_timKiemMaPhieuRenLuyen').val().trim();
+
+        if (_input_timKiemMaPhieuRenLuyen != '') {
+            if(onlyLettersAndNumbers(_input_timKiemMaPhieuRenLuyen)){
+                TimKiemPhieuRenLuyen(_input_timKiemMaPhieuRenLuyen);
+            } else {
+                Swal.fire({
+                    icon: "error",
+                    title: "Lỗi",
+                    text: "Mã phiếu rèn luyện không hợp lệ!",
+                    timer: 2000,
+                    timerProgressBar: true,
+                });
+            }
+        }
+    }
+
+    $('#select_Khoa').on('change', function() {
+		$('#input_timKiemMaPhieuRenLuyen').val('');
+
+		var maKhoa_selected = $('#select_Khoa').val();
+		
+		LoadComboBoxThongTinLopTheoKhoa(maKhoa_selected);
+
+		var maLop_selected = $('#select_Lop').val();
+
+		GetListPhieurenluyen(maLop_selected);
+	});
+
+    $('#select_Lop').on('change', function() {
+        $('#input_timKiemMaPhieuRenLuyen').val('');
+        
+        var maKhoa_selected = $('#select_Khoa').val();
+        var maLop_selected = $('#select_Lop').val();
+
+        GetListPhieurenluyen(maLop_selected);
+    });
+
+    $('#btn_timKiemMaPhieuRenLuyen').on('click', function() {
+        xuLyTimKiemMaPhieuRenLuyen();
+    });
+
+    $('#input_timKiemMaPhieuRenLuyen').keypress(function (e) {
+        var key = e.which;
+        if(key == 13)  // the 'Enter' code
+        {
+            $('#btn_timKiemMaPhieuRenLuyen').click();
+        }
+    }); 
 
 	function TinhDiemTongCong() {
 
@@ -729,7 +781,7 @@
                                 });
 
                                 window.setTimeout(function() {
-                                    GetListPhieurenluyen();
+                                    GetListPhieurenluyen($('#select_Lop').val());
                                 }, 2500);
                             },
                             error: function(errorMessage_tc3) {

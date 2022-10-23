@@ -25,7 +25,7 @@ function thongBaoLoi(message) {
     icon: "error",
     title: "Lỗi",
     text: message,
-    //timer: 5000,
+    timer: 2000,
     timerProgressBar: true,
   });
 }
@@ -83,11 +83,99 @@ function checkLoiDangNhap(message) {
 var jwtCookie = getCookie("jwt");
 
 //phieurenluyen//
-function GetListPhieurenluyen() {
+function GetListPhieurenluyen(maLop) {
+  $("#id_tbodyPhieuRenLuyen tr").remove();
+
+  if (maLop) {
+    $.ajax({
+      url: urlapi_phieurenluyen_read_MaLop + maLop,
+      type: "GET",
+      contentType: "application/json;charset=utf-8",
+      dataType: "json",
+      async: true,
+      headers: { Authorization: jwtCookie },
+      success: function (result) {
+        $("#idPhanTrang").pagination({
+          dataSource: result["phieurenluyen"],
+          pageSize: 10,
+          autoHidePrevious: true,
+          autoHideNext: true,
+
+          callback: function (data, pagination) {
+            var htmlData = "";
+            var count = 0;
+
+            for (let i = 0; i < data.length; i++) {
+              count += 1;
+              var disabled_string = "";
+
+              if (data[i].coVanDuyet == 0) {
+                disabled_string = "disabled";
+              }
+
+              console.log(data[i].coVanDuyet + "---" + disabled_string);
+
+              htmlData +=
+                "<tr>\
+                                  <td class='cell'>" +
+                data[i].soThuTu +
+                "</td>\
+                                  <td class='cell'><span class='truncate'>" +
+                data[i].maPhieuRenLuyen +
+                "</span></td>\
+                                  <td class='cell'>" +
+                data[i].maSinhVien +
+                "</td>\
+                                  <td class='cell'>" +
+                data[i].maHocKyDanhGia +
+                "</td>\
+                                  <td class='cell'>" +
+                data[i].diemTongCong +
+                "</td>\
+                                  <td class='cell'>" +
+                data[i].xepLoai +
+                "</td>\
+                                  <td class='cell'>" +
+                SetTrangThaiDuyet(data[i].coVanDuyet) +
+                "</td>\
+                                  <td class='cell'>" +
+                SetTrangThaiDuyet(data[i].khoaDuyet) +
+                "</td>\
+                                  <td class='cell'>\
+                                    <button type='button' data-bs-toggle='modal' data-bs-target='#ModalXemVaDuyet' class='btn btn-secondary btn_XemVaDuyet' style='color: white;margin: 5px;' data-id='" +
+                data[i].maPhieuRenLuyen +
+                "' data-mssv-id='" +
+                data[i].maSinhVien +
+                "' data-mahocky-id='" +
+                data[i].maHocKyDanhGia +
+                "' " +
+                disabled_string +
+                ">Xem chi tiết và duyệt</button>\
+                                    <a class='btn' href='#' style='color: white;background: #c04f4f;margin: 5px;'><img src='assets/images/icons/pdf.png' width='17px' /><span style='margin-left: 5px;'>Xuất phiếu</span> </a>\
+                                  </td>\
+                                  </tr>";
+            }
+
+            $("#id_tbodyPhieuRenLuyen").html(htmlData);
+          },
+        });
+      },
+      error: function (errorMessage) {
+        checkLoiDangNhap(errorMessage.responseJSON.message);
+
+        thongBaoLoi(errorMessage.responseJSON.message);
+      },
+    });
+  } else {
+    thongBaoLoi("Không tìm thấy kết quả!");
+  }
+}
+
+function TimKiemPhieuRenLuyen(maPhieuRenLuyen) {
   $("#id_tbodyPhieuRenLuyen tr").remove();
 
   $.ajax({
-    url: urlapi_phieurenluyen_read,
+    url: urlapi_phieurenluyen_read_MaPhieuRenLuyen + maPhieuRenLuyen,
     type: "GET",
     contentType: "application/json;charset=utf-8",
     dataType: "json",
@@ -116,32 +204,32 @@ function GetListPhieurenluyen() {
 
             htmlData +=
               "<tr>\
-                                <td class='cell'>" +
+                                  <td class='cell'>" +
               data[i].soThuTu +
               "</td>\
-                                <td class='cell'><span class='truncate'>" +
+                                  <td class='cell'><span class='truncate'>" +
               data[i].maPhieuRenLuyen +
               "</span></td>\
-                                <td class='cell'>" +
+                                  <td class='cell'>" +
               data[i].maSinhVien +
               "</td>\
-                                <td class='cell'>" +
+                                  <td class='cell'>" +
               data[i].maHocKyDanhGia +
               "</td>\
-                                <td class='cell'>" +
+                                  <td class='cell'>" +
               data[i].diemTongCong +
               "</td>\
-                                <td class='cell'>" +
+                                  <td class='cell'>" +
               data[i].xepLoai +
               "</td>\
-                                <td class='cell'>" +
+                                  <td class='cell'>" +
               SetTrangThaiDuyet(data[i].coVanDuyet) +
               "</td>\
-                                <td class='cell'>" +
+                                  <td class='cell'>" +
               SetTrangThaiDuyet(data[i].khoaDuyet) +
               "</td>\
-                                <td class='cell'>\
-                                  <button type='button' data-bs-toggle='modal' data-bs-target='#ModalXemVaDuyet' class='btn btn-secondary btn_XemVaDuyet' style='color: white;margin: 5px;' data-id='" +
+                                  <td class='cell'>\
+                                    <button type='button' data-bs-toggle='modal' data-bs-target='#ModalXemVaDuyet' class='btn btn-secondary btn_XemVaDuyet' style='color: white;margin: 5px;' data-id='" +
               data[i].maPhieuRenLuyen +
               "' data-mssv-id='" +
               data[i].maSinhVien +
@@ -150,9 +238,9 @@ function GetListPhieurenluyen() {
               "' " +
               disabled_string +
               ">Xem chi tiết và duyệt</button>\
-                                  <a class='btn' href='#' style='color: white;background: #c04f4f;margin: 5px;'><img src='assets/images/icons/pdf.png' width='17px' /><span style='margin-left: 5px;'>Xuất phiếu</span> </a>\
-                                </td>\
-                                </tr>";
+                                    <a class='btn' href='#' style='color: white;background: #c04f4f;margin: 5px;'><img src='assets/images/icons/pdf.png' width='17px' /><span style='margin-left: 5px;'>Xuất phiếu</span> </a>\
+                                  </td>\
+                                  </tr>";
           }
 
           $("#id_tbodyPhieuRenLuyen").html(htmlData);
@@ -162,13 +250,7 @@ function GetListPhieurenluyen() {
     error: function (errorMessage) {
       checkLoiDangNhap(errorMessage.responseJSON.message);
 
-      Swal.fire({
-        icon: "error",
-        title: "Thông báo",
-        text: errorMessage.responseJSON.message,
-        //timer: 5000,
-        timerProgressBar: true,
-      });
+      thongBaoLoi(errorMessage.responseJSON.message);
     },
   });
 }
@@ -200,10 +282,6 @@ function LoadComboBoxThongTinKhoa() {
     success: function (result_Khoa) {
       $("#select_Khoa").find("option").remove();
 
-      $("#select_Khoa").append(
-        "<option selected value='tatcakhoa'>Tất cả khoa</option>"
-      );
-
       $.each(result_Khoa, function (index_Khoa) {
         for (var p = 0; p < result_Khoa[index_Khoa].length; p++) {
           $("#select_Khoa").append(
@@ -228,6 +306,45 @@ function LoadComboBoxThongTinKhoa() {
       });
     },
   });
+}
+
+function LoadComboBoxThongTinLopTheoKhoa(maKhoa) {
+  if (maKhoa != "tatcakhoa") {
+    $("#select_Lop").find("option").remove();
+    //Load khoa
+    $.ajax({
+      url: urlapi_lop_read_maKhoa + maKhoa,
+      type: "GET",
+      contentType: "application/json;charset=utf-8",
+      dataType: "json",
+      async: false,
+      headers: { Authorization: jwtCookie },
+      success: function (result_Lop) {
+        $.each(result_Lop, function (index_Lop) {
+          for (var p = 0; p < result_Lop[index_Lop].length; p++) {
+            $("#select_Lop").append(
+              "<option value='" +
+                result_Lop[index_Lop][p].maLop +
+                "'>" +
+                result_Lop[index_Lop][p].maLop +
+                "</option>"
+            );
+          }
+        });
+      },
+      error: function (errorMessage) {
+        checkLoiDangNhap(errorMessage.responseJSON.message);
+
+        tableContent = [];
+        var htmlData = "";
+        $("#id_tbody_DanhSachThamGiaHoatDong").html(htmlData);
+        $("#idPhanTrang").empty();
+      },
+    });
+  } else {
+    //LoadComboBoxThongTinKhoa();
+    $("#select_Lop").find("option").remove();
+  }
 }
 
 function checkValidateInput() {
