@@ -30,7 +30,14 @@
         // GET ALL
         public function getAllChamDiemRenLuyen()
         {
-            $sqlQuery = "SELECT * FROM " . $this->db_table . "";
+            $sqlQuery = "SELECT *, 
+                            case
+                                when $this->db_table.maTieuChi2 != 0 then tieuchicap2.noidung
+                                else tieuchicap3.noidung
+                            end as noiDungTieuChi 
+                        FROM $this->db_table
+                            LEFT JOIN tieuchicap2 ON maTieuChi2 = matc2
+                            LEFT JOIN tieuchicap3 ON maTieuChi3 = matc3";
             $stmt = $this->conn->prepare($sqlQuery);
             $stmt->execute();
             return $stmt;
@@ -39,8 +46,15 @@
         // READ single
         public function getSingleChamDiemRenLuyen_TheoPhieuRenLuyen($maPhieuRenLuyen)
         {
-            $sqlQuery = "SELECT * FROM " . $this->db_table . "
-                            WHERE maPhieuRenLuyen  = ? ";
+            $sqlQuery = "SELECT *, 
+                            case
+                                when $this->db_table.maTieuChi2 != 0 then tieuchicap2.noidung
+                                else tieuchicap3.noidung
+                            end as noiDungTieuChi 
+                        FROM $this->db_table
+                            LEFT JOIN tieuchicap2 ON maTieuChi2 = matc2
+                            LEFT JOIN tieuchicap3 ON maTieuChi3 = matc3
+                        WHERE maPhieuRenLuyen  = ? ";
             $stmt = $this->conn->prepare($sqlQuery);
             $stmt->bindParam(1, $maPhieuRenLuyen);
             $stmt->execute();

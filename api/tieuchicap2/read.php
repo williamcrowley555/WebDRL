@@ -16,40 +16,88 @@
     if($data["status"]==1){
 
        // if ($checkQuyen->checkQuyen_CTSV($data["user_data"]->aud)){
-            $database = new Database();
-            $db = $database->getConnection();
-    
-            $items = new Tieuchicap2($db);
-            $stmt = $items->getAllTC2();
-            $itemCount = $stmt->rowCount();
-    
-            if($itemCount > 0){
-                $tieuchicap2Arr = array();
-                $tieuchicap2Arr["tieuchicap2"] = array(); //tạo object json 
-                $tieuchicap2Arr["itemCount"] = $itemCount;
+            if (isset($_GET['matc3'])) {
+                $matc3 = $_GET['matc3'];
+            } else {
+                $matc3 = null;
+            }
+            
+            if ($matc3 != null) {
+                $matc3 = explode(",", $matc3);
 
-                $countRow = 0;
-    
-                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-                    extract($row);
-                    $countRow++;
-                    $e = array(
-                        "soThuTu" => $countRow,
-                        "matc2" => $matc2 ,
-                        "noidung" => $noidung,
-                        "diemtoida" => $diemtoida,
-                        "matc1" => $matc1,
-                        "kichHoat" => $kichHoat
-                    );
-                    array_push($tieuchicap2Arr["tieuchicap2"], $e);
+                if (count($matc3) > 1) {
+                    $database = new Database();
+                    $db = $database->getConnection();
+            
+                    $items = new Tieuchicap2($db);
+                    $stmt = $items->getAllTC2TheoMatc3($matc3);
+                    $itemCount = $stmt->rowCount();
+            
+                    if($itemCount > 0){
+                        $tieuchicap2Arr = array();
+                        $tieuchicap2Arr["tieuchicap2"] = array(); //tạo object json 
+                        $tieuchicap2Arr["itemCount"] = $itemCount;
+
+                        $countRow = 0;
+            
+                        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+                            extract($row);
+                            $countRow++;
+                            $e = array(
+                                "soThuTu" => $countRow,
+                                "matc2" => $matc2 ,
+                                "noidung" => $noidung,
+                                "diemtoida" => $diemtoida,
+                                "matc1" => $matc1,
+                                "kichHoat" => $kichHoat
+                            );
+                            array_push($tieuchicap2Arr["tieuchicap2"], $e);
+                        }
+                        http_response_code(200);
+                        echo json_encode($tieuchicap2Arr);
+                    }else{
+                        http_response_code(404);
+                        echo json_encode(
+                            array("message" => "Không có dữ liệu.")
+                        );
+                    }
                 }
-                http_response_code(200);
-                echo json_encode($tieuchicap2Arr);
-            }else{
-                http_response_code(404);
-                echo json_encode(
-                    array("message" => "Không có dữ liệu.")
-                );
+            } else {
+                $database = new Database();
+                $db = $database->getConnection();
+        
+                $items = new Tieuchicap2($db);
+                $stmt = $items->getAllTC2();
+                $itemCount = $stmt->rowCount();
+        
+                if($itemCount > 0){
+                    $tieuchicap2Arr = array();
+                    $tieuchicap2Arr["tieuchicap2"] = array(); //tạo object json 
+                    $tieuchicap2Arr["itemCount"] = $itemCount;
+
+                    $countRow = 0;
+        
+                    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+                        extract($row);
+                        $countRow++;
+                        $e = array(
+                            "soThuTu" => $countRow,
+                            "matc2" => $matc2 ,
+                            "noidung" => $noidung,
+                            "diemtoida" => $diemtoida,
+                            "matc1" => $matc1,
+                            "kichHoat" => $kichHoat
+                        );
+                        array_push($tieuchicap2Arr["tieuchicap2"], $e);
+                    }
+                    http_response_code(200);
+                    echo json_encode($tieuchicap2Arr);
+                }else{
+                    http_response_code(404);
+                    echo json_encode(
+                        array("message" => "Không có dữ liệu.")
+                    );
+                }
             }
         // }else{
         //     http_response_code(403);

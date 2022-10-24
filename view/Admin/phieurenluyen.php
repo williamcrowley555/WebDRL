@@ -100,7 +100,6 @@
 
 										</table>
 
-
 									</div>
 
 									<button type="submit" class="btn btn-primary" style="width: auto;text-align: center;text-transform: uppercase;color: white;font-size: 16px;float: right;margin-right: 15px;margin-bottom: 20px;margin-top: -10px;" onclick="return DuyetDiemRenLuyen();">Duyệt điểm</button>
@@ -562,6 +561,228 @@
 	
 		TinhDiemTongCong();
 	})
+
+    $(document).on("submit", ".form_exportPDFPhieuRenLuyen", function(e) {
+        // e.preventDefault();
+        let maPhieuRenLuyen = $(this).parent().children('.btn_XemVaDuyet').attr('data-id');
+        let maSinhVienGET = $(this).parent().children('.btn_XemVaDuyet').attr('data-mssv-id');
+        let maHocKyDanhGiaGET = $(this).parent().children('.btn_XemVaDuyet').attr('data-mahocky-id');
+
+        // Reset phieuRenLuyen
+        phieuRenLuyen = {
+            thongTinPhieu : {},
+            sinhVien: {},
+            hocKyDanhGia: {},
+            diemTieuChiCap2: [],
+            diemTieuChiCap3: [],
+            tieuChiCap1: [],
+            tieuChiCap2: [],
+            tieuChiCap3: [],
+        };
+
+        // Lấy thông tin phiếu rèn luyện
+        $.ajax({
+            url: urlapi_phieurenluyen_single_read + maPhieuRenLuyen,
+            async: false,
+            type: "GET",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            headers: {
+                Authorization: jwtCookie,
+            },
+            success: function (result_PRL) {
+                phieuRenLuyen.thongTinPhieu = result_PRL;
+            },
+            error: function (error) {
+            },
+        });
+
+        // Lấy điểm tiêu chí cấp 2 & 3 của phiếu rèn luyện
+        $.ajax({
+            url: urlapi_chamdiemrenluyen_read_maPhieuRenLuyen + maPhieuRenLuyen,
+            async: false,
+            type: "GET",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            headers: {
+                Authorization: jwtCookie,
+            },
+            success: function (result_CD) {
+                result_CD['ChamDiemRenLuyen'].forEach(function(result) {
+                    if(result.maTieuChi2 != 0) {
+                        phieuRenLuyen.diemTieuChiCap2.push(result);
+
+                        // Lưu tiêu chí cấp 2
+                        $.ajax({
+                            url: urlapi_tieuchicap2_single_read + result.maTieuChi2,
+                            async: false,
+                            type: "GET",
+                            contentType: "application/json;charset=utf-8",
+                            dataType: "json",
+                            headers: {
+                                Authorization: jwtCookie,
+                            },
+                            success: function (result_TCC2) {
+                                delete result_TCC2.soThuTu;
+                                phieuRenLuyen.tieuChiCap2.push(result_TCC2);
+                            },
+                            error: function (error) {
+                            },
+                        });
+
+                    } else if(result.maTieuChi3 != 0) {
+                        phieuRenLuyen.diemTieuChiCap3.push(result);
+
+                        // Lưu tiêu chí cấp 3
+                        $.ajax({
+                            url: urlapi_tieuchicap3_single_read + result.maTieuChi3,
+                            async: false,
+                            type: "GET",
+                            contentType: "application/json;charset=utf-8",
+                            dataType: "json",
+                            headers: {
+                                Authorization: jwtCookie,
+                            },
+                            success: function (result_TCC3) {
+                                delete result_TCC3.soThuTu;
+                                phieuRenLuyen.tieuChiCap3.push(result_TCC3);
+                            },
+                            error: function (error) {
+                            },
+                        });
+                    }
+                });
+            },
+            error: function (error) {
+            },
+        });
+
+        // Lấy các tiêu chí cấp 2 có trong phieuRenLuyen
+        var tieuChiCap2List = phieuRenLuyen.diemTieuChiCap2.map(function(tieuChiCap2) {
+            return tieuChiCap2.maTieuChi2;
+        });
+
+        // Lấy các tiêu chí cấp 1 theo tieuChiCap2List
+        $.ajax({
+            url: urlapi_tieuchicap1_read_matc2 + tieuChiCap2List,
+            async: false,
+            type: "GET",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            headers: {
+                Authorization: jwtCookie,
+            },
+            success: function (result_TCC1) {
+                result_TCC1["tieuchicap1"].forEach(function(result) {
+                    delete result.soThuTu;
+                    phieuRenLuyen.tieuChiCap1.push(result);
+                });
+            },
+            error: function (error) {
+            },
+        });
+
+        // Lấy các tiêu chí cấp 3 có trong phieuRenLuyen
+        var tieuChiCap3List = phieuRenLuyen.diemTieuChiCap3.map(function(tieuChiCap3) {
+            return tieuChiCap3.maTieuChi3;
+        });
+
+        // Lấy các tiêu chí cấp 1 theo tieuChiCap3List
+        $.ajax({
+            url: urlapi_tieuchicap1_read_matc3 + tieuChiCap3List,
+            async: false,
+            type: "GET",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            headers: {
+                Authorization: jwtCookie,
+            },
+            success: function (result_TCC1) {
+                result_TCC1["tieuchicap1"].forEach(function(result) {
+                    var duplicateTCC1 = phieuRenLuyen.tieuChiCap1.find(tcc1 => tcc1.matc1 == result.matc1);
+
+                    if(!duplicateTCC1) {
+                        delete result.soThuTu;
+                        phieuRenLuyen.tieuChiCap1.push(result);
+                    } 
+                });
+            },
+            error: function (error) {
+            },
+        });
+
+        // Lấy các tiêu chí cấp 2 theo tieuChiCap3List
+        $.ajax({
+            url: urlapi_tieuchicap2_read_matc3 + tieuChiCap3List,
+            async: false,
+            type: "GET",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            headers: {
+                Authorization: jwtCookie,
+            },
+            success: function (result_TCC2) {
+                result_TCC2["tieuchicap2"].forEach(function(result) {
+                    var duplicateTCC2 = phieuRenLuyen.tieuChiCap2.find(tcc2 => tcc2.matc2 == result.matc2);
+
+                    if(!duplicateTCC2) {
+                        delete result.soThuTu;
+                        phieuRenLuyen.tieuChiCap2.push(result);
+                    } 
+                });
+            },
+            error: function (error) {
+            },
+        });
+
+        // Sort tieuChiCap1 theo matc1 giảm dần
+        phieuRenLuyen.tieuChiCap1.sort((a, b) => a.matc1 - b.matc1);
+        
+        // Sort tieuChiCap2 theo matc1 giảm dần
+        phieuRenLuyen.tieuChiCap2.sort((a, b) => a.matc2 - b.matc2);
+
+        // Lay thong tin sinh vien
+        $.ajax({
+            url: urlapi_sinhvien_details_read + maSinhVienGET,
+            async: false,
+            type: "GET",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            headers: {
+                Authorization: jwtCookie,
+            },
+            success: function (result) {
+                phieuRenLuyen.sinhVien = result;
+            },
+            error: function (error) {
+            },
+        });
+
+        // Lay thong tin hoc ky danh gia
+        $.ajax({
+            url: urlapi_hockydanhgia_single_read + maHocKyDanhGiaGET,
+            async: false,
+            type: "GET",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            headers: {
+                Authorization: jwtCookie,
+            },
+            success: function (result_HKDG) {
+                phieuRenLuyen.hocKyDanhGia = result_HKDG;
+            },
+            error: function (error) {
+            },
+        });
+
+        // console.log(phieuRenLuyen)
+
+        $(this).children('.data').val(
+            JSON.stringify(phieuRenLuyen)
+        );
+
+		return true;
+    })
 
 	//Xem danh sách hoạt động tham gia
 	$(document).on("click", ".btn_XemDanhSachHoatDong", function() {

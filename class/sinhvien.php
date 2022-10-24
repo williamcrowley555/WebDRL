@@ -123,6 +123,20 @@ class SinhVien
         return $stmt;
     }
 
+    // GET SINHVIEN DETAISL THEO MA SO SINH VIEN
+    public function getSinhVienDetailsTheoMSSV($mssv)
+    {
+        $sqlQuery = "SELECT sinhvien.*, lop.*, tenKhoa 
+                    FROM sinhvien, lop, khoa
+                    WHERE sinhvien.maLop = lop.maLop 
+                        AND lop.maKhoa = khoa.maKhoa
+                        AND maSinhVien = ?";
+
+        $stmt = $this->conn->prepare($sqlQuery);
+        $stmt->bindParam(1, $mssv);
+        $stmt->execute();
+        return $stmt;
+    }
 
     // READ single
     public function getSingleSinhVien()

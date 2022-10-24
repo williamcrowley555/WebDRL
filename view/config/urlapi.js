@@ -16,6 +16,10 @@ const urlapi_sinhvien_read_mssv = urlapi_sinhvien_read + "?mssv=";
 const urlapi_sinhvien_single_read =
   host_domain_url + "/sinhvien/single_read.php?mssv=";
 
+//DETAILS READ
+const urlapi_sinhvien_details_read =
+  host_domain_url + "/sinhvien/details_read.php?mssv=";
+
 //CREATE//
 const urlapi_sinhvien_create = host_domain_url + "/sinhvien/create.php";
 
@@ -238,6 +242,8 @@ const urlapi_khoahoc_update = host_domain_url + "/khoahoc/update.php";
 
 //READ
 const urlapi_tieuchicap1_read = host_domain_url + "/tieuchicap1/read.php";
+const urlapi_tieuchicap1_read_matc2 = urlapi_tieuchicap1_read + "?matc2=";
+const urlapi_tieuchicap1_read_matc3 = urlapi_tieuchicap1_read + "?matc3=";
 
 //CREATE
 const urlapi_tieuchicap1_create = host_domain_url + "/tieuchicap1/create.php";
@@ -252,6 +258,7 @@ const urlapi_tieuchicap1_update_kichHoat =
 
 //READ
 const urlapi_tieuchicap2_read = host_domain_url + "/tieuchicap2/read.php";
+const urlapi_tieuchicap2_read_matc3 = urlapi_tieuchicap2_read + "?matc3=";
 
 //SINGLE READ
 const urlapi_tieuchicap2_single_read =

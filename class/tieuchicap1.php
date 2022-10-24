@@ -25,6 +25,61 @@
             return $stmt;
         }
 
+        // GET ALL THEO MATC2
+        /**
+         * kichHoat == 0 ==> tất cả tiêu chí
+         * kichHoat == 1 ==> tiêu chí được kích hoạt
+         * kichHoat == -1 ==> tiêu chí bị vô hiệu hóa
+         */
+        public function getAllTC1TheoMatc2($matc2, $kichHoat = 1) {
+            $kichHoatCondition = "";
+
+            if ($kichHoat == 1) {
+                $kichHoatCondition = "AND tieuchicap1.kichHoat = 1 ";
+            } else if ($kichHoat == -1) {
+                $kichHoatCondition = "AND tieuchicap1.kichHoat = 0 ";
+            }
+
+            $sqlQuery = "SELECT DISTINCT tieuchicap1.*
+                        FROM tieuchicap1, tieuchicap2
+                        WHERE tieuchicap1.matc1 = tieuchicap2.matc1 
+                            AND matc2 IN (" . join(',', $matc2) . ") " . 
+                            $kichHoatCondition . 
+                        "ORDER BY tieuchicap1.matc1 ASC, tieuchicap1.kichHoat DESC";
+
+            $stmt = $this->conn->prepare($sqlQuery);
+            $stmt->execute();
+            return $stmt;
+        }
+
+        // GET ALL THEO MATC3
+        /**
+         * kichHoat == 0 ==> tất cả tiêu chí
+         * kichHoat == 1 ==> tiêu chí được kích hoạt
+         * kichHoat == -1 ==> tiêu chí bị vô hiệu hóa
+         */
+        public function getAllTC1TheoMatc3($matc3, $kichHoat = 1) {
+            $kichHoatCondition = "";
+
+            if ($kichHoat == 1) {
+                $kichHoatCondition = "AND tieuchicap1.kichHoat = 1 ";
+            } else if ($kichHoat == -1) {
+                $kichHoatCondition = "AND tieuchicap1.kichHoat = 0 ";
+            }
+
+            $sqlQuery = "SELECT DISTINCT tieuchicap1.*
+                        FROM tieuchicap1, tieuchicap2, tieuchicap3
+                        WHERE tieuchicap1.matc1 = tieuchicap2.matc1 
+                            AND tieuchicap2.matc2 = tieuchicap3.matc2 
+                            AND matc3 IN (" . join(',', $matc3) . ") " . 
+                            $kichHoatCondition . 
+                        "ORDER BY tieuchicap1.matc1 ASC, tieuchicap1.kichHoat DESC";
+
+            $stmt = $this->conn->prepare($sqlQuery);
+            $stmt->execute();
+            return $stmt;
+        }
+
         // READ single
         public function getSingleTC1(){
             $sqlQuery = "SELECT matc1, noidung, diemtoida, kichHoat FROM ". $this->db_table ."
@@ -40,7 +95,6 @@
                 $this->noidung = $dataRow['noidung'];
                 $this->diemtoida = $dataRow['diemtoida'];
             }
-            
         }
 
         // CREATE
