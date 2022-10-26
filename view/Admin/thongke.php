@@ -381,6 +381,12 @@
 									<td class='cell'>" +
 								data[i].xepLoai +
 								"</td>\
+									<td class='cell'>" +
+								(data[i].coVanDuyet == '1' ? "<span class='badge bg-success' style='color: white;font-size: inherit;'>Đã duyệt</span>" : "<span class='badge bg-warning' style='color: white;font-size: inherit;'>Chưa duyệt</span>") +
+								"</td>\
+									<td class='cell'>" +
+								(data[i].khoaDuyet == '1' ? "<span class='badge bg-success' style='color: white;font-size: inherit;'>Đã duyệt</span>" : "<span class='badge bg-warning' style='color: white;font-size: inherit;'>Chưa duyệt</span>") +
+								"</td>\
 							</tr>";
 					}
 

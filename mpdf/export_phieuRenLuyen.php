@@ -82,7 +82,7 @@
         
         $html .= '<tr>
                     <td style="padding: 10px; border: 1px solid #ccc; font-weight: bold;">' . $tcc1["noidung"] . '</td>
-                    <td style="padding: 10px; border: 1px solid #ccc; text-align: center; font-weight: bold;">' . ($tcc1["diemtoida"] == 0 ? '' : $tcc1["diemtoida"]) . '</td>
+                    <td style="padding: 10px; border: 1px solid #ccc; text-align: center; font-weight: bold;">' . ($tcc1["diemtoida"] == 0 ? '' : $tcc1["diemtoida"] . "đ") . '</td>
                     <td style="padding: 10px; border: 1px solid #ccc; text-align: center; font-weight: bold;"></td>
                     <td style="padding: 10px; border: 1px solid #ccc; text-align: center; font-weight: bold;"></td>
                     <td style="padding: 10px; border: 1px solid #ccc; text-align: center; font-weight: bold;"></td>
@@ -101,7 +101,7 @@
 
                 $html .= '<tr>
                             <td style="padding: 10px; border: 1px solid #ccc;"><em>' . 
-                                (strpos($tcc2["noidung"], "Kết quả học tập") ?
+                                (strpos(strtolower($tcc2["noidung"]), strtolower("Kết quả học tập")) ?
                                 (
                                     $tcc2["noidung"] .
                                     '<br/>
@@ -112,7 +112,7 @@
                                 : 
                                 $tcc2["noidung"]) . 
                             '</em></td>
-                            <td style="padding: 10px; border: 1px solid #ccc; text-align: center;"><em>' . ($tcc2["diemtoida"] == 0 ? '' : $tcc2["diemtoida"]) . '</em></td>
+                            <td style="padding: 10px; border: 1px solid #ccc; text-align: center;"><em>' . ($tcc2["diemtoida"] == 0 ? '' : $tcc2["diemtoida"] . "đ") . '</em></td>
                             <td style="padding: 10px; border: 1px solid #ccc; text-align: center;">' . ($diemTCC2 == null ? "" : $diemTCC2["diemSinhVienDanhGia"]) . '</td>
                             <td style="padding: 10px; border: 1px solid #ccc; text-align: center;">' . ($diemTCC2 == null ? "" : $diemTCC2["diemLopDanhGia"]) . '</td>
                             <td style="padding: 10px; border: 1px solid #ccc; text-align: center;">' . ($diemTCC2 == null ? "" : $diemTCC2["diemKhoaDanhGia"]) . '</td>
@@ -131,7 +131,7 @@
 
                         $html .= '<tr>
                                     <td style="padding: 10px; border: 1px solid #ccc;"><em>' . $tcc3["noidung"] . '</em></td>
-                                    <td style="padding: 10px; border: 1px solid #ccc; text-align: center;"><em>' . ($tcc3["diem"] == 0 ? '' : $tcc3["diem"]) . '</em></td>
+                                    <td style="padding: 10px; border: 1px solid #ccc; text-align: center;"><em>' . ($tcc3["diem"] == 0 ? '' : $tcc3["diem"] . "đ") . '</em></td>
                                     <td style="padding: 10px; border: 1px solid #ccc; text-align: center;">' . ($diemTCC3 == null ? "" : $diemTCC3["diemSinhVienDanhGia"]) . '</td>
                                     <td style="padding: 10px; border: 1px solid #ccc; text-align: center;">' . ($diemTCC3 == null ? "" : $diemTCC3["diemLopDanhGia"]) . '</td>
                                     <td style="padding: 10px; border: 1px solid #ccc; text-align: center;">' . ($diemTCC3 == null ? "" : $diemTCC3["diemKhoaDanhGia"]) . '</td>

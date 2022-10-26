@@ -318,14 +318,6 @@
 					        </a>\
 					    </li>\
 						<li class='nav-item' style='cursor: pointer;'>\
-					        <a class='nav-link' onclick='LoadContentMainPage(\"khoa.php\");' id='menu-button-Khoa' >\
-						        <span class='nav-icon'>\
-									<img src='assets/images/icons/user.png' alt='icon khoa' width='10%'>\
-						         </span>\
-		                         <span class='nav-link-text'>Khoa</span>\
-					        </a>\
-					    </li>\
-						<li class='nav-item' style='cursor: pointer;'>\
 					        <a class='nav-link' onclick='LoadContentMainPage(\"phieurenluyen.php\");' id='menu-button-PhieuRenLuyen' >\
 						        <span class='nav-icon'>\
 									<img src='assets/images/icons/document.png' alt='icon phiếu chấm điểm' width='10%'>\
@@ -351,7 +343,28 @@
 	
 </body>
 <script>
-	
+	function getCookie(cookieName) {
+		let cookie = {};
+
+		document.cookie.split(';').forEach(function(el) {
+			let [key,value] = el.split('=');
+			cookie[key.trim()] = value;
+		})
+
+		return cookie[cookieName];
+	}
+
+	function objectsEqual(o1, o2) { 
+		return typeof o1 === 'object' && Object.keys(o1).length > 0 
+			? Object.keys(o1).length === Object.keys(o2).length 
+				&& Object.keys(o1).every(p => objectsEqual(o1[p], o2[p]))
+			: o1 === o2;
+	}
+
+	function arraysEqual(a1, a2) {
+		return a1.length === a2.length && a1.every((o, idx) => objectsEqual(o, a2[idx]));
+	} 
+
 	setTimeout(function() {
 		$('.loader_bg').fadeToggle();
 	}, 1000);

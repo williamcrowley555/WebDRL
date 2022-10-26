@@ -23,7 +23,7 @@
     if($tableTitle && $tableContent) {
         $html .= '<h2 style="text-transform: uppercase; text-align: center; margin-top: 20px">Kết quả điểm rèn luyện</h2>';
 
-        $html .= '<table style="width: 90%; border-collapse: collapse; margin: 15px auto;">
+        $html .= '<table style="border-collapse: collapse; margin: 15px auto;">
                     <thead style="background: #3498db; color: white; font-weight: bold;">
                         <tr>';
                         
@@ -43,6 +43,8 @@
                         <td style="padding: 10px; border: 1px solid #ccc; text-align: left; font-size: 16px;">' . $data["ngaySinh"] . '</td>
                         <td style="padding: 10px; border: 1px solid #ccc; text-align: left; font-size: 16px;">' . $data["diemTongCong"] . '</td>
                         <td style="padding: 10px; border: 1px solid #ccc; text-align: left; font-size: 16px;">' . $data["xepLoai"] . '</td>
+                        <td style="padding: 10px; border: 1px solid #ccc; text-align: left; font-size: 16px;">' . ($data["coVanDuyet"] == '1' ? 'Đã duyệt' : 'Chưa duyệt') . '</td>
+                        <td style="padding: 10px; border: 1px solid #ccc; text-align: left; font-size: 16px;">' . ($data["khoaDuyet"] == '1' ? 'Đã duyệt' : 'Chưa duyệt') . '</td>
                     </tr>';
         }            
                     

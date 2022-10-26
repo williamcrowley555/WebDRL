@@ -52,6 +52,8 @@ if ($data["status"] == 1) {
                         "hoTenSinhVien" => $hoTenSinhVien,
                         "ngaySinh" =>  $ngaySinh,
                         "maLop" =>  $maLop,
+                        "coVanDuyet" => $coVanDuyet,
+                        "khoaDuyet" => $khoaDuyet,
                         "diemTongCong" => $diemTongCong,
                         "xepLoai" => $xepLoai
                     );
