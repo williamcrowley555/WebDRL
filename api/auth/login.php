@@ -84,7 +84,8 @@
 
             $arr = array( 
                 "maSo" =>  $obj_SinhVien->maSinhVien,
-                "hoTen" => $obj_SinhVien->hoTenSinhVien
+                "hoTen" => $obj_SinhVien->hoTenSinhVien,
+                "quyen" => $obj_SinhVien->quyen
             );
 
             echo json_encode(array(
@@ -135,7 +136,8 @@
 
             $arr = array( 
                 "maSo" =>  $obj_CVHT->maCoVanHocTap,
-                "hoTen" => $obj_CVHT->hoTenCoVan
+                "hoTen" => $obj_CVHT->hoTenCoVan,
+                "quyen" => $obj_CVHT->quyen,
             );
 
 
@@ -188,7 +190,8 @@
 
             $arr = array( 
                 "maSo" =>  $obj_Khoa->maKhoa,
-                "hoTen" => $obj_Khoa->tenKhoa
+                "hoTen" => $obj_Khoa->tenKhoa,
+                "quyen" => $obj_Khoa->quyen
             );
 
 

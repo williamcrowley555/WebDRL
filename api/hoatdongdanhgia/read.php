@@ -34,6 +34,18 @@
         } else {
             $to = null;
         }
+        
+        if (isset($_GET['maSinhVien'])) {
+            $maSinhVien = $_GET['maSinhVien'];
+        } else {
+            $maSinhVien = null;
+        }
+
+        if (isset($_GET['maHocKyDanhGia'])) {
+            $maHocKyDanhGia = $_GET['maHocKyDanhGia'];
+        } else {
+            $maHocKyDanhGia = null;
+        }
        
         if (isset($_GET['maHD'])) {
             $maHD = $_GET['maHD'];
@@ -77,6 +89,50 @@
                         "thoiGianBatDauHoatDong" => $thoiGianBatDauHoatDong,
                         "thoiGianKetThucHoatDong" => $thoiGianKetThucHoatDong,
                         "noiDungTieuChi" => $noiDungTieuChi,
+                    );
+                    array_push($hoatdongdanhgiaArr["hoatdongdanhgia"], $e);
+                }
+                http_response_code(200);
+                echo json_encode($hoatdongdanhgiaArr);
+            }
+            else{
+                http_response_code(404);
+                echo json_encode(
+                    array("message" => "Không tìm thấy dữ liệu.")
+                );
+            }
+        } else if ($maSinhVien != null && $maHocKyDanhGia != null) {
+            $items = new HoatDongDanhGia($db);
+            $stmt = $items->getAllTheoMSSVAndMaHKDG($maSinhVien, $maHocKyDanhGia);
+            $itemCount = $stmt->rowCount();
+    
+    
+            if($itemCount > 0){
+                $hoatdongdanhgiaArr = array();
+                $hoatdongdanhgiaArr["hoatdongdanhgia"] = array(); //tạo object json 
+                $hoatdongdanhgiaArr["itemCount"] = $itemCount;
+    
+                $urlFile = $url.dirname($_SERVER['PHP_SELF'])."/QRImages/";
+    
+                $countRow = 0;
+    
+                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+                    extract($row);
+                    $countRow++;
+                    $e = array(
+                        "soThuTu" => $countRow,
+                        "maHoatDong" => $maHoatDong ,
+                        "maTieuChi3" => $maTieuChi3,
+                        "maTieuChi2" => $maTieuChi2,
+                        "maKhoa" => $maKhoa,
+                        "tenHoatDong" => $tenHoatDong,
+                        "diemNhanDuoc" => $diemNhanDuoc,
+                        "diaDiemDienRaHoatDong" => $diaDiemDienRaHoatDong,
+                        "maHocKyDanhGia" => $maHocKyDanhGia,
+                        "thoiGianBatDauDiemDanh" => $thoiGianBatDauDiemDanh,
+                        "maQRDiaDiem" => $urlFile.$maQRDiaDiem,
+                        "thoiGianBatDauHoatDong" => $thoiGianBatDauHoatDong,
+                        "thoiGianKetThucHoatDong" => $thoiGianKetThucHoatDong,
                     );
                     array_push($hoatdongdanhgiaArr["hoatdongdanhgia"], $e);
                 }

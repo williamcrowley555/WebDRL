@@ -275,8 +275,8 @@ function isAllowedToScore(thongBaoDanhGia, userRole, validRoles) {
   return result;
 }
 
-//Load thông tin sinh viên lên phiếu
-function LoadThongTinSinhVien(sinhVien, hocKyDanhGia, element) {
+//Set thông tin sinh viên lên phiếu
+function setThongTinSinhVien(sinhVien, hocKyDanhGia, selector) {
   var hoTenSinhVien = sinhVien.hoTenSinhVien;
   var ngaySinh = new Date(sinhVien.ngaySinh);
   var maLop = sinhVien.maLop;
@@ -286,9 +286,9 @@ function LoadThongTinSinhVien(sinhVien, hocKyDanhGia, element) {
   var hocKyXet = hocKyDanhGia.hocKyXet;
   var namHocXet = hocKyDanhGia.namHocXet;
 
-  $(element).empty();
+  $(selector).empty();
 
-  $(element).append(
+  $(selector).append(
     "<div class='row'>\
                 <div class='col'>\
                 <span style='font-weight: bold;'>Họ tên: </span>" +
@@ -343,16 +343,76 @@ function LoadThongTinSinhVien(sinhVien, hocKyDanhGia, element) {
   );
 }
 
+function autoFillDiemHoatDong(maSinhVien, maHocKyDanhGia, selector) {
+  $.ajax({
+    url:
+      urlapi_hoatdongdanhgia_read +
+      "?maSinhVien=" +
+      maSinhVien +
+      "&maHocKyDanhGia=" +
+      maHocKyDanhGia,
+    async: false,
+    type: "GET",
+    contentType: "application/json;charset=utf-8",
+    dataType: "json",
+    headers: {
+      Authorization: jwtCookie,
+    },
+    success: function (result_HD) {
+      result_HD["hoatdongdanhgia"].forEach(function (hoatDong) {
+        $(selector)
+          .find("input")
+          .each(function () {
+            var tieuChi = this.id.slice(0, 3);
+            var maTieuChi = this.id.slice(4, 9);
+            var max_value = $(this).attr("max_value");
+
+            if (tieuChi == "TC2") {
+              if (hoatDong.maTieuChi2 == maTieuChi) {
+                if (this.value != null) {
+                  tongDiemHoatDong_TrenTieuChi =
+                    Number(this.value) + Number(hoatDong.diemNhanDuoc);
+                }
+
+                if (Number(tongDiemHoatDong_TrenTieuChi) > Number(max_value)) {
+                  $("#" + this.id).val(max_value);
+                } else {
+                  $("#" + this.id).val(tongDiemHoatDong_TrenTieuChi);
+                }
+              }
+            }
+
+            if (tieuChi == "TC3") {
+              if (hoatDong.maTieuChi3 == maTieuChi) {
+                if (this.value != null) {
+                  tongDiemHoatDong_TrenTieuChi =
+                    Number(this.value) + Number(hoatDong.diemNhanDuoc);
+                }
+
+                if (Number(tongDiemHoatDong_TrenTieuChi) > Number(max_value)) {
+                  $("#" + this.id).val(max_value);
+                } else {
+                  $("#" + this.id).val(tongDiemHoatDong_TrenTieuChi);
+                }
+              }
+            }
+          });
+      });
+    },
+    error: function (errorMessage_HD) {},
+  });
+}
+
 function createPhieuRenLuyenForm(
   tieuChiDanhGiaList,
   thongBaoDanhGia,
-  element,
-  userRole
+  userRole,
+  selector
 ) {
   if (tieuChiDanhGiaList) {
     var html = "";
 
-    $(element).empty();
+    $(selector).empty();
 
     // Tiêu chí 1
     tieuChiDanhGiaList.tieuChiCap1.forEach(function (tcc1) {
@@ -453,20 +513,37 @@ function createPhieuRenLuyenForm(
               "' >Danh sách</button>\
                         </td>\
                         <td>\
-                        <div class='box'>\
-                        <a href='#' id='show_file_minhchung_TC2_" +
-              tcc2.matc2 +
-              "' target='_blank' style='display:none' ></a>\
-                        <button type='button' class='btn btn-light btn_AnhMinhChung' data-bs-toggle='modal' data-bs-target='#AnhMinhChungModal' data-img-id='img_file_minhchung_TC2_" +
-              tcc2.matc2 +
-              "' ><img src='#' id='img_file_minhchung_TC2_" +
-              tcc2.matc2 +
-              "' width='100px' /></button>\
-                        <form id='formDanhGiaDRL_TC2_" +
-              tcc2.matc2 +
-              "' method='post' enctype='multipart/form-data'>\
-                        </form>\
-                    </div>\
+                        <div class='box'>" +
+              (isAllowedToScore(thongBaoDanhGia, userRole, ["sinhvien"])
+                ? "<a href='#' id='show_file_minhchung_TC2_" +
+                  tcc2.matc2 +
+                  "' target='_blank' ></a>\
+                <form id='formDanhGiaDRL_TC2_" +
+                  tcc2.matc2 +
+                  "' method='post' enctype='multipart/form-data'>\
+                  <input type='file' id='file_minhchung_TC2_" +
+                  tcc2.matc2 +
+                  "' name='fileMinhChung' class='inputfile inputfile-1' accept='.png,.jpg,.jpeg' data-multiple-caption='{count} files selected' >\
+                  <label for='file_minhchung_TC2_" +
+                  tcc2.matc2 +
+                  "'>\
+                    <svg xmlns='http://www.w3.org/2000/svg' width='20' height='17' viewBox='0 0 20 17'><path d='M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z'></path></svg>\
+                    <span>Chọn tệp…</span>\
+                  </label>\
+                </form>"
+                : "<a href='#' id='show_file_minhchung_TC2_" +
+                  tcc2.matc2 +
+                  "' target='_blank' style='display:none' ></a>\
+                  <button type='button' class='btn btn-light btn_AnhMinhChung' data-bs-toggle='modal' data-bs-target='#AnhMinhChungModal' data-img-id='img_file_minhchung_TC2_" +
+                  tcc2.matc2 +
+                  "' ><img src='#' id='img_file_minhchung_TC2_" +
+                  tcc2.matc2 +
+                  "' width='100px' /></button>\
+                  <form id='formDanhGiaDRL_TC2_" +
+                  tcc2.matc2 +
+                  "' method='post' enctype='multipart/form-data'>\
+                  </form>") +
+              "</div>\
                         </td>\
                     </tr>";
           } else {
@@ -666,20 +743,37 @@ function createPhieuRenLuyenForm(
                   "' >Danh sách</button>\
                       </td>\
                       <td>\
-                      <div class='box'>\
-                          <a href='#' id='show_file_minhchung_TC3_" +
-                  tcc3.matc3 +
-                  "' target='_blank' style='display: none' ></a>\
+                      <div class='box'>" +
+                  (isAllowedToScore(thongBaoDanhGia, userRole, ["sinhvien"])
+                    ? "<a href='#' id='show_file_minhchung_TC3_" +
+                      tcc3.matc3 +
+                      "' target='_blank' ></a>\
+                        <form id='formDanhGiaDRL_TC3_" +
+                      tcc3.matc3 +
+                      "' method='post' enctype='multipart/form-data'>\
+                          <input type='file' id='file_minhchung_TC3_" +
+                      tcc3.matc3 +
+                      "' name='fileMinhChung' class='inputfile inputfile-1' accept='.png,.jpg,.jpeg' data-multiple-caption='{count} files selected' >\
+                          <label for='file_minhchung_TC3_" +
+                      tcc3.matc3 +
+                      "'>\
+                            <svg xmlns='http://www.w3.org/2000/svg' width='20' height='17' viewBox='0 0 20 17'><path d='M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z'></path></svg>\
+                            <span>Chọn tệp…</span>\
+                          </label>\
+                        </form>"
+                    : "<a href='#' id='show_file_minhchung_TC3_" +
+                      tcc3.matc3 +
+                      "' target='_blank' style='display:none' ></a>\
                           <button type='button' class='btn btn-light btn_AnhMinhChung' data-bs-toggle='modal' data-bs-target='#AnhMinhChungModal' data-img-id='img_file_minhchung_TC3_" +
-                  tcc3.matc3 +
-                  "' ><img src='#' id='img_file_minhchung_TC3_" +
-                  tcc3.matc3 +
-                  "' width='100px' /></button>\
+                      tcc3.matc3 +
+                      "' ><img src='#' id='img_file_minhchung_TC3_" +
+                      tcc3.matc3 +
+                      "' width='100px' /></button>\
                           <form id='formDanhGiaDRL_TC3_" +
-                  tcc3.matc3 +
-                  "' method='post' enctype='multipart/form-data'>\
-                        </form>\
-                        </div>\
+                      tcc3.matc3 +
+                      "' method='post' enctype='multipart/form-data'>\
+                          </form>") +
+                  "</div>\
                     </td>\
                         </tr>";
               }
@@ -749,6 +843,199 @@ function createPhieuRenLuyenForm(
             <td style='font-weight: bold;'  ><span></span></td>\
         </tr>";
 
-    $(element).append(html);
+    $(selector).append(html);
+  }
+}
+
+function setDiemPhieuRenLuyen(
+  thongTinPhieu,
+  diemTieuChiCap2 = [],
+  diemTieuChiCap3 = [],
+  thongBaoDanhGia,
+  userRole,
+  selector
+) {
+  selector += " ";
+
+  // Phiếu rèn luyện mới (chưa có dữ liệu)
+  if (diemTieuChiCap2.length == 0 && diemTieuChiCap3.length == 0) {
+    // Hiện nút chọn tệp minh chứng
+    // $(selector)
+    //   .find("div.box")
+    //   .each(function () {
+    //     var maTC = $(this).children("a").attr("id").slice(20);
+
+    //     $(this).empty();
+
+    //     $(this).append(
+    //       "<a href='#' id='show_file_minhchung_" +
+    //         maTC +
+    //         "' target='_blank' ></a>\
+    //       <form id='formDanhGiaDRL_" +
+    //         maTC +
+    //         "' method='post' enctype='multipart/form-data'>\
+    //       <input type='file' id='file_minhchung_" +
+    //         maTC +
+    //         "' name='fileMinhChung' class='inputfile inputfile-1' accept='.png,.jpg,.jpeg' data-multiple-caption='{count} files selected' >\
+    //       <label for='file_minhchung_" +
+    //         maTC +
+    //         "'>\
+    //         <svg xmlns='http://www.w3.org/2000/svg' width='20' height='17' viewBox='0 0 20 17'><path d='M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z'></path></svg>\
+    //         <span>Chọn tệp…</span>\
+    //       </label>\
+    //     </form>"
+    //     );
+    //   });
+
+    autoFillDiemHoatDong(
+      thongTinPhieu.maSinhVien,
+      thongTinPhieu.maHocKyDanhGia,
+      selector
+    );
+  }
+  // Phiếu đã có điểm
+  else {
+    $(selector + "#inputTBCHocKyTruoc").val(
+      thongTinPhieu.diemTrungBinhChungHKTruoc
+    );
+    $(selector + "#inputTBCHocKyDangXet").val(
+      thongTinPhieu.diemTrungBinhChungHKXet
+    );
+
+    $(selector + "#text_diemTongCong").text(thongTinPhieu.diemTongCong);
+    $(selector + "#text_XepLoai").text(thongTinPhieu.xepLoai);
+
+    // Điểm tiêu chí cấp 2
+    diemTieuChiCap2.forEach(function (diem) {
+      var fileMinhChung_Name = diem.fileMinhChung.substring(
+        diem.fileMinhChung.lastIndexOf("/") + 1
+      );
+
+      $(selector)
+        .find("input")
+        .each(function () {
+          var tieuChi = this.id.slice(0, 3);
+          var maTieuChi = this.id.slice(4, 9);
+
+          if (tieuChi == "TC2") {
+            if (diem.maTieuChi2 == maTieuChi) {
+              // Hiện điểm sinh viên đánh giá
+              $(selector + "#" + this.id).val(diem.diemSinhVienDanhGia);
+
+              // Hiện điểm cố vấn học tập đánh giá
+              if (isAllowedToScore(thongBaoDanhGia, userRole, ["cvht"])) {
+                if (thongTinPhieu.coVanDuyet == 0) {
+                  $(selector + "#CVHT_" + this.id).val(
+                    diem.diemSinhVienDanhGia
+                  );
+                } else {
+                  $(selector + "#CVHT_" + this.id).val(diem.diemLopDanhGia);
+                }
+              } else {
+                $(selector + "#CVHT_" + this.id).val(diem.diemLopDanhGia);
+              }
+
+              // Hiện điểm khoa đánh giá
+              if (isAllowedToScore(thongBaoDanhGia, userRole, ["khoa"])) {
+                if (thongTinPhieu.khoaDuyet == 0) {
+                  if (thongTinPhieu.coVanDuyet == 0) {
+                    $(selector + "#Khoa_" + this.id).val(
+                      diem.diemSinhVienDanhGia
+                    );
+                  } else {
+                    $(selector + "#Khoa_" + this.id).val(diem.diemLopDanhGia);
+                  }
+                } else {
+                  $(selector + "#Khoa_" + this.id).val(diem.diemKhoaDanhGia);
+                }
+              } else {
+                $(selector + "#Khoa_" + this.id).val(diem.diemKhoaDanhGia);
+              }
+
+              // Hiện file minh chứng
+              $(selector + "#show_file_minhchung_" + this.id).text(
+                fileMinhChung_Name
+              );
+              $(selector + "#show_file_minhchung_" + this.id).attr(
+                "href",
+                diem.fileMinhChung
+              );
+
+              // Hiện ảnh minh chứng lên <td> tag
+              if ($(selector + "#img_file_minhchung_" + this.id).length) {
+                $(selector + "#img_file_minhchung_" + this.id).attr(
+                  "src",
+                  diem.fileMinhChung
+                );
+              }
+            }
+          }
+        });
+    });
+
+    // Điểm tiêu chí cấp 3
+    diemTieuChiCap3.forEach(function (diem) {
+      var fileMinhChung_Name = diem.fileMinhChung.substring(
+        diem.fileMinhChung.lastIndexOf("/") + 1
+      );
+
+      $(selector)
+        .find("input")
+        .each(function () {
+          var tieuChi = this.id.slice(0, 3);
+          var maTieuChi = this.id.slice(4, 9);
+
+          if (tieuChi == "TC3") {
+            if (diem.maTieuChi3 == maTieuChi) {
+              // Hiện điểm sinh viên đánh giá
+              $(selector + "#" + this.id).val(diem.diemSinhVienDanhGia);
+
+              // Hiện điểm cố vấn học tập đánh giá
+              if (isAllowedToScore(thongBaoDanhGia, userRole, ["cvht"])) {
+                if (thongTinPhieu.coVanDuyet == 0) {
+                  $(selector + "#CVHT_" + this.id).val(
+                    diem.diemSinhVienDanhGia
+                  );
+                } else {
+                  $(selector + "#CVHT_" + this.id).val(diem.diemLopDanhGia);
+                }
+              } else {
+                $(selector + "#CVHT_" + this.id).val(diem.diemLopDanhGia);
+              }
+
+              // Hiện điểm khoa đánh giá
+              if (isAllowedToScore(thongBaoDanhGia, userRole, ["khoa"])) {
+                if (thongTinPhieu.khoaDuyet == 0) {
+                  if (thongTinPhieu.coVanDuyet == 0) {
+                    $(selector + "#Khoa_" + this.id).val(
+                      diem.diemSinhVienDanhGia
+                    );
+                  } else {
+                    $(selector + "#Khoa_" + this.id).val(diem.diemLopDanhGia);
+                  }
+                } else {
+                  $(selector + "#Khoa_" + this.id).val(diem.diemKhoaDanhGia);
+                }
+              } else {
+                $(selector + "#Khoa_" + this.id).val(diem.diemKhoaDanhGia);
+              }
+
+              // Hiện file minh chứng
+              $(selector + "#show_file_minhchung_" + this.id).text(
+                fileMinhChung_Name
+              );
+              $(selector + "#show_file_minhchung_" + this.id).attr(
+                "href",
+                diem.fileMinhChung
+              );
+
+              $(selector + "#img_file_minhchung_" + this.id).attr(
+                "src",
+                diem.fileMinhChung
+              );
+            }
+          }
+        });
+    });
   }
 }

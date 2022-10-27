@@ -18,8 +18,23 @@
         //Các chức năng
 
         // GET ALL
-        public function getAllTC1(){
-            $sqlQuery = "SELECT matc1, noidung, diemtoida, kichHoat FROM " . $this->db_table . " ORDER BY matc1 ASC, kichHoat DESC";
+        /**
+        * kichHoat == 0 ==> tất cả tiêu chí
+        * kichHoat == 1 ==> tiêu chí được kích hoạt
+        * kichHoat == -1 ==> tiêu chí bị vô hiệu hóa
+        */
+        public function getAllTC1($kichHoat = 0){
+            $kichHoatCondition = "";
+
+            if ($kichHoat == 1) {
+                $kichHoatCondition = " WHERE kichHoat = 1 ";
+            } else if ($kichHoat == -1) {
+                $kichHoatCondition = " WHERE kichHoat = 0 ";
+            }
+
+            $sqlQuery = "SELECT matc1, noidung, diemtoida, kichHoat FROM " . $this->db_table . 
+                        $kichHoatCondition . 
+                        " ORDER BY matc1 ASC, kichHoat DESC";
             $stmt = $this->conn->prepare($sqlQuery);
             $stmt->execute();
             return $stmt;

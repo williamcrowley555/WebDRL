@@ -154,20 +154,18 @@ if (!isset($_GET['maHocKy'])) {
     <!-- Swiper for image and text sliders -->
     <script src="../js/scripts.js"></script>
 
+    <!-- Phieu Ren Luyen Helper JS -->
+    <script src="../../../helper/js/phieuRenLuyen.js"></script>
+
     <!-- Custom scripts -->
     <script src="../js/chamdiemchitiet/chamdiemchitiet.js"></script>
-
-    <script>
-
-
-    </script>
 
     <script>
         HienThiThongTinVaDanhGia();
 
         var loadhoatdongtruoc_maHocKyDanhGia = $('#input_maHocKyDanhGia').val();
         var loadhoatdongtruoc_maSinhVien = getCookie("maSo");
-        LoadDiemNhanDuocCuaHoatDong_LenForm(loadhoatdongtruoc_maHocKyDanhGia, loadhoatdongtruoc_maSinhVien);
+        // LoadDiemNhanDuocCuaHoatDong_LenForm(loadhoatdongtruoc_maHocKyDanhGia, loadhoatdongtruoc_maSinhVien);
 
 
         //Code tự tính điểm tổng cộng

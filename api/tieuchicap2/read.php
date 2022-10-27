@@ -21,6 +21,12 @@
             } else {
                 $matc3 = null;
             }
+
+            if (isset($_GET['kichHoat'])) {
+                $kichHoat = $_GET['kichHoat'];
+            } else {
+                $kichHoat = null;
+            }
             
             if ($matc3 != null) {
                 $matc3 = explode(",", $matc3);
@@ -30,7 +36,7 @@
                     $db = $database->getConnection();
             
                     $items = new Tieuchicap2($db);
-                    $stmt = $items->getAllTC2TheoMatc3($matc3);
+                    $stmt = $items->getAllTC2TheoMatc3($matc3, 0);
                     $itemCount = $stmt->rowCount();
             
                     if($itemCount > 0){
@@ -61,6 +67,42 @@
                             array("message" => "Không có dữ liệu.")
                         );
                     }
+                }
+            } else if ($kichHoat != null) {
+                $database = new Database();
+                $db = $database->getConnection();
+        
+                $items = new Tieuchicap2($db);
+                $stmt = $items->getAllTC2($kichHoat);
+                $itemCount = $stmt->rowCount();
+        
+                if($itemCount > 0){
+                    $tieuchicap2Arr = array();
+                    $tieuchicap2Arr["tieuchicap2"] = array(); //tạo object json 
+                    $tieuchicap2Arr["itemCount"] = $itemCount;
+
+                    $countRow = 0;
+        
+                    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+                        extract($row);
+                        $countRow++;
+                        $e = array(
+                            "soThuTu" => $countRow,
+                            "matc2" => $matc2 ,
+                            "noidung" => $noidung,
+                            "diemtoida" => $diemtoida,
+                            "matc1" => $matc1,
+                            "kichHoat" => $kichHoat
+                        );
+                        array_push($tieuchicap2Arr["tieuchicap2"], $e);
+                    }
+                    http_response_code(200);
+                    echo json_encode($tieuchicap2Arr);
+                }else{
+                    http_response_code(404);
+                    echo json_encode(
+                        array("message" => "Không có dữ liệu.")
+                    );
                 }
             } else {
                 $database = new Database();

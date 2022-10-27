@@ -16,41 +16,86 @@
     if($data["status"]==1){
 
        // if ($checkQuyen->checkQuyen_CTSV($data["user_data"]->aud)){
-            $database = new Database();
-            $db = $database->getConnection();
-    
-            $items = new Tieuchicap3($db);
-            $stmt = $items->getAllTC3();
-            $itemCount = $stmt->rowCount();
-    
-            if($itemCount > 0){
-                $tieuchicap3Arr = array();
-                $tieuchicap3Arr["tieuchicap3"] = array(); //tạo object json 
-                $tieuchicap3Arr["itemCount"] = $itemCount;
-
-                $countRow = 0;
-    
-                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-                    extract($row);
-                    $countRow++;
-                    $e = array(
-                        "soThuTu" => $countRow,
-                        "matc3" => $matc3 ,
-                        "noidung" => $noidung	,
-                        "diem" => $diem,
-                        "matc2" => $matc2,
-                        "kichHoat" => $kichHoat
-                    );
-                    array_push($tieuchicap3Arr["tieuchicap3"], $e);
-                }
-                http_response_code(200);
-                echo json_encode($tieuchicap3Arr);
+            if (isset($_GET['kichHoat'])) {
+                $kichHoat = $_GET['kichHoat'];
+            } else {
+                $kichHoat = null;
             }
-            else{
-                http_response_code(404);
-                echo json_encode(
-                    array("message" => "Không tìm thấy dữ liệu.")
-                );
+
+            if ($kichHoat != null) {
+                $database = new Database();
+                $db = $database->getConnection();
+        
+                $items = new Tieuchicap3($db);
+                $stmt = $items->getAllTC3($kichHoat);
+                $itemCount = $stmt->rowCount();
+        
+                if($itemCount > 0){
+                    $tieuchicap3Arr = array();
+                    $tieuchicap3Arr["tieuchicap3"] = array(); //tạo object json 
+                    $tieuchicap3Arr["itemCount"] = $itemCount;
+
+                    $countRow = 0;
+        
+                    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+                        extract($row);
+                        $countRow++;
+                        $e = array(
+                            "soThuTu" => $countRow,
+                            "matc3" => $matc3 ,
+                            "noidung" => $noidung	,
+                            "diem" => $diem,
+                            "matc2" => $matc2,
+                            "kichHoat" => $kichHoat
+                        );
+                        array_push($tieuchicap3Arr["tieuchicap3"], $e);
+                    }
+                    http_response_code(200);
+                    echo json_encode($tieuchicap3Arr);
+                }
+                else{
+                    http_response_code(404);
+                    echo json_encode(
+                        array("message" => "Không tìm thấy dữ liệu.")
+                    );
+                }
+            } else {
+                $database = new Database();
+                $db = $database->getConnection();
+        
+                $items = new Tieuchicap3($db);
+                $stmt = $items->getAllTC3();
+                $itemCount = $stmt->rowCount();
+        
+                if($itemCount > 0){
+                    $tieuchicap3Arr = array();
+                    $tieuchicap3Arr["tieuchicap3"] = array(); //tạo object json 
+                    $tieuchicap3Arr["itemCount"] = $itemCount;
+
+                    $countRow = 0;
+        
+                    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+                        extract($row);
+                        $countRow++;
+                        $e = array(
+                            "soThuTu" => $countRow,
+                            "matc3" => $matc3 ,
+                            "noidung" => $noidung	,
+                            "diem" => $diem,
+                            "matc2" => $matc2,
+                            "kichHoat" => $kichHoat
+                        );
+                        array_push($tieuchicap3Arr["tieuchicap3"], $e);
+                    }
+                    http_response_code(200);
+                    echo json_encode($tieuchicap3Arr);
+                }
+                else{
+                    http_response_code(404);
+                    echo json_encode(
+                        array("message" => "Không tìm thấy dữ liệu.")
+                    );
+                }
             }
         // }else{
         //     http_response_code(403);

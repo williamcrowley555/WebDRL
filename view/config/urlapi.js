@@ -242,6 +242,7 @@ const urlapi_khoahoc_update = host_domain_url + "/khoahoc/update.php";
 
 //READ
 const urlapi_tieuchicap1_read = host_domain_url + "/tieuchicap1/read.php";
+const urlapi_tieuchicap1_read_kichHoat = urlapi_tieuchicap1_read + "?kichHoat=";
 const urlapi_tieuchicap1_read_matc2 = urlapi_tieuchicap1_read + "?matc2=";
 const urlapi_tieuchicap1_read_matc3 = urlapi_tieuchicap1_read + "?matc3=";
 
@@ -258,6 +259,7 @@ const urlapi_tieuchicap1_update_kichHoat =
 
 //READ
 const urlapi_tieuchicap2_read = host_domain_url + "/tieuchicap2/read.php";
+const urlapi_tieuchicap2_read_kichHoat = urlapi_tieuchicap2_read + "?kichHoat=";
 const urlapi_tieuchicap2_read_matc3 = urlapi_tieuchicap2_read + "?matc3=";
 
 //SINGLE READ
@@ -277,6 +279,7 @@ const urlapi_tieuchicap2_update_kichHoat =
 
 //READ
 const urlapi_tieuchicap3_read = host_domain_url + "/tieuchicap3/read.php";
+const urlapi_tieuchicap3_read_kichHoat = urlapi_tieuchicap3_read + "?kichHoat=";
 
 //SINGLE READ
 const urlapi_tieuchicap3_single_read =

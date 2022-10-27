@@ -44,6 +44,19 @@
             return $stmt;
         }
 
+        // GET ALL THEO MA SINH VIEN & MA HOC KY DANH GIA
+        public function getAllTheoMSSVAndMaHKDG($maSinhVien, $maHocKyDanhGia){
+            $sqlQuery = "SELECT hoatdongdanhgia.* 
+                        FROM hoatdongdanhgia, thamgiahoatdong 
+                        WHERE hoatdongdanhgia.maHoatDong = thamgiahoatdong.maHoatDong 
+                            AND maSinhVienThamGia = '$maSinhVien' 
+                            AND maHocKyDanhGia = '$maHocKyDanhGia' 
+                        ORDER BY maHocKyDanhGia DESC, thoiGianBatDauHoatDong DESC, thoiGianKetThucHoatDong DESC";
+            $stmt = $this->conn->prepare($sqlQuery);
+            $stmt->execute();
+            return $stmt;
+        }
+
         // GET HOATDONG THEO MA HOAT DONG
         public function getHoatDongTheoMaHD($maHD, $isEqual = true)
         {

@@ -315,20 +315,26 @@
         let calDiemTongCong_SinhVien = 0;
         let calDiemTongCong_CVHT = 0;
         let calDiemTongCong_Khoa = 0;
-        let calDiemTongTieuChi1 = 0;
-        let calDiemTongTieuChi1_Khoa = 0;
         let calDiemTongTieuChi1_SinhVien = 0;
+        let calDiemTongTieuChi1_CVHT = 0;
+        let calDiemTongTieuChi1_Khoa = 0;
         $("#tbody_noiDungDanhGia").find("input").each(function() {
-            var tieuChi = this.id.slice(0, 8);
             var tieuChi_SinhVien = this.id.slice(0, 3);
-            var idDiemTongTieuChi1 = this.id.slice(0, 17);
+            var tieuChi = this.id.slice(0, 8);
             var idDiemTongTieuChi1_SinhVien = this.id.slice(0, 12);
+            var idDiemTongTieuChi1 = this.id.slice(0, 17);
 
+            if (tieuChi_SinhVien == 'TC2' || tieuChi_SinhVien == 'TC3') {
+                if (this.value != null) {
+                    calDiemTongTieuChi1_SinhVien += Number(this.value);
+                   //calDiemTongCong_SinhVien += Number(this.value);
+                }
+            }
 
             if (tieuChi == 'CVHT_TC2' || tieuChi == 'CVHT_TC3') {
                 if (this.value != null) {
                    // calDiemTongCong += Number(this.value);
-                    calDiemTongTieuChi1 += Number(this.value);
+                   calDiemTongTieuChi1_CVHT += Number(this.value);
                     //calDiemTongCong_CVHT += Number(this.value);
                 }
             }
@@ -341,63 +347,60 @@
                 }
             }
 
-            if (tieuChi_SinhVien == 'TC2' || tieuChi_SinhVien == 'TC3') {
-                if (this.value != null) {
-                    calDiemTongTieuChi1_SinhVien += Number(this.value);
-                   //calDiemTongCong_SinhVien += Number(this.value);
-                }
-            }
-
+            // Điểm tổng cộng tiêu chí 1 của sinh viên
             if (idDiemTongTieuChi1_SinhVien == 'TongCong_TC1') {
-                // Thêm ở đây
                 var diemToiDa_TC1 = $('#' + this.id).attr('max-value');
+
                 if (calDiemTongTieuChi1_SinhVien > diemToiDa_TC1) {
                     $('#' + this.id).val(diemToiDa_TC1);
+
                     calDiemTongCong_SinhVien += Number(diemToiDa_TC1);
                     calDiemTongTieuChi1_SinhVien = 0;
                 } else {
                     $('#' + this.id).val(calDiemTongTieuChi1_SinhVien);
+
                     calDiemTongCong_SinhVien += Number(calDiemTongTieuChi1_SinhVien);
                     calDiemTongTieuChi1_SinhVien = 0;
                 }
-                // Kết thúc thêm
             }
 
+            // Điểm tổng cộng tiêu chí 1 của cvht
             if (idDiemTongTieuChi1 == 'CVHT_TongCong_TC1') {
-                // Thêm dòng này
                 var diemToiDa_TC1_CVHT = $('#' + this.id).attr('max-value');
-                if (calDiemTongTieuChi1 > diemToiDa_TC1_CVHT) {
+
+                if (calDiemTongTieuChi1_CVHT > diemToiDa_TC1_CVHT) {
                     $('#' + this.id).val(diemToiDa_TC1_CVHT);
+
                     calDiemTongCong_CVHT += Number(diemToiDa_TC1_CVHT);
-                    calDiemTongTieuChi1 = 0;
+                    calDiemTongTieuChi1_CVHT = 0;
                 } else {
-                    $('#' + this.id).val(calDiemTongTieuChi1);
-                     calDiemTongCong_CVHT += Number(calDiemTongTieuChi1);
-                     calDiemTongTieuChi1 = 0;
+                    $('#' + this.id).val(calDiemTongTieuChi1_CVHT);
+
+                     calDiemTongCong_CVHT += Number(calDiemTongTieuChi1_CVHT);
+                     calDiemTongTieuChi1_CVHT = 0;
                 }
-                // Kết thúc thêm
             }
 
+            // Điểm tổng cộng tiêu chí 1 của khoa
             if (idDiemTongTieuChi1 == 'Khoa_TongCong_TC1') {
                 var diemToiDa_TC1_Khoa = $('#' + this.id).attr('max-value');
+
                 if (calDiemTongTieuChi1_Khoa > diemToiDa_TC1_Khoa) {
-                    console.log("diem tong tieu chi 1 khoa = " + calDiemTongTieuChi1_Khoa);
-                    console.log("diem toi da tieu chi 1 khoa = " + diemToiDa_TC1_Khoa);
                     $('#' + this.id).val(diemToiDa_TC1_Khoa);
+
                     calDiemTongCong_Khoa += Number(diemToiDa_TC1_Khoa);
-                    //console.log("diem tong cong Khoa = " + calDiemTongCong_Khoa);
                     calDiemTongTieuChi1_Khoa = 0;
                 } else {
                     $('#' + this.id).val(calDiemTongTieuChi1_Khoa);
+
                      calDiemTongCong_Khoa += Number(calDiemTongTieuChi1_Khoa);
                      calDiemTongTieuChi1_Khoa = 0;
                 }
-                //$('#' + this.id).val(calDiemTongTieuChi1_Khoa);
-                //calDiemTongTieuChi1_Khoa = 0;
             }
             
         });
 
+        // Điểm tổng cộng của phiếu rèn luyện
 		$("#input_diemtongcong").val(calDiemTongCong_SinhVien);
         $("#CVHT_input_diemtongcong").val(calDiemTongCong_CVHT);
 
@@ -408,6 +411,8 @@
 			$("#Khoa_input_diemtongcong").val(calDiemTongCong_Khoa);
 			$('#text_diemTongCong').text(calDiemTongCong_Khoa);
 		}
+
+        // Điểm tổng cộng đã chốt
 		var diemTong_XepLoai = Number($('#Khoa_input_diemtongcong').val());
 
         $("#text_XepLoai").text(TinhXepLoai(diemTong_XepLoai));
@@ -579,8 +584,8 @@
                         tieuChiCap3: phieuRenLuyen.tieuChiCap3,
                     },
                     phieuRenLuyen.thongBaoDanhGia,
-                    "#tbody_noiDungDanhGia",
                     getCookie('quyen'),
+                    "#tbody_noiDungDanhGia",
                 );
 
                 // Xóa nút duyệt điểm nếu user role không phải là 'khoa' hoặc nằm ngoài thời gian đánh giá
@@ -592,8 +597,13 @@
         } 
             
         $('#text_maPhieuRenLuyen_XemVaDuyet').text(maPhieuRenLuyen);
-        LoadThongTinSinhVien(phieuRenLuyen.sinhVien, phieuRenLuyen.hocKyDanhGia, "#part_thongTinSinhVien");
-        LoadThongTinSinhVienDanhGia(maSinhVienGET, maHocKyDanhGiaGET);
+        setThongTinSinhVien(phieuRenLuyen.sinhVien, phieuRenLuyen.hocKyDanhGia, "#part_thongTinSinhVien");
+        setDiemPhieuRenLuyen(phieuRenLuyen.thongTinPhieu, 
+                            phieuRenLuyen.diemTieuChiCap2, 
+                            phieuRenLuyen.diemTieuChiCap3, 
+                            phieuRenLuyen.thongBaoDanhGia, 
+                            getCookie('quyen'), 
+                            "#tbody_noiDungDanhGia");
 
         if (_isAllowedToScore) {
             TinhDiemTongCong();
