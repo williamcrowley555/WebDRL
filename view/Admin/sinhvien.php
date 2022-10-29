@@ -244,6 +244,76 @@
 				</form>
 			</div>
 
+			<!-- Modal quản lý điểm trung bình học kỳ -->
+			<div class="modal fade" id="QuanLyDiemTrungBinhHocKyModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+				<div class="bg-light" style="min-width: 100vh; min-height: 100vh;">
+					<div class="modal-dialog p-2">
+						<div class="modal-content border-0" style="min-width: 700px;min-height:450px;margin-left:-50px;">
+							<div class="modal-header">
+								<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+							</div>
+							<div class="modal-body py-0">
+								<nav>
+									<div class="nav nav-tabs mb-3" id="nav-tab" role="tablist">
+										<button class="nav-link active" id="nav-list-tab" data-bs-toggle="tab" data-bs-target="#nav-list" type="button" role="tab" aria-controls="nav-list" aria-selected="true">Danh sách</button>
+
+										<button class="nav-link" id="nav-add-tab" data-bs-toggle="tab" data-bs-target="#nav-add" type="button" role="tab" aria-controls="nav-add" aria-selected="false">Thêm mới</button>
+									</div>
+								</nav>
+
+								<div class="tab-content border bg-light" id="nav-tabContent">
+									<!-- List tab -->
+									<div class="tab-pane fade active show" id="nav-list" role="tabpanel" aria-labelledby="nav-list-tab">
+										<div class="table-responsive px-2" id ="DanhSachKetQua">
+										<h3 class="form-label" id="maSinhVien_ketQuaHocTap" style="color: black; font-weight: 500;"> </h3>
+											<table class="table app-table-hover mb-0 text-left" id="table_ketQuaHocTap">
+												<thead>
+													<tr>
+
+													</tr>
+												</thead>
+												<tbody id="id_tbodyKetQuaHocTap">
+													
+												</tbody>
+											</table>
+										</div>
+										<!--//table-responsive-->
+									</div>
+
+									<!-- Add tab -->
+									<div class="tab-pane fade" id="nav-add" role="tabpanel" aria-labelledby="nav-add-tab">
+										<form action="" class="my-0 w-100" id="AddScoreForm">
+											<div class="mb-3 form-group">
+												<label for="input_MaSinhVien_GPA" class="form-label" style="color: black; font-weight: 500;">Mã sinh viên: </label>
+												<input type="text" class="form-control mb-2" id="input_MaSinhVien_GPA" placeholder="Nhập mã sinh viên..." disabled>
+												<span class="invalid-feedback"></span>
+											</div>
+
+											<div class="mb-3 form-group">
+												<label for="quanlydiemtrungbinhhocky_select_Lop" class="form-label" style="color: black; font-weight: 500;">Học kỳ - Năm học</label>
+												<select class="form-select" name="lop" id="select_Quanlydiemtrungbinhhocky"></select>
+												<span class="invalid-feedback"></span>
+											</div>                                    
+										
+											<div class="mb-3 form-group">
+												<label for="input_DiemTrungBinh" class="form-label" style="color: black; font-weight: 500;">Điểm trung bình hệ 4</label>
+												<input type="number" name="diemTrungBinh" class="form-control mb-2" id="input_DiemTrungBinh" placeholder="Nhập điểm trung bình hệ 4 ...">
+												<span class="invalid-feedback"></span>
+											</div>
+
+											<div class="text-end">
+												<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+												<button type="submit" class="btn btn-primary" style="color: white;"> Nhập </button>
+											</div>
+										</form>	
+									</div>						
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
 			<div class="tab-pane fade show active" id="orders-all" role="tabpanel" aria-labelledby="orders-all-tab">
 				<div class="app-card app-card-orders-table shadow-sm mb-5">
 					<div class="app-card-body">
@@ -294,6 +364,7 @@
 
 <!-- Page Specific JS -->
 <script src="assets/js/sinhvien/function.js"></script>
+<script src="assets/js/modal.js"></script>
 
 
 <!-- Form Validator -->
@@ -347,13 +418,33 @@
 		onSubmit: DatLaiMatKhau_SinhVien
 	})
 
-	
+	Validator({
+		form: '#AddScoreForm',
+		formGroupSelector: '.form-group',
+		errorSelector: '.invalid-feedback',
+		rules: [
+			Validator.isRequired('#input_MaSinhVien_GPA'),
+			Validator.isRequired('#input_DiemTrungBinh'),
+			Validator.isNumber('#input_DiemTrungBinh', 'Điểm trung bình chỉ bao gồm các ký tự số'),
+			Validator.minNumber('#input_DiemTrungBinh', 0, "Điểm trung bình phải lớn hơn 0"),
+			Validator.maxNumber('#input_DiemTrungBinh', 4, "Điểm trung bình phải nhỏ hơn 4"),
+		],
+		onSubmit: NhapDiemHe4
+	})
+
 	tableTitle.forEach(function(title, index) {
 		$("#my_table>thead>tr").append(`<th class='cell'>${title}</th>`);
 
 		if(index == tableTitle.length - 1) {
 			$("#my_table>thead>tr").append(`<th class='cell'>Hành động</th>`);
+		}
+	});
 
+	tableKetQuaHocTapTitle.forEach(function(title, index) {
+		$("#table_ketQuaHocTap>thead>tr").append(`<th class='cell'>${title}</th>`);
+
+		if(index == tableKetQuaHocTapTitle.length - 1) {
+			$("#table_ketQuaHocTap>thead>tr").append(`<th class='cell'>Hành động</th>`);
 		}
 	});
 
@@ -413,6 +504,14 @@
 			$('#btn_timKiemMaSinhVien').click();
 		}
 	}); 
+	
+	function isGPA(inputElement, min, max) {
+		if (inputElement.value < min) {
+			inputElement.value = min;
+		} else if (inputElement.value > max) {
+			inputElement.value = max;
+		}
+	}; 
 
 	LoadComboBoxThongTinLop_SinhVien(); //Load combobox trong modal thêm mới
 
@@ -450,7 +549,55 @@
 		$("#EditForm #edit_input_MaSinhVien").removeClass("is-invalid");
       	$("#EditForm #edit_input_TenSinhVien").removeClass("is-invalid");
       	$("#EditForm #edit_input_NgaySinh").removeClass("is-invalid");
-	})
+	});
+
+	// Xử lý quản lý điểm trung bình học kỳ
+	$(document).on("click", ".btn_QuanLyDiemTrungBinhHocKy_SinhVien", function() {
+		$("#AddScoreForm #input_DiemTrungBinh").val("");
+		let maSinhVien = $(this).attr('data-id');
+		$('#input_MaSinhVien_GPA').val(maSinhVien);
+		console.log("Hello");
+		$('#maSinhVien_ketQuaHocTap').text("Mã sinh viên: " + maSinhVien);
+		LoadComboBoxHocKyVaNamHoc();
+		LoadDiemHe4(maSinhVien);
+	});
+
+	// Xử lý chỉnh sửa điểm trung bình học kỳ
+	$(document).on("click", ".btn_ChinhSua_DiemHe4", function() {
+		var diem = $(this).closest('tr').children('td:nth-child(3)').text();
+		$(this).closest('tr').children('td:nth-child(3)').empty();
+		$(this).closest('tr').children('td:nth-child(3)').append(
+			`<input type="number" value="${diem}" min="0" max="4" onchange="isGPA(this, 0, 4)" class="chinhSua-diemTB" style="width:120px" placeholder="Nhập điểm">`
+		);
+
+		$(this).hide();
+		$(this).closest('tr').find('.edit-confirmation').show();
+	});
+
+	// Xử lý xác nhận chỉnh sửa điểm trung bình học kỳ
+	$(document).on("click", ".btn_XacNhanChinhSua_DiemHe4", function() {
+		var diemChinhSua = $(this).closest('tr').find('.chinhSua-diemTB').val();
+		let maSinhVien = $(this).attr('data-idmssv');
+		let maHocKyDanhGia = $(this).attr('data-idMaHKDG');
+		// Call Edit API here...
+		//console.log(diemChinhSua);
+		updateDiemHe4(maSinhVien, maHocKyDanhGia, diemChinhSua);
+		// Call Get All API
+
+		$(this).parent().hide();
+		$(this).closest('tr').find('.btn_ChinhSua_DiemHe4').show();
+	});
+
+	// Xử lý hủy chỉnh sửa điểm trung bình học kỳ
+	$(document).on("click", ".btn_HuyChinhSua_DiemHe4", function() {
+		let maSinhVien = $(this).attr('data-idmssv');
+		
+		// Call Get All API
+		LoadDiemHe4(maSinhVien);
+
+		$(this).parent().hide();
+		$(this).closest('tr').find('.btn_ChinhSua_DiemHe4').show();
+	});
 
 	// Xử lý import form excel 
 	$('#form_import_from_excel').submit(function() {

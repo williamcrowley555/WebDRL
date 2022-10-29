@@ -156,11 +156,13 @@ if (!isset($_GET['maHocKy'])) {
     <!-- Custom scripts -->
     <script type="text/javascript" src="../../SharedComponent/js/cookie.js"></script>
     <script type="text/javascript" src="../../SharedComponent/js/ajax.js"></script>
+    <script type="text/javascript" src="../../SharedComponent/js/helper.js"></script>
     <script type="text/javascript" src="../js/chamdiemchitiet/chamdiemchitiet.js"></script>
 
     <script>
         HienThiThongTinVaDanhGia();
         LoadThongTinSinhVienDanhGia();
+        //sumTrainingPoint();
 
         // var loadhoatdongtruoc_maHocKyDanhGia = $('#input_maHocKyDanhGia').val();
         // var loadhoatdongtruoc_maSinhVien = getCookie("maSo");
@@ -187,24 +189,15 @@ if (!isset($_GET['maHocKy'])) {
             if (idDiemTongTieuChi1_SinhVien == 'TongCong_TC1') {
                 // Thêm dòng này
                 var diemToiDa_TC1 = $('#' + this.id).attr('max-value');
-                //console.log("diem toi da: " + diemToiDa_TC1);
                 if (calDiemTongTieuChi1 > diemToiDa_TC1) {
                     $('#' + this.id).val(diemToiDa_TC1);
-                    //console.log("diem toi da = " + diemToiDa_TC1);
                     calDiemTongCong += Number(diemToiDa_TC1);
-                    //console.log("diem tong cong = " + calDiemTongCong);
                     calDiemTongTieuChi1 = 0;
                 } else {
                     $('#' + this.id).val(calDiemTongTieuChi1);
-                    //console.log("diem tieu chi 1 = " + calDiemTongTieuChi1);
                     calDiemTongCong += Number(calDiemTongTieuChi1);
-                    //console.log("diem tong cong = " + calDiemTongCong);
                     calDiemTongTieuChi1 = 0;
                 }
-                // Hết thêm
-
-                //$('#' + this.id).val(calDiemTongTieuChi1);
-                //calDiemTongTieuChi1 = 0;
             }
 
             if (calDiemTongCong <= 100) {

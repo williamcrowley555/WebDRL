@@ -7,6 +7,12 @@ var tableTitle = [
   "Lớp",
 ];
 
+var tableKetQuaHocTapTitle = [
+  "STT",
+  "Học kỳ - Năm học",
+  "Điểm hệ 4",
+];
+
 var tableContent = [];
 
 function getCookie(cName) {
@@ -108,6 +114,10 @@ function GetListSinhVien(maKhoa, maLop) {
                   <button class='btn bg-warning btn_ChinhSua_SinhVien' style='color: white;' data-bs-toggle='modal' data-bs-target='#ChinhSuaModal' data-id = '" +
                   data[i].maSinhVien +
                   "' >Chỉnh sửa</button>\
+                  <td class='cell'>\
+                  <button class='btn app-btn-primary btn_QuanLyDiemTrungBinhHocKy_SinhVien' style='color: white;' data-bs-toggle='modal' data-bs-target='#QuanLyDiemTrungBinhHocKyModal' data-id = '" +
+                  data[i].maSinhVien +
+                  "' >Quản lý điểm trung bình</button>\
                 </td>\
                                     </tr>";
               }
@@ -188,6 +198,10 @@ function GetListSinhVien(maKhoa, maLop) {
                       <button class='btn bg-warning btn_ChinhSua_SinhVien' style='color: white;' data-bs-toggle='modal' data-bs-target='#ChinhSuaModal' data-id = '" +
                       data[i].maSinhVien +
                       "' >Chỉnh sửa</button>\
+                      <td class='cell'>\
+                      <button class='btn app-btn-primary btn_QuanLyDiemTrungBinhHocKy_SinhVien' style='color: white;' data-bs-toggle='modal' data-bs-target='#QuanLyDiemTrungBinhHocKyModal' data-id = '" +
+                      data[i].maSinhVien +
+                      "' >Quản lý điểm trung bình</button>\
                     </td>\
                       </tr>";
                   }
@@ -263,6 +277,10 @@ function GetListSinhVien(maKhoa, maLop) {
                       <button class='btn bg-warning btn_ChinhSua_SinhVien' style='color: white;' data-bs-toggle='modal' data-bs-target='#ChinhSuaModal' data-id = '" +
                       data[i].maSinhVien +
                       "' >Chỉnh sửa</button>\
+                      <td class='cell'>\
+                      <button class='btn app-btn-primary btn_QuanLyDiemTrungBinhHocKy_SinhVien' style='color: white;' data-bs-toggle='modal' data-bs-target='#QuanLyDiemTrungBinhHocKyModal' data-id = '" +
+                      data[i].maSinhVien +
+                      "' >Quản lý điểm trung bình</button>\
                     </td>\
                                                     </tr>";
                   }
@@ -340,6 +358,10 @@ function GetListSinhVien(maKhoa, maLop) {
                   <button class='btn bg-warning btn_ChinhSua_SinhVien' style='color: white;' data-bs-toggle='modal' data-bs-target='#ChinhSuaModal' data-id = '" +
                     data[i].maSinhVien +
                     "' >Chỉnh sửa</button>\
+                    <td class='cell'>\
+                    <button class='btn app-btn-primary btn_QuanLyDiemTrungBinhHocKy_SinhVien' style='color: white;' data-bs-toggle='modal' data-bs-target='#QuanLyDiemTrungBinhHocKyModal' data-id = '" +
+                    data[i].maSinhVien +
+                  "' >Quản lý điểm trung bình</button>\
                 </td>\
                                     </tr>";
                 }
@@ -421,6 +443,10 @@ function TimKiemSinhVien(maSinhVien) {
             <button class='btn bg-warning btn_ChinhSua_SinhVien' style='color: white;' data-bs-toggle='modal' data-bs-target='#ChinhSuaModal' data-id = '" +
               data[i].maSinhVien +
               "' >Chỉnh sửa</button>\
+            <td class='cell'>\
+            <button class='btn app-btn-primary btn_QuanLyDiemTrungBinhHocKy_SinhVien' style='color: white;' data-bs-toggle='modal' data-bs-target='#QuanLyDiemTrungBinhHocKyModal' data-id = '" +
+            data[i].maSinhVien +
+            "' >Quản lý điểm trung bình</button>\
           </td>\
                               </tr>";
           }
@@ -635,7 +661,6 @@ function ThemMoi_SinhVien() {
       },
       error: function (errorMessage) {
         checkLoiDangNhap(errorMessage.responseJSON.message);
-
         Swal.fire({
           icon: "error",
           title: "Lỗi",
@@ -757,6 +782,7 @@ function LoadThongTinChinhSua_SinhVien(maSinhVien) {
       var _edit_select_Lop = document.getElementById("edit_select_Lop");
 
       for (var i = 0; i < _edit_select_Lop.options.length; i++) {
+
         if (_edit_select_Lop.options[i].value === result_data.maLop) {
           _edit_select_Lop.options[i].selected = true;
         }
@@ -860,4 +886,211 @@ function ChinhSua_SinhVien() {
       },
     });
   }
+}
+
+function LoadComboBoxHocKyVaNamHoc() {
+  $.ajax({
+    url: urlapi_hockydanhgia_read,
+    type: "GET",
+    contentType: "application/json;charset=utf-8",
+    dataType: "json",
+    async: false,
+    headers: { Authorization: jwtCookie },
+   
+    success: function(result_data) {
+      $("#select_Quanlydiemtrungbinhhocky").find("option").remove();
+      $.each(result_data, function (index_HocKy) {
+        for (var i = 0; i < result_data[index_HocKy].length; i++) {
+          $("#select_Quanlydiemtrungbinhhocky").append(
+            "<option value='" +
+              result_data[index_HocKy][i].maHocKyDanhGia +
+              "'>Học kỳ: " +  
+              result_data[index_HocKy][i].hocKyXet +
+              " - Năm học: " +
+              result_data[index_HocKy][i].namHocXet +
+              "</option>"
+          );
+        }
+      });
+    },
+      
+    error: function() {
+      console.log("Loi load combobox nam hoc");
+      return;
+    }
+      
+  });
+}
+
+function getHTMLOptionText(selected) {
+  return selected.options[selected.selectedIndex].text;
+}
+
+function NhapDiemHe4() {
+  var maSinhVien_GPA = $("#input_MaSinhVien_GPA").val();
+  var maHocKyDanhGia = $("#select_Quanlydiemtrungbinhhocky").val();
+  var hocKyVaNamHoc = $("#select_Quanlydiemtrungbinhhocky option:selected").text();
+  var hocKy = hocKyVaNamHoc.slice(8,9);
+  var namHoc = hocKyVaNamHoc.slice(21);
+  var GPA = $("#input_DiemTrungBinh").val();
+  var maDiemTrungBinh = maSinhVien_GPA + maHocKyDanhGia;
+ 
+  var dataPost = {
+    maDiemTrungBinh: maDiemTrungBinh,
+    diem: GPA,
+    hocKy: hocKy,
+    namHoc: namHoc,
+    maHocKyDanhGia: maHocKyDanhGia,
+    maSinhVien: maSinhVien_GPA,
+  };
+
+  //Lưu điểm trung bình hệ 4 vào database
+  $.ajax({
+    url: urlapi_diemtrungbinhhe4_create,
+    type: "POST",
+    contentType: "application/json;charset=utf-8",
+    dataType: "json",
+    data: JSON.stringify(dataPost),
+    async: false,
+    headers: { Authorization: jwtCookie },
+    success: function (result_update) {
+      $("#QuanLyDiemTrungBinhHocKyModal").modal("hide");
+
+      Swal.fire({
+        icon: "success",
+        title:
+          "Nhập điểm thành công sinh viên mã số " +
+          maSinhVien_GPA +
+          "!",
+        text: "",
+        timer: 2000,
+        timerProgressBar: true,
+      });
+
+      setTimeout(() => {
+        LoadDiemHe4(maSinhVien_GPA);
+      }, 2000);
+    },
+    error: function (errorMessage) {
+      Swal.fire({
+        icon: "error",
+        title: "Lỗi",
+        text: errorMessage.responseJSON.message,
+        timerProgressBar: true,
+      });
+    },
+  });
+}
+
+function LoadDiemHe4(maSinhVien) {
+  $.ajax({
+    url: urlapi_diemtrungbinhhe4_read_MaSV + maSinhVien,
+    type: "GET",
+    contentType: "application/json;charset=utf-8",
+    dataType: "json",
+    async: false,
+    headers: { Authorization: jwtCookie },
+    success: function(result_data) {
+      $("#id_tbodyKetQuaHocTap tr").remove();
+      var htmlData = "";
+
+      $.each(result_data, function (index) {
+        for (var i = 0; i < result_data[index].length; i++) {
+          $.ajax({
+            url: urlapi_hockydanhgia_single_read + result_data[index][i].maHocKyDanhGia,
+            type: "GET",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            async: false,
+            headers: { Authorization: jwtCookie },
+            success: function(result_HKDG) {
+              htmlData += "<tr>\
+                <td class='cell'>" +
+                  result_data[index][i].soThuTu +
+                "</td>\
+                <td class='cell'> Học kì: " +
+                result_HKDG.hocKyXet +
+                  " - Năm học: " +
+                  result_HKDG.namHocXet +
+                  "</td>\
+                <td class='cell'>" +
+                  result_data[index][i].diem +
+                "</td>\
+                <td class='cell'>\
+                  <button class='btn bg-warning btn_ChinhSua_DiemHe4' style='color: white;' data-idMSSV = '" +
+                    result_data[index][i].maSinhVien +
+                  "' data-idMaHKDG='" + result_data[index][i].maHocKyDanhGia + "' >Chỉnh sửa</button>\
+                  <div class='edit-confirmation' style='display:none'>\
+                    <button class='btn app-btn-primary btn_XacNhanChinhSua_DiemHe4' style='color: white;' data-idMSSV = '" +
+                      result_data[index][i].maSinhVien +
+                    "' data-idMaHKDG='" + result_data[index][i].maHocKyDanhGia + "'>Xác nhận</button>\
+                    <button class='btn bg-danger btn_HuyChinhSua_DiemHe4 ml-2' style='color: white;' data-idMSSV = '" +
+                      result_data[index][i].maSinhVien +
+                      "' data-idMaHKDG='" + result_data[index][i].maHocKyDanhGia + "'>Hủy</button>\
+                  </div>\
+                </td></tr>";
+            },
+            error: function() {
+            }
+          });
+        }
+      });
+  
+      $("#id_tbodyKetQuaHocTap").html(htmlData);
+    },
+    error: function (errorMessage) {
+      $("#id_tbodyKetQuaHocTap tr").remove();  
+      var htmlData = "\
+        <tr>\
+          <td>\
+          <p class=\"text-center\">Không tìm thấy danh sách điểm của sinh viên có là " +
+            + maSinhVien +
+          "</p>\
+        </td>\
+        <tr>";
+      $("#id_tbodyKetQuaHocTap").html(htmlData);  
+    },
+  });
+}
+
+function updateDiemHe4(maSinhVien, maHocKyDanhGia, diem) {
+  var dataPost_Update = {
+    maDiemTrungBinh: maSinhVien + maHocKyDanhGia,
+    diem: diem,
+    maHocKyDanhGia: maHocKyDanhGia,
+    maSinhVien: maSinhVien
+  };
+
+  $.ajax({
+    url: urlapi_diemtrungbinhhe4_update,
+    type: "POST",
+    contentType: "application/json;charset=utf-8",
+    dataType: "json",
+    data: JSON.stringify(dataPost_Update),
+    async: false,
+    headers: { Authorization: jwtCookie },
+    success: function (result_Create) {
+      LoadDiemHe4(maSinhVien);
+
+      Swal.fire({
+        icon: "success",
+        title: "Cập nhật điểm thành công cho sinh viên có mã là " + maSinhVien,
+        text: "",
+        timer: 2000,
+        timerProgressBar: true,
+      });
+    },
+    error: function (errorMessage) {
+      //checkLoiDangNhap(errorMessage.responseJSON.message);
+      LoadDiemHe4(maSinhVien);
+
+      Swal.fire({
+        icon: "error",
+        title: "Lỗi",
+        text: errorMessage.responseJSON.message,
+        //timer: 5000,
+        timerProgressBar: true,
+      });
+    },
+  });
 }

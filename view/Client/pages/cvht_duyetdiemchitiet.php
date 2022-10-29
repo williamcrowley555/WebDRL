@@ -199,43 +199,33 @@ if (!isset($_GET['maHocKy']) && !isset($_GET['maSinhVien'])) {
             if (idDiemTongTieuChi1_SinhVien == 'TongCong_TC1') {
                 // Thêm ở đây
                 var diemToiDa_TC1_SinhVien = $('#' + this.id).attr('max-value');
-                //console.log("diem toi da: " + diemToiDa_TC1);
                 if (calDiemTongTieuChi1_SinhVien > diemToiDa_TC1_SinhVien) {
                     $('#' + this.id).val(diemToiDa_TC1_SinhVien);
-                    //console.log("diem toi da = " + diemToiDa_TC1);
                     calDiemTongCong_SinhVien += Number(diemToiDa_TC1_SinhVien);
-                    //console.log("diem tong cong = " + calDiemTongCong);
                     calDiemTongTieuChi1_SinhVien = 0;
                 } else {
                     $('#' + this.id).val(calDiemTongTieuChi1);
-                    //console.log("diem tieu chi 1 = " + calDiemTongTieuChi1);
                     calDiemTongCong_SinhVien += Number(calDiemTongTieuChi1_SinhVien);
-                    //console.log("diem tong cong = " + calDiemTongCong);
                     calDiemTongTieuChi1_SinhVien = 0;
                 }
                 // Hết thêm
             }
 
             if (idDiemTongTieuChi1 == 'CVHT_TongCong_TC1') {
-                /*// Thêm ở đây
+                // Thêm ở đây
                 var diemToiDa_TC1_CVHT = $('#' + this.id).attr('max-value');
-                //console.log("diem toi da: " + diemToiDa_TC1);
                 if (calDiemTongTieuChi1 > diemToiDa_TC1_CVHT) {
                     $('#' + this.id).val(diemToiDa_TC1_CVHT);
-                    //console.log("diem toi da = " + diemToiDa_TC1);
                     calDiemTongCong += Number(diemToiDa_TC1_CVHT);
-                    //console.log("diem tong cong = " + calDiemTongCong);
                     calDiemTongTieuChi1 = 0;
                 } else {
                     $('#' + this.id).val(calDiemTongTieuChi1);
-                    //console.log("diem tieu chi 1 = " + calDiemTongTieuChi1);
                     calDiemTongCong += Number(calDiemTongTieuChi1);
-                    //console.log("diem tong cong = " + calDiemTongCong);
                     calDiemTongTieuChi1 = 0;
                 }
-                // Hết thêm*/
-                $('#' + this.id).val(calDiemTongTieuChi1);
-                calDiemTongTieuChi1 = 0;
+
+                //$('#' + this.id).val(calDiemTongTieuChi1);
+                //calDiemTongTieuChi1 = 0;
 
             }
             

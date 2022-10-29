@@ -287,7 +287,7 @@ Validator.isNumber = function (selector, message) {
   return {
     selector: selector,
     test: function (value) {
-      return Number(value)
+      return Number(value) || Number(value) == 0
         ? undefined
         : message || "Trường này chỉ bao gồm các ký tự số";
     },

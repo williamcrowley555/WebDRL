@@ -22,6 +22,21 @@ const urlapi_sinhvien_create = host_domain_url + "/sinhvien/create.php";
 //UPDATE//
 const urlapi_sinhvien_update = host_domain_url + "/sinhvien/update.php";
 
+//---------------   DIEM TRUNG BINH HE 4    ---------------//----------------------------------
+//---------//
+
+//READ
+const urlapi_diemtrungbinhhe4_read = host_domain_url + "/diemtrungbinhhe4/read.php";
+
+const urlapi_diemtrungbinhhe4_read_MaSV =
+  urlapi_diemtrungbinhhe4_read + "?maSinhVien=";
+
+//CREATE//
+const urlapi_diemtrungbinhhe4_create = host_domain_url + "/diemtrungbinhhe4/create.php";
+
+//UPDATE//
+const urlapi_diemtrungbinhhe4_update = host_domain_url + "/diemtrungbinhhe4/update.php";
+
 //---------------   CVHT    ---------------//----------------------------------
 //---------//
 

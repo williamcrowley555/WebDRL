@@ -72,6 +72,7 @@ if (isset($_COOKIE['jwt'])){
             $active_Khoa_DuyetDiem = '';
             $active_TraCuuDiem = '';
             $active_TraCuuHoatDong = '';
+            $active_TaiKhoan = '';
 
 			switch (end($page_word)) {
 				case 'dangnhap.php':{
@@ -114,6 +115,12 @@ if (isset($_COOKIE['jwt'])){
 				case 'tracuuhoatdongthamgia.php':{
 					echo "Tra cứu hoạt động tham gia | Điểm rèn luyện";
                     $active_TraCuuHoatDong = "active";
+					break;
+				}
+
+                case 'taikhoan.php':{
+					echo "Quản lý tài khoản";
+                    $active_TaiKhoan = "active";
 					break;
 				}
 
@@ -217,13 +224,19 @@ if (isset($_COOKIE['jwt'])){
 
                             echo "<li class='nav-item dropdown'>
                                 <a class='nav-link dropdown-toggle' href='#' id='navbarDropdownMenuLink' role='button' data-mdb-toggle='dropdown' aria-expanded='false' style='text-transform: uppercase;'>
-                                    <span class='nav-item' style='text-transform: uppercase;'>
-                                        Xin chào, ". $hoten ."
+                                    <span class='nav-item' style='text-transform: uppercase;'> 
+                                        Xin chào, ". $hoten ." <img class='d-inline-block' src='../account-images/user.png' alt='user profile' width='10%'>
                                     </span>
                                 </a>
                                 <ul class='dropdown-menu' aria-labelledby='navbarDropdownMenuLink'>
                                     <li>
-                                        <button class='dropdown-item' id='btn_DangXuat' onclick='return DangXuat();' style='text-transform: uppercase;'><img src='../images/logout.png' width='15px' > Đăng xuất</button>
+                                        <a class='dropdown-item' href='taikhoan.php' style='text-transform: uppercase;'> <img src='../images/edit-account.png' width='15px'> Tài khoản </a>
+                                    </li>
+                                    <li>
+                                        <hr class='dropdown-divider'>
+                                    </li>
+                                    <li>
+                                        <button class='dropdown-item' id='btn_DangXuat' onclick='return DangXuat();' style='text-transform: uppercase;'><img src='../images/logout.png' width='15px'> Đăng xuất</button>
                                     </li>
                                 </ul>
                             </li>";
