@@ -45,14 +45,9 @@ if (!isset($_GET['maHocKy'])) {
                     <div class="form-outline mb-4">
                         <div class="row justify-content-center" style="padding-bottom: 30px;text-align: start;">
 
-                            <table class="table table-hover table-bordered">
+                            <table class="table table-hover table-bordered" id="tablePhieuRenLuyen">
                                 <thead>
                                     <tr style="text-align: center;">
-                                        <th scope="col"><strong>NỘI DUNG ĐÁNH GIÁ</strong></th>
-                                        <th scope="col"><strong>Điểm tối đa</strong></th>
-                                        <th scope="col"><strong>Điểm SV tự đánh giá</strong></th>
-                                        <th scope="col"><strong>Điểm nhận từ hoạt động</strong></th>
-                                        <th scope="col"><strong>Minh chứng ngoài (nếu có) (ảnh .png, .jpg, .jpeg)</strong></th>
                                     </tr>
                                 </thead>
                                 <tbody id="tbody_noiDungDanhGia">
@@ -161,6 +156,11 @@ if (!isset($_GET['maHocKy'])) {
     <script src="../js/chamdiemchitiet/chamdiemchitiet.js"></script>
 
     <script>
+
+        getPhieuRenLuyenTitle().forEach(function(title) {
+            $("#tablePhieuRenLuyen>thead>tr").append(`<th scope="col"><strong>${title}</strong></th>`);
+        });
+            
         HienThiThongTinVaDanhGia();
 
         var loadhoatdongtruoc_maHocKyDanhGia = $('#input_maHocKyDanhGia').val();

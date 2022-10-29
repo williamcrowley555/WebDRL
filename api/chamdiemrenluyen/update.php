@@ -31,8 +31,6 @@
                 $fileSize = $_FILES['fileMinhChung']['size'];
             }
 
-
-
             //Nếu không có file đính kèm thì chạy code này, ngược lại thì chạy code ở else
             if (empty($fileName)){
 
@@ -71,7 +69,6 @@
                         array("message" => "Không có dữ liệu được gửi lên.")
                     );
                 }
-
 
             }else{
 
@@ -120,11 +117,12 @@
     
                                         http_response_code(200);
                                         echo json_encode(array(
-                                            "message"=>"chamdiemrenluyen cập nhật thành công"
+                                            "message" => "chamdiemrenluyen cập nhật thành công"
                                         ));
                                     } else {
+                                        http_response_code(404);
                                         echo json_encode(array(
-                                            "message"=>"chamdiemrenluyen cập nhật KHÔNG thành công."
+                                            "message" => "chamdiemrenluyen cập nhật KHÔNG thành công."
                                         ));
                                     }
                                 }else{
@@ -135,11 +133,12 @@
     
                                         http_response_code(200);
                                         echo json_encode(array(
-                                            "message"=>"chamdiemrenluyen cập nhật thành công"
+                                            "message" => "chamdiemrenluyen cập nhật thành công"
                                         ));
                                     } else {
+                                        http_response_code(404);
                                         echo json_encode(array(
-                                            "message"=>"chamdiemrenluyen cập nhật KHÔNG thành công."
+                                            "message" => "chamdiemrenluyen cập nhật KHÔNG thành công."
                                         ));
                                     }
                                     // echo json_encode(array(
@@ -154,12 +153,12 @@
     
                                         http_response_code(200);
                                         echo json_encode(array(
-                                            "message"=>"chamdiemrenluyen cập nhật thành công"
+                                            "message" => "chamdiemrenluyen cập nhật thành công"
                                         ));
                                     } else {
                                         http_response_code(500);
                                         echo json_encode(array(
-                                            "message"=>"chamdiemrenluyen cập nhật KHÔNG thành công."
+                                            "message" => "chamdiemrenluyen cập nhật KHÔNG thành công."
                                         ));
                                     }
                                 }else{
@@ -170,12 +169,12 @@
     
                                         http_response_code(200);
                                         echo json_encode(array(
-                                            "message"=>"chamdiemrenluyen cập nhật thành công"
+                                            "message" => "chamdiemrenluyen cập nhật thành công"
                                         ));
                                     } else {
                                         http_response_code(500);
                                         echo json_encode(array(
-                                            "message"=>"chamdiemrenluyen cập nhật KHÔNG thành công."
+                                            "message" => "chamdiemrenluyen cập nhật KHÔNG thành công."
                                         ));
                                     }
                                     // http_response_code(500);
@@ -184,34 +183,24 @@
                                     // ));
                                 }
                             }
-
-                
                         } else {
                             http_response_code(404);
                             echo json_encode(
                                 array("message" => "Không có dữ liệu gửi lên!")
                             );
                         }
-
-
                     }else{
                         http_response_code(500);
                         echo json_encode(
                             array("message" => "File quá lớn, chỉ chấp nhận file nhỏ hơn 10MB")
                         );
                     }
-
-
-
                 }else{
                     http_response_code(500);
                     echo json_encode(
                         array("message" => "Chỉ chấp nhận file định dạng .png, .jpg, .jpeg")
                     );
                 }
-
-
-
             }
         // } else {
         //     http_response_code(403);
@@ -225,9 +214,4 @@
             array("message" => "Vui lòng đăng nhập trước!")
         );
     }
-
-    
-
-
-
 ?>

@@ -369,6 +369,7 @@
 		$('.loader_bg').fadeToggle();
 	}, 1000);
 
+	
 </script>
 
 </html>

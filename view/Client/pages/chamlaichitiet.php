@@ -156,6 +156,10 @@ if (!isset($_GET['maHocKy'])) {
     <!-- Custom scripts -->
     <script type="text/javascript" src="../../SharedComponent/js/cookie.js"></script>
     <script type="text/javascript" src="../../SharedComponent/js/ajax.js"></script>
+
+    <!-- Phieu Ren Luyen Helper JS -->
+    <script src="../../../helper/js/phieuRenLuyen.js"></script>
+
     <script type="text/javascript" src="../js/chamdiemchitiet/chamdiemchitiet.js"></script>
 
     <script>

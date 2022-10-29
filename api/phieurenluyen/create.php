@@ -47,12 +47,14 @@
                             "message"=>"phieurenluyen tạo thành công."
                         ));
                     } else {
+                        http_response_code(404);
                         echo json_encode(array(
                             "message"=>"phieurenluyen tạo KHÔNG thành công."
                         ));
                     }
         
                 } else {
+                    http_response_code(404);
                     echo json_encode(
                         array("message" => "Không có dữ liệu được gửi lên!")
                     );

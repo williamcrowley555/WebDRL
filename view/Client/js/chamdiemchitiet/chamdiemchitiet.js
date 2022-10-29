@@ -105,8 +105,52 @@ function HienThiThongTinVaDanhGia() {
                   ngayHienTai.getTime() <= ngaySVKetThucDanhGia.getTime()
                 ) {
                   //vẫn còn trong thời gian mở chấm nên giữ nguyên page
-                  getThongTinNguoiDung();
+                  // getThongTinNguoiDung();
                   // getTieuChiDanhGia();
+
+                  // Lấy thông tin sinh viên
+                  var sinhVien = {};
+
+                  $.ajax({
+                    url: urlapi_sinhvien_details_read + getCookie("maSo"),
+                    async: false,
+                    type: "GET",
+                    contentType: "application/json;charset=utf-8",
+                    dataType: "json",
+                    headers: {
+                      Authorization: jwtCookie,
+                    },
+                    success: function (result) {
+                      sinhVien = result;
+                    },
+                    error: function (error) {},
+                  });
+
+                  // Lấy thông tin học kỳ đánh giá
+                  var hocKyDanhGia = {};
+
+                  $.ajax({
+                    url: urlapi_hockydanhgia_single_read + GET_MaHocKy,
+                    async: false,
+                    type: "GET",
+                    contentType: "application/json;charset=utf-8",
+                    dataType: "json",
+                    headers: {
+                      Authorization: jwtCookie,
+                    },
+                    success: function (result_HKDG) {
+                      hocKyDanhGia = result_HKDG;
+                    },
+                    error: function (error) {},
+                  });
+
+                  // Set thông tin sinh viên & học kỳ đánh giá lên phiếu
+                  setThongTinSinhVien(
+                    sinhVien,
+                    hocKyDanhGia,
+                    "#part_thongTinSinhVien"
+                  );
+
                   // Lấy các tiêu chí đánh giá được kích hoạt
                   var tieuChiCap1 = [];
                   var tieuChiCap2 = [];
@@ -169,6 +213,7 @@ function HienThiThongTinVaDanhGia() {
                     error: function (error) {},
                   });
 
+                  // Tạo phiếu
                   createPhieuRenLuyenForm(
                     {
                       tieuChiCap1: tieuChiCap1,
@@ -180,6 +225,7 @@ function HienThiThongTinVaDanhGia() {
                     "#tbody_noiDungDanhGia"
                   );
 
+                  // Set điểm phiếu
                   setDiemPhieuRenLuyen(
                     {
                       maSinhVien: getCookie("maSo"),
@@ -216,359 +262,359 @@ function HienThiThongTinVaDanhGia() {
 
 //------------------------------------------------//
 //Show tiêu chí đánh giá
-function getTieuChiDanhGia() {
-  //Ajax tieuchicap1
-  $.ajax({
-    url: urlapi_tieuchicap1_read,
-    async: false,
-    type: "GET",
-    contentType: "application/json;charset=utf-8",
-    dataType: "json",
-    headers: {
-      Authorization: jwtCookie,
-    },
-    success: function (result) {
-      $.each(result, function (index) {
-        for (var i = 0; i < result[index].length; i++) {
-          //console.log(result[index][i].noidung);
+// function getTieuChiDanhGia() {
+//   //Ajax tieuchicap1
+//   $.ajax({
+//     url: urlapi_tieuchicap1_read,
+//     async: false,
+//     type: "GET",
+//     contentType: "application/json;charset=utf-8",
+//     dataType: "json",
+//     headers: {
+//       Authorization: jwtCookie,
+//     },
+//     success: function (result) {
+//       $.each(result, function (index) {
+//         for (var i = 0; i < result[index].length; i++) {
+//           //console.log(result[index][i].noidung);
 
-          $("#tbody_noiDungDanhGia").append(
-            "<tr>\
-                <td style='font-weight: bold;'>" +
-              result[index][i].noidung +
-              "</td>\
-                <td></td>\
-                <td></td>\
-                <td></td>\
-                <td></td>\
-                </tr>"
-          );
+//           $("#tbody_noiDungDanhGia").append(
+//             "<tr>\
+//                 <td style='font-weight: bold;'>" +
+//               result[index][i].noidung +
+//               "</td>\
+//                 <td></td>\
+//                 <td></td>\
+//                 <td></td>\
+//                 <td></td>\
+//                 </tr>"
+//           );
 
-          //Ajax tieuchicap2
-          $.ajax({
-            url: urlapi_tieuchicap2_read,
-            async: false,
-            type: "GET",
-            contentType: "application/json;charset=utf-8",
-            dataType: "json",
-            headers: {
-              Authorization: jwtCookie,
-            },
-            success: function (result_tc2) {
-              $.each(result_tc2, function (index_tc2) {
-                for (var k = 0; k < result_tc2[index_tc2].length; k++) {
-                  if (
-                    result[index][i].matc1 === result_tc2[index_tc2][k].matc1
-                  ) {
-                    if (result_tc2[index_tc2][k].diemtoida != 0) {
-                      var min_value_tc2 = 0;
-                      //get min value
-                      if (result_tc2[index_tc2][k].diemtoida > 0) {
-                        min_value_tc2 = 0;
-                      } else {
-                        min_value_tc2 = result_tc2[index_tc2][k].diemtoida;
-                      }
+//           //Ajax tieuchicap2
+//           $.ajax({
+//             url: urlapi_tieuchicap2_read,
+//             async: false,
+//             type: "GET",
+//             contentType: "application/json;charset=utf-8",
+//             dataType: "json",
+//             headers: {
+//               Authorization: jwtCookie,
+//             },
+//             success: function (result_tc2) {
+//               $.each(result_tc2, function (index_tc2) {
+//                 for (var k = 0; k < result_tc2[index_tc2].length; k++) {
+//                   if (
+//                     result[index][i].matc1 === result_tc2[index_tc2][k].matc1
+//                   ) {
+//                     if (result_tc2[index_tc2][k].diemtoida != 0) {
+//                       var min_value_tc2 = 0;
+//                       //get min value
+//                       if (result_tc2[index_tc2][k].diemtoida > 0) {
+//                         min_value_tc2 = 0;
+//                       } else {
+//                         min_value_tc2 = result_tc2[index_tc2][k].diemtoida;
+//                       }
 
-                      $("#tbody_noiDungDanhGia").append(
-                        "<tr>\
-                          <td><em>" +
-                          result_tc2[index_tc2][k].noidung +
-                          "</em></td>\
-                          <td><em>" +
-                          result_tc2[index_tc2][k].diemtoida +
-                          "đ</em></td>\
-                          <td>\
-                            <input type='number' style='width: 100px;' onchange='changeNumberHandle(this," +
-                          result_tc2[index_tc2][k].diemtoida +
-                          ")' max_value='" +
-                          result_tc2[index_tc2][k].diemtoida +
-                          "'    \
-                            min='" +
-                          min_value_tc2 +
-                          "' id='TC2_" +
-                          result_tc2[index_tc2][k].matc2 +
-                          "' /> \
-                          </td>\
-                          <td>\
-                            <button type='button' class='btn btn-light btn_XemDanhSachHoatDong' style='color: black;width: max-content;' data-bs-toggle='modal' data-bs-target='#XemDanhSachHoatDongModal' data-tieuchi-id='TC2_" +
-                          result_tc2[index_tc2][k].matc2 +
-                          "' data-tentieuchi='" +
-                          result_tc2[index_tc2][k].noidung +
-                          "' >Danh sách</button>\
-                          </td>\
-                          <td>\
-                          <div class='box'>\
-                          <a href='#' id='show_file_minhchung_TC2_" +
-                          result_tc2[index_tc2][k].matc2 +
-                          "' target='_blank' ></a>\
-                          <form id='formDanhGiaDRL_TC2_" +
-                          result_tc2[index_tc2][k].matc2 +
-                          "' method='post' enctype='multipart/form-data'>\
-                            <input type='file' id='file_minhchung_TC2_" +
-                          result_tc2[index_tc2][k].matc2 +
-                          "' name='fileMinhChung' class='inputfile inputfile-1' accept='.png,.jpg,.jpeg' data-multiple-caption='{count} files selected' >\
-                            <label for='file_minhchung_TC2_" +
-                          result_tc2[index_tc2][k].matc2 +
-                          "'><svg xmlns='http://www.w3.org/2000/svg' width='20' height='17' viewBox='0 0 20 17'><path d='M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z'></path></svg> <span>Chọn tệp…</span></label>\
-                          </form>\
-                        </div>\
-                          </td>\
-                        </tr>"
-                      );
+//                       $("#tbody_noiDungDanhGia").append(
+//                         "<tr>\
+//                           <td><em>" +
+//                           result_tc2[index_tc2][k].noidung +
+//                           "</em></td>\
+//                           <td><em>" +
+//                           result_tc2[index_tc2][k].diemtoida +
+//                           "đ</em></td>\
+//                           <td>\
+//                             <input type='number' style='width: 100px;' onchange='changeNumberHandle(this," +
+//                           result_tc2[index_tc2][k].diemtoida +
+//                           ")' max_value='" +
+//                           result_tc2[index_tc2][k].diemtoida +
+//                           "'    \
+//                             min='" +
+//                           min_value_tc2 +
+//                           "' id='TC2_" +
+//                           result_tc2[index_tc2][k].matc2 +
+//                           "' /> \
+//                           </td>\
+//                           <td>\
+//                             <button type='button' class='btn btn-light btn_XemDanhSachHoatDong' style='color: black;width: max-content;' data-bs-toggle='modal' data-bs-target='#XemDanhSachHoatDongModal' data-tieuchi-id='TC2_" +
+//                           result_tc2[index_tc2][k].matc2 +
+//                           "' data-tentieuchi='" +
+//                           result_tc2[index_tc2][k].noidung +
+//                           "' >Danh sách</button>\
+//                           </td>\
+//                           <td>\
+//                           <div class='box'>\
+//                           <a href='#' id='show_file_minhchung_TC2_" +
+//                           result_tc2[index_tc2][k].matc2 +
+//                           "' target='_blank' ></a>\
+//                           <form id='formDanhGiaDRL_TC2_" +
+//                           result_tc2[index_tc2][k].matc2 +
+//                           "' method='post' enctype='multipart/form-data'>\
+//                             <input type='file' id='file_minhchung_TC2_" +
+//                           result_tc2[index_tc2][k].matc2 +
+//                           "' name='fileMinhChung' class='inputfile inputfile-1' accept='.png,.jpg,.jpeg' data-multiple-caption='{count} files selected' >\
+//                             <label for='file_minhchung_TC2_" +
+//                           result_tc2[index_tc2][k].matc2 +
+//                           "'><svg xmlns='http://www.w3.org/2000/svg' width='20' height='17' viewBox='0 0 20 17'><path d='M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z'></path></svg> <span>Chọn tệp…</span></label>\
+//                           </form>\
+//                         </div>\
+//                           </td>\
+//                         </tr>"
+//                       );
 
-                      // <td><input type='text' style='width: 100px;'  id='ghiChuTC2_" + result_tc2[index_tc2][k].matc2 +"' /></td>\
-                    } else {
-                      if (
-                        result_tc2[index_tc2][k].noidung ==
-                        "1.Kết quả học tập: "
-                      ) {
-                        $("#tbody_noiDungDanhGia").append(
-                          "<tr>\
-                                            <td><em>" +
-                            result_tc2[index_tc2][k].noidung +
-                            "<br>Điểm TBC học kỳ trước: <input type='number' step='0.01' onchange='changeNumberHandle(this,4)' id='inputTBCHocKyTruoc' name='diemTrungBinhChungHKTruoc' style='width: 100px;margin-right: 30px;margin-bottom: 15px;' /><br>Điểm TBC học kỳ đang xét: <input type='number' step='0.01' onchange='changeNumberHandle(this,4)' id='inputTBCHocKyDangXet' name='diemTrungBinhChungHKXet' style='width: 100px;' /> </em></td>\
-                                            <td></td>\
-                                            <td></td>\
-                                            <td></td>\
-                                            <td><a href='#' id='show_file_minhchung_TC2_" +
-                            result_tc2[index_tc2][k].matc2 +
-                            "' target='_blank' ></a>\
-                                            <form id='formDanhGiaDRL_TC2_" +
-                            result_tc2[index_tc2][k].matc2 +
-                            "' method='post' enctype='multipart/form-data'></form></td>\
-                                            </tr>"
-                        );
-                      } else {
-                        $("#tbody_noiDungDanhGia").append(
-                          "<tr>\
-                                            <td><em>" +
-                            result_tc2[index_tc2][k].noidung +
-                            "</em></td>\
-                                            <td></td>\
-                                            <td></td>\
-                                            <td></td>\
-                                            <td> <a href='#' id='show_file_minhchung_TC2_" +
-                            result_tc2[index_tc2][k].matc2 +
-                            "' target='_blank' ></a>\
-                                            <form id='formDanhGiaDRL_TC2_" +
-                            result_tc2[index_tc2][k].matc2 +
-                            "' method='post' enctype='multipart/form-data'></form></td>\
-                                            </tr>"
-                        );
-                      }
-                    }
+//                       // <td><input type='text' style='width: 100px;'  id='ghiChuTC2_" + result_tc2[index_tc2][k].matc2 +"' /></td>\
+//                     } else {
+//                       if (
+//                         result_tc2[index_tc2][k].noidung ==
+//                         "1.Kết quả học tập: "
+//                       ) {
+//                         $("#tbody_noiDungDanhGia").append(
+//                           "<tr>\
+//                                             <td><em>" +
+//                             result_tc2[index_tc2][k].noidung +
+//                             "<br>Điểm TBC học kỳ trước: <input type='number' step='0.01' onchange='changeNumberHandle(this,4)' id='inputTBCHocKyTruoc' name='diemTrungBinhChungHKTruoc' style='width: 100px;margin-right: 30px;margin-bottom: 15px;' /><br>Điểm TBC học kỳ đang xét: <input type='number' step='0.01' onchange='changeNumberHandle(this,4)' id='inputTBCHocKyDangXet' name='diemTrungBinhChungHKXet' style='width: 100px;' /> </em></td>\
+//                                             <td></td>\
+//                                             <td></td>\
+//                                             <td></td>\
+//                                             <td><a href='#' id='show_file_minhchung_TC2_" +
+//                             result_tc2[index_tc2][k].matc2 +
+//                             "' target='_blank' ></a>\
+//                                             <form id='formDanhGiaDRL_TC2_" +
+//                             result_tc2[index_tc2][k].matc2 +
+//                             "' method='post' enctype='multipart/form-data'></form></td>\
+//                                             </tr>"
+//                         );
+//                       } else {
+//                         $("#tbody_noiDungDanhGia").append(
+//                           "<tr>\
+//                                             <td><em>" +
+//                             result_tc2[index_tc2][k].noidung +
+//                             "</em></td>\
+//                                             <td></td>\
+//                                             <td></td>\
+//                                             <td></td>\
+//                                             <td> <a href='#' id='show_file_minhchung_TC2_" +
+//                             result_tc2[index_tc2][k].matc2 +
+//                             "' target='_blank' ></a>\
+//                                             <form id='formDanhGiaDRL_TC2_" +
+//                             result_tc2[index_tc2][k].matc2 +
+//                             "' method='post' enctype='multipart/form-data'></form></td>\
+//                                             </tr>"
+//                         );
+//                       }
+//                     }
 
-                    //Ajax tieuchicap3
-                    $.ajax({
-                      url: urlapi_tieuchicap3_read,
-                      async: false,
-                      type: "GET",
-                      contentType: "application/json;charset=utf-8",
-                      dataType: "json",
-                      headers: {
-                        Authorization: jwtCookie,
-                      },
-                      success: function (result_tc3) {
-                        $.each(result_tc3, function (index_tc3) {
-                          for (
-                            var p = 0;
-                            p < result_tc3[index_tc3].length;
-                            p++
-                          ) {
-                            if (
-                              result_tc2[index_tc2][k].matc2 ===
-                              result_tc3[index_tc3][p].matc2
-                            ) {
-                              // console.log(result_tc3[index_tc3][p].noidung);
+//                     //Ajax tieuchicap3
+//                     $.ajax({
+//                       url: urlapi_tieuchicap3_read,
+//                       async: false,
+//                       type: "GET",
+//                       contentType: "application/json;charset=utf-8",
+//                       dataType: "json",
+//                       headers: {
+//                         Authorization: jwtCookie,
+//                       },
+//                       success: function (result_tc3) {
+//                         $.each(result_tc3, function (index_tc3) {
+//                           for (
+//                             var p = 0;
+//                             p < result_tc3[index_tc3].length;
+//                             p++
+//                           ) {
+//                             if (
+//                               result_tc2[index_tc2][k].matc2 ===
+//                               result_tc3[index_tc3][p].matc2
+//                             ) {
+//                               // console.log(result_tc3[index_tc3][p].noidung);
 
-                              var min_value = 0;
-                              var disabled_string = "";
-                              //get min value
-                              if (result_tc3[index_tc3][p].diem > 0) {
-                                min_value = 0;
-                              } else {
-                                min_value = result_tc3[index_tc3][p].diem;
-                              }
+//                               var min_value = 0;
+//                               var disabled_string = "";
+//                               //get min value
+//                               if (result_tc3[index_tc3][p].diem > 0) {
+//                                 min_value = 0;
+//                               } else {
+//                                 min_value = result_tc3[index_tc3][p].diem;
+//                               }
 
-                              if (
-                                result_tc3[index_tc3][p].noidung.localeCompare(
-                                  "a. Điểm trung bình chung học kì từ  3,60 đến 4,00"
-                                ) == 0 ||
-                                result_tc3[index_tc3][p].noidung.localeCompare(
-                                  "b. Điểm trung bình chung học kì từ  3,20 đến 3,59"
-                                ) == 0 ||
-                                result_tc3[index_tc3][p].noidung.localeCompare(
-                                  "c. Điểm trung bình chung học kì từ  2,50 đến 3,19"
-                                ) == 0 ||
-                                result_tc3[index_tc3][p].noidung.localeCompare(
-                                  "d. Điểm trung bình chung học kì từ  2,00 đến 2,49"
-                                ) == 0 ||
-                                result_tc3[index_tc3][p].noidung.localeCompare(
-                                  "đ. Điểm trung bình chung học kì  dưới 2,00"
-                                ) == 0 ||
-                                result_tc3[index_tc3][p].noidung.localeCompare(
-                                  "a. Kết quả học tập tăng một bậc so với học kỳ trước,  ĐTBCHK từ  2,00 trở lên"
-                                ) == 0 ||
-                                result_tc3[index_tc3][p].noidung.localeCompare(
-                                  "b. Kết quả học tập tăng hai bậc so với học kỳ trước,  ĐTBCHK từ  2,00 trở lên"
-                                ) == 0
-                              ) {
-                                disabled_string = "readonly";
-                              }
+//                               if (
+//                                 result_tc3[index_tc3][p].noidung.localeCompare(
+//                                   "a. Điểm trung bình chung học kì từ  3,60 đến 4,00"
+//                                 ) == 0 ||
+//                                 result_tc3[index_tc3][p].noidung.localeCompare(
+//                                   "b. Điểm trung bình chung học kì từ  3,20 đến 3,59"
+//                                 ) == 0 ||
+//                                 result_tc3[index_tc3][p].noidung.localeCompare(
+//                                   "c. Điểm trung bình chung học kì từ  2,50 đến 3,19"
+//                                 ) == 0 ||
+//                                 result_tc3[index_tc3][p].noidung.localeCompare(
+//                                   "d. Điểm trung bình chung học kì từ  2,00 đến 2,49"
+//                                 ) == 0 ||
+//                                 result_tc3[index_tc3][p].noidung.localeCompare(
+//                                   "đ. Điểm trung bình chung học kì  dưới 2,00"
+//                                 ) == 0 ||
+//                                 result_tc3[index_tc3][p].noidung.localeCompare(
+//                                   "a. Kết quả học tập tăng một bậc so với học kỳ trước,  ĐTBCHK từ  2,00 trở lên"
+//                                 ) == 0 ||
+//                                 result_tc3[index_tc3][p].noidung.localeCompare(
+//                                   "b. Kết quả học tập tăng hai bậc so với học kỳ trước,  ĐTBCHK từ  2,00 trở lên"
+//                                 ) == 0
+//                               ) {
+//                                 disabled_string = "readonly";
+//                               }
 
-                              if (
-                                result_tc3[index_tc3][p].noidung.localeCompare(
-                                  "a. Điểm trung bình chung học kì từ  3,60 đến 4,00"
-                                ) == 0 ||
-                                result_tc3[index_tc3][p].noidung.localeCompare(
-                                  "b. Điểm trung bình chung học kì từ  3,20 đến 3,59"
-                                ) == 0 ||
-                                result_tc3[index_tc3][p].noidung.localeCompare(
-                                  "c. Điểm trung bình chung học kì từ  2,50 đến 3,19"
-                                ) == 0 ||
-                                result_tc3[index_tc3][p].noidung.localeCompare(
-                                  "d. Điểm trung bình chung học kì từ  2,00 đến 2,49"
-                                ) == 0 ||
-                                result_tc3[index_tc3][p].noidung.localeCompare(
-                                  "đ. Điểm trung bình chung học kì  dưới 2,00"
-                                ) == 0 ||
-                                result_tc3[index_tc3][p].noidung.localeCompare(
-                                  "a. Kết quả học tập tăng một bậc so với học kỳ trước,  ĐTBCHK từ  2,00 trở lên"
-                                ) == 0 ||
-                                result_tc3[index_tc3][p].noidung.localeCompare(
-                                  "b. Kết quả học tập tăng hai bậc so với học kỳ trước,  ĐTBCHK từ  2,00 trở lên"
-                                ) == 0 ||
-                                result_tc3[index_tc3][p].noidung.localeCompare(
-                                  "c. Sinh viên năm thứ I, nếu có kết quả học tập HK I từ 2,00 trở lên"
-                                ) == 0
-                              ) {
-                                $("#tbody_noiDungDanhGia").append(
-                                  "<tr>\
-                                                  <td>" +
-                                    result_tc3[index_tc3][p].noidung +
-                                    "</span></td>\
-                                                  <td><em>" +
-                                    result_tc3[index_tc3][p].diem +
-                                    "đ</em></td>\
-                                                  <td><input type='number' style='width: 100px;' onchange='changeNumberHandle(this," +
-                                    result_tc3[index_tc3][p].diem +
-                                    ")' max_value='" +
-                                    result_tc3[index_tc3][p].diem +
-                                    "'  id='TC3_" +
-                                    result_tc3[index_tc3][p].matc3 +
-                                    "' " +
-                                    disabled_string +
-                                    " /></td>\
-                                    <td></td>\
-                                    <td> <a href='#' id='show_file_minhchung_TC3_" +
-                                    result_tc3[index_tc3][p].matc3 +
-                                    "' target='_blank' ></a>\
-                                    <form id='formDanhGiaDRL_TC3_" +
-                                    result_tc3[index_tc3][p].matc3 +
-                                    "' method='post' enctype='multipart/form-data'></form></td>\
-                                                  </tr>"
-                                );
-                              } else {
-                                $("#tbody_noiDungDanhGia").append(
-                                  "<tr>\
-                                                  <td>" +
-                                    result_tc3[index_tc3][p].noidung +
-                                    "</span></td>\
-                                                  <td><em>" +
-                                    result_tc3[index_tc3][p].diem +
-                                    "đ</em></td>\
-                                                  <td><input type='number' style='width: 100px;' onchange='changeNumberHandle(this," +
-                                    result_tc3[index_tc3][p].diem +
-                                    ")' max_value='" +
-                                    result_tc3[index_tc3][p].diem +
-                                    "'  id='TC3_" +
-                                    result_tc3[index_tc3][p].matc3 +
-                                    "' " +
-                                    disabled_string +
-                                    " /></td>\
-                                    <td>\
-                                      <button type='button' class='btn btn-light btn_XemDanhSachHoatDong' style='color: black;width: max-content;' data-bs-toggle='modal' data-bs-target='#XemDanhSachHoatDongModal' data-tieuchi-id='TC3_" +
-                                    result_tc3[index_tc3][p].matc3 +
-                                    "' data-tentieuchi='" +
-                                    result_tc3[index_tc3][p].noidung +
-                                    "' >Danh sách</button>\
-                                    </td>\
-                                    <td>\
-                                    <div class='box'>\
-                                        <a href='#' id='show_file_minhchung_TC3_" +
-                                    result_tc3[index_tc3][p].matc3 +
-                                    "' target='_blank' ></a>\
-                                        <form id='formDanhGiaDRL_TC3_" +
-                                    result_tc3[index_tc3][p].matc3 +
-                                    "' method='post' enctype='multipart/form-data'>\
-                                        <input type='file' name='fileMinhChung' id='file_minhchung_TC3_" +
-                                    result_tc3[index_tc3][p].matc3 +
-                                    "' class='inputfile inputfile-1' accept='.png,.jpg,.jpeg' data-multiple-caption='{count} files selected' >\
-                                        <label for='file_minhchung_TC3_" +
-                                    result_tc3[index_tc3][p].matc3 +
-                                    "'><svg xmlns='http://www.w3.org/2000/svg' width='20' height='17' viewBox='0 0 20 17'><path d='M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z'></path></svg> <span>Chọn tệp…</span></label>\
-                                      </form>\
-                                      </div>\
-                                  </td>\
-                                      </tr>"
-                                );
-                              }
-                            }
+//                               if (
+//                                 result_tc3[index_tc3][p].noidung.localeCompare(
+//                                   "a. Điểm trung bình chung học kì từ  3,60 đến 4,00"
+//                                 ) == 0 ||
+//                                 result_tc3[index_tc3][p].noidung.localeCompare(
+//                                   "b. Điểm trung bình chung học kì từ  3,20 đến 3,59"
+//                                 ) == 0 ||
+//                                 result_tc3[index_tc3][p].noidung.localeCompare(
+//                                   "c. Điểm trung bình chung học kì từ  2,50 đến 3,19"
+//                                 ) == 0 ||
+//                                 result_tc3[index_tc3][p].noidung.localeCompare(
+//                                   "d. Điểm trung bình chung học kì từ  2,00 đến 2,49"
+//                                 ) == 0 ||
+//                                 result_tc3[index_tc3][p].noidung.localeCompare(
+//                                   "đ. Điểm trung bình chung học kì  dưới 2,00"
+//                                 ) == 0 ||
+//                                 result_tc3[index_tc3][p].noidung.localeCompare(
+//                                   "a. Kết quả học tập tăng một bậc so với học kỳ trước,  ĐTBCHK từ  2,00 trở lên"
+//                                 ) == 0 ||
+//                                 result_tc3[index_tc3][p].noidung.localeCompare(
+//                                   "b. Kết quả học tập tăng hai bậc so với học kỳ trước,  ĐTBCHK từ  2,00 trở lên"
+//                                 ) == 0 ||
+//                                 result_tc3[index_tc3][p].noidung.localeCompare(
+//                                   "c. Sinh viên năm thứ I, nếu có kết quả học tập HK I từ 2,00 trở lên"
+//                                 ) == 0
+//                               ) {
+//                                 $("#tbody_noiDungDanhGia").append(
+//                                   "<tr>\
+//                                                   <td>" +
+//                                     result_tc3[index_tc3][p].noidung +
+//                                     "</span></td>\
+//                                                   <td><em>" +
+//                                     result_tc3[index_tc3][p].diem +
+//                                     "đ</em></td>\
+//                                                   <td><input type='number' style='width: 100px;' onchange='changeNumberHandle(this," +
+//                                     result_tc3[index_tc3][p].diem +
+//                                     ")' max_value='" +
+//                                     result_tc3[index_tc3][p].diem +
+//                                     "'  id='TC3_" +
+//                                     result_tc3[index_tc3][p].matc3 +
+//                                     "' " +
+//                                     disabled_string +
+//                                     " /></td>\
+//                                     <td></td>\
+//                                     <td> <a href='#' id='show_file_minhchung_TC3_" +
+//                                     result_tc3[index_tc3][p].matc3 +
+//                                     "' target='_blank' ></a>\
+//                                     <form id='formDanhGiaDRL_TC3_" +
+//                                     result_tc3[index_tc3][p].matc3 +
+//                                     "' method='post' enctype='multipart/form-data'></form></td>\
+//                                                   </tr>"
+//                                 );
+//                               } else {
+//                                 $("#tbody_noiDungDanhGia").append(
+//                                   "<tr>\
+//                                                   <td>" +
+//                                     result_tc3[index_tc3][p].noidung +
+//                                     "</span></td>\
+//                                                   <td><em>" +
+//                                     result_tc3[index_tc3][p].diem +
+//                                     "đ</em></td>\
+//                                                   <td><input type='number' style='width: 100px;' onchange='changeNumberHandle(this," +
+//                                     result_tc3[index_tc3][p].diem +
+//                                     ")' max_value='" +
+//                                     result_tc3[index_tc3][p].diem +
+//                                     "'  id='TC3_" +
+//                                     result_tc3[index_tc3][p].matc3 +
+//                                     "' " +
+//                                     disabled_string +
+//                                     " /></td>\
+//                                     <td>\
+//                                       <button type='button' class='btn btn-light btn_XemDanhSachHoatDong' style='color: black;width: max-content;' data-bs-toggle='modal' data-bs-target='#XemDanhSachHoatDongModal' data-tieuchi-id='TC3_" +
+//                                     result_tc3[index_tc3][p].matc3 +
+//                                     "' data-tentieuchi='" +
+//                                     result_tc3[index_tc3][p].noidung +
+//                                     "' >Danh sách</button>\
+//                                     </td>\
+//                                     <td>\
+//                                     <div class='box'>\
+//                                         <a href='#' id='show_file_minhchung_TC3_" +
+//                                     result_tc3[index_tc3][p].matc3 +
+//                                     "' target='_blank' ></a>\
+//                                         <form id='formDanhGiaDRL_TC3_" +
+//                                     result_tc3[index_tc3][p].matc3 +
+//                                     "' method='post' enctype='multipart/form-data'>\
+//                                         <input type='file' name='fileMinhChung' id='file_minhchung_TC3_" +
+//                                     result_tc3[index_tc3][p].matc3 +
+//                                     "' class='inputfile inputfile-1' accept='.png,.jpg,.jpeg' data-multiple-caption='{count} files selected' >\
+//                                         <label for='file_minhchung_TC3_" +
+//                                     result_tc3[index_tc3][p].matc3 +
+//                                     "'><svg xmlns='http://www.w3.org/2000/svg' width='20' height='17' viewBox='0 0 20 17'><path d='M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z'></path></svg> <span>Chọn tệp…</span></label>\
+//                                       </form>\
+//                                       </div>\
+//                                   </td>\
+//                                       </tr>"
+//                                 );
+//                               }
+//                             }
 
-                            // <td><input type='text' style='width: 100px;'  id='ghiChuTC3_" + result_tc3[index_tc3][p].matc3 + "' /></td>\
-                          }
-                        });
-                      },
-                      error: function (errorMessage_tc3) {
-                        thongBaoLoi(errorMessage_tc3.responseText);
-                      },
-                    });
-                  }
-                }
-              });
-            },
-            error: function (errorMessage_tc2) {
-              thongBaoLoi(errorMessage_tc2.responseText);
-            },
-          });
+//                             // <td><input type='text' style='width: 100px;'  id='ghiChuTC3_" + result_tc3[index_tc3][p].matc3 + "' /></td>\
+//                           }
+//                         });
+//                       },
+//                       error: function (errorMessage_tc3) {
+//                         thongBaoLoi(errorMessage_tc3.responseText);
+//                       },
+//                     });
+//                   }
+//                 }
+//               });
+//             },
+//             error: function (errorMessage_tc2) {
+//               thongBaoLoi(errorMessage_tc2.responseText);
+//             },
+//           });
 
-          $("#tbody_noiDungDanhGia").append(
-            "<tr style='background: darkseagreen;' >\
-                <td style='font-weight: bold;' >Cộng: </span>\
-                </td>\
-                <td><em></em></td>\
-                <td><input type='number' style='width: 100px' onchange='changeNumberHandle(this," +
-              result[index][i].diemtoida +
-              ")' max-value='" +
-              result[index][i].diemtoida +
-              "' min='0' max='" +
-              result[index][i].diemtoida +
-              "' id='TongCong_TC1_" +
-              result[index][i].matc1 +
-              "' disabled/></td>\
-              <td></td>\
-              <td></td>\
-                </tr>"
-          );
-        }
-      });
-    },
-    error: function (errorMessage) {
-      thongBaoLoi(errorMessage.responseText);
-    },
-  });
+//           $("#tbody_noiDungDanhGia").append(
+//             "<tr style='background: darkseagreen;' >\
+//                 <td style='font-weight: bold;' >Cộng: </span>\
+//                 </td>\
+//                 <td><em></em></td>\
+//                 <td><input type='number' style='width: 100px' onchange='changeNumberHandle(this," +
+//               result[index][i].diemtoida +
+//               ")' max-value='" +
+//               result[index][i].diemtoida +
+//               "' min='0' max='" +
+//               result[index][i].diemtoida +
+//               "' id='TongCong_TC1_" +
+//               result[index][i].matc1 +
+//               "' disabled/></td>\
+//               <td></td>\
+//               <td></td>\
+//                 </tr>"
+//           );
+//         }
+//       });
+//     },
+//     error: function (errorMessage) {
+//       thongBaoLoi(errorMessage.responseText);
+//     },
+//   });
 
-  $("#tbody_noiDungDanhGia").append(
-    "<tr>\
-            <td style='font-weight: bold;' >ĐIỂM TỔNG CỘNG (tối đa không quá 100 điểm): </span>\
-            </td>\
-            <td><em></em></td>\
-            <td><input type='number' style='width: 100px' onchange='changeNumberHandle(this, 100)' id='input_diemtongcong' name='diemTongCong' readonly='true'/></td>\
-            <td></td>\
-            <td></td>\
-    </tr>"
-  );
-}
+//   $("#tbody_noiDungDanhGia").append(
+//     "<tr>\
+//             <td style='font-weight: bold;' >ĐIỂM TỔNG CỘNG (tối đa không quá 100 điểm): </span>\
+//             </td>\
+//             <td><em></em></td>\
+//             <td><input type='number' style='width: 100px' onchange='changeNumberHandle(this, 100)' id='input_diemtongcong' name='diemTongCong' readonly='true'/></td>\
+//             <td></td>\
+//             <td></td>\
+//     </tr>"
+//   );
+// }
 
 function getThongTinNguoiDung() {
   if (getCookie("maSo") != null) {

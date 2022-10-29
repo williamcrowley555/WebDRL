@@ -10,8 +10,6 @@
     include_once '../auth/read-data.php';
     include_once '../auth/check_quyen.php';
 
-
-
     $read_data = new read_data();
     $data = $read_data->read_token();
 
@@ -66,8 +64,6 @@
                         array("message" => "Không có dữ liệu được gửi lên.")
                     );
                 }
-
-
             }else{
 
                 $fileExt = strtolower(pathinfo($fileName, PATHINFO_EXTENSION)); // lấy phần mở rộng (đuôi file)
@@ -117,11 +113,13 @@
                                             "message"=>"chamdiemrenluyen created successful"
                                         ));
                                     } else {
+                                        http_response_code(404);
                                         echo json_encode(array(
                                             "message"=>"chamdiemrenluyen could not be created."
                                         ));
                                     }
                                 }else{
+                                    http_response_code(404);
                                     echo json_encode(array(
                                         "message"=>"File đã tồn tại trên server."
                                     ));
@@ -149,39 +147,25 @@
                                 ));
                                 }
                             }
-
-                
                         } else {
                             http_response_code(500);
                             echo json_encode(
                                 array("message" => "Không có dữ liệu gửi lên!")
                             );
                         }
-
-
                     }else{
                         http_response_code(500);
                         echo json_encode(
                             array("message" => "File quá lớn, chỉ chấp nhận file nhỏ hơn 10MB")
                         );
                     }
-
-
-
                 }else{
                     http_response_code(500);
                     echo json_encode(
                         array("message" => "Chỉ chấp nhận file định dạng .png, .jpg, .jpeg")
                     );
                 }
-
-
-
             }
-
-          
-                
-            
 
         // } else {
         //     http_response_code(403);
@@ -195,8 +179,4 @@
             array("message" => "Vui lòng đăng nhập trước!")
         );
     }
-
-    
-
-
 ?>
