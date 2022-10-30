@@ -1,6 +1,17 @@
 var jwtCookie = getCookie("jwt");
 var url = new URL(window.location.href);
-var GET_MaHocKy = url.searchParams.get("maHocKy");
+
+var phieuRenLuyen = {
+  thongTinPhieu: {},
+  sinhVien: {},
+  hocKyDanhGia: {},
+  thongBaoDanhGia: {},
+  diemTieuChiCap2: [],
+  diemTieuChiCap3: [],
+  tieuChiCap1: [],
+  tieuChiCap2: [],
+  tieuChiCap3: [],
+};
 
 function getCookie(cName) {
   const name = cName + "=";
@@ -54,211 +65,211 @@ function changeNumberHandle(val, number) {
 }
 
 //-----------------------------------------//
-function HienThiThongTinVaDanhGia() {
-  var checkMaHocKyHopLe = 0;
+// function HienThiThongTinVaDanhGia() {
+//   var checkMaHocKyHopLe = 0;
 
-  if (GET_MaHocKy != null) {
-    if (GET_MaHocKy.trim() != "") {
-      $.ajax({
-        url: urlapi_thongbaodanhgia_read,
-        async: false,
-        type: "GET",
-        contentType: "application/json;charset=utf-8",
-        dataType: "json",
-        headers: {
-          Authorization: jwtCookie,
-        },
-        success: function (result_ThongBaoDanhGia) {
-          $.each(result_ThongBaoDanhGia, function (index_TBDG) {
-            for (
-              var q = 0;
-              q < result_ThongBaoDanhGia[index_TBDG].length;
-              q++
-            ) {
-              var maHocKy_TBDG =
-                result_ThongBaoDanhGia[index_TBDG][q].maHocKyDanhGia;
+//   if (GET_MaHocKy != null) {
+//     if (GET_MaHocKy.trim() != "") {
+//       $.ajax({
+//         url: urlapi_thongbaodanhgia_read,
+//         async: false,
+//         type: "GET",
+//         contentType: "application/json;charset=utf-8",
+//         dataType: "json",
+//         headers: {
+//           Authorization: jwtCookie,
+//         },
+//         success: function (result_ThongBaoDanhGia) {
+//           $.each(result_ThongBaoDanhGia, function (index_TBDG) {
+//             for (
+//               var q = 0;
+//               q < result_ThongBaoDanhGia[index_TBDG].length;
+//               q++
+//             ) {
+//               var maHocKy_TBDG =
+//                 result_ThongBaoDanhGia[index_TBDG][q].maHocKyDanhGia;
 
-              if (GET_MaHocKy === maHocKy_TBDG) {
-                checkMaHocKyHopLe++;
-                var ngaySVDanhGia = new Date(
-                  result_ThongBaoDanhGia[index_TBDG][q].ngaySinhVienDanhGia
-                );
-                var ngaySVKetThucDanhGia = new Date(
-                  result_ThongBaoDanhGia[index_TBDG][
-                    q
-                  ].ngaySinhVienKetThucDanhGia
-                );
+//               if (GET_MaHocKy === maHocKy_TBDG) {
+//                 checkMaHocKyHopLe++;
+//                 var ngaySVDanhGia = new Date(
+//                   result_ThongBaoDanhGia[index_TBDG][q].ngaySinhVienDanhGia
+//                 );
+//                 var ngaySVKetThucDanhGia = new Date(
+//                   result_ThongBaoDanhGia[index_TBDG][
+//                     q
+//                   ].ngaySinhVienKetThucDanhGia
+//                 );
 
-                //lấy ngày hiện tại
-                var today = new Date();
-                var ngayHienTai = new Date(
-                  today.getFullYear() +
-                    "-" +
-                    (today.getMonth() + 1) +
-                    "-" +
-                    today.getDate()
-                );
+//                 //lấy ngày hiện tại
+//                 var today = new Date();
+//                 var ngayHienTai = new Date(
+//                   today.getFullYear() +
+//                     "-" +
+//                     (today.getMonth() + 1) +
+//                     "-" +
+//                     today.getDate()
+//                 );
 
-                //thời gian hiện tại nằm trong khoảng thời gian học kỳ còn mở chấm
-                if (
-                  ngayHienTai.getTime() >= ngaySVDanhGia.getTime() &&
-                  ngayHienTai.getTime() <= ngaySVKetThucDanhGia.getTime()
-                ) {
-                  //vẫn còn trong thời gian mở chấm nên giữ nguyên page
-                  // getThongTinNguoiDung();
-                  // getTieuChiDanhGia();
+//                 //thời gian hiện tại nằm trong khoảng thời gian học kỳ còn mở chấm
+//                 if (
+//                   ngayHienTai.getTime() >= ngaySVDanhGia.getTime() &&
+//                   ngayHienTai.getTime() <= ngaySVKetThucDanhGia.getTime()
+//                 ) {
+//                   //vẫn còn trong thời gian mở chấm nên giữ nguyên page
+//                   // getThongTinNguoiDung();
+//                   // getTieuChiDanhGia();
 
-                  // Lấy thông tin sinh viên
-                  var sinhVien = {};
+//                   // Lấy thông tin sinh viên
+//                   var sinhVien = {};
 
-                  $.ajax({
-                    url: urlapi_sinhvien_details_read + getCookie("maSo"),
-                    async: false,
-                    type: "GET",
-                    contentType: "application/json;charset=utf-8",
-                    dataType: "json",
-                    headers: {
-                      Authorization: jwtCookie,
-                    },
-                    success: function (result) {
-                      sinhVien = result;
-                    },
-                    error: function (error) {},
-                  });
+//                   $.ajax({
+//                     url: urlapi_sinhvien_details_read + getCookie("maSo"),
+//                     async: false,
+//                     type: "GET",
+//                     contentType: "application/json;charset=utf-8",
+//                     dataType: "json",
+//                     headers: {
+//                       Authorization: jwtCookie,
+//                     },
+//                     success: function (result) {
+//                       sinhVien = result;
+//                     },
+//                     error: function (error) {},
+//                   });
 
-                  // Lấy thông tin học kỳ đánh giá
-                  var hocKyDanhGia = {};
+//                   // Lấy thông tin học kỳ đánh giá
+//                   var hocKyDanhGia = {};
 
-                  $.ajax({
-                    url: urlapi_hockydanhgia_single_read + GET_MaHocKy,
-                    async: false,
-                    type: "GET",
-                    contentType: "application/json;charset=utf-8",
-                    dataType: "json",
-                    headers: {
-                      Authorization: jwtCookie,
-                    },
-                    success: function (result_HKDG) {
-                      hocKyDanhGia = result_HKDG;
-                    },
-                    error: function (error) {},
-                  });
+//                   $.ajax({
+//                     url: urlapi_hockydanhgia_single_read + GET_MaHocKy,
+//                     async: false,
+//                     type: "GET",
+//                     contentType: "application/json;charset=utf-8",
+//                     dataType: "json",
+//                     headers: {
+//                       Authorization: jwtCookie,
+//                     },
+//                     success: function (result_HKDG) {
+//                       hocKyDanhGia = result_HKDG;
+//                     },
+//                     error: function (error) {},
+//                   });
 
-                  // Set thông tin sinh viên & học kỳ đánh giá lên phiếu
-                  setThongTinSinhVien(
-                    sinhVien,
-                    hocKyDanhGia,
-                    "#part_thongTinSinhVien"
-                  );
+//                   // Set thông tin sinh viên & học kỳ đánh giá lên phiếu
+//                   setThongTinSinhVien(
+//                     sinhVien,
+//                     hocKyDanhGia,
+//                     "#part_thongTinSinhVien"
+//                   );
 
-                  // Lấy các tiêu chí đánh giá được kích hoạt
-                  var tieuChiCap1 = [];
-                  var tieuChiCap2 = [];
-                  var tieuChiCap3 = [];
+//                   // Lấy các tiêu chí đánh giá được kích hoạt
+//                   var tieuChiCap1 = [];
+//                   var tieuChiCap2 = [];
+//                   var tieuChiCap3 = [];
 
-                  // Tiêu chí cấp 1
-                  $.ajax({
-                    url: urlapi_tieuchicap1_read_kichHoat + "1",
-                    async: false,
-                    type: "GET",
-                    contentType: "application/json;charset=utf-8",
-                    dataType: "json",
-                    headers: {
-                      Authorization: jwtCookie,
-                    },
-                    success: function (result_TCC1) {
-                      result_TCC1["tieuchicap1"].forEach(function (result) {
-                        delete result.soThuTu;
-                        tieuChiCap1.push(result);
-                      });
-                    },
-                    error: function (error) {},
-                  });
+//                   // Tiêu chí cấp 1
+//                   $.ajax({
+//                     url: urlapi_tieuchicap1_read_kichHoat + "1",
+//                     async: false,
+//                     type: "GET",
+//                     contentType: "application/json;charset=utf-8",
+//                     dataType: "json",
+//                     headers: {
+//                       Authorization: jwtCookie,
+//                     },
+//                     success: function (result_TCC1) {
+//                       result_TCC1["tieuchicap1"].forEach(function (result) {
+//                         delete result.soThuTu;
+//                         tieuChiCap1.push(result);
+//                       });
+//                     },
+//                     error: function (error) {},
+//                   });
 
-                  // Tiêu chí cấp 2
-                  $.ajax({
-                    url: urlapi_tieuchicap2_read_kichHoat + "1",
-                    async: false,
-                    type: "GET",
-                    contentType: "application/json;charset=utf-8",
-                    dataType: "json",
-                    headers: {
-                      Authorization: jwtCookie,
-                    },
-                    success: function (result_TCC2) {
-                      result_TCC2["tieuchicap2"].forEach(function (result) {
-                        delete result.soThuTu;
-                        tieuChiCap2.push(result);
-                      });
-                    },
-                    error: function (error) {},
-                  });
+//                   // Tiêu chí cấp 2
+//                   $.ajax({
+//                     url: urlapi_tieuchicap2_read_kichHoat + "1",
+//                     async: false,
+//                     type: "GET",
+//                     contentType: "application/json;charset=utf-8",
+//                     dataType: "json",
+//                     headers: {
+//                       Authorization: jwtCookie,
+//                     },
+//                     success: function (result_TCC2) {
+//                       result_TCC2["tieuchicap2"].forEach(function (result) {
+//                         delete result.soThuTu;
+//                         tieuChiCap2.push(result);
+//                       });
+//                     },
+//                     error: function (error) {},
+//                   });
 
-                  // Tiêu chí cấp 3
-                  $.ajax({
-                    url: urlapi_tieuchicap3_read_kichHoat + "1",
-                    async: false,
-                    type: "GET",
-                    contentType: "application/json;charset=utf-8",
-                    dataType: "json",
-                    headers: {
-                      Authorization: jwtCookie,
-                    },
-                    success: function (result_TCC3) {
-                      result_TCC3["tieuchicap3"].forEach(function (result) {
-                        delete result.soThuTu;
-                        tieuChiCap3.push(result);
-                      });
-                    },
-                    error: function (error) {},
-                  });
+//                   // Tiêu chí cấp 3
+//                   $.ajax({
+//                     url: urlapi_tieuchicap3_read_kichHoat + "1",
+//                     async: false,
+//                     type: "GET",
+//                     contentType: "application/json;charset=utf-8",
+//                     dataType: "json",
+//                     headers: {
+//                       Authorization: jwtCookie,
+//                     },
+//                     success: function (result_TCC3) {
+//                       result_TCC3["tieuchicap3"].forEach(function (result) {
+//                         delete result.soThuTu;
+//                         tieuChiCap3.push(result);
+//                       });
+//                     },
+//                     error: function (error) {},
+//                   });
 
-                  // Tạo phiếu
-                  createPhieuRenLuyenForm(
-                    {
-                      tieuChiCap1: tieuChiCap1,
-                      tieuChiCap2: tieuChiCap2,
-                      tieuChiCap3: tieuChiCap3,
-                    },
-                    result_ThongBaoDanhGia[index_TBDG][q],
-                    getCookie("quyen"),
-                    "#tbody_noiDungDanhGia"
-                  );
+//                   // Tạo phiếu
+//                   createPhieuRenLuyenForm(
+//                     {
+//                       tieuChiCap1: tieuChiCap1,
+//                       tieuChiCap2: tieuChiCap2,
+//                       tieuChiCap3: tieuChiCap3,
+//                     },
+//                     result_ThongBaoDanhGia[index_TBDG][q],
+//                     getCookie("quyen"),
+//                     "#tbody_noiDungDanhGia"
+//                   );
 
-                  // Set điểm phiếu
-                  setDiemPhieuRenLuyen(
-                    {
-                      maSinhVien: getCookie("maSo"),
-                      maHocKyDanhGia: GET_MaHocKy,
-                    },
-                    [],
-                    [],
-                    result_ThongBaoDanhGia,
-                    getCookie("quyen"),
-                    "#tbody_noiDungDanhGia"
-                  );
-                } else {
-                  window.location.href = "chamdiem.php";
-                }
-              }
-            }
+//                   // Set điểm phiếu
+//                   setDiemPhieuRenLuyen(
+//                     {
+//                       maSinhVien: getCookie("maSo"),
+//                       maHocKyDanhGia: GET_MaHocKy,
+//                     },
+//                     [],
+//                     [],
+//                     result_ThongBaoDanhGia,
+//                     getCookie("quyen"),
+//                     "#tbody_noiDungDanhGia"
+//                   );
+//                 } else {
+//                   window.location.href = "chamdiem.php";
+//                 }
+//               }
+//             }
 
-            if (checkMaHocKyHopLe == 0) {
-              window.location.href = "chamdiem.php";
-            }
-          });
-        },
-        error: function (errorMessage_tc3) {
-          thongBaoLoi(errorMessage_tc3.responseText);
-        },
-      });
-    } else {
-      window.location.href = "chamdiem.php";
-    }
-  } else {
-    window.location.href = "chamdiem.php";
-  }
-}
+//             if (checkMaHocKyHopLe == 0) {
+//               window.location.href = "chamdiem.php";
+//             }
+//           });
+//         },
+//         error: function (errorMessage_tc3) {
+//           thongBaoLoi(errorMessage_tc3.responseText);
+//         },
+//       });
+//     } else {
+//       window.location.href = "chamdiem.php";
+//     }
+//   } else {
+//     window.location.href = "chamdiem.php";
+//   }
+// }
 
 //------------------------------------------------//
 //Show tiêu chí đánh giá
@@ -616,286 +627,286 @@ function HienThiThongTinVaDanhGia() {
 //   );
 // }
 
-function getThongTinNguoiDung() {
-  if (getCookie("maSo") != null) {
-    var maSo = getCookie("maSo");
+// function getThongTinNguoiDung() {
+//   if (getCookie("maSo") != null) {
+//     var maSo = getCookie("maSo");
 
-    $.ajax({
-      url: urlapi_sinhvien_single_read + maSo,
-      async: false,
-      type: "GET",
-      contentType: "application/json;charset=utf-8",
-      dataType: "json",
-      headers: {
-        Authorization: jwtCookie,
-      },
-      success: function (result) {
-        var hoTenSinhVien = result["hoTenSinhVien"];
-        var ngaySinh = new Date(result["ngaySinh"]);
-        var maLop = result["maLop"];
-        var he = result["he"];
+//     $.ajax({
+//       url: urlapi_sinhvien_single_read + maSo,
+//       async: false,
+//       type: "GET",
+//       contentType: "application/json;charset=utf-8",
+//       dataType: "json",
+//       headers: {
+//         Authorization: jwtCookie,
+//       },
+//       success: function (result) {
+//         var hoTenSinhVien = result["hoTenSinhVien"];
+//         var ngaySinh = new Date(result["ngaySinh"]);
+//         var maLop = result["maLop"];
+//         var he = result["he"];
 
-        $.ajax({
-          url: urlapi_lop_single_read + maLop,
-          async: false,
-          type: "GET",
-          contentType: "application/json;charset=utf-8",
-          dataType: "json",
-          headers: {
-            Authorization: jwtCookie,
-          },
-          success: function (result_Lop) {
-            var maKhoa = result_Lop["maKhoa"];
+//         $.ajax({
+//           url: urlapi_lop_single_read + maLop,
+//           async: false,
+//           type: "GET",
+//           contentType: "application/json;charset=utf-8",
+//           dataType: "json",
+//           headers: {
+//             Authorization: jwtCookie,
+//           },
+//           success: function (result_Lop) {
+//             var maKhoa = result_Lop["maKhoa"];
 
-            $.ajax({
-              url: urlapi_khoa_single_read + maKhoa,
-              async: false,
-              type: "GET",
-              contentType: "application/json;charset=utf-8",
-              dataType: "json",
-              headers: {
-                Authorization: jwtCookie,
-              },
-              success: function (result_Khoa) {
-                var tenKhoa = result_Khoa["tenKhoa"];
+//             $.ajax({
+//               url: urlapi_khoa_single_read + maKhoa,
+//               async: false,
+//               type: "GET",
+//               contentType: "application/json;charset=utf-8",
+//               dataType: "json",
+//               headers: {
+//                 Authorization: jwtCookie,
+//               },
+//               success: function (result_Khoa) {
+//                 var tenKhoa = result_Khoa["tenKhoa"];
 
-                $.ajax({
-                  url: urlapi_hockydanhgia_single_read + GET_MaHocKy,
-                  async: false,
-                  type: "GET",
-                  contentType: "application/json;charset=utf-8",
-                  dataType: "json",
-                  headers: {
-                    Authorization: jwtCookie,
-                  },
-                  success: function (result_HKDG) {
-                    var input_hocKyXet = result_HKDG.hocKyXet;
-                    var input_namHocXet = result_HKDG.namHocXet;
+//                 $.ajax({
+//                   url: urlapi_hockydanhgia_single_read + GET_MaHocKy,
+//                   async: false,
+//                   type: "GET",
+//                   contentType: "application/json;charset=utf-8",
+//                   dataType: "json",
+//                   headers: {
+//                     Authorization: jwtCookie,
+//                   },
+//                   success: function (result_HKDG) {
+//                     var input_hocKyXet = result_HKDG.hocKyXet;
+//                     var input_namHocXet = result_HKDG.namHocXet;
 
-                    $("#part_thongTinSinhVien").append(
-                      "<div class='row'>\
-                                    <div class='col'>\
-                                    <span style='font-weight: bold;'>Họ tên: </span>" +
-                        hoTenSinhVien +
-                        "</div>\
-                                    <div class='col'>\
-                                    <span style='font-weight: bold;'>Mã số sinh viên: </span>" +
-                        maSo +
-                        "\
-                                    </div>\
-                                    <div class='col'>\
-                                    <span style='font-weight: bold;'>Ngày sinh: </span>" +
-                        ngaySinh.toLocaleDateString() +
-                        "\
-                                    </div>\
-                                    <div class='col'>\
-                                    <span style='font-weight: bold;'>Lớp: </span>" +
-                        maLop +
-                        "\
-                                    </div>\
-                                    </div>\
-                                    <div class='row'>\
-                                    <div class='col'>\
-                                    <span style='font-weight: bold;'>Khoa: </span>" +
-                        tenKhoa +
-                        "\
-                                    </div>\
-                                    <div class='col'>\
-                                    <span style='font-weight: bold;'>Hệ: </span>" +
-                        he +
-                        "\
-                                    </div>\
-                                    <div class='col'>\
-                                    <span style='font-weight: bold;'>Học kỳ: </span>" +
-                        input_hocKyXet +
-                        "\
-                                    </div>\
-                                    <div class='col'>\
-                                    <span style='font-weight: bold;'>Năm học: </span>" +
-                        input_namHocXet +
-                        "\
-                                    </div>\
-                                    <div class='col' style='display: none;'>\
-                                    <input type='text' id='input_maHocKyDanhGia' value='" +
-                        GET_MaHocKy +
-                        "' /></span>\
-                                    </div>\
-                                    </div>\
-                                    "
-                    );
-                  },
-                  error: function (errorMessage_tc3) {
-                    thongBaoLoi(errorMessage_tc3.responseText);
-                  },
-                });
-              },
-            });
-          },
-          error: function (errorMessage) {
-            thongBaoLoi(errorMessage.responseText);
-          },
-        });
-      },
-      error: function (errorMessage) {
-        thongBaoLoi(errorMessage.responseText);
-      },
-    });
-  }
-}
+//                     $("#part_thongTinSinhVien").append(
+//                       "<div class='row'>\
+//                                     <div class='col'>\
+//                                     <span style='font-weight: bold;'>Họ tên: </span>" +
+//                         hoTenSinhVien +
+//                         "</div>\
+//                                     <div class='col'>\
+//                                     <span style='font-weight: bold;'>Mã số sinh viên: </span>" +
+//                         maSo +
+//                         "\
+//                                     </div>\
+//                                     <div class='col'>\
+//                                     <span style='font-weight: bold;'>Ngày sinh: </span>" +
+//                         ngaySinh.toLocaleDateString() +
+//                         "\
+//                                     </div>\
+//                                     <div class='col'>\
+//                                     <span style='font-weight: bold;'>Lớp: </span>" +
+//                         maLop +
+//                         "\
+//                                     </div>\
+//                                     </div>\
+//                                     <div class='row'>\
+//                                     <div class='col'>\
+//                                     <span style='font-weight: bold;'>Khoa: </span>" +
+//                         tenKhoa +
+//                         "\
+//                                     </div>\
+//                                     <div class='col'>\
+//                                     <span style='font-weight: bold;'>Hệ: </span>" +
+//                         he +
+//                         "\
+//                                     </div>\
+//                                     <div class='col'>\
+//                                     <span style='font-weight: bold;'>Học kỳ: </span>" +
+//                         input_hocKyXet +
+//                         "\
+//                                     </div>\
+//                                     <div class='col'>\
+//                                     <span style='font-weight: bold;'>Năm học: </span>" +
+//                         input_namHocXet +
+//                         "\
+//                                     </div>\
+//                                     <div class='col' style='display: none;'>\
+//                                     <input type='text' id='input_maHocKyDanhGia' value='" +
+//                         GET_MaHocKy +
+//                         "' /></span>\
+//                                     </div>\
+//                                     </div>\
+//                                     "
+//                     );
+//                   },
+//                   error: function (errorMessage_tc3) {
+//                     thongBaoLoi(errorMessage_tc3.responseText);
+//                   },
+//                 });
+//               },
+//             });
+//           },
+//           error: function (errorMessage) {
+//             thongBaoLoi(errorMessage.responseText);
+//           },
+//         });
+//       },
+//       error: function (errorMessage) {
+//         thongBaoLoi(errorMessage.responseText);
+//       },
+//     });
+//   }
+// }
 
 //Kiểm tra hợp lệ trước khi thêm phiếu điểm rèn luyện
-function checkValidateInput() {
-  var _inputTBCHocKyTruoc = $("#inputTBCHocKyTruoc").val();
-  var _inputTBCHocKyDangXet = $("#inputTBCHocKyDangXet").val();
-  var _input_diemtongcong = $("#input_diemtongcong").val();
+// function checkValidateInput() {
+//   var _inputTBCHocKyTruoc = $("#inputTBCHocKyTruoc").val();
+//   var _inputTBCHocKyDangXet = $("#inputTBCHocKyDangXet").val();
+//   var _input_diemtongcong = $("#input_diemtongcong").val();
 
-  if (_input_diemtongcong == "") {
-    thongBaoLoi("Vui lòng nhập điểm TỔNG CỘNG cuối cùng.");
-    return false;
-  }
+//   if (_input_diemtongcong == "") {
+//     thongBaoLoi("Vui lòng nhập điểm TỔNG CỘNG cuối cùng.");
+//     return false;
+//   }
 
-  if (_input_diemtongcong > 100) {
-    thongBaoLoi("Điểm tổng cộng không quá 100! Mời nhập lại!.");
-    return false;
-  }
+//   if (_input_diemtongcong > 100) {
+//     thongBaoLoi("Điểm tổng cộng không quá 100! Mời nhập lại!.");
+//     return false;
+//   }
 
-  if (_inputTBCHocKyTruoc != null) {
-    if (isNaN(parseFloat(_inputTBCHocKyTruoc))) {
-      thongBaoLoi("Điểm trung bình chung phải là số! Mời nhập lại!");
-      return false;
-    } else {
-      if (parseFloat(_inputTBCHocKyTruoc) > 4) {
-        thongBaoLoi("Điểm trung bình chung phải nhỏ hơn 4 (hệ 4)!");
-        return false;
-      }
-    }
-  }
+//   if (_inputTBCHocKyTruoc != null) {
+//     if (isNaN(parseFloat(_inputTBCHocKyTruoc))) {
+//       thongBaoLoi("Điểm trung bình chung phải là số! Mời nhập lại!");
+//       return false;
+//     } else {
+//       if (parseFloat(_inputTBCHocKyTruoc) > 4) {
+//         thongBaoLoi("Điểm trung bình chung phải nhỏ hơn 4 (hệ 4)!");
+//         return false;
+//       }
+//     }
+//   }
 
-  if (_inputTBCHocKyDangXet != null) {
-    if (isNaN(parseFloat(_inputTBCHocKyDangXet))) {
-      thongBaoLoi("Điểm trung bình chung phải là số! Mời nhập lại!");
-      return false;
-    } else {
-      if (parseFloat(_inputTBCHocKyTruoc) > 4) {
-        thongBaoLoi("Điểm trung bình chung phải nhỏ hơn 4 (hệ 4)!");
-        return false;
-      }
-    }
-  }
+//   if (_inputTBCHocKyDangXet != null) {
+//     if (isNaN(parseFloat(_inputTBCHocKyDangXet))) {
+//       thongBaoLoi("Điểm trung bình chung phải là số! Mời nhập lại!");
+//       return false;
+//     } else {
+//       if (parseFloat(_inputTBCHocKyTruoc) > 4) {
+//         thongBaoLoi("Điểm trung bình chung phải nhỏ hơn 4 (hệ 4)!");
+//         return false;
+//       }
+//     }
+//   }
 
-  return true;
-}
+//   return true;
+// }
 
 //Chấm điểm rèn luyện
 
 //Load thông tin sinh viên đã đánh giá (chamlaichitiet)
-function LoadThongTinSinhVienDanhGia() {
-  var maPhieuRenLuyen = "PRL" + GET_MaHocKy + getCookie("maSo");
+// function LoadThongTinSinhVienDanhGia() {
+//   var maPhieuRenLuyen = "PRL" + GET_MaHocKy + getCookie("maSo");
 
-  $.ajax({
-    url: urlapi_phieurenluyen_single_read + maPhieuRenLuyen,
-    async: false,
-    type: "GET",
-    contentType: "application/json;charset=utf-8",
-    dataType: "json",
-    headers: {
-      Authorization: jwtCookie,
-    },
-    success: function (result_PRL) {
-      var xepLoai = result_PRL.xepLoai;
-      var diemTongCong = result_PRL.diemTongCong;
-      var diemTrungBinhChungHKTruoc = result_PRL.diemTrungBinhChungHKTruoc;
-      var diemTrungBinhChungHKXet = result_PRL.diemTrungBinhChungHKXet;
+//   $.ajax({
+//     url: urlapi_phieurenluyen_single_read + maPhieuRenLuyen,
+//     async: false,
+//     type: "GET",
+//     contentType: "application/json;charset=utf-8",
+//     dataType: "json",
+//     headers: {
+//       Authorization: jwtCookie,
+//     },
+//     success: function (result_PRL) {
+//       var xepLoai = result_PRL.xepLoai;
+//       var diemTongCong = result_PRL.diemTongCong;
+//       var diemTrungBinhChungHKTruoc = result_PRL.diemTrungBinhChungHKTruoc;
+//       var diemTrungBinhChungHKXet = result_PRL.diemTrungBinhChungHKXet;
 
-      $.ajax({
-        url: urlapi_chamdiemrenluyen_read_maPhieuRenLuyen + maPhieuRenLuyen,
-        async: false,
-        type: "GET",
-        contentType: "application/json;charset=utf-8",
-        dataType: "json",
-        headers: {
-          Authorization: jwtCookie,
-        },
-        success: function (result_CD) {
-          $("#inputTBCHocKyTruoc").val(diemTrungBinhChungHKTruoc);
-          $("#inputTBCHocKyDangXet").val(diemTrungBinhChungHKXet);
-          $("#input_diemtongcong").val(diemTongCong);
-          $("#CVHT_input_diemtongcong").val(diemTongCong);
-          $("#text_XepLoai").text(xepLoai);
+//       $.ajax({
+//         url: urlapi_chamdiemrenluyen_read_maPhieuRenLuyen + maPhieuRenLuyen,
+//         async: false,
+//         type: "GET",
+//         contentType: "application/json;charset=utf-8",
+//         dataType: "json",
+//         headers: {
+//           Authorization: jwtCookie,
+//         },
+//         success: function (result_CD) {
+//           $("#inputTBCHocKyTruoc").val(diemTrungBinhChungHKTruoc);
+//           $("#inputTBCHocKyDangXet").val(diemTrungBinhChungHKXet);
+//           $("#input_diemtongcong").val(diemTongCong);
+//           $("#CVHT_input_diemtongcong").val(diemTongCong);
+//           $("#text_XepLoai").text(xepLoai);
 
-          $.each(result_CD, function (index_cd) {
-            for (var p = 0; p < result_CD[index_cd].length; p++) {
-              var maTieuChi2 = result_CD[index_cd][p].maTieuChi2;
-              var maTieuChi3 = result_CD[index_cd][p].maTieuChi3;
-              var diemSinhVienDanhGia =
-                result_CD[index_cd][p].diemSinhVienDanhGia;
-              var diemLopDanhGia = result_CD[index_cd][p].diemLopDanhGia;
+//           $.each(result_CD, function (index_cd) {
+//             for (var p = 0; p < result_CD[index_cd].length; p++) {
+//               var maTieuChi2 = result_CD[index_cd][p].maTieuChi2;
+//               var maTieuChi3 = result_CD[index_cd][p].maTieuChi3;
+//               var diemSinhVienDanhGia =
+//                 result_CD[index_cd][p].diemSinhVienDanhGia;
+//               var diemLopDanhGia = result_CD[index_cd][p].diemLopDanhGia;
 
-              var fileMinhChung = result_CD[index_cd][p].fileMinhChung;
-              var fileMinhChung_Name = fileMinhChung.substring(
-                fileMinhChung.lastIndexOf("/") + 1
-              );
+//               var fileMinhChung = result_CD[index_cd][p].fileMinhChung;
+//               var fileMinhChung_Name = fileMinhChung.substring(
+//                 fileMinhChung.lastIndexOf("/") + 1
+//               );
 
-              $("#tbody_noiDungDanhGia")
-                .find("input")
-                .each(function () {
-                  var tieuChi = this.id.slice(0, 3);
-                  var maTieuChi = this.id.slice(4, 9);
+//               $("#tbody_noiDungDanhGia")
+//                 .find("input")
+//                 .each(function () {
+//                   var tieuChi = this.id.slice(0, 3);
+//                   var maTieuChi = this.id.slice(4, 9);
 
-                  if (tieuChi == "TC2") {
-                    if (maTieuChi2 == maTieuChi) {
-                      $("#" + this.id).val(diemSinhVienDanhGia);
+//                   if (tieuChi == "TC2") {
+//                     if (maTieuChi2 == maTieuChi) {
+//                       $("#" + this.id).val(diemSinhVienDanhGia);
 
-                      $("#show_file_minhchung_" + this.id).text(
-                        fileMinhChung_Name
-                      );
-                      $("#show_file_minhchung_" + this.id).attr(
-                        "href",
-                        fileMinhChung
-                      );
+//                       $("#show_file_minhchung_" + this.id).text(
+//                         fileMinhChung_Name
+//                       );
+//                       $("#show_file_minhchung_" + this.id).attr(
+//                         "href",
+//                         fileMinhChung
+//                       );
 
-                      if (diemLopDanhGia != 0) {
-                        $("#CVHT_" + this.id).val(diemLopDanhGia);
-                      } else {
-                        $("#CVHT_" + this.id).val(diemSinhVienDanhGia);
-                      }
-                    }
-                  }
+//                       if (diemLopDanhGia != 0) {
+//                         $("#CVHT_" + this.id).val(diemLopDanhGia);
+//                       } else {
+//                         $("#CVHT_" + this.id).val(diemSinhVienDanhGia);
+//                       }
+//                     }
+//                   }
 
-                  if (tieuChi == "TC3") {
-                    if (maTieuChi3 == maTieuChi) {
-                      $("#" + this.id).val(diemSinhVienDanhGia);
+//                   if (tieuChi == "TC3") {
+//                     if (maTieuChi3 == maTieuChi) {
+//                       $("#" + this.id).val(diemSinhVienDanhGia);
 
-                      $("#show_file_minhchung_" + this.id).text(
-                        fileMinhChung_Name
-                      );
-                      $("#show_file_minhchung_" + this.id).attr(
-                        "href",
-                        fileMinhChung
-                      );
+//                       $("#show_file_minhchung_" + this.id).text(
+//                         fileMinhChung_Name
+//                       );
+//                       $("#show_file_minhchung_" + this.id).attr(
+//                         "href",
+//                         fileMinhChung
+//                       );
 
-                      if (diemLopDanhGia != 0) {
-                        $("#CVHT_" + this.id).val(diemLopDanhGia);
-                      } else {
-                        $("#CVHT_" + this.id).val(diemSinhVienDanhGia);
-                      }
-                    }
-                  }
-                });
-            }
-          });
-        },
-        error: function (errorMessage_tc3) {
-          window.location.href = "chamdiem.php"; //nếu chưa chấm thì kh được phép vào trang chamlaichitiet
-          thongBaoLoi(errorMessage_tc3.responseText);
-        },
-      });
-    },
-    error: function (errorMessage_tc3) {
-      window.location.href = "chamdiem.php"; //nếu chưa chấm thì kh được phép vào trang chamlaichitiet
-    },
-  });
-}
+//                       if (diemLopDanhGia != 0) {
+//                         $("#CVHT_" + this.id).val(diemLopDanhGia);
+//                       } else {
+//                         $("#CVHT_" + this.id).val(diemSinhVienDanhGia);
+//                       }
+//                     }
+//                   }
+//                 });
+//             }
+//           });
+//         },
+//         error: function (errorMessage_tc3) {
+//           window.location.href = "chamdiem.php"; //nếu chưa chấm thì kh được phép vào trang chamlaichitiet
+//           thongBaoLoi(errorMessage_tc3.responseText);
+//         },
+//       });
+//     },
+//     error: function (errorMessage_tc3) {
+//       window.location.href = "chamdiem.php"; //nếu chưa chấm thì kh được phép vào trang chamlaichitiet
+//     },
+//   });
+// }
 
 //hàm dùng khi onclick modal
 function LoadDanhSachHoatDongDaThamGia(maHocKyDanhGia, maTieuChi, maSinhVien) {
@@ -988,91 +999,91 @@ function LoadDanhSachHoatDongDaThamGia(maHocKyDanhGia, maTieuChi, maSinhVien) {
   });
 }
 
-function LoadDiemNhanDuocCuaHoatDong_LenForm(maHocKyDanhGia, maSinhVien) {
-  //Load điểm nhận được từ hoạt động lên form sẵn
+// function LoadDiemNhanDuocCuaHoatDong_LenForm(maHocKyDanhGia, maSinhVien) {
+//   //Load điểm nhận được từ hoạt động lên form sẵn
 
-  $.ajax({
-    url: urlapi_thamgiahoatdong_read_MaSV + maSinhVien,
-    async: false,
-    type: "GET",
-    contentType: "application/json;charset=utf-8",
-    dataType: "json",
-    headers: {
-      Authorization: jwtCookie,
-    },
-    success: function (result_CD) {
-      $.each(result_CD, function (index_cd) {
-        for (var p = 0; p < result_CD[index_cd].length; p++) {
-          var tongDiemHoatDong_TrenTieuChi = 0;
-          var thamgiahd_maHoatDong = result_CD[index_cd][p].maHoatDong;
+//   $.ajax({
+//     url: urlapi_thamgiahoatdong_read_MaSV + maSinhVien,
+//     async: false,
+//     type: "GET",
+//     contentType: "application/json;charset=utf-8",
+//     dataType: "json",
+//     headers: {
+//       Authorization: jwtCookie,
+//     },
+//     success: function (result_CD) {
+//       $.each(result_CD, function (index_cd) {
+//         for (var p = 0; p < result_CD[index_cd].length; p++) {
+//           var tongDiemHoatDong_TrenTieuChi = 0;
+//           var thamgiahd_maHoatDong = result_CD[index_cd][p].maHoatDong;
 
-          $.ajax({
-            url: urlapi_hoatdongdanhgia_single_read + thamgiahd_maHoatDong,
-            async: false,
-            type: "GET",
-            contentType: "application/json;charset=utf-8",
-            dataType: "json",
-            headers: {
-              Authorization: jwtCookie,
-            },
-            success: function (result_hoatdongdanhgia) {
-              if (result_hoatdongdanhgia.maHocKyDanhGia == maHocKyDanhGia) {
-                $("#tbody_noiDungDanhGia")
-                  .find("input")
-                  .each(function () {
-                    var tieuChi = this.id.slice(0, 3);
-                    var maTieuChi = this.id.slice(4, 9);
-                    var max_value = $(this).attr("max_value");
+//           $.ajax({
+//             url: urlapi_hoatdongdanhgia_single_read + thamgiahd_maHoatDong,
+//             async: false,
+//             type: "GET",
+//             contentType: "application/json;charset=utf-8",
+//             dataType: "json",
+//             headers: {
+//               Authorization: jwtCookie,
+//             },
+//             success: function (result_hoatdongdanhgia) {
+//               if (result_hoatdongdanhgia.maHocKyDanhGia == maHocKyDanhGia) {
+//                 $("#tbody_noiDungDanhGia")
+//                   .find("input")
+//                   .each(function () {
+//                     var tieuChi = this.id.slice(0, 3);
+//                     var maTieuChi = this.id.slice(4, 9);
+//                     var max_value = $(this).attr("max_value");
 
-                    if (tieuChi == "TC2") {
-                      if (result_hoatdongdanhgia.maTieuChi2 == maTieuChi) {
-                        if (this.value != null) {
-                          tongDiemHoatDong_TrenTieuChi =
-                            Number(this.value) +
-                            Number(result_hoatdongdanhgia.diemNhanDuoc);
-                        }
+//                     if (tieuChi == "TC2") {
+//                       if (result_hoatdongdanhgia.maTieuChi2 == maTieuChi) {
+//                         if (this.value != null) {
+//                           tongDiemHoatDong_TrenTieuChi =
+//                             Number(this.value) +
+//                             Number(result_hoatdongdanhgia.diemNhanDuoc);
+//                         }
 
-                        if (
-                          Number(tongDiemHoatDong_TrenTieuChi) >
-                          Number(max_value)
-                        ) {
-                          $("#" + this.id).val(max_value);
-                        } else {
-                          $("#" + this.id).val(tongDiemHoatDong_TrenTieuChi);
-                        }
-                      }
-                    }
+//                         if (
+//                           Number(tongDiemHoatDong_TrenTieuChi) >
+//                           Number(max_value)
+//                         ) {
+//                           $("#" + this.id).val(max_value);
+//                         } else {
+//                           $("#" + this.id).val(tongDiemHoatDong_TrenTieuChi);
+//                         }
+//                       }
+//                     }
 
-                    if (tieuChi == "TC3") {
-                      if (result_hoatdongdanhgia.maTieuChi3 == maTieuChi) {
-                        if (this.value != null) {
-                          tongDiemHoatDong_TrenTieuChi =
-                            Number(this.value) +
-                            Number(result_hoatdongdanhgia.diemNhanDuoc);
-                        }
+//                     if (tieuChi == "TC3") {
+//                       if (result_hoatdongdanhgia.maTieuChi3 == maTieuChi) {
+//                         if (this.value != null) {
+//                           tongDiemHoatDong_TrenTieuChi =
+//                             Number(this.value) +
+//                             Number(result_hoatdongdanhgia.diemNhanDuoc);
+//                         }
 
-                        if (
-                          Number(tongDiemHoatDong_TrenTieuChi) >
-                          Number(max_value)
-                        ) {
-                          $("#" + this.id).val(max_value);
-                        } else {
-                          $("#" + this.id).val(tongDiemHoatDong_TrenTieuChi);
-                        }
-                      }
-                    }
-                  });
-              }
-            },
-            error: function (errorMessage_tc3) {
-              thongBaoLoi(errorMessage_tc3.responseText);
-            },
-          });
-        }
-      });
-    },
-    error: function (errorMessage_tc3) {
-      //thongBaoLoi(errorMessage_tc3.responseText);
-    },
-  });
-}
+//                         if (
+//                           Number(tongDiemHoatDong_TrenTieuChi) >
+//                           Number(max_value)
+//                         ) {
+//                           $("#" + this.id).val(max_value);
+//                         } else {
+//                           $("#" + this.id).val(tongDiemHoatDong_TrenTieuChi);
+//                         }
+//                       }
+//                     }
+//                   });
+//               }
+//             },
+//             error: function (errorMessage_tc3) {
+//               thongBaoLoi(errorMessage_tc3.responseText);
+//             },
+//           });
+//         }
+//       });
+//     },
+//     error: function (errorMessage_tc3) {
+//       //thongBaoLoi(errorMessage_tc3.responseText);
+//     },
+//   });
+// }

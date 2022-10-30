@@ -95,12 +95,14 @@ function checkLoiDangNhap(message) {
 var jwtCookie = getCookie("jwt");
 
 //phieurenluyen//
-function GetListPhieurenluyen(maLop) {
+function GetListPhieurenluyen(maLop, maHocKyDanhGia) {
   $("#id_tbodyPhieuRenLuyen tr").remove();
 
   if (maLop) {
     $.ajax({
-      url: urlapi_phieurenluyen_read_MaLop + maLop,
+      url:
+        urlapi_phieurenluyen_read +
+        `?maLop=${maLop}&maHocKyDanhGia=${maHocKyDanhGia}`,
       type: "GET",
       contentType: "application/json;charset=utf-8",
       dataType: "json",
@@ -388,6 +390,46 @@ function LoadComboBoxThongTinLopTheoKhoa(maKhoa) {
     //LoadComboBoxThongTinKhoa();
     $("#select_Lop").find("option").remove();
   }
+}
+
+function LoadComboBoxThongTinHocKyDanhGia() {
+  //Load HocKyDanhGia
+  $.ajax({
+    url: urlapi_hockydanhgia_read,
+    type: "GET",
+    contentType: "application/json;charset=utf-8",
+    dataType: "json",
+    async: false,
+    headers: { Authorization: jwtCookie },
+    success: function (result) {
+      $("#select_HocKyDanhGia").find("option").remove();
+
+      $.each(result, function (index) {
+        for (var p = 0; p < result[index].length; p++) {
+          $("#select_HocKyDanhGia").append(
+            "<option value='" +
+              result[index][p].maHocKyDanhGia +
+              "'>" +
+              "Học kỳ: " +
+              result[index][p].hocKyXet +
+              " - Năm học: " +
+              result[index][p].namHocXet +
+              "</option>"
+          );
+        }
+      });
+    },
+    error: function (errorMessage) {
+      checkLoiDangNhap(errorMessage.responseJSON.message);
+
+      Swal.fire({
+        icon: "error",
+        title: "Lỗi",
+        text: errorMessage.responseJSON.message,
+        timerProgressBar: true,
+      });
+    },
+  });
 }
 
 function checkValidateInput() {

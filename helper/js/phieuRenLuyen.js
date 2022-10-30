@@ -848,7 +848,10 @@ function createPhieuRenLuyenForm(
                         </td>\
                         <td>\
                         <div class='box'>" +
-              (isAllowedToScore(thongBaoDanhGia, userRole, [roleSinhVien])
+              (isAllowedToScore(thongBaoDanhGia, userRole, [
+                roleSinhVien,
+                roleCVHT,
+              ])
                 ? "<a href='#' id='show_file_minhchung_TC2_" +
                   tcc2.matc2 +
                   "' target='_blank' ></a>\
@@ -870,7 +873,7 @@ function createPhieuRenLuyenForm(
                   "' target='_blank' style='display:none' ></a>\
                   <button type='button' class='btn btn-light btn_AnhMinhChung' data-bs-toggle='modal' data-bs-target='#AnhMinhChungModal' data-img-id='img_file_minhchung_TC2_" +
                   tcc2.matc2 +
-                  "' ><img src='#' id='img_file_minhchung_TC2_" +
+                  "' ><img src='' id='img_file_minhchung_TC2_" +
                   tcc2.matc2 +
                   "' width='100px' /></button>\
                   <form id='formDanhGiaDRL_TC2_" +
@@ -1080,7 +1083,10 @@ function createPhieuRenLuyenForm(
                       </td>\
                       <td>\
                       <div class='box'>" +
-                  (isAllowedToScore(thongBaoDanhGia, userRole, [roleSinhVien])
+                  (isAllowedToScore(thongBaoDanhGia, userRole, [
+                    roleSinhVien,
+                    roleCVHT,
+                  ])
                     ? "<a href='#' id='show_file_minhchung_TC3_" +
                       tcc3.matc3 +
                       "' target='_blank' ></a>\
@@ -1102,7 +1108,7 @@ function createPhieuRenLuyenForm(
                       "' target='_blank' style='display:none' ></a>\
                           <button type='button' class='btn btn-light btn_AnhMinhChung' data-bs-toggle='modal' data-bs-target='#AnhMinhChungModal' data-img-id='img_file_minhchung_TC3_" +
                       tcc3.matc3 +
-                      "' ><img src='#' id='img_file_minhchung_TC3_" +
+                      "' ><img src='' id='img_file_minhchung_TC3_" +
                       tcc3.matc3 +
                       "' width='100px' /></button>\
                           <form id='formDanhGiaDRL_TC3_" +
@@ -1289,7 +1295,9 @@ function setDiemPhieuRenLuyen(
 
               // Hiện file minh chứng
               $(selector + "#show_file_minhchung_" + this.id).text(
-                fileMinhChung_Name
+                fileMinhChung_Name.length > 10
+                  ? fileMinhChung_Name.substring(0, 10) + "..."
+                  : fileMinhChung_Name
               );
               $(selector + "#show_file_minhchung_" + this.id).attr(
                 "href",
@@ -1406,7 +1414,7 @@ function createFormDataDiemDanhGia(diemDanhGia) {
 function createDiemDanhGia(input, userRole, maPhieuRenLuyen, maSinhVien) {
   var formDataDiemDanhGia = null;
 
-  if (userRole == "sinhvien") {
+  if (userRole == roleSinhVien) {
     var _inputDiemSVDanhGia = input.value;
     var tieuChi = input.id.slice(0, 3);
 
@@ -1472,7 +1480,7 @@ function createDiemDanhGia(input, userRole, maPhieuRenLuyen, maSinhVien) {
 function updateDiemDanhGia(input, userRole, diemDanhGiaCu) {
   var formDataDiemDanhGia = null;
 
-  if (userRole == "sinhvien") {
+  if (userRole == roleSinhVien) {
     var _inputDiemSVDanhGia = input.value;
     var tieuChi = input.id.slice(0, 3);
 
@@ -1503,7 +1511,7 @@ function updateDiemDanhGia(input, userRole, diemDanhGiaCu) {
         formDataDiemDanhGia = createFormDataDiemDanhGia(diemDanhGiaMoi);
       }
     }
-  } else if (userRole == "cvht") {
+  } else if (userRole == roleCVHT) {
     var _inputDiemLopDanhGia = input.value;
     var tieuChi = input.id.slice(0, 8);
 
@@ -1534,7 +1542,7 @@ function updateDiemDanhGia(input, userRole, diemDanhGiaCu) {
         formDataDiemDanhGia = createFormDataDiemDanhGia(diemDanhGiaMoi);
       }
     }
-  } else if (userRole == "khoa") {
+  } else if (userRole == roleKhoa) {
     var _inputDiemKhoaDanhGia = input.value;
     var tieuChi = input.id.slice(0, 8);
 
@@ -1593,7 +1601,12 @@ function updateDiemDanhGia(input, userRole, diemDanhGiaCu) {
   return false;
 }
 
-function xuLyDanhGiaDiemRenLuyen(phieuRenLuyen, userRole, selector, callback) {
+function xuLyLuuDiemRenLuyen(
+  phieuRenLuyen,
+  userRole,
+  selector,
+  successCallback
+) {
   selector += " ";
 
   $(selector).on("submit", function (e) {
@@ -1608,9 +1621,9 @@ function xuLyDanhGiaDiemRenLuyen(phieuRenLuyen, userRole, selector, callback) {
       if (confirmation.isConfirmed) {
         if (
           isAllowedToScore(phieuRenLuyen.thongBaoDanhGia, userRole, [
-            "sinhvien",
-            "cvht",
-            "khoa",
+            roleSinhVien,
+            roleCVHT,
+            roleKhoa,
           ])
         ) {
           var maPhieuRenLuyen;
@@ -1643,7 +1656,7 @@ function xuLyDanhGiaDiemRenLuyen(phieuRenLuyen, userRole, selector, callback) {
           if (
             typeof phieuRenLuyen.thongTinPhieu.maPhieuRenLuyen === "undefined"
           ) {
-            if (userRole == "sinhvien") {
+            if (userRole == roleSinhVien) {
               maPhieuRenLuyen =
                 "PRL" +
                 phieuRenLuyen.hocKyDanhGia.maHocKyDanhGia +
@@ -1706,18 +1719,26 @@ function xuLyDanhGiaDiemRenLuyen(phieuRenLuyen, userRole, selector, callback) {
               phieuRenLuyen.thongTinPhieu.maPhieuRenLuyen
             );
 
-            if (userRole == "cvht") {
+            if (userRole == roleCVHT) {
               formDataPRL.append("coVanDuyet", 1);
               formDataPRL.append(
                 "khoaDuyet",
                 phieuRenLuyen.thongTinPhieu.khoaDuyet
               );
-            } else if (userRole == "khoa") {
+            } else if (userRole == roleKhoa) {
               formDataPRL.append(
                 "coVanDuyet",
                 phieuRenLuyen.thongTinPhieu.coVanDuyet
               );
               formDataPRL.append("khoaDuyet", 1);
+            }
+
+            if (phieuRenLuyen.thongTinPhieu.khoaDuyet == 1) {
+              formDataPRL.set(
+                "diemTongCong",
+                phieuRenLuyen.thongTinPhieu.diemTongCong
+              );
+              formDataPRL.set("xepLoai", phieuRenLuyen.thongTinPhieu.xepLoai);
             }
 
             //Update phiếu rèn luyện trước
@@ -1741,8 +1762,8 @@ function xuLyDanhGiaDiemRenLuyen(phieuRenLuyen, userRole, selector, callback) {
                   diemTrungBinhChungHKTruoc: diemTBCHKTruoc,
                   diemTrungBinhChungHKXet: diemTBCHKDangXet,
                   maHocKyDanhGia: phieuRenLuyen.hocKyDanhGia.maHocKyDanhGia,
-                  coVanDuyet: userRole == "cvht" ? 1 : 0,
-                  khoaDuyet: userRole == "khoa" ? 1 : 0,
+                  coVanDuyet: userRole == roleCVHT ? 1 : 0,
+                  khoaDuyet: userRole == roleKhoa ? 1 : 0,
                 };
               },
               error: function (error) {
@@ -1776,15 +1797,7 @@ function xuLyDanhGiaDiemRenLuyen(phieuRenLuyen, userRole, selector, callback) {
             }
           }
 
-          Swal.fire({
-            icon: "success",
-            title: "Thành công",
-            text: "Duyệt điểm rèn luyện thành công!",
-            timer: 2000,
-            timerProgressBar: true,
-          });
-
-          callback();
+          successCallback();
         } else {
           alertError("Rất tiếc! Đã hết thời gian đánh giá!");
           return;

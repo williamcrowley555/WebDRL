@@ -34,15 +34,18 @@ class PhieuRenLuyen
         return $stmt;
     }
 
-    // GET ALL THEO MA LOP
-    public function getAllPhieuRenLuyen_TheoMaLop($maLop)
+    // GET ALL THEO MA LOP VA MA HOC KY DANH GIA
+    public function getAllPhieuRenLuyen_TheoMaLopVaMaHKDG($maLop, $maHocKyDanhGia)
     {
         $sqlQuery = "SELECT maPhieuRenLuyen, xepLoai, diemTongCong, sinhvien.maSinhVien, diemTrungBinhChungHKTruoc, diemTrungBinhChungHKXet, maHocKyDanhGia, coVanDuyet, khoaDuyet 
                         FROM " . $this->db_table . ", sinhvien 
-                        WHERE phieurenluyen.maSinhVien = sinhvien.maSinhVien AND maLop = ? 
+                        WHERE phieurenluyen.maSinhVien = sinhvien.maSinhVien 
+                            AND maLop = ? 
+                            AND phieurenluyen.maHocKyDanhGia = ? 
                         ORDER BY maHocKyDanhGia DESC";
         $stmt = $this->conn->prepare($sqlQuery);
         $stmt->bindParam(1, $maLop);
+        $stmt->bindParam(2, $maHocKyDanhGia);
         $stmt->execute();
         return $stmt;
     }

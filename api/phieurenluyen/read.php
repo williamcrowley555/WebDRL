@@ -36,6 +36,12 @@ if ($data["status"] == 1 ) {
             $GET_maLop = null;
         }
 
+        if (isset($_GET['maHocKyDanhGia'])) {
+            $GET_maHocKyDanhGia = $_GET['maHocKyDanhGia'];
+        } else {
+            $GET_maHocKyDanhGia = null;
+        }
+
         if (isset($_GET['maSinhVien'])) {
             $GET_maSinhVien = $_GET['maSinhVien'];
         } else {
@@ -144,9 +150,9 @@ if ($data["status"] == 1 ) {
                     array("message" => "Không tìm thấy kết quả.")
                 );
             }
-        } else if ($GET_maLop != null) {
+        } else if ($GET_maLop != null && $GET_maHocKyDanhGia != null) {
             $items = new PhieuRenLuyen($db);
-            $stmt = $items->getAllPhieuRenLuyen_TheoMaLop($GET_maLop);
+            $stmt = $items->getAllPhieuRenLuyen_TheoMaLopVaMaHKDG($GET_maLop, $GET_maHocKyDanhGia);
             $itemCount = $stmt->rowCount();
     
             if ($itemCount > 0) {

@@ -44,6 +44,13 @@
 							</select>
 						</div>
 
+                        <div class="col-auto">
+
+                            <select class="form-select w-auto" id='select_HocKyDanhGia'>
+
+                            </select>
+                        </div>
+
 						<div class="col-auto">
                             <input type="text" id="input_timKiemMaPhieuRenLuyen" name="" class="form-control" placeholder="Nhập mã phiếu rèn luyện">
                         </div>
@@ -245,12 +252,10 @@
 
     LoadComboBoxThongTinLopTheoKhoa($('#select_Khoa').val());
 
+    LoadComboBoxThongTinHocKyDanhGia();
+
 	//hàm trong function.js
-	GetListPhieurenluyen($('#select_Lop').val());
-
-	// getTieuChiDanhGia();
-
-	// TinhDiemTongCong();
+	GetListPhieurenluyen($('#select_Lop').val(), $('#select_HocKyDanhGia').val());
 
     function onlyLettersAndNumbers(str) {
 		return /^[A-Za-z0-9]*$/.test(str);
@@ -282,17 +287,27 @@
 		LoadComboBoxThongTinLopTheoKhoa(maKhoa_selected);
 
 		var maLop_selected = $('#select_Lop').val();
+        var maHocKyDanhGia_selected = $('#select_HocKyDanhGia').val();
 
-		GetListPhieurenluyen(maLop_selected);
+		GetListPhieurenluyen(maLop_selected, maHocKyDanhGia_selected);
 	});
 
     $('#select_Lop').on('change', function() {
         $('#input_timKiemMaPhieuRenLuyen').val('');
         
-        var maKhoa_selected = $('#select_Khoa').val();
         var maLop_selected = $('#select_Lop').val();
+        var maHocKyDanhGia_selected = $('#select_HocKyDanhGia').val();
 
-        GetListPhieurenluyen(maLop_selected);
+		GetListPhieurenluyen(maLop_selected, maHocKyDanhGia_selected);
+    });
+
+    $('#select_HocKyDanhGia').on('change', function() {
+        $('#input_timKiemMaPhieuRenLuyen').val('');
+        
+        var maLop_selected = $('#select_Lop').val();
+        var maHocKyDanhGia_selected = $('#select_HocKyDanhGia').val();
+
+        GetListPhieurenluyen(maLop_selected, maHocKyDanhGia_selected);
     });
 
     $('#btn_timKiemMaPhieuRenLuyen').on('click', function() {
@@ -306,255 +321,6 @@
             $('#btn_timKiemMaPhieuRenLuyen').click();
         }
     }); 
-
-	// function TinhDiemTongCong() {
-
-	// 	//Code tự tính điểm tổng cộng-------------------//
-    //     let calDiemTongCong_SinhVien = 0;
-    //     let calDiemTongCong_CVHT = 0;
-    //     let calDiemTongCong_Khoa = 0;
-    //     let calDiemTongTieuChi1_SinhVien = 0;
-    //     let calDiemTongTieuChi1_CVHT = 0;
-    //     let calDiemTongTieuChi1_Khoa = 0;
-    //     $("#tbody_noiDungDanhGia").find("input").each(function() {
-    //         var tieuChi_SinhVien = this.id.slice(0, 3);
-    //         var tieuChi = this.id.slice(0, 8);
-    //         var idDiemTongTieuChi1_SinhVien = this.id.slice(0, 12);
-    //         var idDiemTongTieuChi1 = this.id.slice(0, 17);
-
-    //         if (tieuChi_SinhVien == 'TC2' || tieuChi_SinhVien == 'TC3') {
-    //             if (this.value != null) {
-    //                 calDiemTongTieuChi1_SinhVien += Number(this.value);
-    //                //calDiemTongCong_SinhVien += Number(this.value);
-    //             }
-    //         }
-
-    //         if (tieuChi == 'CVHT_TC2' || tieuChi == 'CVHT_TC3') {
-    //             if (this.value != null) {
-    //                // calDiemTongCong += Number(this.value);
-    //                calDiemTongTieuChi1_CVHT += Number(this.value);
-    //                 //calDiemTongCong_CVHT += Number(this.value);
-    //             }
-    //         }
-
-    //         if (tieuChi == 'Khoa_TC2' || tieuChi == 'Khoa_TC3') {
-    //             if (this.value != null) {
-    //                // calDiemTongCong += Number(this.value);
-    //                calDiemTongTieuChi1_Khoa += Number(this.value);
-    //                //calDiemTongCong_Khoa += Number(this.value);
-    //             }
-    //         }
-
-    //         // Điểm tổng cộng tiêu chí 1 của sinh viên
-    //         if (idDiemTongTieuChi1_SinhVien == 'TongCong_TC1') {
-    //             var diemToiDa_TC1 = $('#' + this.id).attr('max-value');
-
-    //             if (calDiemTongTieuChi1_SinhVien > diemToiDa_TC1) {
-    //                 $('#' + this.id).val(diemToiDa_TC1);
-
-    //                 calDiemTongCong_SinhVien += Number(diemToiDa_TC1);
-    //                 calDiemTongTieuChi1_SinhVien = 0;
-    //             } else {
-    //                 $('#' + this.id).val(calDiemTongTieuChi1_SinhVien);
-
-    //                 calDiemTongCong_SinhVien += Number(calDiemTongTieuChi1_SinhVien);
-    //                 calDiemTongTieuChi1_SinhVien = 0;
-    //             }
-    //         }
-
-    //         // Điểm tổng cộng tiêu chí 1 của cvht
-    //         if (idDiemTongTieuChi1 == 'CVHT_TongCong_TC1') {
-    //             var diemToiDa_TC1_CVHT = $('#' + this.id).attr('max-value');
-
-    //             if (calDiemTongTieuChi1_CVHT > diemToiDa_TC1_CVHT) {
-    //                 $('#' + this.id).val(diemToiDa_TC1_CVHT);
-
-    //                 calDiemTongCong_CVHT += Number(diemToiDa_TC1_CVHT);
-    //                 calDiemTongTieuChi1_CVHT = 0;
-    //             } else {
-    //                 $('#' + this.id).val(calDiemTongTieuChi1_CVHT);
-
-    //                  calDiemTongCong_CVHT += Number(calDiemTongTieuChi1_CVHT);
-    //                  calDiemTongTieuChi1_CVHT = 0;
-    //             }
-    //         }
-
-    //         // Điểm tổng cộng tiêu chí 1 của khoa
-    //         if (idDiemTongTieuChi1 == 'Khoa_TongCong_TC1') {
-    //             var diemToiDa_TC1_Khoa = $('#' + this.id).attr('max-value');
-
-    //             if (calDiemTongTieuChi1_Khoa > diemToiDa_TC1_Khoa) {
-    //                 $('#' + this.id).val(diemToiDa_TC1_Khoa);
-
-    //                 calDiemTongCong_Khoa += Number(diemToiDa_TC1_Khoa);
-    //                 calDiemTongTieuChi1_Khoa = 0;
-    //             } else {
-    //                 $('#' + this.id).val(calDiemTongTieuChi1_Khoa);
-
-    //                  calDiemTongCong_Khoa += Number(calDiemTongTieuChi1_Khoa);
-    //                  calDiemTongTieuChi1_Khoa = 0;
-    //             }
-    //         }
-            
-    //     });
-
-    //     // Điểm tổng cộng của phiếu rèn luyện
-	// 	$("#input_diemtongcong").val(calDiemTongCong_SinhVien);
-    //     $("#CVHT_input_diemtongcong").val(calDiemTongCong_CVHT);
-
-	// 	if (calDiemTongCong_Khoa > 100){
-	// 		$("#Khoa_input_diemtongcong").val(100);
-	// 		$('#text_diemTongCong').text(100);
-	// 	}else{
-	// 		$("#Khoa_input_diemtongcong").val(calDiemTongCong_Khoa);
-	// 		$('#text_diemTongCong').text(calDiemTongCong_Khoa);
-	// 	}
-
-    //     // Điểm tổng cộng đã chốt
-	// 	var diemTong_XepLoai = Number($('#Khoa_input_diemtongcong').val());
-
-    //     $("#text_XepLoai").text(TinhXepLoai(diemTong_XepLoai));
-     
-    //     //Code tự tính điểm tổng cộng-------------------//
-	// }
-
-    //onchange
-    // $('#tbody_noiDungDanhGia').find("input").on('change', function() {
-    //     _isAllowedToScore = isAllowedToScore(phieuRenLuyen.thongBaoDanhGia, getCookie("quyen"), ["khoa"]);
-    //     if(_isAllowedToScore) {
-    //         TinhDiemTongCong();
-    //     }
-    // });
-
-    // $('#inputTBCHocKyDangXet').on('change', function() {
-    //     TuDongDienDiemTBC();
-    // });
-
-    // $('#inputTBCHocKyTruoc').on('change', function() {
-    //     TuDongDienDiemTBC();
-    // });
-
-    // function TuDongDienDiemTBC() {
-    //     var TBCHocKyDangXet = $('#inputTBCHocKyDangXet').val();
-    //     var TBCHocKyTruoc = $('#inputTBCHocKyTruoc').val();
-    //     var bac_HocKyDangXet = 0;
-    //     var bac_HocKyTruoc = 0;
-
-    //     $('#Khoa_TC3_1').val('');
-    //     $('#Khoa_TC3_2').val('');
-    //     $('#Khoa_TC3_3').val('');
-    //     $('#Khoa_TC3_4').val('');
-    //     $('#Khoa_TC3_5').val('');
-    //     $('#Khoa_TC3_6').val('');
-    //     $('#Khoa_TC3_7').val('');
-
-    //     //Hoc ky dang xet
-    //     if ((TBCHocKyDangXet >= 3.60) && (TBCHocKyDangXet <= 4)) {
-    //         $('#Khoa_TC3_1').val($('#Khoa_TC3_1').attr('max_value'));
-    //         bac_HocKyDangXet = 4;
-    //     }
-
-    //     if ((TBCHocKyDangXet >= 3.20) && (TBCHocKyDangXet <= 3.59)) {
-    //         $('#Khoa_TC3_2').val($('#Khoa_TC3_2').attr('max_value'));
-    //         bac_HocKyDangXet = 3;
-    //     }
-
-    //     if ((TBCHocKyDangXet >= 2.50) && (TBCHocKyDangXet <= 3.19)) {
-    //         $('#Khoa_TC3_3').val($('#Khoa_TC3_3').attr('max_value'));
-    //         bac_HocKyDangXet = 2;
-    //     }
-
-    //     if ((TBCHocKyDangXet >= 2) && (TBCHocKyDangXet <= 2.49)) {
-    //         $('#Khoa_TC3_4').val($('#Khoa_TC3_4').attr('max_value'));
-    //         bac_HocKyDangXet = 1;
-    //     }
-
-    //     if (TBCHocKyDangXet < 2) {
-    //         $('#Khoa_TC3_5').val($('#Khoa_TC3_5').attr('max_value'));
-    //     }
-
-    //     //Hoc ky truoc//
-    //     if ((TBCHocKyTruoc >= 3.60) && (TBCHocKyTruoc <= 4)) {
-    //         bac_HocKyTruoc = 4;
-    //     }
-
-    //     if ((TBCHocKyTruoc >= 3.20) && (TBCHocKyTruoc <= 3.59)) {
-    //         bac_HocKyTruoc = 3;
-    //     }
-
-    //     if ((TBCHocKyTruoc >= 2.50) && (TBCHocKyTruoc <= 3.19)) {
-    //         bac_HocKyTruoc = 2;
-    //     }
-
-    //     if ((TBCHocKyTruoc >= 2) && (TBCHocKyTruoc <= 2.49)) {
-    //         bac_HocKyTruoc = 1;
-    //     }
-
-    //     //console.log(bac_HocKyDangXet + "---" + bac_HocKyTruoc)
-    //     //So sanh bac
-    //     if ((bac_HocKyDangXet - bac_HocKyTruoc) == 1) {
-    //         $('#Khoa_TC3_6').val($('#Khoa_TC3_6').attr('max_value'));
-    //     }
-
-    //     if ((bac_HocKyDangXet - bac_HocKyTruoc) > 1) {
-    //         $('#Khoa_TC3_6').val($('#Khoa_TC3_6').attr('max_value'));
-    //     }
-
-
-    //     //Kích hoạt sự kiên onchange manually vì value set bằng javascript kh hoạt động onchange
-    //     input_TC3_1 = document.getElementById('Khoa_TC3_1');
-    //     ev_TC3_1 = document.createEvent('Event');
-    //     ev_TC3_1.initEvent('change', true, false);
-    //     input_TC3_1.dispatchEvent(ev_TC3_1);
-
-    //     input_TC3_2 = document.getElementById('Khoa_TC3_2');
-    //     ev_TC3_2 = document.createEvent('Event');
-    //     ev_TC3_2.initEvent('change', true, false);
-    //     input_TC3_2.dispatchEvent(ev_TC3_2);
-
-    //     input_TC3_3 = document.getElementById('Khoa_TC3_3');
-    //     ev_TC3_3 = document.createEvent('Event');
-    //     ev_TC3_3.initEvent('change', true, false);
-    //     input_TC3_3.dispatchEvent(ev_TC3_3);
-
-    //     input_TC3_4 = document.getElementById('Khoa_TC3_4');
-    //     ev_TC3_4 = document.createEvent('Event');
-    //     ev_TC3_4.initEvent('change', true, false);
-    //     input_TC3_4.dispatchEvent(ev_TC3_4);
-
-    //     input_TC3_5 = document.getElementById('Khoa_TC3_5');
-    //     ev_TC3_5 = document.createEvent('Event');
-    //     ev_TC3_5.initEvent('change', true, false);
-    //     input_TC3_5.dispatchEvent(ev_TC3_5);
-
-
-    // }
-	
-    // function TinhXepLoai(diemTong_XepLoai) {
-    //     if (diemTong_XepLoai >= 90 && diemTong_XepLoai <= 100) {
-    //         return 'Xuất sắc';
-    //     }
-
-    //     if (diemTong_XepLoai >= 80 && diemTong_XepLoai <= 89) {
-    //         return 'Tốt';
-    //     }
-
-    //     if (diemTong_XepLoai >= 65 && diemTong_XepLoai <= 79) {
-    //         return 'Khá';
-    //     }
-
-    //     if (diemTong_XepLoai >= 50 && diemTong_XepLoai <= 64) {
-    //         return 'Trung bình';
-    //     }
-
-    //     if (diemTong_XepLoai >= 35 && diemTong_XepLoai <= 49) {
-    //         return 'Yếu';
-    //     }
-
-    //     if (diemTong_XepLoai < 35) {
-    //         return 'Kém';
-    //     }
-    // }
 
 	$(document).on("click", ".btn_XemVaDuyet", function() {
 
@@ -588,7 +354,7 @@
                 // Xóa nút duyệt điểm nếu user role không phải là 'khoa' hoặc nằm ngoài thời gian đánh giá
                 _isAllowedToScore = isAllowedToScore(phieuRenLuyen.thongBaoDanhGia, getCookie("quyen"), ["khoa"]);
                 if(!_isAllowedToScore) {
-                    $('#formDanhGiaDRL').find(':submit').remove();
+                    $('form#formDanhGiaDRL').find(':submit').remove();
                 }
             }
         } 
@@ -602,18 +368,25 @@
                             getCookie('quyen'), 
                             "#tbody_noiDungDanhGia");
 
-        xuLyDanhGiaDiemRenLuyen(phieuRenLuyen, getCookie('quyen'), "form#formDanhGiaDRL", function() {
-            GetListPhieurenluyen($('#select_Lop').val());
+        xuLyLuuDiemRenLuyen(phieuRenLuyen, getCookie('quyen'), "form#formDanhGiaDRL", function() {
+            Swal.fire({
+                icon: "success",
+                title: "Thành công",
+                text: "Duyệt điểm rèn luyện thành công!",
+                timer: 2000,
+                timerProgressBar: true,
+            });
+
+            // Lấy lại thông tin phiếu nếu đã cập nhật điểm
+            phieuRenLuyen = getThongTinPhieuRenLuyen(maPhieuRenLuyen);
+            GetListPhieurenluyen($('#select_Lop').val(), $('#select_HocKyDanhGia').val());
         });
 	})
 
     $(document).on("submit", ".form_exportPDFPhieuRenLuyen", function(e) {
-        // e.preventDefault();
         let maPhieuRenLuyen = $(this).parent().children('.btn_XemVaDuyet').attr('data-id');
 
         phieuRenLuyen = getThongTinPhieuRenLuyen(maPhieuRenLuyen);
-
-        // console.log(phieuRenLuyen)
 
         $(this).children('.data').val(
             JSON.stringify(phieuRenLuyen)
@@ -640,224 +413,5 @@
 
             $('#id_img_modal').attr("src", src_img_id);
     })
-
-	//Duyệt điểm
-	// function DuyetDiemRenLuyen() {
-    //     var GET_MaHocKy = $('#input_maHocKyDanhGia').text();
-    //     var GET_MaSinhVien = $('#text_maSV').text();
-    //     var GET_MaLop = $('#text_MaLop').text();
-
-    //     $("form#formDanhGiaDRL").on("submit", function(e) {
-    //         e.preventDefault();
-
-    //         Swal.fire({
-    //             title: 'Xác nhận duyệt điểm rèn luyện?',
-    //             showDenyButton: true,
-    //             confirmButtonText: 'Xác nhận',
-    //             denyButtonText: `Đóng`,
-    //         }).then((result) => {
-    //             if (result.isConfirmed) {
-    //                 if (checkValidateInput()) {
-    //                     var _inputMaSinhVien = GET_MaSinhVien;
-    //                     var _inputDiemTBCHKTruoc = $("#inputTBCHocKyTruoc").val();
-    //                     var _inputDiemTBCHKDangXet = $("#inputTBCHocKyDangXet").val();
-    //                     var _inputMaHocKyDanhGia = $("#input_maHocKyDanhGia").val();
-    //                     // var _inputDiemTongCong = Number($('#input_diemtongcong').val());
-    //                     var _inputXepLoai = '';
-
-    //                     var _inputMaPhieuRenLuyen = "PRL" + _inputMaHocKyDanhGia + _inputMaSinhVien;
-    //                     //vd: maPhieuRenLuyen = PRLHK121223118410262
-
-    //                     _inputXepLoai = $("#text_XepLoai").text();
-                        
-    //                     var formData = new FormData(document.getElementById('formDanhGiaDRL'));
-    //                     formData.append("maPhieuRenLuyen", _inputMaPhieuRenLuyen);
-    //                     formData.append("maSinhVien", _inputMaSinhVien);
-    //                     formData.append("maHocKyDanhGia", _inputMaHocKyDanhGia);
-    //                     formData.append("xepLoai", _inputXepLoai);
-    //                     formData.append("coVanDuyet", 1);
-    //                     formData.append("khoaDuyet", 1); //khoa duyệt
-                
-                    
-    //                     //update phiếu rèn luyện trước
-    //                     $.ajax({
-    //                         url: urlapi_phieurenluyen_update,
-    //                         async: false,
-    //                         type: "POST",
-    //                         contentType: false,
-    //                         cache: false,
-    //                         processData: false,
-    //                         //dataType: "json",
-    //                         data: formData,
-    //                         headers: {
-    //                             Authorization: jwtCookie,
-    //                         },
-    //                         success: function(resultUpdate) {
-                            
-    //                             $.ajax({
-    //                                 url: urlapi_chamdiemrenluyen_read_maPhieuRenLuyen + _inputMaPhieuRenLuyen,
-    //                                 async: false,
-    //                                 type: "GET",
-    //                                 contentType: "application/json;charset=utf-8",
-    //                                 dataType: "json",
-    //                                 headers: {
-    //                                     Authorization: jwtCookie,
-    //                                 },
-    //                                 success: function(resultGET) {
-    //                                     $.each(resultGET, function (index_GET) {
-    //                                         for (var q = 0;q < resultGET[index_GET].length;q++) {
-    //                                             var maTieuChi3 = resultGET[index_GET][q].maTieuChi3;
-    //                                             var maTieuChi2 = resultGET[index_GET][q].maTieuChi2;
-    //                                             var diemSinhVienDanhGia = resultGET[index_GET][q].diemSinhVienDanhGia;
-    //                                             var diemLopDanhGia = resultGET[index_GET][q].diemLopDanhGia;
-    //                                             var maChamDiemRenLuyen = resultGET[index_GET][q].maChamDiemRenLuyen;
-    //                                             var ghiChu = resultGET[index_GET][q].ghiChu;
-
-    //                                             //Vòng lặp input để tạo các hàng giá trị của chamdiemrenluyen theo mã phiếu điểm rèn luyện
-    //                                             $("#tbody_noiDungDanhGia").find("input").each(function() {
-    //                                                 if (this.value != "") {
-    //                                                     var _inputDiemKhoaDanhGia = this.value;
-    //                                                     var tieuChi = this.id.slice(0, 8);
-
-    //                                                     //Chưa xử lý thêm ghi chú (thêm 1 switch case trước switch case tiêu chí này)
-    //                                                     if (tieuChi == "Khoa_TC2") {
-    //                                                         var _inputMaTieuChi2 = this.id.slice(9, this.id.length);
-
-    //                                                         //Cập nhật row
-    //                                                         if (maTieuChi2 === _inputMaTieuChi2 ){
-                                                                    
-    //                                                             var stringFormIDTemp = "formDanhGiaDRL_TC2_" + _inputMaTieuChi2;
-
-    //                                                             var formData_TC2 = new FormData(document.getElementById(stringFormIDTemp));
-    //                                                             formData_TC2.append("maChamDiemRenLuyen", maChamDiemRenLuyen);
-    //                                                             formData_TC2.append("maPhieuRenLuyen", _inputMaPhieuRenLuyen);
-    //                                                             formData_TC2.append("maTieuChi3", 0);
-    //                                                             formData_TC2.append("maTieuChi2", _inputMaTieuChi2);
-    //                                                             formData_TC2.append("maSinhVien", _inputMaSinhVien);
-    //                                                             formData_TC2.append("diemSinhVienDanhGia", diemSinhVienDanhGia);
-    //                                                             formData_TC2.append("diemLopDanhGia", diemLopDanhGia);
-    //                                                             formData_TC2.append("diemKhoaDanhGia", _inputDiemKhoaDanhGia);
-    //                                                             formData_TC2.append("ghiChu", ghiChu);
-
-    //                                                             $.ajax({
-    //                                                                 url: urlapi_chamdiemrenluyen_update,
-    //                                                                 data: formData_TC2,
-    //                                                                 async: false,
-    //                                                                 type: "POST",
-    //                                                                 contentType: false,
-    //                                                                 cache: false,
-    //                                                                 processData: false,
-    //                                                                 //dataType: "json",
-    //                                                                 headers: {
-    //                                                                     Authorization: jwtCookie,
-    //                                                                 },
-    //                                                                 success: function(resultUpdate_ChamDiemRenLuyen) {
-    //                                                                     //console.log(resultCreate_ChamDiemRenLuyen);
-    //                                                                 },
-    //                                                                 error: function(errorMessage) {
-    //                                                                     Swal.fire({
-    //                                                                         icon: "error",
-    //                                                                         title: "Thông báo",
-    //                                                                         text: errorMessage.responseText,
-    //                                                                         //timer: 5000,
-    //                                                                         timerProgressBar: true,
-    //                                                                     });
-    //                                                                 },
-    //                                                             });
-    //                                                         }
-    //                                                     }
-
-    //                                                     if (tieuChi == "CVHT_TC3"){
-    //                                                         var _inputMaTieuChi3 = this.id.slice(9, this.id.length);
-
-    //                                                         //Nếu đã có row rồi thì cập nhật cột diemLopDanhGia, ngược lại tạo row mới
-    //                                                         if (maTieuChi3 === _inputMaTieuChi3 ){
-                                                                    
-    //                                                             var stringFormIDTemp_2 = document.getElementById("formDanhGiaDRL_TC3_" + _inputMaTieuChi3);
-
-    //                                                             var formData_TC3 = new FormData(stringFormIDTemp_2);
-    //                                                             formData_TC3.append("maChamDiemRenLuyen", maChamDiemRenLuyen);
-    //                                                             formData_TC3.append("maPhieuRenLuyen", _inputMaPhieuRenLuyen);
-    //                                                             formData_TC3.append("maTieuChi3", _inputMaTieuChi3);
-    //                                                             formData_TC3.append("maTieuChi2", 0);
-    //                                                             formData_TC3.append("maSinhVien", _inputMaSinhVien);
-    //                                                             formData_TC3.append("diemSinhVienDanhGia", diemSinhVienDanhGia);
-    //                                                             formData_TC3.append("diemLopDanhGia", diemLopDanhGia);
-    //                                                             formData_TC3.append("diemKhoaDanhGia", _inputDiemKhoaDanhGia);
-    //                                                             formData_TC3.append("ghiChu", ghiChu);
-
-    //                                                             $.ajax({
-    //                                                                 url: urlapi_chamdiemrenluyen_update,
-    //                                                                 data: formData_TC3,
-    //                                                                 async: false,
-    //                                                                 type: "POST",
-    //                                                                 contentType: false,
-    //                                                                 cache: false,
-    //                                                                 processData: false,
-    //                                                                 //dataType: "json",
-    //                                                                 headers: {
-    //                                                                     Authorization: jwtCookie,
-    //                                                                 },
-    //                                                                 success: function(resultCreate_ChamDiemRenLuyen) {
-    //                                                                     //console.log(resultCreate_ChamDiemRenLuyen);
-    //                                                                 },
-    //                                                                 error: function(errorMessage) {
-    //                                                                     Swal.fire({
-    //                                                                         icon: "error",
-    //                                                                         title: "Thông báo",
-    //                                                                         text: errorMessage.responseText,
-    //                                                                         //timer: 5000,
-    //                                                                         timerProgressBar: true,
-    //                                                                     });
-    //                                                                 },
-    //                                                             });
-    //                                                         }
-    //                                                     }
-    //                                                 }
-    //                                             });
-    //                                         }
-    //                                     });
-    //                                 },
-    //                                 error: function(errorMessage) {
-    //                                     Swal.fire({
-    //                                         icon: "error",
-    //                                         title: "Thông báo",
-    //                                         text: errorMessage.responseText,
-    //                                         //timer: 5000,
-    //                                         timerProgressBar: true,
-    //                                     });
-    //                                 },
-    //                             });
-
-    //                             $('#ModalXemVaDuyet').modal('hide');
-
-    //                             Swal.fire({
-    //                                 icon: "success",
-    //                                 title: "Duyệt điểm rèn luyện thành công!",
-    //                                 text: "Đang chuyển hướng...",
-    //                                 timer: 2500,
-    //                                 timerProgressBar: true,
-    //                             });
-
-    //                             window.setTimeout(function() {
-    //                                 GetListPhieurenluyen($('#select_Lop').val());
-    //                             }, 2500);
-    //                         },
-    //                         error: function(errorMessage_tc3) {
-
-    //                             Swal.fire({
-    //                                 icon: "error",
-    //                                 title: "Lỗi",
-    //                                 text: errorMessage_tc3.responseText,
-    //                                 //timer: 5000,
-    //                                 timerProgressBar: true,
-    //                             });
-    //                         },
-    //                     });
-    //                 }
-    //             }
-    //         })
-    //     });
-    // }
 
 </script>
