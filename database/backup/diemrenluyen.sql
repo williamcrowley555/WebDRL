@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1:3307
--- Thời gian đã tạo: Th10 08, 2022 lúc 06:30 PM
+-- Thời gian đã tạo: Th10 09, 2022 lúc 06:14 PM
 -- Phiên bản máy phục vụ: 10.4.24-MariaDB
 -- Phiên bản PHP: 7.4.29
 
@@ -552,8 +552,8 @@ CREATE TABLE `quyen` (
 INSERT INTO `quyen` (`maQuyen`, `tenQuyen`) VALUES
 ('admin', 'Admin'),
 ('ctsv', 'Công tác sinh viên'),
-('khoa', 'Khoa'),
 ('cvht', 'Cố vấn học tập'),
+('khoa', 'Khoa'),
 ('sinhvien', 'Sinh viên');
 
 -- --------------------------------------------------------
@@ -3357,7 +3357,7 @@ INSERT INTO `user_token` (`stt`, `maSo`, `token`, `quyen`, `thoiGianDangNhap`, `
 (559, 'cntt', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJpYXQiOjE2NjQ0MzkzNTIsIm5iZiI6MTY2NDQzOTM2MiwiZXhwIjoxNjY0NTI1NzUyLCJhdWQiOiJraG9hIiwia2hvYSI6eyJ0YWlLaG9hbktob2EiOiJjbnR0IiwidGVuS2hvYSI6IkNcdTAwZjRuZyBuZ2hcdTFlYzcgdGhcdTAwZjRuZyB0aW4iLCJxdXllbiI6Imtob2EifX0.rLzFQahBj7Rs_uUz2zE2augFaJTiijoda75GHjLM4_Q', 'khoa', '2022-09-29 03:15:52', '2022-09-30 03:15:52'),
 (577, '3118410044', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJpYXQiOjE2NjQ0NjcxNjIsIm5iZiI6MTY2NDQ2NzE3MiwiZXhwIjoxNjY0NTUzNTYyLCJhdWQiOiJzaW5odmllbiIsInNpbmh2aWVuIjp7Im1hU2luaFZpZW4iOiIzMTE4NDEwMDQ0IiwiaG9UZW5TaW5oVmllbiI6IlZcdTAxMDJOIEhPXHUwMGMwTkcgQ0hcdTAxYWZcdTAxYTBORyAiLCJxdXllbiI6InNpbmh2aWVuIn19._pQsBLr2BUvz-ahFFWr7eUvH9Fp_Q3sFb-q5uVz2UlM', 'sinhvien', '2022-09-29 16:00:18', '2022-09-29 10:59:32'),
 (584, '3118410001', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJpYXQiOjE2NjQ1MTczNjYsIm5iZiI6MTY2NDUxNzM3NiwiZXhwIjoxNjY0NjAzNzY2LCJhdWQiOiJzaW5odmllbiIsInNpbmh2aWVuIjp7Im1hU2luaFZpZW4iOiIzMTE4NDEwMDAxIiwiaG9UZW5TaW5oVmllbiI6IiAgICAgICAgICAgUGhcdTFlYTFtIFx1MDExMFx1MWVlOSAgICAgICAgS2hcdTFlYTNpIiwicXV5ZW4iOiJzaW5odmllbiJ9fQ.zHvNk5tI9hpxJSG8UYyopCezmAp5zZE30VQXSmD_Log', 'sinhvien', '2022-09-30 05:57:18', '2022-09-30 00:56:10'),
-(604, 'ctsv1', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJpYXQiOjE2NjQ3NzEyMTcsIm5iZiI6MTY2NDc3MTIyNywiZXhwIjoxNjY0ODU3NjE3LCJhdWQiOiJwaG9uZ2Nvbmd0YWNzaW5odmllbiIsInBob25nY29uZ3RhY3Npbmh2aWVuIjp7InRhaUtob2FuIjoiY3RzdjEiLCJob1Rlbk5oYW5WaWVuIjoiTmhcdTAwZTJuIHZpXHUwMGVhbiBDVFNWIDEiLCJxdXllbiI6ImN0c3YifX0.mSwMjKBR-KCi0IZaw_gofCpgISY7AmhCMBynqTPILDA', 'ctsv', '2022-10-02 23:26:57', '2022-10-03 23:26:57');
+(628, 'ctsv1', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJpYXQiOjE2NjUzMzE2NzUsIm5iZiI6MTY2NTMzMTY4NSwiZXhwIjoxNjY1NDE4MDc1LCJhdWQiOiJwaG9uZ2Nvbmd0YWNzaW5odmllbiIsInBob25nY29uZ3RhY3Npbmh2aWVuIjp7InRhaUtob2FuIjoiY3RzdjEiLCJob1Rlbk5oYW5WaWVuIjoiTmhcdTAwZTJuIHZpXHUwMGVhbiBDVFNWIDEiLCJxdXllbiI6ImN0c3YifX0.wKpRYra48-Lwfe4AnN4reyxGB5vEZhn1Nd8p47_zZHU', 'ctsv', '2022-10-09 11:07:55', '2022-10-10 11:07:55');
 
 --
 -- Chỉ mục cho các bảng đã đổ
@@ -3423,6 +3423,12 @@ ALTER TABLE `phieurenluyen`
 --
 ALTER TABLE `phongcongtacsinhvien`
   ADD PRIMARY KEY (`taiKhoan`);
+
+--
+-- Chỉ mục cho bảng `quyen`
+--
+ALTER TABLE `quyen`
+  ADD PRIMARY KEY (`maQuyen`);
 
 --
 -- Chỉ mục cho bảng `sinhvien`
@@ -3492,31 +3498,31 @@ ALTER TABLE `thamgiahoatdong`
 -- AUTO_INCREMENT cho bảng `thongbaodanhgia`
 --
 ALTER TABLE `thongbaodanhgia`
-  MODIFY `maThongBao` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `maThongBao` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT cho bảng `tieuchicap1`
 --
 ALTER TABLE `tieuchicap1`
-  MODIFY `matc1` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `matc1` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT cho bảng `tieuchicap2`
 --
 ALTER TABLE `tieuchicap2`
-  MODIFY `matc2` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `matc2` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT cho bảng `tieuchicap3`
 --
 ALTER TABLE `tieuchicap3`
-  MODIFY `matc3` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `matc3` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT cho bảng `user_token`
 --
 ALTER TABLE `user_token`
-  MODIFY `stt` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=605;
+  MODIFY `stt` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=629;
 
 --
 -- Các ràng buộc cho các bảng đã đổ
