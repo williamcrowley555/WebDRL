@@ -190,7 +190,8 @@
 
             $arr = array( 
                 "maSo" =>  $obj_Khoa->maKhoa,
-                "hoTen" => $obj_Khoa->tenKhoa
+                "hoTen" => $obj_Khoa->tenKhoa,
+                "quyen" => $obj_Khoa->quyen
             );
 
 

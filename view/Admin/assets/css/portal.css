@@ -3178,7 +3178,7 @@ fieldset:disabled .btn {
   border-color: #5b99ea;
 }
 .btn-outline-info:hover {
-  color: #000;
+  color: #fff;
   background-color: #5b99ea;
   border-color: #5b99ea;
 }
@@ -3191,7 +3191,7 @@ fieldset:disabled .btn {
 .btn-outline-info:active,
 .btn-outline-info.active,
 .btn-outline-info.dropdown-toggle.show {
-  color: #000;
+  color: #fff;
   background-color: #5b99ea;
   border-color: #5b99ea;
 }

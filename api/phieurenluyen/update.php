@@ -29,7 +29,6 @@
                 $tempPath = $_FILES['fileDinhKem']['tmp_name'];
                 $fileSize = $_FILES['fileDinhKem']['size'];
             }
-            
 
             if (empty($fileName)){
                 if (isset($_POST['maPhieuRenLuyen']) && isset($_POST['maSinhVien']) &&
@@ -46,27 +45,26 @@
                     $item->maHocKyDanhGia = $_POST['maHocKyDanhGia'];
                     $item->coVanDuyet = $_POST['coVanDuyet'];
                     $item->khoaDuyet = $_POST['khoaDuyet'];
-                  
-                
-                                
+                        
                     if ($item->updatePhieuRenLuyen()) {
                         http_response_code(200);
                         echo json_encode(array(
-                            "message"=>"phieurenluyen cập nhật thành công."
+                            "message" => "phieurenluyen cập nhật thành công."
                         ));
                     } else {
+                        http_response_code(404);
                         echo json_encode(array(
-                            "message"=>"phieurenluyen cập nhật KHÔNG thành công."
+                            "message" => "phieurenluyen cập nhật KHÔNG thành công."
                         ));
                     }
                 
                 } else {
+                    http_response_code(404);
                     echo json_encode(
                         array("message" => "Không có dữ liệu gửi lên!")
                     );
                 }
             }
-
         
         // } else {
         //     http_response_code(403);
@@ -80,7 +78,5 @@
             array("message" => "Vui lòng đăng nhập trước!")
         );
     }
-
-
 
 ?>

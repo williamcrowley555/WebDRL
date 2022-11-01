@@ -30,7 +30,14 @@
         // GET ALL
         public function getAllChamDiemRenLuyen()
         {
-            $sqlQuery = "SELECT * FROM " . $this->db_table . "";
+            $sqlQuery = "SELECT *, 
+                            case
+                                when $this->db_table.maTieuChi2 != 0 then tieuchicap2.noidung
+                                else tieuchicap3.noidung
+                            end as noiDungTieuChi 
+                        FROM $this->db_table
+                            LEFT JOIN tieuchicap2 ON maTieuChi2 = matc2
+                            LEFT JOIN tieuchicap3 ON maTieuChi3 = matc3";
             $stmt = $this->conn->prepare($sqlQuery);
             $stmt->execute();
             return $stmt;
@@ -39,8 +46,15 @@
         // READ single
         public function getSingleChamDiemRenLuyen_TheoPhieuRenLuyen($maPhieuRenLuyen)
         {
-            $sqlQuery = "SELECT * FROM " . $this->db_table . "
-                            WHERE maPhieuRenLuyen  = ? ";
+            $sqlQuery = "SELECT *, 
+                            case
+                                when $this->db_table.maTieuChi2 != 0 then tieuchicap2.noidung
+                                else tieuchicap3.noidung
+                            end as noiDungTieuChi 
+                        FROM $this->db_table
+                            LEFT JOIN tieuchicap2 ON maTieuChi2 = matc2
+                            LEFT JOIN tieuchicap3 ON maTieuChi3 = matc3
+                        WHERE maPhieuRenLuyen  = ? ";
             $stmt = $this->conn->prepare($sqlQuery);
             $stmt->bindParam(1, $maPhieuRenLuyen);
             $stmt->execute();
@@ -51,7 +65,8 @@
         // READ single
         public function getSingleChamDiemRenLuyen()
         {
-            $sqlQuery = "SELECT  maChamDiemRenLuyen, maPhieuRenLuyen, maTieuChi2, maTieuChi3, diemSinhVienDanhGia, maSinhVien, diemLopDanhGia, diemKhoaDanhGia, fileMinhChung, ghiChu FROM " . $this->db_table . "
+            $sqlQuery = "SELECT  maChamDiemRenLuyen, maPhieuRenLuyen, maTieuChi2, maTieuChi3, diemSinhVienDanhGia, maSinhVien, diemLopDanhGia, diemKhoaDanhGia, fileMinhChung, ghiChu 
+                            FROM " . $this->db_table . "
                             WHERE maChamDiemRenLuyen  = ? LIMIT 0,1";
             $stmt = $this->conn->prepare($sqlQuery);
             $stmt->bindParam(1, $this->maChamDiemRenLuyen);
@@ -70,10 +85,64 @@
                 $this->diemKhoaDanhGia = $dataRow['diemKhoaDanhGia'];
                 $this->fileMinhChung = $dataRow['fileMinhChung'];
                 $this->diemLopDanhGia = $dataRow['ghiChu'];
-                
             }
         }
 
+        // READ single Theo Ma Phieu Ren Luyen Va Ma Tieu Chi 2
+        public function getSingleChamDiemRenLuyen_TheoMaPhieuRenLuyenVaMaTieuChi2($maPhieuRenLuyen, $maTieuChi2)
+        {
+            $sqlQuery = "SELECT * 
+                            FROM " . $this->db_table . "
+                            WHERE maPhieuRenLuyen  = ? AND maTieuChi2 = ? 
+                            LIMIT 0,1";
+            $stmt = $this->conn->prepare($sqlQuery);
+            $stmt->bindParam(1, $maPhieuRenLuyen);
+            $stmt->bindParam(2, $maTieuChi2);
+            $stmt->execute();
+
+            $dataRow = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            if ($dataRow != null) {
+                $this->maChamDiemRenLuyen  = $dataRow['maChamDiemRenLuyen'];
+                $this->maPhieuRenLuyen = $dataRow['maPhieuRenLuyen'];
+                $this->maTieuChi3 = $dataRow['maTieuChi3'];
+                $this->maTieuChi2 = $dataRow['maTieuChi2'];
+                $this->maSinhVien = $dataRow['maSinhVien'];
+                $this->diemSinhVienDanhGia = $dataRow['diemSinhVienDanhGia'];
+                $this->diemLopDanhGia = $dataRow['diemLopDanhGia'];
+                $this->diemKhoaDanhGia = $dataRow['diemKhoaDanhGia'];
+                $this->fileMinhChung = $dataRow['fileMinhChung'];
+                $this->ghiChu = $dataRow['ghiChu'];
+            }
+        }
+
+        // READ single Theo Ma Phieu Ren Luyen Va Ma Tieu Chi 3
+        public function getSingleChamDiemRenLuyen_TheoMaPhieuRenLuyenVaMaTieuChi3($maPhieuRenLuyen, $maTieuChi3)
+        {
+            $sqlQuery = "SELECT * 
+                            FROM " . $this->db_table . "
+                            WHERE maPhieuRenLuyen  = ? AND maTieuChi3 = ? 
+                            LIMIT 0,1";
+            $stmt = $this->conn->prepare($sqlQuery);
+            $stmt->bindParam(1, $maPhieuRenLuyen);
+            $stmt->bindParam(2, $maTieuChi3);
+            $stmt->execute();
+
+            $dataRow = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            if ($dataRow != null) {
+                $this->maChamDiemRenLuyen  = $dataRow['maChamDiemRenLuyen'];
+                $this->maPhieuRenLuyen = $dataRow['maPhieuRenLuyen'];
+                $this->maTieuChi3 = $dataRow['maTieuChi3'];
+                $this->maTieuChi2 = $dataRow['maTieuChi2'];
+                $this->maSinhVien = $dataRow['maSinhVien'];
+                $this->diemSinhVienDanhGia = $dataRow['diemSinhVienDanhGia'];
+                $this->diemLopDanhGia = $dataRow['diemLopDanhGia'];
+                $this->diemKhoaDanhGia = $dataRow['diemKhoaDanhGia'];
+                $this->fileMinhChung = $dataRow['fileMinhChung'];
+                $this->ghiChu = $dataRow['ghiChu'];
+            }
+        }
 
         // CREATE
         public function createChamDiemRenLuyen()

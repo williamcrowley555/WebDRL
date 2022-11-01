@@ -28,7 +28,7 @@
 
             if (isset($_GET['maPhieuRenLuyen']) ){
 
-                $maPhieuRenLuyen = isset($_GET['maPhieuRenLuyen']) ? $_GET['maPhieuRenLuyen'] : die(); //Lấy id từ phương thức GET
+                $maPhieuRenLuyen = $_GET['maPhieuRenLuyen'];
     
                 $item = new ChamDiemRenLuyen($db);
                 $stmt = $item->getSingleChamDiemRenLuyen_TheoPhieuRenLuyen($maPhieuRenLuyen);
@@ -56,6 +56,7 @@
                                 "maPhieuRenLuyen" =>  $maPhieuRenLuyen,
                                 "maTieuChi3" => $maTieuChi3,
                                 "maTieuChi2" => $maTieuChi2,
+                                "noiDungTieuChi" => $noiDungTieuChi,
                                 "maSinhVien" => $maSinhVien,
                                 "diemSinhVienDanhGia" => $diemSinhVienDanhGia,
                                 "diemLopDanhGia" => $diemLopDanhGia,
@@ -73,6 +74,7 @@
                                 "maPhieuRenLuyen" =>  $maPhieuRenLuyen,
                                 "maTieuChi3" => $maTieuChi3,
                                 "maTieuChi2" => $maTieuChi2,
+                                "noiDungTieuChi" => $noiDungTieuChi,
                                 "maSinhVien" => $maSinhVien,
                                 "diemSinhVienDanhGia" => $diemSinhVienDanhGia,
                                 "diemLopDanhGia" => $diemLopDanhGia,
@@ -85,13 +87,14 @@
                         
                         array_push($ChamDiemRenLuyenArr["ChamDiemRenLuyen"], $e);
 
-                    }else{
+                    } else {
                         $e = array(
                             "soThuTu" => $countRow,
                             "maChamDiemRenLuyen" =>  $maChamDiemRenLuyen,
                             "maPhieuRenLuyen" =>  $maPhieuRenLuyen,
                             "maTieuChi3" => $maTieuChi3,
                             "maTieuChi2" => $maTieuChi2,
+                            "noiDungTieuChi" => $noiDungTieuChi,
                             "maSinhVien" => $maSinhVien,
                             "diemSinhVienDanhGia" => $diemSinhVienDanhGia,
                             "diemLopDanhGia" => $diemLopDanhGia,
@@ -112,9 +115,7 @@
                         array("message" => "Không có dữ liệu.")
                     );
                 }
-        
-    
-            }else{
+            } else {
                 $item = new ChamDiemRenLuyen($db);
                 $stmt = $item->getAllChamDiemRenLuyen();
                 $itemCount = $stmt->rowCount();
@@ -142,6 +143,7 @@
                                     "maPhieuRenLuyen" =>  $maPhieuRenLuyen,
                                     "maTieuChi3" => $maTieuChi3,
                                     "maTieuChi2" => $maTieuChi2,
+                                    "noiDungTieuChi" => $noiDungTieuChi,
                                     "maSinhVien" => $maSinhVien,
                                     "diemSinhVienDanhGia" => $diemSinhVienDanhGia,
                                     "diemLopDanhGia" => $diemLopDanhGia,
@@ -159,6 +161,7 @@
                                     "maPhieuRenLuyen" =>  $maPhieuRenLuyen,
                                     "maTieuChi3" => $maTieuChi3,
                                     "maTieuChi2" => $maTieuChi2,
+                                    "noiDungTieuChi" => $noiDungTieuChi,
                                     "maSinhVien" => $maSinhVien,
                                     "diemSinhVienDanhGia" => $diemSinhVienDanhGia,
                                     "diemLopDanhGia" => $diemLopDanhGia,
@@ -171,13 +174,14 @@
                             
                             array_push($ChamDiemRenLuyenArr["ChamDiemRenLuyen"], $e);
     
-                        }else{
+                        } else {
                             $e = array(
                                 "soThuTu" => $countRow,
                                 "maChamDiemRenLuyen" =>  $maChamDiemRenLuyen,
                                 "maPhieuRenLuyen" =>  $maPhieuRenLuyen,
                                 "maTieuChi3" => $maTieuChi3,
                                 "maTieuChi2" => $maTieuChi2,
+                                "noiDungTieuChi" => $noiDungTieuChi,
                                 "maSinhVien" => $maSinhVien,
                                 "diemSinhVienDanhGia" => $diemSinhVienDanhGia,
                                 "diemLopDanhGia" => $diemLopDanhGia,
@@ -186,9 +190,9 @@
                                 "ghiChu" => $ghiChu
                             
                             );
+                            
                             array_push($ChamDiemRenLuyenArr["ChamDiemRenLuyen"], $e);
                         }
-                        
                     }
                         http_response_code(200);
                         echo json_encode($ChamDiemRenLuyenArr);
@@ -199,8 +203,6 @@
                         );
                     }
             }
-
-            
         // } else {
         //     http_response_code(403);
         //     echo json_encode(

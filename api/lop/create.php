@@ -21,7 +21,7 @@
             $database = new Database();
             $db = $database->getConnection();
     
-            $item = new Lop($db); //new Khoa object
+            $item = new Lop($db); //new Lop object
             $data = json_decode(file_get_contents("php://input")); //lấy request data từ user 
     
             if ($data != null){

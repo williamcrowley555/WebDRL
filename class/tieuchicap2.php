@@ -19,8 +19,50 @@
         //Các chức năng
 
         // GET ALL
-        public function getAllTC2(){
-            $sqlQuery = "SELECT * FROM " . $this->db_table . " ORDER BY matc2 ASC, kichHoat DESC";
+        /**
+        * kichHoat == 0 ==> tất cả tiêu chí
+        * kichHoat == 1 ==> tiêu chí được kích hoạt
+        * kichHoat == -1 ==> tiêu chí bị vô hiệu hóa
+        */
+        public function getAllTC2($kichHoat = 0){
+            $kichHoatCondition = "";
+
+            if ($kichHoat == 1) {
+                $kichHoatCondition = " WHERE kichHoat = 1 ";
+            } else if ($kichHoat == -1) {
+                $kichHoatCondition = " WHERE kichHoat = 0 ";
+            }
+
+            $sqlQuery = "SELECT * FROM " . $this->db_table . 
+                        $kichHoatCondition . 
+                        " ORDER BY matc2 ASC, kichHoat DESC";
+            $stmt = $this->conn->prepare($sqlQuery);
+            $stmt->execute();
+            return $stmt;
+        }
+
+        // GET ALL THEO MATC3
+        /**
+         * kichHoat == 0 ==> tất cả tiêu chí
+         * kichHoat == 1 ==> tiêu chí được kích hoạt
+         * kichHoat == -1 ==> tiêu chí bị vô hiệu hóa
+         */
+        public function getAllTC2TheoMatc3($matc3, $kichHoat = 1) {
+            $kichHoatCondition = "";
+
+            if ($kichHoat == 1) {
+                $kichHoatCondition = "AND tieuchicap2.kichHoat = 1 ";
+            } else if ($kichHoat == -1) {
+                $kichHoatCondition = "AND tieuchicap2.kichHoat = 0 ";
+            }
+
+            $sqlQuery = "SELECT DISTINCT tieuchicap2.*
+                        FROM tieuchicap2, tieuchicap3
+                        WHERE tieuchicap2.matc2 = tieuchicap3.matc2 
+                            AND matc3 IN (" . join(',', $matc3) . ") " . 
+                            $kichHoatCondition . 
+                        "ORDER BY tieuchicap2.matc2 ASC, tieuchicap2.kichHoat DESC";
+
             $stmt = $this->conn->prepare($sqlQuery);
             $stmt->execute();
             return $stmt;
@@ -41,8 +83,8 @@
                 $this->noidung = $dataRow['noidung'];
                 $this->diemtoida = $dataRow['diemtoida'];
                 $this->matc1 = $dataRow['matc1'];
+                $this->kichHoat = $dataRow['kichHoat'];
             }
-            
         }
 
         // CREATE

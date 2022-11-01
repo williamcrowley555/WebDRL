@@ -1,3 +1,14 @@
+var tableTitle = [
+  "STT",
+  "Mã lớp",
+  "Tên lớp",
+  "Mã khoa",
+  "Mã cố vấn học tập",
+  "Mã khóa học",
+];
+
+var tableContent = [];
+
 function getCookie(cName) {
   const name = cName + "=";
   const cDecoded = decodeURIComponent(document.cookie); //to be careful
@@ -53,6 +64,8 @@ function GetListLop(maKhoa) {
       async: true,
       headers: { Authorization: jwtCookie },
       success: function (result) {
+        tableContent = result["lop"];
+
         $("#idPhanTrang").pagination({
           dataSource: result["lop"],
           pageSize: 10,
@@ -101,6 +114,10 @@ function GetListLop(maKhoa) {
       error: function (errorMessage) {
         checkLoiDangNhap(errorMessage.responseJSON.message);
 
+        tableContent = [];
+
+        $("#idPhanTrang").empty();
+
         Swal.fire({
           icon: "error",
           title: "Lỗi",
@@ -121,6 +138,8 @@ function GetListLop(maKhoa) {
       async: true,
       headers: { Authorization: jwtCookie },
       success: function (result) {
+        tableContent = result["lop"];
+
         $("#idPhanTrang").pagination({
           dataSource: result["lop"],
           pageSize: 10,
@@ -169,6 +188,8 @@ function GetListLop(maKhoa) {
       error: function (errorMessage) {
         checkLoiDangNhap(errorMessage.responseJSON.message);
 
+        tableContent = [];
+
         $("#idPhanTrang").empty();
 
         ThongBaoLoi(errorMessage.responseJSON.message);
@@ -188,6 +209,8 @@ function TimKiemLop(maLop) {
     dataType: "json",
     headers: { Authorization: jwtCookie },
     success: function (result) {
+      tableContent = result["lop"];
+
       $("#idPhanTrang").pagination({
         dataSource: result["lop"],
         pageSize: 10,
@@ -235,6 +258,8 @@ function TimKiemLop(maLop) {
     },
     error: function (errorMessage) {
       checkLoiDangNhap(errorMessage.responseJSON.message);
+
+      tableContent = [];
 
       $("#idPhanTrang").empty();
 
@@ -294,6 +319,7 @@ function LoadComboBoxThongTinKhoa_Lop() {
       $("#select_Khoa").find("option").remove();
       $("#select_Khoa_Add").find("option").remove();
       $("#edit_select_Khoa_Add").find("option").remove();
+      $("#select_khoa_import").find("option").remove();
 
       $("#select_Khoa").append(
         "<option selected value='tatcakhoa'>Tất cả khoa</option>"
@@ -318,6 +344,14 @@ function LoadComboBoxThongTinKhoa_Lop() {
           );
 
           $("#edit_select_Khoa_Add").append(
+            "<option value='" +
+              result_Khoa[index_Khoa][p].maKhoa +
+              "'>" +
+              result_Khoa[index_Khoa][p].tenKhoa +
+              "</option>"
+          );
+
+          $("#select_khoa_import").append(
             "<option value='" +
               result_Khoa[index_Khoa][p].maKhoa +
               "'>" +

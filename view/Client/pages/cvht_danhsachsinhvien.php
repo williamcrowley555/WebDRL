@@ -122,11 +122,6 @@
 
     <script>
         LoadComboBoxHocKy();
-        
-        //Set học kỳ mới nhất lên dropdown
-        var lastValueHocKy = $('#select_HocKyDanhGia option:last-child').val();
-        $("#select_HocKyDanhGia").val(lastValueHocKy);
-
 
         var url = new URL(window.location.href);
         var GET_MaLop = url.searchParams.get("maLop");

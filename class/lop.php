@@ -37,12 +37,23 @@
             return $stmt;
         }
         
-        //GET ALL LOP THEO MA Khoa
+        //GET ALL LOP THEO MA KHOA
         public function getAllLopTheoMaKhoa($maKhoa){
             $sqlQuery = "SELECT maLop, tenLop, maKhoa, maCoVanHocTap, maKhoaHoc FROM " . $this->db_table . " 
                         WHERE maKhoa = ? ";
             $stmt = $this->conn->prepare($sqlQuery);
             $stmt->bindParam(1, $maKhoa);
+            $stmt->execute();
+            return $stmt;
+        }
+        
+        //GET ALL LOP THEO MA KHOA & MA KHOA HOC
+        public function getAllLopTheoMaKhoaVaMaKhoaHoc($maKhoa, $maKhoaHoc){
+            $sqlQuery = "SELECT maLop, tenLop, maKhoa, maCoVanHocTap, maKhoaHoc FROM " . $this->db_table . " 
+                        WHERE maKhoa = ? AND maKhoaHoc = ?";
+            $stmt = $this->conn->prepare($sqlQuery);
+            $stmt->bindParam(1, $maKhoa);
+            $stmt->bindParam(2, $maKhoaHoc);
             $stmt->execute();
             return $stmt;
         }
@@ -80,7 +91,31 @@
                 $this->maCoVanHocTap = $dataRow['maCoVanHocTap'];
                 $this->maKhoaHoc = $dataRow['maKhoaHoc'];
             }
+        }
+        
+        // READ single details
+        public function getSingleLopDetails(){
+            $sqlQuery = "SELECT * 
+                            FROM lop LEFT JOIN khoa ON lop.maKhoa = khoa.maKhoa
+                                LEFT JOIN covanhoctap ON lop.maCoVanHocTap = covanhoctap.maCoVanHocTap
+                            WHERE lop.maLop = ? 
+                            LIMIT 0,1";
+            $stmt = $this->conn->prepare($sqlQuery);
+            $stmt->bindParam(1, $this->maLop);
+            $stmt->execute();
+
+            $dataRow = $stmt->fetch(PDO::FETCH_ASSOC);
             
+            if ($dataRow != null){
+                $this->maLop = $dataRow['maLop'];
+                $this->tenLop = $dataRow['tenLop'];
+                $this->maKhoa = $dataRow['maKhoa'];
+                $this->tenKhoa = $dataRow['tenKhoa'];
+                $this->maCoVanHocTap = $dataRow['maCoVanHocTap'];
+                $this->hoTenCoVan = $dataRow['hoTenCoVan'];
+                $this->soDienThoaiCoVan = $dataRow['soDienThoai'];
+                $this->maKhoaHoc = $dataRow['maKhoaHoc'];
+            }
         }
 
         // CREATE

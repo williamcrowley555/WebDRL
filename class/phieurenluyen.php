@@ -34,13 +34,43 @@ class PhieuRenLuyen
         return $stmt;
     }
 
+    // GET ALL THEO MA LOP VA MA HOC KY DANH GIA
+    public function getAllPhieuRenLuyen_TheoMaLopVaMaHKDG($maLop, $maHocKyDanhGia)
+    {
+        $sqlQuery = "SELECT maPhieuRenLuyen, xepLoai, diemTongCong, sinhvien.maSinhVien, diemTrungBinhChungHKTruoc, diemTrungBinhChungHKXet, maHocKyDanhGia, coVanDuyet, khoaDuyet 
+                        FROM " . $this->db_table . ", sinhvien 
+                        WHERE phieurenluyen.maSinhVien = sinhvien.maSinhVien 
+                            AND maLop = ? 
+                            AND phieurenluyen.maHocKyDanhGia = ? 
+                        ORDER BY maHocKyDanhGia DESC";
+        $stmt = $this->conn->prepare($sqlQuery);
+        $stmt->bindParam(1, $maLop);
+        $stmt->bindParam(2, $maHocKyDanhGia);
+        $stmt->execute();
+        return $stmt;
+    }
+
     // GET ALL THEO MSSV
     public function getAllPhieuRenLuyen_TheoMSSV($maSinhVien)
     {
         $sqlQuery = "SELECT maPhieuRenLuyen, xepLoai, diemTongCong, maSinhVien, diemTrungBinhChungHKTruoc, diemTrungBinhChungHKXet, maHocKyDanhGia, coVanDuyet, khoaDuyet FROM " . $this->db_table . "
-                    WHERE maSinhVien = ? ";
+                        WHERE maSinhVien = ? 
+                        ORDER BY maHocKyDanhGia DESC";
         $stmt = $this->conn->prepare($sqlQuery);
         $stmt->bindParam(1, $maSinhVien);
+        $stmt->execute();
+        return $stmt;
+    }
+
+    // GET PHIEU REN LUYEN THEO MA PHIEU REN LUYEN
+    public function getPhieuRenLuyen_TheoMaPhieuRenLuyen($maPhieuRenLuyen, $isEqual = true)
+    {
+        $sqlQuery = "SELECT maPhieuRenLuyen, xepLoai, diemTongCong, maSinhVien, diemTrungBinhChungHKTruoc, diemTrungBinhChungHKXet, maHocKyDanhGia, coVanDuyet, khoaDuyet FROM " . $this->db_table . "
+                        WHERE maPhieuRenLuyen" . 
+                        ($isEqual ? " = '$maPhieuRenLuyen'" : " LIKE '%$maPhieuRenLuyen%'") . 
+                        " ORDER BY maHocKyDanhGia DESC";
+
+        $stmt = $this->conn->prepare($sqlQuery);
         $stmt->execute();
         return $stmt;
     }
@@ -92,9 +122,7 @@ class PhieuRenLuyen
             $this->khoaDuyet = $dataRow['khoaDuyet'];
         }
     }
-
-
-
+    
     // CREATE
     public function createPhieuRenLuyen()
     {

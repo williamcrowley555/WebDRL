@@ -31,7 +31,8 @@
                     "matc2" =>  $item->matc2,
                     "noidung" => $item->noidung,
                     "diemtoida" => $item->diemtoida,
-                    "matc1" => $item->matc1
+                    "matc1" => $item->matc1,
+                    "kichHoat" => $item->kichHoat
                 );
             
                 http_response_code(200);

@@ -1,22 +1,23 @@
 <script src="assets/js/check_token.js"></script>
 <script>
-		//remove class active
-		$("#menu-button-ThongKe").removeClass("active");
-		$("#menu-button-SinhVien").removeClass("active");
-		$("#menu-button-Lop").removeClass("active");
-		$("#menu-button-Khoa").removeClass("active");
-		$("#menu-button-PhieuRenLuyen").removeClass("active");
-		$("#menu-button-CoVanHocTap").removeClass("active");
-		$("#menu-button-TieuChiDanhGia").removeClass("active");
-		$("#menu-button-ThongBaoDanhGia").removeClass("active");
-		
-		//add class active
-		$("#menu-button-HoatDongDanhGia").addClass("active");
 
-		//set title
-		document.title = "Hoạt động đánh giá | Web điểm rèn luyện";
-		
+	//remove class active
+	$("#menu-button-ThongKe").removeClass("active");
+	$("#menu-button-SinhVien").removeClass("active");
+	$("#menu-button-Lop").removeClass("active");
+	$("#menu-button-Khoa").removeClass("active");
+	$("#menu-button-PhieuRenLuyen").removeClass("active");
+	$("#menu-button-CoVanHocTap").removeClass("active");
+	$("#menu-button-TieuChiDanhGia").removeClass("active");
+	$("#menu-button-ThongBaoDanhGia").removeClass("active");
+	$("#menu-button-ThongKe").removeClass("active");
+	
+	//add class active
+	$("#menu-button-HoatDongDanhGia").addClass("active");
 
+	//set title
+	document.title = "Hoạt động đánh giá | Web điểm rèn luyện";
+		
 </script>
 
 	<div class="app-content pt-3 p-md-3 p-lg-4">
@@ -310,7 +311,7 @@
 											<th class="cell">Thời gian kết thúc</th>
 											<th class="cell">Thời gian bắt đầu điểm danh</th>
 											<th class="cell">Mã QR điểm danh/checkin</th>
-											<th></th>
+											<th class="cell">Hành động</th>
 										</tr>
 									</thead>
 									<tbody id="id_tbodyLop">
@@ -561,6 +562,8 @@
 
 	// Xử lý lọc hoạt động theo khoảng thời gian
 	$(document).on("click", "#btnDateFilter" ,function() {
+		$('#inputTimKiem_MaHoatDong').val('');
+
 		var inputFrom = $('#fromDateFilter').val();
 		var inputTo = $('#toDateFilter').val();
 

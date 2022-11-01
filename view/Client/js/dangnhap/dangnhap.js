@@ -4,17 +4,16 @@ function getCookie(cName) {
   const cArr = cDecoded.split("; ");
   let res;
   cArr.forEach((val) => {
-      if (val.indexOf(name) === 0) res = val.substring(name.length);
+    if (val.indexOf(name) === 0) res = val.substring(name.length);
   });
   return res;
 }
 
-var previousPage = '';
+var previousPage = "";
 
-if (getCookie('previousPage') !== undefined){
-  previousPage = getCookie('previousPage');
+if (getCookie("previousPage") !== undefined) {
+  previousPage = getCookie("previousPage");
 }
-
 
 //Login
 function Login(inputLogin_MSSV, inputLogin_MatKhau) {
@@ -31,7 +30,7 @@ function Login(inputLogin_MSSV, inputLogin_MatKhau) {
     });
   } else {
     var objLogin = {
-      taiKhoan: _inputLogin_MSSV, 
+      taiKhoan: _inputLogin_MSSV,
       matKhau: _inputLogin_MatKhau,
     };
 
@@ -53,21 +52,26 @@ function Login(inputLogin_MSSV, inputLogin_MatKhau) {
         document.cookie = "quyen = " + result[0]["quyen"];
 
         Swal.fire({
-            icon: "success",
-            title: "Đăng nhập thành công!",
-            timer: 1000,
-            timerProgressBar: true,
-            showConfirmButton: false,
+          icon: "success",
+          title: "Đăng nhập thành công!",
+          timer: 1000,
+          timerProgressBar: true,
+          showConfirmButton: false,
         });
-        
-        
-        
-         setTimeout(function () {
-            $("#formDieuHuongDangNhap").append("<input type='text' id='jwt' name='jwt' value='" + result["jwt"] + "'>");
-            $("#formDieuHuongDangNhap").append("<input type='text' id='previousPage' name='previousPage' value='" + previousPage + "'>");
-            $("form#formDieuHuongDangNhap").submit();
-         }, 1000);
 
+        setTimeout(function () {
+          $("#formDieuHuongDangNhap").append(
+            "<input type='text' id='jwt' name='jwt' value='" +
+              result["jwt"] +
+              "'>"
+          );
+          $("#formDieuHuongDangNhap").append(
+            "<input type='text' id='previousPage' name='previousPage' value='" +
+              previousPage +
+              "'>"
+          );
+          $("form#formDieuHuongDangNhap").submit();
+        }, 1000);
       },
       error: function (errorMessage) {
         Swal.fire({
@@ -84,11 +88,11 @@ function Login(inputLogin_MSSV, inputLogin_MatKhau) {
 
 //Logout
 function DangXuat() {
-  var _input_MaSo = getCookie('maSo');
+  var _input_MaSo = getCookie("maSo");
 
   var dataPost = {
-    maSo: _input_MaSo
-  }
+    maSo: _input_MaSo,
+  };
 
   $.ajax({
     url: urlapi_logout_client,
@@ -98,24 +102,20 @@ function DangXuat() {
     dataType: "json",
     async: false,
     success: function (result) {
-
       deleteAllCookies();
 
       Swal.fire({
-          icon: "success",
-          title: "Đăng xuất thành công!",
-          text:"Đang chuyển hướng...",
-          timer: 1000,
-          timerProgressBar: true,
-          showConfirmButton: false,
+        icon: "success",
+        title: "Đăng xuất thành công!",
+        text: "Đang chuyển hướng...",
+        timer: 1000,
+        timerProgressBar: true,
+        showConfirmButton: false,
       });
-      
-      
-      
-       setTimeout(function () {
-          window.location.href = 'dangnhap.php';
-       }, 1000);
 
+      setTimeout(function () {
+        window.location.href = "dangnhap.php";
+      }, 1000);
     },
     error: function (errorMessage) {
       Swal.fire({
@@ -127,14 +127,7 @@ function DangXuat() {
       });
     },
   });
-  
-
-    
-
 }
-
-
-
 
 function deleteAllCookies() {
   var cookies = document.cookie.split(";");

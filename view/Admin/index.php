@@ -45,10 +45,9 @@
 
 	<script src="../config/urlapi.js" ></script>
 
-	
+	<!-- Chart -->
+	<script src="assets/plugins/chart.js/chart.min.js"></script> 
    
-
-
     <!-- App CSS -->  
     <link id="theme-style" rel="stylesheet" href="assets/css/portal.css">
 	
@@ -282,6 +281,14 @@
 						         </span>\
 		                         <span class='nav-link-text'>Thông báo đánh giá</span>\
 					        </a>\
+					    </li>\
+						<li class='nav-item' style='cursor: pointer;'>\
+					        <a class='nav-link' onclick='LoadContentMainPage(\"thongke.php\");' id='menu-button-ThongKe' >\
+						        <span class='nav-icon'>\
+									<img src='assets/images/icons/analysis.png' alt='icon thống kê' width='25px'>\
+						         </span>\
+		                         <span class='nav-link-text'>Thống kê</span>\
+					        </a>\
 					    </li>");
 
 		}else{
@@ -311,14 +318,6 @@
 					        </a>\
 					    </li>\
 						<li class='nav-item' style='cursor: pointer;'>\
-					        <a class='nav-link' onclick='LoadContentMainPage(\"khoa.php\");' id='menu-button-Khoa' >\
-						        <span class='nav-icon'>\
-									<img src='assets/images/icons/user.png' alt='icon khoa' width='10%'>\
-						         </span>\
-		                         <span class='nav-link-text'>Khoa</span>\
-					        </a>\
-					    </li>\
-						<li class='nav-item' style='cursor: pointer;'>\
 					        <a class='nav-link' onclick='LoadContentMainPage(\"phieurenluyen.php\");' id='menu-button-PhieuRenLuyen' >\
 						        <span class='nav-icon'>\
 									<img src='assets/images/icons/document.png' alt='icon phiếu chấm điểm' width='10%'>\
@@ -344,16 +343,22 @@
 	
 </body>
 <script>
-	
+	function objectsEqual(o1, o2) { 
+		return typeof o1 === 'object' && Object.keys(o1).length > 0 
+			? Object.keys(o1).length === Object.keys(o2).length 
+				&& Object.keys(o1).every(p => objectsEqual(o1[p], o2[p]))
+			: o1 === o2;
+	}
+
+	function arraysEqual(a1, a2) {
+		return a1.length === a2.length && a1.every((o, idx) => objectsEqual(o, a2[idx]));
+	} 
+
 	setTimeout(function() {
 		$('.loader_bg').fadeToggle();
 	}, 1000);
 
-
 	
-		
 </script>
-
-
 
 </html>

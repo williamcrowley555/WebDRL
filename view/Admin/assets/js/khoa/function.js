@@ -1,3 +1,7 @@
+var tableTitle = ["STT", "Mã khoa", "Tên khoa", "Tài khoản khoa"];
+
+var tableContent = [];
+
 function getCookie(cName) {
   const name = cName + "=";
   const cDecoded = decodeURIComponent(document.cookie); //to be careful
@@ -51,6 +55,8 @@ function GetListKhoa() {
     async: false,
     headers: { Authorization: jwtCookie },
     success: function (result) {
+      tableContent = result["khoa"];
+
       $("#idPhanTrang").pagination({
         dataSource: result["khoa"],
         pageSize: 10,
@@ -96,6 +102,8 @@ function GetListKhoa() {
     },
     error: function (errorMessage) {
       checkLoiDangNhap(errorMessage.responseJSON.message);
+
+      tableContent = [];
 
       var htmlData = "";
       $("#id_tbodyKhoa").html(htmlData);
@@ -116,6 +124,8 @@ function TimKiemKhoa(maKhoa) {
     dataType: "json",
     headers: { Authorization: jwtCookie },
     success: function (result) {
+      tableContent = result["khoa"];
+
       $("#idPhanTrang").pagination({
         dataSource: result["khoa"],
         pageSize: 10,
@@ -161,6 +171,8 @@ function TimKiemKhoa(maKhoa) {
     },
     error: function (errorMessage) {
       checkLoiDangNhap(errorMessage.responseJSON.message);
+
+      tableContent = [];
 
       var htmlData = "";
       $("#id_tbodyKhoa").html(htmlData);
