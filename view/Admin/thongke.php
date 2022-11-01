@@ -212,11 +212,17 @@
 								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-funnel-fill" viewBox="0 0 16 16">
 									<path d="M1.5 1.5A.5.5 0 0 1 2 1h12a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.128.334L10 8.692V13.5a.5.5 0 0 1-.342.474l-3 1A.5.5 0 0 1 6 14.5V8.692L1.628 3.834A.5.5 0 0 1 1.5 3.5v-2z"/>
 								</svg>
-								Lọc điểm: 
-								<select class="form-select w-auto d-inline ml-3" id="select_Diem">
-									<option value='all' selected>Tất cả</option>
-									<option value='overThan50'>Trên 50 điểm</option>
-									<option value='lessThan50'>Dưới 50 điểm</option>
+								Lọc cột: 
+								<select class="form-select w-auto d-inline mx-3" id="select_FilterColumn">
+									<option disabled value selected>--- Chọn cột ---</option>
+									<option value='diem'>Điểm</option>
+									<option value='xepLoai'>Xếp loại</option>
+									<option value='sinhVienCham'>Sinh viên chấm</option>
+									<option value='coVanDuyet'>Cố vấn duyệt</option>
+									<option value='khoaDuyet'>Khoa duyệt</option>
+								</select>
+								Lựa chọn: 
+								<select class="form-select w-auto d-inline" id="select_FilterOption">
 								</select>
 							</div>
 						</div>
@@ -319,35 +325,213 @@
 		ThongKeSinhVien(maLop, maHocKyDanhGia);
 	})
 
-	$('#select_Diem').on('change', function() {
-		var option = $('#select_Diem').val();
+	// Xử lý filter column
+	$('#select_FilterColumn').on('change', function() {
+		var column = $('#select_FilterColumn').val();
+		$("#select_FilterOption").empty();
+
+		switch(column) {
+			case 'diem':
+				$("#select_FilterOption").append(`<option value='all' selected>Tất cả</option>`);
+				$("#select_FilterOption").append(`<option value='overThan50'>Trên 50 điểm</option>`);
+				$("#select_FilterOption").append(`<option value='lessThan50'>Dưới 50 điểm</option>`);
+
+				$('#select_FilterOption').trigger('change');
+
+				break;
+			case 'xepLoai':
+				$("#select_FilterOption").append(`<option value='all' selected>Tất cả</option>`);
+				$("#select_FilterOption").append(`<option value='xuatSac'>Xuất sắc</option>`);
+				$("#select_FilterOption").append(`<option value='tot'>Tốt</option>`);
+				$("#select_FilterOption").append(`<option value='kha'>Khá</option>`);
+				$("#select_FilterOption").append(`<option value='trungBinh'>Trung bình</option>`);
+				$("#select_FilterOption").append(`<option value='yeu'>Yếu</option>`);
+				$("#select_FilterOption").append(`<option value='kem'>Kém</option>`);
+
+				$('#select_FilterOption').trigger('change');
+
+				break;
+				
+				
+				break;
+			case 'sinhVienCham':
+				$("#select_FilterOption").append(`<option value='all' selected>Tất cả</option>`);
+				$("#select_FilterOption").append(`<option value='daCham'>Đã chấm</option>`);
+				$("#select_FilterOption").append(`<option value='chuaCham'>Chưa chấm</option>`);
+
+				$('#select_FilterOption').trigger('change');
+				
+				
+				break;
+			case 'coVanDuyet':
+				$("#select_FilterOption").append(`<option value='all' selected>Tất cả</option>`);
+				$("#select_FilterOption").append(`<option value='daDuyet'>Đã duyệt</option>`);
+				$("#select_FilterOption").append(`<option value='chuaDuyet'>Chưa duyệt</option>`);
+
+				$('#select_FilterOption').trigger('change');
+				
+				
+				break;
+			case 'khoaDuyet':
+				$("#select_FilterOption").append(`<option value='all' selected>Tất cả</option>`);
+				$("#select_FilterOption").append(`<option value='daDuyet'>Đã duyệt</option>`);
+				$("#select_FilterOption").append(`<option value='chuaDuyet'>Chưa duyệt</option>`);
+
+				$('#select_FilterOption').trigger('change');
+				
+				break;
+			default:
+				break;
+		}
+	});
+
+	$('#select_FilterOption').on('change', function() {
+		var column = $('#select_FilterColumn').val();
+		var option = $('#select_FilterOption').val();
 		var counter = 0;
 		tmpTableSinhVienContent = tableSinhVienContent;
 
-		if (option == 'overThan50') {
-			tmpTableSinhVienContent = tableSinhVienContent.reduce(function(filtered, data) {
-			if (data.diemTongCong >= 50) {
-				counter++; 
+		switch(column) {
+			case 'diem':
 
-				data = {...data, soThuTu: counter};
+				if (option == 'overThan50') {
+					tmpTableSinhVienContent = tableSinhVienContent.reduce(function(filtered, data) {
+					if (data.diemTongCong >= 50) {
+						counter++; 
 
-				filtered.push(data);
-			}
+						data = {...data, soThuTu: counter};
 
-			return filtered;
-			}, []);
-		} else if (option == 'lessThan50') {
-			tmpTableSinhVienContent = tableSinhVienContent.reduce(function(filtered, data) {
-			if (data.diemTongCong < 50) {
-				counter++; 
+						filtered.push(data);
+					}
 
-				data = {...data, soThuTu: counter};
+					return filtered;
+					}, []);
+				} else if (option == 'lessThan50') {
+					tmpTableSinhVienContent = tableSinhVienContent.reduce(function(filtered, data) {
+					if (data.diemTongCong < 50) {
+						counter++; 
 
-				filtered.push(data);
-			}
+						data = {...data, soThuTu: counter};
 
-			return filtered;
-			}, []);
+						filtered.push(data);
+					}
+
+					return filtered;
+					}, []);
+				}
+
+				break;
+			case 'xepLoai':
+				
+				xepLoaiOptionText = $(`#select_FilterOption option[value='${option}']`).text();
+
+				if (xepLoaiOptionText != 'Tất cả') {
+					tmpTableSinhVienContent = tableSinhVienContent.reduce(function(filtered, data) {
+					if (data.xepLoai == xepLoaiOptionText) {
+						counter++; 
+
+						data = {...data, soThuTu: counter};
+
+						filtered.push(data);
+					}
+
+					return filtered;
+					}, []);
+				}
+
+				break;
+				
+				
+				break;
+			case 'sinhVienCham':
+
+				if (option == 'daCham') {
+					tmpTableSinhVienContent = tableSinhVienContent.reduce(function(filtered, data) {
+					if (data.sinhVienCham == '1') {
+						counter++; 
+
+						data = {...data, soThuTu: counter};
+
+						filtered.push(data);
+					}
+
+					return filtered;
+					}, []);
+				} else if (option == 'chuaCham') {
+					tmpTableSinhVienContent = tableSinhVienContent.reduce(function(filtered, data) {
+					if (data.sinhVienCham == '0') {
+						counter++; 
+
+						data = {...data, soThuTu: counter};
+
+						filtered.push(data);
+					}
+
+					return filtered;
+					}, []);
+				}
+				
+				break;
+			case 'coVanDuyet':
+
+				if (option == 'daDuyet') {
+					tmpTableSinhVienContent = tableSinhVienContent.reduce(function(filtered, data) {
+					if (data.coVanDuyet == '1') {
+						counter++; 
+
+						data = {...data, soThuTu: counter};
+
+						filtered.push(data);
+					}
+
+					return filtered;
+					}, []);
+				} else if (option == 'chuaDuyet') {
+					tmpTableSinhVienContent = tableSinhVienContent.reduce(function(filtered, data) {
+					if (data.coVanDuyet == '0') {
+						counter++; 
+
+						data = {...data, soThuTu: counter};
+
+						filtered.push(data);
+					}
+
+					return filtered;
+					}, []);
+				}
+				
+				break;
+			case 'khoaDuyet':
+
+				if (option == 'daDuyet') {
+					tmpTableSinhVienContent = tableSinhVienContent.reduce(function(filtered, data) {
+					if (data.khoaDuyet == '1') {
+						counter++; 
+
+						data = {...data, soThuTu: counter};
+
+						filtered.push(data);
+					}
+
+					return filtered;
+					}, []);
+				} else if (option == 'chuaDuyet') {
+					tmpTableSinhVienContent = tableSinhVienContent.reduce(function(filtered, data) {
+					if (data.khoaDuyet == '0') {
+						counter++; 
+
+						data = {...data, soThuTu: counter};
+
+						filtered.push(data);
+					}
+
+					return filtered;
+					}, []);
+				}
+
+				break;
+			default:
+				break;
 		}
 
   		$("#tbodySinhVien tr").remove();
@@ -380,6 +564,11 @@
 								"</td>\
 									<td class='cell'>" +
 								data[i].xepLoai +
+								"</td>\
+								<td class='cell'>" +
+								(data[i].sinhVienCham == "1"
+									? "<span class='badge bg-success' style='color: white;font-size: inherit;'>Đã chấm</span>"
+									: "<span class='badge bg-warning' style='color: white;font-size: inherit;'>Chưa chấm</span>") +
 								"</td>\
 									<td class='cell'>" +
 								(data[i].coVanDuyet == '1' ? "<span class='badge bg-success' style='color: white;font-size: inherit;'>Đã duyệt</span>" : "<span class='badge bg-warning' style='color: white;font-size: inherit;'>Chưa duyệt</span>") +

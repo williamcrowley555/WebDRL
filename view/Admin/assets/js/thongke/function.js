@@ -19,6 +19,7 @@ var tableSinhVienTitle = [
   "Ngày sinh",
   "Điểm",
   "Xếp loại",
+  "Sinh viên chấm",
   "Cố vấn duyệt",
   "Khoa duyệt",
 ];
@@ -533,6 +534,11 @@ function ThongKeSinhVien(maLop, maHocKyDanhGia) {
               "</td>\
                   <td class='cell'>" +
               data[i].xepLoai +
+              "</td>\
+              <td class='cell'>" +
+              (data[i].sinhVienCham == "1"
+                ? "<span class='badge bg-success' style='color: white;font-size: inherit;'>Đã chấm</span>"
+                : "<span class='badge bg-warning' style='color: white;font-size: inherit;'>Chưa chấm</span>") +
               "</td>\
               <td class='cell'>" +
               (data[i].coVanDuyet == "1"
