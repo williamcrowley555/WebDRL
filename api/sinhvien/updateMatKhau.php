@@ -16,7 +16,7 @@ $checkQuyen = new checkQuyen();
 
 // kiểm tra đăng nhập thành công 
 if ($data["status"] == 1) {
-    if ($checkQuyen->checkQuyen_Khoa_CTSV($data["user_data"]->aud)) {
+    // if ($checkQuyen->checkQuyen_Khoa_CTSV($data["user_data"]->aud)) {
         $database = new Database();
         $db = $database->getConnection();
 
@@ -25,46 +25,11 @@ if ($data["status"] == 1) {
         $data = json_decode(file_get_contents("php://input"));
 
         if ($data != null) {
-
-            //Nếu có gửi matKhauSinhVien thì -> chức năng đặt lại mật khẩu, ngược lại là chức năng chỉnh sửa
             if (isset($data->matKhauSinhVien)){
                 $item->maSinhVien  = $data->maSinhVien;
-
-                //values
-                $item->hoTenSinhVien = $data->hoTenSinhVien;
-                $item->ngaySinh = $data->ngaySinh;
-                $item->email = $data->email; 
-                $item->sdt = $data->sdt;
-                $item->he = $data->he;
                 $item->matKhauSinhVien = md5($data->matKhauSinhVien);
-                $item->maLop = $data->maLop;
-                $item->totNghiep = $data->totNghiep;
     
-                if ($item->updateSinhVien()) {
-                    http_response_code(200);
-                    echo json_encode(
-                        array("message" => "sinhvien cập nhật thành công.")
-                    );
-                } else {
-                    http_response_code(500);
-                    echo json_encode(
-                        array("message" => "sinhvien cập nhật KHÔNG thành công.")
-                    );
-                }
-            }else{
-                $item->maSinhVien  = $data->maSinhVien;
-
-                //values
-                $item->hoTenSinhVien = $data->hoTenSinhVien;
-                $item->ngaySinh = $data->ngaySinh;
-                $item->email = $data->email; 
-                $item->sdt = $data->sdt;
-                $item->he = $data->he;
-                $item->maLop = $data->maLop;
-                $item->totNghiep = $data->totNghiep;
-
-
-                if ($item->updateSinhVien_KhongMatKhau()) {
+                if ($item->updateSinhVien_MatKhau()) {
                     http_response_code(200);
                     echo json_encode(
                         array("message" => "sinhvien cập nhật thành công.")
@@ -76,21 +41,18 @@ if ($data["status"] == 1) {
                     );
                 }
             }
-
-
-            
         } else {
             http_response_code(404);
             echo json_encode(
                 array("message" => "Không có dữ liệu gửi lên.")
             );
         }
-    } else {
-        http_response_code(403);
-        echo json_encode(
-            array("message" => "Bạn không có quyền thực hiện điều này!")
-        );
-    }
+    // } else {
+    //     http_response_code(403);
+    //     echo json_encode(
+    //         array("message" => "Bạn không có quyền thực hiện điều này!")
+    //     );
+    // }
 } else {
     http_response_code(403);
     echo json_encode(

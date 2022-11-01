@@ -61,7 +61,11 @@ if ($data["status"] == 1) {
                                 "hoTenSinhVien" => $hoTenSinhVien,
                                 "ngaySinh" => $ngaySinh,
                                 "he" => $he,
-                                "maLop" => $maLop
+                                "maLop" => $maLop,
+                                "email" => $email,
+                                "sdt" => $sdt,
+                                "anhDaiDien" => $anhDaiDien,
+                                "totNghiep" => $totNghiep
                             );
                             array_push($sinhvienArr["sinhvien"], $e);
                         }
@@ -99,7 +103,11 @@ if ($data["status"] == 1) {
                                 "hoTenSinhVien" => $hoTenSinhVien,
                                 "ngaySinh" => $ngaySinh,
                                 "he" => $he,
-                                "maLop" => $maLop
+                                "maLop" => $maLop,
+                                "email" => $email,
+                                "sdt" => $sdt,
+                                "anhDaiDien" => $anhDaiDien,
+                                "totNghiep" => $totNghiep
                             );
                             array_push($sinhvienArr["sinhvien"], $e);
                         }
@@ -134,7 +142,11 @@ if ($data["status"] == 1) {
                                 "hoTenSinhVien" => $hoTenSinhVien,
                                 "ngaySinh" => $ngaySinh,
                                 "he" => $he,
-                                "maLop" => $maLop
+                                "maLop" => $maLop,
+                                "email" => $email,
+                                "sdt" => $sdt,
+                                "anhDaiDien" => $anhDaiDien,
+                                "totNghiep" => $totNghiep
                             );
                             array_push($sinhvienArr["sinhvien"], $e);
                         }
@@ -172,7 +184,11 @@ if ($data["status"] == 1) {
                                 "hoTenSinhVien" => $hoTenSinhVien,
                                 "ngaySinh" => $ngaySinh,
                                 "he" => $he,
-                                "maLop" => $maLop
+                                "maLop" => $maLop,
+                                "email" => $email,
+                                "sdt" => $sdt,
+                                "anhDaiDien" => $anhDaiDien,
+                                "totNghiep" => $totNghiep
                             );
                             array_push($sinhvienArr["sinhvien"], $e);
                         }
@@ -211,7 +227,11 @@ if ($data["status"] == 1) {
                         "hoTenSinhVien" => $hoTenSinhVien,
                         "ngaySinh" => $ngaySinh,
                         "he" => $he,
-                        "maLop" => $maLop
+                        "maLop" => $maLop,
+                        "email" => $email,
+                        "sdt" => $sdt,
+                        "anhDaiDien" => $anhDaiDien,
+                        "totNghiep" => $totNghiep
                     );
                     array_push($sinhvienArr["sinhvien"], $e);
                 }

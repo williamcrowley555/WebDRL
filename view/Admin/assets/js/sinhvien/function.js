@@ -4,7 +4,10 @@ var tableTitle = [
   "Họ tên sinh viên",
   "Ngày sinh",
   "Hệ",
+  "Email",
+  "Số điện thoại",
   "Lớp",
+  "Tốt nghiệp"
 ];
 
 var tableKetQuaHocTapTitle = [
@@ -105,7 +108,20 @@ function GetListSinhVien(maKhoa, maLop) {
                   data[i].he +
                   "</td>\
                   <td class='cell'>" +
+                  data[i].email +
+                  "</td>\
+                  <td class='cell'>" +
+                  data[i].sdt +
+                  "</td>\
+                  <td class='cell'>" +
                   data[i].maLop +
+                  "</td>\
+                  <td class='cell'>" +
+                  (data[i].totNghiep == 1 ? 
+                    "<span class='badge bg-success' style='color: white;font-size: inherit;'>Đã tốt nghiệp</span>"
+                    : 
+                    "<span class='badge bg-warning' style='color: white;font-size: inherit;'>Chưa tốt nghiệp</span>"
+                  ) +
                   "</td>\
                   <td class='cell'><button  type='button' id='id_btnReset' class='btn btn-info btn_DatLaiMatKhau_SinhVien' data-bs-toggle='modal' data-bs-target='#DatLaiMatKhauModal' style='color: white;' data-id='" +
                   data[i].maSinhVien +
@@ -190,8 +206,22 @@ function GetListSinhVien(maKhoa, maLop) {
                       data[i].he +
                       "</td>\
                       <td class='cell'>" +
+                      data[i].email +
+                      "</td>\
+                      <td class='cell'>" +
+                      data[i].sdt +
+                      "</td>\
+                      <td class='cell'>" +
                       data[i].maLop +
-                      "<td class='cell'><button type='button'  class='btn btn-info btn_DatLaiMatKhau_SinhVien' data-bs-toggle='modal' data-bs-target='#DatLaiMatKhauModal' style='color: white;' data-id='" +
+                      "</td>\
+                      <td class='cell'>" +
+                      (data[i].totNghiep == 1 ? 
+                    "<span class='badge bg-success' style='color: white;font-size: inherit;'>Đã tốt nghiệp</span>"
+                    : 
+                    "<span class='badge bg-warning' style='color: white;font-size: inherit;'>Chưa tốt nghiệp</span>"
+                  ) +
+                      "</td>\
+                      <td class='cell'><button  type='button' id='id_btnReset' class='btn btn-info btn_DatLaiMatKhau_SinhVien' data-bs-toggle='modal' data-bs-target='#DatLaiMatKhauModal' style='color: white;' data-id='" +
                       data[i].maSinhVien +
                       "' >Đặt lại mật khẩu</button></td>\
                       <td class='cell'>\
@@ -203,7 +233,7 @@ function GetListSinhVien(maKhoa, maLop) {
                       data[i].maSinhVien +
                       "' >Quản lý điểm trung bình</button>\
                     </td>\
-                      </tr>";
+                    </tr>";
                   }
 
                   $("#id_tbodySinhVien").html(htmlData);
@@ -252,37 +282,51 @@ function GetListSinhVien(maKhoa, maLop) {
                     countSinhVien += 1;
 
                     htmlData +=
-                      "<tr>\
-                                                    <td class='cell'>" +
-                      data[i].soThuTu +
-                      "</td>\
-                                                    <td class='cell'><span class='truncate'>" +
-                      data[i].maSinhVien +
-                      "</span></td>\
-                                                    <td class='cell'>" +
-                      data[i].hoTenSinhVien +
-                      "</td>\
-                                                    <td class='cell'>" +
-                      data[i].ngaySinh +
-                      "</td>\
-                                                    <td class='cell'>" +
-                      data[i].he +
-                      "</td>\
-                                                    <td class='cell'>" +
-                      data[i].maLop +
-                      "<td class='cell'><button type='button' class='btn btn-info btn_DatLaiMatKhau_SinhVien' data-bs-toggle='modal' data-bs-target='#DatLaiMatKhauModal' style='color: white;' data-id='" +
-                      data[i].maSinhVien +
-                      "' >Đặt lại mật khẩu</button></td>\
-                      <td class='cell'>\
-                      <button class='btn bg-warning btn_ChinhSua_SinhVien' style='color: white;' data-bs-toggle='modal' data-bs-target='#ChinhSuaModal' data-id = '" +
-                      data[i].maSinhVien +
-                      "' >Chỉnh sửa</button>\
-                      <td class='cell'>\
-                      <button class='btn app-btn-primary btn_QuanLyDiemTrungBinhHocKy_SinhVien' style='color: white;' data-bs-toggle='modal' data-bs-target='#QuanLyDiemTrungBinhHocKyModal' data-id = '" +
-                      data[i].maSinhVien +
-                      "' >Quản lý điểm trung bình</button>\
-                    </td>\
-                                                    </tr>";
+                        "<tr>\
+                        <td class='cell'>" +
+                        data[i].soThuTu +
+                        "</td>\
+                        <td class='cell'><span class='truncate'>" +
+                        data[i].maSinhVien +
+                        "</span></td>\
+                        <td class='cell'>" +
+                        data[i].hoTenSinhVien +
+                        "</td>\
+                        <td class='cell'>" +
+                        data[i].ngaySinh +
+                        "</td>\
+                        <td class='cell'>" +
+                        data[i].he +
+                        "</td>\
+                        <td class='cell'>" +
+                        data[i].email +
+                        "</td>\
+                        <td class='cell'>" +
+                        data[i].sdt +
+                        "</td>\
+                        <td class='cell'>" +
+                        data[i].maLop +
+                        "</td>\
+                        <td class='cell'>" +
+                        (data[i].totNghiep == 1 ? 
+                    "<span class='badge bg-success' style='color: white;font-size: inherit;'>Đã tốt nghiệp</span>"
+                    : 
+                    "<span class='badge bg-warning' style='color: white;font-size: inherit;'>Chưa tốt nghiệp</span>"
+                  ) +
+                        "</td>\
+                        <td class='cell'><button  type='button' id='id_btnReset' class='btn btn-info btn_DatLaiMatKhau_SinhVien' data-bs-toggle='modal' data-bs-target='#DatLaiMatKhauModal' style='color: white;' data-id='" +
+                        data[i].maSinhVien +
+                        "' >Đặt lại mật khẩu</button></td>\
+                        <td class='cell'>\
+                        <button class='btn bg-warning btn_ChinhSua_SinhVien' style='color: white;' data-bs-toggle='modal' data-bs-target='#ChinhSuaModal' data-id = '" +
+                        data[i].maSinhVien +
+                        "' >Chỉnh sửa</button>\
+                        <td class='cell'>\
+                        <button class='btn app-btn-primary btn_QuanLyDiemTrungBinhHocKy_SinhVien' style='color: white;' data-bs-toggle='modal' data-bs-target='#QuanLyDiemTrungBinhHocKyModal' data-id = '" +
+                        data[i].maSinhVien +
+                        "' >Quản lý điểm trung bình</button>\
+                      </td>\
+                      </tr>";
                   }
 
                   $("#id_tbodySinhVien").html(htmlData);
@@ -332,35 +376,48 @@ function GetListSinhVien(maKhoa, maLop) {
                   countSinhVien += 1;
 
                   htmlData +=
-                    "<tr>\
+                  "<tr>\
                   <td class='cell'>" +
-                    data[i].soThuTu +
-                    "</td>\
+                  data[i].soThuTu +
+                  "</td>\
                   <td class='cell'><span class='truncate'>" +
-                    data[i].maSinhVien +
-                    "</span></td>\
+                  data[i].maSinhVien +
+                  "</span></td>\
                   <td class='cell'>" +
-                    data[i].hoTenSinhVien +
-                    "</td>\
+                  data[i].hoTenSinhVien +
+                  "</td>\
                   <td class='cell'>" +
-                    data[i].ngaySinh +
-                    "</td>\
+                  data[i].ngaySinh +
+                  "</td>\
                   <td class='cell'>" +
-                    data[i].he +
-                    "</td>\
+                  data[i].he +
+                  "</td>\
                   <td class='cell'>" +
-                    data[i].maLop +
-                    "</td>\
+                  data[i].email +
+                  "</td>\
+                  <td class='cell'>" +
+                  data[i].sdt +
+                  "</td>\
+                  <td class='cell'>" +
+                  data[i].maLop +
+                  "</td>\
+                  <td class='cell'>" +
+                  (data[i].totNghiep == 1 ? 
+                    "<span class='badge bg-success' style='color: white;font-size: inherit;'>Đã tốt nghiệp</span>"
+                    : 
+                    "<span class='badge bg-warning' style='color: white;font-size: inherit;'>Chưa tốt nghiệp</span>"
+                  ) +
+                  "</td>\
                   <td class='cell'><button  type='button' id='id_btnReset' class='btn btn-info btn_DatLaiMatKhau_SinhVien' data-bs-toggle='modal' data-bs-target='#DatLaiMatKhauModal' style='color: white;' data-id='" +
-                    data[i].maSinhVien +
-                    "' >Đặt lại mật khẩu</button></td>\
+                  data[i].maSinhVien +
+                  "' >Đặt lại mật khẩu</button></td>\
                   <td class='cell'>\
                   <button class='btn bg-warning btn_ChinhSua_SinhVien' style='color: white;' data-bs-toggle='modal' data-bs-target='#ChinhSuaModal' data-id = '" +
-                    data[i].maSinhVien +
-                    "' >Chỉnh sửa</button>\
-                    <td class='cell'>\
-                    <button class='btn app-btn-primary btn_QuanLyDiemTrungBinhHocKy_SinhVien' style='color: white;' data-bs-toggle='modal' data-bs-target='#QuanLyDiemTrungBinhHocKyModal' data-id = '" +
-                    data[i].maSinhVien +
+                  data[i].maSinhVien +
+                  "' >Chỉnh sửa</button>\
+                  <td class='cell'>\
+                  <button class='btn app-btn-primary btn_QuanLyDiemTrungBinhHocKy_SinhVien' style='color: white;' data-bs-toggle='modal' data-bs-target='#QuanLyDiemTrungBinhHocKyModal' data-id = '" +
+                  data[i].maSinhVien +
                   "' >Quản lý điểm trung bình</button>\
                 </td>\
                                     </tr>";
@@ -417,38 +474,51 @@ function TimKiemSinhVien(maSinhVien) {
             countSinhVien += 1;
 
             htmlData +=
-              "<tr>\
-            <td class='cell'>" +
-              data[i].soThuTu +
-              "</td>\
-            <td class='cell'><span class='truncate'>" +
-              data[i].maSinhVien +
-              "</span></td>\
-            <td class='cell'>" +
-              data[i].hoTenSinhVien +
-              "</td>\
-            <td class='cell'>" +
-              data[i].ngaySinh +
-              "</td>\
-            <td class='cell'>" +
-              data[i].he +
-              "</td>\
-            <td class='cell'>" +
-              data[i].maLop +
-              "</td>\
-            <td class='cell'><button  type='button' id='id_btnReset' class='btn btn-info btn_DatLaiMatKhau_SinhVien' data-bs-toggle='modal' data-bs-target='#DatLaiMatKhauModal' style='color: white;' data-id='" +
-              data[i].maSinhVien +
-              "' >Đặt lại mật khẩu</button></td>\
-            <td class='cell'>\
-            <button class='btn bg-warning btn_ChinhSua_SinhVien' style='color: white;' data-bs-toggle='modal' data-bs-target='#ChinhSuaModal' data-id = '" +
-              data[i].maSinhVien +
-              "' >Chỉnh sửa</button>\
-            <td class='cell'>\
-            <button class='btn app-btn-primary btn_QuanLyDiemTrungBinhHocKy_SinhVien' style='color: white;' data-bs-toggle='modal' data-bs-target='#QuanLyDiemTrungBinhHocKyModal' data-id = '" +
-            data[i].maSinhVien +
-            "' >Quản lý điểm trung bình</button>\
-          </td>\
-                              </tr>";
+                  "<tr>\
+                  <td class='cell'>" +
+                  data[i].soThuTu +
+                  "</td>\
+                  <td class='cell'><span class='truncate'>" +
+                  data[i].maSinhVien +
+                  "</span></td>\
+                  <td class='cell'>" +
+                  data[i].hoTenSinhVien +
+                  "</td>\
+                  <td class='cell'>" +
+                  data[i].ngaySinh +
+                  "</td>\
+                  <td class='cell'>" +
+                  data[i].he +
+                  "</td>\
+                  <td class='cell'>" +
+                  data[i].email +
+                  "</td>\
+                  <td class='cell'>" +
+                  data[i].sdt +
+                  "</td>\
+                  <td class='cell'>" +
+                  data[i].maLop +
+                  "</td>\
+                  <td class='cell'>" +
+                  (data[i].totNghiep == 1 ? 
+                    "<span class='badge bg-success' style='color: white;font-size: inherit;'>Đã tốt nghiệp</span>"
+                    : 
+                    "<span class='badge bg-warning' style='color: white;font-size: inherit;'>Chưa tốt nghiệp</span>"
+                  ) +
+                  "</td>\
+                  <td class='cell'><button  type='button' id='id_btnReset' class='btn btn-info btn_DatLaiMatKhau_SinhVien' data-bs-toggle='modal' data-bs-target='#DatLaiMatKhauModal' style='color: white;' data-id='" +
+                  data[i].maSinhVien +
+                  "' >Đặt lại mật khẩu</button></td>\
+                  <td class='cell'>\
+                  <button class='btn bg-warning btn_ChinhSua_SinhVien' style='color: white;' data-bs-toggle='modal' data-bs-target='#ChinhSuaModal' data-id = '" +
+                  data[i].maSinhVien +
+                  "' >Chỉnh sửa</button>\
+                  <td class='cell'>\
+                  <button class='btn app-btn-primary btn_QuanLyDiemTrungBinhHocKy_SinhVien' style='color: white;' data-bs-toggle='modal' data-bs-target='#QuanLyDiemTrungBinhHocKyModal' data-id = '" +
+                  data[i].maSinhVien +
+                  "' >Quản lý điểm trung bình</button>\
+                </td>\
+                                    </tr>";
           }
 
           $("#id_tbodySinhVien").html(htmlData);
@@ -613,13 +683,18 @@ function ThemMoi_SinhVien() {
   var _input_MaSinhVien = $("#input_MaSinhVien").val();
   var _input_HoTenSinhVien = $("#input_HoTenSinhVien").val();
   var _input_NgaySinh = $("#input_NgaySinh").val();
+  var _input_Email = $("#input_Email").val();
+  var _input_sdt = $("#input_sdt").val();
   var _input_MaLop = $("#select_Lop_Add option:selected").val();
   var _select_He_Add = $("#select_He_Add option:selected").text();
+  var _select_TotNghiep_Add = $("#select_TotNghiep_Add option:selected").val();
 
   if (
     _input_MaSinhVien == "" ||
     _input_HoTenSinhVien == "" ||
-    _input_NgaySinh == ""
+    _input_NgaySinh == "" ||
+    _input_Email == "" ||
+    _input_sdt == ""
   ) {
     ThongBaoLoi("Vui lòng nhập đầy đủ thông tin!");
   } else {
@@ -627,9 +702,12 @@ function ThemMoi_SinhVien() {
       maSinhVien: _input_MaSinhVien,
       hoTenSinhVien: _input_HoTenSinhVien,
       ngaySinh: _input_NgaySinh,
+      email: _input_Email,
+      sdt: _input_sdt,
       maLop: _input_MaLop,
       matKhauSinhVien: _input_MaSinhVien,
       he: _select_He_Add,
+      totNghiep: _select_TotNghiep_Add
     };
 
     $.ajax({
@@ -696,16 +774,22 @@ function DatLaiMatKhau_SinhVien() {
           var _input_MaSinhVien = result_SV.maSinhVien;
           var _input_hoTenSinhVien = result_SV.hoTenSinhVien;
           var _input_ngaySinh = result_SV.ngaySinh;
+          var _input_email = result_SV.email;
+          var _input_sdt = result_SV.sdt;
           var _input_he = result_SV.he;
           var _input_maLop = result_SV.maLop;
+          var _input_totNghiep = result_SV.totNghiep;
 
           var dataPost_Update = {
             maSinhVien: _input_MaSinhVien,
             hoTenSinhVien: _input_hoTenSinhVien,
             ngaySinh: _input_ngaySinh,
+            email: _input_email,
+            sdt: _input_sdt,
             he: _input_he,
             maLop: _input_maLop,
             matKhauSinhVien: _input_MatKhauMoi,
+            totNghiep: _input_totNghiep
           };
 
           $.ajax({
@@ -807,6 +891,10 @@ function LoadThongTinChinhSua_SinhVien(maSinhVien) {
 
       var edit_select_He = document.querySelector("#edit_select_He");
 
+      $("#edit_input_Email").val(result_data.email);
+      $("#edit_input_sdt").val(result_data.sdt);
+      $("#edit_select_TotNghiep").val(result_data.totNghiep);
+
       dselect(edit_select_He, {
         search: true,
       });
@@ -829,13 +917,18 @@ function ChinhSua_SinhVien() {
   var _edit_input_MaSinhVien = $("#edit_input_MaSinhVien").val();
   var _edit_input_TenSinhVien = $("#edit_input_TenSinhVien").val();
   var _edit_input_NgaySinh = $("#edit_input_NgaySinh").val();
+  var _edit_input_Email = $("#edit_input_Email").val();
+  var _edit_input_sdt = $("#edit_input_sdt").val();
   var _edit_select_Lop = $("#edit_select_Lop option:selected").val();
   var _edit_select_He = $("#edit_select_He option:selected").text();
+  var _edit_select_TotNghiep = $("#edit_select_TotNghiep option:selected").val();
 
   if (
     _edit_input_MaSinhVien == "" ||
     _edit_input_TenSinhVien == "" ||
-    _edit_input_NgaySinh == ""
+    _edit_input_NgaySinh == "" ||
+    _edit_input_Email == "" ||
+    _edit_input_sdt == ""
   ) {
     ThongBaoLoi("Vui lòng nhập đầy đủ thông tin!");
   } else {
@@ -843,8 +936,11 @@ function ChinhSua_SinhVien() {
       maSinhVien: _edit_input_MaSinhVien,
       hoTenSinhVien: _edit_input_TenSinhVien,
       ngaySinh: _edit_input_NgaySinh,
+      email: _edit_input_Email,
+      sdt: _edit_input_sdt,
       he: _edit_select_He,
       maLop: _edit_select_Lop,
+      totNghiep: _edit_select_TotNghiep
     };
 
     $.ajax({

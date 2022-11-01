@@ -20,7 +20,7 @@
 
         // GET ALL
         public function getAllCVHT(){
-            $sqlQuery = "SELECT maCoVanHocTap, hoTenCoVan, soDienThoai, maKhoa, matKhauTaiKhoanCoVan FROM " . $this->db_table . "";
+            $sqlQuery = "SELECT * FROM " . $this->db_table . "";
             $stmt = $this->conn->prepare($sqlQuery);
             $stmt->execute();
             return $stmt;
@@ -29,7 +29,7 @@
         // GET ALL THEO MAKHOA 
         public function getAllCVHTTheoMaKhoa($maKhoa)
         {
-            $sqlQuery = "SELECT maCoVanHocTap, hoTenCoVan, soDienThoai, maKhoa, matKhauTaiKhoanCoVan 
+            $sqlQuery = "SELECT *
                             FROM " . $this->db_table . " WHERE maKhoa = ?";
                                 
     
@@ -51,7 +51,7 @@
         // GET CO VAN HOC TAP THEO MA CVHT
         public function getCVHTTheoMaCVHT($maCVHT, $isEqual = true)
         {
-            $sqlQuery = "SELECT maCoVanHocTap, hoTenCoVan, soDienThoai, maKhoa, matKhauTaiKhoanCoVan FROM " . $this->db_table . " 
+            $sqlQuery = "SELECT * FROM " . $this->db_table . " 
                             WHERE maCoVanHocTap" . 
                             ($isEqual ? " = '$maCVHT'" : " LIKE '%$maCVHT%'");
     
@@ -62,7 +62,7 @@
 
         // READ single
         public function getSingleCVHT(){
-            $sqlQuery = "SELECT maCoVanHocTap, hoTenCoVan, soDienThoai, maKhoa, matKhauTaiKhoanCoVan FROM ". $this->db_table ."
+            $sqlQuery = "SELECT * FROM ". $this->db_table ."
                         WHERE maCoVanHocTap = ? LIMIT 0,1";
             $stmt = $this->conn->prepare($sqlQuery);
             $stmt->bindParam(1, $this->maCoVanHocTap);
@@ -76,6 +76,8 @@
                 $this->soDienThoai = $dataRow['soDienThoai'];
                 $this->maKhoa = $dataRow['maKhoa'];
                 $this->matKhauTaiKhoanCoVan = $dataRow['matKhauTaiKhoanCoVan'];
+                $this->email = $dataRow['email'];
+                $this->anhDaiDien = $dataRow['anhDaiDien'];
             }
             
         }
@@ -176,6 +178,49 @@
             if($stmt->execute()){
                return true;
             }
+            return false;
+        }
+
+        public function updateTaiKhoanCvht() {
+            if(isset($this->maCoVanHocTap)) {
+                $sqlQuery = "UPDATE " . $this->db_table;
+            
+                if(isset($this->maCoVanHocTap) && (isset($this->email) || isset($this->soDienThoai) || isset($this->anhDaiDien))) {
+                    $sqlQuery.= " SET ".
+                                    (isset($this->email) ? "email = :email, " : "").
+                                    (isset($this->soDienThoai) ? "soDienThoai = :soDienThoai, " : "").
+                                    (isset($this->anhDaiDien) ? "anhDaiDien = :anhDaiDien, " : "");
+                    $sqlQuery = substr($sqlQuery, 0, -2);
+                    $sqlQuery.= " WHERE maCoVanHocTap = :maCoVanHocTap";
+    
+                    $stmt = $this->conn->prepare($sqlQuery);
+    
+                    // sanitize (Lọc dữ liệu đầu vào tránh SQLInjection, XSS)
+                    if(isset($this->email))
+                        $this->email = htmlspecialchars(strip_tags($this->email));
+                    if(isset($this->soDienThoai))
+                        $this->soDienThoai = htmlspecialchars(strip_tags($this->soDienThoai));
+                    if(isset($this->anhDaiDien))
+                        $this->anhDaiDien = htmlspecialchars(strip_tags($this->anhDaiDien));
+                    if(isset($this->maCoVanHocTap))
+                        $this->maCoVanHocTap = htmlspecialchars(strip_tags($this->maCoVanHocTap));
+    
+                    // bind data
+                    if(isset($this->email))
+                        $stmt->bindParam(":email", $this->email);
+                    if(isset($this->soDienThoai))
+                        $stmt->bindParam(":soDienThoai", $this->soDienThoai);
+                    if(isset($this->anhDaiDien))
+                        $stmt->bindParam(":anhDaiDien", $this->anhDaiDien);
+                    if(isset($this->maCoVanHocTap))
+                        $stmt->bindParam(":maCoVanHocTap", $this->maCoVanHocTap);
+    
+                    if ($stmt->execute()) {
+                        return true;
+                    }
+                }
+            }
+            
             return false;
         }
 

@@ -27,10 +27,13 @@
                 //set các biến bằng data nhận từ user
                 $item->maSinhVien = $data->maSinhVien;
                 $item->hoTenSinhVien = $data->hoTenSinhVien;
-                $item->ngaySinh = $data->ngaySinh;        
+                $item->ngaySinh = $data->ngaySinh;     
+                $item->email = $data->email; 
+                $item->sdt = $data->sdt;    
                 $item->he = $data->he;
                 $item->matKhauSinhVien =md5($data->matKhauSinhVien);
                 $item->maLop = $data->maLop;
+                $item->totNghiep = $data->totNghiep;
     
                 if($item->createSinhVien()){
                     http_response_code(200);

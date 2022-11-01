@@ -31,7 +31,11 @@
                     "hoTenCoVan" => $item->hoTenCoVan,
                     "soDienThoai" => $item->soDienThoai,
                     "maKhoa" => $item->maKhoa,
-                    "matKhauTaiKhoanCoVan" => $item->matKhauTaiKhoanCoVan
+                    "matKhauTaiKhoanCoVan" => $item->matKhauTaiKhoanCoVan,
+                    "email" => $item->email,
+                    "soDienThoai" => $item->soDienThoai,
+                    "anhDaiDien" => $item->anhDaiDien,
+
                 );
             
                 http_response_code(200);

@@ -125,16 +125,37 @@
 							</div>
 
 							<div class="mb-3 form-group">
+								<label for="input_Email" class="form-label" style="color: black; font-weight: 500;">Email</label>
+								<input type="email" name="email" class="form-control" id="input_Email" placeholder="Nhập email...">
+								<span class="invalid-feedback"></span>
+							</div>
+
+							<div class="mb-3 form-group">
+								<label for="input_sdt" class="form-label" style="color: black; font-weight: 500;">Số điện thoại</label>
+								<input type="tel" name="sdt" class="form-control" id="input_sdt" placeholder="Nhập số điện thoại...">
+								<span class="invalid-feedback"></span>
+							</div>
+
+							<div class="mb-3 form-group">
 								<label for="select_Lop_Add" class="form-label" style="color: black; font-weight: 500;">Lớp</label>
 								<select class="form-select" name="maLop" aria-label="Default select example" id="select_Lop_Add"></select>
 								<span class="invalid-feedback"></span>
 							</div>
 
 							<div class="mb-3 form-group">
-								<label for="edit_select_He" class="form-label" style="color: black; font-weight: 500;">Hệ</label>
+								<label class="form-label" style="color: black; font-weight: 500;">Hệ</label>
 								<select class="form-select edit_select_He" name="he" aria-label="Default select example" id="select_He_Add">
 									<option value="dai_hoc">Đại học</option>
 									<option value="cao_dang">Cao đẳng</option>
+								</select>
+								<span class="invalid-feedback"></span>
+							</div>
+
+							<div class="mb-3 form-group">
+								<label class="form-label" style="color: black; font-weight: 500;">Tốt nghiệp</label>
+								<select class="form-select edit_select_TotNghiep" name="totNghiep" aria-label="Default select example" id="select_TotNghiep_Add">
+									<option value="0">Chưa tốt nghiệp</option>
+									<option value="1">Đã tốt nghiệp</option>
 								</select>
 								<span class="invalid-feedback"></span>
 							</div>
@@ -179,7 +200,19 @@
 
 							<div class="mb-3 form-group">
 								<label for="edit_input_NgaySinh" class="form-label" style="color: black; font-weight: 500;">Ngày sinh:</label>
-								<input type="date" name="ngaySinh" class="form-control mb-2" id="edit_input_NgaySinh" name="birthday">
+								<input type="date" name="ngaySinh" class="form-control mb-2" id="edit_input_NgaySinh">
+								<span class="invalid-feedback"></span>
+							</div>
+
+							<div class="mb-3 form-group">
+								<label for="edit_input_Email" class="form-label" style="color: black; font-weight: 500;">Email:</label>
+								<input type="email" name="email" class="form-control mb-2" id="edit_input_Email" name="email">
+								<span class="invalid-feedback"></span>
+							</div>
+
+							<div class="mb-3 form-group">
+								<label for="edit_input_sdt" class="form-label" style="color: black; font-weight: 500;">Số điện thoại:</label>
+								<input type="tel" name="sdt" class="form-control mb-2" id="edit_input_sdt">
 								<span class="invalid-feedback"></span>
 							</div>
 
@@ -194,6 +227,15 @@
 								<select class="form-select edit_select_He" name="he" aria-label="Default select example" id="edit_select_He">
 									<option value="dai_hoc">Đại học</option>
 									<option value="cao_dang">Cao đẳng</option>
+								</select>
+								<span class="invalid-feedback"></span>
+							</div>
+
+							<div class="mb-3 form-group">
+								<label for="edit_select_TotNghiep" class="form-label" style="color: black; font-weight: 500;">Tốt nghiệp</label>
+								<select class="form-select edit_select_TotNghiep" name="totNghiep" aria-label="Default select example" id="edit_select_TotNghiep">
+									<option value="0">Chưa tốt nghiệp</option>
+									<option value="1">Đã tốt nghiệp</option>
 								</select>
 								<span class="invalid-feedback"></span>
 							</div>
@@ -384,6 +426,10 @@
 			Validator.isCharacters('#input_HoTenSinhVien', 'Họ tên sinh viên chỉ bao gồm các ký tự chữ'),
 			Validator.isRequired('#input_NgaySinh', 'Vui lòng nhập ngày sinh'),
 			Validator.isDateOfBirth('#input_NgaySinh'),
+			Validator.isRequired('#input_Email', "Vui lòng nhập email"),
+			Validator.isEmail('#input_Email', "Email không hợp lệ"),
+			Validator.isRequired('#input_sdt', "Vui lòng nhập số điện thoại"),
+			Validator.isPhoneNumber('#input_sdt'),
         ],
         onSubmit: ThemMoi_SinhVien
     })
@@ -400,6 +446,10 @@
 			Validator.isCharacters('#edit_input_TenSinhVien', 'Họ tên sinh viên chỉ bao gồm các ký tự chữ'),
 			Validator.isRequired('#edit_input_NgaySinh', 'Vui lòng nhập ngày sinh'),
 			Validator.isDateOfBirth('#edit_input_NgaySinh'),
+			Validator.isRequired('#edit_input_Email', "Vui lòng nhập email"),
+			Validator.isEmail('#edit_input_Email', "Email không hợp lệ"),
+			Validator.isRequired('#edit_input_sdt', "Vui lòng nhập số điện thoại"),
+			Validator.isPhoneNumber('#edit_input_sdt'),
         ],
         onSubmit: ChinhSua_SinhVien
     })

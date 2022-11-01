@@ -16,7 +16,9 @@ if (isset($_COOKIE['jwt'])){
     $dataToken = CheckCookie::read_data_token($jwt);
 
     if ($dataToken['status'] == 1 ){
-        $quyenNguoiDung = $dataToken['user_data']->aud; 
+        $quyenNguoiDung = $dataToken['user_data']->aud;
+        $quyen = $_COOKIE['quyen'];
+        $maSo = $_COOKIE['maSo'];
     }else{
         setcookie("jwt", "", time() -3600);
         
@@ -128,9 +130,9 @@ if (isset($_COOKIE['jwt'])){
 					echo "Điểm rèn luyện";
 					break;
 				}
-					
 			}
 			
+            
 		?>
 
     </title>
@@ -142,8 +144,10 @@ if (isset($_COOKIE['jwt'])){
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
     <link href="../css/bootstrap.min.css" rel="stylesheet">
     <link href="../css/fontawesome-all.min.css" rel="stylesheet">
+    
     <link href="../css/swiper.css" rel="stylesheet">
     <link href="../css/styles.css" rel="stylesheet">
+    
     <script src="../js/jquery-3.6.0.js"></script>
     
     <script src="../js/sweetalert2.all.min.js"></script>
@@ -155,9 +159,8 @@ if (isset($_COOKIE['jwt'])){
 
     <!-- Custom Script -->
     <script src="../js/dangnhap/dangnhap.js"></script>
-
     <script src="../../config/urlapi.js" ></script>
-   
+    
 
 </head>
 
@@ -183,7 +186,7 @@ if (isset($_COOKIE['jwt'])){
             </button>
 
             <div class="navbar-collapse offcanvas-collapse" id="navbarsExampleDefault">
-                <ul class="navbar-nav ms-auto navbar-nav-scroll">
+                <ul class="navbar-nav ms-auto navbar-nav-scroll d-flex align-items-center">
                 
                     <!-- Chức năng chung -->
                     <li class="nav-item">
@@ -225,12 +228,12 @@ if (isset($_COOKIE['jwt'])){
                             echo "<li class='nav-item dropdown'>
                                 <a class='nav-link dropdown-toggle' href='#' id='navbarDropdownMenuLink' role='button' data-mdb-toggle='dropdown' aria-expanded='false' style='text-transform: uppercase;'>
                                     <span class='nav-item' style='text-transform: uppercase;'> 
-                                        Xin chào, ". $hoten ." <img class='d-inline-block' src='../account-images/user.png' alt='user profile' width='10%'>
+                                        Xin chào, ". $hoten ." <img class='d-inline-block rounded-circle' id='avatar' src='' alt='user profile' width='50px'>
                                     </span>
                                 </a>
                                 <ul class='dropdown-menu' aria-labelledby='navbarDropdownMenuLink'>
                                     <li>
-                                        <a class='dropdown-item' href='taikhoan.php' style='text-transform: uppercase;'> <img src='../images/edit-account.png' width='15px'> Tài khoản </a>
+                                        <a class='dropdown-item' href='taikhoan.php' style='text-transform: uppercase;'> <img src='../images/edit-account.png' width='20px'> Tài khoản </a>
                                     </li>
                                     <li>
                                         <hr class='dropdown-divider'>
@@ -275,3 +278,5 @@ if (isset($_COOKIE['jwt'])){
 
 
     </script>
+    <!-- Custom Script -->
+    <script src="../js/header/header.js"></script>

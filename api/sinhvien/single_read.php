@@ -24,7 +24,45 @@
                 $mssv = null;
             }
 
-            if ($mssv != null) {
+            if (isset($_GET['matKhau'])) {
+                $matKhau = $_GET['matKhau'];
+            } else {
+                $matKhau = null;
+            }
+
+            if ($mssv != null && $matKhau != null) {
+                $database = new Database();
+                $db = $database->getConnection();
+
+                $items = new SinhVien($db);
+                $stmt = $items->getSingleinhVienTheoMSSVVaMatKhau($mssv, md5($matKhau));
+                $itemCount = $stmt->rowCount();
+        
+                if ($itemCount == 1) {
+                    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+                    extract($row);
+                    $sv = array(
+                        "maSinhVien" => $maSinhVien,
+                        "hoTenSinhVien" => $hoTenSinhVien,
+                        "ngaySinh" => $ngaySinh,
+                        "he" => $he,
+                        "maLop" => $maLop,
+                        "email" => $email,
+                        "sdt" => $sdt,
+                        "anhDaiDien" => $anhDaiDien,
+                        "totNghiep" => $totNghiep
+                    );
+                    
+                    http_response_code(200);
+                    echo json_encode($sv);
+                } else {
+                    http_response_code(404);
+                    echo json_encode(
+                        array("message" => "Không tìm thấy kết quả.")
+                    );
+                }
+            } else if ($mssv != null) {
                 $database = new Database();
                 $db = $database->getConnection();
 
@@ -41,7 +79,11 @@
                         "hoTenSinhVien" => $hoTenSinhVien,
                         "ngaySinh" => $ngaySinh,
                         "he" => $he,
-                        "maLop" => $maLop
+                        "maLop" => $maLop,
+                        "email" => $email,
+                        "sdt" => $sdt,
+                        "anhDaiDien" => $anhDaiDien,
+                        "totNghiep" => $totNghiep
                     );
                     
                     

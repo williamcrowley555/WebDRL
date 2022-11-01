@@ -16,8 +16,6 @@
                 }else{
                     header("Location: ../chamdiem.php");
                 }
-                
-                
                 break;
                 
             }
