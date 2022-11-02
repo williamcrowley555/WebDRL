@@ -25,23 +25,32 @@ const urlapi_sinhvien_create = host_domain_url + "/sinhvien/create.php";
 
 //UPDATE//
 const urlapi_sinhvien_update = host_domain_url + "/sinhvien/update.php";
-const urlapi_sinhvien_update_matKhau = host_domain_url + "/sinhvien/updateMatKhau.php";
-const urlapi_sinhvien_update_taikhoan = host_domain_url + "/sinhvien/updateTaiKhoan.php?maSinhVien=";
+const urlapi_sinhvien_update_matKhau =
+  host_domain_url + "/sinhvien/updateMatKhau.php";
+const urlapi_sinhvien_update_taikhoan =
+  host_domain_url + "/sinhvien/updateTaiKhoan.php?maSinhVien=";
 
 //---------------   DIEM TRUNG BINH HE 4    ---------------//----------------------------------
 //---------//
 
 //READ
-const urlapi_diemtrungbinhhe4_read = host_domain_url + "/diemtrungbinhhe4/read.php";
+const urlapi_diemtrungbinhhe4_read =
+  host_domain_url + "/diemtrungbinhhe4/read.php";
 
 const urlapi_diemtrungbinhhe4_read_MaSV =
   urlapi_diemtrungbinhhe4_read + "?maSinhVien=";
 
+//SINGLE READ//
+const urlapi_diemtrungbinhhe4_single_read =
+  host_domain_url + "/diemtrungbinhhe4/single_read.php";
+
 //CREATE//
-const urlapi_diemtrungbinhhe4_create = host_domain_url + "/diemtrungbinhhe4/create.php";
+const urlapi_diemtrungbinhhe4_create =
+  host_domain_url + "/diemtrungbinhhe4/create.php";
 
 //UPDATE//
-const urlapi_diemtrungbinhhe4_update = host_domain_url + "/diemtrungbinhhe4/update.php";
+const urlapi_diemtrungbinhhe4_update =
+  host_domain_url + "/diemtrungbinhhe4/update.php";
 
 //---------------   CVHT    ---------------//----------------------------------
 //---------//
@@ -251,6 +260,9 @@ const urlapi_covanhoctap_update = host_domain_url + "/covanhoctap/update.php";
 
 //READ
 const urlapi_khoahoc_read = host_domain_url + "/khoahoc/read.php";
+
+//SINGLE READ
+const urlapi_khoahoc_single_read = host_domain_url + "/khoahoc/single_read.php";
 
 //CREATE
 const urlapi_khoahoc_create = host_domain_url + "/khoahoc/create.php";

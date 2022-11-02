@@ -43,6 +43,26 @@
             
         }
 
+        // READ single THEO MA SINH VIEN
+        public function getSingleKhoaHocTheoMSSV($maSinhVien){
+            $sqlQuery = "SELECT khoahoc.* 
+                        FROM sinhvien, lop, khoahoc
+                        WHERE sinhvien.maLop = lop.maLop AND lop.maKhoaHoc = khoahoc.maKhoaHoc 
+                            AND maSinhVien = '3118410044'";
+            $stmt = $this->conn->prepare($sqlQuery);
+            $stmt->bindParam(1, $maSinhVien);
+            $stmt->execute();
+
+            $dataRow = $stmt->fetch(PDO::FETCH_ASSOC);
+            
+            if ($dataRow != null){
+                $this->maKhoaHoc = $dataRow['maKhoaHoc'];
+                $this->namBatDau = $dataRow['namBatDau'];
+                $this->namKetThuc = $dataRow['namKetThuc'];
+            }
+            
+        }
+
         // CREATE
         public function createKhoaHoc(){
             $sqlQuery = "INSERT INTO

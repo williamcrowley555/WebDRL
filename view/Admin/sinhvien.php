@@ -675,7 +675,6 @@
 		$("#AddScoreForm #input_DiemTrungBinh").val("");
 		let maSinhVien = $(this).attr('data-id');
 		$('#input_MaSinhVien_GPA').val(maSinhVien);
-		console.log("Hello");
 		$('#maSinhVien_ketQuaHocTap').text("Mã sinh viên: " + maSinhVien);
 		LoadComboBoxHocKyVaNamHoc();
 		LoadDiemHe4(maSinhVien);

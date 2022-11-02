@@ -64,6 +64,26 @@
             }
         }
 
+        // GET SINGLE DIEM TRUNG BINH HE 4 THEO MSSV VA MA HOC KY DANH GIA
+        public function getSingleTheoMSSVVaMaHKDG($maSinhVien, $maHocKyDanhGia) {
+            $sqlQuery = "SELECT * FROM " . $this->db_table . "
+                        WHERE maSinhVien  = ? AND maHocKyDanhGia = ? 
+                        LIMIT 0,1";
+            $stmt = $this->conn->prepare($sqlQuery);
+            $stmt->bindParam(1, $maSinhVien);
+            $stmt->bindParam(2, $maHocKyDanhGia);
+            $stmt->execute();
+
+            $dataRow = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            if ($dataRow != null) {
+                $this->maDiemTrungBinh  = $dataRow['maDiemTrungBinh'];
+                $this->diem = $dataRow['diem'];
+                $this->maHocKyDanhGia = $dataRow['maHocKyDanhGia'];
+                $this->maSinhVien = $dataRow['maSinhVien'];
+            }
+        }
+
         // CREATE
         public function createDiemTrungBinhHe4() {
             $sqlQuery = "INSERT INTO
@@ -84,7 +104,7 @@
 
             // bind data
             $stmt->bindParam(":maDiemTrungBinh", $this->maDiemTrungBinh);
-            $stmt->bindParam(":namHoc", $this->namHoc);
+            $stmt->bindParam(":diem", $this->diem);
             $stmt->bindParam(":maHocKyDanhGia", $this->maHocKyDanhGia);
             $stmt->bindParam(":maSinhVien", $this->maSinhVien);
 

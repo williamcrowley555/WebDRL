@@ -451,8 +451,80 @@ function autoFillDiemKetQuaHocTap(
 ) {
   selector += " ";
 
-  var TBCHocKyDangXet = $(selector + "#inputTBCHocKyDangXet").val();
+  // Tìm kiếm học kỳ trước
+  $.ajax({
+    url: urlapi_hockydanhgia_read,
+    async: false,
+    type: "GET",
+    contentType: "application/json;charset=utf-8",
+    dataType: "json",
+    headers: {
+      Authorization: jwtCookie,
+    },
+    success: function (result_HKDG) {
+      var maHocKyDanhGiaTruoc = null;
+
+      for (let i = 0; i < result_HKDG["hockydanhgia"].length; i++) {
+        if (
+          result_HKDG["hockydanhgia"][i].maHocKyDanhGia == maHocKyDanhGia &&
+          i < result_HKDG["hockydanhgia"].length - 1
+        ) {
+          maHocKyDanhGiaTruoc =
+            result_HKDG["hockydanhgia"][i + 1].maHocKyDanhGia;
+        }
+      }
+
+      if (maHocKyDanhGiaTruoc != null) {
+        // Lấy điểm trung bình hệ 4 của học kỳ trước
+        $.ajax({
+          url:
+            urlapi_diemtrungbinhhe4_single_read +
+            `?maSinhVien=${maSinhVien}&maHocKyDanhGia=${maHocKyDanhGiaTruoc}`,
+          async: false,
+          type: "GET",
+          contentType: "application/json;charset=utf-8",
+          dataType: "json",
+          headers: {
+            Authorization: jwtCookie,
+          },
+          success: function (result_DiemHe4) {
+            $(selector + "#inputTBCHocKyTruoc").val(result_DiemHe4.diem);
+          },
+          error: function (error) {
+            $(selector + "#inputTBCHocKyTruoc").val(0);
+          },
+        });
+      } else {
+        $(selector + "#inputTBCHocKyTruoc").val(0);
+      }
+    },
+    error: function (error) {
+      $(selector + "#inputTBCHocKyTruoc").val(0);
+    },
+  });
+
+  // Lấy điểm trung bình hệ 4 của học kỳ đang xét
+  $.ajax({
+    url:
+      urlapi_diemtrungbinhhe4_single_read +
+      `?maSinhVien=${maSinhVien}&maHocKyDanhGia=${maHocKyDanhGia}`,
+    async: false,
+    type: "GET",
+    contentType: "application/json;charset=utf-8",
+    dataType: "json",
+    headers: {
+      Authorization: jwtCookie,
+    },
+    success: function (result_DiemHe4) {
+      $(selector + "#inputTBCHocKyDangXet").val(result_DiemHe4.diem);
+    },
+    error: function (error) {
+      $(selector + "#inputTBCHocKyDangXet").val(0);
+    },
+  });
+
   var TBCHocKyTruoc = $(selector + "#inputTBCHocKyTruoc").val();
+  var TBCHocKyDangXet = $(selector + "#inputTBCHocKyDangXet").val();
 
   var bac_HocKyDangXet = 0;
   var bac_HocKyTruoc = 0;
@@ -893,8 +965,8 @@ function createPhieuRenLuyenForm(
                 "<tr>\
                                       <td><em>" +
                 tcc2.noidung +
-                "<br>Điểm TBC học kỳ trước: <input type='number' step='0.01' onchange='changeNumberHandle(this,4)' id='inputTBCHocKyTruoc' name='diemTrungBinhChungHKTruoc' style='width: 90px;margin-bottom: 15px;' />\
-                <br>Điểm TBC học kỳ đang xét: <input type='number' step='0.01' onchange='changeNumberHandle(this,4)' id='inputTBCHocKyDangXet' name='diemTrungBinhChungHKXet' style='width: 90px;' />\
+                "<br>Điểm TBC học kỳ trước: <input type='number' step='0.01' onchange='changeNumberHandle(this,4)' id='inputTBCHocKyTruoc' name='diemTrungBinhChungHKTruoc' style='width: 90px;margin-bottom: 15px;' disabled />\
+                <br>Điểm TBC học kỳ đang xét: <input type='number' step='0.01' onchange='changeNumberHandle(this,4)' id='inputTBCHocKyDangXet' name='diemTrungBinhChungHKXet' style='width: 90px;' disabled />\
                                       </em></td>\
                                       <td></td>\
                                       <td></td>\
@@ -958,34 +1030,7 @@ function createPhieuRenLuyenForm(
                 ) == 0
               ) {
                 readonly_string = "readonly";
-              }
 
-              if (
-                tcc3.noidung.localeCompare(
-                  "a. Điểm trung bình chung học kì từ  3,60 đến 4,00"
-                ) == 0 ||
-                tcc3.noidung.localeCompare(
-                  "b. Điểm trung bình chung học kì từ  3,20 đến 3,59"
-                ) == 0 ||
-                tcc3.noidung.localeCompare(
-                  "c. Điểm trung bình chung học kì từ  2,50 đến 3,19"
-                ) == 0 ||
-                tcc3.noidung.localeCompare(
-                  "d. Điểm trung bình chung học kì từ  2,00 đến 2,49"
-                ) == 0 ||
-                tcc3.noidung.localeCompare(
-                  "đ. Điểm trung bình chung học kì  dưới 2,00"
-                ) == 0 ||
-                tcc3.noidung.localeCompare(
-                  "a. Kết quả học tập tăng một bậc so với học kỳ trước,  ĐTBCHK từ  2,00 trở lên"
-                ) == 0 ||
-                tcc3.noidung.localeCompare(
-                  "b. Kết quả học tập tăng hai bậc so với học kỳ trước,  ĐTBCHK từ  2,00 trở lên"
-                ) == 0 ||
-                tcc3.noidung.localeCompare(
-                  "c. Sinh viên năm thứ I, nếu có kết quả học tập HK I từ 2,00 trở lên"
-                ) == 0
-              ) {
                 html +=
                   "<tr>\
                                     <td>" +
@@ -1208,6 +1253,13 @@ function setDiemPhieuRenLuyen(
 
   // Phiếu rèn luyện mới (chưa có dữ liệu)
   if (diemTieuChiCap2.length == 0 && diemTieuChiCap3.length == 0) {
+    autoFillDiemKetQuaHocTap(
+      thongTinPhieu.maSinhVien,
+      thongTinPhieu.maHocKyDanhGia,
+      userRole,
+      selector
+    );
+
     $(selector + "#inputTBCHocKyDangXet").on("change", function () {
       autoFillDiemKetQuaHocTap(
         thongTinPhieu.maSinhVien,

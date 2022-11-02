@@ -183,7 +183,6 @@
             });
             
             phieuRenLuyen = getThongTinPhieuRenLuyen(maPhieuRenLuyen);
-            console.log(phieuRenLuyen.diemTieuChiCap2)
 
             // Nếu phiếu không tồn tại => Lấy các tiêu chí đang được kích hoạt để hiển thị
             if (typeof(phieuRenLuyen.thongTinPhieu.maPhieuRenLuyen) === "undefined") {

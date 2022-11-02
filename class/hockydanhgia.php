@@ -20,7 +20,8 @@
 
         // GET ALL
         public function getAllHocKyDanhGia(){
-            $sqlQuery = "SELECT maHocKyDanhGia , hocKyXet, namHocXet FROM " . $this->db_table . "";
+            $sqlQuery = "SELECT maHocKyDanhGia , hocKyXet, namHocXet FROM " . $this->db_table . 
+                        " ORDER BY namHocXet DESC, hocKyXet DESC";
             $stmt = $this->conn->prepare($sqlQuery);
             $stmt->execute();
             return $stmt;
