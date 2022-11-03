@@ -110,7 +110,7 @@ function getThongTinHocKyDanhGia() {
           var ngaySinhVienKetThucDanhGia = new Date(
             result[index][p].ngaySinhVienKetThucDanhGia
           );
-          ngaySinhVienKetThucDanhGia.setHours(0, 0, 0, 0);
+          ngaySinhVienKetThucDanhGia.setHours(23, 59, 59, 999);
 
           var maHocKyDanhGia = result[index][p].maHocKyDanhGia;
 

@@ -131,7 +131,7 @@
 
                         $html .= '<tr>
                                     <td style="padding: 10px; border: 1px solid #ccc;"><em>' . $tcc3["noidung"] . '</em></td>
-                                    <td style="padding: 10px; border: 1px solid #ccc; text-align: center;"><em>' . ($tcc3["diem"] == 0 ? '' : $tcc3["diem"] . "đ") . '</em></td>
+                                    <td style="padding: 10px; border: 1px solid #ccc; text-align: center;"><em>' . $tcc3["diem"] . 'đ</em></td>
                                     <td style="padding: 10px; border: 1px solid #ccc; text-align: center;">' . ($diemTCC3 == null ? "" : $diemTCC3["diemSinhVienDanhGia"]) . '</td>
                                     <td style="padding: 10px; border: 1px solid #ccc; text-align: center;">' . ($diemTCC3 == null ? "" : $diemTCC3["diemLopDanhGia"]) . '</td>
                                     <td style="padding: 10px; border: 1px solid #ccc; text-align: center;">' . ($diemTCC3 == null ? "" : $diemTCC3["diemKhoaDanhGia"]) . '</td>

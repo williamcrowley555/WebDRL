@@ -7,14 +7,10 @@ var tableTitle = [
   "Số điện thoại",
   "Hệ",
   "Lớp",
-  "Tốt nghiệp"
+  "Tốt nghiệp",
 ];
 
-var tableKetQuaHocTapTitle = [
-  "STT",
-  "Học kỳ - Năm học",
-  "Điểm hệ 4",
-];
+var tableKetQuaHocTapTitle = ["STT", "Học kỳ - Năm học", "Điểm hệ 4"];
 
 var tableContent = [];
 
@@ -117,11 +113,9 @@ function GetListSinhVien(maKhoa, maLop) {
                   data[i].maLop +
                   "</td>\
                   <td class='cell'>" +
-                  (data[i].totNghiep == 1 ? 
-                    "<span class='badge bg-success' style='color: white;font-size: inherit;'>Đã tốt nghiệp</span>"
-                    : 
-                    "<span class='badge bg-warning' style='color: white;font-size: inherit;'>Chưa tốt nghiệp</span>"
-                  ) +
+                  (data[i].totNghiep == 1
+                    ? "<span class='badge bg-success' style='color: white;font-size: inherit;'>Đã tốt nghiệp</span>"
+                    : "<span class='badge bg-warning' style='color: white;font-size: inherit;'>Chưa tốt nghiệp</span>") +
                   "</td>\
                   <td class='cell'><button  type='button' id='id_btnReset' class='btn btn-info btn_DatLaiMatKhau_SinhVien' data-bs-toggle='modal' data-bs-target='#DatLaiMatKhauModal' style='color: white; min-width: 137px;' data-id='" +
                   data[i].maSinhVien +
@@ -216,11 +210,9 @@ function GetListSinhVien(maKhoa, maLop) {
                       data[i].maLop +
                       "</td>\
                       <td class='cell'>" +
-                      (data[i].totNghiep == 1 ? 
-                    "<span class='badge bg-success' style='color: white;font-size: inherit;'>Đã tốt nghiệp</span>"
-                    : 
-                    "<span class='badge bg-warning' style='color: white;font-size: inherit;'>Chưa tốt nghiệp</span>"
-                  ) +
+                      (data[i].totNghiep == 1
+                        ? "<span class='badge bg-success' style='color: white;font-size: inherit;'>Đã tốt nghiệp</span>"
+                        : "<span class='badge bg-warning' style='color: white;font-size: inherit;'>Chưa tốt nghiệp</span>") +
                       "</td>\
                       <td class='cell'><button  type='button' id='id_btnReset' class='btn btn-info btn_DatLaiMatKhau_SinhVien' data-bs-toggle='modal' data-bs-target='#DatLaiMatKhauModal' style='color: white; min-width: 137px;' data-id='" +
                       data[i].maSinhVien +
@@ -284,31 +276,31 @@ function GetListSinhVien(maKhoa, maLop) {
                     countSinhVien += 1;
 
                     htmlData +=
-                        "<tr>\
+                      "<tr>\
                         <td class='cell'>" +
-                        data[i].soThuTu +
-                        "</td>\
+                      data[i].soThuTu +
+                      "</td>\
                         <td class='cell'><span class='truncate'>" +
-                        data[i].maSinhVien +
-                        "</span></td>\
+                      data[i].maSinhVien +
+                      "</span></td>\
                         <td class='cell'>" +
-                        data[i].hoTenSinhVien +
-                        "</td>\
+                      data[i].hoTenSinhVien +
+                      "</td>\
                         <td class='cell'>" +
-                        data[i].ngaySinh +
-                        "</td>\
+                      data[i].ngaySinh +
+                      "</td>\
                         <td class='cell'>" +
-                        data[i].he +
-                        "</td>\
+                      data[i].he +
+                      "</td>\
                         <td class='cell'>" +
-                        data[i].email +
-                        "</td>\
+                      data[i].email +
+                      "</td>\
                         <td class='cell'>" +
-                        data[i].sdt +
-                        "</td>\
+                      data[i].sdt +
+                      "</td>\
                         <td class='cell'>" +
-                        data[i].maLop +
-                        "</td>\
+                      data[i].maLop +
+                      "</td>\
                         <td class='cell'>" +
                         (data[i].totNghiep == 1 ? 
                     "<span class='badge bg-success' style='color: white;font-size: inherit;'>Đã tốt nghiệp</span>"
@@ -325,8 +317,8 @@ function GetListSinhVien(maKhoa, maLop) {
                         "' >Chỉnh sửa</button>\
                         <td class='cell'>\
                         <button class='btn app-btn-primary btn_QuanLyDiemTrungBinhHocKy_SinhVien' style='color: white;' data-bs-toggle='modal' data-bs-target='#QuanLyDiemTrungBinhHocKyModal' data-id = '" +
-                        data[i].maSinhVien +
-                        "' >Quản lý điểm trung bình</button>\
+                      data[i].maSinhVien +
+                      "' >Quản lý điểm trung bình</button>\
                       </td>\
                       </tr>";
                   }
@@ -379,31 +371,31 @@ function GetListSinhVien(maKhoa, maLop) {
                   countSinhVien += 1;
 
                   htmlData +=
-                  "<tr>\
+                    "<tr>\
                   <td class='cell'>" +
-                  data[i].soThuTu +
-                  "</td>\
+                    data[i].soThuTu +
+                    "</td>\
                   <td class='cell'><span class='truncate'>" +
-                  data[i].maSinhVien +
-                  "</span></td>\
+                    data[i].maSinhVien +
+                    "</span></td>\
                   <td class='cell'>" +
-                  data[i].hoTenSinhVien +
-                  "</td>\
+                    data[i].hoTenSinhVien +
+                    "</td>\
                   <td class='cell'>" +
-                  data[i].ngaySinh +
-                  "</td>\
+                    data[i].ngaySinh +
+                    "</td>\
                   <td class='cell'>" +
-                  data[i].he +
-                  "</td>\
+                    data[i].he +
+                    "</td>\
                   <td class='cell'>" +
-                  data[i].email +
-                  "</td>\
+                    data[i].email +
+                    "</td>\
                   <td class='cell'>" +
-                  data[i].sdt +
-                  "</td>\
+                    data[i].sdt +
+                    "</td>\
                   <td class='cell'>" +
-                  data[i].maLop +
-                  "</td>\
+                    data[i].maLop +
+                    "</td>\
                   <td class='cell'>" +
                   (data[i].totNghiep == 1 ? 
                     "<span class='badge bg-success' style='color: white;font-size: inherit;'>Đã tốt nghiệp</span>"
@@ -420,8 +412,8 @@ function GetListSinhVien(maKhoa, maLop) {
                   "' >Chỉnh sửa</button>\
                   <td class='cell'>\
                   <button class='btn app-btn-primary btn_QuanLyDiemTrungBinhHocKy_SinhVien' style='color: white;' data-bs-toggle='modal' data-bs-target='#QuanLyDiemTrungBinhHocKyModal' data-id = '" +
-                  data[i].maSinhVien +
-                  "' >Quản lý điểm trung bình</button>\
+                    data[i].maSinhVien +
+                    "' >Quản lý điểm trung bình</button>\
                 </td>\
                                     </tr>";
                 }
@@ -478,31 +470,31 @@ function TimKiemSinhVien(maSinhVien) {
             countSinhVien += 1;
 
             htmlData +=
-                  "<tr>\
+              "<tr>\
                   <td class='cell'>" +
-                  data[i].soThuTu +
-                  "</td>\
+              data[i].soThuTu +
+              "</td>\
                   <td class='cell'><span class='truncate'>" +
-                  data[i].maSinhVien +
-                  "</span></td>\
+              data[i].maSinhVien +
+              "</span></td>\
                   <td class='cell'>" +
-                  data[i].hoTenSinhVien +
-                  "</td>\
+              data[i].hoTenSinhVien +
+              "</td>\
                   <td class='cell'>" +
-                  data[i].ngaySinh +
-                  "</td>\
+              data[i].ngaySinh +
+              "</td>\
                   <td class='cell'>" +
-                  data[i].he +
-                  "</td>\
+              data[i].he +
+              "</td>\
                   <td class='cell'>" +
-                  data[i].email +
-                  "</td>\
+              data[i].email +
+              "</td>\
                   <td class='cell'>" +
-                  data[i].sdt +
-                  "</td>\
+              data[i].sdt +
+              "</td>\
                   <td class='cell'>" +
-                  data[i].maLop +
-                  "</td>\
+              data[i].maLop +
+              "</td>\
                   <td class='cell'>" +
                   (data[i].totNghiep == 1 ? 
                     "<span class='badge bg-success' style='color: white;font-size: inherit;'>Đã tốt nghiệp</span>"
@@ -519,8 +511,8 @@ function TimKiemSinhVien(maSinhVien) {
                   "' >Chỉnh sửa</button>\
                   <td class='cell'>\
                   <button class='btn app-btn-primary btn_QuanLyDiemTrungBinhHocKy_SinhVien' style='color: white;' data-bs-toggle='modal' data-bs-target='#QuanLyDiemTrungBinhHocKyModal' data-id = '" +
-                  data[i].maSinhVien +
-                  "' >Quản lý điểm trung bình</button>\
+              data[i].maSinhVien +
+              "' >Quản lý điểm trung bình</button>\
                 </td>\
                                     </tr>";
           }
@@ -719,7 +711,7 @@ function ThemMoi_SinhVien() {
       maLop: _input_MaLop,
       matKhauSinhVien: _input_MaSinhVien,
       he: _select_He_Add,
-      totNghiep: _select_TotNghiep_Add
+      totNghiep: _select_TotNghiep_Add,
     };
 
     $.ajax({
@@ -801,7 +793,7 @@ function DatLaiMatKhau_SinhVien() {
             he: _input_he,
             maLop: _input_maLop,
             matKhauSinhVien: _input_MatKhauMoi,
-            totNghiep: _input_totNghiep
+            totNghiep: _input_totNghiep,
           };
 
           $.ajax({
@@ -878,7 +870,6 @@ function LoadThongTinChinhSua_SinhVien(maSinhVien) {
       var _edit_select_Lop = document.getElementById("edit_select_Lop");
 
       for (var i = 0; i < _edit_select_Lop.options.length; i++) {
-
         if (_edit_select_Lop.options[i].value === result_data.maLop) {
           _edit_select_Lop.options[i].selected = true;
         }
@@ -933,7 +924,9 @@ function ChinhSua_SinhVien() {
   var _edit_input_sdt = $("#edit_input_sdt").val();
   var _edit_select_Lop = $("#edit_select_Lop option:selected").val();
   var _edit_select_He = $("#edit_select_He option:selected").text();
-  var _edit_select_TotNghiep = $("#edit_select_TotNghiep option:selected").val();
+  var _edit_select_TotNghiep = $(
+    "#edit_select_TotNghiep option:selected"
+  ).val();
 
   if (
     _edit_input_MaSinhVien == "" ||
@@ -952,7 +945,7 @@ function ChinhSua_SinhVien() {
       sdt: _edit_input_sdt,
       he: _edit_select_He,
       maLop: _edit_select_Lop,
-      totNghiep: _edit_select_TotNghiep
+      totNghiep: _edit_select_TotNghiep,
     };
 
     $.ajax({
@@ -1004,15 +997,15 @@ function LoadComboBoxHocKyVaNamHoc() {
     dataType: "json",
     async: false,
     headers: { Authorization: jwtCookie },
-   
-    success: function(result_data) {
+
+    success: function (result_data) {
       $("#select_Quanlydiemtrungbinhhocky").find("option").remove();
       $.each(result_data, function (index_HocKy) {
         for (var i = 0; i < result_data[index_HocKy].length; i++) {
           $("#select_Quanlydiemtrungbinhhocky").append(
             "<option value='" +
               result_data[index_HocKy][i].maHocKyDanhGia +
-              "'>Học kỳ: " +  
+              "'>Học kỳ: " +
               result_data[index_HocKy][i].hocKyXet +
               " - Năm học: " +
               result_data[index_HocKy][i].namHocXet +
@@ -1021,12 +1014,11 @@ function LoadComboBoxHocKyVaNamHoc() {
         }
       });
     },
-      
-    error: function() {
+
+    error: function () {
       console.log("Loi load combobox nam hoc");
       return;
-    }
-      
+    },
   });
 }
 
@@ -1036,18 +1028,15 @@ function getHTMLOptionText(selected) {
 
 function NhapDiemHe4() {
   var maSinhVien_GPA = $("#input_MaSinhVien_GPA").val();
-  var maHocKyDanhGia = $("#select_Quanlydiemtrungbinhhocky").val();
-  var hocKyVaNamHoc = $("#select_Quanlydiemtrungbinhhocky option:selected").text();
-  var hocKy = hocKyVaNamHoc.slice(8,9);
-  var namHoc = hocKyVaNamHoc.slice(21);
+  var maHocKyDanhGia = $(
+    "#select_Quanlydiemtrungbinhhocky option:selected"
+  ).val();
   var GPA = $("#input_DiemTrungBinh").val();
   var maDiemTrungBinh = maSinhVien_GPA + maHocKyDanhGia;
- 
+
   var dataPost = {
     maDiemTrungBinh: maDiemTrungBinh,
     diem: GPA,
-    hocKy: hocKy,
-    namHoc: namHoc,
     maHocKyDanhGia: maHocKyDanhGia,
     maSinhVien: maSinhVien_GPA,
   };
@@ -1066,10 +1055,7 @@ function NhapDiemHe4() {
 
       Swal.fire({
         icon: "success",
-        title:
-          "Nhập điểm thành công sinh viên mã số " +
-          maSinhVien_GPA +
-          "!",
+        title: "Nhập điểm thành công sinh viên mã số " + maSinhVien_GPA + "!",
         text: "",
         timer: 2000,
         timerProgressBar: true,
@@ -1098,65 +1084,74 @@ function LoadDiemHe4(maSinhVien) {
     dataType: "json",
     async: false,
     headers: { Authorization: jwtCookie },
-    success: function(result_data) {
+    success: function (result_data) {
       $("#id_tbodyKetQuaHocTap tr").remove();
       var htmlData = "";
 
       $.each(result_data, function (index) {
         for (var i = 0; i < result_data[index].length; i++) {
           $.ajax({
-            url: urlapi_hockydanhgia_single_read + result_data[index][i].maHocKyDanhGia,
+            url:
+              urlapi_hockydanhgia_single_read +
+              result_data[index][i].maHocKyDanhGia,
             type: "GET",
             contentType: "application/json;charset=utf-8",
             dataType: "json",
             async: false,
             headers: { Authorization: jwtCookie },
-            success: function(result_HKDG) {
-              htmlData += "<tr>\
+            success: function (result_HKDG) {
+              htmlData +=
+                "<tr>\
                 <td class='cell'>" +
-                  result_data[index][i].soThuTu +
+                result_data[index][i].soThuTu +
                 "</td>\
                 <td class='cell'> Học kì: " +
                 result_HKDG.hocKyXet +
-                  " - Năm học: " +
-                  result_HKDG.namHocXet +
-                  "</td>\
+                " - Năm học: " +
+                result_HKDG.namHocXet +
+                "</td>\
                 <td class='cell'>" +
-                  result_data[index][i].diem +
+                result_data[index][i].diem +
                 "</td>\
                 <td class='cell'>\
                   <button class='btn bg-warning btn_ChinhSua_DiemHe4' style='color: white;' data-idMSSV = '" +
-                    result_data[index][i].maSinhVien +
-                  "' data-idMaHKDG='" + result_data[index][i].maHocKyDanhGia + "' >Chỉnh sửa</button>\
+                result_data[index][i].maSinhVien +
+                "' data-idMaHKDG='" +
+                result_data[index][i].maHocKyDanhGia +
+                "' >Chỉnh sửa</button>\
                   <div class='edit-confirmation' style='display:none'>\
                     <button class='btn app-btn-primary btn_XacNhanChinhSua_DiemHe4' style='color: white;' data-idMSSV = '" +
-                      result_data[index][i].maSinhVien +
-                    "' data-idMaHKDG='" + result_data[index][i].maHocKyDanhGia + "'>Xác nhận</button>\
+                result_data[index][i].maSinhVien +
+                "' data-idMaHKDG='" +
+                result_data[index][i].maHocKyDanhGia +
+                "'>Xác nhận</button>\
                     <button class='btn bg-danger btn_HuyChinhSua_DiemHe4 ml-2' style='color: white;' data-idMSSV = '" +
-                      result_data[index][i].maSinhVien +
-                      "' data-idMaHKDG='" + result_data[index][i].maHocKyDanhGia + "'>Hủy</button>\
+                result_data[index][i].maSinhVien +
+                "' data-idMaHKDG='" +
+                result_data[index][i].maHocKyDanhGia +
+                "'>Hủy</button>\
                   </div>\
                 </td></tr>";
             },
-            error: function() {
-            }
+            error: function () {},
           });
         }
       });
-  
+
       $("#id_tbodyKetQuaHocTap").html(htmlData);
     },
     error: function (errorMessage) {
-      $("#id_tbodyKetQuaHocTap tr").remove();  
-      var htmlData = "\
+      $("#id_tbodyKetQuaHocTap tr").remove();
+      var htmlData =
+        '\
         <tr>\
-          <td>\
-          <p class=\"text-center\">Không tìm thấy danh sách điểm của sinh viên có là " +
-            + maSinhVien +
-          "</p>\
+          <td colspan="4">\
+          <p class="text-center">Không tìm thấy kết quả' +
+        +maSinhVien +
+        "</p>\
         </td>\
         <tr>";
-      $("#id_tbodyKetQuaHocTap").html(htmlData);  
+      $("#id_tbodyKetQuaHocTap").html(htmlData);
     },
   });
 }
@@ -1166,7 +1161,7 @@ function updateDiemHe4(maSinhVien, maHocKyDanhGia, diem) {
     maDiemTrungBinh: maSinhVien + maHocKyDanhGia,
     diem: diem,
     maHocKyDanhGia: maHocKyDanhGia,
-    maSinhVien: maSinhVien
+    maSinhVien: maSinhVien,
   };
 
   $.ajax({

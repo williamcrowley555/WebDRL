@@ -16,35 +16,65 @@ $checkQuyen = new checkQuyen();
 
 // kiểm tra đăng nhập thành công 
 if ($data["status"] == 1) {
-    if ($checkQuyen->checkQuyen_Khoa_CTSV($data["user_data"]->aud)) {
-        $database = new Database();
-        $db = $database->getConnection();
-        $item = new KhoaHoc($db);
-        $item->maKhoaHoc = isset($_GET['maKhoaHoc']) ? $_GET['maKhoaHoc'] : die(); //Lấy id từ phương thức GET
-
-        $item->getSingleKhoaHoc();
-        if ($item->namBatDau != null) {
-            // create array
-            $khoahoc_arr = array(
-                "maKhoaHoc" =>  $item->maKhoaHoc,
-                "namBatDau" => $item->namBatDau,
-                "namKetThuc" => $item->namKetThuc
-            );
-
-            http_response_code(200);
-            echo json_encode($khoahoc_arr);
+    // if ($checkQuyen->checkQuyen_Khoa_CTSV($data["user_data"]->aud)) {
+        if (isset($_GET['maSinhVien'])) {
+            $GET_maSinhVien = $_GET['maSinhVien'];
         } else {
-            http_response_code(404);
-            echo json_encode(
-                array("message" => "Không tìm thấy dữ liệu.")
-            );
+            $GET_maSinhVien = null;
         }
-    } else {
-        http_response_code(403);
-        echo json_encode(
-            array("message" => "Bạn không có quyền thực hiện điều này!")
-        );
-    }
+
+        if ($GET_maSinhVien != null) {
+            $database = new Database();
+            $db = $database->getConnection();
+            $item = new KhoaHoc($db);
+
+            $item->getSingleKhoaHocTheoMSSV($GET_maSinhVien);
+            if ($item->maKhoaHoc != null) {
+                // create array
+                $khoahoc_arr = array(
+                    "maKhoaHoc" =>  $item->maKhoaHoc,
+                    "namBatDau" => $item->namBatDau,
+                    "namKetThuc" => $item->namKetThuc
+                );
+
+                http_response_code(200);
+                echo json_encode($khoahoc_arr);
+            } else {
+                http_response_code(404);
+                echo json_encode(
+                    array("message" => "Không tìm thấy dữ liệu.")
+                );
+            }
+        } else {
+            $database = new Database();
+            $db = $database->getConnection();
+            $item = new KhoaHoc($db);
+            $item->maKhoaHoc = isset($_GET['maKhoaHoc']) ? $_GET['maKhoaHoc'] : die(); //Lấy id từ phương thức GET
+
+            $item->getSingleKhoaHoc();
+            if ($item->namBatDau != null) {
+                // create array
+                $khoahoc_arr = array(
+                    "maKhoaHoc" =>  $item->maKhoaHoc,
+                    "namBatDau" => $item->namBatDau,
+                    "namKetThuc" => $item->namKetThuc
+                );
+
+                http_response_code(200);
+                echo json_encode($khoahoc_arr);
+            } else {
+                http_response_code(404);
+                echo json_encode(
+                    array("message" => "Không tìm thấy dữ liệu.")
+                );
+            }
+        }
+    // } else {
+    //     http_response_code(403);
+    //     echo json_encode(
+    //         array("message" => "Bạn không có quyền thực hiện điều này!")
+    //     );
+    // }
 } else {
     http_response_code(403);
     echo json_encode(

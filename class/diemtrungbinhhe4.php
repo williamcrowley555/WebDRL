@@ -65,8 +65,7 @@
         }
 
         // GET TON TAI DIEM CUA SINH VIEN THEO MA HOC KY DANH GIA
-        public function getTonTaiDiemCuaSinhVienTheoMaHocKyDanhGia($maHocKyDanhGia, $maSinhVien, $isEqual = true)
-        {
+        public function getTonTaiDiemCuaSinhVienTheoMaHocKyDanhGia($maHocKyDanhGia, $maSinhVien, $isEqual = true) {
             $sqlQuery = "SELECT * FROM " . $this->db_table . " 
                             WHERE maSinhVien" . 
                             ($isEqual ? " = '$maSinhVien' " : " LIKE '%$maSinhVien%' ") . "
@@ -87,6 +86,26 @@
             $stmt = $this->conn->prepare($sqlQuery);
             $stmt->execute();
             return $stmt;
+        }
+
+        // GET SINGLE DIEM TRUNG BINH HE 4 THEO MSSV VA MA HOC KY DANH GIA
+        public function getSingleTheoMSSVVaMaHKDG($maSinhVien, $maHocKyDanhGia) {
+            $sqlQuery = "SELECT * FROM " . $this->db_table . "
+                        WHERE maSinhVien  = ? AND maHocKyDanhGia = ? 
+                        LIMIT 0,1";
+            $stmt = $this->conn->prepare($sqlQuery);
+            $stmt->bindParam(1, $maSinhVien);
+            $stmt->bindParam(2, $maHocKyDanhGia);
+            $stmt->execute();
+
+            $dataRow = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            if ($dataRow != null) {
+                $this->maDiemTrungBinh  = $dataRow['maDiemTrungBinh'];
+                $this->diem = $dataRow['diem'];
+                $this->maHocKyDanhGia = $dataRow['maHocKyDanhGia'];
+                $this->maSinhVien = $dataRow['maSinhVien'];
+            }
         }
 
         // CREATE

@@ -142,7 +142,7 @@ function getDanhSachDRLSinhVienLopTheoHocKy(maLop, maHocKyDanhGia) {
                   var ngayCoVanKetThucDanhGia = new Date(
                     result_HKDG.ngayCoVanKetThucDanhGia
                   );
-                  ngayCoVanKetThucDanhGia.setHours(0, 0, 0, 0);
+                  ngayCoVanKetThucDanhGia.setHours(23, 59, 59, 999);
 
                   var today = new Date();
                   var ngayHienTai = new Date(

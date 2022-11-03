@@ -34,7 +34,6 @@
                             <div class="col-4">
                                 <span style="font-weight: bold;">Mã số sinh viên: </span><span id="text_MaSo"></span> 
                             </div>
-
                         </div>
 
                         <div class="row justify-content-center" style="padding-bottom: 30px;">
@@ -46,9 +45,9 @@
                             </div>
                         </div>
 
-                          <table class="table align-middle mb-0 bg-white table-hover">
+                        <table class="table align-middle mb-0 bg-white table-hover">
                             <thead class="bg-light">
-                              <tr>
+                                <tr>
                                 <th>Học kỳ</th>
                                 <th>Năm học</th>
                                 <th>Trạng thái chấm</th>
@@ -59,16 +58,19 @@
                                 <th>Ngày bắt đầu chấm</th>
                                 <th>Ngày kết thúc chấm</th>
                                 <th></th>
-                              </tr>
+                                </tr>
                             </thead>
                             <tbody id="tbody_hocKyDanhGia" >
-                              
-                              
+                                
                             </tbody>
-                          </table>
-
+                        </table>
                     </div>  
                 </div>
+
+                <form action='http://localhost/WebDRL/mpdf/export_mauPhieuRenLuyen.php' method='POST' id='formDownloadMauPhieuRenLuyen' class='text-center pb-2'>
+                    <input type='hidden' name='data' class='data' />
+                    <p>Tải về mẫu phiếu rèn luyện <button type='submit' class='btn btn-link bg-white p-0' style='outline: none; box-shadow: none;'>tại đây</button></p>
+                </form>
             </div>
         </div>
             <!-- end of row -->
@@ -115,6 +117,77 @@
 
     <script>
         getThongTinHocKyDanhGia();
+
+        $(document).on("submit", "#formDownloadMauPhieuRenLuyen", function(e) {
+            var phieuRenLuyen = {
+                tieuChiCap1: [],
+                tieuChiCap2: [],
+                tieuChiCap3: []
+            };
+            
+            // Tiêu chí cấp 1
+            $.ajax({
+                url: urlapi_tieuchicap1_read_kichHoat + "1",
+                async: false,
+                type: "GET",
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                headers: {
+                    Authorization: jwtCookie,
+                },
+                success: function (result_TCC1) {
+                    result_TCC1["tieuchicap1"].forEach(function (tcc1) {
+                        delete tcc1.soThuTu;
+                        phieuRenLuyen.tieuChiCap1.push(tcc1);
+                    });
+                },
+                error: function (error) {},
+            });
+            
+            // Tiêu chí cấp 2
+            $.ajax({
+                url: urlapi_tieuchicap2_read_kichHoat + "1",
+                async: false,
+                type: "GET",
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                headers: {
+                    Authorization: jwtCookie,
+                },
+                success: function (result_TCC2) {
+                    result_TCC2["tieuchicap2"].forEach(function (tcc2) {
+                        delete tcc2.soThuTu;
+                        phieuRenLuyen.tieuChiCap2.push(tcc2);
+                    });
+                },
+                error: function (error) {},
+            });
+            
+            // Tiêu chí cấp 3
+            $.ajax({
+                url: urlapi_tieuchicap3_read_kichHoat + "1",
+                async: false,
+                type: "GET",
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                headers: {
+                    Authorization: jwtCookie,
+                },
+                success: function (result_TCC3) {
+                    result_TCC3["tieuchicap3"].forEach(function (tcc3) {
+                        delete tcc3.soThuTu;
+                        phieuRenLuyen.tieuChiCap3.push(tcc3);
+                    });
+                },
+                error: function (error) {},
+            });
+
+            $(this).children('.data').val(
+                JSON.stringify(phieuRenLuyen)
+            );
+
+            return true;
+    })
     </script>
     
     <!-- Custom scripts -->

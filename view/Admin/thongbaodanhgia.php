@@ -40,10 +40,10 @@
 							<div class="col-auto">
 								<div class="table-search-form row gx-1 align-items-center" style="padding-bottom: 20px;">
 									<div class="col-auto">
-										<input type="text" id="inputTimKiem_MaHoatDong" name="inputTimKiem_MaHoatDong" class="form-control search-orders" placeholder="Nhập mã học kỳ...">
+										<input type="text" id="input_timKiemMaHKDG" name="inputTimKiem_MaHoatDong" class="form-control search-orders" placeholder="Nhập mã học kỳ...">
 									</div>
 									<div class="col-auto">
-										<button type="button" class="btn app-btn-secondary">Tìm kiếm</button>
+										<button type="button" id="btn_timKiemMaHKDG" class="btn app-btn-secondary">Tìm kiếm</button>
 									</div>
 
 									<div class="col-auto" style="padding-left: 15px;">
@@ -246,8 +246,9 @@
 										<tr>
 											<th class="cell">STT</th>
 											<th class="cell">Mã thông báo</th>
-											<th class="cell">Ngày thông báo</th>
+											<th class="cell">Mã học kỳ</th>
 											<th class="cell">Học kỳ - Năm học</th>
+											<th class="cell">Ngày thông báo</th>
 											<th class="cell"><img src='assets/images/icons/student1.png' alt='Student text' width='15px' /> Ngày sinh viên đánh giá</th>
 											<th class="cell">Ngày sinh viên kết thúc đánh giá</th>
 											<th class="cell"><img src='assets/images/icons/presentation2.png' alt='cố vấn text' width='15px' />Ngày cố vấn đánh giá</th>
@@ -618,10 +619,48 @@
         onSubmit: ChinhSua_ThongBaoDanhGia
     })
 
+	function onlyLettersAndNumbers(str) {
+		return /^[A-Za-z0-9]*$/.test(str);
+	}
+
+	function xuLyTimKiemMaHKDG() {
+		var _input_timKiemMaHKDG = $('#input_timKiemMaHKDG').val().trim();
+
+		if (_input_timKiemMaHKDG != '') {
+			if(onlyLettersAndNumbers(_input_timKiemMaHKDG)){
+				TimKiemThongBaoDanhGia(_input_timKiemMaHKDG);
+			} else {
+				Swal.fire({
+					icon: "error",
+					title: "Lỗi",
+					text: "Mã học kỳ không hợp lệ!",
+					timer: 2000,
+					timerProgressBar: true,
+				});
+			}
+		}
+	}
+
 	//hàm trong function.js
 	GetListThongBaoDanhGia();
 
-	//LoadThongTinThemMoi();
+	$('#btn_timKiemMaHKDG').on('click', function() {
+		xuLyTimKiemMaHKDG();
+	});
+
+	$('#input_timKiemMaHKDG').keypress(function (e) {
+		var key = e.which;
+		if(key == 13)  // the 'Enter' code
+		{
+			$('#btn_timKiemMaHKDG').click();
+		}
+	}); 
+
+	$('#input_timKiemMaHKDG').change(function (e) {
+		if(!$('#input_timKiemMaHKDG').val()) {
+			GetListKhoa();
+		} 
+	}); 
 
 	// Xử lý chỉnh sửa thông báo đánh giá
 	$(document).on("click", ".btn_ChinhSua_ThongBaoDanhGia" ,function() {

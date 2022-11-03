@@ -15,46 +15,94 @@
     if($data["status"]==1){
 
         //if ($checkQuyen->checkQuyen_Khoa_CTSV($data["user_data"]->aud)){
-            $database = new Database();
-            $db = $database->getConnection();
-    
-            $items = new ThongBaoDanhGia($db);
-            $stmt = $items->getAllThongBaoDanhGia();
-            $itemCount = $stmt->rowCount();
-    
-    
-            if($itemCount > 0){
-                $thongbaodanhgiaArr = array();
-                $thongbaodanhgiaArr["thongbaodanhgia"] = array(); //tạo object json 
-                $thongbaodanhgiaArr["itemCount"] = $itemCount;
-    
-                $countRow = 0;
-
-                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-                    extract($row);
-                    $countRow++;
-                    $e = array(
-                        "soThuTu" => $countRow,
-                        "maThongBao" => $maThongBao ,
-                        "ngaySinhVienDanhGia" => $ngaySinhVienDanhGia,
-                        "ngaySinhVienKetThucDanhGia" => $ngaySinhVienKetThucDanhGia,
-                        "ngayCoVanDanhGia" => $ngayCoVanDanhGia,
-                        "ngayCoVanKetThucDanhGia" => $ngayCoVanKetThucDanhGia,
-                        "ngayKhoaDanhGia" => $ngayKhoaDanhGia,
-                        "ngayKhoaKetThucDanhGia" => $ngayKhoaKetThucDanhGia,
-                        "ngayThongBao" => $ngayThongBao,
-                        "maHocKyDanhGia" => $maHocKyDanhGia
-                    );
-                    array_push($thongbaodanhgiaArr["thongbaodanhgia"], $e);
-                }
-                http_response_code(200);
-                echo json_encode($thongbaodanhgiaArr);
+            if (isset($_GET['maHKDG'])) {
+                $maHKDG = $_GET['maHKDG'];
+            } else {
+                $maHKDG = null;
             }
-            else{
-                http_response_code(404);
-                echo json_encode(
-                    array("message" => "Không tìm thấy dữ liệu.")
-                );
+            
+            if ($maHKDG != null) {
+                $database = new Database();
+                $db = $database->getConnection();
+        
+                $items = new ThongBaoDanhGia($db);
+                $stmt = $items->getThongBaoDanhGiaTheoMaHKDG($maHKDG, false);
+                $itemCount = $stmt->rowCount();
+        
+        
+                if($itemCount > 0){
+                    $thongbaodanhgiaArr = array();
+                    $thongbaodanhgiaArr["thongbaodanhgia"] = array(); //tạo object json 
+                    $thongbaodanhgiaArr["itemCount"] = $itemCount;
+        
+                    $countRow = 0;
+
+                    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+                        extract($row);
+                        $countRow++;
+                        $e = array(
+                            "soThuTu" => $countRow,
+                            "maThongBao" => $maThongBao ,
+                            "ngaySinhVienDanhGia" => $ngaySinhVienDanhGia,
+                            "ngaySinhVienKetThucDanhGia" => $ngaySinhVienKetThucDanhGia,
+                            "ngayCoVanDanhGia" => $ngayCoVanDanhGia,
+                            "ngayCoVanKetThucDanhGia" => $ngayCoVanKetThucDanhGia,
+                            "ngayKhoaDanhGia" => $ngayKhoaDanhGia,
+                            "ngayKhoaKetThucDanhGia" => $ngayKhoaKetThucDanhGia,
+                            "ngayThongBao" => $ngayThongBao,
+                            "maHocKyDanhGia" => $maHocKyDanhGia
+                        );
+                        array_push($thongbaodanhgiaArr["thongbaodanhgia"], $e);
+                    }
+                    http_response_code(200);
+                    echo json_encode($thongbaodanhgiaArr);
+                } else{
+                    http_response_code(404);
+                    echo json_encode(
+                        array("message" => "Không tìm thấy dữ liệu.")
+                    );
+                }
+            } else {
+                $database = new Database();
+                $db = $database->getConnection();
+        
+                $items = new ThongBaoDanhGia($db);
+                $stmt = $items->getAllThongBaoDanhGia();
+                $itemCount = $stmt->rowCount();
+        
+        
+                if($itemCount > 0){
+                    $thongbaodanhgiaArr = array();
+                    $thongbaodanhgiaArr["thongbaodanhgia"] = array(); //tạo object json 
+                    $thongbaodanhgiaArr["itemCount"] = $itemCount;
+        
+                    $countRow = 0;
+
+                    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+                        extract($row);
+                        $countRow++;
+                        $e = array(
+                            "soThuTu" => $countRow,
+                            "maThongBao" => $maThongBao ,
+                            "ngaySinhVienDanhGia" => $ngaySinhVienDanhGia,
+                            "ngaySinhVienKetThucDanhGia" => $ngaySinhVienKetThucDanhGia,
+                            "ngayCoVanDanhGia" => $ngayCoVanDanhGia,
+                            "ngayCoVanKetThucDanhGia" => $ngayCoVanKetThucDanhGia,
+                            "ngayKhoaDanhGia" => $ngayKhoaDanhGia,
+                            "ngayKhoaKetThucDanhGia" => $ngayKhoaKetThucDanhGia,
+                            "ngayThongBao" => $ngayThongBao,
+                            "maHocKyDanhGia" => $maHocKyDanhGia
+                        );
+                        array_push($thongbaodanhgiaArr["thongbaodanhgia"], $e);
+                    }
+                    http_response_code(200);
+                    echo json_encode($thongbaodanhgiaArr);
+                } else{
+                    http_response_code(404);
+                    echo json_encode(
+                        array("message" => "Không tìm thấy dữ liệu.")
+                    );
+                }
             }
         // }else{
         //     http_response_code(403);
