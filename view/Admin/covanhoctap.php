@@ -174,6 +174,12 @@
 							</div>
 
 							<div class="mb-3 form-group">
+								<label for="edit_input_email" class="form-label" style="color: black; font-weight: 500;">Email</label>
+								<input type="text" class="form-control" name="email" id="edit_input_email" placeholder="Nhập email...">
+								<span class="invalid-feedback"></span>
+							</div>
+
+							<div class="mb-3 form-group">
 								<label for="select_Khoa_Edit" class="form-label" style="color: black; font-weight: 500;">Khoa</label>
 								<select class="form-select" name="maKhoa" aria-label="Default select example" id="select_Khoa_Edit">
 
@@ -254,7 +260,7 @@
 							</div>
 
 							<div class="form-group">
-								<p class="mb-0 fw-bold text-body">Yêu cầu thứ tự các cột như sau: STT, Mã cố vấn học tập, Họ tên cố vấn, Số điện thoại, Mật khẩu (optional)</p>
+								<p class="mb-0 fw-bold text-body">Yêu cầu thứ tự các cột như sau: STT, Mã cố vấn học tập, Họ tên cố vấn, Số điện thoại, Email, Mật khẩu (optional)</p>
 							</div>
 
 						</div>
@@ -387,6 +393,8 @@
 			Validator.isCharacters('#edit_input_TenCVHT', 'Họ tên cố vấn học tập chỉ bao gồm các ký tự chữ'),
 			Validator.isRequired('#edit_input_sdt', 'Vui lòng nhập số điện thoại'),
 			Validator.isPhoneNumber('#edit_input_sdt'),
+			Validator.isRequired('#edit_input_email', 'Vui lòng nhập số email'),
+			Validator.isEmail('#edit_input_email'),
         ],
         onSubmit: ChinhSua_CVHT
     })

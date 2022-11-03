@@ -69,7 +69,7 @@ function loadThongTinTaiKhoan(urlApi, quyen) {
             $("#input_taikhoan_email").val(result_data.email);
 
 
-            if(result_data.anhDaiDien == null) {
+            if(result_data.anhDaiDien == "null") {
                 $("#blah").attr("src", '../../../user-images/default/user.png');
             } else if(quyen == "sinhvien") {
                 $("#blah").attr("src",  '../../../user-images/sinhvien/' + maSo + '/user-avatar/' + result_data.anhDaiDien);
@@ -90,79 +90,88 @@ function loadThongTinTaiKhoan(urlApi, quyen) {
     
 }
 
-function changePassword() {
+function changePasswordByQuyen() {
     var quyen = getCookie("quyen");
-    var matKhauHienTai = $("#input_MatKhauHienTai").val();
     if(quyen == "sinhvien") {
-        var objLogin = {
-          taiKhoan: getCookie("maSo"), 
-          matKhau: matKhauHienTai,
-        };
+        changePassword(urlapi_sinhvien_single_read, urlapi_sinhvien_update_matKhau, quyen);
+    } else {
+        changePassword(urlapi_cvht_single_read, urlapi_cvht_update_matKhau, quyen);
+    }
+}
 
-        // Kiểm tra mật khẩu hiện tại
-        $.ajax({
-            url: urlapi_sinhvien_single_read + `${getCookie("maSo")}&matKhau=${matKhauHienTai}`,
-            async: false,
-            type: "GET",
+function changePassword(urlQuyen, urlUpdate, quyen) {
+    var matKhauHienTai = $("#input_MatKhauHienTai").val();
+    
+    var objLogin = {
+        taiKhoan: getCookie("maSo"), 
+        matKhau: matKhauHienTai,
+    };
+
+    // Kiểm tra mật khẩu hiện tại
+    $.ajax({
+        url: urlQuyen + `${getCookie("maSo")}&matKhau=${matKhauHienTai}`,
+        async: false,
+        type: "GET",
+        contentType: "application/json;charset=utf-8",
+        dataType: "json",
+        headers: {
+            Authorization: jwtCookie,
+        },
+        success: function (result) {
+            // Update mật khẩu mới
+            if(quyen == "sinhvien") {
+                var dataPost_Update = {
+                    maSinhVien: getCookie("maSo"),
+                    matKhauSinhVien: $('#input_MatKhauMoi').val(),
+                } 
+            } else {
+                var dataPost_Update = {
+                    maCoVanHocTap: getCookie("maSo"),
+                    matKhauTaiKhoanCoVan: $('#input_MatKhauMoi').val(),
+                }
+            }
+            $.ajax({
+            url: urlUpdate,
+            type: "POST",
             contentType: "application/json;charset=utf-8",
             dataType: "json",
-            headers: {
-                Authorization: jwtCookie,
-            },
-            success: function (result) {
-              // Update mật khẩu mới
-              var dataPost_Update = {
-                maSinhVien: getCookie("maSo"),
-                matKhauSinhVien: $('#input_MatKhauMoi').val(),
-              };
+            data: JSON.stringify(dataPost_Update),
+            async: false,
+            headers: { Authorization: jwtCookie },
+            success: function (result_Update) {
+                $("#ChangePasswordForm #input_MatKhauHienTai").val("");
+                $("#ChangePasswordForm #input_MatKhauMoi").val("");
+                $("#ChangePasswordForm #input_XacNhanMatKhauMoi").val("");
 
-              $.ajax({
-                url: urlapi_sinhvien_update_matKhau,
-                type: "POST",
-                contentType: "application/json;charset=utf-8",
-                dataType: "json",
-                data: JSON.stringify(dataPost_Update),
-                async: false,
-                headers: { Authorization: jwtCookie },
-                success: function (result_Update) {
-                  $("#ChangePasswordForm #input_MatKhauHienTai").val("");
-                  $("#ChangePasswordForm #input_MatKhauMoi").val("");
-                  $("#ChangePasswordForm #input_XacNhanMatKhauMoi").val("");
-    
-                  Swal.fire({
-                    icon: "success",
-                    title: "Thành công",
-                    text: "Đặt lại mật khẩu thành công!",
-                    timer: 2000,
-                    timerProgressBar: true,
-                  });
-                },
-                error: function (errorMessage) {
-                  Swal.fire({
-                    icon: "error",
-                    title: "Lỗi",
-                    text: "Cập nhật mật khẩu bị lỗi! Vui lòng thử lại sau!",
-                    timer: 2000,
-                    timerProgressBar: true,
-                  });
-                },
-              });
+                Swal.fire({
+                icon: "success",
+                title: "Thành công",
+                text: "Đặt lại mật khẩu thành công!",
+                timer: 2000,
+                timerProgressBar: true,
+                });
             },
             error: function (errorMessage) {
-              Swal.fire({
+                Swal.fire({
                 icon: "error",
                 title: "Lỗi",
-                text: "Mật khẩu hiện tại không chính xác!",
-                timer: 3000,
+                text: "Cập nhật mật khẩu bị lỗi! Vui lòng thử lại sau!",
+                timer: 2000,
                 timerProgressBar: true,
-              });
+                });
             },
-        });
-    } else if(quyen == "cvht") {
-
-    }
-
-    
+            });
+        },
+        error: function (errorMessage) {
+            Swal.fire({
+            icon: "error",
+            title: "Lỗi",
+            text: "Mật khẩu hiện tại không chính xác!",
+            timer: 3000,
+            timerProgressBar: true,
+            });
+        },
+    }); 
 }
 
 function updateProfileByQuyen() {

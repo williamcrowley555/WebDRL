@@ -228,7 +228,7 @@ if (isset($_COOKIE['jwt'])){
                             echo "<li class='nav-item dropdown'>
                                 <a class='nav-link dropdown-toggle' href='#' id='navbarDropdownMenuLink' role='button' data-mdb-toggle='dropdown' aria-expanded='false' style='text-transform: uppercase;'>
                                     <span class='nav-item' style='text-transform: uppercase;'> 
-                                        Xin chào, ". $hoten ." <img class='d-inline-block rounded-circle' id='avatar' src='' alt='user profile' width='50px'>
+                                        Xin chào, ". $hoten ." <img class='d-inline-block rounded-circle ms-3' id='avatar' src='' alt='user profile' width='50px'>
                                     </span>
                                 </a>
                                 <ul class='dropdown-menu' aria-labelledby='navbarDropdownMenuLink'>

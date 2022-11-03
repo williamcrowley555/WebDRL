@@ -3,6 +3,7 @@ var tableTitle = [
   "Mã cố vấn học tập",
   "Họ tên cố vấn",
   "Số điện thoại",
+  "Email",
   "Mã khoa",
 ];
 
@@ -95,6 +96,9 @@ function GetListCVHT(maKhoa) {
                     data[i].soDienThoai +
                     "</td>\
                                     <td class='cell'>" +
+                    data[i].email +
+                    "</td>\
+                                    <td class='cell'>" +
                     data[i].maKhoa +
                     "</td>\
                                     <td class='cell'><button type=button' class='btn btn-info btn_DatLaiMatKhau_CVHT' data-bs-toggle='modal' data-bs-target='#DatLaiMatKhauModal' style='color: white;' data-id='" +
@@ -163,9 +167,6 @@ function GetListCVHT(maKhoa) {
                     "</td>\
                                     <td class='cell'>" +
                     data[i].soDienThoai +
-                    "</td>\
-                                    <td class='cell'>" +
-                    data[i].maKhoa +
                     "</td>\
                                     <td class='cell'><button type=button' class='btn btn-info btn_DatLaiMatKhau_CVHT' data-bs-toggle='modal' data-bs-target='#DatLaiMatKhauModal' style='color: white;' data-id='" +
                     data[i].maCoVanHocTap +
@@ -239,6 +240,9 @@ function TimKiemCoVanHocTap(maCVHT) {
               "</td>\
                               <td class='cell'>" +
               data[i].soDienThoai +
+              "</td>\
+                              <td class='cell'>" +
+              data[i].email +
               "</td>\
                               <td class='cell'>" +
               data[i].maKhoa +
@@ -459,12 +463,16 @@ function DatLaiMatKhau_CVHT() {
           var _input_MaCoVanHocTap = result_SV.maCoVanHocTap;
           var _input_HoTenCoVan = result_SV.hoTenCoVan;
           var _input_SoDienThoai = result_SV.soDienThoai;
+          var _input_email = result_SV.email;
+          var _input_maKhoa = result_SV.maKhoa;
 
           var dataPost_Update = {
             maCoVanHocTap: _input_MaCoVanHocTap,
             hoTenCoVan: _input_HoTenCoVan,
             soDienThoai: _input_SoDienThoai,
+            email: _input_email,
             matKhauTaiKhoanCoVan: _input_MatKhauMoi,
+            maKhoa: _input_maKhoa
           };
 
           $.ajax({
@@ -546,12 +554,14 @@ function ChinhSua_CVHT() {
   var edit_input_MaCVHT = $("#edit_input_MaCVHT").val();
   var edit_input_TenCVHT = $("#edit_input_TenCVHT").val();
   var edit_input_sdt = $("#edit_input_sdt").val();
+  var edit_input_email = $("#edit_input_email").val();
   var _select_Khoa_Edit = $("#select_Khoa_Edit option:selected").val();
 
   if (
     edit_input_MaCVHT == "" ||
     edit_input_TenCVHT == "" ||
-    edit_input_sdt == ""
+    edit_input_sdt == "" ||
+    edit_input_email == ""
   ) {
     ThongBaoLoi("Vui lòng nhập đầy đủ thông tin!");
   } else {
@@ -559,6 +569,7 @@ function ChinhSua_CVHT() {
       maCoVanHocTap: edit_input_MaCVHT,
       hoTenCoVan: edit_input_TenCVHT,
       soDienThoai: edit_input_sdt,
+      email: edit_input_email,
       maKhoa: _select_Khoa_Edit,
     };
 

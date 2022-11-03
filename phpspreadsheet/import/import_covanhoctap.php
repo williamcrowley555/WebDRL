@@ -32,8 +32,9 @@
                 $item = new CVHT($db); //new CVHT object
                 $item->maCoVanHocTap = $row['1'];
                 $item->hoTenCoVan = $row['2'];
-                $item->soDienThoai = $row['3'];   
-                $item->matKhauTaiKhoanCoVan = isset($row['4']) ? md5($row['4']) : md5($row['1']);   
+                $item->soDienThoai = $row['3'];
+                $item->email = $row['4'];
+                $item->matKhauTaiKhoanCoVan = isset($row['5']) ? md5($row['5']) : md5($row['1']);
                 $item->maKhoa = $_POST["khoa"];
 
                 // Validate maCoVanHocTap
@@ -45,7 +46,7 @@
                     ($errorMsg = minLength($row['1'], 5, "Mã cố vấn học tập phải có tối thiểu 5 chữ số")) != null
                 ) {
                     $success = false;
-                    array_push($invalidRows, array($row['0'], $row['1'], $row['2'], $row['3'], isset($row['4']) ? $row['4'] : null, $errorMsg));
+                    array_push($invalidRows, array($row['0'], $row['1'], $row['2'], $row['3'], $row['4'], isset($row['5']) ? $row['5'] : null, $errorMsg));
                     continue;
                 }
 
@@ -56,7 +57,7 @@
                     ($errorMsg = isCharacters($row['2'], true, "Họ tên cố vấn học tập chỉ bao gồm các ký tự chữ")) != null
                 ) {
                     $success = false;
-                    array_push($invalidRows, array($row['0'], $row['1'], $row['2'], $row['3'], isset($row['4']) ? $row['4'] : null, $errorMsg));
+                    array_push($invalidRows, array($row['0'], $row['1'], $row['2'], $row['3'], $row['4'], isset($row['5']) ? $row['5'] : null, $errorMsg));
                     continue;
                 }
 
@@ -67,17 +68,28 @@
                     ($errorMsg = isPhoneNumber($row['3'])) != null
                 ) {
                     $success = false;
-                    array_push($invalidRows, array($row['0'], $row['1'], $row['2'], $row['3'], isset($row['4']) ? $row['4'] : null, $errorMsg));
+                    array_push($invalidRows, array($row['0'], $row['1'], $row['2'], $row['3'], $row['4'], isset($row['5']) ? $row['5'] : null, $errorMsg));
+                    continue;
+                }
+
+                // Validate email
+                if(
+                    ($errorMsg = isRequired($row['4'], "Email không được để trống")) != null
+                    ||
+                    ($errorMsg = isEmail($row['4'])) != null
+                ) {
+                    $success = false;
+                    array_push($invalidRows, array($row['0'], $row['1'], $row['2'], $row['3'], $row['4'], isset($row['5']) ? $row['5'] : null, $errorMsg));
                     continue;
                 }
 
                 // Validate matKhauTaiKhoanCoVan
-                if($row['4']) {
+                if($row['5']) {
                     if(
-                        ($errorMsg = minLength($row['4'], 5, "Mật khẩu phải có tối thiểu 5 ký tự")) != null
+                        ($errorMsg = minLength($row['5'], 5, "Mật khẩu phải có tối thiểu 5 ký tự")) != null
                     ) {
                         $success = false;
-                        array_push($invalidRows, array($row['0'], $row['1'], $row['2'], $row['3'], isset($row['4']) ? $row['4'] : null, $errorMsg));
+                        array_push($invalidRows, array($row['0'], $row['1'], $row['2'], $row['3'], $row['4'], isset($row['5']) ? $row['5'] : null, $errorMsg));
                         continue;
                     }
                 }
@@ -89,18 +101,40 @@
                 if ($itemCount > 0) {
                     $success = false;
                     array_push($invalidRows, array($row['0'], $row['1'], $row['2'], $row['3'], isset($row['4']) ? $row['4'] : null, 'Mã cố vấn học tập đã tồn tại'));
+                    continue;
+                }
+
+                // Kiểm tra Email đã tồn tại?
+                $stmt = $item->getCVHTTheoEmail($row['4'], true);
+                $itemCount = $stmt->rowCount();
+        
+                if ($itemCount > 0) {
+                    $success = false;
+                    array_push($invalidRows, array($row['0'], $row['1'], $row['2'], $row['3'], isset($row['4']) ? $row['4'] : null, 'Email tồn tại'));
+                    continue;
+                }
+
+                // Kiểm tra sđt đã tồn tại?
+                $stmt = $item->getCVHTTheoSdt($row['3'], true);
+                $itemCount = $stmt->rowCount();
+        
+                if ($itemCount > 0) {
+                    $success = false;
+                    array_push($invalidRows, array($row['0'], $row['1'], $row['2'], $row['3'], isset($row['4']) ? $row['4'] : null, 'Số điện thoại tồn tại'));
+                    continue;
+                }
+                
+                // Lưu import CVHT
+                $result = $item->createCVHT();
+                
+                if ($result) {
+                    $successfulRowCount++; 
                 } else {
-                    $result = $item->createCVHT();
-                    
-                    if ($result) {
-                        $successfulRowCount++; 
-                    } else {
-                        $success = false;
-                        array_push($invalidRows, array($row['0'], $row['1'], $row['2'], $row['3'], isset($row['4']) ? $row['4'] : null, 'Lỗi database'));
-                    }
+                    $success = false;
+                    array_push($invalidRows, array($row['0'], $row['1'], $row['2'], $row['3'], $row['4'], isset($row['5']) ? $row['5'] : null, 'Lỗi database'));
                 }
             } elseif($rowCount == 0) {
-                array_push($invalidRows, array($row['0'], $row['1'], $row['2'], $row['3'], isset($row['4']) ? $row['4'] : "Mật khẩu", 'Lỗi'));
+                array_push($invalidRows, array($row['0'], $row['1'], $row['2'], $row['3'], $row['4'], isset($row['5']) ? $row['5'] : "Mật khẩu", 'Lỗi'));
             }
 
             $rowCount++;

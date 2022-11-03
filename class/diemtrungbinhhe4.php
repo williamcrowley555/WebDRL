@@ -64,6 +64,31 @@
             }
         }
 
+        // GET TON TAI DIEM CUA SINH VIEN THEO MA HOC KY DANH GIA
+        public function getTonTaiDiemCuaSinhVienTheoMaHocKyDanhGia($maHocKyDanhGia, $maSinhVien, $isEqual = true)
+        {
+            $sqlQuery = "SELECT * FROM " . $this->db_table . " 
+                            WHERE maSinhVien" . 
+                            ($isEqual ? " = '$maSinhVien' " : " LIKE '%$maSinhVien%' ") . "
+                            AND maHocKyDanhGia" .
+                            ($isEqual ? " = '$maHocKyDanhGia' " : " LIKE '%$maHocKyDanhGia%' ");
+
+            $stmt = $this->conn->prepare($sqlQuery);
+            $stmt->execute();
+            return $stmt;
+        }
+
+        //getDIEM HE 4 THEO MA DIEM TRUNG BINH
+        public function getDiemHe4TheoMaDiemTrungBinh($maDiemTrungBinh, $isEqual = true) {
+            $sqlQuery = "SELECT * FROM " . $this->db_table . " 
+                        WHERE maDiemTrungBinh" . 
+                        ($isEqual ? " = '$maDiemTrungBinh'" : " LIKE '%$maDiemTrungBinh%'");
+
+            $stmt = $this->conn->prepare($sqlQuery);
+            $stmt->execute();
+            return $stmt;
+        }
+
         // CREATE
         public function createDiemTrungBinhHe4() {
             $sqlQuery = "INSERT INTO
@@ -84,7 +109,7 @@
 
             // bind data
             $stmt->bindParam(":maDiemTrungBinh", $this->maDiemTrungBinh);
-            $stmt->bindParam(":namHoc", $this->namHoc);
+            $stmt->bindParam(":diem", $this->diem);
             $stmt->bindParam(":maHocKyDanhGia", $this->maHocKyDanhGia);
             $stmt->bindParam(":maSinhVien", $this->maSinhVien);
 

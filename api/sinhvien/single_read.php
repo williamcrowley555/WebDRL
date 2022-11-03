@@ -35,7 +35,7 @@
                 $db = $database->getConnection();
 
                 $items = new SinhVien($db);
-                $stmt = $items->getSingleinhVienTheoMSSVVaMatKhau($mssv, md5($matKhau));
+                $stmt = $items->getSingleSinhVienTheoMSSVVaMatKhau($mssv, md5($matKhau));
                 $itemCount = $stmt->rowCount();
         
                 if ($itemCount == 1) {

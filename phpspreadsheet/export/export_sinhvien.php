@@ -33,8 +33,11 @@
                 $sheet->setCellValue($alphabet[1] . $rowCount, $tableContent[$i]['maSinhVien']);
                 $sheet->setCellValue($alphabet[2] . $rowCount, $tableContent[$i]['hoTenSinhVien']);
                 $sheet->setCellValue($alphabet[3] . $rowCount, $tableContent[$i]['ngaySinh']);
-                $sheet->setCellValue($alphabet[4] . $rowCount, $tableContent[$i]['he']);
-                $sheet->setCellValue($alphabet[5] . $rowCount, $tableContent[$i]['maLop']);
+                $sheet->setCellValue($alphabet[4] . $rowCount, $tableContent[$i]['email']);
+                $sheet->setCellValue($alphabet[5] . $rowCount, $tableContent[$i]['sdt']);
+                $sheet->setCellValue($alphabet[6] . $rowCount, $tableContent[$i]['he']);
+                $sheet->setCellValue($alphabet[7] . $rowCount, $tableContent[$i]['maLop']);
+                $sheet->setCellValue($alphabet[8] . $rowCount, ($tableContent[$i]['totNghiep'] == 1 ? "Đã tốt nghiệp" : "Chưa tốt nghiệp"));
 
                 $rowCount++;
             }

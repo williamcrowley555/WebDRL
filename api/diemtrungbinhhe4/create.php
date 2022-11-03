@@ -28,8 +28,6 @@
                 //set các biến bằng data nhận từ user
                 $item->maDiemTrungBinh = $data->maDiemTrungBinh;
                 $item->diem = $data->diem;
-                $item->hocKy = $data->hocKy;
-                $item->namHoc = $data->namHoc;
                 $item->maHocKyDanhGia = $data->maHocKyDanhGia;
                 $item->maSinhVien = $data->maSinhVien;
     

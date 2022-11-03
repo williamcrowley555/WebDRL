@@ -17,42 +17,87 @@
     // kiểm tra đăng nhập thành công 
     if($data["status"]==1) {
         //if ($checkQuyen->checkQuyen_CTSV($data["user_data"]->aud)) {
-            $database = new Database();
-            $db = $database->getConnection();
-            $item = new CVHT($db);
-            $item->maCoVanHocTap = isset($_GET['maCoVanHocTap']) ? $_GET['maCoVanHocTap'] : die(); //Lấy id từ phương thức GET
-        
-            $item->getSingleCVHT();
-
-            if($item->hoTenCoVan != null) {
-                // create array
-                $covanhoctap_arr = array(
-                    "maCoVanHocTap" =>  $item->maCoVanHocTap,
-                    "hoTenCoVan" => $item->hoTenCoVan,
-                    "soDienThoai" => $item->soDienThoai,
-                    "maKhoa" => $item->maKhoa,
-                    "matKhauTaiKhoanCoVan" => $item->matKhauTaiKhoanCoVan,
-                    "email" => $item->email,
-                    "soDienThoai" => $item->soDienThoai,
-                    "anhDaiDien" => $item->anhDaiDien,
-
-                );
-            
-                http_response_code(200);
-                echo json_encode($covanhoctap_arr);
+            if (isset($_GET['maCoVanHocTap'])) {
+                $maCoVanHocTap = $_GET['maCoVanHocTap'];
+            } else {
+                $maCoVanHocTap = null;
             }
-            else {
-                http_response_code(404);
-                echo json_encode(
-                    array("message" => "Không có dữ liệu.")
-                );
-            } 
-        // } else {
-        //     http_response_code(403);
-        //     echo json_encode(
-        //         array("message" => "Bạn không có quyền thực hiện điều này!")
-        //     );
-        // }
+
+            if (isset($_GET['matKhau'])) {
+                $matKhau = $_GET['matKhau'];
+            } else {
+                $matKhau = null;
+            }
+
+            if ($maCoVanHocTap != null && $matKhau != null) {
+                $database = new Database();
+                $db = $database->getConnection();
+
+                $items = new CVHT($db);
+                $stmt = $items->getSingleCVHTTheoMaCoVanHocTapVaMatKhau($maCoVanHocTap, md5($matKhau));
+                $itemCount = $stmt->rowCount();
+        
+                if ($itemCount == 1) {
+                    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+                    extract($row);
+                    $sv = array(
+                        "maCoVanHocTap" => $maCoVanHocTap,
+                        "hoTenCoVan" => $hoTenCoVan,
+                        "soDienThoai" => $soDienThoai,
+                        "maKhoa" => $maKhoa,
+                        "matKhauTaiKhoanCoVan" => $matKhauTaiKhoanCoVan,
+                        "email" => $email,
+                        "soDienThoai" => $soDienThoai,
+                        "anhDaiDien" => $anhDaiDien
+                    );
+                    
+                    http_response_code(200);    
+                    echo json_encode($sv);
+                } else {
+                    http_response_code(404);
+                    echo json_encode(
+                        array("message" => "Không tìm thấy kết quả.")
+                    );
+                }
+            } else if ($maCoVanHocTap != null) {
+                $database = new Database();
+                $db = $database->getConnection();
+                $item = new CVHT($db);
+                $item->maCoVanHocTap = isset($_GET['maCoVanHocTap']) ? $_GET['maCoVanHocTap'] : die(); //Lấy id từ phương thức GET
+            
+                $item->getSingleCVHT();
+
+                if($item->hoTenCoVan != null) {
+                    // create array
+                    $covanhoctap_arr = array(
+                        "maCoVanHocTap" =>  $item->maCoVanHocTap,
+                        "hoTenCoVan" => $item->hoTenCoVan,
+                        "soDienThoai" => $item->soDienThoai,
+                        "maKhoa" => $item->maKhoa,
+                        "matKhauTaiKhoanCoVan" => $item->matKhauTaiKhoanCoVan,
+                        "email" => $item->email,
+                        "soDienThoai" => $item->soDienThoai,
+                        "anhDaiDien" => $item->anhDaiDien,
+
+                    );
+                
+                    http_response_code(200);
+                    echo json_encode($covanhoctap_arr);
+                }
+                else {
+                    http_response_code(404);
+                    echo json_encode(
+                        array("message" => "Không có dữ liệu.")
+                    );
+                } 
+            // } else {
+            //     http_response_code(403);
+            //     echo json_encode(
+            //         array("message" => "Bạn không có quyền thực hiện điều này!")
+            //     );
+            }
+        //}
     } else {
         http_response_code(403);
         echo json_encode(

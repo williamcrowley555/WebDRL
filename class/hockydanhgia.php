@@ -60,7 +60,18 @@
                 $this->hocKyXet = $dataRow['hocKyXet'];
                 $this->namHocXet = $dataRow['namHocXet'];
             }
-            
+        }
+
+        // GET HOC KY DANH GIA THEO MA HOC KY DANH GIA
+        public function getHocKyDanhGiaTheoMaHocKyDanhGia($maHocKyDanhGia, $isEqual = true)
+        {
+            $sqlQuery = "SELECT * FROM " . $this->db_table . " 
+                            WHERE maHocKyDanhGia" . 
+                            ($isEqual ? " = '$maHocKyDanhGia'" : " LIKE '%$maHocKyDanhGia%'");
+
+            $stmt = $this->conn->prepare($sqlQuery);
+            $stmt->execute();
+            return $stmt;
         }
 
         // CREATE

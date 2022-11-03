@@ -123,6 +123,30 @@ class SinhVien
         return $stmt;
     }
 
+    // GET SINHVIEN THEO EMAIL
+    public function getSinhVienTheoEmail($email, $isEqual = true)
+    {
+        $sqlQuery = "SELECT * FROM " . $this->db_table . " 
+                        WHERE email" . 
+                        ($isEqual ? " = '$email'" : " LIKE '%$email%'");
+
+        $stmt = $this->conn->prepare($sqlQuery);
+        $stmt->execute();
+        return $stmt;
+    }
+
+    // GET SINHVIEN THEO SDT
+    public function getSinhVienTheoSdt($sdt, $isEqual = true)
+    {
+        $sqlQuery = "SELECT * FROM " . $this->db_table . " 
+                        WHERE sdt" . 
+                        ($isEqual ? " = '$sdt'" : " LIKE '%$sdt%'");
+
+        $stmt = $this->conn->prepare($sqlQuery);
+        $stmt->execute();
+        return $stmt;
+    }
+
     // GET SINHVIEN DETAISL THEO MA SO SINH VIEN
     public function getSinhVienDetailsTheoMSSV($mssv)
     {
@@ -160,7 +184,7 @@ class SinhVien
     }
 
     // GET SINGLE SINHVIEN THEO MA SO SINH VIEN
-    public function getSingleinhVienTheoMSSVVaMatKhau($mssv, $matKhau)
+    public function getSingleSinhVienTheoMSSVVaMatKhau($mssv, $matKhau)
     {
         $sqlQuery = "SELECT * FROM " . $this->db_table . " 
                         WHERE maSinhVien = ? AND matKhauSinhVien = ?";
