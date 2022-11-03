@@ -86,12 +86,131 @@ function GetListThongBaoDanhGia() {
                     data[i].maThongBao +
                     "</span></td>\
                                 <td class='cell'>" +
-                    data[i].ngayThongBao +
+                    result_HKDG.maHocKyDanhGia +
                     "</td>\
                                 <td class='cell'>" +
                     result_HKDG.hocKyXet +
                     " - " +
                     result_HKDG.namHocXet +
+                    "</td>\
+                                <td class='cell'>" +
+                    data[i].ngayThongBao +
+                    "</td>\
+                                <td class='cell' style='font-weight: 500;' >" +
+                    data[i].ngaySinhVienDanhGia +
+                    "</td>\
+                                <td class='cell'>" +
+                    data[i].ngaySinhVienKetThucDanhGia +
+                    "</td>\
+                                <td class='cell' style='font-weight: 500;' >" +
+                    data[i].ngayCoVanDanhGia +
+                    "</td>\
+                                <td class='cell'>" +
+                    data[i].ngayCoVanKetThucDanhGia +
+                    "</td>\
+                                <td class='cell' style='font-weight: 500;' >" +
+                    data[i].ngayKhoaDanhGia +
+                    "</td>\
+                                <td class='cell'>" +
+                    data[i].ngayKhoaKetThucDanhGia +
+                    "</td>\
+                                <td class='cell'>\
+                                    <button class='btn bg-warning btn_ChinhSua_ThongBaoDanhGia' style='color: white;margin: 5px;width: max-content;' data-id='" +
+                    data[i].maThongBao +
+                    "' data-bs-toggle='modal' data-bs-target='#ChinhSuaModal' >Chỉnh sửa</button>\
+                                    <button class='btn bg-danger btn_Xoa_ThongBaoDanhGia' style='color: white;width: max-content;margin: 5px;' data-id='" +
+                    data[i].maThongBao +
+                    "' >Xóa</button>\
+                                </td>\
+                                </tr>";
+                },
+                error: function (errorMessage) {
+                  checkLoiDangNhap(errorMessage.responseJSON.message);
+
+                  Swal.fire({
+                    icon: "error",
+                    title: "Lỗi",
+                    text: errorMessage.responseJSON.message,
+                    //timer: 5000,
+                    timerProgressBar: true,
+                  });
+                },
+              });
+            }
+
+            $("#id_tbodyLop").html(htmlData);
+          },
+        });
+      },
+      error: function (errorMessage) {
+        checkLoiDangNhap(errorMessage.responseJSON.message);
+
+        Swal.fire({
+          icon: "error",
+          title: "Lỗi",
+          text: errorMessage.responseJSON.message,
+          //timer: 5000,
+          timerProgressBar: true,
+        });
+      },
+    });
+  }
+}
+
+function TimKiemThongBaoDanhGia(maHKDG) {
+  if (getCookie("jwt") != null) {
+    var jwtCookie = getCookie("jwt");
+
+    $("#id_tbodyLop tr").remove();
+
+    $.ajax({
+      url: urlapi_thongbaodanhgia_read_maHKDG + maHKDG,
+      type: "GET",
+      contentType: "application/json;charset=utf-8",
+      dataType: "json",
+      async: true,
+      headers: { Authorization: jwtCookie },
+      success: function (result) {
+        $("#idPhanTrang").pagination({
+          dataSource: result["thongbaodanhgia"],
+          pageSize: 10,
+          autoHidePrevious: true,
+          autoHideNext: true,
+
+          callback: function (data, pagination) {
+            var htmlData = "";
+            var count = 0;
+
+            for (let i = 0; i < data.length; i++) {
+              count += 1;
+
+              //Ajax load học kỳ
+              $.ajax({
+                url: urlapi_hockydanhgia_single_read + data[i].maHocKyDanhGia,
+                type: "GET",
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                async: false,
+                headers: { Authorization: jwtCookie },
+                success: function (result_HKDG) {
+                  htmlData +=
+                    "<tr >\
+                                <td class='cell'>" +
+                    data[i].soThuTu +
+                    "</td>\
+                                <td class='cell'><span class='truncate'>" +
+                    data[i].maThongBao +
+                    "</span></td>\
+                                <td class='cell'>" +
+                    result_HKDG.maHocKyDanhGia +
+                    "</td>\
+                                <td class='cell'>" +
+                    result_HKDG.hocKyXet +
+                    " - " +
+                    result_HKDG.namHocXet +
+                    "</td>\
+                                <td class='cell'>" +
+                    data[i].ngayThongBao +
                     "</td>\
                                 <td class='cell' style='font-weight: 500;' >" +
                     data[i].ngaySinhVienDanhGia +

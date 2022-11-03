@@ -116,6 +116,8 @@ const urlapi_lop_update = host_domain_url + "/lop/update.php";
 //READ
 const urlapi_thongbaodanhgia_read =
   host_domain_url + "/thongbaodanhgia/read.php";
+const urlapi_thongbaodanhgia_read_maHKDG =
+  host_domain_url + "/thongbaodanhgia/read.php?maHKDG=";
 
 //SINGLE READ (maHocKyDanhGia)
 const urlapi_thongbaodanhgia_single_read_MaHKDG =

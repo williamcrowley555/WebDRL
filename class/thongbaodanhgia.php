@@ -36,6 +36,17 @@
             return $stmt;
         }
 
+        // GET ALL THEO MA HOC KY DANH GIA 
+        public function getThongBaoDanhGiaTheoMaHKDG($maHKDG, $isEqual = true){
+            $sqlQuery = "SELECT * FROM " . $this->db_table . " 
+                            WHERE UPPER(maHocKyDanhGia)" . 
+                            ($isEqual ? " = UPPER('$maHKDG')" : " LIKE UPPER('%$maHKDG%')");
+    
+            $stmt = $this->conn->prepare($sqlQuery);
+            $stmt->execute();
+            return $stmt;
+        }
+
         // READ single
         public function getSingleThongBaoDanhGia(){
             $sqlQuery = "SELECT maThongBao, ngaySinhVienDanhGia, ngaySinhVienKetThucDanhGia, ngayCoVanDanhGia, ngayCoVanKetThucDanhGia, ngayKhoaDanhGia, ngayKhoaKetThucDanhGia, ngayThongBao, maHocKyDanhGia FROM ". $this->db_table ."
