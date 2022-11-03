@@ -28,7 +28,7 @@ function getPhieuRenLuyenTitle() {
 
 function getThongTinPhieuRenLuyen(maPhieuRenLuyen) {
   // Reset phieuRenLuyen
-  phieuRenLuyen = {
+  var phieuRenLuyen = {
     thongTinPhieu: {},
     sinhVien: {},
     hocKyDanhGia: {},
@@ -269,11 +269,17 @@ function isAllowedToScore(thongBaoDanhGia, userRole, validRoles) {
         typeof thongBaoDanhGia.ngaySinhVienDanhGia !== "undefined" &&
         typeof thongBaoDanhGia.ngaySinhVienKetThucDanhGia !== "undefined"
       ) {
-        if (
-          new Date(thongBaoDanhGia.ngaySinhVienDanhGia.split("-")) <= today &&
-          today <=
-            new Date(thongBaoDanhGia.ngaySinhVienKetThucDanhGia.split("-"))
-        ) {
+        var startDate = new Date(
+          thongBaoDanhGia.ngaySinhVienDanhGia.split("-")
+        );
+        var endDate = new Date(
+          thongBaoDanhGia.ngaySinhVienKetThucDanhGia.split("-")
+        );
+
+        startDate.setHours(0, 0, 0, 0);
+        endDate.setHours(23, 59, 59, 999);
+
+        if (startDate <= today && today <= endDate) {
           result = true;
         }
       }
@@ -282,10 +288,15 @@ function isAllowedToScore(thongBaoDanhGia, userRole, validRoles) {
         typeof thongBaoDanhGia.ngayCoVanDanhGia !== "undefined" &&
         typeof thongBaoDanhGia.ngayCoVanKetThucDanhGia !== "undefined"
       ) {
-        if (
-          new Date(thongBaoDanhGia.ngayCoVanDanhGia.split("-")) <= today &&
-          today <= new Date(thongBaoDanhGia.ngayCoVanKetThucDanhGia.split("-"))
-        ) {
+        var startDate = new Date(thongBaoDanhGia.ngayCoVanDanhGia.split("-"));
+        var endDate = new Date(
+          thongBaoDanhGia.ngayCoVanKetThucDanhGia.split("-")
+        );
+
+        startDate.setHours(0, 0, 0, 0);
+        endDate.setHours(23, 59, 59, 999);
+
+        if (startDate <= today && today <= endDate) {
           result = true;
         }
       }
@@ -294,10 +305,15 @@ function isAllowedToScore(thongBaoDanhGia, userRole, validRoles) {
         typeof thongBaoDanhGia.ngayKhoaDanhGia !== "undefined" &&
         typeof thongBaoDanhGia.ngayKhoaKetThucDanhGia !== "undefined"
       ) {
-        if (
-          new Date(thongBaoDanhGia.ngayKhoaDanhGia.split("-")) <= today &&
-          today <= new Date(thongBaoDanhGia.ngayKhoaKetThucDanhGia.split("-"))
-        ) {
+        var startDate = new Date(thongBaoDanhGia.ngayKhoaDanhGia.split("-"));
+        var endDate = new Date(
+          thongBaoDanhGia.ngayKhoaKetThucDanhGia.split("-")
+        );
+
+        startDate.setHours(0, 0, 0, 0);
+        endDate.setHours(23, 59, 59, 999);
+
+        if (startDate <= today && today <= endDate) {
           result = true;
         }
       }

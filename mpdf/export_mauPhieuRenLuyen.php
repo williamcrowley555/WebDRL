@@ -3,34 +3,32 @@
     
     $data = json_decode($_POST["data"], true);
 
-    $hocKyDanhGia = $data["hocKyDanhGia"];
     $tieuChiCap1 = $data["tieuChiCap1"];
     $tieuChiCap2 = $data["tieuChiCap2"];
     $tieuChiCap3 = $data["tieuChiCap3"];
 
-    $fileName = 'phieu_ren_luyen';
+    $fileName = 'mau_phieu_ren_luyen';
     
     $html = '';
     
     $html .= '<h3 style="text-transform: uppercase; text-align: left;">--Thông tin sinh viên--</h3>
         <div class="row justify-content-center" style="padding-bottom: 20px; text-align: start;" id="part_thongTinSinhVien">
             <div class="row">
-                <div class="dots" style="width: 100%; overflow: hidden; white-space: nowrap;"><span style="font-weight: bold; font-size: 16px;">Họ tên: </span>' . $sinhVien["hoTenSinhVien"] . '</div>
-                <div class="dots" style="width: 100%; overflow: hidden; white-space: nowrap;"><span style="font-weight: bold; font-size: 16px;">Mã số sinh viên: </span><span id="text_maSV">' . $sinhVien["maSinhVien"] . '</span></div>
-                <div class="dots" style="width: 100%; overflow: hidden; white-space: nowrap;"><span style="font-weight: bold; font-size: 16px;">Ngày sinh: </span>' . date_format(date_create($sinhVien["ngaySinh"]), "d/m/Y") . '</div>
-                <div class="dots" style="width: 100%; overflow: hidden; white-space: nowrap;"><span style="font-weight: bold; font-size: 16px;">Lớp: </span><span id="text_MaLop">' . $sinhVien["maLop"] . '</span></div>
-                <div class="dots" style="width: 100%; overflow: hidden; white-space: nowrap;"><span style="font-weight: bold; font-size: 16px;">Khoa: </span>' . $sinhVien["maKhoa"] . ' - ' . $sinhVien["tenKhoa"] . '</div>
-                <div class="dots" style="width: 100%; overflow: hidden; white-space: nowrap;"><span style="font-weight: bold; font-size: 16px;">Hệ: </span>' . $sinhVien["he"] . '</div>
-                <div class="dots" style="width: 100%; overflow: hidden; white-space: nowrap;"><span style="font-weight: bold; font-size: 16px;">Học kỳ: </span>' . $hocKyDanhGia["hocKyXet"] . '</div>
-                <div class="dots" style="width: 100%; overflow: hidden; white-space: nowrap;"><span style="font-weight: bold; font-size: 16px;">Năm học: </span>' . $hocKyDanhGia["namHocXet"] . '</div>
-                <div class="dots" style="width: 100%; overflow: hidden; white-space: nowrap;" style="display: none;"><input type="text" id="input_maHocKyDanhGia" value="' . $hocKyDanhGia["maHocKyDanhGia"] . '" /></div>
+                <div style=" margin-bottom:10px"><span style="font-weight: bold; font-size: 16px;">Họ tên: </span></div>
+                <div style=" margin-bottom:10px"><span style="font-weight: bold; font-size: 16px;">Mã số sinh viên: </span></div>
+                <div style=" margin-bottom:10px"><span style="font-weight: bold; font-size: 16px;">Ngày sinh: </span></div>
+                <div style=" margin-bottom:10px"><span style="font-weight: bold; font-size: 16px;">Lớp: </span></div>
+                <div style=" margin-bottom:10px"><span style="font-weight: bold; font-size: 16px;">Khoa: </span></div>
+                <div style=" margin-bottom:10px"><span style="font-weight: bold; font-size: 16px;">Hệ: </span></div>
+                <div style=" margin-bottom:10px"><span style="font-weight: bold; font-size: 16px;">Học kỳ: </span></div>
+                <div style=" margin-bottom:10px"><span style="font-weight: bold; font-size: 16px;">Năm học: </span></div>
             </div>
         </div>';
 
     $html .= '<h3 style="text-transform: uppercase; text-align: left;">--PHIẾU ĐÁNH GIÁ ĐIỂM RÈN LUYỆN--</h3>
             <form id="formDanhGiaDRL" method="post" enctype="multipart/form-data">
                 <div class="form-outline mb-4">
-                    <div class="row justify-content-center" style="margin-top: 20px; text-align: start;">
+                    <div class="row justify-content-center" style="margin-top: 10px; text-align: start;">
                         <table class="table table-hover table-bordered" style="border-collapse: collapse;">
                             <thead>
                                 <tr style="text-align: center;">
@@ -68,9 +66,9 @@
                                 (
                                     $tcc2["noidung"] .
                                     '<br/>
-                                    Điểm TBC học kỳ trước: ' . $thongTinPhieu["diemTrungBinhChungHKTruoc"] .
-                                    '<br/>
-                                    Điểm TBC học kỳ đang xét: ' . $thongTinPhieu["diemTrungBinhChungHKXet"]
+                                    Điểm TBC học kỳ trước: 
+                                    <br/>
+                                    Điểm TBC học kỳ đang xét: ' 
                                 )  
                                 : 
                                 $tcc2["noidung"]) . 
@@ -87,7 +85,7 @@
 
                         $html .= '<tr>
                                     <td style="padding: 10px; border: 1px solid #ccc;"><em>' . $tcc3["noidung"] . '</em></td>
-                                    <td style="padding: 10px; border: 1px solid #ccc; text-align: center;"><em>' . ($tcc3["diem"] == 0 ? '' : $tcc3["diem"] . "đ") . '</em></td>
+                                    <td style="padding: 10px; border: 1px solid #ccc; text-align: center;"><em>' . $tcc3["diem"] . 'đ</em></td>
                                     <td style="padding: 10px; border: 1px solid #ccc; text-align: center;"></td>
                                     <td style="padding: 10px; border: 1px solid #ccc; text-align: center;"></td>
                                     <td style="padding: 10px; border: 1px solid #ccc; text-align: center;"></td>
