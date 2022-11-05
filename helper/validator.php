@@ -107,4 +107,9 @@
 
         return preg_match($regex, $value) ? null : $message ?? "Số điện thoại không hợp lệ";
     }
+
+    function isEmail($value, $message = null) {
+        $regex = "/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/";
+        return preg_match($regex, $value) ? null : $message ?? "Email không hợp lệ";
+    }
 ?>

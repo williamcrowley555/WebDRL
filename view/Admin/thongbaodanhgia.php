@@ -236,6 +236,53 @@
 					</form>
 				</div>
 
+				<!-- Modal gửi email thông báo -->
+				<div class="modal fade" id="SendEmailNotificationModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+					<form action="" class="modal-dialog" id="form_send_email_notification">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="exampleModalLabel"> Gửi email thông báo</h5>
+								<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+							</div>
+							<div class="modal-body">
+
+								<label class="mb-3 form-label" style="color: black; font-weight: 500;">Vui lòng chọn đối tượng muốn gửi email thông báo</label>
+								<input type="hidden" name="maThongBao" />
+
+								<div class="mb-3 form-check">
+									<input class="form-check-input" type="checkbox" name="options" value="allSinhVien" id="checkAllSinhVien">
+									<label class="form-check-label" for="checkAllSinhVien" style="color: black;">
+										Thông báo cho tất cả sinh viên
+									</label>
+								</div>
+
+								<div class="mb-3 form-check">
+									<input class="form-check-input" type="checkbox" name="options" value="allCVHT" id="checkAllCVHT">
+									<label class="form-check-label" for="checkAllCVHT" style="color: black;">
+										Thông báo cho tất cả cố vấn học tập
+									</label>
+								</div>
+
+								<div class="mb-3 form-check">
+									<input class="form-check-input" type="checkbox" name="options" value="uploadExcel" id="checkUploadExcel">
+									<label class="form-check-label" for="checkUploadExcel" style="color: black;">
+										Thông báo theo danh sách email trong Excel
+									</label>
+								</div>
+
+								<div class="mb-3 form-group" style="display:none">
+									<input type="file" name="email_file" class="form-control" id="email_file" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" >
+								</div>
+
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+								<button type="submit" class="btn" style='color: white;background: dodgerblue;'>Gửi</button>
+							</div>
+						</div>
+					</form>
+				</div>
+
 
 				<div class="tab-pane fade show active" id="orders-all" role="tabpanel" aria-labelledby="orders-all-tab">
 					<div class="app-card app-card-orders-table shadow-sm mb-5">
@@ -679,7 +726,6 @@
 		$("#EditForm #edit_input_NgayKhoaDanhGia").removeClass("is-invalid");
 		$("#EditForm #edit_input_NgayKhoaKetThucDanhGia").removeClass("is-invalid");
 	})
-
 	
 	// Xử lý xóa thông báo đánh giá
 	$(document).on("click", ".btn_Xoa_ThongBaoDanhGia" ,function() {
@@ -687,4 +733,168 @@
 
 		XoaThongBaoDanhGia(maThongBao);
 	})
+
+	// Xử lý click nút gửi email thông báo
+	$(document).on("click", ".btn_GuiEmail_ThongBaoDanhGia" ,function() {
+		var maThongBao = $(this).attr('data-id');
+
+		$("#form_send_email_notification input[name='maThongBao']").val(maThongBao);
+
+		$("#form_send_email_notification input[name='options']:checked").each(function (index, input) {
+			$(input).prop('checked', false);
+		});
+		$('#form_send_email_notification input[name="email_file"]').parent().hide();
+	})
+
+	$('#form_send_email_notification #checkUploadExcel').change(function(e) {
+		if (this.checked) {
+			$('#form_send_email_notification input[name="email_file"]').parent().show();
+		} else {
+			$('#form_send_email_notification input[name="email_file"]').parent().hide();
+		}
+	});
+
+	$('#form_send_email_notification').submit(function(e) {
+		e.preventDefault();
+
+		if ($("#form_send_email_notification input[name='options']:checked").length > 0) {
+			var options = [];
+			var formData = new FormData(this);
+
+			// Kiểm tra đã upload file chưa khi chọn option 'uploadExcel'
+			if ($("#form_send_email_notification #checkUploadExcel").is(":checked")) {
+				if(document.querySelector("#form_send_email_notification input[name='email_file']").files.length == 0 ){
+					Swal.fire({
+						icon: "error",
+						title: "Lỗi",
+						text: "Vui lòng upload file excel để tiếp tục!",
+						timer: 2000,
+						timerProgressBar: true,
+					});
+
+					return;
+				}
+			}
+
+			$("#form_send_email_notification input[name='options']:checked").each(function (index, input) {
+				options.push(input.value);
+			});
+
+			formData.append("options", options);
+
+			$('#form_send_email_notification button[type=submit]').text("Đang xử lý...");
+			$('#form_send_email_notification button[type=submit]').prop('disabled', true);
+
+			$.ajax({
+				url: 'http://localhost/WebDRL/phpmailer/send_email/sendEmailThongBaoDanhGia.php',
+				type: "POST",
+				data: formData,
+				processData: false, 
+				contentType: false,
+				enctype: 'multipart/form-data',
+				mimeType: 'multipart/form-data',
+				success: function (result) {
+					$('#form_send_email_notification button[type=submit]').text("Gửi");
+					$('#form_send_email_notification button[type=submit]').prop('disabled', false);
+					
+					result = JSON.parse(result);
+
+					if(result.success) {
+						Swal.fire({
+							icon: "success",
+							title: "Thành công",
+							text: result.message,
+							timer: 2000,
+							timerProgressBar: true,
+							showCloseButton: true,
+						});
+					} else {
+						Swal.fire({
+							icon: "error",
+							title: "Thất bại!",
+							text: result.message,
+							timerProgressBar: true,
+							showCloseButton: true,
+						});
+					}
+				},
+			});
+		} 
+
+
+		// if(document.getElementById("import_file").files.length == 0 ){
+		// 	Swal.fire({
+		// 		icon: "error",
+		// 		title: "Lỗi",
+		// 		text: "Vui lòng upload file excel để import!",
+		// 		timer: 2000,
+		// 		timerProgressBar: true,
+		// 	});
+		// } else {
+		// 	var formData = new FormData(this);
+
+		// 	$("#ImportFromExcelModal").modal("hide");
+		
+			// $.ajax({
+			// 	url: 'http://localhost/WebDRL/phpspreadsheet/import/import_khoa.php',
+			// 	type: "POST",
+			// 	data: formData,
+			// 	processData: false, 
+			// 	contentType: false,
+			// 	enctype: 'multipart/form-data',
+			// 	mimeType: 'multipart/form-data',
+			// 	success: function (result) {
+			// 		// console.log(result)
+			// 		result = JSON.parse(result);
+
+			// 		if(result.success) {
+			// 			Swal.fire({
+			// 				icon: "success",
+			// 				title: "Thành công",
+			// 				text: "Import thành công!",
+			// 				timer: 2000,
+			// 				timerProgressBar: true,
+			// 				showCloseButton: true,
+			// 			});
+			// 		} else {
+			// 			Swal.fire({
+			// 				icon: "error",
+			// 				title: "Import thất bại!",
+			// 				text: result.message,
+			// 				timerProgressBar: true,
+			// 				showCloseButton: true,
+			// 			}).then(function() {
+			// 				$("#form_import_from_excel #import_file").val('');
+
+			// 				if(result.invalidRows) {
+			// 					const tableTitle = result.invalidRows.slice(0, 1);
+			// 					const tableBody = result.invalidRows.slice(1);
+
+			// 					$("#table_import_error_list thead tr th").remove();
+			// 					$("#table_import_error_list tbody tr").remove();
+
+			// 					tableTitle[0].forEach(function(title) {
+			// 						$("#table_import_error_list>thead>tr").append(`<th class='cell'>${title}</th>`);
+			// 					});
+								
+			// 					tableBody.forEach(function(row) {
+			// 						html = "<tr>";
+
+			// 						row.forEach(function(data) {
+			// 							html += `<td class='cell'>${data}</td>`;
+			// 						});
+
+			// 						html += "</tr>";
+
+			// 						$("#table_import_error_list>tbody").append(html);
+			// 					});
+
+			// 					$("#ImportErrorListModal").modal("show");
+			// 				}
+			// 			});;
+			// 		}
+			// 	},
+			// });
+		// }
+	});
 </script>

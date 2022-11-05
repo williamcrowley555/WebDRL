@@ -1,0 +1,6 @@
+<h3>*** THÔNG BÁO ĐÁNH GIÁ ĐIỂM RÈN LUYỆN (HỌC KỲ: {hocKyXet} - NĂM HỌC: {namHocXet}) ***</h3>
+<hr>
+<p>Gửi sinh viên: {hoTenSinhVien} - MSSV: {maSinhVien}</p>
+<p>Từ ngày {ngaySinhVienDanhGia} đến hết ngày {ngaySinhVienKetThucDanhGia}, hệ thống chấm điểm rèn luyện của trường Đại học Sài Gòn sẽ được mở cho sinh viên vào đánh giá.</p> 
+<p>Sinh viên lưu ý chấm điểm đúng hạn để tránh bị phạt chấm trễ.</p>
+<p><i>Trân trọng cảm ơn!</i></p>

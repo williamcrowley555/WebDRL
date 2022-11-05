@@ -7,6 +7,7 @@ var tableLopTitle = [
   "Mã lớp",
   "Tên lớp",
   "Sỉ số lớp",
+  "Số lượng sinh viên đã chấm",
   "Số lượng cố vấn đã duyệt",
   "Số lượng khoa đã duyệt",
   "Tình trạng",
@@ -364,6 +365,7 @@ function ThongKeLop(maKhoa, maKhoaHoc, maHocKyDanhGia) {
                   maLop: data[i].maLop,
                   tenLop: data[i].tenLop,
                   siSo: result_ThongKe.siSo,
+                  sinhVienCham: result_ThongKe.sinhVienCham,
                   coVanDaDuyet: result_ThongKe.coVanDaDuyet,
                   khoaDaDuyet: result_ThongKe.khoaDaDuyet,
                 });
@@ -380,6 +382,11 @@ function ThongKeLop(maKhoa, maKhoaHoc, maHocKyDanhGia) {
                   data[i].tenLop +
                   "</td>\
                                       <td class='cell'>" +
+                  result_ThongKe.siSo +
+                  "</td>\
+                                      <td class='cell'>" +
+                  result_ThongKe.sinhVienCham +
+                  "/" +
                   result_ThongKe.siSo +
                   "</td>\
                                       <td class='cell'>" +

@@ -1,0 +1,8 @@
+<h3>*** THÔNG BÁO ĐÁNH GIÁ ĐIỂM RÈN LUYỆN (HỌC KỲ: {hocKyXet} - NĂM HỌC: {namHocXet}) ***</h3>
+<hr>
+<p>Trường Đại học Sài Gòn (SGU) trân trọng thông báo tới sinh viên và giáo viên các khung giờ mở chấm/duyệt điểm rèn luyện của sinh viên như sau:</p>
+<p>Thời gian đánh giá của sinh viên: Từ ngày {ngaySinhVienDanhGia} đến hết ngày {ngaySinhVienKetThucDanhGia}.</p> 
+<p>Thời gian đánh giá của cố vấn học tập: Từ ngày {ngayCoVanDanhGia} đến hết ngày {ngayCoVanKetThucDanhGia}.</p> 
+<p>Thời gian đánh giá của khoa: Từ ngày {ngayKhoaDanhGia} đến hết ngày {ngayKhoaKetThucDanhGia}.</p> 
+<p>Yêu cầu sinh viên và giáo viên thực hiện chấm/duyệt điểm theo đúng thời gian quy định.</p>
+<p><i>Trân trọng cảm ơn!</i></p>

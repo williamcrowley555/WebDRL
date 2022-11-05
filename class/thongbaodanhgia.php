@@ -70,6 +70,35 @@
             }
         }
 
+        // READ single
+        public function getSingleDetailsThongBaoDanhGia(){
+            $sqlQuery = "SELECT * 
+                        FROM thongbaodanhgia, hockydanhgia
+                        WHERE thongbaodanhgia.maHocKyDanhGia = hockydanhgia.maHocKyDanhGia 
+                            AND maThongBao = ? 
+                        LIMIT 0,1";
+
+            $stmt = $this->conn->prepare($sqlQuery);
+            $stmt->bindParam(1, $this->maThongBao);
+            $stmt->execute();
+
+            $dataRow = $stmt->fetch(PDO::FETCH_ASSOC);
+            
+            if ($dataRow != null){
+                $this->maThongBao = $dataRow['maThongBao'];
+                $this->ngaySinhVienDanhGia = $dataRow['ngaySinhVienDanhGia'];
+                $this->ngaySinhVienKetThucDanhGia = $dataRow['ngaySinhVienKetThucDanhGia'];
+                $this->ngayCoVanDanhGia = $dataRow['ngayCoVanDanhGia'];
+                $this->ngayCoVanKetThucDanhGia = $dataRow['ngayCoVanKetThucDanhGia'];
+                $this->ngayKhoaDanhGia = $dataRow['ngayKhoaDanhGia'];
+                $this->ngayKhoaKetThucDanhGia = $dataRow['ngayKhoaKetThucDanhGia'];
+                $this->ngayThongBao = $dataRow['ngayThongBao'];
+                $this->maHocKyDanhGia = $dataRow['maHocKyDanhGia'];
+                $this->hocKyXet = $dataRow['hocKyXet'];
+                $this->namHocXet = $dataRow['namHocXet'];
+            }
+        }
+
         //Get single thongbao qua maHocKyDanhGia
         public function getSingleThongBaoDanhGia_HocKyDanhGia(){
             $sqlQuery = "SELECT maThongBao, ngaySinhVienDanhGia, ngaySinhVienKetThucDanhGia, ngayCoVanDanhGia, ngayCoVanKetThucDanhGia, ngayKhoaDanhGia, ngayKhoaKetThucDanhGia, ngayThongBao, maHocKyDanhGia FROM ". $this->db_table ."

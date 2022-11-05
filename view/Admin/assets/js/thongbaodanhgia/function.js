@@ -121,6 +121,9 @@ function GetListThongBaoDanhGia() {
                                     <button class='btn bg-danger btn_Xoa_ThongBaoDanhGia' style='color: white;width: max-content;margin: 5px;' data-id='" +
                     data[i].maThongBao +
                     "' >Xóa</button>\
+                                    <button class='btn btn_GuiEmail_ThongBaoDanhGia' style='color: white;width: max-content;margin: 5px;background: dodgerblue;' data-bs-toggle='modal' data-bs-target='#SendEmailNotificationModal' data-id='" +
+                    data[i].maThongBao +
+                    "' >Gửi email thông báo</button>\
                                 </td>\
                                 </tr>";
                 },
@@ -237,6 +240,9 @@ function TimKiemThongBaoDanhGia(maHKDG) {
                                     <button class='btn bg-danger btn_Xoa_ThongBaoDanhGia' style='color: white;width: max-content;margin: 5px;' data-id='" +
                     data[i].maThongBao +
                     "' >Xóa</button>\
+                                    <button class='btn btn_GuiEmail_ThongBaoDanhGia' style='color: white;width: max-content;margin: 5px;background: dodgerblue;' data-bs-toggle='modal' data-bs-target='#SendEmailNotificationModal' data-id='" +
+                    data[i].maThongBao +
+                    "' >Gửi email thông báo</button>\
                                 </td>\
                                 </tr>";
                 },
