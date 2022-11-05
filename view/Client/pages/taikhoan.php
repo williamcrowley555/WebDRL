@@ -257,12 +257,12 @@
                 Validator.isRequired('#input_MatKhauHienTai'),
                 Validator.isRequired('#input_MatKhauMoi'),
                 Validator.isRequired('#input_XacNhanMatKhauMoi'),
-                Validator.minLength('#input_MatKhauMoi', 6, "Mật khẩu phải có tối thiểu 6 ký tự"),
+                Validator.minLength('#input_MatKhauMoi', 5, "Mật khẩu phải có tối thiểu 5 ký tự"),
                 Validator.isConfirmed('#input_XacNhanMatKhauMoi', function() {
                     return document.querySelector('#ChangePasswordForm #input_MatKhauMoi').value;
                 }, 'Mật khẩu nhập lại không chính xác'),
             ],
-            onSubmit: changePassword
+            onSubmit: changePasswordByQuyen
         })
 
         Validator({

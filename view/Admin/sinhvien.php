@@ -63,7 +63,9 @@
 									</button>
 									<ul class="dropdown-menu" aria-labelledby="dropdownImportButton">
 										<li>
-											<button name="btn_import_from_excel" class="dropdown-item" data-bs-toggle='modal' data-bs-target='#ImportFromExcelModal'>Import from Excel</button>
+											<button name="btn_import_sinhvien_from_excel" class="dropdown-item" data-bs-toggle='modal' data-bs-target='#ImportSinhVienFromExcelModal'>Import sinh viên từ Excel</button>
+											<button name="btn_import_diemhe4_from_excel" class="dropdown-item" data-bs-toggle='modal' data-bs-target='#ImportGPAFromExcelModal'>Import điểm hệ 4 từ Excel</button>
+
 										</li>
 									</ul>
 								</div>
@@ -355,12 +357,12 @@
 				</div>
 			</div>
 			
-			<!-- Modal import from excel -->
-			<div class="modal fade" id="ImportFromExcelModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<!-- Modal import sinh vien from excel -->
+			<div class="modal fade" id="ImportSinhVienFromExcelModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 				<form action="" class="modal-dialog" id="form_import_from_excel">
 					<div class="modal-content">
 						<div class="modal-header">
-							<h5 class="modal-title" id="exampleModalLabel"> Import From Excel</h5>
+							<h5 class="modal-title" id="exampleModalLabel"> Import sinh viên từ Excel</h5>
 							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 						</div>
 						<div class="modal-body">
@@ -379,7 +381,7 @@
 							</div>
 
 							<div class="form-group">
-								<p class="mb-0 fw-bold text-body">Yêu cầu thứ tự các cột như sau: STT, Mã số sinh viên, Họ tên sinh viên, Ngày sinh, Hệ</p>
+								<p class="mb-0 fw-bold text-body">Yêu cầu thứ tự các cột như sau: STT, Mã số sinh viên, Họ tên sinh viên, Ngày sinh, Email, SĐT, Hệ, Tốt nghiệp</p>
 							</div>
 
 						</div>
@@ -420,6 +422,42 @@
 						</div>
 					</div>
 				</div>
+			</div>
+
+			<!-- Modal import diem he 4 from excel -->
+			<div class="modal fade" id="ImportGPAFromExcelModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+				<form action="" class="modal-dialog" id="form_import_GPA_from_excel">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="exampleModalLabel"> Import điểm hệ 4 từ Excel</h5>
+							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						</div>
+						<div class="modal-body">
+
+							<!-- <div class="mb-3 form-group">
+								<label for="select_lop_import" class="form-label" style="color: black; font-weight: 500;">Lớp</label>
+								<select class="form-select" name="lop" aria-label="Default select example" id="select_lop_import">
+								</select>
+								<span class="invalid-feedback"></span>
+							</div> -->
+
+							<div class="mb-3 form-group">
+								<label for="import_file_GPA" class="form-label" style="color: black; font-weight: 500;">Upload file</label>
+								<input type="file" name="import_file_GPA" class="form-control" id="import_file_GPA">
+								<span class="invalid-feedback"></span>
+							</div>
+
+							<div class="form-group">
+								<p class="mb-0 fw-bold text-body">Yêu cầu thứ tự các cột như sau: STT, Mã điểm trung bình, Mã học kỳ đánh giá,  Điểm, Mã số sinh viên</p>
+							</div>
+
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+							<button type="submit" class="btn btn-primary" style='color: white;'>Import</button>
+						</div>
+					</div>
+				</form>
 			</div>
 
 			<div class="tab-pane fade show active" id="orders-all" role="tabpanel" aria-labelledby="orders-all-tab">
@@ -472,7 +510,7 @@
 
 <!-- Page Specific JS -->
 <script src="assets/js/sinhvien/function.js"></script>
-<script src="assets/js/modal.js"></script>
+<!-- <script src="assets/js/modal.js"></script> -->
 
 
 <!-- Form Validator -->
@@ -732,7 +770,7 @@
 		} else {
 			var formData = new FormData(this);
 							
-			$("#ImportFromExcelModal").modal("hide");
+			$("#ImportSinhVienFromExcelModal").modal("hide");
 		
 			$.ajax({
 				url: 'http://localhost/WebDRL/phpspreadsheet/import/import_sinhvien.php',
@@ -767,6 +805,91 @@
 
 							if(result.invalidRows) {
 								const tableTitle = result.invalidRows.slice(0, 1);
+								console.log("table title" + tableTitle);
+								const tableBody = result.invalidRows.slice(1);
+
+								$("#table_import_error_list thead tr th").remove();
+								$("#table_import_error_list tbody tr").remove();
+
+								tableTitle[0].forEach(function(title) {
+									$("#table_import_error_list>thead>tr").append(`<th class='cell'>${title}</th>`);
+								});
+								
+								tableBody.forEach(function(row) {
+									html = "<tr>";
+
+									row.forEach(function(data) {
+										html += `<td class='cell'>${data}</td>`;
+									});
+
+									html += "</tr>";
+
+									$("#table_import_error_list>tbody").append(html);
+								});
+
+								$("#ImportErrorListModal").modal("show");
+							}
+						});;
+					}
+				},
+			});
+		}
+	});
+
+	// Xử lý import GPA form excel
+	$('#form_import_GPA_from_excel').submit(function(e) {
+      	e.preventDefault();
+
+		if(document.getElementById("import_file_GPA").files.length == 0 ){
+			Swal.fire({
+				icon: "error",
+				title: "Lỗi",
+				text: "Vui lòng upload file excel để import!",
+				timer: 2000,
+				timerProgressBar: true,
+			});
+		} else {
+			var formData = new FormData(this);
+			for (const pair of formData.entries()) {
+				console.log(`${pair[0]}, ${pair[1]}`);
+			}
+							
+			$("#ImportGPAFromExcelModal").modal("hide");
+		
+			$.ajax({
+				url: 'http://localhost/WebDRL/phpspreadsheet/import/import_GPA.php',
+				type: "POST",
+				data: formData,
+    			processData: false, 
+                contentType: false,
+                enctype: 'multipart/form-data',
+                mimeType: 'multipart/form-data',
+				success: function (result) {
+					// console.log(result)
+					result = JSON.parse(result);
+
+					if(result.success) {
+						Swal.fire({
+							icon: "success",
+							title: "Thành công",
+							text: "Import thành công!",
+							timer: 2000,
+							timerProgressBar: true,
+							showCloseButton: true,
+						});
+					} else {
+						Swal.fire({
+							icon: "error",
+							title: "Import thất bại!",
+							text: result.message,
+							timerProgressBar: true,
+							showCloseButton: true,
+						}).then(function() {
+							$("#form_import_GPA_from_excel #import_file_GPA").val('');
+
+							if(result.invalidRows) {
+								const tableTitle = result.invalidRows.slice(0, 1);
+								console.log("table title" + tableTitle);
 								const tableBody = result.invalidRows.slice(1);
 
 								$("#table_import_error_list thead tr th").remove();

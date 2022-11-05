@@ -32,8 +32,11 @@
                 $item = new SinhVien($db); //new SinhVien object
                 $item->maSinhVien = $row['1'];
                 $item->hoTenSinhVien = $row['2'];
-                $item->ngaySinh = $row['3'];      
-                $item->he = $row['4'];
+                $item->ngaySinh = $row['3'];
+                $item->email = $row['4'];
+                $item->sdt = $row['5'];
+                $item->he = $row['6'];
+                $item->totNghiep = (($row['7'] === "Chưa tốt nghiệp") ? 0 : (($row['7'] === "Đã tốt nghiệp") ? 1 : $row['7']));
                 $item->matKhauSinhVien = md5($row['1']);
                 $item->maLop = $_POST["lop"];
 
@@ -46,7 +49,7 @@
                     ($errorMsg = minLength($row['1'], 10, "Mã số sinh viên phải có tối thiểu 10 chữ số")) != null
                 ) {
                     $success = false;
-                    array_push($invalidRows, array($row['0'], $row['1'], $row['2'], $row['3'], $row['4'], $errorMsg));
+                    array_push($invalidRows, array($row['0'], $row['1'], $row['2'], $row['3'], $row['4'], $row['5'], $row['6'], $row['7'], $errorMsg));
                     continue;
                 }
 
@@ -57,7 +60,7 @@
                     ($errorMsg = isCharacters($row['2'], true, "Họ tên sinh viên chỉ bao gồm các ký tự chữ")) != null
                 ) {
                     $success = false;
-                    array_push($invalidRows, array($row['0'], $row['1'], $row['2'], $row['3'], $row['4'], $errorMsg));
+                    array_push($invalidRows, array($row['0'], $row['1'], $row['2'], $row['3'], $row['4'], $row['5'], $row['6'], $row['7'], $errorMsg));
                     continue;
                 }
 
@@ -70,38 +73,92 @@
                     ($errorMsg = isDateOfBirth($row['3'], "Ngày sinh không hợp lệ")) != null
                 ) {
                     $success = false;
-                    array_push($invalidRows, array($row['0'], $row['1'], $row['2'], $row['3'], $row['4'], $errorMsg));
+                    array_push($invalidRows, array($row['0'], $row['1'], $row['2'], $row['3'], $row['4'], $row['5'], $row['6'], $row['7'], $errorMsg));
+                    continue;
+                }
+
+                // Validate email
+                if(
+                    ($errorMsg = isRequired($row['4'], "Email không được để trống")) != null
+                    ||
+                    ($errorMsg = isEmail($row['4'])) != null
+                ) {
+                    $success = false;
+                    array_push($invalidRows, array($row['0'], $row['1'], $row['2'], $row['3'], $row['4'], $row['5'], $row['6'], $row['7'], $errorMsg));
+                    continue;
+                }
+
+                // Validate sdt
+                if(
+                    ($errorMsg = isRequired($row['5'], "Số điện thoại không được để trống")) != null 
+                    ||
+                    ($errorMsg = isPhoneNumber($row['5'], "Số điện thoại không đúng")) != null
+                ) {
+                    $success = false;
+                    array_push($invalidRows, array($row['0'], $row['1'], $row['2'], $row['3'], $row['4'], $row['5'], $row['6'], $row['7'], $errorMsg));
                     continue;
                 }
 
                 // Validate he
                 if(
-                    ($errorMsg = isRequired($row['4'], "Hệ không được để trống")) != null
+                    ($errorMsg = isRequired($row['6'], "Hệ không được để trống")) != null
                 ) {
                     $success = false;
-                    array_push($invalidRows, array($row['0'], $row['1'], $row['2'], $row['3'], $row['4'], $errorMsg));
+                    array_push($invalidRows, array($row['0'], $row['1'], $row['2'], $row['3'], $row['4'], $row['5'], $row['6'], $row['7'], $errorMsg));
                     continue;
                 }
 
-                // Kiểm tra MSSV đã tồn tại?
+                // Validate totNghiep
+                if(
+                    ($errorMsg = isRequired($row['7'], "Tốt nghiệp không được để trống")) != null 
+                    ||
+                    ($errorMsg = isGraduate($row['7'], "Tốt nghiệp phải định dạng là \"Đã tốt nghiệp\" hoặc \"Chưa tốt nghiệp\"")) != null
+                ) {
+                    $success = false;
+                    array_push($invalidRows, array($row['0'], $row['1'], $row['2'], $row['3'], $row['4'], $row['5'], $row['6'], $row['7'], $errorMsg));
+                    continue;
+                }
+
+                //Kiểm tra MSSV đã tồn tại?
                 $stmt = $item->getSinhVienTheoMSSV($row['1'], true);
                 $itemCount = $stmt->rowCount();
         
                 if ($itemCount > 0) {
                     $success = false;
-                    array_push($invalidRows, array($row['0'], $row['1'], $row['2'], $row['3'], $row['4'], 'Mã số sinh viên đã tồn tại'));
+                    array_push($invalidRows, array($row['0'], $row['1'], $row['2'], $row['3'], $row['4'], $row['5'], $row['6'], $row['7'], 'Mã số sinh viên đã tồn tại'));
+                    continue;
+                }
+
+                //Kiểm tra email đã tồn tại?
+                $stmt = $item->getSinhVienTheoEmail($row['4'], true);
+                $itemCount = $stmt->rowCount();
+        
+                if ($itemCount > 0) {
+                    $success = false;
+                    array_push($invalidRows, array($row['0'], $row['1'], $row['2'], $row['3'], $row['4'], $row['5'], $row['6'], $row['7'], 'Email đã tồn tại'));
+                    continue;
+                }
+
+                //Kiểm tra sđt đã tồn tại?
+                $stmt = $item->getSinhVienTheoSdt($row['5'], true);
+                $itemCount = $stmt->rowCount();
+        
+                if ($itemCount > 0) {
+                    $success = false;
+                    array_push($invalidRows, array($row['0'], $row['1'], $row['2'], $row['3'], $row['4'], $row['5'], $row['6'], $row['7'], 'Số điện thoại đã tồn tại'));
+                    continue;
+                }
+                
+                $result = $item->createSinhVien();
+                
+                if ($result) {
+                    $successfulRowCount++; 
                 } else {
-                    $result = $item->createSinhVien();
-                    
-                    if ($result) {
-                        $successfulRowCount++; 
-                    } else {
-                        $success = false;
-                        array_push($invalidRows, array($row['0'], $row['1'], $row['2'], $row['3'], $row['4'], 'Lỗi database'));
-                    }
+                    $success = false;
+                    array_push($invalidRows, array($row['0'], $row['1'], $row['2'], $row['3'], $row['4'], $row['5'], $row['6'], $row['7'], 'Lỗi database'));
                 }
             } elseif($rowCount == 0) {
-                array_push($invalidRows, array($row['0'], $row['1'], $row['2'], $row['3'], $row['4'], 'Lỗi'));
+                array_push($invalidRows, array($row['0'], $row['1'], $row['2'], $row['3'], $row['4'], $row['5'], $row['6'], $row['7'], 'Lỗi'));
             }
 
             $rowCount++;

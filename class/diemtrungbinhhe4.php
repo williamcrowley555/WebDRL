@@ -64,6 +64,30 @@
             }
         }
 
+        // GET TON TAI DIEM CUA SINH VIEN THEO MA HOC KY DANH GIA
+        public function getTonTaiDiemCuaSinhVienTheoMaHocKyDanhGia($maHocKyDanhGia, $maSinhVien, $isEqual = true) {
+            $sqlQuery = "SELECT * FROM " . $this->db_table . " 
+                            WHERE maSinhVien" . 
+                            ($isEqual ? " = '$maSinhVien' " : " LIKE '%$maSinhVien%' ") . "
+                            AND maHocKyDanhGia" .
+                            ($isEqual ? " = '$maHocKyDanhGia' " : " LIKE '%$maHocKyDanhGia%' ");
+
+            $stmt = $this->conn->prepare($sqlQuery);
+            $stmt->execute();
+            return $stmt;
+        }
+
+        //getDIEM HE 4 THEO MA DIEM TRUNG BINH
+        public function getDiemHe4TheoMaDiemTrungBinh($maDiemTrungBinh, $isEqual = true) {
+            $sqlQuery = "SELECT * FROM " . $this->db_table . " 
+                        WHERE maDiemTrungBinh" . 
+                        ($isEqual ? " = '$maDiemTrungBinh'" : " LIKE '%$maDiemTrungBinh%'");
+
+            $stmt = $this->conn->prepare($sqlQuery);
+            $stmt->execute();
+            return $stmt;
+        }
+
         // GET SINGLE DIEM TRUNG BINH HE 4 THEO MSSV VA MA HOC KY DANH GIA
         public function getSingleTheoMSSVVaMaHKDG($maSinhVien, $maHocKyDanhGia) {
             $sqlQuery = "SELECT * FROM " . $this->db_table . "

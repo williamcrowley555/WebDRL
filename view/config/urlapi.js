@@ -70,6 +70,7 @@ const urlapi_cvht_create = host_domain_url + "/covanhoctap/create.php";
 
 //UPDATE//
 const urlapi_cvht_update = host_domain_url + "/covanhoctap/update.php";
+const urlapi_cvht_update_matKhau = host_domain_url + "/covanhoctap/updateMatKhau.php";
 
 //---------------KHOA---------------//----------------------------------
 //---------//

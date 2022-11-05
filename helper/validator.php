@@ -112,4 +112,16 @@
         $regex = "/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/";
         return preg_match($regex, $value) ? null : $message ?? "Email không hợp lệ";
     }
+
+    function isGraduate($value, $message = null) {
+        return ($value === "Chưa tốt nghiệp" || $value === "Đã tốt nghiệp") ? null : $message ?? "Tốt nghiệp không hợp lệ";
+    }
+
+    function isGPA($value, $message = null) {
+        return ($value >= 0 && $value <= 4) ? null : $message ?? "Điểm không hợp lệ";
+    }
+
+    function isGPAIDFormat($value, $maSinhVien, $maHocKyDanhGia, $message = null) {
+        return ($value == ($maSinhVien."".$maHocKyDanhGia)) ? null : $message ?? "Mã điểm trung bình không hợp lệ";
+    }
 ?>

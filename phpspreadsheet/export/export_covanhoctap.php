@@ -33,7 +33,8 @@
                 $sheet->setCellValue($alphabet[1] . $rowCount, $tableContent[$i]['maCoVanHocTap']);
                 $sheet->setCellValue($alphabet[2] . $rowCount, $tableContent[$i]['hoTenCoVan']);
                 $sheet->setCellValue($alphabet[3] . $rowCount, $tableContent[$i]['soDienThoai']);
-                $sheet->setCellValue($alphabet[4] . $rowCount, $tableContent[$i]['maKhoa']);
+                $sheet->setCellValue($alphabet[4] . $rowCount, $tableContent[$i]['email']);
+                $sheet->setCellValue($alphabet[5] . $rowCount, $tableContent[$i]['maKhoa']);
 
                 $rowCount++;
             }

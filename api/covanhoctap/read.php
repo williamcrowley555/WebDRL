@@ -52,6 +52,7 @@ if ($data["status"] == 1) {
                             "maCoVanHocTap" => $maCoVanHocTap,
                             "hoTenCoVan" => $hoTenCoVan,
                             "soDienThoai" => $soDienThoai,
+                            "email" => $email,
                             "maKhoa" => $maKhoa,
                             "matKhauTaiKhoanCoVan" => $matKhauTaiKhoanCoVan
                         );
@@ -85,6 +86,7 @@ if ($data["status"] == 1) {
                             "maCoVanHocTap" => $maCoVanHocTap,
                             "hoTenCoVan" => $hoTenCoVan,
                             "soDienThoai" => $soDienThoai,
+                            "email" => $email,
                             "maKhoa" => $maKhoa,
                             "matKhauTaiKhoanCoVan" => $matKhauTaiKhoanCoVan
                         );
@@ -119,6 +121,7 @@ if ($data["status"] == 1) {
                         "maCoVanHocTap" => $maCoVanHocTap,
                         "hoTenCoVan" => $hoTenCoVan,
                         "soDienThoai" => $soDienThoai,
+                        "email" => $email,
                         "maKhoa" => $maKhoa,
                         "matKhauTaiKhoanCoVan" => $matKhauTaiKhoanCoVan
                     );

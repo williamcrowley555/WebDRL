@@ -89,7 +89,7 @@ function getThongTinLopCoVan() {
                            
                         },
                         error: function (errorMessage) {
-                          thongBaoLoi(errorMessage.responseText);
+                          thongBaoLoi(errorMessage.responseJSON.message);
                         },
                     });
 
@@ -98,7 +98,7 @@ function getThongTinLopCoVan() {
             });
         },
         error: function (errorMessage) {
-          thongBaoLoi(errorMessage.responseText);
+          thongBaoLoi(errorMessage.responseJSON.message);
         },
     });
 

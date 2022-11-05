@@ -32,6 +32,7 @@
                     //values
                     $item->hoTenCoVan = $data->hoTenCoVan;
                     $item->soDienThoai = $data->soDienThoai;
+                    $item->email = $data->email;
                     $item->maKhoa = $data->maKhoa;
                     $item->matKhauTaiKhoanCoVan = md5($data->matKhauTaiKhoanCoVan);
                     
@@ -52,6 +53,7 @@
                     //values
                     $item->hoTenCoVan = $data->hoTenCoVan;
                     $item->soDienThoai = $data->soDienThoai;
+                    $item->email = $data->email;
                     $item->maKhoa = $data->maKhoa;
                     
                     if($item->updateCVHT_KhongMatKhau()){
