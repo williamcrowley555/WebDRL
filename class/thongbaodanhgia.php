@@ -16,7 +16,6 @@
         public $maHocKyDanhGia;
 
 
-        
         // Db connection
         public function __construct($db){
             $this->conn = $db;
@@ -27,9 +26,9 @@
 
         // GET ALL
         public function getAllThongBaoDanhGia($kichHoat = 1){
-            $sqlQuery = "SELECT maThongBao, ngaySinhVienDanhGia, ngaySinhVienKetThucDanhGia, ngayCoVanDanhGia, ngayCoVanKetThucDanhGia, ngayKhoaDanhGia, ngayKhoaKetThucDanhGia, ngayThongBao, maHocKyDanhGia 
-            FROM " . $this->db_table . 
-            " WHERE kichHoat = ?";
+            $sqlQuery = "SELECT * 
+                        FROM " . $this->db_table . 
+                        " WHERE kichHoat = ?";
             $stmt = $this->conn->prepare($sqlQuery);
             $stmt->bindParam(1, $kichHoat);
             $stmt->execute();
@@ -49,7 +48,7 @@
 
         // READ single
         public function getSingleThongBaoDanhGia(){
-            $sqlQuery = "SELECT maThongBao, ngaySinhVienDanhGia, ngaySinhVienKetThucDanhGia, ngayCoVanDanhGia, ngayCoVanKetThucDanhGia, ngayKhoaDanhGia, ngayKhoaKetThucDanhGia, ngayThongBao, maHocKyDanhGia FROM ". $this->db_table ."
+            $sqlQuery = "SELECT * FROM ". $this->db_table ."
                         WHERE maThongBao = ? LIMIT 0,1";
             $stmt = $this->conn->prepare($sqlQuery);
             $stmt->bindParam(1, $this->maThongBao);
@@ -66,6 +65,9 @@
                 $this->ngayKhoaDanhGia = $dataRow['ngayKhoaDanhGia'];
                 $this->ngayKhoaKetThucDanhGia = $dataRow['ngayKhoaKetThucDanhGia'];
                 $this->ngayThongBao = $dataRow['ngayThongBao'];
+                $this->ngayKhieuNai = $dataRow['ngayKhieuNai'];
+                $this->ngayKetThucKhieuNai = $dataRow['ngayKetThucKhieuNai'];
+                $this->tuDongThongBao = $dataRow['tuDongThongBao'];
                 $this->maHocKyDanhGia = $dataRow['maHocKyDanhGia'];
             }
         }
@@ -93,6 +95,9 @@
                 $this->ngayKhoaDanhGia = $dataRow['ngayKhoaDanhGia'];
                 $this->ngayKhoaKetThucDanhGia = $dataRow['ngayKhoaKetThucDanhGia'];
                 $this->ngayThongBao = $dataRow['ngayThongBao'];
+                $this->ngayKhieuNai = $dataRow['ngayKhieuNai'];
+                $this->ngayKetThucKhieuNai = $dataRow['ngayKetThucKhieuNai'];
+                $this->tuDongThongBao = $dataRow['tuDongThongBao'];
                 $this->maHocKyDanhGia = $dataRow['maHocKyDanhGia'];
                 $this->hocKyXet = $dataRow['hocKyXet'];
                 $this->namHocXet = $dataRow['namHocXet'];
@@ -101,7 +106,7 @@
 
         //Get single thongbao qua maHocKyDanhGia
         public function getSingleThongBaoDanhGia_HocKyDanhGia(){
-            $sqlQuery = "SELECT maThongBao, ngaySinhVienDanhGia, ngaySinhVienKetThucDanhGia, ngayCoVanDanhGia, ngayCoVanKetThucDanhGia, ngayKhoaDanhGia, ngayKhoaKetThucDanhGia, ngayThongBao, maHocKyDanhGia FROM ". $this->db_table ."
+            $sqlQuery = "SELECT * FROM ". $this->db_table ."
                         WHERE maHocKyDanhGia = ? LIMIT 0,1";
             $stmt = $this->conn->prepare($sqlQuery);
             $stmt->bindParam(1, $this->maHocKyDanhGia  );
@@ -118,6 +123,9 @@
                 $this->ngayKhoaDanhGia = $dataRow['ngayKhoaDanhGia'];
                 $this->ngayKhoaKetThucDanhGia = $dataRow['ngayKhoaKetThucDanhGia'];
                 $this->ngayThongBao = $dataRow['ngayThongBao'];
+                $this->ngayKhieuNai = $dataRow['ngayKhieuNai'];
+                $this->ngayKetThucKhieuNai = $dataRow['ngayKetThucKhieuNai'];
+                $this->tuDongThongBao = $dataRow['tuDongThongBao'];
                 $this->maHocKyDanhGia = $dataRow['maHocKyDanhGia'];
             }
         }
@@ -133,6 +141,9 @@
                         ngayCoVanKetThucDanhGia = :ngayCoVanKetThucDanhGia,
                         ngayKhoaDanhGia = :ngayKhoaDanhGia,
                         ngayKhoaKetThucDanhGia = :ngayKhoaKetThucDanhGia,
+                        ngayKhieuNai = :ngayKhieuNai,
+                        ngayKetThucKhieuNai = :ngayKetThucKhieuNai,
+                        tuDongThongBao = :tuDongThongBao,
                         ngayThongBao = :ngayThongBao,
                         maHocKyDanhGia = :maHocKyDanhGia";
                         
@@ -147,6 +158,9 @@
             $this->ngayKhoaDanhGia=htmlspecialchars(strip_tags($this->ngayKhoaDanhGia));
             $this->ngayKhoaKetThucDanhGia=htmlspecialchars(strip_tags($this->ngayKhoaKetThucDanhGia));
             $this->ngayThongBao=htmlspecialchars(strip_tags($this->ngayThongBao));
+            $this->ngayKhieuNai=htmlspecialchars(strip_tags($this->ngayKhieuNai));
+            $this->ngayKetThucKhieuNai=htmlspecialchars(strip_tags($this->ngayKetThucKhieuNai));
+            $this->tuDongThongBao=htmlspecialchars(strip_tags($this->tuDongThongBao));
             $this->maHocKyDanhGia=htmlspecialchars(strip_tags($this->maHocKyDanhGia));
         
             // bind data
@@ -157,6 +171,9 @@
             $stmt->bindParam(":ngayKhoaDanhGia", $this->ngayKhoaDanhGia);
             $stmt->bindParam(":ngayKhoaKetThucDanhGia", $this->ngayKhoaKetThucDanhGia);
             $stmt->bindParam(":ngayThongBao", $this->ngayThongBao);
+            $stmt->bindParam(":ngayKhieuNai", $this->ngayKhieuNai);
+            $stmt->bindParam(":ngayKetThucKhieuNai", $this->ngayKetThucKhieuNai);
+            $stmt->bindParam(":tuDongThongBao", $this->tuDongThongBao);
             $stmt->bindParam(":maHocKyDanhGia", $this->maHocKyDanhGia);
 
         
@@ -178,6 +195,9 @@
                         ngayKhoaDanhGia = :ngayKhoaDanhGia,
                         ngayKhoaKetThucDanhGia = :ngayKhoaKetThucDanhGia,
                         ngayThongBao = :ngayThongBao,
+                        ngayKhieuNai = :ngayKhieuNai,
+                        ngayKetThucKhieuNai = :ngayKetThucKhieuNai,
+                        tuDongThongBao = :tuDongThongBao,
                         maHocKyDanhGia = :maHocKyDanhGia
                     WHERE 
                         maThongBao = :maThongBao";
@@ -193,6 +213,9 @@
             $this->ngayKhoaDanhGia=htmlspecialchars(strip_tags($this->ngayKhoaDanhGia));
             $this->ngayKhoaKetThucDanhGia=htmlspecialchars(strip_tags($this->ngayKhoaKetThucDanhGia));
             $this->ngayThongBao=htmlspecialchars(strip_tags($this->ngayThongBao));
+            $this->ngayKhieuNai=htmlspecialchars(strip_tags($this->ngayKhieuNai));
+            $this->ngayKetThucKhieuNai=htmlspecialchars(strip_tags($this->ngayKetThucKhieuNai));
+            $this->tuDongThongBao=htmlspecialchars(strip_tags($this->tuDongThongBao));
             $this->maHocKyDanhGia=htmlspecialchars(strip_tags($this->maHocKyDanhGia));
         
         
@@ -205,6 +228,9 @@
             $stmt->bindParam(":ngayKhoaDanhGia", $this->ngayKhoaDanhGia);
             $stmt->bindParam(":ngayKhoaKetThucDanhGia", $this->ngayKhoaKetThucDanhGia);
             $stmt->bindParam(":ngayThongBao", $this->ngayThongBao);
+            $stmt->bindParam(":ngayKhieuNai", $this->ngayKhieuNai);
+            $stmt->bindParam(":ngayKetThucKhieuNai", $this->ngayKetThucKhieuNai);
+            $stmt->bindParam(":tuDongThongBao", $this->tuDongThongBao);
             $stmt->bindParam(":maHocKyDanhGia", $this->maHocKyDanhGia);
         
         

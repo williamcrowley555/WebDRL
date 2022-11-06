@@ -142,15 +142,34 @@
 								</div>
 
 								<div class="mb-3 form-group">
-									<label for="input_NgayKhoaDanhGia" class="form-label" style="color: black; font-weight: 500;"><img src="assets/images/icons/office-worker.png" alt="khoa text" width="15px" /> Ngày Khoa đánh giá</label>
+									<label for="input_NgayKhoaDanhGia" class="form-label" style="color: black; font-weight: 500;"><img src="assets/images/icons/office-worker.png" alt="khoa text" width="15px" /> Ngày khoa đánh giá</label>
 									<input type="date" class="form-control" name="ngayKhoaDanhGia" id="input_NgayKhoaDanhGia" placeholder="Nhập ngày khoa đánh giá...">
 									<span class="invalid-feedback"></span>
 								</div>
 
 								<div class="mb-3 form-group">
-									<label for="input_NgayKhoaKetThucDanhGia" class="form-label" style="color: black; font-weight: 500;">Ngày Khoa kết thúc đánh giá</label>
+									<label for="input_NgayKhoaKetThucDanhGia" class="form-label" style="color: black; font-weight: 500;">Ngày khoa kết thúc đánh giá</label>
 									<input type="date" class="form-control" name="ngayKhoaKetThucDanhGia" id="input_NgayKhoaKetThucDanhGia" placeholder="Nhập ngày Khoa kết thúc đánh giá...">
 									<span class="invalid-feedback"></span>
+								</div>
+
+								<div class="mb-3 form-group">
+									<label for="input_NgayKhieuNai" class="form-label" style="color: black; font-weight: 500;">Ngày khiếu nại</label>
+									<input type="date" class="form-control" name="ngayKhieuNai" id="input_NgayKhieuNai" placeholder="Nhập ngày khiếu nại...">
+									<span class="invalid-feedback"></span>
+								</div>
+
+								<div class="mb-3 form-group">
+									<label for="input_NgayKetThucKhieuNai" class="form-label" style="color: black; font-weight: 500;">Ngày kết thúc khiếu nại</label>
+									<input type="date" class="form-control" name="ngayKetThucKhieuNai" id="input_NgayKetThucKhieuNai" placeholder="Nhập ngày kết thúc khiếu nại...">
+									<span class="invalid-feedback"></span>
+								</div>
+
+								<div class="form-check">
+									<input class="form-check-input" type="checkbox" value="1" id="checkBox_tuDongThongBao">
+									<label class="form-check-label" for="checkBox_tuDongThongBao">
+										Tự động gửi email thông báo
+									</label>
 								</div>
 								
 							</div>
@@ -216,15 +235,34 @@
 								</div>
 
 								<div class="mb-3 form-group">
-									<label for="edit_input_NgayKhoaDanhGia" class="form-label" style="color: black; font-weight: 500;"><img src="assets/images/icons/office-worker.png" alt="khoa text" width="15px" /> Ngày Khoa đánh giá</label>
+									<label for="edit_input_NgayKhoaDanhGia" class="form-label" style="color: black; font-weight: 500;"><img src="assets/images/icons/office-worker.png" alt="khoa text" width="15px" /> Ngày khoa đánh giá</label>
 									<input type="date" class="form-control" name="ngayKhoaDanhGia" id="edit_input_NgayKhoaDanhGia" placeholder="Nhập ngày khoa đánh giá...">
 									<span class="invalid-feedback"></span>
 								</div>
 
 								<div class="mb-3 form-group">
-									<label for="edit_input_NgayKhoaKetThucDanhGia" class="form-label" style="color: black; font-weight: 500;">Ngày Khoa kết thúc đánh giá</label>
-									<input type="date" class="form-control" name="ngayKhoaKetThucDanhGia" id="edit_input_NgayKhoaKetThucDanhGia" placeholder="Nhập ngày Khoa kết thúc đánh giá...">
+									<label for="edit_input_NgayKhoaKetThucDanhGia" class="form-label" style="color: black; font-weight: 500;">Ngày khoa kết thúc đánh giá</label>
+									<input type="date" class="form-control" name="ngayKhoaKetThucDanhGia" id="edit_input_NgayKhoaKetThucDanhGia" placeholder="Nhập ngày khoa kết thúc đánh giá...">
 									<span class="invalid-feedback"></span>
+								</div>
+
+								<div class="mb-3 form-group">
+									<label for="edit_input_NgayKhieuNai" class="form-label" style="color: black; font-weight: 500;">Ngày khiếu nại</label>
+									<input type="date" class="form-control" name="ngayKhieuNai" id="edit_input_NgayKhieuNai" placeholder="Nhập ngày khiếu nại...">
+									<span class="invalid-feedback"></span>
+								</div>
+
+								<div class="mb-3 form-group">
+									<label for="edit_input_NgayKetThucKhieuNai" class="form-label" style="color: black; font-weight: 500;">Ngày kết thúc khiếu nại</label>
+									<input type="date" class="form-control" name="ngayKetThucKhieuNai" id="edit_input_NgayKetThucKhieuNai" placeholder="Nhập ngày kết thúc khiếu nại...">
+									<span class="invalid-feedback"></span>
+								</div>
+
+								<div class="form-check">
+									<input class="form-check-input" type="checkbox" value="1" id="edit_checkBox_tuDongThongBao">
+									<label class="form-check-label" for="edit_checkBox_tuDongThongBao">
+										Tự động gửi email thông báo
+									</label>
 								</div>
 								
 							</div>
@@ -288,7 +326,7 @@
 					<div class="app-card app-card-orders-table shadow-sm mb-5">
 						<div class="app-card-body">
 							<div class="table-responsive">
-								<table class="table app-table-hover mb-0 text-left">
+								<table class="table app-table-hover mb-0 text-center">
 									<thead>
 										<tr>
 											<th class="cell">STT</th>
@@ -296,13 +334,16 @@
 											<th class="cell">Mã học kỳ</th>
 											<th class="cell">Học kỳ - Năm học</th>
 											<th class="cell">Ngày thông báo</th>
-											<th class="cell"><img src='assets/images/icons/student1.png' alt='Student text' width='15px' /> Ngày sinh viên đánh giá</th>
+											<th class="cell">Ngày sinh viên đánh giá</th>
 											<th class="cell">Ngày sinh viên kết thúc đánh giá</th>
-											<th class="cell"><img src='assets/images/icons/presentation2.png' alt='cố vấn text' width='15px' />Ngày cố vấn đánh giá</th>
+											<th class="cell">Ngày cố vấn đánh giá</th>
 											<th class="cell">Ngày cố vấn kết thúc đánh giá</th>
-											<th class="cell"><img src="assets/images/icons/office-worker.png" alt="khoa text" width="15px" />Ngày Khoa đánh giá</th>
+											<th class="cell">Ngày Khoa đánh giá</th>
 											<th class="cell">Ngày Khoa kết thúc đánh giá</th>
-											<th class="cell">Hành động</th>
+											<th class="cell">Ngày khiếu nại</th>
+											<th class="cell">Ngày kết thúc khiếu nại</th>
+											<th class="cell" style="width:95px">Tự động thông báo email</th>
+											<th class="cell" style="width:185px">Hành động</th>
 										</tr>
 									</thead>
 									<tbody id="id_tbodyLop">
@@ -493,6 +534,40 @@
 					return `${_input_namHocKetThuc}-12-31`;
 				}
 			),
+			Validator.isRequired('#input_NgayKhieuNai', 'Vui lòng nhập ngày khiếu nại'),
+			Validator.isEventDay('#input_NgayKhieuNai', function() {
+				return document.querySelector('#AddForm #input_NgayKhoaKetThucDanhGia').value;
+			}, "Ngày khiếu nại phải diễn ra sau ngày khoa kết thúc đánh giá", true),
+			Validator.isInDateRange(
+				'#input_NgayKhieuNai', 
+				function() {
+					var _input_namHocBatDau = $("#AddForm #input_NamHocBatDau").val();
+
+					return `${_input_namHocBatDau}-01-01`;
+				},
+				function() {
+					var _input_namHocKetThuc = $("#AddForm #input_NamHocKetThuc").val();
+
+					return `${_input_namHocKetThuc}-12-31`;
+				}
+			),
+			Validator.isRequired('#input_NgayKetThucKhieuNai', 'Vui lòng nhập ngày kết thúc khiếu nại'),
+			Validator.isEventDay('#input_NgayKetThucKhieuNai', function() {
+				return document.querySelector('#AddForm #input_NgayKhieuNai').value;
+			}, "Ngày kết thúc khiếu nại phải diễn ra sau ngày khiếu nại", true),
+			Validator.isInDateRange(
+				'#input_NgayKetThucKhieuNai', 
+				function() {
+					var _input_namHocBatDau = $("#AddForm #input_NamHocBatDau").val();
+
+					return `${_input_namHocBatDau}-01-01`;
+				},
+				function() {
+					var _input_namHocKetThuc = $("#AddForm #input_NamHocKetThuc").val();
+
+					return `${_input_namHocKetThuc}-12-31`;
+				}
+			),
         ],
         onSubmit: ThemMoi
     })
@@ -645,6 +720,52 @@
 			}, "Ngày khoa kết thúc đánh giá phải diễn ra sau ngày khoa đánh giá", true),
 			Validator.isInDateRange(
 				'#edit_input_NgayKhoaKetThucDanhGia', 
+				function() {
+					var _input_HocKyNamHocXet = $("#EditForm #edit_input_HocKyNamHocXet").val();
+					var nienKhoaIndex = _input_HocKyNamHocXet.indexOf("Năm học: ") + 9;
+					var nienKhoa = _input_HocKyNamHocXet.substring(nienKhoaIndex);
+					var namHocBatDau = nienKhoa.split("-")[0];
+
+					return `${namHocBatDau}-01-01`;
+				},
+				function() {
+					var _input_HocKyNamHocXet = $("#EditForm #edit_input_HocKyNamHocXet").val();
+					var nienKhoaIndex = _input_HocKyNamHocXet.indexOf("Năm học: ") + 9;
+					var nienKhoa = _input_HocKyNamHocXet.substring(nienKhoaIndex);
+					var namHocKetThuc = nienKhoa.split("-")[1];
+
+					return `${namHocKetThuc}-12-31`;
+				}
+			),
+			Validator.isRequired('#edit_input_NgayKhieuNai', 'Vui lòng nhập ngày khiếu nại'),
+			Validator.isEventDay('#edit_input_NgayKhieuNai', function() {
+				return document.querySelector('#EditForm #edit_input_NgayKhoaKetThucDanhGia').value;
+			}, "Ngày khiếu nại phải diễn ra sau ngày khoa kết thúc đánh giá", true),
+			Validator.isInDateRange(
+				'#edit_input_NgayKhieuNai', 
+				function() {
+					var _input_HocKyNamHocXet = $("#EditForm #edit_input_HocKyNamHocXet").val();
+					var nienKhoaIndex = _input_HocKyNamHocXet.indexOf("Năm học: ") + 9;
+					var nienKhoa = _input_HocKyNamHocXet.substring(nienKhoaIndex);
+					var namHocBatDau = nienKhoa.split("-")[0];
+
+					return `${namHocBatDau}-01-01`;
+				},
+				function() {
+					var _input_HocKyNamHocXet = $("#EditForm #edit_input_HocKyNamHocXet").val();
+					var nienKhoaIndex = _input_HocKyNamHocXet.indexOf("Năm học: ") + 9;
+					var nienKhoa = _input_HocKyNamHocXet.substring(nienKhoaIndex);
+					var namHocKetThuc = nienKhoa.split("-")[1];
+
+					return `${namHocKetThuc}-12-31`;
+				}
+			),
+			Validator.isRequired('#edit_input_NgayKetThucKhieuNai', 'Vui lòng nhập ngày kết thúc khiếu nại'),
+			Validator.isEventDay('#edit_input_NgayKetThucKhieuNai', function() {
+				return document.querySelector('#EditForm #edit_input_NgayKhieuNai').value;
+			}, "Ngày kết thúc khiếu nại phải diễn ra sau ngày khiếu nại", true),
+			Validator.isInDateRange(
+				'#edit_input_NgayKetThucKhieuNai', 
 				function() {
 					var _input_HocKyNamHocXet = $("#EditForm #edit_input_HocKyNamHocXet").val();
 					var nienKhoaIndex = _input_HocKyNamHocXet.indexOf("Năm học: ") + 9;
@@ -820,81 +941,5 @@
 				},
 			});
 		} 
-
-
-		// if(document.getElementById("import_file").files.length == 0 ){
-		// 	Swal.fire({
-		// 		icon: "error",
-		// 		title: "Lỗi",
-		// 		text: "Vui lòng upload file excel để import!",
-		// 		timer: 2000,
-		// 		timerProgressBar: true,
-		// 	});
-		// } else {
-		// 	var formData = new FormData(this);
-
-		// 	$("#ImportFromExcelModal").modal("hide");
-		
-			// $.ajax({
-			// 	url: 'http://localhost/WebDRL/phpspreadsheet/import/import_khoa.php',
-			// 	type: "POST",
-			// 	data: formData,
-			// 	processData: false, 
-			// 	contentType: false,
-			// 	enctype: 'multipart/form-data',
-			// 	mimeType: 'multipart/form-data',
-			// 	success: function (result) {
-			// 		// console.log(result)
-			// 		result = JSON.parse(result);
-
-			// 		if(result.success) {
-			// 			Swal.fire({
-			// 				icon: "success",
-			// 				title: "Thành công",
-			// 				text: "Import thành công!",
-			// 				timer: 2000,
-			// 				timerProgressBar: true,
-			// 				showCloseButton: true,
-			// 			});
-			// 		} else {
-			// 			Swal.fire({
-			// 				icon: "error",
-			// 				title: "Import thất bại!",
-			// 				text: result.message,
-			// 				timerProgressBar: true,
-			// 				showCloseButton: true,
-			// 			}).then(function() {
-			// 				$("#form_import_from_excel #import_file").val('');
-
-			// 				if(result.invalidRows) {
-			// 					const tableTitle = result.invalidRows.slice(0, 1);
-			// 					const tableBody = result.invalidRows.slice(1);
-
-			// 					$("#table_import_error_list thead tr th").remove();
-			// 					$("#table_import_error_list tbody tr").remove();
-
-			// 					tableTitle[0].forEach(function(title) {
-			// 						$("#table_import_error_list>thead>tr").append(`<th class='cell'>${title}</th>`);
-			// 					});
-								
-			// 					tableBody.forEach(function(row) {
-			// 						html = "<tr>";
-
-			// 						row.forEach(function(data) {
-			// 							html += `<td class='cell'>${data}</td>`;
-			// 						});
-
-			// 						html += "</tr>";
-
-			// 						$("#table_import_error_list>tbody").append(html);
-			// 					});
-
-			// 					$("#ImportErrorListModal").modal("show");
-			// 				}
-			// 			});;
-			// 		}
-			// 	},
-			// });
-		// }
 	});
 </script>

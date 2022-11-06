@@ -40,7 +40,7 @@ function checkLoiDangNhap(message) {
   }
 }
 
-//hoatdongdanhgia//
+//thong bao danh gia//
 function GetListThongBaoDanhGia() {
   if (getCookie("jwt") != null) {
     var jwtCookie = getCookie("jwt");
@@ -113,6 +113,17 @@ function GetListThongBaoDanhGia() {
                     "</td>\
                                 <td class='cell'>" +
                     data[i].ngayKhoaKetThucDanhGia +
+                    "</td>\
+                                <td class='cell'>" +
+                    data[i].ngayKhieuNai +
+                    "</td>\
+                                <td class='cell'>" +
+                    data[i].ngayKetThucKhieuNai +
+                    "</td>\
+                    <td class='cell'>" +
+                    (data[i].tuDongThongBao == 1
+                      ? "<span class='badge bg-success' style='color: white;font-size: inherit;'>Đang bật</span>"
+                      : "<span class='badge bg-danger' style='color: white;font-size: inherit;'>Đã tắt</span>") +
                     "</td>\
                                 <td class='cell'>\
                                     <button class='btn bg-warning btn_ChinhSua_ThongBaoDanhGia' style='color: white;margin: 5px;width: max-content;' data-id='" +
@@ -233,6 +244,17 @@ function TimKiemThongBaoDanhGia(maHKDG) {
                                 <td class='cell'>" +
                     data[i].ngayKhoaKetThucDanhGia +
                     "</td>\
+                                <td class='cell'>" +
+                    data[i].ngayKhieuNai +
+                    "</td>\
+                                <td class='cell'>" +
+                    data[i].ngayKetThucKhieuNai +
+                    "</td>\
+                                <td class='cell'>" +
+                    (data[i].tuDongThongBao == 1
+                      ? "<span class='badge bg-success' style='color: white;font-size: inherit;'>Đang bật</span>"
+                      : "<span class='badge bg-danger' style='color: white;font-size: inherit;'>Đã tắt</span>") +
+                    "</td>\
                                 <td class='cell'>\
                                     <button class='btn bg-warning btn_ChinhSua_ThongBaoDanhGia' style='color: white;margin: 5px;width: max-content;' data-id='" +
                     data[i].maThongBao +
@@ -279,6 +301,71 @@ function TimKiemThongBaoDanhGia(maHKDG) {
   }
 }
 
+function isToday(date) {
+  const today = new Date();
+
+  if (
+    today.getFullYear() === date.getFullYear() &&
+    today.getMonth() === date.getMonth() &&
+    today.getDate() === date.getDate()
+  ) {
+    return true;
+  }
+
+  return false;
+}
+
+function autoSendEmailNotification(maThongBao, options) {
+  var formData = new FormData();
+  formData.append("maThongBao", maThongBao);
+  formData.append("options", options);
+
+  $.ajax({
+    url: "http://localhost/WebDRL/phpmailer/send_email/sendEmailThongBaoDanhGia.php",
+    async: true,
+    type: "POST",
+    data: formData,
+    processData: false,
+    contentType: false,
+    enctype: "multipart/form-data",
+    mimeType: "multipart/form-data",
+    success: function (result) {},
+  });
+}
+
+function setTimerToCheckNotification(maHocKyDanhGia) {
+  $.ajax({
+    url: urlapi_thongbaodanhgia_single_read_MaHKDG + maHocKyDanhGia,
+    async: true,
+    type: "GET",
+    contentType: "application/json;charset=utf-8",
+    dataType: "json",
+    headers: {
+      Authorization: jwtCookie,
+    },
+    success: function (result) {
+      if (result.tuDongThongBao == 1) {
+        if (isToday(new Date(result.ngayThongBao))) {
+          autoSendEmailNotification(result.maThongBao, [
+            "allSinhVien",
+            "allCVHT",
+          ]);
+        } else {
+          var today = new Date();
+          today.setHours(0, 0, 0, 0);
+          // Nếu ngày thông báo chưa trôi qua => Kiểm tra lại mỗi 12 tiếng để thông báo
+          if (today > new Date(result.ngayThongBao)) {
+            setInterval(function () {
+              setTimerToCheckNotification(maHocKyDanhGia);
+            }, 1000 * 60 * 60 * 12);
+          }
+        }
+      }
+    },
+    error: function (error) {},
+  });
+}
+
 function ThemMoi() {
   var _select_HocKyXet = $("#select_HocKyXet option:selected").val();
   var _input_NamHocXet =
@@ -294,6 +381,11 @@ function ThemMoi() {
   ).val();
   var _input_NgayKhoaDanhGia = $("#input_NgayKhoaDanhGia").val();
   var _input_NgayKhoaKetThucDanhGia = $("#input_NgayKhoaKetThucDanhGia").val();
+  var _input_NgayKhieuNai = $("#input_NgayKhieuNai").val();
+  var _input_NgayKetThucKhieuNai = $("#input_NgayKetThucKhieuNai").val();
+  var _checkBox_tuDongThongBao = $("#checkBox_tuDongThongBao").is(":checked")
+    ? 1
+    : 0;
 
   if (
     _select_HocKyXet == "" ||
@@ -304,7 +396,9 @@ function ThemMoi() {
     _input_NgayCoVanDanhGia == "" ||
     _input_NgayCoVanKetThucDanhGia == "" ||
     _input_NgayKhoaDanhGia == "" ||
-    _input_NgayKhoaKetThucDanhGia == ""
+    _input_NgayKhoaKetThucDanhGia == "" ||
+    _input_NgayKhieuNai == "" ||
+    _input_NgayKetThucKhieuNai == ""
   ) {
     ThongBaoLoi("Vui lòng nhập đầy đủ thông tin!");
   } else {
@@ -383,6 +477,9 @@ function ThemMoi() {
                 ngayCoVanKetThucDanhGia: _input_NgayCoVanKetThucDanhGia,
                 ngayKhoaDanhGia: _input_NgayKhoaDanhGia,
                 ngayKhoaKetThucDanhGia: _input_NgayKhoaKetThucDanhGia,
+                ngayKhieuNai: _input_NgayKhieuNai,
+                ngayKetThucKhieuNai: _input_NgayKetThucKhieuNai,
+                tuDongThongBao: _checkBox_tuDongThongBao,
               };
 
               $.ajax({
@@ -416,6 +513,11 @@ function ThemMoi() {
                   $("#input_NgayCoVanKetThucDanhGia").val("");
                   $("#input_NgayKhoaDanhGia").val("");
                   $("#input_NgayKhoaKetThucDanhGia").val("");
+                  $("#checkBox_tuDongThongBao").prop("checked", false);
+
+                  if (_checkBox_tuDongThongBao == 1) {
+                    setTimerToCheckNotification(_input_MaHocKyDanhGia);
+                  }
                 },
                 error: function (errorMessage) {
                   //checkLoiDangNhap(errorMessage.responseJSON.message);
@@ -479,6 +581,16 @@ function LoadThongTinChinhSua_ThongBaoDanhGia(maThongBao) {
           $("#edit_input_NgayKhoaKetThucDanhGia").val(
             result_data.ngayKhoaKetThucDanhGia
           );
+          $("#edit_input_NgayKhieuNai").val(result_data.ngayKhieuNai);
+          $("#edit_input_NgayKetThucKhieuNai").val(
+            result_data.ngayKetThucKhieuNai
+          );
+
+          if (result_data.tuDongThongBao == 1) {
+            $("#edit_checkBox_tuDongThongBao").prop("checked", true);
+          } else {
+            $("#edit_checkBox_tuDongThongBao").prop("checked", false);
+          }
 
           var _edit_input_NgaySinh = document.getElementById(
             "edit_input_NgayThongBao"
@@ -518,6 +630,15 @@ function ChinhSua_ThongBaoDanhGia() {
   var _edit_input_NgayKhoaKetThucDanhGia = $(
     "#edit_input_NgayKhoaKetThucDanhGia"
   ).val();
+  var _edit_input_NgayKhieuNai = $("#edit_input_NgayKhieuNai").val();
+  var _edit_input_NgayKetThucKhieuNai = $(
+    "#edit_input_NgayKetThucKhieuNai"
+  ).val();
+  var _edit_checkBox_tuDongThongBao = $("#edit_checkBox_tuDongThongBao").is(
+    ":checked"
+  )
+    ? 1
+    : 0;
 
   if (
     _edit_input_MaThongBao == "" ||
@@ -527,7 +648,9 @@ function ChinhSua_ThongBaoDanhGia() {
     _edit_input_NgayCoVanDanhGia == "" ||
     _edit_input_NgayCoVanKetThucDanhGia == "" ||
     _edit_input_NgayKhoaDanhGia == "" ||
-    _edit_input_NgayKhoaKetThucDanhGia == ""
+    _edit_input_NgayKhoaKetThucDanhGia == "" ||
+    _edit_input_NgayKhieuNai == "" ||
+    _edit_input_NgayKetThucKhieuNai == ""
   ) {
     ThongBaoLoi("Vui lòng nhập đầy đủ thông tin!");
   } else {
@@ -550,6 +673,9 @@ function ChinhSua_ThongBaoDanhGia() {
           ngayCoVanKetThucDanhGia: _edit_input_NgayCoVanKetThucDanhGia,
           ngayKhoaDanhGia: _edit_input_NgayKhoaDanhGia,
           ngayKhoaKetThucDanhGia: _edit_input_NgayKhoaKetThucDanhGia,
+          ngayKhieuNai: _edit_input_NgayKhieuNai,
+          ngayKetThucKhieuNai: _edit_input_NgayKetThucKhieuNai,
+          tuDongThongBao: _edit_checkBox_tuDongThongBao,
         };
 
         $.ajax({
@@ -577,6 +703,10 @@ function ChinhSua_ThongBaoDanhGia() {
             setTimeout(function () {
               GetListThongBaoDanhGia();
             }, 2000);
+
+            if (_edit_checkBox_tuDongThongBao == 1) {
+              setTimerToCheckNotification(result_data.maHocKyDanhGia);
+            }
           },
           error: function (errorMessage) {
             //checkLoiDangNhap(errorMessage.responseJSON.message);

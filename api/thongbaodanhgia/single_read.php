@@ -50,6 +50,9 @@
                         "ngayKhoaDanhGia" => $item->ngayKhoaDanhGia,
                         "ngayKhoaKetThucDanhGia" => $item->ngayKhoaKetThucDanhGia,
                         "ngayThongBao" => $item->ngayThongBao,
+                        "ngayKhieuNai" => $item->ngayKhieuNai,
+                        "ngayKetThucKhieuNai" => $item->ngayKetThucKhieuNai,
+                        "tuDongThongBao" => $item->tuDongThongBao,
                         "maHocKyDanhGia" => $item->maHocKyDanhGia        
                     );
 
@@ -71,6 +74,9 @@
                         "ngayKhoaDanhGia" => $item->ngayKhoaDanhGia,
                         "ngayKhoaKetThucDanhGia" => $item->ngayKhoaKetThucDanhGia,
                         "ngayThongBao" => $item->ngayThongBao,
+                        "ngayKhieuNai" => $item->ngayKhieuNai,
+                        "ngayKetThucKhieuNai" => $item->ngayKetThucKhieuNai,
+                        "tuDongThongBao" => $item->tuDongThongBao,
                         "maHocKyDanhGia" => $item->maHocKyDanhGia        
                     );
 

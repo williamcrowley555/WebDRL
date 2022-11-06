@@ -33,6 +33,9 @@
                 $item->ngayKhoaDanhGia = $data->ngayKhoaDanhGia;
                 $item->ngayKhoaKetThucDanhGia = $data->ngayKhoaKetThucDanhGia;
                 $item->ngayThongBao = $data->ngayThongBao;
+                $item->ngayKhieuNai = $data->ngayKhieuNai;
+                $item->ngayKetThucKhieuNai = $data->ngayKetThucKhieuNai;
+                $item->tuDongThongBao = $data->tuDongThongBao;
                 $item->maHocKyDanhGia = $data->maHocKyDanhGia;
     
                 if($item->createThongBaoDanhGia()){
