@@ -167,7 +167,7 @@
 
 								<div class="form-check">
 									<input class="form-check-input" type="checkbox" value="1" id="checkBox_tuDongThongBao">
-									<label class="form-check-label" for="checkBox_tuDongThongBao">
+									<label class="form-check-label" for="checkBox_tuDongThongBao" checked="false">
 										Tự động gửi email thông báo
 									</label>
 								</div>
@@ -260,7 +260,7 @@
 
 								<div class="form-check">
 									<input class="form-check-input" type="checkbox" value="1" id="edit_checkBox_tuDongThongBao">
-									<label class="form-check-label" for="edit_checkBox_tuDongThongBao">
+									<label class="form-check-label" for="edit_checkBox_tuDongThongBao" checked="false">
 										Tự động gửi email thông báo
 									</label>
 								</div>
@@ -859,11 +859,10 @@
 	$(document).on("click", ".btn_GuiEmail_ThongBaoDanhGia" ,function() {
 		var maThongBao = $(this).attr('data-id');
 
+		$('#form_send_email_notification').trigger("reset");
+
 		$("#form_send_email_notification input[name='maThongBao']").val(maThongBao);
 
-		$("#form_send_email_notification input[name='options']:checked").each(function (index, input) {
-			$(input).prop('checked', false);
-		});
 		$('#form_send_email_notification input[name="email_file"]').parent().hide();
 	})
 

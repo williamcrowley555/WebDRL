@@ -88,8 +88,55 @@ function getThongTinCoVanSinhVien(maSinhVien) {
   });
 }
 
+function createKhieuNaiButton(
+  ngayKhieuNai,
+  ngayKetThucKhieuNai,
+  maHocKyDanhGia
+) {
+  var html = "<td></td>";
+
+  var today = new Date();
+  var ngayHienTai = new Date(
+    today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate()
+  );
+
+  if (
+    ngayHienTai.getTime() >= ngayKhieuNai.getTime() &&
+    ngayHienTai.getTime() <= ngayKetThucKhieuNai.getTime()
+  ) {
+    $.ajax({
+      url:
+        urlapi_khieunai_single_read +
+        `?maSinhVien=${getCookie("maSo")}&maHocKyDanhGia=${maHocKyDanhGia}`,
+      async: false,
+      type: "GET",
+      contentType: "application/json;charset=utf-8",
+      dataType: "json",
+      headers: {
+        Authorization: jwtCookie,
+      },
+      success: function (result) {
+        html =
+          "<td><button type='button' class='btn btn-dark btn_XemLaiKhieuNai' data-bs-toggle='modal' data-bs-target='#KhieuNaiModal' data-maHocKy='" +
+          maHocKyDanhGia +
+          "' style='color: white;width: max-content;'> Xem lại khiếu nại</button></td>";
+      },
+      error: function (error) {
+        html =
+          "<td><button type='button' class='btn btn-dark btn_KhieuNai' data-bs-toggle='modal' data-bs-target='#KhieuNaiModal' data-maHocKy='" +
+          maHocKyDanhGia +
+          "' style='color: white;width: max-content;'> Khiếu nại</button></td>";
+      },
+    });
+  }
+
+  return html;
+}
+
 // function lấy thông tin thông báo đánh giá, học kỳ đánh giá
 function getThongTinHocKyDanhGia() {
+  $("#tbody_hocKyDanhGia").empty();
+
   $.ajax({
     url: urlapi_thongbaodanhgia_read,
     async: false,
@@ -111,6 +158,14 @@ function getThongTinHocKyDanhGia() {
             result[index][p].ngaySinhVienKetThucDanhGia
           );
           ngaySinhVienKetThucDanhGia.setHours(23, 59, 59, 999);
+
+          var ngayKhieuNai = new Date(result[index][p].ngayKhieuNai);
+          ngayKhieuNai.setHours(0, 0, 0, 0);
+
+          var ngayKetThucKhieuNai = new Date(
+            result[index][p].ngayKetThucKhieuNai
+          );
+          ngayKetThucKhieuNai.setHours(23, 59, 59, 999);
 
           var maHocKyDanhGia = result[index][p].maHocKyDanhGia;
 
@@ -183,7 +238,7 @@ function getThongTinHocKyDanhGia() {
                                                         <td><span>" +
                               ngaySinhVienKetThucDanhGia.toLocaleDateString() +
                               "</span></td>\
-                                                        <td>\
+                                                        <td colspan='2'>\
                                                             <a href='chamdiemchitiet.php?maHocKy=" +
                               maHocKyDanhGia_HKDG +
                               "' ><button type='button' class='btn btn-warning' style='color: white;width: max-content;'>Chấm lại</button></a>\
@@ -213,7 +268,7 @@ function getThongTinHocKyDanhGia() {
                                                         <td><span>" +
                               ngaySinhVienKetThucDanhGia.toLocaleDateString() +
                               "</span></td>\
-                                                        <td>\
+                                                        <td colspan='2'>\
                                                             <a href='chamdiemchitiet.php?maHocKy=" +
                               maHocKyDanhGia_HKDG +
                               "' ><button type='button' class='btn btn-warning' style='color: white;width: max-content;'>Chấm lại</button></a>\
@@ -245,7 +300,7 @@ function getThongTinHocKyDanhGia() {
                                                     <td><span>" +
                               ngaySinhVienKetThucDanhGia.toLocaleDateString() +
                               "</span></td>\
-                                                    <td>\
+                                                    <td colspan='2'>\
                                                     <a href='chamdiemchitiet.php?maHocKy=" +
                               maHocKyDanhGia_HKDG +
                               "' ><button type='button' class='btn btn-warning' style='color: white;width: max-content;'>Chấm lại</button></a>\
@@ -275,7 +330,7 @@ function getThongTinHocKyDanhGia() {
                                                     <td><span>" +
                               ngaySinhVienKetThucDanhGia.toLocaleDateString() +
                               "</span></td>\
-                                                    <td>\
+                                                    <td colspan='2'>\
                                                         <a href='chamdiemchitiet.php?maHocKy=" +
                               maHocKyDanhGia_HKDG +
                               "' ><button type='button' class='btn btn-warning' style='color: white;width: max-content;'>Chấm lại</button></a>\
@@ -304,7 +359,7 @@ function getThongTinHocKyDanhGia() {
                                                 <td><span>" +
                           ngaySinhVienKetThucDanhGia.toLocaleDateString() +
                           "</span></td>\
-                                                <td>\
+                                                <td colspan='2'>\
                                                     <a href='chamdiemchitiet.php?maHocKy=" +
                           maHocKyDanhGia_HKDG +
                           "' ><button type='button' class='btn btn-info' style='color: white;width: max-content;'>Chấm điểm</button></a>\
@@ -358,8 +413,13 @@ function getThongTinHocKyDanhGia() {
                                                             <a href='chamdiemchitiet.php?maHocKy=" +
                                 maHocKyDanhGia_HKDG +
                                 "' ><button type='button' class='btn btn-light' style='color: black;width: max-content;'> Xem chi tiết</button></a>\
-                                                            </td>\
-                                                        </tr>"
+                                                            </td>" +
+                                createKhieuNaiButton(
+                                  ngayKhieuNai,
+                                  ngayKetThucKhieuNai,
+                                  maHocKyDanhGia_HKDG
+                                ) +
+                                "</tr>"
                             );
                           } else {
                             $("#tbody_hocKyDanhGia").append(
@@ -388,8 +448,13 @@ function getThongTinHocKyDanhGia() {
                                                             <a href='chamdiemchitiet.php?maHocKy=" +
                                 maHocKyDanhGia_HKDG +
                                 "' ><button type='button' class='btn btn-light' style='color: black;width: max-content;'> Xem chi tiết</button></a>\
-                                                            </td>\
-                                                        </tr>"
+                                                            </td>" +
+                                createKhieuNaiButton(
+                                  ngayKhieuNai,
+                                  ngayKetThucKhieuNai,
+                                  maHocKyDanhGia_HKDG
+                                ) +
+                                "</tr>"
                             );
                           }
                         } else {
@@ -420,8 +485,13 @@ function getThongTinHocKyDanhGia() {
                                                         <a href='chamdiemchitiet.php?maHocKy=" +
                                 maHocKyDanhGia_HKDG +
                                 "' ><button type='button' class='btn btn-light' style='color: black;width: max-content;'> Xem chi tiết</button></a>\
-                                                        </td>\
-                                                    </tr>"
+                                                        </td>" +
+                                createKhieuNaiButton(
+                                  ngayKhieuNai,
+                                  ngayKetThucKhieuNai,
+                                  maHocKyDanhGia_HKDG
+                                ) +
+                                "</tr>"
                             );
                           } else {
                             $("#tbody_hocKyDanhGia").append(
@@ -450,8 +520,13 @@ function getThongTinHocKyDanhGia() {
                                                         <a href='chamdiemchitiet.php?maHocKy=" +
                                 maHocKyDanhGia_HKDG +
                                 "' ><button type='button' class='btn btn-light' style='color: black;width: max-content;'> Xem chi tiết</button></a>\
-                                                        </td>\
-                                                    </tr>"
+                                                        </td>" +
+                                createKhieuNaiButton(
+                                  ngayKhieuNai,
+                                  ngayKetThucKhieuNai,
+                                  maHocKyDanhGia_HKDG
+                                ) +
+                                "</tr>"
                             );
                           }
                         }
@@ -476,7 +551,7 @@ function getThongTinHocKyDanhGia() {
                                                 <td><span>" +
                           ngaySinhVienKetThucDanhGia.toLocaleDateString() +
                           "</span></td>\
-                                                <td>\
+                                                <td colspan='2'>\
                                                     <span>Ngoài thời gian chấm, liên hệ phòng Công tác sinh viên</span>\
                                                 </td>\
                                             </tr>"
@@ -495,6 +570,86 @@ function getThongTinHocKyDanhGia() {
     },
     error: function (errorMessage) {
       thongBaoLoi(errorMessage.responseText);
+    },
+  });
+}
+
+function GuiKhieuNai() {
+  var formData = new FormData(document.getElementById("form_khieu_nai"));
+
+  $.ajax({
+    url:
+      urlapi_phieurenluyen_single_read_MaHKDG_MaSV +
+      $("#khieuNai_maHocKy").val() +
+      "&maSinhVien=" +
+      getCookie("maSo"),
+    async: false,
+    type: "GET",
+    contentType: "application/json;charset=utf-8",
+    dataType: "json",
+    headers: {
+      Authorization: jwtCookie,
+    },
+    success: function (result_PRL) {
+      formData.append("maPhieuRenLuyen", result_PRL.maPhieuRenLuyen);
+      formData.append("maSinhVien", result_PRL.maSinhVien);
+
+      $.ajax({
+        url:
+          urlapi_khieunai_single_read +
+          "?maSinhVien=" +
+          getCookie("maSo") +
+          "&maHocKyDanhGia=" +
+          $("#khieuNai_maHocKy").val(),
+        async: false,
+        async: false,
+        type: "GET",
+        contentType: "application/json;charset=utf-8",
+        dataType: "json",
+        headers: {
+          Authorization: jwtCookie,
+        },
+        success: function (result_Read_KN) {
+          thongBaoLoi("Bạn đã gửi khiếu nại cho phiếu rèn luyện này!");
+        },
+        error: function (error_Read_KN) {
+          $.ajax({
+            url: urlapi_khieunai_create,
+            async: false,
+            type: "POST",
+            data: formData,
+            processData: false,
+            contentType: false,
+            cache: false,
+            enctype: "multipart/form-data",
+            mimeType: "multipart/form-data",
+            headers: { Authorization: jwtCookie },
+            success: function (result_Create_KN) {
+              Swal.fire({
+                icon: "success",
+                title: "Thành công",
+                text: "Gửi khiếu nại thành công!",
+                timer: 2000,
+                timerProgressBar: true,
+              });
+
+              getThongTinHocKyDanhGia();
+            },
+            error: function (error_Create_KN) {
+              thongBaoLoi(error.responseJSON.message);
+            },
+          });
+        },
+      });
+    },
+    error: function (error_PRL) {
+      thongBaoLoi("Không tìm thấy phiếu rèn luyện để khiếu nại!");
+    },
+    complete: function () {
+      $("#KhieuNaiModal").find(".btn-close").trigger("click");
+      $("#form_khieu_nai").trigger("reset");
+      $("#images").empty();
+      $("#num-of-files").val("Không có file được chọn");
     },
   });
 }

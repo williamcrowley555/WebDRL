@@ -70,7 +70,8 @@ const urlapi_cvht_create = host_domain_url + "/covanhoctap/create.php";
 
 //UPDATE//
 const urlapi_cvht_update = host_domain_url + "/covanhoctap/update.php";
-const urlapi_cvht_update_matKhau = host_domain_url + "/covanhoctap/updateMatKhau.php";
+const urlapi_cvht_update_matKhau =
+  host_domain_url + "/covanhoctap/updateMatKhau.php";
 
 //---------------KHOA---------------//----------------------------------
 //---------//
@@ -336,6 +337,19 @@ const urlapi_tieuchicap3_update_kichHoat =
 const urlapi_thongkelop_read = host_domain_url + "/thongkelop/read.php";
 const urlapi_thongkesinhvien_read =
   host_domain_url + "/thongkesinhvien/read.php";
+
+//---------------KHIEU NAI---------------//----------------------------------
+//---------//
+
+//READ
+const urlapi_khieunai_read = host_domain_url + "/khieunai/read.php";
+
+//SINGLE READ
+const urlapi_khieunai_single_read =
+  host_domain_url + "/khieunai/single_read.php";
+
+//CREATE
+const urlapi_khieunai_create = host_domain_url + "/khieunai/create.php";
 
 //---------------LOGIN ADMIN---------------//----------------------------------
 //---------//
