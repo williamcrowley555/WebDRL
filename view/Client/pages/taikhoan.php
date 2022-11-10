@@ -308,8 +308,14 @@
 
         // Xem hình preview trước khi upload
         $("#imgInp").on("change", function() {
-            readURL(this);
-            console.log($('input[type=file]')[0].files[0]);
+            $fileName = $('input[type=file]')[0].files[0].name;
+            $fileExtension = $fileName.split('.').pop();
+            if ($fileExtension == 'png' || $fileExtension == 'jpg' || $fileExtension == 'jpeg') {
+                readURL(this);
+                console.log($('input[type=file]')[0].files[0]);
+            } else {
+                presentNotification("error", "Lỗi", "File tải lên phải là dạng ảnh!");
+            }
         });
 
         $("#btn_Luu_EditProfile").on("click", function() {  

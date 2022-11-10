@@ -10,6 +10,9 @@ var tableTitle = [
   "Tốt nghiệp",
 ];
 
+var listXetTotNghiep = {};
+var listXetTotNghiepTimKiem = {};
+
 var tableKetQuaHocTapTitle = ["STT", "Học kỳ - Năm học", "Điểm hệ 4"];
 
 var tableContent = [];
@@ -34,6 +37,16 @@ function deleteAllCookies() {
     var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
     document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
   }
+}
+
+function presentNotification(iconType, titleNotification, textNotifiaction) {
+    Swal.fire({
+        icon: iconType,
+        title: titleNotification,
+        text: textNotifiaction,
+        timer: 2000,
+        timerProgressBar: true,
+    });
 }
 
 function ThongBaoLoi(message) {
@@ -538,7 +551,7 @@ function TimKiemSinhVien(maSinhVien) {
   });
 }
 
-function LoadComboBoxThongTinKhoa_SinhVien() {
+function LoadComboBoxThongTinKhoa_SinhVien(selector) {
   //Load khoa
   $.ajax({
     url: urlapi_khoa_read,
@@ -548,15 +561,15 @@ function LoadComboBoxThongTinKhoa_SinhVien() {
     async: false,
     headers: { Authorization: jwtCookie },
     success: function (result_Khoa) {
-      $("#select_Khoa").find("option").remove();
+      $(selector).find("option").remove();
 
-      $("#select_Khoa").append(
+      $(selector).append(
         "<option selected value='tatcakhoa'>Tất cả khoa</option>"
       );
 
       $.each(result_Khoa, function (index_Khoa) {
         for (var p = 0; p < result_Khoa[index_Khoa].length; p++) {
-          $("#select_Khoa").append(
+          $(selector).append(
             "<option value='" +
               result_Khoa[index_Khoa][p].maKhoa +
               "'>" +
@@ -567,26 +580,28 @@ function LoadComboBoxThongTinKhoa_SinhVien() {
       });
     },
     error: function (errorMessage) {
-      checkLoiDangNhap(errorMessage.responseJSON.message);
-
-      tableContent = [];
-      var htmlData = "";
-      $("#id_tbodySinhVien").html(htmlData);
-      $("#idPhanTrang").empty();
-      // Swal.fire({
-      //   icon: "error",
-      //   title: "Lỗi",
-      //   text: errorMessage.responseJSON.message,
-      //   //timer: 5000,
-      //   timerProgressBar: true,
-      // });
+        checkLoiDangNhap(errorMessage.responseJSON.message);
+        if(selector === "#select_Khoa") {
+            tableContent = [];
+            var htmlData = "";
+            $("#id_tbodySinhVien").html(htmlData);
+            $("#idPhanTrang").empty();
+        }
+        // Swal.fire({
+        //   icon: "error",
+        //   title: "Lỗi",
+        //   text: errorMessage.responseJSON.message,
+        //   //timer: 5000,
+        //   timerProgressBar: true,
+        // });
     },
   });
 }
 
-function LoadComboBoxThongTinLopTheoKhoa(maKhoa) {
+function LoadComboBoxThongTinLopTheoKhoa(maKhoa, selector) {
   if (maKhoa != "tatcakhoa") {
-    $("#select_Lop").find("option").remove();
+    //$("#select_Lop").find("option").remove();
+    $(selector).find("option").remove();
     //Load khoa
     $.ajax({
       url: urlapi_lop_read_maKhoa + maKhoa,
@@ -596,13 +611,15 @@ function LoadComboBoxThongTinLopTheoKhoa(maKhoa) {
       async: false,
       headers: { Authorization: jwtCookie },
       success: function (result_Lop) {
-        $("#select_Lop").append(
+        //$("#select_Lop")
+        $(selector).append(
           "<option selected value='tatcalop'>Tất cả lớp</option>"
         );
 
         $.each(result_Lop, function (index_Lop) {
           for (var p = 0; p < result_Lop[index_Lop].length; p++) {
-            $("#select_Lop").append(
+            // $("#select_Lop")
+            $(selector).append(
               "<option value='" +
                 result_Lop[index_Lop][p].maLop +
                 "'>" +
@@ -614,11 +631,12 @@ function LoadComboBoxThongTinLopTheoKhoa(maKhoa) {
       },
       error: function (errorMessage) {
         checkLoiDangNhap(errorMessage.responseJSON.message);
-
-        tableContent = [];
-        var htmlData = "";
-        $("#id_tbodySinhVien").html(htmlData);
-        $("#idPhanTrang").empty();
+        if(selector == "$select_Lop") {
+            tableContent = [];
+            var htmlData = "";
+            $("#id_tbodySinhVien").html(htmlData);
+            $("#idPhanTrang").empty();
+        }        
       },
     });
   } else {
@@ -980,7 +998,7 @@ function ChinhSua_SinhVien() {
         Swal.fire({
           icon: "error",
           title: "Lỗi",
-          text: errorMessage.responseText,
+          text: errorMessage.responseJSON.message,
           //timer: 5000,
           timerProgressBar: true,
         });
@@ -1196,4 +1214,139 @@ function updateDiemHe4(maSinhVien, maHocKyDanhGia, diem) {
       });
     },
   });
+}
+
+function getListXetTotNghiep(maLop) {
+    $.ajax({
+        url: urlapi_sinhvien_read_maLop + maLop,
+        async: false,
+        type: "GET",
+        contentType: "application/json;charset=utf-8",
+        dataType: "json",
+        headers: { Authorization: jwtCookie },
+        success: function(result_data) {
+            listXetTotNghiep = result_data;
+        },
+        error: function() {
+            console.log("Loi load list xet tot nghiep");
+        },
+    });
+}
+
+function viewCheckBox() {
+    $("#listXetTotNghiep").empty();
+    htmlData = "";
+    $.each(listXetTotNghiep, function(index) {
+        for(let i = 0; i<listXetTotNghiep[index].length; i++) {
+            if(listXetTotNghiep[index][i].totNghiep == 0) {
+                htmlData += "\
+                            <input type='checkbox' onclick='changeCheckBox(this)' dataXetTotNghiep ='" + listXetTotNghiep[index][i].maSinhVien + "' /> "
+                            + listXetTotNghiep[index][i].maSinhVien + " - " + listXetTotNghiep[index][i].hoTenSinhVien + " <br />";
+            } else {
+                htmlData += "\
+                            <input type='checkbox' onclick='changeCheckBox(this)' dataXetTotNghiep ='" + listXetTotNghiep[index][i].maSinhVien + "' checked /> "
+                            + listXetTotNghiep[index][i].maSinhVien + " - " + listXetTotNghiep[index][i].hoTenSinhVien + " <br />";
+            }
+        }
+    });
+    $("#listXetTotNghiep").html(htmlData);
+}
+
+function searchCheckBox() {
+    var searchText = $("#input_TimKiem_XetTotNghiep").val().toUpperCase();
+    var htmlData = "";
+    $.each(listXetTotNghiep, function(index) {
+        for(let i = 0; i<listXetTotNghiep[index].length; i++) {
+            if(listXetTotNghiep[index][i].maSinhVien.includes(searchText)
+            ||
+            listXetTotNghiep[index][i].hoTenSinhVien.includes(searchText)
+            ) {
+                if(listXetTotNghiep[index][i].totNghiep == 0) {
+                    htmlData += "\
+                                <input type='checkbox' onclick='changeCheckBox(this)' dataxettotnghiep ='" + listXetTotNghiep[index][i].maSinhVien + "' /> "
+                                + listXetTotNghiep[index][i].maSinhVien + " - " + listXetTotNghiep[index][i].hoTenSinhVien + " <br />";
+                } else {
+                    htmlData += "\
+                                <input type='checkbox' onclick='changeCheckBox(this)' dataxettotnghiep ='" + listXetTotNghiep[index][i].maSinhVien + "' checked /> "
+                                + listXetTotNghiep[index][i].maSinhVien + " - " + listXetTotNghiep[index][i].hoTenSinhVien + " <br />";
+                }
+            }
+        }
+    });
+    $("#listXetTotNghiep").empty();
+    $("#listXetTotNghiep").html(htmlData);
+}
+
+function changeCheckBox(checkbox) {
+  var maSinhVienXetTotNghiep = $(checkbox).attr("dataxettotnghiep");
+  $.each(listXetTotNghiep, function(index) {
+    for(let i = 0; i<listXetTotNghiep[index].length; i++) {
+        if(listXetTotNghiep[index][i].maSinhVien == maSinhVienXetTotNghiep) {
+          listXetTotNghiep[index][i].totNghiep = (listXetTotNghiep[index][i].totNghiep == 0 ? 1 : 0);
+        }
+    }
+  });
+}
+
+function selectAllCheckBox() {
+  $.each(listXetTotNghiep, function(index) {
+    for(let i = 0; i<listXetTotNghiep[index].length; i++) {
+      listXetTotNghiep[index][i].totNghiep = 1;
+    }
+  });
+  viewCheckBox();
+}
+
+function deselectAllCheckBox() {
+  $.each(listXetTotNghiep, function(index) {
+    for(let i = 0; i<listXetTotNghiep[index].length; i++) {
+      listXetTotNghiep[index][i].totNghiep = 0;
+    }
+  });
+  viewCheckBox();
+}
+
+function luuXetTotNghiep() {
+    console.log("luu xet tot nghiep");
+    $.each(listXetTotNghiep, function(index) {
+        for(let i = 0; i<listXetTotNghiep[index].length; i++) {
+            var dataPost_Update = {
+                maSinhVien: listXetTotNghiep[index][i].maSinhVien,
+                // hoTenSinhVien: listXetTotNghiep[index][i].hoTenSinhVien,
+                // ngaySinh: listXetTotNghiep[index][i].ngaySinh,
+                // email: listXetTotNghiep[index][i].email,
+                // sdt: listXetTotNghiep[index][i].sdt,
+                // he: listXetTotNghiep[index][i].he,
+                // maLop: listXetTotNghiep[index][i].maLop,
+                totNghiep: listXetTotNghiep[index][i].totNghiep,
+            };
+
+            $.ajax({
+                url: urlapi_sinhvien_update_xettotnghiep,
+                type: "POST",
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                data: JSON.stringify(dataPost_Update),
+                async: false,
+                headers: { Authorization: jwtCookie },
+                success: function (result_Create) {
+                    GetListSinhVien("tatcakhoa","tatcalop");
+                    $("#select_Lop option").remove();
+                    LoadComboBoxThongTinKhoa_SinhVien("#select_Khoa");
+                    presentNotification("success", "Thành công", "Update xét tốt nghiệp thành công!");
+                },
+                error: function (errorMessage) {
+                    presentNotification("success", "Thành công", "Update xét tốt nghiệp thành công!");
+                },
+              });
+        }
+    });
+    
+}
+
+function test() {
+    var obj = [];
+    obj["mssv"] = "3118410179";
+    obj["mssv"] = "checked";
+    console.log(obj);
 }
