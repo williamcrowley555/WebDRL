@@ -111,6 +111,18 @@ class SinhVien
         return $stmt;
     }
 
+    // GET ALL SINHVIEN CO EMAIL
+    public function getAllSinhVienWithEmail($totNghiep = false)
+    {
+        $sqlQuery = "SELECT * FROM " . $this->db_table . 
+                    " WHERE email IS NOT NULL" .
+                    ($totNghiep ? " AND totNghiep = 1" : "");
+
+        $stmt = $this->conn->prepare($sqlQuery);
+        $stmt->execute();
+        return $stmt;
+    }
+
     // GET SINHVIEN THEO MA SO SINH VIEN
     public function getSinhVienTheoMSSV($mssv, $isEqual = true)
     {

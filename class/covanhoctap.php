@@ -48,6 +48,17 @@
             return $stmt;
         }
 
+        // GET ALL CO VAN HOC TAP CO EMAIL
+        public function getAllCVHTWithEmail()
+        {
+            $sqlQuery = "SELECT * FROM " . $this->db_table . 
+                        " WHERE email IS NOT NULL";
+    
+            $stmt = $this->conn->prepare($sqlQuery);
+            $stmt->execute();
+            return $stmt;
+        }
+
         // GET CO VAN HOC TAP THEO MA CVHT
         public function getCVHTTheoMaCVHT($maCVHT, $isEqual = true)
         {

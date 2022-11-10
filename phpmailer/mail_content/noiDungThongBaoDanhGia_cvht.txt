@@ -1,0 +1,6 @@
+<h3>*** THÔNG BÁO ĐÁNH GIÁ ĐIỂM RÈN LUYỆN (HỌC KỲ: {hocKyXet} - NĂM HỌC: {namHocXet}) ***</h3>
+<hr>
+<p>Kính gửi thầy/cô: {hoTenCoVan} - Mã cố vấn học tập: {maCoVanHocTap}</p>
+<p>Từ ngày {ngayCoVanDanhGia} đến hết ngày {ngayCoVanKetThucDanhGia}, hệ thống chấm điểm rèn luyện của trường Đại học Sài Gòn sẽ được mở cho cố vấn học tập vào đánh giá.</p> 
+<p>Quý thầy cô vui lòng truy cập vào hệ thống và duyệt điểm cho sinh viên các lớp được phụ trách theo đúng thời hạn.</p>
+<p><i>Trân trọng cảm ơn!</i></p>

@@ -26,7 +26,7 @@
         
         // GET SO SINH VIEN DA DUYET THEO MA LOP & MA HOC KY DANH GIA
         public function getSoSinhVienDaDuyet($maLop, $maHocKyDanhGia){
-            $sqlQuery =  "SELECT table3.maLop, table3.siSo, table1.coVanDaDuyet, table2.khoaDaDuyet
+            $sqlQuery =  "SELECT table3.maLop, table3.siSo, table1.coVanDaDuyet, table2.khoaDaDuyet, table4.sinhVienCham
                             FROM 
                                 (SELECT lop.maLop, COUNT(sinhvien.maSinhVien) AS coVanDaDuyet
                                 FROM phieurenluyen RIGHT JOIN sinhvien ON phieurenluyen.maSinhVien = sinhvien.maSinhVien
@@ -43,6 +43,12 @@
                                     FROM sinhvien, lop
                                     WHERE sinhvien.maLop = lop.maLop AND lop.maLop = '$maLop') AS table3
                                 ON table2.maLop = table3.maLop
+                                INNER JOIN
+                                (SELECT lop.maLop, COUNT(*) AS sinhVienCham
+                                FROM phieurenluyen LEFT JOIN sinhvien ON phieurenluyen.maSinhVien = sinhvien.maSinhVien
+                                    LEFT JOIN lop ON sinhvien.maLop = lop.maLop 
+                                WHERE maHocKyDanhGia = '$maHocKyDanhGia' AND lop.maLop = '$maLop') AS table4
+                                ON table3.maLop = table4.maLop
                             LIMIT 0,1";
             $stmt = $this->conn->prepare($sqlQuery);
             $stmt->execute();

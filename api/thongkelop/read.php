@@ -41,6 +41,7 @@ if ($data["status"] == 1) {
                 $thongKe_arr = array(
                     "maLop" =>  $maLop,
                     "siSo" => $siSo,
+                    "sinhVienCham" => $sinhVienCham,
                     "coVanDaDuyet" =>  $coVanDaDuyet,
                     "khoaDaDuyet" => $khoaDaDuyet
                 );

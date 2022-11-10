@@ -50,6 +50,9 @@
                             "ngayKhoaDanhGia" => $ngayKhoaDanhGia,
                             "ngayKhoaKetThucDanhGia" => $ngayKhoaKetThucDanhGia,
                             "ngayThongBao" => $ngayThongBao,
+                            "ngayKhieuNai" => $ngayKhieuNai,
+                            "ngayKetThucKhieuNai" => $ngayKetThucKhieuNai,
+                            "tuDongThongBao" => $tuDongThongBao,
                             "maHocKyDanhGia" => $maHocKyDanhGia
                         );
                         array_push($thongbaodanhgiaArr["thongbaodanhgia"], $e);
@@ -91,6 +94,9 @@
                             "ngayKhoaDanhGia" => $ngayKhoaDanhGia,
                             "ngayKhoaKetThucDanhGia" => $ngayKhoaKetThucDanhGia,
                             "ngayThongBao" => $ngayThongBao,
+                            "ngayKhieuNai" => $ngayKhieuNai,
+                            "ngayKetThucKhieuNai" => $ngayKetThucKhieuNai,
+                            "tuDongThongBao" => $tuDongThongBao,
                             "maHocKyDanhGia" => $maHocKyDanhGia
                         );
                         array_push($thongbaodanhgiaArr["thongbaodanhgia"], $e);
