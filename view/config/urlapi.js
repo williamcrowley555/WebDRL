@@ -29,6 +29,8 @@ const urlapi_sinhvien_update_matKhau =
   host_domain_url + "/sinhvien/updateMatKhau.php";
 const urlapi_sinhvien_update_taikhoan =
   host_domain_url + "/sinhvien/updateTaiKhoan.php?maSinhVien=";
+const urlapi_sinhvien_update_xettotnghiep = 
+  host_domain_url + "/sinhvien/updateXetTotNghiep.php";
 
 //---------------   DIEM TRUNG BINH HE 4    ---------------//----------------------------------
 //---------//

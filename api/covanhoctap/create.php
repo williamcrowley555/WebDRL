@@ -33,6 +33,28 @@ if ($data["status"] == 1) {
             $item->maKhoa = $data->maKhoa;
             $item->matKhauTaiKhoanCoVan = md5($data->matKhauTaiKhoanCoVan);
 
+            $stmt = $item->getCVHTTheoEmail($data->email, true);
+            $itemCount = $stmt->rowCount();
+
+            if($itemCount > 0) {
+                http_response_code(404);
+                echo json_encode(
+                    array("message" => "Email vừa tạo đã bị trùng! Vui lòng nhập email khác!")
+                );
+                return;
+            }
+
+            $stmt = $item->getCVHTTheoSdt($data->soDienThoai, true);
+            $itemCount = $stmt->rowCount();
+
+            if($itemCount > 0) {
+                http_response_code(404);
+                echo json_encode(
+                    array("message" => "Số điện thoại vừa tạo đã bị trùng! Vui lòng nhập số điện thoại khác!")
+                );
+                return;
+            }
+
             if ($item->createCVHT()) {
                 http_response_code(200);
                 echo json_encode(

@@ -83,6 +83,10 @@
 										</li>
 									</ul>
 								</div>
+
+								<div class="col-auto" style="padding-left: 15px;">
+									<button class="btn btn-info btn_XetTotNghiep" type="button" data-bs-toggle="modal" data-bs-target="#ModalXetTotNghiep" style="color: white;">Xét tốt nghiệp</button>
+								</div>
 							</div>
 						</div>
 						<!--//col-->
@@ -393,37 +397,6 @@
 				</form>
 			</div>
 
-			<!-- Modal error list of import from excel -->
-			<div class="modal fade" id="ImportErrorListModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-				<div class="modal-dialog modal-lg">
-					<div class="modal-content">
-						<div class="modal-header">
-							<h5 class="modal-title"> Dach sách các dòng lỗi</h5>
-							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-						</div>
-						<div class="modal-body">
-
-							<div class="table-responsive">
-								<table class="table app-table-hover mb-0 text-left" id="table_import_error_list">
-									<thead>
-										<tr>
-										
-										</tr>
-									</thead>
-									<tbody>
-
-									</tbody>
-								</table>
-							</div>
-
-						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-						</div>
-					</div>
-				</div>
-			</div>
-
 			<!-- Modal import diem he 4 from excel -->
 			<div class="modal fade" id="ImportGPAFromExcelModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 				<form action="" class="modal-dialog" id="form_import_GPA_from_excel">
@@ -458,6 +431,75 @@
 						</div>
 					</div>
 				</form>
+			</div>
+			
+			<!-- Modal error list of import from excel -->
+			<div class="modal fade" id="ImportErrorListModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+				<div class="modal-dialog modal-lg">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title"> Dach sách các dòng lỗi</h5>
+							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						</div>
+						<div class="modal-body">
+							<div class="table-responsive">
+								<table class="table app-table-hover mb-0 text-left" id="table_import_error_list">
+									<thead>
+										<tr>
+										
+										</tr>
+									</thead>
+									<tbody>
+									</tbody>
+								</table>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Modal Xet tot nghiep -->
+			<div class="modal fade" id="ModalXetTotNghiep" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="">
+				<div class="modal-dialog modal-lg">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title"> Xét tốt nghiệp </h5>
+							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						</div>
+						<div class="modal-body">
+							<div class="mb-3">
+								<label style="color: black; font-weight: 500;">Chọn khoa</label><br />
+								<select class="form-select" name="maKhoaXetTotNghiep" id="select_Khoa_XetTotNghiep"></select>
+							</div>
+							<div class="mb-3">
+								<label style="color: black; font-weight: 500;">Chọn lớp</label><br />
+								<select class="form-select " name="maLopXetTotNghiep" id="select_Lop_XetTotNghiep"></select>
+							</div>
+
+							<div class="mb-3">
+								<label style="color: black; font-weight: 500;">Tìm kiếm</label><br />
+								<input id="input_TimKiem_XetTotNghiep" placeholder="Nhập mã số sinh viên..." style="width:50%;"  oninput="searchCheckBox()"/>
+							</div>
+
+							<div class="mb-3">
+								<label style="color: black; font-weight: 500;">Danh sách sinh viên xét tốt nghiệp (tích = tốt nghiệp)</label>
+								<button type="button" class="btn btn-danger float-end btn_BoChonTatCa" style="color: white;"> Bỏ chọn tất cả </button>
+								<button type="button" class="btn btn-info float-end me-3 btn_ChonTatCa" style="color: white;"> Chọn tất cả </button>
+							</div>
+							
+							<div class="container" id="listXetTotNghiep" style="border:1px solid #ccc; height: 200px; overflow-y: scroll;">
+								
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn app-btn-primary" data-bs-dismiss="modal" id="Luu_XetTotNghiep">Lưu</button>
+							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+						</div>
+					</div>
+				</div>
 			</div>
 
 			<div class="tab-pane fade show active" id="orders-all" role="tabpanel" aria-labelledby="orders-all-tab">
@@ -631,7 +673,7 @@
 
 		var maKhoa_selected = $('#select_Khoa').val();
 		
-		LoadComboBoxThongTinLopTheoKhoa(maKhoa_selected);
+		LoadComboBoxThongTinLopTheoKhoa(maKhoa_selected, "#select_Lop");
 
 		var maLop_selected = $('#select_Lop').val();
 
@@ -645,6 +687,24 @@
 		var maLop_selected = $('#select_Lop').val();
 
 		GetListSinhVien(maKhoa_selected, maLop_selected);
+	});
+
+	$("#select_Khoa_XetTotNghiep").on("change", function() {
+		$('#input_TimKiem_XetTotNghiep').val('');
+		var maKhoa_selected = $('#select_Khoa_XetTotNghiep').val();
+		console.log();
+		if(maKhoa_selected == "tatcakhoa") {
+			$("#select_Lop_XetTotNghiep").find("option").remove();
+			return;
+		}
+		LoadComboBoxThongTinLopTheoKhoa(maKhoa_selected, "#select_Lop_XetTotNghiep");
+	});
+
+	$("#select_Lop_XetTotNghiep").on("change", function() {
+		$('#input_TimKiem_XetTotNghiep').val('');
+		var maLop_selected = $('#select_Lop_XetTotNghiep').val();
+		getListXetTotNghiep(maLop_selected);
+		viewCheckBox();
 	});
 
 	$('#btn_timKiemMaSinhVien').on('click', function() {
@@ -669,7 +729,7 @@
 
 	LoadComboBoxThongTinLop_SinhVien(); //Load combobox trong modal thêm mới
 
-	LoadComboBoxThongTinKhoa_SinhVien();
+	LoadComboBoxThongTinKhoa_SinhVien("#select_Khoa");
 
 
 	//Dat lai mat khau
@@ -945,5 +1005,28 @@
 
 			return false;
 		}
+	});
+
+	// Xử lý xét tốt nghiệp
+	$(document).on("click", ".btn_XetTotNghiep", function() {
+		LoadComboBoxThongTinKhoa_SinhVien("#select_Khoa_XetTotNghiep");
+		$("#select_Lop_XetTotNghiep option").remove();
+		$("#input_TimKiem_XetTotNghiep").val("");
+		$("#listXetTotNghiep").empty();
+	});
+
+	// Chọn tất cả
+	$(document).on("click", ".btn_ChonTatCa", function() {
+		selectAllCheckBox();
+	});
+
+	// Bỏ chọn tất cả
+	$(document).on("click", ".btn_BoChonTatCa", function() {
+		deselectAllCheckBox();
+	});
+
+	// Lưu xét tốt nghiệp
+	$("#Luu_XetTotNghiep").on("click", function() {
+		luuXetTotNghiep();
 	});
 </script>

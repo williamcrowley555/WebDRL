@@ -408,6 +408,32 @@ class SinhVien
         return false;
     }
 
+    public function updateSinhVien_XetTotNghiep()
+    {
+        $sqlQuery = "UPDATE
+                        " . $this->db_table . "
+                    SET
+                        totNghiep = :totNghiep
+                    WHERE 
+                        maSinhVien  = :maSinhVien ";
+
+        $stmt = $this->conn->prepare($sqlQuery);
+
+        // sanitize (Lọc dữ liệu đầu vào tránh SQLInjection, XSS)
+        $this->maSinhVien = htmlspecialchars(strip_tags($this->maSinhVien));
+        $this->totNghiep = htmlspecialchars(strip_tags($this->totNghiep));
+
+        // bind data
+        $stmt->bindParam(":maSinhVien", $this->maSinhVien);
+        $stmt->bindParam(":totNghiep", $this->totNghiep);
+
+
+        if ($stmt->execute()) {
+            return true;
+        }
+        return false;
+    }
+
     // DELETE
     function deleteSinhVien()
     {

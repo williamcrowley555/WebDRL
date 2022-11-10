@@ -63,6 +63,28 @@ if ($data["status"] == 1) {
                 $item->maLop = $data->maLop;
                 $item->totNghiep = $data->totNghiep;
 
+                $stmt = $item->getSinhVienTheoEmail($data->email, true);
+                $itemCount = $stmt->rowCount();
+
+                if($itemCount > 0) {
+                    http_response_code(404);
+                    echo json_encode(
+                        array("message" => "Email bị trùng! Vui lòng nhập email khác!")
+                    );
+                    return;
+                }
+
+                $stmt = $item->getSinhVienTheoSdt($data->sdt, true);
+                $itemCount = $stmt->rowCount();
+
+                if($itemCount > 0) {
+                    http_response_code(404);
+                    echo json_encode(
+                        array("message" => "Số điện thoại  bị trùng! Vui lòng nhập số điện thoại khác!")
+                    );
+                    return;
+                }
+
 
                 if ($item->updateSinhVien_KhongMatKhau()) {
                     http_response_code(200);

@@ -11,6 +11,16 @@ function getCookie(cName) {
     return res;
 }
 
+function presentNotification(iconType, titleNotification, textNotifiaction) {
+    Swal.fire({
+        icon: iconType,
+        title: titleNotification,
+        text: textNotifiaction,
+        timer: 2000,
+        timerProgressBar: true,
+    });
+}
+
 function readURL(input) {
   if (input.files && input.files[0]) {
       var reader = new FileReader();
@@ -68,8 +78,8 @@ function loadThongTinTaiKhoan(urlApi, quyen) {
             $("#taikhoan_email").val(result_data.email);
             $("#input_taikhoan_email").val(result_data.email);
 
-
-            if(result_data.anhDaiDien == "null") {
+            //"null"
+            if(result_data.anhDaiDien == null) {
                 $("#blah").attr("src", '../../../user-images/default/user.png');
             } else if(quyen == "sinhvien") {
                 $("#blah").attr("src",  '../../../user-images/sinhvien/' + maSo + '/user-avatar/' + result_data.anhDaiDien);

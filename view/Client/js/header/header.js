@@ -32,7 +32,8 @@ function loadAvatar(urlApi, quyen) {
         async: false,
         headers: { Authorization: jwtCookie },
         success: function(result_data) {
-            if(result_data.anhDaiDien == "null") {
+            //"null"
+            if(result_data.anhDaiDien == null) {
                 $("#avatar").attr("src", "../../../user-images/default/user.png");
                 return;
             }
