@@ -1,6 +1,7 @@
 <script src="assets/js/check_token.js"></script>
 <script>
 	//remove class active
+	$("#menu-button-QuanTriVien").removeClass("active");
 	$("#menu-button-ThongKe").removeClass("active");
 	$("#menu-button-SinhVien").removeClass("active");
 	$("#menu-button-Lop").removeClass("active");
@@ -8,6 +9,7 @@
 	$("#menu-button-PhieuRenLuyen").removeClass("active");
 	$("#menu-button-HoatDongDanhGia").removeClass("active");
 	$("#menu-button-TieuChiDanhGia").removeClass("active");
+	$("#menu-button-KhieuNai").removeClass("active");
 	$("#menu-button-ThongBaoDanhGia").removeClass("active");
 
 

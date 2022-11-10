@@ -23,11 +23,74 @@
         //Các chức năng
 
         // GET ALL
-        public function getAll(){
+        public function getAllKhieuNai() {
             $sqlQuery = "SELECT * FROM " . $this->db_table;
             $stmt = $this->conn->prepare($sqlQuery);
             $stmt->execute();
             return $stmt;
+        }
+        
+        // GET DETAILS ALL THEO MA KHOA & MA KHOA HOC & MA HOC KY DANH GIA
+        public function getDetailsAll($maKhoa, $maKhoaHoc, $maHocKyDanhGia) {
+            $sqlQuery = "SELECT * 
+                        FROM khieunai, phieurenluyen, sinhvien, lop
+                        WHERE khieunai.maPhieuRenLuyen = phieurenluyen.maPhieuRenLuyen 
+                            AND phieurenluyen.maSinhVien = sinhvien.maSinhVien
+                            AND sinhvien.maLop = lop.maLop
+                            AND lop.maKhoa = ? AND lop.maKhoaHoc = ?
+                            AND phieurenluyen.maHocKyDanhGia = ?";
+            $stmt = $this->conn->prepare($sqlQuery);
+            $stmt->bindParam(1, $maKhoa);
+            $stmt->bindParam(2, $maKhoaHoc);
+            $stmt->bindParam(3, $maHocKyDanhGia);
+            $stmt->execute();
+            return $stmt;
+        }
+
+        // GET ALL THEO MA SO SINH VIEN
+        public function getDetailsKhieuNaiTheoMSSV($mssv, $isEqual = true)
+        {
+            $sqlQuery = "SELECT * 
+                        FROM khieunai, phieurenluyen, sinhvien, lop  
+                        WHERE khieunai.maPhieuRenLuyen = phieurenluyen.maPhieuRenLuyen 
+                            AND phieurenluyen.maSinhVien = sinhvien.maSinhVien
+                            AND sinhvien.maLop = lop.maLop
+                            AND phieurenluyen.maSinhVien" . 
+                            ($isEqual ? " = '$mssv'" : " LIKE '%$mssv%'");
+    
+            $stmt = $this->conn->prepare($sqlQuery);
+            $stmt->execute();
+            return $stmt;
+        }
+        
+        // GET SINGLE DETAILS THEO MA KHIEU NAI
+        public function getSingleDetailsTheoMaKhieuNai($maKhieuNai) {
+            $sqlQuery = "SELECT * 
+                        FROM khieunai, phieurenluyen, sinhvien, lop
+                        WHERE khieunai.maPhieuRenLuyen = phieurenluyen.maPhieuRenLuyen 
+                            AND phieurenluyen.maSinhVien = sinhvien.maSinhVien
+                            AND sinhvien.maLop = lop.maLop
+                            AND maKhieuNai = ? 
+                        LIMIT 0,1";
+            $stmt = $this->conn->prepare($sqlQuery);
+            $stmt->bindParam(1, $maKhieuNai);
+            $stmt->execute();
+            
+            $dataRow = $stmt->fetch(PDO::FETCH_ASSOC);
+            if ($dataRow != null){
+                $this->maKhieuNai = $dataRow['maKhieuNai'];
+                $this->maPhieuRenLuyen = $dataRow['maPhieuRenLuyen'];
+                $this->lyDoKhieuNai = $dataRow['lyDoKhieuNai'];
+                $this->minhChung = $dataRow['minhChung'];
+                $this->trangThai = $dataRow['trangThai'];
+                $this->thoiGianKhieuNai = $dataRow['thoiGianKhieuNai'];
+                $this->loiNhan = $dataRow['loiNhan'];
+                $this->lyDoTuChoi = $dataRow['lyDoTuChoi'];
+                $this->maHocKyDanhGia = $dataRow['maHocKyDanhGia'];
+                $this->maSinhVien = $dataRow['maSinhVien'];
+                $this->hoTenSinhVien = $dataRow['hoTenSinhVien'];
+                $this->maLop = $dataRow['maLop'];
+            }
         }
         
         // READ single

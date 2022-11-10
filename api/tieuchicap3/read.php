@@ -15,7 +15,7 @@
     // kiểm tra đăng nhập thành công 
     if($data["status"]==1){
 
-       // if ($checkQuyen->checkQuyen_CTSV($data["user_data"]->aud)){
+       // if ($checkQuyen->checkQuyen_CTSV_Admin($data["user_data"]->aud)){
             if (isset($_GET['kichHoat'])) {
                 $kichHoat = $_GET['kichHoat'];
             } else {

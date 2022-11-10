@@ -16,7 +16,7 @@
 
     // kiểm tra đăng nhập thành công 
     if($data["status"]==1){
-        //if ($checkQuyen->checkQuyen_CVHT_Khoa_CTSV($data["user_data"]->aud)) {
+        //if ($checkQuyen->checkQuyen_CVHT_Khoa_CTSV_Admin($data["user_data"]->aud)) {
             $database = new Database();
             $db = $database->getConnection();
             $item = new Khoa($db);

@@ -343,10 +343,15 @@ const urlapi_thongkesinhvien_read =
 
 //READ
 const urlapi_khieunai_read = host_domain_url + "/khieunai/read.php";
+const urlapi_khieunai_read_maSinhVien = urlapi_khieunai_read + "?maSinhVien=";
 
 //SINGLE READ
 const urlapi_khieunai_single_read =
   host_domain_url + "/khieunai/single_read.php";
+
+//SINGLE DETAILS READ
+const urlapi_khieunai_single_details_read =
+  host_domain_url + "/khieunai/single_details_read.php";
 
 //CREATE
 const urlapi_khieunai_create = host_domain_url + "/khieunai/create.php";

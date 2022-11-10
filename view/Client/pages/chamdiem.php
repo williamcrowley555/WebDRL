@@ -247,6 +247,7 @@
             }
         }
 
+	    // Xử lý xem ảnh minh chứng
         document.addEventListener("click", function (e) {
             if(e.target.classList.contains("minh-chung-item")) {
                 const src = e.target.getAttribute("src");

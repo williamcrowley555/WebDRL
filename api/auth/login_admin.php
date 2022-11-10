@@ -11,6 +11,7 @@
 
     include_once '../../config/database.php';
     include_once '../../class/user_token.php';
+    include_once '../../class/admin.php';
     include_once '../../class/phongcongtacsinhvien.php';
     include_once '../../class/khoa.php';
 
@@ -35,10 +36,7 @@
                 http_response_code(404);
                 echo "Sai thông tin đăng nhập!";
             }
-           
         }
-       
-
     }else{
         echo "Chưa gửi thông tin đăng nhập!";
     }
@@ -49,7 +47,59 @@
         $database = new Database();
         $db = $database->getConnection();
 
- 
+        $obj_Admin = new Admin($db);
+        $obj_Admin->taiKhoan = htmlspecialchars(strip_tags($taiKhoan));
+        $obj_Admin->matKhau = htmlspecialchars(strip_tags(md5($matKhau)));
+
+        $sqlQuery_Admin = "SELECT * FROM admin 
+                    WHERE taiKhoan = ? AND matKhau = ? LIMIT 0,1";
+        $stmt = $database->conn->prepare($sqlQuery_Admin);
+        $stmt->bindParam(1, $obj_Admin->taiKhoan);
+        $stmt->bindParam(2, $obj_Admin->matKhau);
+        $stmt->execute();
+        $dataRow_Admin = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($dataRow_Admin != null){
+            $obj_Admin->taiKhoan  = $dataRow_Admin['taiKhoan'];
+            $obj_Admin->hoTen = $dataRow_Admin['hoTen'];
+            $obj_Admin->email = $dataRow_Admin['email'];
+            $obj_Admin->soDienThoai = $dataRow_Admin['soDienThoai'];
+            $obj_Admin->quyen = $dataRow_Admin['quyen'];
+
+            $jwt = create_token("admin",$obj_Admin,"taiKhoan","hoTen", "quyen");
+
+            //Them phien dang nhap vao table user_token
+            $objUserToken = new UserToken($db);
+            $objUserToken->maSo = $obj_Admin->taiKhoan;
+            $objUserToken->token = $jwt;
+            $objUserToken->quyen = $obj_Admin->quyen;
+            $objUserToken->thoiGianDangNhap = date("Y-m-d H:i:s");
+            $objUserToken->thoiGianHetHan = date("Y-m-d H:i:s", strtotime('+24 hours'));
+
+
+            if ($objUserToken->checkUserExist($objUserToken->maSo)){
+                $objUserToken->deleteUserToken($objUserToken->maSo);
+            }
+               
+            $objUserToken->createUserToken();
+
+            $arr = array( 
+                "taiKhoan" =>  $obj_Admin->taiKhoan,
+                "hoTen" => $obj_Admin->hoTen,
+                "quyen" => $obj_Admin->quyen
+            );
+    
+            echo json_encode(array(
+                "login_status"=> 1,
+                "jwt"=> $jwt,
+                "message"=>"Login successful",
+                $arr
+            )); 
+    
+            return true;
+            
+        }
+
         $obj_CTSV = new PhongCongTacSinhVien($db);
         $obj_CTSV->taiKhoan = htmlspecialchars(strip_tags($taiKhoan));
         $obj_CTSV->matKhau = htmlspecialchars(strip_tags(md5($matKhau)));

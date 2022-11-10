@@ -61,13 +61,13 @@
 
 		}
 
-
 		//Get hoTenNhanVien
 		var hoTenNhanVien = '';
 		if (getCookie('hoTenNhanVien') != null) {
 			hoTenNhanVien = getCookie('hoTenNhanVien');
+		} else if (getCookie('hoTen') != null) {
+			hoTenNhanVien = getCookie('hoTen');
 		}
-
 
 		//Logout
 		function DangXuat() {
@@ -210,14 +210,30 @@
 	<script>
 		$(document).ready(function() {
 
-			LoadContentMainPage("sinhvien.php");
+			if (_getQuyen.localeCompare('admin') === 0) {
+				LoadContentMainPage("quantrivien.php");
+			} else {
+				LoadContentMainPage("sinhvien.php");
+			}
 			
 		});
 		
 		var _getQuyen = getCookie('quyen');
 
 		$('#menu_feature li').empty();
-		if (_getQuyen.localeCompare('ctsv') === 0 ){
+
+		if (_getQuyen.localeCompare('admin') === 0){
+			$('#menu-accordion').append("<li class='nav-item' style='cursor: pointer;'>\
+					        <a class='nav-link' onclick='LoadContentMainPage(\"quantrivien.php\");' id='menu-button-QuanTriVien' >\
+						        <span class='nav-icon'>\
+									<img src='assets/images/icons/admin.png' alt='icon quản trị viên' width='25px'>\
+						         </span>\
+		                         <span class='nav-link-text'>Quản trị viên</span>\
+					        </a>\
+					    </li>");
+		}
+
+		if (_getQuyen.localeCompare('ctsv') === 0 || _getQuyen.localeCompare('admin') === 0){
 			$('#menu-accordion').append("<li class='nav-item' style='cursor: pointer;'>\
 					        <a class='nav-link'  onclick='LoadContentMainPage(\"sinhvien.php\");' id='menu-button-SinhVien'>\
 						        <span class='nav-icon'>\
@@ -280,6 +296,14 @@
 									<img src='assets/images/icons/social.png' alt='icon thông báo đánh giá' width='10%'>\
 						         </span>\
 		                         <span class='nav-link-text'>Thông báo đánh giá</span>\
+					        </a>\
+					    </li>\
+						<li class='nav-item' style='cursor: pointer;'>\
+					        <a class='nav-link' onclick='LoadContentMainPage(\"khieunai.php\");' id='menu-button-KhieuNai' >\
+						        <span class='nav-icon'>\
+									<img src='assets/images/icons/complaint.png' alt='icon khiếu nại' width='25px'>\
+						         </span>\
+		                         <span class='nav-link-text'>Khiếu nại</span>\
 					        </a>\
 					    </li>\
 						<li class='nav-item' style='cursor: pointer;'>\

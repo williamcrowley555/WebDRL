@@ -151,7 +151,6 @@
             return true;
         }
 
-
         //Khoa
         $obj_Khoa = new Khoa($db);
         $obj_Khoa->taiKhoanKhoa = $taiKhoan;
@@ -206,13 +205,8 @@
             return true;
         }
 
-
         return false;
-        
     }
-
-
-
 
     //---Create token-------
     function create_token(
@@ -261,8 +255,4 @@
         // ));     
         
     }
-
-
-    
-    
 ?>

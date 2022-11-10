@@ -16,7 +16,7 @@ $checkQuyen = new checkQuyen();
 
 // kiểm tra đăng nhập thành công và có phải giáo viên không
 if ($data["status"] == 1) {
-    if ($checkQuyen->checkQuyen_CVHT_Khoa_CTSV($data["user_data"]->aud)) {
+    if ($checkQuyen->checkQuyen_Khoa_CTSV_Admin($data["user_data"]->aud)) {
 
         if (isset($_GET['maLop'])) {
             $GET_maLop = $_GET['maLop'];

@@ -23,7 +23,7 @@ $url .= $_SERVER['HTTP_HOST'];
 // kiểm tra đăng nhập thành công và có phải giáo viên không
 if ($data["status"] == 1 ) {
 
-    //if ($checkQuyen->checkQuyen_CTSV($data["user_data"]->aud)) {
+    //if ($checkQuyen->checkQuyen_CTSV_Admin($data["user_data"]->aud)) {
         if (isset($_GET['maPhieuRenLuyen'])) {
             $GET_maPhieuRenLuyen = $_GET['maPhieuRenLuyen'];
         } else {

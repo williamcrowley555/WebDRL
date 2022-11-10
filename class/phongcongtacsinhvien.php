@@ -12,6 +12,7 @@
         public $sdt;
         public $diaChi;
         public $quyen;
+        public $kichHoat;
         
         // Db connection
         public function __construct($db){
@@ -23,7 +24,7 @@
 
         // GET ALL
         public function getAllPhongCTSV(){
-            $sqlQuery = "SELECT hoTenNhanVien, email, sodienthoai, diaChi FROM " . $this->db_table . "";
+            $sqlQuery = "SELECT * FROM " . $this->db_table . "";
             $stmt = $this->conn->prepare($sqlQuery);
             $stmt->execute();
             return $stmt;
@@ -39,7 +40,8 @@
                         hoTenNhanVien = :hoTenNhanVien,
                         email = :email,
                         sodienthoai = :sodienthoai,
-                        diaChi = :diaChi";
+                        diaChi = :diaChi,
+                        kichHoat = :kichHoat";
         
             $stmt = $this->conn->prepare($sqlQuery);
         
@@ -50,6 +52,7 @@
             $this->email=htmlspecialchars(strip_tags($this->email));
             $this->sodienthoai=htmlspecialchars(strip_tags($this->sodienthoai));
             $this->diaChi=htmlspecialchars(strip_tags($this->diaChi));
+            $this->kichHoat=htmlspecialchars(strip_tags($this->kichHoat));
         
             // bind data
             $stmt->bindParam(":taiKhoan", $this->taiKhoan);
@@ -58,6 +61,7 @@
             $stmt->bindParam(":email", $this->email);
             $stmt->bindParam(":sodienthoai", $this->sodienthoai);
             $stmt->bindParam(":diaChi", $this->diaChi);
+            $stmt->bindParam(":kichHoat", $this->kichHoat);
         
             if($stmt->execute()){
                return true;
@@ -70,14 +74,15 @@
             $sqlQuery = "UPDATE
                         ". $this->db_table ."
                     SET
-                    taiKhoan = :taiKhoan, 
-                    matKhau = :matKhau,
-                    hoTenNhanVien = :hoTenNhanVien,
-                    email = :email,
-                    sodienthoai = :sodienthoai,
-                    diaChi = :diaChi
+                        taiKhoan = :taiKhoan, 
+                        matKhau = :matKhau,
+                        hoTenNhanVien = :hoTenNhanVien,
+                        email = :email,
+                        sodienthoai = :sodienthoai,
+                        diaChi = :diaChi
+                        kichHoat = :kichHoat
                     WHERE 
-                    taiKhoan = :taiKhoan";
+                        taiKhoan = :taiKhoan";
         
             $stmt = $this->conn->prepare($sqlQuery);
         
@@ -88,6 +93,7 @@
             $this->email=htmlspecialchars(strip_tags($this->email));
             $this->sodienthoai=htmlspecialchars(strip_tags($this->sodienthoai));
             $this->diaChi=htmlspecialchars(strip_tags($this->diaChi));
+            $this->kichHoat=htmlspecialchars(strip_tags($this->kichHoat));
         
             // bind data
             $stmt->bindParam(":taiKhoan", $this->taiKhoan);
@@ -96,6 +102,7 @@
             $stmt->bindParam(":email", $this->email);
             $stmt->bindParam(":sodienthoai", $this->sodienthoai);
             $stmt->bindParam(":diaChi", $this->diaChi);
+            $stmt->bindParam(":kichHoat", $this->kichHoat);
         
             if($stmt->execute()){
                return true;
@@ -117,8 +124,6 @@
             }
             return false;
         }
-
-
     }
 
 ?>
