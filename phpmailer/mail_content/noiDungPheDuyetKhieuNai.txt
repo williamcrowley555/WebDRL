@@ -1,0 +1,7 @@
+<h3>*** PHẢN HỒI KHIẾU NẠI ĐIỂM RÈN LUYỆN (HỌC KỲ: {hocKyXet} - NĂM HỌC: {namHocXet}) ***</h3>
+<hr>
+<p>Gửi sinh viên: {hoTenSinhVien} - MSSV: {maSinhVien}</p>
+<p>Khiếu nại của bạn đã {text_trangThai}.</p> 
+<p>{text_ghiChu}.</p> 
+<p>Mọi thắc mắc xin vui lòng liên lạc với văn phòng khoa sớm nhất có thể.</p>
+<p><i>Trân trọng cảm ơn!</i></p>

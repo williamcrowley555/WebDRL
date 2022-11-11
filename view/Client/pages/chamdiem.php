@@ -53,7 +53,7 @@
 
                                 <div class="mb-3 form-group text-start">
                                     <label for="textarea_lyDoKhieuNai" class="form-label" style="color: black; font-weight: 600;">Lý do khiếu nại</label>
-                                    <textarea class="form-control" name="lyDoKhieuNai" id="textarea_lyDoKhieuNai" rows="8"></textarea>
+                                    <textarea class="form-control" name="lyDoKhieuNai" id="textarea_lyDoKhieuNai" rows="8" style="background-color:transparent;"></textarea>
                                     <span class="invalid-feedback position-relative"></span>
                                 </div>
 
@@ -283,6 +283,7 @@
 
             $("#khieuNai_maHocKy").val(maHocKy);
             $("#textarea_lyDoKhieuNai").val('');
+            $("#textarea_lyDoKhieuNai").attr('readonly', false);
             $("#label_uploadMinhChung").text(`Upload ảnh minh chứng (tối đa ${limitedFiles} ảnh)`);
             $('label[for='+  fileInput.id  +']').show();
             imageContainer.innerHTML = "";
@@ -312,6 +313,8 @@
             });
 
             $("#khieuNai_maHocKy").val(maHocKy);
+            $("#textarea_lyDoKhieuNai").attr('readonly', true);
+            $("#textarea_lyDoKhieuNai").removeClass("is-invalid");
             $("#label_uploadMinhChung").text("Ảnh minh chứng");
             $('label[for='+  fileInput.id  +']').hide();
             $("#form_khieu_nai").find(':submit').hide();

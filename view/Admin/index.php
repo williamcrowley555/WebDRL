@@ -357,7 +357,22 @@
 		                         <span class='nav-link-text'>Hoạt động đánh giá</span>\
 					        </a>\
 					    </li>\
-						");
+						<li class='nav-item' style='cursor: pointer;'>\
+					        <a class='nav-link' onclick='LoadContentMainPage(\"khieunai.php\");' id='menu-button-KhieuNai' >\
+						        <span class='nav-icon'>\
+									<img src='assets/images/icons/complaint.png' alt='icon khiếu nại' width='25px'>\
+						         </span>\
+		                         <span class='nav-link-text'>Khiếu nại</span>\
+					        </a>\
+					    </li>\
+						<li class='nav-item' style='cursor: pointer;'>\
+					        <a class='nav-link' onclick='LoadContentMainPage(\"thongke.php\");' id='menu-button-ThongKe' >\
+						        <span class='nav-icon'>\
+									<img src='assets/images/icons/analysis.png' alt='icon thống kê' width='25px'>\
+						         </span>\
+		                         <span class='nav-link-text'>Thống kê</span>\
+					        </a>\
+					    </li>");
 			}
 			
 		}

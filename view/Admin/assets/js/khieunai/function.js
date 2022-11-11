@@ -264,7 +264,6 @@ function GetListKhieuNai(maKhoa, maKhoaHoc, maHocKyDanhGia) {
         pageSize: 10,
         autoHidePrevious: true,
         autoHideNext: true,
-
         callback: function (data, pagination) {
           var htmlData = "";
           var count = 0;
@@ -300,9 +299,9 @@ function GetListKhieuNai(maKhoa, maKhoaHoc, maHocKyDanhGia) {
                 : "<span class='badge bg-info' style='color: white;font-size: inherit;'>Đang chờ duyệt</span>") +
               "</td>\
                                 <td class='cell'>" +
-              (data[i].trangThai == 1
-                ? toDateTimeString(data[i].thoiGianKhieuNai)
-                : timeSinceBadge(data[i].thoiGianKhieuNai)) +
+              (data[i].trangThai == 0
+                ? timeSinceBadge(data[i].thoiGianKhieuNai)
+                : toDateTimeString(data[i].thoiGianKhieuNai)) +
               "</td>\
                                 <td class='cell'>\
                                   <button class='btn btn-secondary btn_XemChiTiet' style='color: white;' data-bs-toggle='modal' data-bs-target='#XemChiTietModal' data-id = '" +
@@ -329,6 +328,8 @@ function GetListKhieuNai(maKhoa, maKhoaHoc, maHocKyDanhGia) {
       ThongBaoLoi(errorMessage.responseJSON.message);
     },
   });
+
+  $("#select_TrangThai").val("all");
 }
 
 function TimKiemKhieuNai(maSinhVien) {
@@ -349,7 +350,6 @@ function TimKiemKhieuNai(maSinhVien) {
         pageSize: 10,
         autoHidePrevious: true,
         autoHideNext: true,
-
         callback: function (data, pagination) {
           var htmlData = "";
           var count = 0;
@@ -385,9 +385,9 @@ function TimKiemKhieuNai(maSinhVien) {
                 : "<span class='badge bg-info' style='color: white;font-size: inherit;'>Đang chờ duyệt</span>") +
               "</td>\
                                 <td class='cell'>" +
-              (data[i].trangThai == 1
-                ? data[i].thoiGianKhieuNai
-                : timeSinceBadge(data[i].thoiGianKhieuNai)) +
+              (data[i].trangThai == 0
+                ? timeSinceBadge(data[i].thoiGianKhieuNai)
+                : toDateTimeString(data[i].thoiGianKhieuNai)) +
               "</td>\
                                 <td class='cell'>\
                                   <button class='btn btn-secondary btn_XemChiTiet' style='color: white; width: max-content;' data-bs-toggle='modal' data-bs-target='#XemChiTietModal' data-id = '" +
@@ -414,4 +414,138 @@ function TimKiemKhieuNai(maSinhVien) {
       ThongBaoLoi(errorMessage.responseJSON.message);
     },
   });
+
+  $("#select_TrangThai").val("all");
+}
+
+function LoadThongTinPheDuyet(maKhieuNai) {
+  $("#edit_input_MaKhieuNai").val(maKhieuNai);
+
+  $.ajax({
+    url: urlapi_khieunai_single_read + `?maKhieuNai=${maKhieuNai}`,
+    async: false,
+    type: "GET",
+    contentType: "application/json;charset=utf-8",
+    dataType: "json",
+    headers: {
+      Authorization: jwtCookie,
+    },
+    success: function (result_KN) {
+      if (result_KN.trangThai != 0) {
+        $(
+          "input[name=trangThai][value=" + result_KN.trangThai + "]",
+          "#PheDuyetForm"
+        )
+          .attr("checked", true)
+          .trigger("click");
+      } else {
+        $("input[name=trangThai]", "#PheDuyetForm").prop("checked", false);
+        $("#edit_textarea_LoiNhan").parent().hide();
+        $("#edit_textarea_LyDoTuChoi").parent().hide();
+      }
+
+      if (result_KN.loiNhan) {
+        $("#edit_textarea_LoiNhan").val(result_KN.loiNhan);
+      } else {
+        $("#edit_textarea_LoiNhan").val("");
+      }
+
+      if (result_KN.lyDoTuChoi) {
+        $("#edit_textarea_LyDoTuChoi").val(result_KN.lyDoTuChoi);
+      } else {
+        $("#edit_textarea_LyDoTuChoi").val("");
+      }
+    },
+    error: function (error_KN) {
+      $("#PheDuyetModal").find(".btn-close").trigger("click");
+      ThongBaoLoi(error_KN.responseJSON.message);
+    },
+  });
+}
+
+function sendEmailApprovalNotification(maKhieuNai) {
+  var formData = new FormData();
+  formData.append("maKhieuNai", maKhieuNai);
+
+  $.ajax({
+    url: "http://localhost/WebDRL/phpmailer/send_email/sendEmailPheDuyetKhieuNai.php",
+    async: true,
+    type: "POST",
+    data: formData,
+    processData: false,
+    contentType: false,
+    success: function (result) {
+      result = JSON.parse(result);
+
+      if (!result.success) {
+        ThongBaoLoi(result.message);
+      }
+    },
+  });
+}
+
+function pheDuyet() {
+  const _edit_input_MaKhieuNai = $("#edit_input_MaKhieuNai").val();
+  const _trangThai = $("input[name=trangThai]:checked", "#PheDuyetForm").val();
+
+  if (_trangThai) {
+    var _edit_textarea_LoiNhan = $("#edit_textarea_LoiNhan").val();
+    var _edit_textarea_LyDoTuChoi = $("#edit_textarea_LyDoTuChoi").val();
+    var _edit_checkBox_guiEmail = $("#edit_checkBox_guiEmail").is(":checked")
+      ? 1
+      : 0;
+
+    var dataPost = {
+      maKhieuNai: _edit_input_MaKhieuNai,
+      trangThai: _trangThai,
+      loiNhan: _edit_textarea_LoiNhan,
+      lyDoTuChoi: _edit_textarea_LyDoTuChoi,
+    };
+
+    $.ajax({
+      url: urlapi_khieunai_update_trangThai,
+      type: "POST",
+      contentType: "application/json;charset=utf-8",
+      dataType: "json",
+      data: JSON.stringify(dataPost),
+      async: false,
+      headers: { Authorization: jwtCookie },
+      success: function (result_update) {
+        $("#PheDuyetModal").modal("hide");
+
+        Swal.fire({
+          icon: "success",
+          title:
+            "Phê duyệt thành công khiếu nại mã: " +
+            _edit_input_MaKhieuNai +
+            "!",
+          text: "",
+          timer: 2000,
+          timerProgressBar: true,
+        });
+
+        setTimeout(() => {
+          GetListKhieuNai(
+            $("#select_Khoa").val(),
+            $("#select_KhoaHoc").val(),
+            $("#select_HocKyDanhGia").val()
+          );
+        }, 2000);
+
+        if (_edit_checkBox_guiEmail == 1) {
+          sendEmailApprovalNotification(_edit_input_MaKhieuNai);
+        }
+      },
+      error: function (errorMessage) {
+        checkLoiDangNhap(errorMessage.responseJSON.message);
+
+        ThongBaoLoi(errorMessage.responseJSON.message);
+      },
+      complete: function () {
+        $("#edit_checkBox_guiEmail").prop("checked", true);
+      },
+    });
+  } else {
+    ThongBaoLoi("Vui lòng chọn trạng thái phê duyệt!");
+  }
 }

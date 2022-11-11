@@ -437,6 +437,9 @@ function ThongKeSinhVien(maLop, maHocKyDanhGia) {
   $("#tabSinhVien #classInfo").empty();
   $("#tbodySinhVien tr").remove();
 
+  $("#select_FilterColumn").val("");
+  $("#select_FilterOption").empty();
+
   // Hiển thị thông tin lớp
   $.ajax({
     url: urlapi_lop_details_read + maLop,
