@@ -67,6 +67,11 @@
                                     <div id="images" style="width: 90%; position: relative; margin: auto; display: flex; justify-content: space-evenly; gap: 20px; flex-wrap: wrap;"></div>
                                 </div>
 
+                                <div class="mt-4 form-group text-start" id="xemLai_trangThai" style="display: none;">
+                                    <label class="form-label" style="color: black; font-weight: 600;">Trạng thái</label>
+                                    <span style='color: white;font-size: inherit;margin-left: 30px;'></span>
+                                </div>
+
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
@@ -262,6 +267,7 @@
 
         $(document).on("click", ".btn_KhieuNai", function() {
             let maHocKy = $(this).attr('data-maHocKy');
+            $("#xemLai_trangThai").hide();
 
             // Lấy thông tin học kỳ đánh giá
             $.ajax({
@@ -332,6 +338,19 @@
                 },
                 success: function (result) {
                     $("#textarea_lyDoKhieuNai").val(result.lyDoKhieuNai);
+
+                    if (result.trangThai == 1) {
+                        $("#xemLai_trangThai").children("span").removeClass().addClass("badge bg-success");
+                        $("#xemLai_trangThai").children("span").text("Chấp thuận");
+                    } else if (result.trangThai == -1) {
+                        $("#xemLai_trangThai").children("span").removeClass().addClass("badge bg-danger");
+                        $("#xemLai_trangThai").children("span").text("Từ chối");
+                    } else {
+                        $("#xemLai_trangThai").children("span").removeClass().addClass("badge bg-info");
+                        $("#xemLai_trangThai").children("span").text("Đang chờ duyệt");
+                    }
+
+                    $("#xemLai_trangThai").show();
                     
                     if (result.minhChung) {
                         imageContainer.innerHTML = "";
