@@ -48,7 +48,7 @@
 
 						<div class="col-auto">
 							<div class="table-search-form row gx-1 align-items-center">
-								<div class="col-auto">
+								<div class="col-auto" style="max-width: 200px;">
 									<input type="text" id="input_timKiemMaSinhVien" name="" class="form-control" placeholder="Nhập mã số sinh viên...">
 								</div>
 								<div class="col-auto">
@@ -646,9 +646,6 @@
 		}
 	});
 
-	var maKhoa_selected = 'tatcakhoa';
-	var maLop_selected = 'tatcalop';
-
 	function xuLyTimKiemMSSV() {
 		var _input_timKiemMaSinhVien = $('#input_timKiemMaSinhVien').val().trim();
 
@@ -666,9 +663,6 @@
 			}
 		}
 	}
-
-	//hàm trong function.js
-	GetListSinhVien(maKhoa_selected, maLop_selected);
 
 	$('#select_Khoa').on('change', function() {
 		$('#input_timKiemMaSinhVien').val('');
@@ -732,6 +726,9 @@
 	LoadComboBoxThongTinLop_SinhVien(); //Load combobox trong modal thêm mới
 
 	LoadComboBoxThongTinKhoa_SinhVien("#select_Khoa");
+
+	//hàm trong function.js
+	GetListSinhVien($('#select_Khoa').val(), $('#select_Lop').val());
 
 
 	//Dat lai mat khau

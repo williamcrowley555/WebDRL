@@ -114,7 +114,7 @@ function GetListThongBaoDanhGia() {
                                 <td class='cell'>" +
                     data[i].ngayKhoaKetThucDanhGia +
                     "</td>\
-                                <td class='cell'>" +
+                                <td class='cell' style='font-weight: 500;' >" +
                     data[i].ngayKhieuNai +
                     "</td>\
                                 <td class='cell'>" +
@@ -244,7 +244,7 @@ function TimKiemThongBaoDanhGia(maHKDG) {
                                 <td class='cell'>" +
                     data[i].ngayKhoaKetThucDanhGia +
                     "</td>\
-                                <td class='cell'>" +
+                                <td class='cell' style='font-weight: 500;' >" +
                     data[i].ngayKhieuNai +
                     "</td>\
                                 <td class='cell'>" +

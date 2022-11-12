@@ -40,13 +40,13 @@ function deleteAllCookies() {
 }
 
 function presentNotification(iconType, titleNotification, textNotifiaction) {
-    Swal.fire({
-        icon: iconType,
-        title: titleNotification,
-        text: textNotifiaction,
-        timer: 2000,
-        timerProgressBar: true,
-    });
+  Swal.fire({
+    icon: iconType,
+    title: titleNotification,
+    text: textNotifiaction,
+    timer: 2000,
+    timerProgressBar: true,
+  });
 }
 
 function ThongBaoLoi(message) {
@@ -315,19 +315,17 @@ function GetListSinhVien(maKhoa, maLop) {
                       data[i].maLop +
                       "</td>\
                         <td class='cell'>" +
-                        (data[i].totNghiep == 1 ? 
-                    "<span class='badge bg-success' style='color: white;font-size: inherit;'>Đã tốt nghiệp</span>"
-                    : 
-                    "<span class='badge bg-warning' style='color: white;font-size: inherit;'>Chưa tốt nghiệp</span>"
-                  ) +
-                        "</td>\
+                      (data[i].totNghiep == 1
+                        ? "<span class='badge bg-success' style='color: white;font-size: inherit;'>Đã tốt nghiệp</span>"
+                        : "<span class='badge bg-warning' style='color: white;font-size: inherit;'>Chưa tốt nghiệp</span>") +
+                      "</td>\
                         <td class='cell'><button  type='button' id='id_btnReset' class='btn btn-info btn_DatLaiMatKhau_SinhVien' data-bs-toggle='modal' data-bs-target='#DatLaiMatKhauModal' style='color: white; min-width: 137px;' data-id='" +
-                        data[i].maSinhVien +
-                        "' >Đặt lại mật khẩu</button></td>\
+                      data[i].maSinhVien +
+                      "' >Đặt lại mật khẩu</button></td>\
                         <td class='cell'>\
                         <button class='btn bg-warning btn_ChinhSua_SinhVien' style='color: white; min-width: 95px;' data-bs-toggle='modal' data-bs-target='#ChinhSuaModal' data-id = '" +
-                        data[i].maSinhVien +
-                        "' >Chỉnh sửa</button>\
+                      data[i].maSinhVien +
+                      "' >Chỉnh sửa</button>\
                         <td class='cell'>\
                         <button class='btn app-btn-primary btn_QuanLyDiemTrungBinhHocKy_SinhVien' style='color: white;' data-bs-toggle='modal' data-bs-target='#QuanLyDiemTrungBinhHocKyModal' data-id = '" +
                       data[i].maSinhVien +
@@ -410,19 +408,17 @@ function GetListSinhVien(maKhoa, maLop) {
                     data[i].maLop +
                     "</td>\
                   <td class='cell'>" +
-                  (data[i].totNghiep == 1 ? 
-                    "<span class='badge bg-success' style='color: white;font-size: inherit;'>Đã tốt nghiệp</span>"
-                    : 
-                    "<span class='badge bg-warning' style='color: white;font-size: inherit;'>Chưa tốt nghiệp</span>"
-                  ) +
-                  "</td>\
+                    (data[i].totNghiep == 1
+                      ? "<span class='badge bg-success' style='color: white;font-size: inherit;'>Đã tốt nghiệp</span>"
+                      : "<span class='badge bg-warning' style='color: white;font-size: inherit;'>Chưa tốt nghiệp</span>") +
+                    "</td>\
                   <td class='cell'><button  type='button' id='id_btnReset' class='btn btn-info btn_DatLaiMatKhau_SinhVien' data-bs-toggle='modal' data-bs-target='#DatLaiMatKhauModal' style='color: white; min-width: 137px;' data-id='" +
-                  data[i].maSinhVien +
-                  "' >Đặt lại mật khẩu</button></td>\
+                    data[i].maSinhVien +
+                    "' >Đặt lại mật khẩu</button></td>\
                   <td class='cell'>\
                   <button class='btn bg-warning btn_ChinhSua_SinhVien' style='color: white; min-width: 95px;' data-bs-toggle='modal' data-bs-target='#ChinhSuaModal' data-id = '" +
-                  data[i].maSinhVien +
-                  "' >Chỉnh sửa</button>\
+                    data[i].maSinhVien +
+                    "' >Chỉnh sửa</button>\
                   <td class='cell'>\
                   <button class='btn app-btn-primary btn_QuanLyDiemTrungBinhHocKy_SinhVien' style='color: white;' data-bs-toggle='modal' data-bs-target='#QuanLyDiemTrungBinhHocKyModal' data-id = '" +
                     data[i].maSinhVien +
@@ -509,19 +505,17 @@ function TimKiemSinhVien(maSinhVien) {
               data[i].maLop +
               "</td>\
                   <td class='cell'>" +
-                  (data[i].totNghiep == 1 ? 
-                    "<span class='badge bg-success' style='color: white;font-size: inherit;'>Đã tốt nghiệp</span>"
-                    : 
-                    "<span class='badge bg-warning' style='color: white;font-size: inherit;'>Chưa tốt nghiệp</span>"
-                  ) +
-                  "</td>\
+              (data[i].totNghiep == 1
+                ? "<span class='badge bg-success' style='color: white;font-size: inherit;'>Đã tốt nghiệp</span>"
+                : "<span class='badge bg-warning' style='color: white;font-size: inherit;'>Chưa tốt nghiệp</span>") +
+              "</td>\
                   <td class='cell'><button  type='button' id='id_btnReset' class='btn btn-info btn_DatLaiMatKhau_SinhVien' data-bs-toggle='modal' data-bs-target='#DatLaiMatKhauModal' style='color: white; min-width: 137px;' data-id='" +
-                  data[i].maSinhVien +
-                  "' >Đặt lại mật khẩu</button></td>\
+              data[i].maSinhVien +
+              "' >Đặt lại mật khẩu</button></td>\
                   <td class='cell'>\
                   <button class='btn bg-warning btn_ChinhSua_SinhVien' style='color: white; min-width: 95px;' data-bs-toggle='modal' data-bs-target='#ChinhSuaModal' data-id = '" +
-                  data[i].maSinhVien +
-                  "' >Chỉnh sửa</button>\
+              data[i].maSinhVien +
+              "' >Chỉnh sửa</button>\
                   <td class='cell'>\
                   <button class='btn app-btn-primary btn_QuanLyDiemTrungBinhHocKy_SinhVien' style='color: white;' data-bs-toggle='modal' data-bs-target='#QuanLyDiemTrungBinhHocKyModal' data-id = '" +
               data[i].maSinhVien +
@@ -563,37 +557,50 @@ function LoadComboBoxThongTinKhoa_SinhVien(selector) {
     success: function (result_Khoa) {
       $(selector).find("option").remove();
 
-      $(selector).append(
-        "<option selected value='tatcakhoa'>Tất cả khoa</option>"
-      );
+      if (getCookie("quyen") == "admin" || getCookie("quyen") == "ctsv") {
+        $(selector).append(
+          "<option selected value='tatcakhoa'>Tất cả khoa</option>"
+        );
+      }
 
       $.each(result_Khoa, function (index_Khoa) {
         for (var p = 0; p < result_Khoa[index_Khoa].length; p++) {
-          $(selector).append(
-            "<option value='" +
-              result_Khoa[index_Khoa][p].maKhoa +
-              "'>" +
-              result_Khoa[index_Khoa][p].tenKhoa +
-              "</option>"
-          );
+          if (getCookie("quyen") == "admin" || getCookie("quyen") == "ctsv") {
+            $(selector).append(
+              "<option value='" +
+                result_Khoa[index_Khoa][p].maKhoa +
+                "'>" +
+                result_Khoa[index_Khoa][p].tenKhoa +
+                "</option>"
+            );
+          } else if (getCookie("quyen") == "khoa") {
+            if (
+              result_Khoa[index_Khoa][p].taiKhoanKhoa == getCookie("taiKhoan")
+            ) {
+              $(selector).append(
+                "<option value='" +
+                  result_Khoa[index_Khoa][p].maKhoa +
+                  "'>" +
+                  result_Khoa[index_Khoa][p].tenKhoa +
+                  "</option>"
+              );
+            }
+          }
         }
       });
+
+      if (getCookie("quyen") == "khoa") {
+        $("#select_Khoa").trigger("change");
+      }
     },
     error: function (errorMessage) {
-        checkLoiDangNhap(errorMessage.responseJSON.message);
-        if(selector === "#select_Khoa") {
-            tableContent = [];
-            var htmlData = "";
-            $("#id_tbodySinhVien").html(htmlData);
-            $("#idPhanTrang").empty();
-        }
-        // Swal.fire({
-        //   icon: "error",
-        //   title: "Lỗi",
-        //   text: errorMessage.responseJSON.message,
-        //   //timer: 5000,
-        //   timerProgressBar: true,
-        // });
+      checkLoiDangNhap(errorMessage.responseJSON.message);
+      if (selector === "#select_Khoa") {
+        tableContent = [];
+        var htmlData = "";
+        $("#id_tbodySinhVien").html(htmlData);
+        $("#idPhanTrang").empty();
+      }
     },
   });
 }
@@ -611,7 +618,6 @@ function LoadComboBoxThongTinLopTheoKhoa(maKhoa, selector) {
       async: false,
       headers: { Authorization: jwtCookie },
       success: function (result_Lop) {
-        //$("#select_Lop")
         $(selector).append(
           "<option selected value='tatcalop'>Tất cả lớp</option>"
         );
@@ -631,12 +637,12 @@ function LoadComboBoxThongTinLopTheoKhoa(maKhoa, selector) {
       },
       error: function (errorMessage) {
         checkLoiDangNhap(errorMessage.responseJSON.message);
-        if(selector == "$select_Lop") {
-            tableContent = [];
-            var htmlData = "";
-            $("#id_tbodySinhVien").html(htmlData);
-            $("#idPhanTrang").empty();
-        }        
+        if (selector == "$select_Lop") {
+          tableContent = [];
+          var htmlData = "";
+          $("#id_tbodySinhVien").html(htmlData);
+          $("#idPhanTrang").empty();
+        }
       },
     });
   } else {
@@ -1164,7 +1170,7 @@ function LoadDiemHe4(maSinhVien) {
         '\
         <tr>\
           <td colspan="4">\
-          <p class="text-center">Không tìm thấy kết quả' +
+          <p class="text-center">Không tìm thấy kết quả của mssv: ' +
         +maSinhVien +
         "</p>\
         </td>\
@@ -1217,80 +1223,105 @@ function updateDiemHe4(maSinhVien, maHocKyDanhGia, diem) {
 }
 
 function getListXetTotNghiep(maLop) {
-    $.ajax({
-        url: urlapi_sinhvien_read_maLop + maLop,
-        async: false,
-        type: "GET",
-        contentType: "application/json;charset=utf-8",
-        dataType: "json",
-        headers: { Authorization: jwtCookie },
-        success: function(result_data) {
-            listXetTotNghiep = result_data;
-        },
-        error: function() {
-            console.log("Loi load list xet tot nghiep");
-        },
-    });
+  $.ajax({
+    url: urlapi_sinhvien_read_maLop + maLop,
+    async: false,
+    type: "GET",
+    contentType: "application/json;charset=utf-8",
+    dataType: "json",
+    headers: { Authorization: jwtCookie },
+    success: function (result_data) {
+      listXetTotNghiep = result_data;
+    },
+    error: function () {
+      console.log("Loi load list xet tot nghiep");
+    },
+  });
 }
 
 function viewCheckBox() {
-    $("#listXetTotNghiep").empty();
-    htmlData = "";
-    $.each(listXetTotNghiep, function(index) {
-        for(let i = 0; i<listXetTotNghiep[index].length; i++) {
-            if(listXetTotNghiep[index][i].totNghiep == 0) {
-                htmlData += "\
-                            <input type='checkbox' onclick='changeCheckBox(this)' dataXetTotNghiep ='" + listXetTotNghiep[index][i].maSinhVien + "' /> "
-                            + listXetTotNghiep[index][i].maSinhVien + " - " + listXetTotNghiep[index][i].hoTenSinhVien + " <br />";
-            } else {
-                htmlData += "\
-                            <input type='checkbox' onclick='changeCheckBox(this)' dataXetTotNghiep ='" + listXetTotNghiep[index][i].maSinhVien + "' checked /> "
-                            + listXetTotNghiep[index][i].maSinhVien + " - " + listXetTotNghiep[index][i].hoTenSinhVien + " <br />";
-            }
-        }
-    });
-    $("#listXetTotNghiep").html(htmlData);
+  $("#listXetTotNghiep").empty();
+  htmlData = "";
+  $.each(listXetTotNghiep, function (index) {
+    for (let i = 0; i < listXetTotNghiep[index].length; i++) {
+      if (listXetTotNghiep[index][i].totNghiep == 0) {
+        htmlData +=
+          "\
+                            <input type='checkbox' onclick='changeCheckBox(this)' dataXetTotNghiep ='" +
+          listXetTotNghiep[index][i].maSinhVien +
+          "' /> " +
+          listXetTotNghiep[index][i].maSinhVien +
+          " - " +
+          listXetTotNghiep[index][i].hoTenSinhVien +
+          " <br />";
+      } else {
+        htmlData +=
+          "\
+                            <input type='checkbox' onclick='changeCheckBox(this)' dataXetTotNghiep ='" +
+          listXetTotNghiep[index][i].maSinhVien +
+          "' checked /> " +
+          listXetTotNghiep[index][i].maSinhVien +
+          " - " +
+          listXetTotNghiep[index][i].hoTenSinhVien +
+          " <br />";
+      }
+    }
+  });
+  $("#listXetTotNghiep").html(htmlData);
 }
 
 function searchCheckBox() {
-    var searchText = $("#input_TimKiem_XetTotNghiep").val().toUpperCase();
-    var htmlData = "";
-    $.each(listXetTotNghiep, function(index) {
-        for(let i = 0; i<listXetTotNghiep[index].length; i++) {
-            if(listXetTotNghiep[index][i].maSinhVien.includes(searchText)
-            ||
-            listXetTotNghiep[index][i].hoTenSinhVien.includes(searchText)
-            ) {
-                if(listXetTotNghiep[index][i].totNghiep == 0) {
-                    htmlData += "\
-                                <input type='checkbox' onclick='changeCheckBox(this)' dataxettotnghiep ='" + listXetTotNghiep[index][i].maSinhVien + "' /> "
-                                + listXetTotNghiep[index][i].maSinhVien + " - " + listXetTotNghiep[index][i].hoTenSinhVien + " <br />";
-                } else {
-                    htmlData += "\
-                                <input type='checkbox' onclick='changeCheckBox(this)' dataxettotnghiep ='" + listXetTotNghiep[index][i].maSinhVien + "' checked /> "
-                                + listXetTotNghiep[index][i].maSinhVien + " - " + listXetTotNghiep[index][i].hoTenSinhVien + " <br />";
-                }
-            }
+  var searchText = $("#input_TimKiem_XetTotNghiep").val().toUpperCase();
+  var htmlData = "";
+  $.each(listXetTotNghiep, function (index) {
+    for (let i = 0; i < listXetTotNghiep[index].length; i++) {
+      if (
+        listXetTotNghiep[index][i].maSinhVien.includes(searchText) ||
+        listXetTotNghiep[index][i].hoTenSinhVien.includes(searchText)
+      ) {
+        if (listXetTotNghiep[index][i].totNghiep == 0) {
+          htmlData +=
+            "\
+                                <input type='checkbox' onclick='changeCheckBox(this)' dataxettotnghiep ='" +
+            listXetTotNghiep[index][i].maSinhVien +
+            "' /> " +
+            listXetTotNghiep[index][i].maSinhVien +
+            " - " +
+            listXetTotNghiep[index][i].hoTenSinhVien +
+            " <br />";
+        } else {
+          htmlData +=
+            "\
+                                <input type='checkbox' onclick='changeCheckBox(this)' dataxettotnghiep ='" +
+            listXetTotNghiep[index][i].maSinhVien +
+            "' checked /> " +
+            listXetTotNghiep[index][i].maSinhVien +
+            " - " +
+            listXetTotNghiep[index][i].hoTenSinhVien +
+            " <br />";
         }
-    });
-    $("#listXetTotNghiep").empty();
-    $("#listXetTotNghiep").html(htmlData);
+      }
+    }
+  });
+  $("#listXetTotNghiep").empty();
+  $("#listXetTotNghiep").html(htmlData);
 }
 
 function changeCheckBox(checkbox) {
   var maSinhVienXetTotNghiep = $(checkbox).attr("dataxettotnghiep");
-  $.each(listXetTotNghiep, function(index) {
-    for(let i = 0; i<listXetTotNghiep[index].length; i++) {
-        if(listXetTotNghiep[index][i].maSinhVien == maSinhVienXetTotNghiep) {
-          listXetTotNghiep[index][i].totNghiep = (listXetTotNghiep[index][i].totNghiep == 0 ? 1 : 0);
-        }
+  $.each(listXetTotNghiep, function (index) {
+    for (let i = 0; i < listXetTotNghiep[index].length; i++) {
+      if (listXetTotNghiep[index][i].maSinhVien == maSinhVienXetTotNghiep) {
+        listXetTotNghiep[index][i].totNghiep =
+          listXetTotNghiep[index][i].totNghiep == 0 ? 1 : 0;
+      }
     }
   });
 }
 
 function selectAllCheckBox() {
-  $.each(listXetTotNghiep, function(index) {
-    for(let i = 0; i<listXetTotNghiep[index].length; i++) {
+  $.each(listXetTotNghiep, function (index) {
+    for (let i = 0; i < listXetTotNghiep[index].length; i++) {
       listXetTotNghiep[index][i].totNghiep = 1;
     }
   });
@@ -1298,8 +1329,8 @@ function selectAllCheckBox() {
 }
 
 function deselectAllCheckBox() {
-  $.each(listXetTotNghiep, function(index) {
-    for(let i = 0; i<listXetTotNghiep[index].length; i++) {
+  $.each(listXetTotNghiep, function (index) {
+    for (let i = 0; i < listXetTotNghiep[index].length; i++) {
       listXetTotNghiep[index][i].totNghiep = 0;
     }
   });
@@ -1307,46 +1338,53 @@ function deselectAllCheckBox() {
 }
 
 function luuXetTotNghiep() {
-    console.log("luu xet tot nghiep");
-    $.each(listXetTotNghiep, function(index) {
-        for(let i = 0; i<listXetTotNghiep[index].length; i++) {
-            var dataPost_Update = {
-                maSinhVien: listXetTotNghiep[index][i].maSinhVien,
-                // hoTenSinhVien: listXetTotNghiep[index][i].hoTenSinhVien,
-                // ngaySinh: listXetTotNghiep[index][i].ngaySinh,
-                // email: listXetTotNghiep[index][i].email,
-                // sdt: listXetTotNghiep[index][i].sdt,
-                // he: listXetTotNghiep[index][i].he,
-                // maLop: listXetTotNghiep[index][i].maLop,
-                totNghiep: listXetTotNghiep[index][i].totNghiep,
-            };
+  console.log("luu xet tot nghiep");
+  $.each(listXetTotNghiep, function (index) {
+    for (let i = 0; i < listXetTotNghiep[index].length; i++) {
+      var dataPost_Update = {
+        maSinhVien: listXetTotNghiep[index][i].maSinhVien,
+        // hoTenSinhVien: listXetTotNghiep[index][i].hoTenSinhVien,
+        // ngaySinh: listXetTotNghiep[index][i].ngaySinh,
+        // email: listXetTotNghiep[index][i].email,
+        // sdt: listXetTotNghiep[index][i].sdt,
+        // he: listXetTotNghiep[index][i].he,
+        // maLop: listXetTotNghiep[index][i].maLop,
+        totNghiep: listXetTotNghiep[index][i].totNghiep,
+      };
 
-            $.ajax({
-                url: urlapi_sinhvien_update_xettotnghiep,
-                type: "POST",
-                contentType: "application/json;charset=utf-8",
-                dataType: "json",
-                data: JSON.stringify(dataPost_Update),
-                async: false,
-                headers: { Authorization: jwtCookie },
-                success: function (result_Create) {
-                    GetListSinhVien("tatcakhoa","tatcalop");
-                    $("#select_Lop option").remove();
-                    LoadComboBoxThongTinKhoa_SinhVien("#select_Khoa");
-                    presentNotification("success", "Thành công", "Update xét tốt nghiệp thành công!");
-                },
-                error: function (errorMessage) {
-                    presentNotification("success", "Thành công", "Update xét tốt nghiệp thành công!");
-                },
-              });
-        }
-    });
-    
+      $.ajax({
+        url: urlapi_sinhvien_update_xettotnghiep,
+        type: "POST",
+        contentType: "application/json;charset=utf-8",
+        dataType: "json",
+        data: JSON.stringify(dataPost_Update),
+        async: false,
+        headers: { Authorization: jwtCookie },
+        success: function (result_Create) {
+          GetListSinhVien("tatcakhoa", "tatcalop");
+          $("#select_Lop option").remove();
+          LoadComboBoxThongTinKhoa_SinhVien("#select_Khoa");
+          presentNotification(
+            "success",
+            "Thành công",
+            "Update xét tốt nghiệp thành công!"
+          );
+        },
+        error: function (errorMessage) {
+          presentNotification(
+            "success",
+            "Thành công",
+            "Update xét tốt nghiệp thành công!"
+          );
+        },
+      });
+    }
+  });
 }
 
 function test() {
-    var obj = [];
-    obj["mssv"] = "3118410179";
-    obj["mssv"] = "checked";
-    console.log(obj);
+  var obj = [];
+  obj["mssv"] = "3118410179";
+  obj["mssv"] = "checked";
+  console.log(obj);
 }

@@ -100,35 +100,35 @@ function createKhieuNaiButton(
     today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate()
   );
 
-  if (
-    ngayHienTai.getTime() >= ngayKhieuNai.getTime() &&
-    ngayHienTai.getTime() <= ngayKetThucKhieuNai.getTime()
-  ) {
-    $.ajax({
-      url:
-        urlapi_khieunai_single_read +
-        `?maSinhVien=${getCookie("maSo")}&maHocKyDanhGia=${maHocKyDanhGia}`,
-      async: false,
-      type: "GET",
-      contentType: "application/json;charset=utf-8",
-      dataType: "json",
-      headers: {
-        Authorization: jwtCookie,
-      },
-      success: function (result) {
-        html =
-          "<td><button type='button' class='btn btn-dark btn_XemLaiKhieuNai' data-bs-toggle='modal' data-bs-target='#KhieuNaiModal' data-maHocKy='" +
-          maHocKyDanhGia +
-          "' style='color: white;width: max-content;'> Xem lại khiếu nại</button></td>";
-      },
-      error: function (error) {
+  $.ajax({
+    url:
+      urlapi_khieunai_single_read +
+      `?maSinhVien=${getCookie("maSo")}&maHocKyDanhGia=${maHocKyDanhGia}`,
+    async: false,
+    type: "GET",
+    contentType: "application/json;charset=utf-8",
+    dataType: "json",
+    headers: {
+      Authorization: jwtCookie,
+    },
+    success: function (result) {
+      html =
+        "<td><button type='button' class='btn btn-dark btn_XemLaiKhieuNai' data-bs-toggle='modal' data-bs-target='#KhieuNaiModal' data-maHocKy='" +
+        maHocKyDanhGia +
+        "' style='color: white;width: max-content;'> Xem lại khiếu nại</button></td>";
+    },
+    error: function (error) {
+      if (
+        ngayHienTai.getTime() >= ngayKhieuNai.getTime() &&
+        ngayHienTai.getTime() <= ngayKetThucKhieuNai.getTime()
+      ) {
         html =
           "<td><button type='button' class='btn btn-dark btn_KhieuNai' data-bs-toggle='modal' data-bs-target='#KhieuNaiModal' data-maHocKy='" +
           maHocKyDanhGia +
           "' style='color: white;width: max-content;'> Khiếu nại</button></td>";
-      },
-    });
-  }
+      }
+    },
+  });
 
   return html;
 }

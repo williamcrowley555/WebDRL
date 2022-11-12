@@ -85,6 +85,8 @@ const urlapi_khoa_read_maKhoa = urlapi_khoa_read + "?maKhoa=";
 //SINGLE READ//
 const urlapi_khoa_single_read =
   host_domain_url + "/khoa/single_read.php?maKhoa=";
+const urlapi_khoa_single_read_taiKhoanKhoa =
+  host_domain_url + "/khoa/single_read.php?taiKhoanKhoa=";
 
 //CREATE
 const urlapi_khoa_create = host_domain_url + "/khoa/create.php";

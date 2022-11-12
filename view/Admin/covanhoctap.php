@@ -424,8 +424,6 @@
 		}
 	});
 
-	var maKhoa_selected = 'tatcakhoa';
-
 	function xuLyTimKiemMaCVHT() {
 		var _input_timKiemMaCVHT = $('#input_timKiemMaCVHT').val().trim();
 
@@ -444,10 +442,10 @@
 		}
 	}
 
-	//hàm trong function.js
-	GetListCVHT(maKhoa_selected);
-
 	LoadComboBoxThongTinKhoa_CVHT();
+
+	//hàm trong function.js
+	GetListCVHT($('#select_Khoa').val());
 
 	//add modal
 	var select_box_element_Khoa = document.querySelector('#select_Khoa_Add');
