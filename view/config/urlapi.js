@@ -358,6 +358,55 @@ const urlapi_khieunai_single_details_read =
 //CREATE
 const urlapi_khieunai_create = host_domain_url + "/khieunai/create.php";
 
+//---------------ADMIN---------------//----------------------------------
+//---------//
+
+//READ
+const urlapi_admin_read = host_domain_url + "/admin/read.php";
+const urlapi_admin_read_searchText = urlapi_admin_read + "?searchText=";
+
+//SINGLE READ
+const urlapi_admin_single_read =
+  host_domain_url + "/admin/single_read.php?id=";
+
+//SINGLE DETAILS READ
+//const urlapi_khieunai_single_details_read =
+  //host_domain_url + "/khieunai/single_details_read.php";
+
+//CREATE
+const urlapi_admin_create = host_domain_url + "/admin/create.php";
+
+//UPDATE
+const urlapi_admin_update = host_domain_url + "/admin/update.php";
+const urlapi_admin_update_matkhau = host_domain_url + "/admin/updateMatKhau.php";
+const urlapi_admin_update_kichhoat = host_domain_url + "/admin/updateKichHoat.php";
+const urlapi_admin_update_vohieuhoa = host_domain_url + "/admin/updateVoHieuHoa.php";
+
+//---------------CONG TAC SINH VIEN---------------//----------------------------------
+//---------//
+
+//READ
+const urlapi_ctsv_read = host_domain_url + "/phongcongtacsinhvien/read.php";
+const urlapi_ctsv_read_searchText = urlapi_ctsv_read + "?searchText=";
+//const urlapi_khieunai_read_maSinhVien = urlapi_khieunai_read + "?maSinhVien=";
+
+//SINGLE READ
+const urlapi_ctsv_single_read =
+  host_domain_url + "/phongcongtacsinhvien/single_read.php?taiKhoan=";
+
+//SINGLE DETAILS READ
+//const urlapi_khieunai_single_details_read =
+  //host_domain_url + "/khieunai/single_details_read.php";
+
+//CREATE
+const urlapi_ctsv_create = host_domain_url + "/phongcongtacsinhvien/create.php";
+
+//UPDATE
+const urlapi_ctsv_update = host_domain_url + "/phongcongtacsinhvien/update.php";
+const urlapi_ctsv_update_matkhau = host_domain_url + "/phongcongtacsinhvien/updateMatKhau.php";
+const urlapi_ctsv_update_kichhoat = host_domain_url + "/phongcongtacsinhvien/updateKichHoat.php";
+const urlapi_ctsv_update_vohieuhoa = host_domain_url + "/phongcongtacsinhvien/updateVoHieuHoa.php";
+
 //---------------LOGIN ADMIN---------------//----------------------------------
 //---------//
 
