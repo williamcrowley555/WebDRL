@@ -6,7 +6,7 @@ header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
 include_once '../../config/database.php';
-include_once '../../class/sinhvien.php';
+include_once '../../class/khieunai.php';
 include_once '../auth/read-data.php';
 include_once '../auth/check_quyen.php';
 
@@ -16,34 +16,37 @@ $checkQuyen = new checkQuyen();
 
 // kiểm tra đăng nhập thành công 
 if ($data["status"] == 1) {
-    if ($checkQuyen->checkQuyen_Khoa_CTSV($data["user_data"]->aud)) {
+    if ($checkQuyen->checkQuyen_Khoa_CTSV_Admin($data["user_data"]->aud)) {
         $database = new Database();
         $db = $database->getConnection();
 
-        $item = new SinhVien($db);
+        $item = new KhieuNai($db);
 
         $data = json_decode(file_get_contents("php://input"));
 
         if ($data != null) {
-                $item->maSinhVien  = $data->maSinhVien;
+
+            if (isset($data->maKhieuNai) && isset($data->trangThai)) {
+                $item->maKhieuNai = $data->maKhieuNai;
 
                 //values
-                $item->totNghiep = $data->totNghiep;
-
-                if ($item->updateSinhVien_XetTotNghiep()) {
+                $item->trangThai = $data->trangThai;
+                $item->loiNhan = $data->trangThai == '1' ? $data->loiNhan : null;
+                $item->lyDoTuChoi = $data->trangThai == '-1' ? $data->lyDoTuChoi : null;
+    
+                if ($item->updateKhieuNai_TrangThai()) {
                     http_response_code(200);
                     echo json_encode(
-                        array("message" => "sinhvien xét tốt nghiệp thành công.")
+                        array("message" =>  "Phê duyệt thành công")
                     );
                 } else {
                     http_response_code(500);
                     echo json_encode(
-                        array("message" => "sinhvien xét tốt nghiệp KHÔNG thành công.")
+                        array("message" => "Phê duyệt thất bại")
                     );
                 }
-            
+            }
         } else {
-            http_response_code(404);
             echo json_encode(
                 array("message" => "Không có dữ liệu gửi lên.")
             );

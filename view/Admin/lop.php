@@ -357,13 +357,6 @@
 		}
 	});
 
-	//hàm trong function.js
-	var maKhoa = 'tatcakhoa';
-
-	if (maKhoa != '') {
-		GetListLop(maKhoa);
-	}
-
 	function onlyLettersAndNumbers(str) {
 		return /^[A-Za-z0-9]*$/.test(str);
 	}
@@ -427,6 +420,8 @@
 	LoadComboBoxCoVanHocTap_AddModal();
 
 	LoadComboBoxKhoaHoc_AddModal();
+
+	GetListLop($("#select_Khoa").val());
 
 
 	//add modal

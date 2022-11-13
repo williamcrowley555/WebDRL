@@ -195,6 +195,9 @@
                 echo json_encode(array('success' => false,
                                     'message' => 'Lỗi gửi mail: ' . $mail->ErrorInfo));
             }
+        } else {
+            echo json_encode(array('success' => false,
+                                    'message' => 'Không tìm thấy thông tin của thông báo đánh giá'));
         }
     }
  ?>

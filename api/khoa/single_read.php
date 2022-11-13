@@ -17,30 +17,66 @@
     // kiểm tra đăng nhập thành công 
     if($data["status"]==1){
         //if ($checkQuyen->checkQuyen_CVHT_Khoa_CTSV_Admin($data["user_data"]->aud)) {
-            $database = new Database();
-            $db = $database->getConnection();
-            $item = new Khoa($db);
-            $item->maKhoa = isset($_GET['maKhoa']) ? $_GET['maKhoa'] : die(); //Lấy id từ phương thức GET
-        
-            $item->getSingleKhoa();
-            if($item->tenKhoa != null){
-                // create array
-                $khoa_arr = array(
-                    "maKhoa" =>  $item->maKhoa,
-                    "tenKhoa" => $item->tenKhoa,
-                    "taiKhoanKhoa" => $item->taiKhoanKhoa
-                    //"matKhauKhoa" => $item->matKhauKhoa
-                );
-            
-                http_response_code(200);
-                echo json_encode($khoa_arr);
+            if (isset($_GET['maKhoa'])) {
+                $maKhoa = $_GET['maKhoa'];
+            } else {
+                $maKhoa = null;
             }
+
+            if (isset($_GET['taiKhoanKhoa'])) {
+                $taiKhoanKhoa = $_GET['taiKhoanKhoa'];
+            } else {
+                $taiKhoanKhoa = null;
+            }
+
+            if ($maKhoa != null) {
+                $database = new Database();
+                $db = $database->getConnection();
+                $item = new Khoa($db);
+                $item->maKhoa = $maKhoa;
             
-            else{
-                http_response_code(404);
-                echo json_encode(
-                    array("message" => "Không tìm thấy dữ liệu.")
-                );
+                $item->getSingleKhoa();
+                if($item->tenKhoa != null) {
+                    // create array
+                    $khoa_arr = array(
+                        "maKhoa" =>  $item->maKhoa,
+                        "tenKhoa" => $item->tenKhoa,
+                        "taiKhoanKhoa" => $item->taiKhoanKhoa
+                        //"matKhauKhoa" => $item->matKhauKhoa
+                    );
+                
+                    http_response_code(200);
+                    echo json_encode($khoa_arr);
+                } else {
+                    http_response_code(404);
+                    echo json_encode(
+                        array("message" => "Không tìm thấy dữ liệu.")
+                    );
+                }
+            } else if ($taiKhoanKhoa != null) {
+                $database = new Database();
+                $db = $database->getConnection();
+                $item = new Khoa($db);
+                $item->taiKhoanKhoa = $taiKhoanKhoa;
+            
+                $item->getSingleKhoaTheoTaiKhoan();
+                if($item->tenKhoa != null) {
+                    // create array
+                    $khoa_arr = array(
+                        "maKhoa" =>  $item->maKhoa,
+                        "tenKhoa" => $item->tenKhoa,
+                        "taiKhoanKhoa" => $item->taiKhoanKhoa
+                        //"matKhauKhoa" => $item->matKhauKhoa
+                    );
+                
+                    http_response_code(200);
+                    echo json_encode($khoa_arr);
+                } else {
+                    http_response_code(404);
+                    echo json_encode(
+                        array("message" => "Không tìm thấy dữ liệu.")
+                    );
+                }
             }
         // } else {
         //     http_response_code(403);

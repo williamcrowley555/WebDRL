@@ -53,7 +53,7 @@
 
                                 <div class="mb-3 form-group text-start">
                                     <label for="textarea_lyDoKhieuNai" class="form-label" style="color: black; font-weight: 600;">Lý do khiếu nại</label>
-                                    <textarea class="form-control" name="lyDoKhieuNai" id="textarea_lyDoKhieuNai" rows="8"></textarea>
+                                    <textarea class="form-control" name="lyDoKhieuNai" id="textarea_lyDoKhieuNai" rows="8" style="background-color:transparent;"></textarea>
                                     <span class="invalid-feedback position-relative"></span>
                                 </div>
 
@@ -65,6 +65,11 @@
                                     </label>
                                     <p id="num-of-files" style="text-align: center; margin: 20px 0;">Không có file được chọn</p>
                                     <div id="images" style="width: 90%; position: relative; margin: auto; display: flex; justify-content: space-evenly; gap: 20px; flex-wrap: wrap;"></div>
+                                </div>
+
+                                <div class="mt-4 form-group text-start" id="xemLai_trangThai" style="display: none;">
+                                    <label class="form-label" style="color: black; font-weight: 600;">Trạng thái</label>
+                                    <span style='color: white;font-size: inherit;margin-left: 30px;'></span>
                                 </div>
 
                             </div>
@@ -262,6 +267,7 @@
 
         $(document).on("click", ".btn_KhieuNai", function() {
             let maHocKy = $(this).attr('data-maHocKy');
+            $("#xemLai_trangThai").hide();
 
             // Lấy thông tin học kỳ đánh giá
             $.ajax({
@@ -283,6 +289,7 @@
 
             $("#khieuNai_maHocKy").val(maHocKy);
             $("#textarea_lyDoKhieuNai").val('');
+            $("#textarea_lyDoKhieuNai").attr('readonly', false);
             $("#label_uploadMinhChung").text(`Upload ảnh minh chứng (tối đa ${limitedFiles} ảnh)`);
             $('label[for='+  fileInput.id  +']').show();
             imageContainer.innerHTML = "";
@@ -312,6 +319,8 @@
             });
 
             $("#khieuNai_maHocKy").val(maHocKy);
+            $("#textarea_lyDoKhieuNai").attr('readonly', true);
+            $("#textarea_lyDoKhieuNai").removeClass("is-invalid");
             $("#label_uploadMinhChung").text("Ảnh minh chứng");
             $('label[for='+  fileInput.id  +']').hide();
             $("#form_khieu_nai").find(':submit').hide();
@@ -329,6 +338,19 @@
                 },
                 success: function (result) {
                     $("#textarea_lyDoKhieuNai").val(result.lyDoKhieuNai);
+
+                    if (result.trangThai == 1) {
+                        $("#xemLai_trangThai").children("span").removeClass().addClass("badge bg-success");
+                        $("#xemLai_trangThai").children("span").text("Chấp thuận");
+                    } else if (result.trangThai == -1) {
+                        $("#xemLai_trangThai").children("span").removeClass().addClass("badge bg-danger");
+                        $("#xemLai_trangThai").children("span").text("Từ chối");
+                    } else {
+                        $("#xemLai_trangThai").children("span").removeClass().addClass("badge bg-info");
+                        $("#xemLai_trangThai").children("span").text("Đang chờ duyệt");
+                    }
+
+                    $("#xemLai_trangThai").show();
                     
                     if (result.minhChung) {
                         imageContainer.innerHTML = "";

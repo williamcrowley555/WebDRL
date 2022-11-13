@@ -29,7 +29,7 @@ const urlapi_sinhvien_update_matKhau =
   host_domain_url + "/sinhvien/updateMatKhau.php";
 const urlapi_sinhvien_update_taikhoan =
   host_domain_url + "/sinhvien/updateTaiKhoan.php?maSinhVien=";
-const urlapi_sinhvien_update_xettotnghiep = 
+const urlapi_sinhvien_update_xettotnghiep =
   host_domain_url + "/sinhvien/updateXetTotNghiep.php";
 
 //---------------   DIEM TRUNG BINH HE 4    ---------------//----------------------------------
@@ -85,6 +85,8 @@ const urlapi_khoa_read_maKhoa = urlapi_khoa_read + "?maKhoa=";
 //SINGLE READ//
 const urlapi_khoa_single_read =
   host_domain_url + "/khoa/single_read.php?maKhoa=";
+const urlapi_khoa_single_read_taiKhoanKhoa =
+  host_domain_url + "/khoa/single_read.php?taiKhoanKhoa=";
 
 //CREATE
 const urlapi_khoa_create = host_domain_url + "/khoa/create.php";
@@ -357,6 +359,10 @@ const urlapi_khieunai_single_details_read =
 
 //CREATE
 const urlapi_khieunai_create = host_domain_url + "/khieunai/create.php";
+
+//UPDATE
+const urlapi_khieunai_update_trangThai =
+  host_domain_url + "/khieunai/update_trangThai.php";
 
 //---------------ADMIN---------------//----------------------------------
 //---------//

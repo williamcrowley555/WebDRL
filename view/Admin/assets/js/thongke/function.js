@@ -100,13 +100,27 @@ function LoadComboBoxThongTinKhoa_ThongKe() {
 
       $.each(result_Khoa, function (index_Khoa) {
         for (var p = 0; p < result_Khoa[index_Khoa].length; p++) {
-          $("#select_Khoa").append(
-            "<option value='" +
-              result_Khoa[index_Khoa][p].maKhoa +
-              "'>" +
-              result_Khoa[index_Khoa][p].tenKhoa +
-              "</option>"
-          );
+          if (getCookie("quyen") == "admin" || getCookie("quyen") == "ctsv") {
+            $("#select_Khoa").append(
+              "<option value='" +
+                result_Khoa[index_Khoa][p].maKhoa +
+                "'>" +
+                result_Khoa[index_Khoa][p].tenKhoa +
+                "</option>"
+            );
+          } else if (getCookie("quyen") == "khoa") {
+            if (
+              result_Khoa[index_Khoa][p].taiKhoanKhoa == getCookie("taiKhoan")
+            ) {
+              $("#select_Khoa").append(
+                "<option value='" +
+                  result_Khoa[index_Khoa][p].maKhoa +
+                  "'>" +
+                  result_Khoa[index_Khoa][p].tenKhoa +
+                  "</option>"
+              );
+            }
+          }
         }
       });
     },
@@ -436,6 +450,9 @@ function ThongKeLop(maKhoa, maKhoaHoc, maHocKyDanhGia) {
 function ThongKeSinhVien(maLop, maHocKyDanhGia) {
   $("#tabSinhVien #classInfo").empty();
   $("#tbodySinhVien tr").remove();
+
+  $("#select_FilterColumn").val("");
+  $("#select_FilterOption").empty();
 
   // Hiển thị thông tin lớp
   $.ajax({

@@ -49,7 +49,7 @@
 						<div class="col-auto">
 							<div class="table-search-form row gx-1 align-items-center">
 								<div class="col-auto">
-									<input type="text" id="input_timKiemMaSinhVien" name="" class="form-control" placeholder="Nhập mã số sinh viên...">
+									<input type="text" id="input_timKiemMaSinhVien" class="form-control" style="min-width: 200px;" placeholder="Nhập mã số sinh viên...">
 								</div>
 								<div class="col-auto">
 									<button type="button" id="btn_timKiemMaSinhVien" class="btn app-btn-secondary">Tìm kiếm</button>
@@ -646,9 +646,6 @@
 		}
 	});
 
-	var maKhoa_selected = 'tatcakhoa';
-	var maLop_selected = 'tatcalop';
-
 	function xuLyTimKiemMSSV() {
 		var _input_timKiemMaSinhVien = $('#input_timKiemMaSinhVien').val().trim();
 
@@ -666,9 +663,6 @@
 			}
 		}
 	}
-
-	//hàm trong function.js
-	GetListSinhVien(maKhoa_selected, maLop_selected);
 
 	$('#select_Khoa').on('change', function() {
 		$('#input_timKiemMaSinhVien').val('');
@@ -694,12 +688,15 @@
 	$("#select_Khoa_XetTotNghiep").on("change", function() {
 		$('#input_TimKiem_XetTotNghiep').val('');
 		var maKhoa_selected = $('#select_Khoa_XetTotNghiep').val();
-		console.log();
+		
 		if(maKhoa_selected == "tatcakhoa") {
 			$("#select_Lop_XetTotNghiep").find("option").remove();
 			return;
 		}
+
 		LoadComboBoxThongTinLopTheoKhoa(maKhoa_selected, "#select_Lop_XetTotNghiep");
+		$("#select_Lop_XetTotNghiep option[value='tatcalop']").remove();
+		$('#select_Lop_XetTotNghiep').trigger('change');
 	});
 
 	$("#select_Lop_XetTotNghiep").on("change", function() {
@@ -732,6 +729,9 @@
 	LoadComboBoxThongTinLop_SinhVien(); //Load combobox trong modal thêm mới
 
 	LoadComboBoxThongTinKhoa_SinhVien("#select_Khoa");
+
+	//hàm trong function.js
+	GetListSinhVien($('#select_Khoa').val(), $('#select_Lop').val());
 
 
 	//Dat lai mat khau
@@ -1012,7 +1012,9 @@
 	// Xử lý xét tốt nghiệp
 	$(document).on("click", ".btn_XetTotNghiep", function() {
 		LoadComboBoxThongTinKhoa_SinhVien("#select_Khoa_XetTotNghiep");
-		$("#select_Lop_XetTotNghiep option").remove();
+		LoadComboBoxThongTinLopTheoKhoa($('#select_Khoa_XetTotNghiep').val(), "#select_Lop_XetTotNghiep");
+
+		$("#select_Lop_XetTotNghiep option[value='tatcalop']").remove();
 		$("#input_TimKiem_XetTotNghiep").val("");
 		$("#listXetTotNghiep").empty();
 	});

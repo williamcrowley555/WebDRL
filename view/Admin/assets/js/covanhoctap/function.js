@@ -168,6 +168,9 @@ function GetListCVHT(maKhoa) {
                                     <td class='cell'>" +
                     data[i].soDienThoai +
                     "</td>\
+                                    <td class='cell'>" +
+                    data[i].email +
+                    "</td>\
                                     <td class='cell'><button type=button' class='btn btn-info btn_DatLaiMatKhau_CVHT' data-bs-toggle='modal' data-bs-target='#DatLaiMatKhauModal' style='color: white;' data-id='" +
                     data[i].maCoVanHocTap +
                     "' >Đặt lại mật khẩu</button></td>\
@@ -296,43 +299,83 @@ function LoadComboBoxThongTinKhoa_CVHT() {
       $("#select_Khoa_Edit").find("option").remove();
       $("#select_khoa_import").find("option").remove();
 
-      $("#select_Khoa").append(
-        "<option selected value='tatcakhoa'>Tất cả khoa</option>"
-      );
+      if (getCookie("quyen") == "admin" || getCookie("quyen") == "ctsv") {
+        $("#select_Khoa").append(
+          "<option selected value='tatcakhoa'>Tất cả khoa</option>"
+        );
+      }
 
       $.each(result_Khoa, function (index_Khoa) {
         for (var p = 0; p < result_Khoa[index_Khoa].length; p++) {
-          $("#select_Khoa").append(
-            "<option value='" +
-              result_Khoa[index_Khoa][p].maKhoa +
-              "'>" +
-              result_Khoa[index_Khoa][p].tenKhoa +
-              "</option>"
-          );
+          if (getCookie("quyen") == "admin" || getCookie("quyen") == "ctsv") {
+            $("#select_Khoa").append(
+              "<option value='" +
+                result_Khoa[index_Khoa][p].maKhoa +
+                "'>" +
+                result_Khoa[index_Khoa][p].tenKhoa +
+                "</option>"
+            );
 
-          $("#select_Khoa_Add").append(
-            "<option value='" +
-              result_Khoa[index_Khoa][p].maKhoa +
-              "'>" +
-              result_Khoa[index_Khoa][p].tenKhoa +
-              "</option>"
-          );
+            $("#select_Khoa_Add").append(
+              "<option value='" +
+                result_Khoa[index_Khoa][p].maKhoa +
+                "'>" +
+                result_Khoa[index_Khoa][p].tenKhoa +
+                "</option>"
+            );
 
-          $("#select_Khoa_Edit").append(
-            "<option value='" +
-              result_Khoa[index_Khoa][p].maKhoa +
-              "'>" +
-              result_Khoa[index_Khoa][p].tenKhoa +
-              "</option>"
-          );
+            $("#select_Khoa_Edit").append(
+              "<option value='" +
+                result_Khoa[index_Khoa][p].maKhoa +
+                "'>" +
+                result_Khoa[index_Khoa][p].tenKhoa +
+                "</option>"
+            );
 
-          $("#select_khoa_import").append(
-            "<option value='" +
-              result_Khoa[index_Khoa][p].maKhoa +
-              "'>" +
-              result_Khoa[index_Khoa][p].tenKhoa +
-              "</option>"
-          );
+            $("#select_khoa_import").append(
+              "<option value='" +
+                result_Khoa[index_Khoa][p].maKhoa +
+                "'>" +
+                result_Khoa[index_Khoa][p].tenKhoa +
+                "</option>"
+            );
+          } else if (getCookie("quyen") == "khoa") {
+            if (
+              result_Khoa[index_Khoa][p].taiKhoanKhoa == getCookie("taiKhoan")
+            ) {
+              $("#select_Khoa").append(
+                "<option value='" +
+                  result_Khoa[index_Khoa][p].maKhoa +
+                  "'>" +
+                  result_Khoa[index_Khoa][p].tenKhoa +
+                  "</option>"
+              );
+
+              $("#select_Khoa_Add").append(
+                "<option value='" +
+                  result_Khoa[index_Khoa][p].maKhoa +
+                  "'>" +
+                  result_Khoa[index_Khoa][p].tenKhoa +
+                  "</option>"
+              );
+
+              $("#select_Khoa_Edit").append(
+                "<option value='" +
+                  result_Khoa[index_Khoa][p].maKhoa +
+                  "'>" +
+                  result_Khoa[index_Khoa][p].tenKhoa +
+                  "</option>"
+              );
+
+              $("#select_khoa_import").append(
+                "<option value='" +
+                  result_Khoa[index_Khoa][p].maKhoa +
+                  "'>" +
+                  result_Khoa[index_Khoa][p].tenKhoa +
+                  "</option>"
+              );
+            }
+          }
         }
       });
     },
@@ -472,7 +515,7 @@ function DatLaiMatKhau_CVHT() {
             soDienThoai: _input_SoDienThoai,
             email: _input_email,
             matKhauTaiKhoanCoVan: _input_MatKhauMoi,
-            maKhoa: _input_maKhoa
+            maKhoa: _input_maKhoa,
           };
 
           $.ajax({

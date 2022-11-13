@@ -261,8 +261,8 @@
 								</div>
 
 								<div class="form-check">
-									<input class="form-check-input" type="checkbox" value="1" id="edit_checkBox_tuDongThongBao">
-									<label class="form-check-label" for="edit_checkBox_tuDongThongBao" checked="false">
+									<input class="form-check-input" type="checkbox" value="1" id="edit_checkBox_tuDongThongBao" checked="false">
+									<label class="form-check-label" for="edit_checkBox_tuDongThongBao">
 										Tự động gửi email thông báo
 									</label>
 								</div>

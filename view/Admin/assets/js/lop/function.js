@@ -321,43 +321,83 @@ function LoadComboBoxThongTinKhoa_Lop() {
       $("#edit_select_Khoa_Add").find("option").remove();
       $("#select_khoa_import").find("option").remove();
 
-      $("#select_Khoa").append(
-        "<option selected value='tatcakhoa'>Tất cả khoa</option>"
-      );
+      if (getCookie("quyen") == "admin" || getCookie("quyen") == "ctsv") {
+        $("#select_Khoa").append(
+          "<option selected value='tatcakhoa'>Tất cả khoa</option>"
+        );
+      }
 
       $.each(result_Khoa, function (index_Khoa) {
         for (var p = 0; p < result_Khoa[index_Khoa].length; p++) {
-          $("#select_Khoa").append(
-            "<option value='" +
-              result_Khoa[index_Khoa][p].maKhoa +
-              "'>" +
-              result_Khoa[index_Khoa][p].tenKhoa +
-              "</option>"
-          );
+          if (getCookie("quyen") == "admin" || getCookie("quyen") == "ctsv") {
+            $("#select_Khoa").append(
+              "<option value='" +
+                result_Khoa[index_Khoa][p].maKhoa +
+                "'>" +
+                result_Khoa[index_Khoa][p].tenKhoa +
+                "</option>"
+            );
 
-          $("#select_Khoa_Add").append(
-            "<option value='" +
-              result_Khoa[index_Khoa][p].maKhoa +
-              "'>" +
-              result_Khoa[index_Khoa][p].tenKhoa +
-              "</option>"
-          );
+            $("#select_Khoa_Add").append(
+              "<option value='" +
+                result_Khoa[index_Khoa][p].maKhoa +
+                "'>" +
+                result_Khoa[index_Khoa][p].tenKhoa +
+                "</option>"
+            );
 
-          $("#edit_select_Khoa_Add").append(
-            "<option value='" +
-              result_Khoa[index_Khoa][p].maKhoa +
-              "'>" +
-              result_Khoa[index_Khoa][p].tenKhoa +
-              "</option>"
-          );
+            $("#edit_select_Khoa_Add").append(
+              "<option value='" +
+                result_Khoa[index_Khoa][p].maKhoa +
+                "'>" +
+                result_Khoa[index_Khoa][p].tenKhoa +
+                "</option>"
+            );
 
-          $("#select_khoa_import").append(
-            "<option value='" +
-              result_Khoa[index_Khoa][p].maKhoa +
-              "'>" +
-              result_Khoa[index_Khoa][p].tenKhoa +
-              "</option>"
-          );
+            $("#select_khoa_import").append(
+              "<option value='" +
+                result_Khoa[index_Khoa][p].maKhoa +
+                "'>" +
+                result_Khoa[index_Khoa][p].tenKhoa +
+                "</option>"
+            );
+          } else if (getCookie("quyen") == "khoa") {
+            if (
+              result_Khoa[index_Khoa][p].taiKhoanKhoa == getCookie("taiKhoan")
+            ) {
+              $("#select_Khoa").append(
+                "<option value='" +
+                  result_Khoa[index_Khoa][p].maKhoa +
+                  "'>" +
+                  result_Khoa[index_Khoa][p].tenKhoa +
+                  "</option>"
+              );
+
+              $("#select_Khoa_Add").append(
+                "<option value='" +
+                  result_Khoa[index_Khoa][p].maKhoa +
+                  "'>" +
+                  result_Khoa[index_Khoa][p].tenKhoa +
+                  "</option>"
+              );
+
+              $("#edit_select_Khoa_Add").append(
+                "<option value='" +
+                  result_Khoa[index_Khoa][p].maKhoa +
+                  "'>" +
+                  result_Khoa[index_Khoa][p].tenKhoa +
+                  "</option>"
+              );
+
+              $("#select_khoa_import").append(
+                "<option value='" +
+                  result_Khoa[index_Khoa][p].maKhoa +
+                  "'>" +
+                  result_Khoa[index_Khoa][p].tenKhoa +
+                  "</option>"
+              );
+            }
+          }
         }
       });
     },

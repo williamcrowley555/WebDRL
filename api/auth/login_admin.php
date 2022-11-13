@@ -22,6 +22,7 @@
     // }
 
     $data = json_decode(file_get_contents("php://input")); // nhan data json tu client post len
+    $isDisabledAccount = 0;
   
     if(!empty($data->taiKhoan) && !empty($data->matKhau)){
         $input_taiKhoan = $data->taiKhoan;
@@ -34,7 +35,11 @@
                 http_response_code(200);
             }else{
                 http_response_code(404);
-                echo "Sai thông tin đăng nhập!";
+                if ($isDisabledAccount) {
+                    echo "Tài khoản đã bị vô hiệu hóa!";
+                } else {
+                    echo "Sai thông tin đăng nhập!";
+                }
             }
         }
     }else{
@@ -60,44 +65,49 @@
         $dataRow_Admin = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if ($dataRow_Admin != null){
-            $obj_Admin->taiKhoan  = $dataRow_Admin['taiKhoan'];
-            $obj_Admin->hoTen = $dataRow_Admin['hoTen'];
-            $obj_Admin->email = $dataRow_Admin['email'];
-            $obj_Admin->soDienThoai = $dataRow_Admin['soDienThoai'];
-            $obj_Admin->quyen = $dataRow_Admin['quyen'];
+            if ($dataRow_Admin['kichHoat'] == 0) {
+                $GLOBALS['isDisabledAccount'] = 1;
 
-            $jwt = create_token("admin",$obj_Admin,"taiKhoan","hoTen", "quyen");
+                return false;
+            } else {
+                $obj_Admin->taiKhoan  = $dataRow_Admin['taiKhoan'];
+                $obj_Admin->hoTen = $dataRow_Admin['hoTen'];
+                $obj_Admin->email = $dataRow_Admin['email'];
+                $obj_Admin->soDienThoai = $dataRow_Admin['soDienThoai'];
+                $obj_Admin->quyen = $dataRow_Admin['quyen'];
 
-            //Them phien dang nhap vao table user_token
-            $objUserToken = new UserToken($db);
-            $objUserToken->maSo = $obj_Admin->taiKhoan;
-            $objUserToken->token = $jwt;
-            $objUserToken->quyen = $obj_Admin->quyen;
-            $objUserToken->thoiGianDangNhap = date("Y-m-d H:i:s");
-            $objUserToken->thoiGianHetHan = date("Y-m-d H:i:s", strtotime('+24 hours'));
+                $jwt = create_token("admin",$obj_Admin,"taiKhoan","hoTen", "quyen");
+
+                //Them phien dang nhap vao table user_token
+                $objUserToken = new UserToken($db);
+                $objUserToken->maSo = $obj_Admin->taiKhoan;
+                $objUserToken->token = $jwt;
+                $objUserToken->quyen = $obj_Admin->quyen;
+                $objUserToken->thoiGianDangNhap = date("Y-m-d H:i:s");
+                $objUserToken->thoiGianHetHan = date("Y-m-d H:i:s", strtotime('+24 hours'));
 
 
-            if ($objUserToken->checkUserExist($objUserToken->maSo)){
-                $objUserToken->deleteUserToken($objUserToken->maSo);
+                if ($objUserToken->checkUserExist($objUserToken->maSo)){
+                    $objUserToken->deleteUserToken($objUserToken->maSo);
+                }
+                
+                $objUserToken->createUserToken();
+
+                $arr = array( 
+                    "taiKhoan" =>  $obj_Admin->taiKhoan,
+                    "hoTen" => $obj_Admin->hoTen,
+                    "quyen" => $obj_Admin->quyen
+                );
+        
+                echo json_encode(array(
+                    "login_status"=> 1,
+                    "jwt"=> $jwt,
+                    "message"=>"Login successful",
+                    $arr
+                )); 
+        
+                return true;
             }
-               
-            $objUserToken->createUserToken();
-
-            $arr = array( 
-                "taiKhoan" =>  $obj_Admin->taiKhoan,
-                "hoTen" => $obj_Admin->hoTen,
-                "quyen" => $obj_Admin->quyen
-            );
-    
-            echo json_encode(array(
-                "login_status"=> 1,
-                "jwt"=> $jwt,
-                "message"=>"Login successful",
-                $arr
-            )); 
-    
-            return true;
-            
         }
 
         $obj_CTSV = new PhongCongTacSinhVien($db);
@@ -113,45 +123,50 @@
         $dataRow_CTSV = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if ($dataRow_CTSV != null){
-            $obj_CTSV->taiKhoan  = $dataRow_CTSV['taiKhoan'];
-            $obj_CTSV->hoTenNhanVien = $dataRow_CTSV['hoTenNhanVien'];
-            $obj_CTSV->email = $dataRow_CTSV['email'];
-            $obj_CTSV->sodienthoai = $dataRow_CTSV['sodienthoai'];
-            $obj_CTSV->diaChi = $dataRow_CTSV['diaChi'];
-            $obj_CTSV->quyen = $dataRow_CTSV['quyen'];
+            if ($dataRow_CTSV['kichHoat'] == 0) {
+                $GLOBALS['isDisabledAccount'] = 1;
 
-            $jwt = create_token("phongcongtacsinhvien",$obj_CTSV,"taiKhoan","hoTenNhanVien", "quyen");
+                return false;
+            } else {
+                $obj_CTSV->taiKhoan  = $dataRow_CTSV['taiKhoan'];
+                $obj_CTSV->hoTenNhanVien = $dataRow_CTSV['hoTenNhanVien'];
+                $obj_CTSV->email = $dataRow_CTSV['email'];
+                $obj_CTSV->sodienthoai = $dataRow_CTSV['sodienthoai'];
+                $obj_CTSV->diaChi = $dataRow_CTSV['diaChi'];
+                $obj_CTSV->quyen = $dataRow_CTSV['quyen'];
 
-            //Them phien dang nhap vao table user_token
-            $objUserToken = new UserToken($db);
-            $objUserToken->maSo = $obj_CTSV->taiKhoan;
-            $objUserToken->token = $jwt;
-            $objUserToken->quyen = $obj_CTSV->quyen;
-            $objUserToken->thoiGianDangNhap = date("Y-m-d H:i:s");
-            $objUserToken->thoiGianHetHan = date("Y-m-d H:i:s", strtotime('+24 hours'));
+                $jwt = create_token("phongcongtacsinhvien",$obj_CTSV,"taiKhoan","hoTenNhanVien", "quyen");
+
+                //Them phien dang nhap vao table user_token
+                $objUserToken = new UserToken($db);
+                $objUserToken->maSo = $obj_CTSV->taiKhoan;
+                $objUserToken->token = $jwt;
+                $objUserToken->quyen = $obj_CTSV->quyen;
+                $objUserToken->thoiGianDangNhap = date("Y-m-d H:i:s");
+                $objUserToken->thoiGianHetHan = date("Y-m-d H:i:s", strtotime('+24 hours'));
 
 
-            if ($objUserToken->checkUserExist($objUserToken->maSo)){
-                $objUserToken->deleteUserToken($objUserToken->maSo);
+                if ($objUserToken->checkUserExist($objUserToken->maSo)){
+                    $objUserToken->deleteUserToken($objUserToken->maSo);
+                }
+                
+                $objUserToken->createUserToken();
+
+                $arr = array( 
+                    "taiKhoan" =>  $obj_CTSV->taiKhoan,
+                    "hoTenNhanVien" => $obj_CTSV->hoTenNhanVien,
+                    "quyen" => $obj_CTSV->quyen
+                );
+        
+                echo json_encode(array(
+                    "login_status"=> 1,
+                    "jwt"=> $jwt,
+                    "message"=>"Login successful",
+                    $arr
+                )); 
+        
+                return true;
             }
-               
-            $objUserToken->createUserToken();
-
-            $arr = array( 
-                "taiKhoan" =>  $obj_CTSV->taiKhoan,
-                "hoTenNhanVien" => $obj_CTSV->hoTenNhanVien,
-                "quyen" => $obj_CTSV->quyen
-            );
-    
-            echo json_encode(array(
-                "login_status"=> 1,
-                "jwt"=> $jwt,
-                "message"=>"Login successful",
-                $arr
-            )); 
-    
-            return true;
-            
         }
 
         return false;
@@ -221,9 +236,6 @@
         
     }
 
-
-
-
     //---Create token-------
     function create_token(
         String $aud , // ai la nguoi dang nhap
@@ -232,7 +244,7 @@
         String $hoten,
         String $quyen
         
-     )
+    )
     {
         $iss = "localhost";
         $iat = time(); //thời gian đăng nhập

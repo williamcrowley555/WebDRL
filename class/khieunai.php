@@ -24,7 +24,7 @@
 
         // GET ALL
         public function getAllKhieuNai() {
-            $sqlQuery = "SELECT * FROM " . $this->db_table;
+            $sqlQuery = "SELECT * FROM " . $this->db_table . " ORDER BY thoiGianKhieuNai DESC";
             $stmt = $this->conn->prepare($sqlQuery);
             $stmt->execute();
             return $stmt;
@@ -38,7 +38,8 @@
                             AND phieurenluyen.maSinhVien = sinhvien.maSinhVien
                             AND sinhvien.maLop = lop.maLop
                             AND lop.maKhoa = ? AND lop.maKhoaHoc = ?
-                            AND phieurenluyen.maHocKyDanhGia = ?";
+                            AND phieurenluyen.maHocKyDanhGia = ? 
+                        ORDER BY thoiGianKhieuNai DESC";
             $stmt = $this->conn->prepare($sqlQuery);
             $stmt->bindParam(1, $maKhoa);
             $stmt->bindParam(2, $maKhoaHoc);
@@ -56,7 +57,8 @@
                             AND phieurenluyen.maSinhVien = sinhvien.maSinhVien
                             AND sinhvien.maLop = lop.maLop
                             AND phieurenluyen.maSinhVien" . 
-                            ($isEqual ? " = '$mssv'" : " LIKE '%$mssv%'");
+                            ($isEqual ? " = '$mssv'" : " LIKE '%$mssv%'") . 
+                        " ORDER BY thoiGianKhieuNai DESC";
     
             $stmt = $this->conn->prepare($sqlQuery);
             $stmt->execute();
@@ -89,6 +91,8 @@
                 $this->maHocKyDanhGia = $dataRow['maHocKyDanhGia'];
                 $this->maSinhVien = $dataRow['maSinhVien'];
                 $this->hoTenSinhVien = $dataRow['hoTenSinhVien'];
+                $this->email = $dataRow['email'];
+                $this->sdt = $dataRow['sdt'];
                 $this->maLop = $dataRow['maLop'];
             }
         }
@@ -242,6 +246,38 @@
             $stmt->bindParam(":minhChung", $this->minhChung);
             $stmt->bindParam(":trangThai", $this->trangThai);
             $stmt->bindParam(":thoiGianKhieuNai", $this->thoiGianKhieuNai);
+            $stmt->bindParam(":loiNhan", $this->loiNhan);
+            $stmt->bindParam(":lyDoTuChoi", $this->lyDoTuChoi);
+        
+        
+            if($stmt->execute()){
+               return true;
+            }
+            return false;
+        }
+
+        // UPDATE TRẠNG THÁI
+        public function updateKhieuNai_TrangThai(){
+            $sqlQuery = "UPDATE
+                        ". $this->db_table ."
+                    SET
+                        trangThai = :trangThai,
+                        loiNhan = :loiNhan,
+                        lyDoTuChoi = :lyDoTuChoi
+                    WHERE 
+                        maKhieuNai = :maKhieuNai";
+        
+            $stmt = $this->conn->prepare($sqlQuery);
+        
+            // sanitize (Lọc dữ liệu đầu vào tránh SQLInjection, XSS)
+            $this->maKhieuNai=htmlspecialchars(strip_tags($this->maKhieuNai));
+            $this->trangThai=htmlspecialchars(strip_tags($this->trangThai));
+            $this->loiNhan=htmlspecialchars(strip_tags($this->loiNhan));
+            $this->lyDoTuChoi=htmlspecialchars(strip_tags($this->lyDoTuChoi));
+        
+            // bind data
+            $stmt->bindParam(":maKhieuNai", $this->maKhieuNai);
+            $stmt->bindParam(":trangThai", $this->trangThai);
             $stmt->bindParam(":loiNhan", $this->loiNhan);
             $stmt->bindParam(":lyDoTuChoi", $this->lyDoTuChoi);
         

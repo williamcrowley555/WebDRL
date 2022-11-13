@@ -16,7 +16,7 @@
 
     // kiểm tra đăng nhập thành công 
     if($data["status"]==1){
-        if ($checkQuyen->checkQuyen_CVHT_Khoa_CTSV_Admin($data["user_data"]->aud)) {
+        if ($checkQuyen->checkQuyen_Khoa_CTSV_Admin($data["user_data"]->aud)) {
             
             if (isset($_GET['maKhieuNai'])) {
                 $GET_maKhieuNai = $_GET['maKhieuNai'];
