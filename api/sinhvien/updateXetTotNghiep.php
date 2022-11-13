@@ -28,12 +28,6 @@ if ($data["status"] == 1) {
                 $item->maSinhVien  = $data->maSinhVien;
 
                 //values
-                $item->hoTenSinhVien = $data->hoTenSinhVien;
-                // $item->ngaySinh = $data->ngaySinh;
-                // $item->email = $data->email; 
-                // $item->sdt = $data->sdt;
-                // $item->he = $data->he;
-                // $item->maLop = $data->maLop;
                 $item->totNghiep = $data->totNghiep;
 
                 if ($item->updateSinhVien_XetTotNghiep()) {

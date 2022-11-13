@@ -637,7 +637,7 @@ function LoadComboBoxThongTinLopTheoKhoa(maKhoa, selector) {
       },
       error: function (errorMessage) {
         checkLoiDangNhap(errorMessage.responseJSON.message);
-        if (selector == "$select_Lop") {
+        if (selector == "#select_Lop") {
           tableContent = [];
           var htmlData = "";
           $("#id_tbodySinhVien").html(htmlData);
@@ -647,7 +647,7 @@ function LoadComboBoxThongTinLopTheoKhoa(maKhoa, selector) {
     });
   } else {
     //LoadComboBoxThongTinKhoa();
-    $("#select_Lop").find("option").remove();
+    $(selector).find("option").remove();
   }
 }
 
@@ -1338,18 +1338,11 @@ function deselectAllCheckBox() {
 }
 
 function luuXetTotNghiep() {
-  console.log("luu xet tot nghiep");
   $.each(listXetTotNghiep, function (index) {
     for (let i = 0; i < listXetTotNghiep[index].length; i++) {
       var dataPost_Update = {
         maSinhVien: listXetTotNghiep[index][i].maSinhVien,
-        // hoTenSinhVien: listXetTotNghiep[index][i].hoTenSinhVien,
-        // ngaySinh: listXetTotNghiep[index][i].ngaySinh,
-        // email: listXetTotNghiep[index][i].email,
-        // sdt: listXetTotNghiep[index][i].sdt,
-        // he: listXetTotNghiep[index][i].he,
-        // maLop: listXetTotNghiep[index][i].maLop,
-        totNghiep: listXetTotNghiep[index][i].totNghiep,
+        totNghiep: Number(listXetTotNghiep[index][i].totNghiep),
       };
 
       $.ajax({
@@ -1361,30 +1354,24 @@ function luuXetTotNghiep() {
         async: false,
         headers: { Authorization: jwtCookie },
         success: function (result_Create) {
-          GetListSinhVien("tatcakhoa", "tatcalop");
-          $("#select_Lop option").remove();
-          LoadComboBoxThongTinKhoa_SinhVien("#select_Khoa");
           presentNotification(
             "success",
             "Thành công",
             "Update xét tốt nghiệp thành công!"
           );
+
+          setTimeout(() => {
+            GetListSinhVien($("#select_Khoa").val(), $("#select_Lop").val());
+          }, 2000);
         },
         error: function (errorMessage) {
           presentNotification(
-            "success",
-            "Thành công",
-            "Update xét tốt nghiệp thành công!"
+            "error",
+            "Thất bại",
+            "Update xét tốt nghiệp thất bại!"
           );
         },
       });
     }
   });
-}
-
-function test() {
-  var obj = [];
-  obj["mssv"] = "3118410179";
-  obj["mssv"] = "checked";
-  console.log(obj);
 }

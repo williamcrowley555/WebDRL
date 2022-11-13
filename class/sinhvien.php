@@ -422,8 +422,7 @@ class SinhVien
 
     public function updateSinhVien_XetTotNghiep()
     {
-        $sqlQuery = "UPDATE
-                        " . $this->db_table . "
+        $sqlQuery = "UPDATE $this->db_table 
                     SET
                         totNghiep = :totNghiep
                     WHERE 

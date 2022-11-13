@@ -48,8 +48,8 @@
 
 						<div class="col-auto">
 							<div class="table-search-form row gx-1 align-items-center">
-								<div class="col-auto" style="max-width: 200px;">
-									<input type="text" id="input_timKiemMaSinhVien" name="" class="form-control" placeholder="Nhập mã số sinh viên...">
+								<div class="col-auto">
+									<input type="text" id="input_timKiemMaSinhVien" class="form-control" style="min-width: 200px;" placeholder="Nhập mã số sinh viên...">
 								</div>
 								<div class="col-auto">
 									<button type="button" id="btn_timKiemMaSinhVien" class="btn app-btn-secondary">Tìm kiếm</button>
@@ -688,12 +688,15 @@
 	$("#select_Khoa_XetTotNghiep").on("change", function() {
 		$('#input_TimKiem_XetTotNghiep').val('');
 		var maKhoa_selected = $('#select_Khoa_XetTotNghiep').val();
-		console.log();
+		
 		if(maKhoa_selected == "tatcakhoa") {
 			$("#select_Lop_XetTotNghiep").find("option").remove();
 			return;
 		}
+
 		LoadComboBoxThongTinLopTheoKhoa(maKhoa_selected, "#select_Lop_XetTotNghiep");
+		$("#select_Lop_XetTotNghiep option[value='tatcalop']").remove();
+		$('#select_Lop_XetTotNghiep').trigger('change');
 	});
 
 	$("#select_Lop_XetTotNghiep").on("change", function() {
@@ -1009,7 +1012,9 @@
 	// Xử lý xét tốt nghiệp
 	$(document).on("click", ".btn_XetTotNghiep", function() {
 		LoadComboBoxThongTinKhoa_SinhVien("#select_Khoa_XetTotNghiep");
-		$("#select_Lop_XetTotNghiep option").remove();
+		LoadComboBoxThongTinLopTheoKhoa($('#select_Khoa_XetTotNghiep').val(), "#select_Lop_XetTotNghiep");
+
+		$("#select_Lop_XetTotNghiep option[value='tatcalop']").remove();
 		$("#input_TimKiem_XetTotNghiep").val("");
 		$("#listXetTotNghiep").empty();
 	});

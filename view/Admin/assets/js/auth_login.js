@@ -131,7 +131,6 @@ function Login() {
         }
       },
       error: function (errorMessage) {
-        console.log(errorMessage.responseText);
         Swal.fire({
           icon: "error",
           title: "Lỗi đăng nhập",
