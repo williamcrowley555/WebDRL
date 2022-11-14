@@ -427,3 +427,9 @@ const urlapi_login_client = host_domain_url + "/auth/login.php";
 
 //LOGOUT
 const urlapi_logout_client = host_domain_url + "/auth/logout.php";
+
+//--------------- TOKEN --------------//----------------------------------
+//---------//
+
+//DELETE
+const urlapi_token_delete = host_domain_url + "/token/delete.php";

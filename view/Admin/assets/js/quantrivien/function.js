@@ -1,4 +1,5 @@
 var jwtCookie = getCookie("jwt");
+var quyenBefore = null;
 
 var tableQuanTriVienTitle = [
     "STT",
@@ -455,7 +456,7 @@ function timKiemQuanTriVien(searchText, maQuyen) {
                                 "</td>\
                                 <td class='cell'><span class='truncate'>" +
                                 data[i].taiKhoan +
-                                "</span></td>\
+                                "</span></td>f\
                                 <td class='cell'>" +
                                 data[i].hoTen +
                                 "</td>\
@@ -896,7 +897,7 @@ function themMoiQuanTriVien() {
 }
 
 function datLaiMatKhauQuanTriVien() {
-    var taiKhoan_Update = $("#input_MaTaiKhoan_Update").val();
+    var taiKhoan_Update = $("#input_MaTaiKhoan_Update").val().trim();
     var quyen_Update = $("#input_Quyen_Update").val();
     var _input_MatKhauMoi = $("#input_MatKhauMoi").val();
     var _input_NhapLaiMatKhauMoi = $("#input_NhapLaiMatKhauMoi").val();
@@ -923,6 +924,17 @@ function datLaiMatKhauQuanTriVien() {
                     text: "",
                     timer: 2000,
                     timerProgressBar: true,
+                });
+
+                $.ajax({
+                    url: urlapi_logout_client,
+                    data: JSON.stringify({ maSo: taiKhoan_Update}),
+                    type: "POST",
+                    contentType: "application/json;charset=utf-8",
+                    dataType: "json",
+                    async: false,
+                    success: function (result) {},
+                    error: function (errorMessage) {},
                 });
             },
             error: function (errorMessage) {
@@ -954,6 +966,17 @@ function datLaiMatKhauQuanTriVien() {
                     timer: 2000,
                     timerProgressBar: true,
                 });
+
+                $.ajax({
+                    url: urlapi_logout_client,
+                    data: JSON.stringify({ maSo: taiKhoan_Update}),
+                    type: "POST",
+                    contentType: "application/json;charset=utf-8",
+                    dataType: "json",
+                    async: false,
+                    success: function (result) {},
+                    error: function (errorMessage) {},
+                  });
             },
             error: function (errorMessage) {
                 checkLoiDangNhap(errorMessage.responseJSON.message);
@@ -984,7 +1007,8 @@ function loadThongTinChinhSuaQuanTriVien(taiKhoan, quyen) {
                 $("#edit_input_hotennguoidung").val(result_data.hoTen);
                 $("#edit_input_email").val(result_data.email);
                 $("#edit_input_sdt").val(result_data.soDienThoai);
-                $("#edit_input_quyen").val(result_data.quyen);
+                $("#edit_select_quyen").val(result_data.quyen);
+                quyenBefore = result_data.quyen;
             },
             error: function (errorMessage) {
                 //checkLoiDangNhap(errorMessage.responseJSON.message);
@@ -1010,7 +1034,7 @@ function loadThongTinChinhSuaQuanTriVien(taiKhoan, quyen) {
                 $("#edit_input_hotennguoidung").val(result_data.hoTenNhanVien);
                 $("#edit_input_email").val(result_data.email);
                 $("#edit_input_sdt").val(result_data.sodienthoai);
-                $("#edit_input_quyen").val(result_data.quyen);
+                $("#edit_select_quyen").val(result_data.quyen);
             },
             error: function (errorMessage) {
                 //checkLoiDangNhap(errorMessage.responseJSON.message);
@@ -1027,11 +1051,11 @@ function loadThongTinChinhSuaQuanTriVien(taiKhoan, quyen) {
 }
 
 function chinhSuaQuanTriVien() {
-    var _edit_input_taikhoan = $("#edit_input_taikhoan").val();
-    var _edit_input_hoten = $("#edit_input_hotennguoidung").val();
-    var _edit_input_email = $("#edit_input_email").val();
-    var _edit_input_sdt = $("#edit_input_sdt").val();
-    var _edit_input_quyen = $("#edit_input_quyen").val();
+    var _edit_input_taikhoan = $("#edit_input_taikhoan").val().trim();
+    var _edit_input_hoten = $("#edit_input_hotennguoidung").val().trim();
+    var _edit_input_email = $("#edit_input_email").val().trim();
+    var _edit_input_sdt = $("#edit_input_sdt").val().trim();
+    var _edit_input_quyen = $("#edit_select_quyen option:selected").val().trim();
 
     if(_edit_input_quyen == "admin") {
         var dataPost = {
@@ -1039,6 +1063,7 @@ function chinhSuaQuanTriVien() {
             hoTen: _edit_input_hoten,
             email: _edit_input_email,
             soDienThoai: _edit_input_sdt,
+            quyen: _edit_input_quyen
         };
 
         $.ajax({
@@ -1063,6 +1088,22 @@ function chinhSuaQuanTriVien() {
                 setTimeout(() => {
                     getListQuanTriVien($("#select_Role").val());
                 }, 2000);
+                console.log("quyen before: " + quyenBefore);
+                console.log("quyen hien tai: " + _edit_input_quyen);
+
+                if(_edit_input_quyen != quyenBefore) {
+                    $.ajax({
+                        url: urlapi_logout_client,
+                        data: JSON.stringify({ maSo: _edit_input_taikhoan}),
+                        type: "POST",
+                        contentType: "application/json;charset=utf-8",
+                        dataType: "json",
+                        async: false,
+                        success: function (result) {},
+                        error: function (errorMessage) {},
+                      });
+                    quyenBefore = null;
+                }
             },
             error: function (errorMessage) {
                 //checkLoiDangNhap(errorMessage.responseJSON.message);
@@ -1081,6 +1122,7 @@ function chinhSuaQuanTriVien() {
             hoTenNhanVien: _edit_input_hoten,
             email: _edit_input_email,
             sodienthoai: _edit_input_sdt,
+            quyen: _edit_input_quyen
         };
 
         $.ajax({
@@ -1105,6 +1147,23 @@ function chinhSuaQuanTriVien() {
                 setTimeout(() => {
                     getListQuanTriVien($("#select_Role").val());
                 }, 2000);
+
+                console.log("quyen before: " + quyenBefore);
+                console.log("quyen hien tai: " + _edit_input_quyen);
+
+                if(_edit_input_quyen != quyenBefore) {
+                    $.ajax({
+                        url: urlapi_logout_client,
+                        data: JSON.stringify({ maSo: _edit_input_taikhoan}),
+                        type: "POST",
+                        contentType: "application/json;charset=utf-8",
+                        dataType: "json",
+                        async: false,
+                        success: function (result) {},
+                        error: function (errorMessage) {},
+                      });
+                    quyenBefore = null;
+                }
             },
             error: function (errorMessage) {
                 //checkLoiDangNhap(errorMessage.responseJSON.message);
@@ -1153,6 +1212,17 @@ function kichHoatQuanTriVien(taiKhoan, quyen) {
                         setTimeout(() => {
                             getListQuanTriVien($("#select_Role").val());
                         }, 2000);
+
+                        $.ajax({
+                            url: urlapi_logout_client,
+                            data: JSON.stringify({ maSo: taiKhoan}),
+                            type: "POST",
+                            contentType: "application/json;charset=utf-8",
+                            dataType: "json",
+                            async: false,
+                            success: function (result) {},
+                            error: function (errorMessage) {},
+                        });
                     },
                     error: function (errorMessage) {
                         checkLoiDangNhap(errorMessage.responseJSON.message);
@@ -1191,6 +1261,17 @@ function kichHoatQuanTriVien(taiKhoan, quyen) {
                         setTimeout(() => {
                             getListQuanTriVien($("#select_Role").val());
                         }, 2000);
+
+                        $.ajax({
+                            url: urlapi_logout_client,
+                            data: JSON.stringify({ maSo: taiKhoan}),
+                            type: "POST",
+                            contentType: "application/json;charset=utf-8",
+                            dataType: "json",
+                            async: false,
+                            success: function (result) {},
+                            error: function (errorMessage) {},
+                        });
                     },
                     error: function (errorMessage) {
                         checkLoiDangNhap(errorMessage.responseJSON.message);
@@ -1243,6 +1324,17 @@ function voHieuHoaQuanTriVien(taiKhoan, quyen) {
                         setTimeout(() => {
                             getListQuanTriVien($("#select_Role").val());
                         }, 2000);
+
+                        $.ajax({
+                            url: urlapi_logout_client,
+                            data: JSON.stringify({ maSo: taiKhoan}),
+                            type: "POST",
+                            contentType: "application/json;charset=utf-8",
+                            dataType: "json",
+                            async: false,
+                            success: function (result) {},
+                            error: function (errorMessage) {},
+                         });
                     },
                     error: function (errorMessage) {
                         checkLoiDangNhap(errorMessage.responseJSON.message);
@@ -1281,6 +1373,17 @@ function voHieuHoaQuanTriVien(taiKhoan, quyen) {
                         setTimeout(() => {
                             getListQuanTriVien($("#select_Role").val());
                         }, 2000);
+
+                        $.ajax({
+                            url: urlapi_logout_client,
+                            data: JSON.stringify({ maSo: taiKhoan}),
+                            type: "POST",
+                            contentType: "application/json;charset=utf-8",
+                            dataType: "json",
+                            async: false,
+                            success: function (result) {},
+                            error: function (errorMessage) {},
+                        });
                     },
                     error: function (errorMessage) {
                         checkLoiDangNhap(errorMessage.responseJSON.message);

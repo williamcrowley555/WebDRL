@@ -60,10 +60,32 @@
             return $stmt;
         }
 
+        public function getPhongCTSVTheoEmailUpdate($email, $taiKhoan, $isEqual = true) {
+            $sqlQuery = "SELECT * FROM " . $this->db_table . " 
+                            WHERE email" . 
+                            ($isEqual ? " = '$email'" : " LIKE '%$email%'"). "
+                            AND taiKhoan != '$taiKhoan'";
+
+            $stmt = $this->conn->prepare($sqlQuery);
+            $stmt->execute();
+            return $stmt;
+        }
+
         public function getPhongCTSVTheoSdt($sodienthoai, $isEqual = true) {
             $sqlQuery = "SELECT * FROM " . $this->db_table . " 
                             WHERE sodienthoai" . 
                             ($isEqual ? " = '$sodienthoai'" : " LIKE '%$sodienthoai%'");
+
+            $stmt = $this->conn->prepare($sqlQuery);
+            $stmt->execute();
+            return $stmt;
+        }
+
+        public function getPhongCTSVTheoSdtUpdate($sodienthoai, $taiKhoan, $isEqual = true) {
+            $sqlQuery = "SELECT * FROM " . $this->db_table . " 
+                            WHERE sodienthoai" . 
+                            ($isEqual ? " = '$sodienthoai'" : " LIKE '%$sodienthoai%'"). "
+                            AND taiKhoan != '$taiKhoan'";
 
             $stmt = $this->conn->prepare($sqlQuery);
             $stmt->execute();
@@ -119,7 +141,8 @@
                     SET
                         hoTenNhanVien = :hoTenNhanVien,
                         email = :email,
-                        sodienthoai = :sodienthoai
+                        sodienthoai = :sodienthoai,
+                        quyen = :quyen
                     WHERE 
                         taiKhoan = :taiKhoan";
         
@@ -130,12 +153,14 @@
             $this->hoTenNhanVien=htmlspecialchars(strip_tags($this->hoTenNhanVien));
             $this->email=htmlspecialchars(strip_tags($this->email));
             $this->sodienthoai=htmlspecialchars(strip_tags($this->sodienthoai));
+            $this->quyen=htmlspecialchars(strip_tags($this->quyen));
         
             // bind data
             $stmt->bindParam(":taiKhoan", $this->taiKhoan);
             $stmt->bindParam(":hoTenNhanVien", $this->hoTenNhanVien);
             $stmt->bindParam(":email", $this->email);
             $stmt->bindParam(":sodienthoai", $this->sodienthoai);
+            $stmt->bindParam(":quyen", $this->quyen);
         
             if($stmt->execute()){
                return true;

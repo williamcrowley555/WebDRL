@@ -222,12 +222,6 @@
 							</div>
 
 							<div class="mb-3 form-group">
-								<label for="edit_input_quyen" class="form-label" style="color: black; font-weight: 500;">Quyền</label>
-								<input type="text" name="quyen" class="form-control mb-2" id="edit_input_quyen" placeholder="Nhập tên quyền..." readonly>
-								<span class="invalid-feedback"></span>
-							</div>
-
-							<div class="mb-3 form-group">
 								<label for="edit_input_hotennguoidung" class="form-label" style="color: black; font-weight: 500;">Họ tên người dùng</label>
 								<input type="text" name="hoTenNguoiDung" class="form-control" id="edit_input_hotennguoidung" placeholder="Nhập tên sinh viên...">
 								<span class="invalid-feedback"></span>
@@ -242,6 +236,15 @@
 							<div class="mb-3 form-group">
 								<label for="edit_input_sdt" class="form-label" style="color: black; font-weight: 500;">Số điện thoại:</label>
 								<input type="tel" name="sdt" class="form-control mb-2" id="edit_input_sdt">
+								<span class="invalid-feedback"></span>
+							</div>
+
+							<div class="mb-3 form-group">
+								<label for="edit_select_quyen" class="form-label" style="color: black; font-weight: 500;">Quyền</label>
+								<select class="form-select" name="quyen" aria-label="Default select example" id="edit_select_quyen">
+									<option value="admin"> Admin </option>
+									<option value="ctsv"> Phòng cộng tác sinh viên </option>
+								</select>
 								<span class="invalid-feedback"></span>
 							</div>
 						</div>

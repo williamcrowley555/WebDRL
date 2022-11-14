@@ -83,12 +83,36 @@
             return $stmt;
         }
 
+        public function getCVHTTheoEmailUpdate($email, $maCoVanHocTap, $isEqual = true)
+        {
+            $sqlQuery = "SELECT * FROM " . $this->db_table . " 
+                            WHERE email" . 
+                            ($isEqual ? " = '$email' " : " LIKE '%$email%' ") . "
+                            AND maCoVanHocTap != '$maCoVanHocTap'";
+
+            $stmt = $this->conn->prepare($sqlQuery);
+            $stmt->execute();
+            return $stmt;
+        }
+
         // GET CVHT THEO SDT
         public function getCVHTTheoSdt($soDienThoai, $isEqual = true)
         {
             $sqlQuery = "SELECT * FROM " . $this->db_table . " 
                             WHERE soDienThoai" . 
                             ($isEqual ? " = '$soDienThoai'" : " LIKE '%$soDienThoai%'");
+
+            $stmt = $this->conn->prepare($sqlQuery);
+            $stmt->execute();
+            return $stmt;
+        }
+
+        public function getCVHTTheoSdtUpdate($soDienThoai, $maCoVanHocTap, $isEqual = true)
+        {
+            $sqlQuery = "SELECT * FROM " . $this->db_table . " 
+                            WHERE soDienThoai" . 
+                            ($isEqual ? " = '$soDienThoai'" : " LIKE '%$soDienThoai%'") . "
+                            AND maCoVanHocTap != '$maCoVanHocTap'";
 
             $stmt = $this->conn->prepare($sqlQuery);
             $stmt->execute();

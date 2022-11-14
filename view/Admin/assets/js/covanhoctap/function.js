@@ -540,12 +540,24 @@ function DatLaiMatKhau_CVHT() {
                 timerProgressBar: true,
               });
 
+
               setTimeout(() => {
                 GetListCVHT("tatcakhoa");
               }, 2000);
 
               $("#input_MatKhauMoi").val("");
               $("#input_NhapLaiMatKhauMoi").val("");
+
+              $.ajax({
+                url: urlapi_logout_client,
+                data: JSON.stringify({ maSo: _input_MaCoVanHocTap }),
+                type: "POST",
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                async: false,
+                success: function (result) {console.log("thanh cong");},
+                error: function (errorMessage) {console.log("that bai");},
+              });
             },
             error: function (errorMessage) {
               checkLoiDangNhap(errorMessage.responseJSON.message);
@@ -571,6 +583,7 @@ function LoadThongTinChinhSua_CVHT(maCVHT) {
     success: function (result_data) {
       $("#edit_input_TenCVHT").val(result_data.hoTenCoVan);
       $("#edit_input_sdt").val(result_data.soDienThoai);
+      $("#edit_input_email").val(result_data.email);
 
       var select_Khoa_Edit = document.getElementById("select_Khoa_Edit");
       for (var i = 0; i < select_Khoa_Edit.options.length; i++) {
@@ -594,11 +607,11 @@ function LoadThongTinChinhSua_CVHT(maCVHT) {
 }
 
 function ChinhSua_CVHT() {
-  var edit_input_MaCVHT = $("#edit_input_MaCVHT").val();
-  var edit_input_TenCVHT = $("#edit_input_TenCVHT").val();
-  var edit_input_sdt = $("#edit_input_sdt").val();
-  var edit_input_email = $("#edit_input_email").val();
-  var _select_Khoa_Edit = $("#select_Khoa_Edit option:selected").val();
+  var edit_input_MaCVHT = $("#edit_input_MaCVHT").val().trim();
+  var edit_input_TenCVHT = $("#edit_input_TenCVHT").val().trim();
+  var edit_input_sdt = $("#edit_input_sdt").val().trim();
+  var edit_input_email = $("#edit_input_email").val().trim();
+  var _select_Khoa_Edit = $("#select_Khoa_Edit option:selected").val().trim();
 
   if (
     edit_input_MaCVHT == "" ||
@@ -615,6 +628,8 @@ function ChinhSua_CVHT() {
       email: edit_input_email,
       maKhoa: _select_Khoa_Edit,
     };
+
+    console.log(dataPost);
 
     $.ajax({
       url: urlapi_covanhoctap_update,

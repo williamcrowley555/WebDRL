@@ -37,10 +37,7 @@
                 $itemCount = $stmt->rowCount();
 
                 if($itemCount > 0) {
-                    http_response_code(404);
-                    echo json_encode(
-                        array("message" => "Email vừa tạo đã bị trùng! Vui lòng nhập email khác!")
-                    );
+                    showMessage(404, "Email vừa tạo đã bị trùng! Vui lòng nhập email khác!");
                     return;
                 }
 
@@ -48,40 +45,29 @@
                 $itemCount = $stmt->rowCount();
 
                 if($itemCount > 0) {
-                    http_response_code(404);
-                    echo json_encode(
-                        array("message" => "Số điện thoại vừa tạo đã bị trùng! Vui lòng nhập số điện thoại khác!")
-                    );
+                    showMessage(404, "Số điện thoại vừa tạo đã bị trùng! Vui lòng nhập số điện thoại khác!");
                     return;
                 }
     
                 if($item->createAdmin()){
-                    http_response_code(200);
-                    echo json_encode(
-                        array("message" => "admin tạo thành công.")
-                    );
+                    showMessage(200, "admin tạo thành công!");
                 } else{
-                    http_response_code(404);
-                    echo json_encode(
-                        array("message" => "Id vừa tạo đã bị trùng! Vui lòng nhập mã khác!")
-                    );
+                    showMessage(404, "Id vừa tạo đã bị trùng! Vui lòng nhập mã khác!");
                 }
             }else{
-                http_response_code(404);
-                echo json_encode(
-                    array("message" => "Không có dữ liệu gửi lên.")
-                );
+                showMessage(404, "Không có dữ liệu gửi lên!");
             } 
         } else {
-            http_response_code(403);
-            echo json_encode(
-                array("message" => "Bạn không có quyền thực hiện điều này!")
-            );
+            showMessage(403, "Bạn không có quyền thực hiện điều này!");
         }
     } else {
-        http_response_code(403);
+        showMessage(403, "Vui lòng đăng nhập trước!");
+    }
+
+    function showMessage($responseNumber, $message) {
+        http_response_code($responseNumber);
         echo json_encode(
-            array("message" => "Vui lòng đăng nhập trước!")
+            array("message" => $message)
         );
     }
-    ?>
+?>

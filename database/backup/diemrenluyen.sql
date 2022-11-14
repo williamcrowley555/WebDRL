@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1:3307
--- Thời gian đã tạo: Th10 03, 2022 lúc 12:31 PM
+-- Thời gian đã tạo: Th10 10, 2022 lúc 12:34 PM
 -- Phiên bản máy phục vụ: 10.4.24-MariaDB
 -- Phiên bản PHP: 7.4.29
 
@@ -36,15 +36,16 @@ CREATE TABLE `admin` (
   `hoTen` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
   `soDienThoai` varchar(255) NOT NULL,
-  `quyen` varchar(255) NOT NULL
+  `quyen` varchar(255) NOT NULL,
+  `kichHoat` tinyint(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Đang đổ dữ liệu cho bảng `admin`
 --
 
-INSERT INTO `admin` (`id`, `taiKhoan`, `matKhau`, `hoTen`, `email`, `soDienThoai`, `quyen`) VALUES
-(1, 'admin', '21232f297a57a5a743894a0e4a801fc3 ', 'Admin', 'admin123@gmail.com', '0912345678', 'admin');
+INSERT INTO `admin` (`id`, `taiKhoan`, `matKhau`, `hoTen`, `email`, `soDienThoai`, `quyen`, `kichHoat`) VALUES
+(1, 'admin', '21232f297a57a5a743894a0e4a801fc3 ', 'Admin', 'admin123@gmail.com', '0912345678', 'admin', 1);
 
 -- --------------------------------------------------------
 
@@ -265,7 +266,56 @@ INSERT INTO `chamdiemrenluyen` (`maChamDiemRenLuyen`, `maPhieuRenLuyen`, `maTieu
 (4030, 'PRLHK221223118410044', 27, 0, '3118410044', 0, 0, 0, '', ''),
 (4031, 'PRLHK221223118410044', 28, 0, '3118410044', 0, 0, 0, '', ''),
 (4032, 'PRLHK221223118410044', 0, 29, '3118410044', 5, 5, 0, '135075.jpg', ''),
-(4033, 'PRLHK221223118410044', 0, 30, '3118410044', 0, 10, 0, '', '');
+(4033, 'PRLHK221223118410044', 0, 30, '3118410044', 0, 10, 0, '', ''),
+(4034, 'PRLHK122233119410262', 1, 0, '3119410262', 0, 0, 0, '', ''),
+(4035, 'PRLHK122233119410262', 2, 0, '3119410262', 0, 0, 0, '', ''),
+(4036, 'PRLHK122233119410262', 3, 0, '3119410262', 0, 0, 0, '', ''),
+(4037, 'PRLHK122233119410262', 4, 0, '3119410262', 0, 0, 0, '', ''),
+(4038, 'PRLHK122233119410262', 5, 0, '3119410262', 0, 0, 0, '', ''),
+(4039, 'PRLHK122233119410262', 6, 0, '3119410262', 0, 0, 0, '', ''),
+(4040, 'PRLHK122233119410262', 7, 0, '3119410262', 0, 0, 0, '', ''),
+(4041, 'PRLHK122233119410262', 8, 0, '3119410262', 0, 0, 0, '', ''),
+(4042, 'PRLHK122233119410262', 9, 0, '3119410262', 0, 0, 0, '', ''),
+(4043, 'PRLHK122233119410262', 11, 0, '3119410262', 0, 0, 0, '', ''),
+(4044, 'PRLHK122233119410262', 12, 0, '3119410262', 0, 0, 0, '', ''),
+(4045, 'PRLHK122233119410262', 13, 0, '3119410262', 0, 0, 0, '', ''),
+(4046, 'PRLHK122233119410262', 14, 0, '3119410262', 0, 0, 0, '', ''),
+(4047, 'PRLHK122233119410262', 15, 0, '3119410262', 2, 0, 0, '', ''),
+(4048, 'PRLHK122233119410262', 16, 0, '3119410262', 0, 0, 0, '', ''),
+(4049, 'PRLHK122233119410262', 17, 0, '3119410262', 0, 0, 0, '', ''),
+(4050, 'PRLHK122233119410262', 18, 0, '3119410262', 0, 0, 0, '', ''),
+(4051, 'PRLHK122233119410262', 19, 0, '3119410262', 0, 0, 0, '', ''),
+(4052, 'PRLHK122233119410262', 20, 0, '3119410262', 0, 0, 0, '', ''),
+(4053, 'PRLHK122233119410262', 21, 0, '3119410262', 0, 0, 0, '', ''),
+(4054, 'PRLHK122233119410262', 0, 7, '3119410262', 15, 0, 0, '', ''),
+(4055, 'PRLHK122233119410262', 0, 8, '3119410262', 10, 0, 0, '', ''),
+(4056, 'PRLHK122233119410262', 0, 9, '3119410262', 0, 0, 0, '', ''),
+(4057, 'PRLHK122233119410262', 0, 10, '3119410262', 0, 0, 0, '', ''),
+(4058, 'PRLHK122233119410262', 10, 0, '3119410262', 0, 0, 0, '', ''),
+(4059, 'PRLHK122233119410262', 22, 0, '3119410262', 10, 0, 0, '', ''),
+(4060, 'PRLHK122233119410262', 23, 0, '3119410262', 0, 0, 0, '', ''),
+(4061, 'PRLHK122233119410262', 0, 12, '3119410262', 5, 0, 0, '', ''),
+(4062, 'PRLHK122233119410262', 24, 0, '3119410262', 0, 0, 0, '', ''),
+(4063, 'PRLHK122233119410262', 25, 0, '3119410262', 0, 0, 0, '', ''),
+(4064, 'PRLHK122233119410262', 26, 0, '3119410262', 0, 0, 0, '', ''),
+(4065, 'PRLHK122233119410262', 0, 14, '3119410262', 10, 0, 0, '', ''),
+(4066, 'PRLHK122233119410262', 0, 15, '3119410262', 0, 0, 0, '', ''),
+(4067, 'PRLHK122233119410262', 0, 16, '3119410262', 10, 0, 0, '', ''),
+(4068, 'PRLHK122233119410262', 0, 17, '3119410262', 0, 0, 0, '', ''),
+(4069, 'PRLHK122233119410262', 0, 18, '3119410262', 0, 0, 0, '', ''),
+(4070, 'PRLHK122233119410262', 0, 19, '3119410262', 5, 0, 0, '', ''),
+(4071, 'PRLHK122233119410262', 0, 20, '3119410262', 0, 0, 0, '', ''),
+(4072, 'PRLHK122233119410262', 0, 21, '3119410262', 0, 0, 0, '', ''),
+(4073, 'PRLHK122233119410262', 0, 22, '3119410262', 0, 0, 0, '', ''),
+(4074, 'PRLHK122233119410262', 0, 23, '3119410262', 0, 0, 0, '', ''),
+(4075, 'PRLHK122233119410262', 0, 24, '3119410262', 0, 0, 0, '', ''),
+(4076, 'PRLHK122233119410262', 0, 25, '3119410262', 0, 0, 0, '', ''),
+(4077, 'PRLHK122233119410262', 0, 26, '3119410262', 0, 0, 0, '', ''),
+(4078, 'PRLHK122233119410262', 0, 27, '3119410262', 3, 0, 0, '', ''),
+(4079, 'PRLHK122233119410262', 27, 0, '3119410262', 0, 0, 0, '', ''),
+(4080, 'PRLHK122233119410262', 28, 0, '3119410262', 0, 0, 0, '', ''),
+(4081, 'PRLHK122233119410262', 0, 29, '3119410262', 0, 0, 0, '', ''),
+(4082, 'PRLHK122233119410262', 0, 30, '3119410262', 0, 0, 0, '', '');
 
 -- --------------------------------------------------------
 
@@ -289,30 +339,30 @@ CREATE TABLE `covanhoctap` (
 --
 
 INSERT INTO `covanhoctap` (`maCoVanHocTap`, `hoTenCoVan`, `soDienThoai`, `matKhauTaiKhoanCoVan`, `email`, `anhDaiDien`, `quyen`, `maKhoa`) VALUES
-('10218', 'Huỳnh Minh Trí', '0914133451', '3e1fb9297735057d44263e674078a7fd', 'null', 'null', 'cvht', 'DCT'),
-('10219', 'Nguyễn Nhựt Đông', '0914133451', '1531beb762df4029513ebf9295e0d34f', 'null', 'null', 'cvht', 'DCT'),
-('10227', 'Phùng Thái Thiên Trang', '0914133451', 'c0a0756dd0a93eb7c840fdeb3c65808e', 'null', 'null', 'cvht', 'DCT'),
-('10228', 'Lê Minh Nhựt Triều', '0914133451', 'd6d0f445ef4338aba648d1a13936743c', 'null', 'null', 'cvht', 'DCT'),
-('10409', 'Phạm Hoàng Vương', '0914133451', 'f653d5976458f0dcce2b3939259acffa', 'null', 'null', 'cvht', 'DCT'),
-('10600', 'Nguyễn Quốc Huy', '0914133451', '3bb585ea00014b0e3ebe4c6dd165a358', 'null', 'null', 'cvht', 'DCT'),
-('10631', 'Phan Tấn Quốc', '0918171921', '7e8c3b36784c572ea4d560578eec954b', 'quocpt@gmail.com', 'phantanquoc.jpg', 'cvht', 'DCT'),
-('10797', 'Huỳnh Thắng Được', '0914133451', '01a416a7e28d0d2293e95ef842b9e773', 'null', 'null', 'cvht', 'DCT'),
-('10930', 'Nguyễn Thành Huy', '0914133451', '069853553a93eb5096a7edfb603b4607', 'null', 'null', 'cvht', 'DCT'),
-('10943', 'Nguyễn Hòa', '0914133451', 'ee76626ee11ada502d5dbf1fb5aae4d2', 'null', 'null', 'cvht', 'DCT'),
-('10991', 'Nguyễn Thanh Sang', '0914133451', '35d58f24d7a7701719c983a1ef1979b1', 'null', 'null', 'cvht', 'DCT'),
-('11041', 'Đỗ Ngọc Như Loan', '0914133451', 'e10559d57b97636f684ed48d171889e8', 'null', 'null', 'cvht', 'DCT'),
-('11216', 'Đinh Thị Thu Hương', '0914133451', 'f6e25176c96f7d7c8c7d74ff8babee5d', 'null', 'null', 'cvht', 'DCT'),
-('11271', 'Nguyễn Thị Hồng Anh', '0914133451', '15fa1fad1fc582dd65403f6f950b1e21', 'null', 'null', 'cvht', 'DCT'),
-('11363', 'Lê Nhị Lãm Thúy', '0914133451', 'e96c7de8f6390b1e6c71556e4e0a4959', 'null', 'null', 'cvht', 'DCT'),
-('11364', 'Lương Minh Huấn', '0914133451', '804fce744c17d9250210436d98709490', 'null', 'null', 'cvht', 'DCT'),
-('11381', 'Phạm Thế Bảo', '0914133451', '189e3f782cbb3f4cc1ae9702adca884e', 'null', 'null', 'cvht', 'DCT'),
-('11383', 'Trịnh Tấn Đạt', '0914133451', '2bfec16d7d15a063cda186788f08cdeb', 'null', 'null', 'cvht', 'DCT'),
-('11384', 'Trương Tấn Khoa', '0914133451', '881317e81cbf9521edf4df205a545eb8', 'null', 'null', 'cvht', 'DCT'),
-('11426', 'Phạm Thi Vương', '0914133451', '874f44f0fc7f98682c91ecbf990e5a2f', 'null', 'null', 'cvht', 'DCT'),
-('11453', 'Nguyễn Tuấn Đăng', '0914133451', '0ec96be397dd6d3cf2fecb4a2d627c1c', 'null', 'null', 'cvht', 'DCT'),
-('11541', 'Phan Nguyệt Minh', '0914133451', '28bbd522fee8ef2020ff5828be644942', 'null', 'null', 'cvht', 'DCT'),
-('11544', 'Hà Thanh Dũng', '0914133451', '049a632efba268d49b6a861759a4268a', 'null', 'null', 'cvht', 'DCT'),
-('11556', 'Huỳnh Nguyễn Khắc Huy', '0914133451', 'c7b711619071c92bef604c7ad68380dd', 'null', 'null', 'cvht', 'DCT');
+('10218', 'Huỳnh Minh Trí', '0914133451', '3e1fb9297735057d44263e674078a7fd', 'duckhai0623@gmail.com', 'null', 'cvht', 'DCT'),
+('10219', 'Nguyễn Nhựt Đông', '0914133451', '1531beb762df4029513ebf9295e0d34f', 'avs4@gmail.com', 'null', 'cvht', 'DCT'),
+('10227', 'Phùng Thái Thiên Trang', '0914133451', 'c0a0756dd0a93eb7c840fdeb3c65808e', NULL, 'null', 'cvht', 'DCT'),
+('10228', 'Lê Minh Nhựt Triều', '0914133451', 'd6d0f445ef4338aba648d1a13936743c', NULL, 'null', 'cvht', 'DCT'),
+('10409', 'Phạm Hoàng Vương', '0914133451', 'f653d5976458f0dcce2b3939259acffa', NULL, 'null', 'cvht', 'DCT'),
+('10600', 'Nguyễn Quốc Huy', '0914133451', '3bb585ea00014b0e3ebe4c6dd165a358', NULL, 'null', 'cvht', 'DCT'),
+('10631', 'Phan Tấn Quốc', '0918171921', '7e8c3b36784c572ea4d560578eec954b', 'test@gmail.com', 'phantanquoc.jpg', 'cvht', 'DCT'),
+('10797', 'Huỳnh Thắng Được', '0914133451', '01a416a7e28d0d2293e95ef842b9e773', NULL, 'null', 'cvht', 'DCT'),
+('10930', 'Nguyễn Thành Huy', '0914133451', '069853553a93eb5096a7edfb603b4607', NULL, 'null', 'cvht', 'DCT'),
+('10943', 'Nguyễn Hòa', '0914133451', 'ee76626ee11ada502d5dbf1fb5aae4d2', NULL, 'null', 'cvht', 'DCT'),
+('10991', 'Nguyễn Thanh Sang', '0914133451', '35d58f24d7a7701719c983a1ef1979b1', NULL, 'null', 'cvht', 'DCT'),
+('11041', 'Đỗ Ngọc Như Loan', '0914133451', 'e10559d57b97636f684ed48d171889e8', NULL, 'null', 'cvht', 'DCT'),
+('11216', 'Đinh Thị Thu Hương', '0914133451', 'f6e25176c96f7d7c8c7d74ff8babee5d', NULL, 'null', 'cvht', 'DCT'),
+('11271', 'Nguyễn Thị Hồng Anh', '0914133451', '15fa1fad1fc582dd65403f6f950b1e21', NULL, 'null', 'cvht', 'DCT'),
+('11363', 'Lê Nhị Lãm Thúy', '0914133451', 'e96c7de8f6390b1e6c71556e4e0a4959', NULL, 'null', 'cvht', 'DCT'),
+('11364', 'Lương Minh Huấn', '0914133451', '804fce744c17d9250210436d98709490', NULL, 'null', 'cvht', 'DCT'),
+('11381', 'Phạm Thế Bảo', '0914133451', '189e3f782cbb3f4cc1ae9702adca884e', NULL, 'null', 'cvht', 'DCT'),
+('11383', 'Trịnh Tấn Đạt', '0914133451', '2bfec16d7d15a063cda186788f08cdeb', NULL, 'null', 'cvht', 'DCT'),
+('11384', 'Trương Tấn Khoa', '0914133451', '881317e81cbf9521edf4df205a545eb8', NULL, 'null', 'cvht', 'DCT'),
+('11426', 'Phạm Thi Vương', '0914133451', '874f44f0fc7f98682c91ecbf990e5a2f', NULL, 'null', 'cvht', 'DCT'),
+('11453', 'Nguyễn Tuấn Đăng', '0914133451', '0ec96be397dd6d3cf2fecb4a2d627c1c', NULL, 'null', 'cvht', 'DCT'),
+('11541', 'Phan Nguyệt Minh', '0914133451', '28bbd522fee8ef2020ff5828be644942', NULL, 'null', 'cvht', 'DCT'),
+('11544', 'Hà Thanh Dũng', '0914133451', '049a632efba268d49b6a861759a4268a', NULL, 'null', 'cvht', 'DCT'),
+('11556', 'Huỳnh Nguyễn Khắc Huy', '0914133451', 'c7b711619071c92bef604c7ad68380dd', NULL, 'null', 'cvht', 'DCT');
 
 -- --------------------------------------------------------
 
@@ -392,6 +442,30 @@ CREATE TABLE `hockydanhgia` (
 INSERT INTO `hockydanhgia` (`maHocKyDanhGia`, `hocKyXet`, `namHocXet`) VALUES
 ('HK12223', 1, '2022-2023'),
 ('HK22122', 2, '2021-2022');
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `khieunai`
+--
+
+CREATE TABLE `khieunai` (
+  `maKhieuNai` int(11) NOT NULL,
+  `maPhieuRenLuyen` varchar(255) NOT NULL,
+  `lyDoKhieuNai` text NOT NULL,
+  `minhChung` text DEFAULT NULL,
+  `trangThai` tinyint(1) DEFAULT 0,
+  `thoiGianKhieuNai` datetime NOT NULL,
+  `loiNhan` text DEFAULT NULL,
+  `lyDoTuChoi` text DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Đang đổ dữ liệu cho bảng `khieunai`
+--
+
+INSERT INTO `khieunai` (`maKhieuNai`, `maPhieuRenLuyen`, `lyDoKhieuNai`, `minhChung`, `trangThai`, `thoiGianKhieuNai`, `loiNhan`, `lyDoTuChoi`) VALUES
+(7, 'PRLHK221223119410262', 'Sai điểm', '279855610_301387272189587_1563161153034469171_n.jpg|279875725_530242335383015_1741092598538941883_n.jpg|', 0, '2022-11-09 12:45:26', '', '');
 
 -- --------------------------------------------------------
 
@@ -530,6 +604,7 @@ CREATE TABLE `phieurenluyen` (
 --
 
 INSERT INTO `phieurenluyen` (`maPhieuRenLuyen`, `xepLoai`, `diemTongCong`, `maSinhVien`, `diemTrungBinhChungHKTruoc`, `diemTrungBinhChungHKXet`, `maHocKyDanhGia`, `coVanDuyet`, `khoaDuyet`) VALUES
+('PRLHK122233119410262', 'Khá', 70, '3119410262', 0, 0, 'HK12223', 0, 0),
 ('PRLHK221223118410029', 'Khá', 69, '3118410029', 3.5, 3.42, 'HK22122', 0, 0),
 ('PRLHK221223118410044', 'Tốt', 83, '3118410044', 2, 2.98, 'HK22122', 1, 0),
 ('PRLHK221223118410262', 'Khá', 73, '3118410262', 2.5, 3.2, 'HK22122', 0, 0),
@@ -548,15 +623,16 @@ CREATE TABLE `phongcongtacsinhvien` (
   `email` varchar(255) NOT NULL,
   `sodienthoai` varchar(255) NOT NULL,
   `diaChi` varchar(255) NOT NULL,
-  `quyen` varchar(255) NOT NULL DEFAULT 'ctsv'
+  `quyen` varchar(255) NOT NULL DEFAULT 'ctsv',
+  `kichHoat` tinyint(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Đang đổ dữ liệu cho bảng `phongcongtacsinhvien`
 --
 
-INSERT INTO `phongcongtacsinhvien` (`taiKhoan`, `matKhau`, `hoTenNhanVien`, `email`, `sodienthoai`, `diaChi`, `quyen`) VALUES
-('ctsv1', '0bf27758133599500db277a95366941b', 'Nhân viên CTSV 1', 'ctsv1@edu.vn', '0562346234', '87 Nguyễn Văn Cừ, TP HCM', 'ctsv');
+INSERT INTO `phongcongtacsinhvien` (`taiKhoan`, `matKhau`, `hoTenNhanVien`, `email`, `sodienthoai`, `diaChi`, `quyen`, `kichHoat`) VALUES
+('ctsv1', '0bf27758133599500db277a95366941b', 'Nhân viên CTSV 1', 'ctsv1@edu.vn', '0562346234', '87 Nguyễn Văn Cừ, TP HCM', 'ctsv', 1);
 
 -- --------------------------------------------------------
 
@@ -605,7 +681,7 @@ CREATE TABLE `sinhvien` (
 --
 
 INSERT INTO `sinhvien` (`maSinhVien`, `hoTenSinhVien`, `ngaySinh`, `he`, `matKhauSinhVien`, `email`, `sdt`, `anhDaiDien`, `totNghiep`, `maLop`, `quyen`) VALUES
-('3117410001', 'HÀNG MINH AN', '1999-07-19', 'Đại học', 'e6915656a5c119fec50c54485890006a', NULL, NULL, NULL, 0, 'DCT1172', 'sinhvien'),
+('3117410001', 'HÀNG MINH AN', '1999-07-19', 'Đại học', 'e6915656a5c119fec50c54485890006a', 'minhan99@gmail.com', '0906521457', NULL, 0, 'DCT1172', 'sinhvien'),
 ('3117410002', 'LÊ BẢO THÁI AN ', '1999-12-11', 'Đại học', '19494f11d49c7e22716e3259f4559279', NULL, NULL, NULL, 0, 'DCT1177', 'sinhvien'),
 ('3117410003', 'TRẦN THỊ THÚY AN ', '1999-07-11', 'Đại học', '000fbaadaf0d0f06bb4c764590e76317', NULL, NULL, NULL, 0, 'DCT1172', 'sinhvien'),
 ('3117410009', 'TRẦN ĐỨC ANH ', '1999-03-03', 'Đại học', '0aa4a31517689a0fd9b99bda2950cf01', NULL, NULL, NULL, 0, 'DCT1176', 'sinhvien'),
@@ -903,7 +979,7 @@ INSERT INTO `sinhvien` (`maSinhVien`, `hoTenSinhVien`, `ngaySinh`, `he`, `matKha
 ('3118410143', 'NGUYỄN HOÀNG ANH HÙNG ', '2000-03-19', 'Đại học', '692ceffc99c8db2b2271be2f8ee116f6', NULL, NULL, NULL, 0, 'DCT1187', 'sinhvien'),
 ('3118410144', 'THẠCH CHÍ HÙNG ', '2000-03-01', 'Đại học', 'e25edfdff91b821c54e4404b6d43bcfa', NULL, NULL, NULL, 0, 'DCT1188', 'sinhvien'),
 ('3118410145', 'ÂU HẢI HUY ', '2000-06-24', 'Đại học', 'f5b2878ec0cc12b4ee6acc236422681b', NULL, NULL, NULL, 0, 'DCT1189', 'sinhvien'),
-('3118410146', 'BÙI QUANG HUY ', '2000-12-10', 'Đại học', '779bb6903da6293ac1e88fc7f6774648', 'huy@gmail.com', '0954412587', 'buiquanghuy.jpg', 0, 'DCT1181', 'sinhvien'),
+('3118410146', 'BÙI QUANG HUY ', '2000-12-10', 'Đại học', '779bb6903da6293ac1e88fc7f6774648', 'hello12@gmail.com', '0954412587', 'buiquanghuy.jpg', 1, 'DCT1181', 'sinhvien'),
 ('3118410148', 'HUỲNH HOÀNG HUY ', '2000-08-31', 'Đại học', 'b96b82d08d0aa78ac8879bdfb2abf27d', NULL, NULL, NULL, 0, 'DCT1181', 'sinhvien'),
 ('3118410149', 'LÊ THANH HUY ', '2000-02-05', 'Đại học', '9afb79bb6aa9acb9852b2567ef012692', NULL, NULL, NULL, 0, 'DCT1181', 'sinhvien'),
 ('3118410151', 'NGUYỄN ĐỨC GIA HUY ', '2000-05-21', 'Đại học', '7182563dafda38657d67e3db633eadae', NULL, NULL, NULL, 0, 'DCT1181', 'sinhvien'),
@@ -924,7 +1000,7 @@ INSERT INTO `sinhvien` (`maSinhVien`, `hoTenSinhVien`, `ngaySinh`, `he`, `matKha
 ('3118410175', 'VŨ THỊ HẢI HƯƠNG ', '2000-11-24', 'Đại học', '25f0547706743f03e63beec998bd8f4d', NULL, NULL, NULL, 0, 'DCT1181', 'sinhvien'),
 ('3118410176', 'ĐẶNG HOÀNG KHA ', '2000-06-20', 'Đại học', '23cafccbccd25efe84430b787db04c59', NULL, NULL, NULL, 0, 'DCT1181', 'sinhvien'),
 ('3118410177', 'TRIỆU BÍCH KHAI ', '2000-10-09', 'Đại học', '5225e535456de73c9bfec1bb61453e18', NULL, NULL, NULL, 0, 'DCT1181', 'sinhvien'),
-('3118410179', 'PHẠM ĐỨC KHẢI ', '2000-06-23', 'Đại học', 'ce11182aa82fc256b940ebd1d0447b24', 'duckhai06232@gmail.com', '0918171965', 'icons8-edit-account-100.png', 0, 'DCT1182', 'sinhvien'),
+('3118410179', 'PHẠM ĐỨC KHẢI ', '2000-06-23', 'Đại học', 'ce11182aa82fc256b940ebd1d0447b24', 'duckhai0623@gmail.com', '0918171965', 'icons8-edit-account-100.png', 1, 'DCT1182', 'sinhvien'),
 ('3118410180', 'PHẠM VĂN KHẢI ', '2000-11-30', 'Đại học', '5d13986e2855038bfc384733523d8ec8', NULL, NULL, NULL, 0, 'DCT1183', 'sinhvien'),
 ('3118410182', 'BÙI THẾ KHANG ', '2000-08-16', 'Đại học', '4c1a9a489ecfee18bec10ec3a403f63b', NULL, NULL, NULL, 0, 'DCT1184', 'sinhvien'),
 ('3118410185', 'NGUYỄN TRIỀU MINH KHANG ', '2000-10-15', 'Đại học', '27fb2153b9fae224ed5000e11368cae1', NULL, NULL, NULL, 0, 'DCT1187', 'sinhvien'),
@@ -3219,6 +3295,9 @@ CREATE TABLE `thongbaodanhgia` (
   `ngayCoVanKetThucDanhGia` date NOT NULL,
   `ngayKhoaDanhGia` date NOT NULL,
   `ngayKhoaKetThucDanhGia` date NOT NULL,
+  `ngayKhieuNai` date DEFAULT NULL,
+  `ngayKetThucKhieuNai` date DEFAULT NULL,
+  `tuDongThongBao` tinyint(1) NOT NULL DEFAULT 0,
   `ngayThongBao` date NOT NULL,
   `maHocKyDanhGia` varchar(11) COLLATE utf8_unicode_ci NOT NULL,
   `kichHoat` tinyint(1) NOT NULL DEFAULT 1,
@@ -3229,9 +3308,9 @@ CREATE TABLE `thongbaodanhgia` (
 -- Đang đổ dữ liệu cho bảng `thongbaodanhgia`
 --
 
-INSERT INTO `thongbaodanhgia` (`maThongBao`, `ngaySinhVienDanhGia`, `ngaySinhVienKetThucDanhGia`, `ngayCoVanDanhGia`, `ngayCoVanKetThucDanhGia`, `ngayKhoaDanhGia`, `ngayKhoaKetThucDanhGia`, `ngayThongBao`, `maHocKyDanhGia`, `kichHoat`, `taiKhoanCTSV`) VALUES
-(2, '2022-05-19', '2022-06-22', '2022-06-23', '2022-07-09', '2022-07-10', '2022-07-19', '2022-05-16', 'HK22122', 1, NULL),
-(14, '2022-10-28', '2022-11-03', '2022-11-04', '2022-11-12', '2022-11-13', '2022-11-19', '2022-10-16', 'HK12223', 1, NULL);
+INSERT INTO `thongbaodanhgia` (`maThongBao`, `ngaySinhVienDanhGia`, `ngaySinhVienKetThucDanhGia`, `ngayCoVanDanhGia`, `ngayCoVanKetThucDanhGia`, `ngayKhoaDanhGia`, `ngayKhoaKetThucDanhGia`, `ngayKhieuNai`, `ngayKetThucKhieuNai`, `tuDongThongBao`, `ngayThongBao`, `maHocKyDanhGia`, `kichHoat`, `taiKhoanCTSV`) VALUES
+(2, '2022-05-19', '2022-06-22', '2022-06-23', '2022-07-09', '2022-07-10', '2022-07-19', '2022-11-06', '2022-11-11', 0, '2022-05-16', 'HK22122', 1, NULL),
+(14, '2022-10-09', '2022-10-10', '2022-10-11', '2022-10-16', '2022-10-24', '2022-11-01', '2022-11-09', '2022-11-15', 0, '2022-10-05', 'HK12223', 1, NULL);
 
 -- --------------------------------------------------------
 
@@ -3386,8 +3465,9 @@ INSERT INTO `user_token` (`stt`, `maSo`, `token`, `quyen`, `thoiGianDangNhap`, `
 (584, '3118410001', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJpYXQiOjE2NjQ1MTczNjYsIm5iZiI6MTY2NDUxNzM3NiwiZXhwIjoxNjY0NjAzNzY2LCJhdWQiOiJzaW5odmllbiIsInNpbmh2aWVuIjp7Im1hU2luaFZpZW4iOiIzMTE4NDEwMDAxIiwiaG9UZW5TaW5oVmllbiI6IiAgICAgICAgICAgUGhcdTFlYTFtIFx1MDExMFx1MWVlOSAgICAgICAgS2hcdTFlYTNpIiwicXV5ZW4iOiJzaW5odmllbiJ9fQ.zHvNk5tI9hpxJSG8UYyopCezmAp5zZE30VQXSmD_Log', 'sinhvien', '2022-09-30 05:57:18', '2022-09-30 00:56:10'),
 (653, '3118419999', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJpYXQiOjE2NjczMjE1NzcsIm5iZiI6MTY2NzMyMTU4NywiZXhwIjoxNjY3NDA3OTc3LCJhdWQiOiJzaW5odmllbiIsInNpbmh2aWVuIjp7Im1hU2luaFZpZW4iOiIzMTE4NDE5OTk5IiwiaG9UZW5TaW5oVmllbiI6IlRcdTAwZjluZyIsInF1eWVuIjoic2luaHZpZW4ifX0.iyeynGPplWEF3W0i6JV2BPG96Mlv58AkLKLYU6ojfOk', 'sinhvien', '2022-11-01 10:52:57', '2022-11-02 10:52:57'),
 (656, '3118410044', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJpYXQiOjE2Njc0MDkwNzMsIm5iZiI6MTY2NzQwOTA4MywiZXhwIjoxNjY3NDk1NDczLCJhdWQiOiJzaW5odmllbiIsInNpbmh2aWVuIjp7Im1hU2luaFZpZW4iOiIzMTE4NDEwMDQ0IiwiaG9UZW5TaW5oVmllbiI6IlZcdTAxMDJOIEhPXHUwMGMwTkcgQ0hcdTAxYWZcdTAxYTBORyAiLCJxdXllbiI6InNpbmh2aWVuIn19.0JYnJUDA97tA-6zyO-n6_uxjpQ9ImG6XORt2tAxzP_k', 'sinhvien', '2022-11-02 11:11:13', '2022-11-03 11:11:13'),
-(664, 'cntt', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJpYXQiOjE2Njc0NzI5OTIsIm5iZiI6MTY2NzQ3MzAwMiwiZXhwIjoxNjY3NTU5MzkyLCJhdWQiOiJraG9hIiwia2hvYSI6eyJ0YWlLaG9hbktob2EiOiJjbnR0IiwidGVuS2hvYSI6IkNcdTAwZjRuZyBuZ2hcdTFlYzcgdGhcdTAwZjRuZyB0aW4iLCJxdXllbiI6Imtob2EifX0.ki8XPRTVyVmjqObSE-v5TZatETsf7VeOT_d3Hg_b42c', 'khoa', '2022-11-03 04:56:32', '2022-11-04 04:56:32'),
-(666, '3118410146', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJpYXQiOjE2Njc0NzUwMDMsIm5iZiI6MTY2NzQ3NTAxMywiZXhwIjoxNjY3NTYxNDAzLCJhdWQiOiJzaW5odmllbiIsInNpbmh2aWVuIjp7Im1hU2luaFZpZW4iOiIzMTE4NDEwMTQ2IiwiaG9UZW5TaW5oVmllbiI6IkJcdTAwZDlJIFFVQU5HIEhVWSAiLCJxdXllbiI6InNpbmh2aWVuIn19.w91UthrkurGm5IXrZE1zS7FtLdcRZuN2GAHkHzAt1Bc', 'sinhvien', '2022-11-03 05:30:03', '2022-11-04 05:30:03');
+(666, '3118410146', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJpYXQiOjE2Njc0NzUwMDMsIm5iZiI6MTY2NzQ3NTAxMywiZXhwIjoxNjY3NTYxNDAzLCJhdWQiOiJzaW5odmllbiIsInNpbmh2aWVuIjp7Im1hU2luaFZpZW4iOiIzMTE4NDEwMTQ2IiwiaG9UZW5TaW5oVmllbiI6IkJcdTAwZDlJIFFVQU5HIEhVWSAiLCJxdXllbiI6InNpbmh2aWVuIn19.w91UthrkurGm5IXrZE1zS7FtLdcRZuN2GAHkHzAt1Bc', 'sinhvien', '2022-11-03 05:30:03', '2022-11-04 05:30:03'),
+(690, '3119410262', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJpYXQiOjE2Njc5NjkwODgsIm5iZiI6MTY2Nzk2OTA5OCwiZXhwIjoxNjY4MDU1NDg4LCJhdWQiOiJzaW5odmllbiIsInNpbmh2aWVuIjp7Im1hU2luaFZpZW4iOiIzMTE5NDEwMjYyIiwiaG9UZW5TaW5oVmllbiI6IlRSXHUwMWFmXHUwMWEwTkcgTkhcdTFlYWNUIE5BTSAiLCJxdXllbiI6InNpbmh2aWVuIn19._uWqf5bSgdZclfefxfYg1LR--yICcp_sa1OVSoUXE2I', 'sinhvien', '2022-11-08 22:44:48', '2022-11-09 22:44:48'),
+(700, 'admin', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJpYXQiOjE2NjgwNzk2ODIsIm5iZiI6MTY2ODA3OTY5MiwiZXhwIjoxNjY4MTY2MDgyLCJhdWQiOiJhZG1pbiIsImFkbWluIjp7InRhaUtob2FuIjoiYWRtaW4iLCJob1RlbiI6IkFkbWluIiwicXV5ZW4iOiJhZG1pbiJ9fQ.M3YUAiSTd0y0hvkV_U9M8hIyGlY5kisFG2jIVrExBys', 'admin', '2022-11-10 05:28:02', '2022-11-11 05:28:02');
 
 --
 -- Chỉ mục cho các bảng đã đổ
@@ -3429,6 +3509,12 @@ ALTER TABLE `hoatdongdanhgia`
 --
 ALTER TABLE `hockydanhgia`
   ADD PRIMARY KEY (`maHocKyDanhGia`);
+
+--
+-- Chỉ mục cho bảng `khieunai`
+--
+ALTER TABLE `khieunai`
+  ADD PRIMARY KEY (`maKhieuNai`);
 
 --
 -- Chỉ mục cho bảng `khoa`
@@ -3522,7 +3608,13 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT cho bảng `chamdiemrenluyen`
 --
 ALTER TABLE `chamdiemrenluyen`
-  MODIFY `maChamDiemRenLuyen` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4034;
+  MODIFY `maChamDiemRenLuyen` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4083;
+
+--
+-- AUTO_INCREMENT cho bảng `khieunai`
+--
+ALTER TABLE `khieunai`
+  MODIFY `maKhieuNai` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT cho bảng `thamgiahoatdong`
@@ -3534,7 +3626,7 @@ ALTER TABLE `thamgiahoatdong`
 -- AUTO_INCREMENT cho bảng `thongbaodanhgia`
 --
 ALTER TABLE `thongbaodanhgia`
-  MODIFY `maThongBao` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `maThongBao` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT cho bảng `tieuchicap1`
@@ -3558,7 +3650,7 @@ ALTER TABLE `tieuchicap3`
 -- AUTO_INCREMENT cho bảng `user_token`
 --
 ALTER TABLE `user_token`
-  MODIFY `stt` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=667;
+  MODIFY `stt` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=701;
 
 --
 -- Các ràng buộc cho các bảng đã đổ

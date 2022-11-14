@@ -27,68 +27,161 @@ if ($data["status"] == 1) {
         $data = json_decode(file_get_contents("php://input"));
 
         if ($data != null) {
-            $itemCTSV->taiKhoan  = $data->taiKhoan;
 
-            //values
-            $itemCTSV->hoTenNhanVien = $data->hoTenNhanVien;
-            $itemCTSV->email = $data->email; 
-            $itemCTSV->sodienthoai = $data->sodienthoai;
-
-            $stmt = $itemCTSV->getPhongCTSVTheoEmail($data->email, true);
+            //Kiểm tra tồn tại ctsv?
+            $stmt = $itemCTSV->getPhongCTSVTheoTaiKhoan($data->taiKhoan, true);
             $itemCount = $stmt->rowCount();
+            if($itemCount == 1) {
+                $itemCTSV->taiKhoan  = $data->taiKhoan;
 
-            if($itemCount > 1) {
-                http_response_code(404);
-                echo json_encode(
-                    array("message" => "Email bị trùng! Vui lòng nhập email khác!")
-                );
-                return;
-            }
+                //values
+                $itemCTSV->hoTenNhanVien = $data->hoTenNhanVien;
+                $itemCTSV->email = $data->email; 
+                $itemCTSV->sodienthoai = $data->sodienthoai;
+                $itemCTSV->quyen = $data->quyen;
+                // Nếu tồn tại ctsv, thực hiện update như thông thường
+                
+                //Kiểm tra tồn tại email?
+                $stmt = $itemCTSV->getPhongCTSVTheoEmailUpdate($data->email, $data->taiKhoan,true);
+                $itemCount = $stmt->rowCount();
+    
+                if($itemCount > 0) {
+                    http_response_code(404);
+                    echo json_encode(
+                        array("message" => "Email bị trùng! Vui lòng nhập email khác!")
+                    );
+                    return;
+                }
+    
+                $stmt = $itemAdmin->getAdminTheoEmail($data->email, true);
+                $itemCount = $stmt->rowCount();
+    
+                if($itemCount > 0) {
+                    http_response_code(404);
+                    echo json_encode(
+                        array("message" => "Email bị trùng! Vui lòng nhập email khác!")
+                    );
+                    return;
+                }
+    
+                // Kiểm tra tồn tại sdt?
+                $stmt = $itemCTSV->getPhongCTSVTheoSdtUpdate($data->sodienthoai, $data->taiKhoan, true);
+                $itemCount = $stmt->rowCount();
+    
+                if($itemCount > 0) {
+                    http_response_code(404);
+                    echo json_encode(
+                        array("message" => "Số điện thoại bị trùng! Vui lòng nhập số điện thoại khác!")
+                    );
+                    return;
+                }
+    
+                $stmt = $itemAdmin->getAdminTheoSdt($data->sodienthoai, true);
+                $itemCount = $stmt->rowCount();
+    
+                if($itemCount > 0) {
+                    http_response_code(404);
+                    echo json_encode(
+                        array("message" => "Số điện thoại bị trùng! Vui lòng nhập số điện thoại khác!")
+                    );
+                    return;
+                }
+    
+                if ($itemCTSV->updatePhongCTSV()) {
+                    http_response_code(200);
+                    echo json_encode(
+                        array("message" => "phongctsv cập nhật thành công.")
+                    );
+                } else {
+                    http_response_code(500);
+                    echo json_encode(
+                        array("message" => "phongctsv cập nhật KHÔNG thành công.")
+                    );
+                }
 
-            $stmt = $itemAdmin->getAdminTheoEmail($data->email, true);
-            $itemCount = $stmt->rowCount();
-
-            if($itemCount > 0) {
-                http_response_code(404);
-                echo json_encode(
-                    array("message" => "Email bị trùng! Vui lòng nhập email khác!")
-                );
-                return;
-            }
-
-            $stmt = $itemCTSV->getPhongCTSVTheoSdt($data->sodienthoai, true);
-            $itemCount = $stmt->rowCount();
-
-            if($itemCount > 1) {
-                http_response_code(404);
-                echo json_encode(
-                    array("message" => "Số điện thoại bị trùng! Vui lòng nhập số điện thoại khác!")
-                );
-                return;
-            }
-
-            $stmt = $itemAdmin->getAdminTheoSdt($data->sodienthoai, true);
-            $itemCount = $stmt->rowCount();
-
-            if($itemCount > 0) {
-                http_response_code(404);
-                echo json_encode(
-                    array("message" => "Số điện thoại bị trùng! Vui lòng nhập số điện thoại khác!")
-                );
-                return;
-            }
-
-            if ($itemCTSV->updatePhongCTSV()) {
-                http_response_code(200);
-                echo json_encode(
-                    array("message" => "phongctsv cập nhật thành công.")
-                );
             } else {
-                http_response_code(500);
-                echo json_encode(
-                    array("message" => "phongctsv cập nhật KHÔNG thành công.")
-                );
+                $itemCTSV->taiKhoan  = $data->taiKhoan;
+
+                //values
+                $itemCTSV->hoTenNhanVien = $data->hoTenNhanVien;
+                $itemCTSV->email = $data->email; 
+                $itemCTSV->sodienthoai = $data->sodienthoai;
+                $itemCTSV->quyen = $data->quyen;
+                $itemCTSV->matKhau = md5($data->taiKhoan);
+                $itemCTSV->diaChi = null;
+                $itemCTSV->kichHoat = 1;
+
+                // Nếu không tìm thấy ctsv, tạo mới ctsv và xóa admin có tài khoản là $taiKhoan
+
+                //Kiểm tra tồn tại email?
+                $stmt = $itemCTSV->getPhongCTSVTheoEmail($data->email, true);
+                $itemCount = $stmt->rowCount();
+    
+                if($itemCount > 0) {
+                    http_response_code(404);
+                    echo json_encode(
+                        array("message" => "Email bị trùng! Vui lòng nhập email khác!")
+                    );
+                    return;
+                }
+    
+                $stmt = $itemAdmin->getAdminTheoEmailUpdate($data->email, $data->taiKhoan, true);
+                $itemCount = $stmt->rowCount();
+    
+                if($itemCount > 0) {
+                    http_response_code(404);
+                    echo json_encode(
+                        array("message" => "Email bị trùng! Vui lòng nhập email khác!")
+                    );
+                    return;
+                }
+    
+                // Kiểm tra tồn tại sdt?
+                $stmt = $itemCTSV->getPhongCTSVTheoSdt($data->sodienthoai, true);
+                $itemCount = $stmt->rowCount();
+    
+                if($itemCount > 0) {
+                    http_response_code(404);
+                    echo json_encode(
+                        array("message" => "Số điện thoại bị trùng! Vui lòng nhập số điện thoại khác!")
+                    );
+                    return;
+                }
+    
+                $stmt = $itemAdmin->getAdminTheoSdtUpdate($data->sodienthoai, $data->taiKhoan, true);
+                $itemCount = $stmt->rowCount();
+    
+                if($itemCount > 0) {
+                    http_response_code(404);
+                    echo json_encode(
+                        array("message" => "Số điện thoại bị trùng! Vui lòng nhập số điện thoại khác!")
+                    );
+                    return;
+                }
+
+                if ($itemCTSV->createPhongCTSV()) {
+                    //Nếu thành công, xóa ctsv có tài khoản là $taiKhoan
+                    $itemAdmin->taiKhoan  = $data->taiKhoan;
+    
+                    if ($itemAdmin->deleteAdmin()) {
+                        http_response_code(200);
+                        echo json_encode(
+                            array("message" => "ctsv cập nhật thành công.")
+                        );
+                    } else {
+                        http_response_code(500);
+                        echo json_encode(
+                            array("message" => "cstv cập nhật KHÔNG thành công.")
+                        );
+                    }
+                } else {
+                    http_response_code(500);
+                    echo json_encode(
+                        array("message" => "ctsv cập nhật KHÔNG thành công.")
+                    );
+                }
             }
+            
         } else {
             http_response_code(404);
             echo json_encode(

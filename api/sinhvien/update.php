@@ -63,7 +63,7 @@ if ($data["status"] == 1) {
                 $item->maLop = $data->maLop;
                 $item->totNghiep = $data->totNghiep;
 
-                $stmt = $item->getSinhVienTheoEmail($data->email, true);
+                $stmt = $item->getSinhVienTheoEmailUpdate($data->email, $data->maSinhVien, true);
                 $itemCount = $stmt->rowCount();
 
                 if($itemCount > 0) {
@@ -74,13 +74,13 @@ if ($data["status"] == 1) {
                     return;
                 }
 
-                $stmt = $item->getSinhVienTheoSdt($data->sdt, true);
+                $stmt = $item->getSinhVienTheoSdtUpdate($data->sdt, $data->maSinhVien, true);
                 $itemCount = $stmt->rowCount();
 
                 if($itemCount > 0) {
                     http_response_code(404);
                     echo json_encode(
-                        array("message" => "Số điện thoại  bị trùng! Vui lòng nhập số điện thoại khác!")
+                        array("message" => "Số điện thoại bị trùng! Vui lòng nhập số điện thoại khác!")
                     );
                     return;
                 }
