@@ -88,6 +88,27 @@ function getThongTinCoVanSinhVien(maSinhVien) {
   });
 }
 
+function getThongTinSinhVien(maSinhVien) {
+  var sinhVienInfo = null;
+
+  $.ajax({
+    url: urlapi_sinhvien_details_read + maSinhVien,
+    async: false,
+    type: "GET",
+    contentType: "application/json;charset=utf-8",
+    dataType: "json",
+    headers: {
+      Authorization: jwtCookie,
+    },
+    success: function (result) {
+      sinhVienInfo = result;
+    },
+    error: function (error) {},
+  });
+
+  return sinhVienInfo;
+}
+
 function createKhieuNaiButton(
   ngayKhieuNai,
   ngayKetThucKhieuNai,
@@ -136,6 +157,8 @@ function createKhieuNaiButton(
 // function lấy thông tin thông báo đánh giá, học kỳ đánh giá
 function getThongTinHocKyDanhGia() {
   $("#tbody_hocKyDanhGia").empty();
+
+  sinhVienInfo = getThongTinSinhVien(getCookie("maSo"));
 
   $.ajax({
     url: urlapi_thongbaodanhgia_read,
@@ -359,11 +382,13 @@ function getThongTinHocKyDanhGia() {
                                                 <td><span>" +
                           ngaySinhVienKetThucDanhGia.toLocaleDateString() +
                           "</span></td>\
-                                                <td colspan='2'>\
-                                                    <a href='chamdiemchitiet.php?maHocKy=" +
-                          maHocKyDanhGia_HKDG +
-                          "' ><button type='button' class='btn btn-info' style='color: white;width: max-content;'>Chấm điểm</button></a>\
-                                                </td>\
+                                                <td colspan='2'>" +
+                          (sinhVienInfo != null && sinhVienInfo.totNghiep == 0
+                            ? "<a href='chamdiemchitiet.php?maHocKy=" +
+                              maHocKyDanhGia_HKDG +
+                              "' ><button type='button' class='btn btn-info' style='color: white;width: max-content;'>Chấm điểm</button></a>"
+                            : "<span>Sinh viên đã tốt nghiệp</span>") +
+                          "</td>\
                                             </tr>"
                       );
                     },
