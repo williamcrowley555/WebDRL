@@ -908,7 +908,7 @@
 			$('#form_send_email_notification button[type=submit]').prop('disabled', true);
 
 			$.ajax({
-				url: 'http://localhost/WebDRL/phpmailer/send_email/sendEmailThongBaoDanhGia.php',
+				url: host_domain_url + '/phpmailer/send_email/sendEmailThongBaoDanhGia.php',
 				type: "POST",
 				data: formData,
 				processData: false, 

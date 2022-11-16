@@ -482,7 +482,8 @@ function sendEmailApprovalNotification(maKhieuNai) {
   formData.append("maKhieuNai", maKhieuNai);
 
   $.ajax({
-    url: "http://localhost/WebDRL/phpmailer/send_email/sendEmailPheDuyetKhieuNai.php",
+    url:
+      host_domain_url + "/phpmailer/send_email/sendEmailPheDuyetKhieuNai.php",
     async: true,
     type: "POST",
     data: formData,

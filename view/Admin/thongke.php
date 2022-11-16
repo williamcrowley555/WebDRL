@@ -142,7 +142,7 @@
 						<h4 class="mb-3 text-uppercase hoc-ky-danh-gia">Kết quả điểm rèn luyện</h4>
 
 						<div class="d-flex justify-content-between align-items-center mb-3">
-							<form action="http://localhost/WebDRL/mpdf/export_ketQuaDRL.php" method="POST" id="form_exportPDFKetQuaDRL" class="d-inline">
+							<form method="POST" id="form_exportPDFKetQuaDRL" class="d-inline">
 								<input type="hidden" name="data" class="data" />
 								<button type="submit" class="btn btn-danger text-white">In PDF</button>
 							</form>
@@ -525,6 +525,8 @@
 
 	$('#form_exportPDFKetQuaDRL').submit(function() {
 		if(Array.isArray(tmpTableSinhVienContent) && tmpTableSinhVienContent.length > 0) {
+			$(this).attr('action', host_domain_url + '/mpdf/export_ketQuaDRL.php');
+			
 			var fileName = $(this).children('.data').attr('file-name');
 
 			$("#form_exportPDFKetQuaDRL .data").val(

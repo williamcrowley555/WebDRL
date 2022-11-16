@@ -43,7 +43,7 @@ function GetListTieuChi(tieuChi) {
   if (getCookie("jwt") != null) {
     var jwtCookie = getCookie("jwt");
     $.ajax({
-      url: host_domain_url + "/" + tieuChi + "/read.php",
+      url: api_url + "/" + tieuChi + "/read.php",
       type: "GET",
       contentType: "application/json;charset=utf-8",
       dataType: "json",

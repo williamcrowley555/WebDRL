@@ -835,7 +835,7 @@
 			$("#ImportSinhVienFromExcelModal").modal("hide");
 		
 			$.ajax({
-				url: 'http://localhost/WebDRL/phpspreadsheet/import/import_sinhvien.php',
+				url: host_domain_url + '/phpspreadsheet/import/import_sinhvien.php',
 				type: "POST",
 				data: formData,
     			processData: false, 
@@ -919,7 +919,7 @@
 			$("#ImportGPAFromExcelModal").modal("hide");
 		
 			$.ajax({
-				url: 'http://localhost/WebDRL/phpspreadsheet/import/import_GPA.php',
+				url: host_domain_url + '/phpspreadsheet/import/import_GPA.php',
 				type: "POST",
 				data: formData,
     			processData: false, 
@@ -985,7 +985,7 @@
 	// Xử lý export to excel 
 	$('#form_export_to_excel').submit(function() {
 		if(Array.isArray(tableContent) && tableContent.length > 0) {
-			$(this).attr('action', 'http://localhost/WebDRL/phpspreadsheet/export/export_sinhvien.php');
+			$(this).attr('action', host_domain_url + '/phpspreadsheet/export/export_sinhvien.php');
 
 			$("#form_export_to_excel #table_data").val(
 				JSON.stringify({

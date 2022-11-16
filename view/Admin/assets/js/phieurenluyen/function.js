@@ -179,7 +179,9 @@ function GetListPhieurenluyen(maLop, maHocKyDanhGia) {
                   ? "Xem chi tiết và duyệt"
                   : "Xem chi tiết") +
                 "</button>\
-                  <form action='http://localhost/WebDRL/mpdf/export_phieuRenLuyen.php' method='POST' class='d-inline form_exportPDFPhieuRenLuyen'>\
+                  <form action='" +
+                host_domain_url +
+                "/mpdf/export_phieuRenLuyen.php' method='POST' class='d-inline form_exportPDFPhieuRenLuyen'>\
                     <input type='hidden' name='data' class='data' />\
                     <button type='submit' class='btn' style='color: white;background: #c04f4f;margin: 5px;'><img src='assets/images/icons/pdf.png' width='17px' /><span style='margin-left: 5px;'>Xuất phiếu</span> </button>\
                   </form>\

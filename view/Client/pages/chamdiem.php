@@ -126,7 +126,7 @@
 
                 <p class="mb-3 fw-bold text-body">LƯU Ý: Mỗi sinh viên chỉ được phép khiếu nại duy nhất 1 lần cho mỗi phiếu rèn luyện. Vui lòng xem xét kỹ trước khi gửi khiếu nại.</p>
 
-                <form action='http://localhost/WebDRL/mpdf/export_mauPhieuRenLuyen.php' method='POST' id='formDownloadMauPhieuRenLuyen' class='text-center pb-2'>
+                <form method='POST' id='formDownloadMauPhieuRenLuyen' class='text-center pb-2'>
                     <input type='hidden' name='data' class='data' />
                     <p>Tải về mẫu phiếu rèn luyện <button type='submit' class='btn btn-link bg-white p-0' style='outline: none; box-shadow: none;'>tại đây</button></p>
                 </form>
@@ -364,7 +364,7 @@
                                 let img = document.createElement("img");
                                 img.style.width = "100%";
                                 img.style.cursor = "pointer";
-                                img.setAttribute("src", `http://localhost/WebDRL//user-images/sinhvien/${getCookie("maSo")}/khieuNai_minhChung/${maHocKy}/${fileName}`);
+                                img.setAttribute("src", `${host_domain_url}/user-images/sinhvien/${getCookie("maSo")}/khieuNai_minhChung/${maHocKy}/${fileName}`);
                                 img.classList.add("minh-chung-item");
 
                                 figure.appendChild(img);
@@ -391,6 +391,8 @@
 
         // Download mẫu phiếu rèn luyện
         $(document).on("submit", "#formDownloadMauPhieuRenLuyen", function(e) {
+			$('#formDownloadMauPhieuRenLuyen').attr('action', host_domain_url + '/mpdf/export_mauPhieuRenLuyen.php');
+
             var phieuRenLuyen = {
                 tieuChiCap1: [],
                 tieuChiCap2: [],

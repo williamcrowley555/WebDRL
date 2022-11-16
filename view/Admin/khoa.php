@@ -467,7 +467,7 @@
 			$("#ImportFromExcelModal").modal("hide");
 		
 			$.ajax({
-				url: 'http://localhost/WebDRL/phpspreadsheet/import/import_khoa.php',
+				url: host_domain_url + '/phpspreadsheet/import/import_khoa.php',
 				type: "POST",
 				data: formData,
 				processData: false, 
@@ -532,7 +532,7 @@
 	// Xử lý export to excel 
 	$('#form_export_to_excel').submit(function() {
 		if(Array.isArray(tableContent) && tableContent.length > 0) {
-			$(this).attr('action', 'http://localhost/WebDRL/phpspreadsheet/export/export_khoa.php');
+			$(this).attr('action', host_domain_url + '/phpspreadsheet/export/export_khoa.php');
 
 			$("#form_export_to_excel #table_data").val(
 				JSON.stringify({

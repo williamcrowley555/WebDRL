@@ -489,7 +489,7 @@
 							let img = document.createElement("img");
 							img.style.width = "100%";
 							img.style.cursor = "pointer";
-							img.setAttribute("src", `http://localhost/WebDRL//user-images/sinhvien/${result_KN.maSinhVien}/khieuNai_minhChung/${result_KN.maHocKyDanhGia}/${fileName}`);
+							img.setAttribute("src", `${host_domain_url}/user-images/sinhvien/${result_KN.maSinhVien}/khieuNai_minhChung/${result_KN.maHocKyDanhGia}/${fileName}`);
 							img.classList.add("minh-chung-item");
 
 							figure.appendChild(img);

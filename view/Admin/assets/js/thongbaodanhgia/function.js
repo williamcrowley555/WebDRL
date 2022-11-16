@@ -321,7 +321,7 @@ function autoSendEmailNotification(maThongBao, options) {
   formData.append("options", options);
 
   $.ajax({
-    url: "http://localhost/WebDRL/phpmailer/send_email/sendEmailThongBaoDanhGia.php",
+    url: host_domain_url + "/phpmailer/send_email/sendEmailThongBaoDanhGia.php",
     async: true,
     type: "POST",
     data: formData,
