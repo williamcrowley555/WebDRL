@@ -30,11 +30,13 @@
         }
 
         public function getAllAdminBySearchText($searchText) {
-            $sqlQuery = "SELECT * FROM " . $this->db_table . " 
+            $sqlQuery = "SELECT * FROM " . $this->db_table . " INNER JOIN quyen
+                            ON quyen = maQuyen 
                             WHERE taiKhoan LIKE '%$searchText%' " .
                             "OR hoTen LIKE '%$searchText%' " .
                             "OR email LIKE '%$searchText%' " .
-                            "OR soDienThoai LIKE '%$searchText%' ";
+                            "OR soDienThoai LIKE '%$searchText%'" .
+                            "OR tenQuyen LIKE '%$searchText%'";
             $stmt = $this->conn->prepare($sqlQuery);
             $stmt->execute();
             return $stmt;

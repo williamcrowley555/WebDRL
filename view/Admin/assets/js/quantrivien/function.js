@@ -560,7 +560,9 @@ function timKiemQuanTriVien(searchText, maQuyen) {
                             data[i].sodienthoai +
                             "</td>\
                             <td class='cell'>" +
-                            data[i].quyen +
+                            (data[i].quyen == "admin"
+                                ? "Admin"
+                                : "Công tác sinh viên") +
                             "</td>\
                             <td class='cell'>" +
                             (data[i].kichHoat == 1 ? 
@@ -744,7 +746,9 @@ function timKiemQuanTriVien(searchText, maQuyen) {
                             data[i].sodienthoai +
                             "</td>\
                             <td class='cell'>" +
-                            data[i].quyen +
+                            (data[i].quyen == "admin"
+                                ? "Admin"
+                                : "Công tác sinh viên") +
                             "</td>\
                             <td class='cell'>" +
                             (data[i].kichHoat == 1 ? 
