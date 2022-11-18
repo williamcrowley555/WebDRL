@@ -1,7 +1,7 @@
 //HOST DOMAIN
 const host_domain_url = "http://localhost/WebDRL";
 
-const api_url = "http://localhost/WebDRL/api";
+const api_url = host_domain_url + "/api";
 
 //const api_url = 'https://5674-115-73-162-67.ap.ngrok.io/WebDRL/api';
 

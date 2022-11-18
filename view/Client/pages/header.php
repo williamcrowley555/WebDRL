@@ -187,15 +187,26 @@ if (isset($_COOKIE['jwt'])){
 
             <div class="navbar-collapse offcanvas-collapse" id="navbarsExampleDefault">
                 <ul class="navbar-nav ms-auto navbar-nav-scroll d-flex align-items-center">
+                    <?php 
+                        if(end($page_word) != 'dangnhap.php') {
+                            echo "
+                                <li class='nav-item'>
+                                    <a class='nav-link ".((end($page_word) == 'tracuudiemrenluyen.php') ? " active'" : "'") ." href='tracuudiemrenluyen.php' style='text-transform: uppercase;'> Tra cứu điểm rèn luyện</a>
+                                </li>
+                                <li class='nav-item'>
+                                    <a class='nav-link ". $active_TraCuuHoatDong . "' href='tracuuhoatdongthamgia.php'  style='text-transform: uppercase;'> Tra cứu hoạt động tham gia</a>
+                                </li>";
+                        }
+                    ?>
                 
                     <!-- Chức năng chung -->
-                    <li class="nav-item">
-                        <a class="nav-link <?php if (end($page_word) == 'tracuudiemrenluyen.php') echo 'active'; ?>" href="tracuudiemrenluyen.php" style="text-transform: uppercase;"> Tra cứu điểm rèn luyện</a>
+                    <!-- <li class="nav-item">
+                        <a class="nav-link <?php //if (end($page_word) == 'tracuudiemrenluyen.php') echo 'active'; ?>" href="tracuudiemrenluyen.php" style="text-transform: uppercase;"> Tra cứu điểm rèn luyện</a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link <?php echo $active_TraCuuHoatDong; ?>" href="tracuuhoatdongthamgia.php"  style="text-transform: uppercase;"> Tra cứu hoạt động tham gia</a>
-                    </li>
+                        <a class="nav-link <?php //echo $active_TraCuuHoatDong; ?>" href="tracuuhoatdongthamgia.php"  style="text-transform: uppercase;"> Tra cứu hoạt động tham gia</a>
+                    </li> -->
 
                     <!-- Chức năng sinh viên -->
                     <?php 

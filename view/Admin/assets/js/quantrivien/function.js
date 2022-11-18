@@ -60,7 +60,7 @@ function loadComboBoxSelectRole() {
     $("#select_Role").append("\
         <option value='tatcaquyen'> Tất cả quyền </option>\
         <option value='admin'> Admin </option>\
-        <option value='ctsv'> Cộng tác sinh viên </option>");   
+        <option value='ctsv'> Công tác sinh viên </option>");
 }
 
 function getListQuanTriVien(maQuyen) {
@@ -105,7 +105,9 @@ function getListQuanTriVien(maQuyen) {
                                 data[i].soDienThoai +
                                 "</td>\
                                 <td class='cell'>" +
-                                data[i].quyen +
+                                (data[i].quyen == "admin"
+                                ? "Admin"
+                                : "Công tác sinh viên") +
                                 "</td>\
                                 <td class='cell'>" +
                                 (data[i].kichHoat == 1
@@ -188,7 +190,9 @@ function getListQuanTriVien(maQuyen) {
                             data[i].sodienthoai +
                             "</td>\
                             <td class='cell'>" +
-                            data[i].quyen +
+                            (data[i].quyen == "admin"
+                                ? "Admin"
+                                : "Công tác sinh viên") +
                             "</td>\
                             <td class='cell'>" +
                             (data[i].kichHoat == 1 ? 
@@ -280,7 +284,9 @@ function getListQuanTriVien(maQuyen) {
                             data[i].soDienThoai +
                             "</td>\
                             <td class='cell'>" +
-                            data[i].quyen +
+                            (data[i].quyen == "admin"
+                                ? "Admin"
+                                : "Công tác sinh viên") +
                             "</td>\
                             <td class='cell'>" +
                             (data[i].kichHoat == 1
@@ -370,7 +376,9 @@ function getListQuanTriVien(maQuyen) {
                             data[i].sodienthoai +
                             "</td>\
                             <td class='cell'>" +
-                            data[i].quyen +
+                            (data[i].quyen == "admin"
+                                ? "Admin"
+                                : "Công tác sinh viên") +
                             "</td>\
                             <td class='cell'>" +
                             (data[i].kichHoat == 1 ? 
@@ -467,7 +475,9 @@ function timKiemQuanTriVien(searchText, maQuyen) {
                                 data[i].soDienThoai +
                                 "</td>\
                                 <td class='cell'>" +
-                                data[i].quyen +
+                                (data[i].quyen == "admin"
+                                ? "Admin"
+                                : "Công tác sinh viên") +
                                 "</td>\
                                 <td class='cell'>" +
                                 (data[i].kichHoat == 1
@@ -642,7 +652,9 @@ function timKiemQuanTriVien(searchText, maQuyen) {
                             data[i].soDienThoai +
                             "</td>\
                             <td class='cell'>" +
-                            data[i].quyen +
+                            (data[i].quyen == "admin"
+                                ? "Admin"
+                                : "Công tác sinh viên") +
                             "</td>\
                             <td class='cell'>" +
                             (data[i].kichHoat == 1

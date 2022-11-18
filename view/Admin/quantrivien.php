@@ -132,7 +132,7 @@
 								<label for="select_quyen_add" class="form-label" style="color: black; font-weight: 500;">Quyền</label>
 								<select class="form-select" name="quyen" aria-label="Default select example" id="select_quyen_add">
 									<option value="admin"> Admin </option>
-									<option value="ctsv"> Phòng cộng tác sinh viên </option>
+									<option value="ctsv"> Công tác sinh viên </option>
 								</select>
 								<span class="invalid-feedback"></span>
 							</div>
@@ -243,7 +243,7 @@
 								<label for="edit_select_quyen" class="form-label" style="color: black; font-weight: 500;">Quyền</label>
 								<select class="form-select" name="quyen" aria-label="Default select example" id="edit_select_quyen">
 									<option value="admin"> Admin </option>
-									<option value="ctsv"> Phòng cộng tác sinh viên </option>
+									<option value="ctsv"> Công tác sinh viên </option>
 								</select>
 								<span class="invalid-feedback"></span>
 							</div>
@@ -365,7 +365,7 @@
 		if(quyen == "admin") {
 			$("#input_Quyen_Update").val("Admin");
 		} else {
-			$("#input_Quyen_Update").val("Cộng tác sinh viên");
+			$("#input_Quyen_Update").val("Công tác sinh viên");
 		}
 		$("#ChangePasswordForm #input_MatKhauMoi").val("");
 		$("#ChangePasswordForm #input_MatKhauMoi").removeClass("is-invalid");
