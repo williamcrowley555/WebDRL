@@ -131,7 +131,7 @@
             var getMaHocKyDanhGiaOption = $('#select_HocKyDanhGia option:selected').val();
 
             $.ajax({
-                url: "../../../api/thongbaodanhgia/single_read.php?maHocKyDanhGia=" + getMaHocKyDanhGiaOption,
+                url: api_url + "/thongbaodanhgia/single_read.php?maHocKyDanhGia=" + getMaHocKyDanhGiaOption,
                 async: false,
                 type: "GET",
                 contentType: "application/json;charset=utf-8",

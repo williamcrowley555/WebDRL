@@ -128,11 +128,11 @@ function GetListThongBaoDanhGia() {
                                 <td class='cell'>\
                                     <button class='btn bg-warning btn_ChinhSua_ThongBaoDanhGia' style='color: white;margin: 5px;width: max-content;' data-id='" +
                     data[i].maThongBao +
-                    "' data-bs-toggle='modal' data-bs-target='#ChinhSuaModal' >Chỉnh sửa</button>\
-                                    <button class='btn bg-danger btn_Xoa_ThongBaoDanhGia' style='color: white;width: max-content;margin: 5px;' data-id='" +
-                    data[i].maThongBao +
-                    "' >Xóa</button>\
-                                    <button class='btn btn_GuiEmail_ThongBaoDanhGia' style='color: white;width: max-content;margin: 5px;background: dodgerblue;' data-bs-toggle='modal' data-bs-target='#SendEmailNotificationModal' data-id='" +
+                    "' data-bs-toggle='modal' data-bs-target='#ChinhSuaModal' >Chỉnh sửa</button>" +
+                    //                 <button class='btn bg-danger btn_Xoa_ThongBaoDanhGia' style='color: white;width: max-content;margin: 5px;' data-id='" +
+                    // data[i].maThongBao +
+                    // "' >Xóa</button>\
+                                    "<button class='btn btn_GuiEmail_ThongBaoDanhGia' style='color: white;width: max-content;margin: 5px;background: dodgerblue;' data-bs-toggle='modal' data-bs-target='#SendEmailNotificationModal' data-id='" +
                     data[i].maThongBao +
                     "' >Gửi email thông báo</button>\
                                 </td>\
@@ -258,11 +258,11 @@ function TimKiemThongBaoDanhGia(maHKDG) {
                                 <td class='cell'>\
                                     <button class='btn bg-warning btn_ChinhSua_ThongBaoDanhGia' style='color: white;margin: 5px;width: max-content;' data-id='" +
                     data[i].maThongBao +
-                    "' data-bs-toggle='modal' data-bs-target='#ChinhSuaModal' >Chỉnh sửa</button>\
-                                    <button class='btn bg-danger btn_Xoa_ThongBaoDanhGia' style='color: white;width: max-content;margin: 5px;' data-id='" +
-                    data[i].maThongBao +
-                    "' >Xóa</button>\
-                                    <button class='btn btn_GuiEmail_ThongBaoDanhGia' style='color: white;width: max-content;margin: 5px;background: dodgerblue;' data-bs-toggle='modal' data-bs-target='#SendEmailNotificationModal' data-id='" +
+                    "' data-bs-toggle='modal' data-bs-target='#ChinhSuaModal' >Chỉnh sửa</button>" +
+                    //                 <button class='btn bg-danger btn_Xoa_ThongBaoDanhGia' style='color: white;width: max-content;margin: 5px;' data-id='" +
+                    // data[i].maThongBao +
+                    // "' >Xóa</button>\
+                                    "<button class='btn btn_GuiEmail_ThongBaoDanhGia' style='color: white;width: max-content;margin: 5px;background: dodgerblue;' data-bs-toggle='modal' data-bs-target='#SendEmailNotificationModal' data-id='" +
                     data[i].maThongBao +
                     "' >Gửi email thông báo</button>\
                                 </td>\

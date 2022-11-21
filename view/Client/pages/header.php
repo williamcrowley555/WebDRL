@@ -71,6 +71,7 @@ if (isset($_COOKIE['jwt'])){
             $active_chamDiem = '';
             $active_chamDiemChiTiet = '';
             $active_CVHT_DuyetDiem = '';
+            $active_CVHT_NhapDiem = '';
             $active_Khoa_DuyetDiem = '';
             $active_TraCuuDiem = '';
             $active_TraCuuHoatDong = '';
@@ -99,6 +100,12 @@ if (isset($_COOKIE['jwt'])){
 				case 'cvht_duyetdiemrenluyen.php':{
 					echo "Duyệt điểm rèn luyện | CVHT | Điểm rèn luyện";
                     $active_CVHT_DuyetDiem = "active";
+					break;
+				}
+
+                case 'nhapdiemhe4.php':{
+					echo "Nhập điểm hệ 4";
+                    $active_CVHT_NhapDiem = "active";
 					break;
 				}
 
@@ -221,8 +228,11 @@ if (isset($_COOKIE['jwt'])){
                                 
                                 case 'cvht':{
                                     echo "<li class='nav-item'>
-                                        <a class='nav-link ".$active_CVHT_DuyetDiem."' href='cvht_duyetdiemrenluyen.php' style='text-transform: uppercase;'> Duyệt danh sách điểm rèn luyện theo lớp</a>
-                                    </li>";
+                                            <a class='nav-link ".$active_CVHT_DuyetDiem."' href='cvht_duyetdiemrenluyen.php' style='text-transform: uppercase;'> Duyệt danh sách điểm rèn luyện theo lớp</a>
+                                        </li>
+                                        <li class='nav-item'>
+                                            <a class='nav-link ".$active_CVHT_NhapDiem."' href='nhapdiemhe4.php' style='text-transform: uppercase;'> Nhập điểm </a>
+                                        </li>";
                                     break;
                                 }
                     

@@ -16,7 +16,7 @@
 
     // kiểm tra đăng nhập thành công 
     if($data["status"]==1){
-        if ($checkQuyen->checkQuyen_Khoa_CTSV_Admin($data["user_data"]->aud)) {
+        //if ($checkQuyen->checkQuyen_Khoa_CTSV_Admin($data["user_data"]->aud)) {
             $database = new Database();
             $db = $database->getConnection();
     
@@ -57,9 +57,9 @@
             }else{
                 showMessage(404, "Không có dữ liệu gửi lên!");
             } 
-        } else {
-            showMessage(403, "Bạn không có quyền thực hiện điều này!");
-        }
+        // } else {
+        //     showMessage(403, "Bạn không có quyền thực hiện điều này!");
+        // }
     } else {
         showMessage(403, "Vui lòng đăng nhập trước!");
     }
