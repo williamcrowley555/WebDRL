@@ -10,8 +10,23 @@
     $fileName = 'mau_phieu_ren_luyen';
     
     $html = '';
+
+    $html .= "<div style='margin-bottom: 20px'>
+                <div style='width: 50%;float: left;'>
+                    <h3 style='text-align: center; font-weight: 400'>
+                        ỦY BAN NHÂN DÂN <br />THÀNH PHỐ HỒ CHÍ MINH <br /><b>TRƯỜNG ĐẠI HỌC SÀI GÒN</b>
+                        <hr style='border-top: 2px solid black; width: 140px;' />
+                    </h3>
+                </div>
+                <div style='width: 50%;float: left;'>
+                    <h3 style='text-align: center;'>
+                        CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM <br />Độc lập - Tự do - Hạnh phúc
+                        <hr style='border-top: 2px solid black; width: 140px;' />
+                    </h3>
+                </div>
+            </div>";
     
-    $html .= '<h3 style="text-transform: uppercase; text-align: left;">--Thông tin sinh viên--</h3>
+    $html .= '<h3 style="text-transform: uppercase; text-align: left; margin-top: 20px">--Thông tin sinh viên--</h3>
         <div class="row justify-content-center" style="padding-bottom: 20px; text-align: start;" id="part_thongTinSinhVien">
             <div class="row">
                 <div style=" margin-bottom:10px"><span style="font-weight: bold; font-size: 16px;">Họ tên: </span></div>
@@ -27,7 +42,7 @@
 
     $html .= '<h3 style="text-transform: uppercase; text-align: left;">--PHIẾU ĐÁNH GIÁ ĐIỂM RÈN LUYỆN--</h3>
             <form id="formDanhGiaDRL" method="post" enctype="multipart/form-data">
-                <div class="form-outline mb-4">
+                <div class="form-outline" style="margin-bottom: 20px">
                     <div class="row justify-content-center" style="margin-top: 10px; text-align: start;">
                         <table class="table table-hover table-bordered" style="border-collapse: collapse;">
                             <thead>
@@ -126,6 +141,27 @@
                 </div>
             </form>
         </div>';
+
+    $html .= "<div>
+                <div style='width: 33.33%;float: left; text-align: center; margin-bottom: 100px'>
+                    <h4>Họ tên và chữ ký của sinh viên</h4>
+                </div>
+                <div style='width: 33.33%;float: left; text-align: center; margin-bottom: 100px'>
+                    <h4>Họ tên và chữ ký của lớp trưởng</h4>
+                </div>
+                <div style='width: 33.33%;float: left; text-align: center; margin-bottom: 100px'>
+                    <h4>Họ tên và chữ ký của cố vấn học tập</h4>
+                </div>
+            </div>
+            
+            <div style='margin-bottom: 20px'>
+                <div style='width: 50%;float: left; text-align: center; margin-bottom: 100px'>
+                    <h4>Hội đồng cấp khoa</h4>
+                </div>
+                <div style='width: 50%;float: left; text-align: center; margin-bottom: 100px'>
+                    <h4>Hội đồng cấp trường</h4>
+                </div>
+            </div>";
 
     $mpdf = new \Mpdf\Mpdf();
     $stylesheet = file_get_contents('./css/export_mauPhieuRenLuyen.css');
