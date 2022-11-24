@@ -994,6 +994,17 @@ function ChinhSua_SinhVien() {
           timerProgressBar: true,
         });
 
+        $.ajax({
+          url: urlapi_logout_client,
+          data: JSON.stringify({ maSo: _edit_input_MaSinhVien }),
+          type: "POST",
+          contentType: "application/json;charset=utf-8",
+          dataType: "json",
+          async: false,
+          success: function (result) {},
+          error: function (errorMessage) {},
+        });
+
         setTimeout(() => {
           GetListSinhVien($("#select_Khoa").val(), $("#select_Lop").val());
         }, 2000);
@@ -1359,6 +1370,17 @@ function luuXetTotNghiep() {
             "Thành công",
             "Update xét tốt nghiệp thành công!"
           );
+
+          $.ajax({
+            url: urlapi_logout_client,
+            data: JSON.stringify({ maSo: listXetTotNghiep[index][i].maSinhVien }),
+            type: "POST",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            async: false,
+            success: function (result) {},
+            error: function (errorMessage) {},
+          });
 
           setTimeout(() => {
             GetListSinhVien($("#select_Khoa").val(), $("#select_Lop").val());

@@ -22,6 +22,7 @@
     // }
 
     $data = json_decode(file_get_contents("php://input")); // nhan data json tu client post len
+    $isDisabledAccount = 0;
   
     if(!empty($data->taiKhoan) && !empty($data->matKhau)){
         $input_taiKhoan = $data->taiKhoan;
@@ -31,7 +32,11 @@
             http_response_code(200);
         }else{
             http_response_code(404);
-            echo "Sai thông tin đăng nhập!";
+            if ($isDisabledAccount) {
+                echo "Tài khoản đã bị vô hiệu hóa!";
+            } else {
+                echo "Sai thông tin đăng nhập!";
+            }
         }
        
 
@@ -59,6 +64,11 @@
         $dataRow_SinhVien = $stmt_SinhVien->fetch(PDO::FETCH_ASSOC);
 
         if ($dataRow_SinhVien != null){
+            if($dataRow_SinhVien['totNghiep'] == 1) {
+                $GLOBALS['isDisabledAccount'] = 1;
+                return false;
+            }
+            
             $obj_SinhVien->maSinhVien  = $dataRow_SinhVien['maSinhVien'];
             $obj_SinhVien->hoTenSinhVien = $dataRow_SinhVien['hoTenSinhVien'];
             $obj_SinhVien->ngaySinh = $dataRow_SinhVien['ngaySinh'];
