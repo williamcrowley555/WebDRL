@@ -249,7 +249,7 @@
         onSubmit: ChinhSua_TieuChiDanhGia
     })
 
-	const capTieuChiList = [
+	var capTieuChiList = [
 		{
 			value: 'tieuchicap1',
 			text: 'Tiêu chí cấp 1'
