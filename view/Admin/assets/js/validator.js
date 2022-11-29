@@ -21,7 +21,9 @@ function Validator(options) {
     var errorMessage;
 
     // Loại bỏ khoảng trắng của input value
-    inputElement.value = inputElement.value.trim();
+    if (!Array.isArray(inputElement.value)) {
+      inputElement.value = inputElement.value.trim();
+    }
 
     // Lấy ra các rules của selector
     var rules = selectorRules[rule.selector];
@@ -189,6 +191,10 @@ Validator.isRequired = function (selector, message) {
   return {
     selector: selector,
     test: function (value) {
+      if (Array.isArray(value)) {
+        value = value.length;
+      }
+
       return value ? undefined : message || "Vui lòng nhập trường này";
     },
   };

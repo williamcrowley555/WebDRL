@@ -301,3 +301,6 @@ if (isset($_COOKIE['jwt'])){
     </script>
     <!-- Custom Script -->
     <script src="../js/header/header.js"></script>
+
+	<!-- Constants Chuc Nang JS -->
+	<script src="../../constants/constants_chucNang.js"></script> 

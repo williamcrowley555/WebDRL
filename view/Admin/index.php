@@ -48,9 +48,17 @@
 	<!-- Chart -->
 	<script src="assets/plugins/chart.js/chart.min.js"></script> 
    
+   <!-- Virtual Select CSS -->  
+   <link rel="stylesheet" href="assets/css/virtual-select.min.css">
+
+	<!-- Virtual Select JS -->
+	<script src="assets/js/virtual-select.min.js"></script> 
+   
     <!-- App CSS -->  
     <link id="theme-style" rel="stylesheet" href="assets/css/portal.css">
 	
+	<!-- Constants Chuc Nang JS -->
+	<script src="../constants/constants_chucNang.js"></script> 
 
 	<script>
 		
@@ -306,6 +314,14 @@
 									<img src='assets/images/icons/analysis.png' alt='icon thống kê' width='25px'>\
 						         </span>\
 		                         <span class='nav-link-text'>Thống kê</span>\
+					        </a>\
+					    </li>\
+						<li class='nav-item' style='cursor: pointer;'>\
+					        <a class='nav-link' onclick='LoadContentMainPage(\"caidat.php\");' id='menu-button-CaiDat' >\
+						        <span class='nav-icon'>\
+									<img src='assets/images/icons/settings.png' alt='icon cài đặt' width='25px'>\
+						         </span>\
+		                         <span class='nav-link-text'>Cài đặt</span>\
 					        </a>\
 					    </li>");
 

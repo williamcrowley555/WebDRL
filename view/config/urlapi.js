@@ -394,6 +394,70 @@ const urlapi_ctsv_update_kichhoat =
 const urlapi_ctsv_update_vohieuhoa =
   api_url + "/phongcongtacsinhvien/updateVoHieuHoa.php";
 
+//---------------QUYEN---------------//----------------------------------
+//---------//
+
+//READ
+const urlapi_quyen_read = api_url + "/quyen/read.php";
+
+//---------------CHUC NANG---------------//----------------------------------
+//---------//
+
+//READ
+const urlapi_chucnang_read = api_url + "/chucnang/read.php";
+
+//SINGLE READ
+const urlapi_chucnang_single_read = api_url + "/chucnang/single_read.php";
+const urlapi_chucnang_single_read_maChucNang =
+  urlapi_chucnang_single_read + "?maChucNang=";
+
+//UPDATE
+const urlapi_chucnang_update = api_url + "/chucnang/update.php";
+const urlapi_chucnang_update_kichHoat =
+  api_url + "/chucnang/update_kichHoat.php";
+
+//---------------CHUC NANG _ HOC KY DANH GIA---------------//----------------------------------
+//---------//
+
+//READ
+const urlapi_chucnang_hockydanhgia_read =
+  api_url + "/chucnang_hockydanhgia/read.php";
+
+//SINGLE DETAILS READ
+const urlapi_chucnang_hockydanhgia_details_read =
+  api_url + "/chucnang_hockydanhgia/details_read.php";
+
+//CREATE
+const urlapi_chucnang_hockydanhgia_create =
+  api_url + "/chucnang_hockydanhgia/create.php";
+
+//UPDATE
+const urlapi_chucnang_hockydanhgia_update =
+  api_url + "/chucnang_hockydanhgia/update.php";
+
+//DELETE
+const urlapi_chucnang_hockydanhgia_delete =
+  api_url + "/chucnang_hockydanhgia/delete.php";
+
+//---------------CHUC NANG _ QUYEN---------------//----------------------------------
+//---------//
+
+//READ
+const urlapi_chucnang_quyen_read = api_url + "/chucnang_quyen/read.php";
+
+//SINGLE DETAILS READ
+const urlapi_chucnang_quyen_details_read =
+  api_url + "/chucnang_quyen/details_read.php";
+
+//CREATE
+const urlapi_chucnang_quyen_create = api_url + "/chucnang_quyen/create.php";
+
+//UPDATE
+const urlapi_chucnang_quyen_update = api_url + "/chucnang_quyen/update.php";
+
+//DELETE
+const urlapi_chucnang_quyen_delete = api_url + "/chucnang_quyen/delete.php";
+
 //---------------LOGIN ADMIN---------------//----------------------------------
 //---------//
 
