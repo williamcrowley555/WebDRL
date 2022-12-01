@@ -424,6 +424,10 @@ const urlapi_chucnang_hockydanhgia_read =
   api_url + "/chucnang_hockydanhgia/read.php";
 
 //SINGLE DETAILS READ
+const urlapi_chucnang_hockydanhgia_single_details_read =
+  api_url + "/chucnang_hockydanhgia/single_details_read.php";
+
+// DETAILS READ
 const urlapi_chucnang_hockydanhgia_details_read =
   api_url + "/chucnang_hockydanhgia/details_read.php";
 
@@ -446,6 +450,10 @@ const urlapi_chucnang_hockydanhgia_delete =
 const urlapi_chucnang_quyen_read = api_url + "/chucnang_quyen/read.php";
 
 //SINGLE DETAILS READ
+const urlapi_chucnang_quyen_single_details_read =
+  api_url + "/chucnang_quyen/single_details_read.php";
+
+// DETAILS READ
 const urlapi_chucnang_quyen_details_read =
   api_url + "/chucnang_quyen/details_read.php";
 

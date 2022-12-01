@@ -252,7 +252,7 @@ if (isset($_COOKIE['jwt'])){
                                         Xin chào, ". $hoten ." <img class='d-inline-block rounded-circle ms-3' id='avatar' src='' alt='user profile' width='50px'>
                                     </span>
                                 </a>
-                                <ul class='dropdown-menu' aria-labelledby='navbarDropdownMenuLink'>
+                                <ul class='dropdown-menu' aria-labelledby='navbarDropdownMenuLink' style='right: 0px;'>
                                     <li>
                                         <a class='dropdown-item' href='taikhoan.php' style='text-transform: uppercase;'> <img src='../images/edit-account.png' width='20px'> Tài khoản </a>
                                     </li>

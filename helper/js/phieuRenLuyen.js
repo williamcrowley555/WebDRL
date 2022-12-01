@@ -263,58 +263,119 @@ function isAllowedToScore(thongBaoDanhGia, userRole, validRoles) {
   var result = false;
   var today = new Date();
 
-  if (validRoles.indexOf(userRole) >= 0) {
-    if (userRole == roleSinhVien) {
-      if (
-        typeof thongBaoDanhGia.ngaySinhVienDanhGia !== "undefined" &&
-        typeof thongBaoDanhGia.ngaySinhVienKetThucDanhGia !== "undefined"
-      ) {
-        var startDate = new Date(
-          thongBaoDanhGia.ngaySinhVienDanhGia.split("-")
-        );
-        var endDate = new Date(
-          thongBaoDanhGia.ngaySinhVienKetThucDanhGia.split("-")
-        );
-
-        startDate.setHours(0, 0, 0, 0);
-        endDate.setHours(23, 59, 59, 999);
-
-        if (startDate <= today && today <= endDate) {
-          result = true;
-        }
+  // Kiểm tra chức năng có được mở?
+  $.ajax({
+    url: urlapi_chucnang_single_read_maChucNang + CHUC_NANG_CHAM_DIEM_REN_LUYEN,
+    async: false,
+    type: "GET",
+    contentType: "application/json;charset=utf-8",
+    dataType: "json",
+    headers: {
+      Authorization: jwtCookie,
+    },
+    success: function (result_CN) {
+      if (result_CN.kichHoat == 1) {
+        // Kiểm tra học kỳ đang xét được áp dụng cho chức năng?
+        $.ajax({
+          url:
+            urlapi_chucnang_hockydanhgia_single_details_read +
+            `?maChucNang=${CHUC_NANG_CHAM_DIEM_REN_LUYEN}&maHocKyDanhGia=${thongBaoDanhGia.maHocKyDanhGia}`,
+          async: false,
+          type: "GET",
+          contentType: "application/json;charset=utf-8",
+          dataType: "json",
+          headers: {
+            Authorization: jwtCookie,
+          },
+          success: function (result_CN_HKDG) {
+            if (
+              result_CN_HKDG.maHocKyDanhGia == thongBaoDanhGia.maHocKyDanhGia
+            ) {
+              // Kiểm tra quyền đang xét được áp dụng cho chức năng?
+              $.ajax({
+                url:
+                  urlapi_chucnang_quyen_single_details_read +
+                  `?maChucNang=${CHUC_NANG_CHAM_DIEM_REN_LUYEN}&maQuyen=${userRole}`,
+                async: false,
+                type: "GET",
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                headers: {
+                  Authorization: jwtCookie,
+                },
+                success: function (result_CN_Quyen) {
+                  if (
+                    result_CN_Quyen.maQuyen == userRole &&
+                    validRoles.indexOf(userRole) >= 0
+                  ) {
+                    result = true;
+                  }
+                },
+                error: function (error_CN_Quyen) {},
+              });
+            }
+          },
+          error: function (error_CN_HKDG) {},
+        });
       }
-    } else if (userRole == roleCVHT) {
-      if (
-        typeof thongBaoDanhGia.ngayCoVanDanhGia !== "undefined" &&
-        typeof thongBaoDanhGia.ngayCoVanKetThucDanhGia !== "undefined"
-      ) {
-        var startDate = new Date(thongBaoDanhGia.ngayCoVanDanhGia.split("-"));
-        var endDate = new Date(
-          thongBaoDanhGia.ngayCoVanKetThucDanhGia.split("-")
-        );
+    },
+    error: function (error_CN) {},
+  });
 
-        startDate.setHours(0, 0, 0, 0);
-        endDate.setHours(23, 59, 59, 999);
+  if (!result) {
+    if (validRoles.indexOf(userRole) >= 0) {
+      if (userRole == roleSinhVien) {
+        if (
+          typeof thongBaoDanhGia.ngaySinhVienDanhGia !== "undefined" &&
+          typeof thongBaoDanhGia.ngaySinhVienKetThucDanhGia !== "undefined"
+        ) {
+          var startDate = new Date(
+            thongBaoDanhGia.ngaySinhVienDanhGia.split("-")
+          );
+          var endDate = new Date(
+            thongBaoDanhGia.ngaySinhVienKetThucDanhGia.split("-")
+          );
 
-        if (startDate <= today && today <= endDate) {
-          result = true;
+          startDate.setHours(0, 0, 0, 0);
+          endDate.setHours(23, 59, 59, 999);
+
+          if (startDate <= today && today <= endDate) {
+            result = true;
+          }
         }
-      }
-    } else if (userRole == roleKhoa) {
-      if (
-        typeof thongBaoDanhGia.ngayKhoaDanhGia !== "undefined" &&
-        typeof thongBaoDanhGia.ngayKhoaKetThucDanhGia !== "undefined"
-      ) {
-        var startDate = new Date(thongBaoDanhGia.ngayKhoaDanhGia.split("-"));
-        var endDate = new Date(
-          thongBaoDanhGia.ngayKhoaKetThucDanhGia.split("-")
-        );
+      } else if (userRole == roleCVHT) {
+        if (
+          typeof thongBaoDanhGia.ngayCoVanDanhGia !== "undefined" &&
+          typeof thongBaoDanhGia.ngayCoVanKetThucDanhGia !== "undefined"
+        ) {
+          var startDate = new Date(thongBaoDanhGia.ngayCoVanDanhGia.split("-"));
+          var endDate = new Date(
+            thongBaoDanhGia.ngayCoVanKetThucDanhGia.split("-")
+          );
 
-        startDate.setHours(0, 0, 0, 0);
-        endDate.setHours(23, 59, 59, 999);
+          startDate.setHours(0, 0, 0, 0);
+          endDate.setHours(23, 59, 59, 999);
 
-        if (startDate <= today && today <= endDate) {
-          result = true;
+          if (startDate <= today && today <= endDate) {
+            result = true;
+          }
+        }
+      } else if (userRole == roleKhoa) {
+        if (
+          typeof thongBaoDanhGia.ngayKhoaDanhGia !== "undefined" &&
+          typeof thongBaoDanhGia.ngayKhoaKetThucDanhGia !== "undefined"
+        ) {
+          var startDate = new Date(thongBaoDanhGia.ngayKhoaDanhGia.split("-"));
+          var endDate = new Date(
+            thongBaoDanhGia.ngayKhoaKetThucDanhGia.split("-")
+          );
+
+          startDate.setHours(0, 0, 0, 0);
+          endDate.setHours(23, 59, 59, 999);
+
+          if (startDate <= today && today <= endDate) {
+            result = true;
+          }
         }
       }
     }
@@ -836,6 +897,18 @@ function createPhieuRenLuyenForm(
 
     $(selector).empty();
 
+    var isAllowedToScore_SinhVien = isAllowedToScore(
+      thongBaoDanhGia,
+      userRole,
+      [roleSinhVien]
+    );
+    var isAllowedToScore_CVHT = isAllowedToScore(thongBaoDanhGia, userRole, [
+      roleCVHT,
+    ]);
+    var isAllowedToScore_Khoa = isAllowedToScore(thongBaoDanhGia, userRole, [
+      roleKhoa,
+    ]);
+
     // Tiêu chí 1
     tieuChiDanhGiaList.tieuChiCap1.forEach(function (tcc1) {
       html +=
@@ -890,9 +963,7 @@ function createPhieuRenLuyenForm(
               "' id='TC2_" +
               tcc2.matc2 +
               "' " +
-              (isAllowedToScore(thongBaoDanhGia, userRole, [roleSinhVien])
-                ? ""
-                : "disabled") +
+              (isAllowedToScore_SinhVien ? "" : "disabled") +
               "/> \
                     </td>\
                     <td>\
@@ -906,9 +977,7 @@ function createPhieuRenLuyenForm(
               "' id='CVHT_TC2_" +
               tcc2.matc2 +
               "' " +
-              (isAllowedToScore(thongBaoDanhGia, userRole, [roleCVHT])
-                ? ""
-                : "disabled") +
+              (isAllowedToScore_CVHT ? "" : "disabled") +
               "/> \
                     </td>\
                     <td>\
@@ -922,9 +991,7 @@ function createPhieuRenLuyenForm(
               "' id='Khoa_TC2_" +
               tcc2.matc2 +
               "' " +
-              (isAllowedToScore(thongBaoDanhGia, userRole, [roleKhoa])
-                ? ""
-                : "disabled") +
+              (isAllowedToScore_Khoa ? "" : "disabled") +
               "/> \
                     </td>\
                     <td>\
@@ -936,10 +1003,7 @@ function createPhieuRenLuyenForm(
                         </td>\
                         <td>\
                         <div class='box'>" +
-              (isAllowedToScore(thongBaoDanhGia, userRole, [
-                roleSinhVien,
-                roleCVHT,
-              ])
+              (isAllowedToScore_SinhVien || isAllowedToScore_CVHT
                 ? "<a href='#' id='show_file_minhchung_TC2_" +
                   tcc2.matc2 +
                   "' target='_blank' ></a>\
@@ -1107,9 +1171,7 @@ function createPhieuRenLuyenForm(
                   tcc3.matc3 +
                   "' " +
                   readonly_string +
-                  (isAllowedToScore(thongBaoDanhGia, userRole, [roleSinhVien])
-                    ? ""
-                    : "disabled") +
+                  (isAllowedToScore_SinhVien ? "" : "disabled") +
                   " /></td>\
                       <td><input type='number' style='width: 100px;' onchange='changeNumberHandle(this," +
                   tcc3.diem +
@@ -1119,9 +1181,7 @@ function createPhieuRenLuyenForm(
                   tcc3.matc3 +
                   "' " +
                   readonly_string +
-                  (isAllowedToScore(thongBaoDanhGia, userRole, [roleCVHT])
-                    ? ""
-                    : "disabled") +
+                  (isAllowedToScore_CVHT ? "" : "disabled") +
                   " /></td>\
                       <td><input type='number' style='width: 100px;' onchange='changeNumberHandle(this," +
                   tcc3.diem +
@@ -1131,9 +1191,7 @@ function createPhieuRenLuyenForm(
                   tcc3.matc3 +
                   "' " +
                   readonly_string +
-                  (isAllowedToScore(thongBaoDanhGia, userRole, [roleKhoa])
-                    ? ""
-                    : "disabled") +
+                  (isAllowedToScore_Khoa ? "" : "disabled") +
                   " /></td>\
                       <td>\
                         <button type='button' class='btn btn-light btn_XemDanhSachHoatDong' style='color: black;width: max-content;' data-bs-toggle='modal' data-bs-target='#XemDanhSachHoatDongModal' data-tieuchi-id='TC3_" +
@@ -1144,10 +1202,7 @@ function createPhieuRenLuyenForm(
                       </td>\
                       <td>\
                       <div class='box'>" +
-                  (isAllowedToScore(thongBaoDanhGia, userRole, [
-                    roleSinhVien,
-                    roleCVHT,
-                  ])
+                  (isAllowedToScore_SinhVien || isAllowedToScore_CVHT
                     ? "<a href='#' id='show_file_minhchung_TC3_" +
                       tcc3.matc3 +
                       "' target='_blank' ></a>\
@@ -1304,6 +1359,18 @@ function setDiemPhieuRenLuyen(
   }
   // Phiếu đã có điểm
   else {
+    var isAllowedToScore_SinhVien = isAllowedToScore(
+      thongBaoDanhGia,
+      userRole,
+      [roleSinhVien]
+    );
+    var isAllowedToScore_CVHT = isAllowedToScore(thongBaoDanhGia, userRole, [
+      roleCVHT,
+    ]);
+    var isAllowedToScore_Khoa = isAllowedToScore(thongBaoDanhGia, userRole, [
+      roleKhoa,
+    ]);
+
     $(selector + "#inputTBCHocKyTruoc").val(
       thongTinPhieu.diemTrungBinhChungHKTruoc
     );
@@ -1332,7 +1399,7 @@ function setDiemPhieuRenLuyen(
               $(selector + "#" + this.id).val(diem.diemSinhVienDanhGia);
 
               // Hiện điểm cố vấn học tập đánh giá
-              if (isAllowedToScore(thongBaoDanhGia, userRole, [roleCVHT])) {
+              if (isAllowedToScore_CVHT) {
                 if (thongTinPhieu.coVanDuyet == 0) {
                   $(selector + "#CVHT_" + this.id).val(
                     diem.diemSinhVienDanhGia
@@ -1345,7 +1412,7 @@ function setDiemPhieuRenLuyen(
               }
 
               // Hiện điểm khoa đánh giá
-              if (isAllowedToScore(thongBaoDanhGia, userRole, [roleKhoa])) {
+              if (isAllowedToScore_Khoa) {
                 if (thongTinPhieu.khoaDuyet == 0) {
                   if (thongTinPhieu.coVanDuyet == 0) {
                     $(selector + "#Khoa_" + this.id).val(
@@ -1402,7 +1469,7 @@ function setDiemPhieuRenLuyen(
               $(selector + "#" + this.id).val(diem.diemSinhVienDanhGia);
 
               // Hiện điểm cố vấn học tập đánh giá
-              if (isAllowedToScore(thongBaoDanhGia, userRole, [roleCVHT])) {
+              if (isAllowedToScore_CVHT) {
                 if (thongTinPhieu.coVanDuyet == 0) {
                   $(selector + "#CVHT_" + this.id).val(
                     diem.diemSinhVienDanhGia
@@ -1415,7 +1482,7 @@ function setDiemPhieuRenLuyen(
               }
 
               // Hiện điểm khoa đánh giá
-              if (isAllowedToScore(thongBaoDanhGia, userRole, [roleKhoa])) {
+              if (isAllowedToScore_Khoa) {
                 if (thongTinPhieu.khoaDuyet == 0) {
                   if (thongTinPhieu.coVanDuyet == 0) {
                     $(selector + "#Khoa_" + this.id).val(
@@ -1787,26 +1854,50 @@ function xuLyLuuDiemRenLuyen(
               phieuRenLuyen.thongTinPhieu.maPhieuRenLuyen
             );
 
-            if (userRole == roleCVHT) {
-              formDataPRL.append("coVanDuyet", 1);
-              formDataPRL.append(
-                "khoaDuyet",
-                phieuRenLuyen.thongTinPhieu.khoaDuyet
-              );
-            } else if (userRole == roleKhoa) {
+            if (userRole == roleKhoa) {
               formDataPRL.append(
                 "coVanDuyet",
                 phieuRenLuyen.thongTinPhieu.coVanDuyet
               );
               formDataPRL.append("khoaDuyet", 1);
+            } else if (userRole == roleCVHT) {
+              formDataPRL.append("coVanDuyet", 1);
+              formDataPRL.append(
+                "khoaDuyet",
+                phieuRenLuyen.thongTinPhieu.khoaDuyet
+              );
+            } else if (userRole == roleSinhVien) {
+              formDataPRL.append(
+                "coVanDuyet",
+                phieuRenLuyen.thongTinPhieu.coVanDuyet
+              );
+              formDataPRL.append(
+                "khoaDuyet",
+                phieuRenLuyen.thongTinPhieu.khoaDuyet
+              );
             }
 
+            // Nếu khoa đã duyệt
             if (phieuRenLuyen.thongTinPhieu.khoaDuyet == 1) {
-              formDataPRL.set(
-                "diemTongCong",
-                phieuRenLuyen.thongTinPhieu.diemTongCong
-              );
-              formDataPRL.set("xepLoai", phieuRenLuyen.thongTinPhieu.xepLoai);
+              // Nếu người đang chấm không phải khoa => Giữ điểm tổng cộng và xếp loại cũ
+              if (userRole != roleKhoa) {
+                formDataPRL.set(
+                  "diemTongCong",
+                  phieuRenLuyen.thongTinPhieu.diemTongCong
+                );
+                formDataPRL.set("xepLoai", phieuRenLuyen.thongTinPhieu.xepLoai);
+              }
+            }
+            // Nếu cố vấn đã duyệt và khoa chưa duyệt
+            else if (phieuRenLuyen.thongTinPhieu.coVanDuyet == 1) {
+              // Nếu người đang chấm không phải cvht hoặc khoa => Giữ điểm tổng cộng và xếp loại cũ
+              if (userRole != roleKhoa && userRole != roleCVHT) {
+                formDataPRL.set(
+                  "diemTongCong",
+                  phieuRenLuyen.thongTinPhieu.diemTongCong
+                );
+                formDataPRL.set("xepLoai", phieuRenLuyen.thongTinPhieu.xepLoai);
+              }
             }
 
             //Update phiếu rèn luyện trước

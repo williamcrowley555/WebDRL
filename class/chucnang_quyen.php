@@ -43,6 +43,22 @@
             return $stmt;
         }
 
+        // GET SINGLE DETAILS THEO MA CHUC NANG VA MA QUYEN
+        public function getSingleDetailsTheoMaChucNangVaMaQuyen($maChucNang, $maQuyen) {
+            $sqlQuery = "SELECT chucnang_quyen.*, quyen.* 
+                        FROM chucnang_quyen, quyen
+                        WHERE chucnang_quyen.maQuyen = quyen.maQuyen 
+                            AND chucnang_quyen.maChucNang = ?
+                            AND chucnang_quyen.maQuyen = ?";
+    
+            $stmt = $this->conn->prepare($sqlQuery);
+            $stmt->bindParam(1, $maChucNang);
+            $stmt->bindParam(2, $maQuyen);
+            $stmt->execute();
+            
+            return $stmt;
+        }
+
         // CREATE
         public function createChucNang_Quyen(){
             $sqlQuery = "INSERT INTO
