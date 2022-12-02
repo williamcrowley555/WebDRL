@@ -342,6 +342,7 @@ function initializeBarChart(element, chartData) {
 
 function ThongKeLop(maKhoa, maKhoaHoc, maHocKyDanhGia) {
   $("#tbodyLop tr").remove();
+  var htmlData = "";
 
   $.ajax({
     url: urlapi_lop_read + `?maKhoa=${maKhoa}&maKhoaHoc=${maKhoaHoc}`,
@@ -358,7 +359,7 @@ function ThongKeLop(maKhoa, maKhoaHoc, maHocKyDanhGia) {
         autoHideNext: true,
 
         callback: function (data, pagination) {
-          var htmlData = "";
+          
           var count = 0;
 
           for (let i = 0; i < data.length; i++) {
@@ -442,12 +443,20 @@ function ThongKeLop(maKhoa, maKhoaHoc, maHocKyDanhGia) {
 
       $("#idPhanTrangLop").empty();
 
-      ThongBaoLoi(errorMessage.responseJSON.message);
+      htmlData += "<tr>\
+									<td colspan='9' class='text-center'>\
+										<p class='mt-4'>Không tìm thấy kết quả.</p>\
+									</td>\
+								</tr>"
+			$("#tbodyLop").append(htmlData);
+
+      //ThongBaoLoi(errorMessage.responseJSON.message);
     },
   });
 }
 
 function ThongKeSinhVien(maLop, maHocKyDanhGia) {
+  var htmlData = "";
   $("#tabSinhVien #classInfo").empty();
   $("#tbodySinhVien tr").remove();
 
@@ -536,7 +545,7 @@ function ThongKeSinhVien(maLop, maHocKyDanhGia) {
         autoHideNext: true,
 
         callback: function (data, pagination) {
-          var htmlData = "";
+          
 
           for (let i = 0; i < data.length; i++) {
             htmlData +=
@@ -593,6 +602,14 @@ function ThongKeSinhVien(maLop, maHocKyDanhGia) {
       );
 
       $("#idPhanTrangSinhVien").empty();
+      htmlData += "<tr>\
+									<td colspan='9' class='text-center'>\
+										<p class='mt-4'>Không tìm thấy kết quả.</p>\
+									</td>\
+								</tr>"
+			$("#tbodySinhVien").append(htmlData);
+
+      
 
       ThongBaoLoi(errorMessage.responseJSON.message);
     },

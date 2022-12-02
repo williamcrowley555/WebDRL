@@ -53,6 +53,7 @@ var jwtCookie = getCookie("jwt");
 
 //Cố vấn học tập//
 function GetListCVHT(maKhoa) {
+  var htmlData = "";
   if (getCookie("jwt") != null) {
     $("#id_tbodyData tr").remove();
 
@@ -75,7 +76,7 @@ function GetListCVHT(maKhoa) {
               autoHideNext: true,
 
               callback: function (data, pagination) {
-                var htmlData = "";
+                
                 var count = 0;
 
                 for (let i = 0; i < data.length; i++) {
@@ -121,7 +122,13 @@ function GetListCVHT(maKhoa) {
 
             tableContent = [];
             $("#idPhanTrang").empty();
-            ThongBaoLoi(errorMessage.responseJSON.message);
+            htmlData += "<tr>\
+                            <td colspan='7' class='text-center'>\
+                                <p class='mt-4'>Không tìm thấy kết quả.</p>\
+                            </td>\
+                        </tr>"
+            $("#id_tbodyData").append(htmlData);
+            //ThongBaoLoi(errorMessage.responseJSON.message);
           },
           statusCode: {
             403: function (xhr) {
@@ -191,7 +198,13 @@ function GetListCVHT(maKhoa) {
 
             tableContent = [];
             $("#idPhanTrang").empty();
-            ThongBaoLoi(errorMessage.responseJSON.message);
+            htmlData += "<tr>\
+                            <td colspan='7' class='text-center'>\
+                                <p class='mt-4'>Không tìm thấy kết quả.</p>\
+                            </td>\
+                        </tr>"
+            $("#id_tbodyData").append(htmlData);
+            //ThongBaoLoi(errorMessage.responseJSON.message);
           },
           statusCode: {
             403: function (xhr) {
@@ -272,8 +285,14 @@ function TimKiemCoVanHocTap(maCVHT) {
       var htmlData = "";
       $("#id_tbodyData").html(htmlData);
       $("#idPhanTrang").empty();
+      htmlData += "<tr>\
+                      <td colspan='7' class='text-center'>\
+                          <p class='mt-4'>Không tìm thấy kết quả.</p>\
+                      </td>\
+                  </tr>"
+      $("#id_tbodyData").append(htmlData);
 
-      ThongBaoLoi(errorMessage.responseJSON.message);
+      //ThongBaoLoi(errorMessage.responseJSON.message);
     },
     statusCode: {
       403: function (xhr) {

@@ -21,6 +21,18 @@ if ($data["status"] == 1) {
         } else {
             $maSinhVien = null;
         }
+
+        if (isset($_GET['maLop'])) {
+            $maLop = $_GET['maLop'];
+        } else {
+            $maLop = null;
+        }
+
+        if (isset($_GET['maHocKyDanhGia'])) {
+            $maHocKyDanhGia = $_GET['maHocKyDanhGia'];
+        } else {
+            $maHocKyDanhGia = null;
+        }
         
         $database = new Database();
         $db = $database->getConnection();
@@ -47,6 +59,40 @@ if ($data["status"] == 1) {
                         "maDiemTrungBinh" => $maDiemTrungBinh,
                         "maHocKyDanhGia" => $maHocKyDanhGia,
                         "maSinhVien" => $maSinhVien,
+                    );
+                    
+                    array_push($diemtrungbinhhe4Arr["diemtrungbinhhe4"], $e);
+                };
+                
+                http_response_code(200);
+                echo json_encode($diemtrungbinhhe4Arr);
+            } else {
+                http_response_code(404);
+                echo json_encode(
+                    array("message" => "Không tìm thấy kết quả.")
+                );
+            }
+        } else {
+            $items = new DiemTrungBinhHe4($db);
+            $stmt = $items->getAllDiemTrungBinhHe4TheoMaLop($maLop, $maHocKyDanhGia);
+            $itemCount = $stmt->rowCount();
+
+            if ($itemCount > 0) {
+
+                $diemtrungbinhhe4Arr = array();
+                $diemtrungbinhhe4Arr["diemtrungbinhhe4"] = array(); //tạo object json 
+                $diemtrungbinhhe4Arr["itemCount"] = $itemCount;
+
+                $countRow = 0;
+
+                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                    extract($row);
+                    $countRow++;
+                    $e = array(
+                        "soThuTu" => $countRow,
+                        "diem" => $diem,
+                        "maSinhVien" => $maSinhVien,
+                        "hoTenSinhVien" => $hoTenSinhVien
                     );
                     
                     array_push($diemtrungbinhhe4Arr["diemtrungbinhhe4"], $e);

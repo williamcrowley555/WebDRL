@@ -157,7 +157,14 @@ function GetListSinhVien(maKhoa, maLop) {
           $("#id_tbodySinhVien").html(htmlData);
           $("#idPhanTrang").empty();
 
-          ThongBaoLoi(errorMessage.responseJSON.message);
+          htmlData += "<tr>\
+                          <td colspan='8' class='text-center'>\
+                              <p class='mt-4'>Không tìm thấy kết quả.</p>\
+                          </td>\
+                      </tr>"
+          $("#tbodyQuanTriVien").append(htmlData);
+
+          //ThongBaoLoi(errorMessage.responseJSON.message);
         },
         statusCode: {
           403: function (xhr) {
@@ -254,7 +261,14 @@ function GetListSinhVien(maKhoa, maLop) {
               $("#id_tbodySinhVien").html(htmlData);
               $("#idPhanTrang").empty();
 
-              ThongBaoLoi(errorMessage.responseJSON.message);
+              htmlData += "<tr>\
+                              <td colspan='10' class='text-center'>\
+                                  <p class='mt-4'>Không tìm thấy kết quả.</p>\
+                              </td>\
+                          </tr>"
+              $("#id_tbodySinhVien").append(htmlData);
+
+              //ThongBaoLoi(errorMessage.responseJSON.message);
             },
             statusCode: {
               403: function (xhr) {
@@ -346,7 +360,14 @@ function GetListSinhVien(maKhoa, maLop) {
               $("#id_tbodySinhVien").html(htmlData);
               $("#idPhanTrang").empty();
 
-              ThongBaoLoi(errorMessage.responseJSON.message);
+              htmlData += "<tr>\
+                              <td colspan='10' class='text-center'>\
+                                  <p class='mt-4'>Không tìm thấy kết quả.</p>\
+                              </td>\
+                          </tr>"
+              $("#id_tbodySinhVien").append(htmlData);
+
+              //ThongBaoLoi(errorMessage.responseJSON.message);
             },
             statusCode: {
               403: function (xhr) {
@@ -439,7 +460,14 @@ function GetListSinhVien(maKhoa, maLop) {
             $("#id_tbodySinhVien").html(htmlData);
             $("#idPhanTrang").empty();
 
-            ThongBaoLoi(errorMessage.responseJSON.message);
+            htmlData += "<tr>\
+                              <td colspan='10' class='text-center'>\
+                                  <p class='mt-4'>Không tìm thấy kết quả.</p>\
+                              </td>\
+                          </tr>"
+              $("#id_tbodySinhVien").append(htmlData);
+
+            //ThongBaoLoi(errorMessage.responseJSON.message);
           },
           statusCode: {
             403: function (xhr) {
@@ -535,6 +563,13 @@ function TimKiemSinhVien(maSinhVien) {
       var htmlData = "";
       $("#id_tbodySinhVien").html(htmlData);
       $("#idPhanTrang").empty();
+
+      htmlData += "<tr>\
+                      <td colspan='10' class='text-center'>\
+                          <p class='mt-4'>Không tìm thấy kết quả.</p>\
+                      </td>\
+                  </tr>"
+      $("#id_tbodySinhVien").append(htmlData);
     },
     statusCode: {
       403: function (xhr) {
@@ -600,6 +635,13 @@ function LoadComboBoxThongTinKhoa_SinhVien(selector) {
         var htmlData = "";
         $("#id_tbodySinhVien").html(htmlData);
         $("#idPhanTrang").empty();
+
+        htmlData += "<tr>\
+                        <td colspan='10' class='text-center'>\
+                            <p class='mt-4'>Không tìm thấy kết quả.</p>\
+                        </td>\
+                    </tr>"
+        $("#id_tbodySinhVien").append(htmlData);
       }
     },
   });
@@ -642,6 +684,13 @@ function LoadComboBoxThongTinLopTheoKhoa(maKhoa, selector) {
           var htmlData = "";
           $("#id_tbodySinhVien").html(htmlData);
           $("#idPhanTrang").empty();
+
+          htmlData += "<tr>\
+                          <td colspan='10' class='text-center'>\
+                              <p class='mt-4'>Không tìm thấy kết quả.</p>\
+                          </td>\
+                      </tr>"
+          $("#id_tbodySinhVien").append(htmlData);
         }
       },
     });

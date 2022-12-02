@@ -40,6 +40,7 @@ function checkLoiDangNhap(message) {
 
 //tieuchidanhgia//
 function GetListTieuChi(tieuChi) {
+  var htmlData = "";
   if (getCookie("jwt") != null) {
     var jwtCookie = getCookie("jwt");
     $.ajax({
@@ -57,7 +58,7 @@ function GetListTieuChi(tieuChi) {
           autoHideNext: true,
 
           callback: function (data, pagination) {
-            var htmlData = "";
+            
             var count = 0;
 
             if (tieuChi == "tieuchicap1") {
@@ -205,14 +206,21 @@ function GetListTieuChi(tieuChi) {
       },
       error: function (errorMessage) {
         checkLoiDangNhap(errorMessage.responseJSON.message);
+        $("#idPhanTrang").empty();
+        htmlData += "<tr>\
+                        <td colspan='6' class='text-center'>\
+                            <p class='mt-4'>Không tìm thấy kết quả.</p>\
+                        </td>\
+                    </tr>"
+        $("#id_tbodyLop").append(htmlData);
 
-        Swal.fire({
-          icon: "error",
-          title: "Lỗi",
-          text: errorMessage.responseText,
-          //timer: 5000,
-          timerProgressBar: true,
-        });
+        // Swal.fire({
+        //   icon: "error",
+        //   title: "Lỗi",
+        //   text: errorMessage.responseText,
+        //   //timer: 5000,
+        //   timerProgressBar: true,
+        // });
       },
     });
   }

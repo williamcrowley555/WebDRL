@@ -291,20 +291,20 @@
 
 	function xuLyTimKiemMSSV() {
 		var _input_timKiemMaSinhVien = $('#input_timKiemMaSinhVien').val().trim();
-
-		if (_input_timKiemMaSinhVien != '') {
-			if(Number(_input_timKiemMaSinhVien)) {
-				TimKiemKhieuNai(_input_timKiemMaSinhVien);
-			} else {
-				Swal.fire({
-					icon: "error",
-					title: "Lỗi",
-					text: "Mã số sinh viên không hợp lệ!",
-					timer: 2000,
-					timerProgressBar: true,
-				});
-			}
-		}
+		TimKiemKhieuNai(_input_timKiemMaSinhVien);
+		// if (_input_timKiemMaSinhVien != '') {
+		// 	if(Number(_input_timKiemMaSinhVien)) {
+		// 		TimKiemKhieuNai(_input_timKiemMaSinhVien);
+		// 	} else {
+		// 		Swal.fire({
+		// 			icon: "error",
+		// 			title: "Lỗi",
+		// 			text: "Mã số sinh viên không hợp lệ!",
+		// 			timer: 2000,
+		// 			timerProgressBar: true,
+		// 		});
+		// 	}
+		// }
 	}
 
 	$('#btn_timKiemMaSinhVien').on('click', function() {
@@ -362,53 +362,62 @@
 				var htmlData = "";
 				var count = 0;
 
-				for (let i = 0; i < data.length; i++) {
-					count += 1;
+				if(data.length == 0) {
+					htmlData += "<tr>\
+									<td colspan='9' class='text-center'>\
+										<p class='mt-4'>Không tìm thấy kết quả.</p>\
+									</td>\
+								</tr>"
+					$("#tbodyKhieuNai").append(htmlData);
+				} else {
+					for (let i = 0; i < data.length; i++) {
+						count += 1;
 
-					htmlData +=
-					"<tr>\
-										<td class='cell'>" +
-					data[i].soThuTu +
-					"</td>\
-										<td class='cell'><span class='truncate'>" +
-					data[i].maKhieuNai +
-					"</span></td>\
-										<td class='cell'>" +
-					data[i].maPhieuRenLuyen +
-					"</td>\
-										<td class='cell'>" +
-					data[i].maSinhVien +
-					"</td>\
-										<td class='cell'>" +
-					data[i].hoTenSinhVien +
-					"</td>\
-										<td class='cell'>" +
-					data[i].maLop +
-					"</td>\
-										<td class='cell'>" +
-					(data[i].trangThai == 1
-						? "<span class='badge bg-success' style='color: white;font-size: inherit;'>Chấp thuận</span>"
-						: data[i].trangThai == -1
-						? "<span class='badge bg-danger' style='color: white;font-size: inherit;'>Từ chối</span>"
-						: "<span class='badge bg-info' style='color: white;font-size: inherit;'>Đang chờ duyệt</span>") +
-					"</td>\
-										<td class='cell'>" +
-					(data[i].trangThai == 0
-						? timeSinceBadge(data[i].thoiGianKhieuNai)
-						: toDateTimeString(data[i].thoiGianKhieuNai)) +
-					"</td>\
-										<td class='cell'>\
-										<button class='btn btn-secondary btn_XemChiTiet' style='color: white;' data-bs-toggle='modal' data-bs-target='#XemChiTietModal' data-id = '" +
-					data[i].maKhieuNai +
-					"' >Xem chi tiết</button>\
-										<button class='btn btn-info btn_PheDuyet' style='color: white;' data-bs-toggle='modal' data-bs-target='#PheDuyetModal' data-id = '" +
-					data[i].maKhieuNai +
-					"' >Phê duyệt</button>\
-					</td>\
-										</tr>";
+						htmlData +=
+						"<tr>\
+											<td class='cell'>" +
+						data[i].soThuTu +
+						"</td>\
+											<td class='cell'><span class='truncate'>" +
+						data[i].maKhieuNai +
+						"</span></td>\
+											<td class='cell'>" +
+						data[i].maPhieuRenLuyen +
+						"</td>\
+											<td class='cell'>" +
+						data[i].maSinhVien +
+						"</td>\
+											<td class='cell'>" +
+						data[i].hoTenSinhVien +
+						"</td>\
+											<td class='cell'>" +
+						data[i].maLop +
+						"</td>\
+											<td class='cell'>" +
+						(data[i].trangThai == 1
+							? "<span class='badge bg-success' style='color: white;font-size: inherit;'>Chấp thuận</span>"
+							: data[i].trangThai == -1
+							? "<span class='badge bg-danger' style='color: white;font-size: inherit;'>Từ chối</span>"
+							: "<span class='badge bg-info' style='color: white;font-size: inherit;'>Đang chờ duyệt</span>") +
+						"</td>\
+											<td class='cell'>" +
+						(data[i].trangThai == 0
+							? timeSinceBadge(data[i].thoiGianKhieuNai)
+							: toDateTimeString(data[i].thoiGianKhieuNai)) +
+						"</td>\
+											<td class='cell'>\
+											<button class='btn btn-secondary btn_XemChiTiet' style='color: white;' data-bs-toggle='modal' data-bs-target='#XemChiTietModal' data-id = '" +
+						data[i].maKhieuNai +
+						"' >Xem chi tiết</button>\
+											<button class='btn btn-info btn_PheDuyet' style='color: white;' data-bs-toggle='modal' data-bs-target='#PheDuyetModal' data-id = '" +
+						data[i].maKhieuNai +
+						"' >Phê duyệt</button>\
+						</td>\
+											</tr>";
+					}
+
+					$("#tbodyKhieuNai").html(htmlData);
 				}
-
-				$("#tbodyKhieuNai").html(htmlData);
 			},
 		});
 	})

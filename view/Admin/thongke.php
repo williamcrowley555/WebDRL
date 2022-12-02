@@ -483,42 +483,53 @@
 				callback: function (data, pagination) {
 					var htmlData = "";
 
-					for (let i = 0; i < data.length; i++) {
-						htmlData +=
-							"<tr>\
-								<td class='cell'>" +
-								data[i].soThuTu +
-								"</td>\
-									<td class='cell'><span class='truncate'>" +
-								data[i].maSinhVien +
-								"</span></td>\
+					if(data.length == 0) {
+						htmlData += "<tr>\
+										<td colspan='9' class='text-center'>\
+											<p class='mt-4'>Không tìm thấy kết quả.</p>\
+										</td>\
+									</tr>"
+						$("#tbodySinhVien").append(htmlData);
+					} else {
+						for (let i = 0; i < data.length; i++) {
+							htmlData +=
+								"<tr>\
 									<td class='cell'>" +
-								data[i].hoTenSinhVien +
-								"</td>\
+									data[i].soThuTu +
+									"</td>\
+										<td class='cell'><span class='truncate'>" +
+									data[i].maSinhVien +
+									"</span></td>\
+										<td class='cell'>" +
+									data[i].hoTenSinhVien +
+									"</td>\
+										<td class='cell'>" +
+									data[i].ngaySinh +
+									"</td>\
+										<td class='cell'>" +
+									data[i].diemTongCong +
+									"</td>\
+										<td class='cell'>" +
+									data[i].xepLoai +
+									"</td>\
 									<td class='cell'>" +
-								data[i].ngaySinh +
-								"</td>\
-									<td class='cell'>" +
-								data[i].diemTongCong +
-								"</td>\
-									<td class='cell'>" +
-								data[i].xepLoai +
-								"</td>\
-								<td class='cell'>" +
-								(data[i].sinhVienCham == "1"
-									? "<span class='badge bg-success' style='color: white;font-size: inherit;'>Đã chấm</span>"
-									: "<span class='badge bg-warning' style='color: white;font-size: inherit;'>Chưa chấm</span>") +
-								"</td>\
-									<td class='cell'>" +
-								(data[i].coVanDuyet == '1' ? "<span class='badge bg-success' style='color: white;font-size: inherit;'>Đã duyệt</span>" : "<span class='badge bg-warning' style='color: white;font-size: inherit;'>Chưa duyệt</span>") +
-								"</td>\
-									<td class='cell'>" +
-								(data[i].khoaDuyet == '1' ? "<span class='badge bg-success' style='color: white;font-size: inherit;'>Đã duyệt</span>" : "<span class='badge bg-warning' style='color: white;font-size: inherit;'>Chưa duyệt</span>") +
-								"</td>\
-							</tr>";
+									(data[i].sinhVienCham == "1"
+										? "<span class='badge bg-success' style='color: white;font-size: inherit;'>Đã chấm</span>"
+										: "<span class='badge bg-warning' style='color: white;font-size: inherit;'>Chưa chấm</span>") +
+									"</td>\
+										<td class='cell'>" +
+									(data[i].coVanDuyet == '1' ? "<span class='badge bg-success' style='color: white;font-size: inherit;'>Đã duyệt</span>" : "<span class='badge bg-warning' style='color: white;font-size: inherit;'>Chưa duyệt</span>") +
+									"</td>\
+										<td class='cell'>" +
+									(data[i].khoaDuyet == '1' ? "<span class='badge bg-success' style='color: white;font-size: inherit;'>Đã duyệt</span>" : "<span class='badge bg-warning' style='color: white;font-size: inherit;'>Chưa duyệt</span>") +
+									"</td>\
+								</tr>";
+						}
+
+						$("#tbodySinhVien").html(htmlData);
 					}
 
-					$("#tbodySinhVien").html(htmlData);
+					
 				},
 			});
 	});

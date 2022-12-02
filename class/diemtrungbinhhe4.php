@@ -46,6 +46,16 @@
             return $stmt;
         }
 
+        public function getAllDiemTrungBinhHe4TheoMaLop($maLop, $maHocKyDanhGia){
+            $sqlQuery = "SELECT maDiemTrungBinh, ". $this->db_table .".maSinhVien, hoTenSinhVien, diem FROM " . $this->db_table . " 
+                        JOIN sinhvien ON ". $this->db_table .".maSinhVien = sinhvien.maSinhVien WHERE maLop = ? AND maHocKyDanhGia = ?";
+            $stmt = $this->conn->prepare($sqlQuery);
+            $stmt->bindParam(1, $maLop);
+            $stmt->bindParam(2, $maHocKyDanhGia);
+            $stmt->execute();
+            return $stmt;
+        }
+
         // GET SINGLE DIEM TRUNG BINH HE 4
         public function getSingleDiemTrungBinhHe4() {
             $sqlQuery = "SELECT * FROM " . $this->db_table . "

@@ -108,6 +108,13 @@ function GetListKhoa() {
       var htmlData = "";
       $("#id_tbodyKhoa").html(htmlData);
       $("#idPhanTrang").empty();
+      htmlData += "<tr>\
+									<td colspan='5' class='text-center'>\
+										<p class='mt-4'>Không tìm thấy kết quả.</p>\
+									</td>\
+								</tr>"
+			$("#id_tbodyKhoa").append(htmlData);
+
 
       ThongBaoLoi(errorMessage.responseJSON.message);
     },
@@ -178,7 +185,14 @@ function TimKiemKhoa(maKhoa) {
       $("#id_tbodyKhoa").html(htmlData);
       $("#idPhanTrang").empty();
 
-      ThongBaoLoi(errorMessage.responseJSON.message);
+      htmlData += "<tr>\
+									<td colspan='5' class='text-center'>\
+										<p class='mt-4'>Không tìm thấy kết quả.</p>\
+									</td>\
+								</tr>"
+			$("#id_tbodyKhoa").append(htmlData);
+
+      //ThongBaoLoi(errorMessage.responseJSON.message);
     },
     statusCode: {
       403: function (xhr) {

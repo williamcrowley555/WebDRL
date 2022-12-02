@@ -132,7 +132,14 @@ function GetListHoatdongdanhgia() {
         $("#id_tbodyLop").html(htmlData);
         $("#idPhanTrang").empty();
 
-        ThongBaoLoi(errorMessage.responseJSON.message);
+        htmlData += "<tr>\
+                        <td colspan='13' class='text-center'>\
+                            <p class='mt-4'>Không tìm thấy kết quả.</p>\
+                        </td>\
+                    </tr>"
+        $("#id_tbodyLop").append(htmlData);
+
+        //ThongBaoLoi(errorMessage.responseJSON.message);
       },
     });
   }
@@ -226,12 +233,21 @@ function TimKiemHoatDong(maHD) {
       $("#id_tbodyLop").html(htmlData);
       $("#idPhanTrang").empty();
 
-      ThongBaoLoi(errorMessage.responseJSON.message);
+      htmlData += "<tr>\
+                        <td colspan='13' class='text-center'>\
+                            <p class='mt-4'>Không tìm thấy kết quả.</p>\
+                        </td>\
+                    </tr>"
+        $("#id_tbodyLop").append(htmlData);
+
+      //ThongBaoLoi(errorMessage.responseJSON.message);
     },
   });
 }
 
 function LocHoatDong(from, to) {
+  $("#id_tbodyLop tr").remove();
+  var htmlData = "";
   if (from && to) {
     $.ajax({
       url: urlapi_hoatdongdanhgia_read + `?from=${from}&to=${to}`,
@@ -250,7 +266,7 @@ function LocHoatDong(from, to) {
           autoHideNext: true,
 
           callback: function (data, pagination) {
-            var htmlData = "";
+            
             var count = 0;
 
             for (let i = 0; i < data.length; i++) {
@@ -316,8 +332,16 @@ function LocHoatDong(from, to) {
       },
       error: function (errorMessage) {
         checkLoiDangNhap(errorMessage.responseJSON.message);
+        $("#idPhanTrang").hide();
 
-        ThongBaoLoi(errorMessage.responseJSON.message);
+        htmlData += "<tr>\
+                        <td colspan='13' class='text-center'>\
+                            <p class='mt-4'>Không tìm thấy kết quả.</p>\
+                        </td>\
+                    </tr>"
+        $("#id_tbodyLop").append(htmlData);
+
+        //ThongBaoLoi(errorMessage.responseJSON.message);
       },
     });
   }

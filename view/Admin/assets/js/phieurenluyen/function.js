@@ -97,6 +97,7 @@ var jwtCookie = getCookie("jwt");
 //phieurenluyen//
 function GetListPhieurenluyen(maLop, maHocKyDanhGia) {
   $("#id_tbodyPhieuRenLuyen tr").remove();
+  var htmlData = "";
 
   if (maLop) {
     $.ajax({
@@ -116,7 +117,7 @@ function GetListPhieurenluyen(maLop, maHocKyDanhGia) {
           autoHideNext: true,
 
           callback: function (data, pagination) {
-            var htmlData = "";
+            
             var count = 0;
 
             for (let i = 0; i < data.length; i++) {
@@ -195,17 +196,29 @@ function GetListPhieurenluyen(maLop, maHocKyDanhGia) {
       },
       error: function (errorMessage) {
         checkLoiDangNhap(errorMessage.responseJSON.message);
-
-        thongBaoLoi(errorMessage.responseJSON.message);
+        htmlData += "<tr>\
+                        <td colspan='9' class='text-center'>\
+                            <p class='mt-4'>Không tìm thấy kết quả.</p>\
+                        </td>\
+                    </tr>"
+        $("#id_tbodyPhieuRenLuyen").append(htmlData);
+        //thongBaoLoi(errorMessage.responseJSON.message);
       },
     });
   } else {
-    thongBaoLoi("Không tìm thấy kết quả!");
+    htmlData += "<tr>\
+                    <td colspan='9' class='text-center'>\
+                        <p class='mt-4'>Không tìm thấy kết quả.</p>\
+                    </td>\
+                </tr>"
+    $("#id_tbodyPhieuRenLuyen").append(htmlData);
+    //thongBaoLoi("Không tìm thấy kết quả");
   }
 }
 
 function TimKiemPhieuRenLuyen(maPhieuRenLuyen) {
   $("#id_tbodyPhieuRenLuyen tr").remove();
+  var htmlData = "";
 
   $.ajax({
     url: urlapi_phieurenluyen_read_MaPhieuRenLuyen + maPhieuRenLuyen,
@@ -222,7 +235,6 @@ function TimKiemPhieuRenLuyen(maPhieuRenLuyen) {
         autoHideNext: true,
 
         callback: function (data, pagination) {
-          var htmlData = "";
           var count = 0;
 
           for (let i = 0; i < data.length; i++) {
@@ -297,7 +309,14 @@ function TimKiemPhieuRenLuyen(maPhieuRenLuyen) {
     error: function (errorMessage) {
       checkLoiDangNhap(errorMessage.responseJSON.message);
 
-      thongBaoLoi(errorMessage.responseJSON.message);
+      htmlData += "<tr>\
+                      <td colspan='9' class='text-center'>\
+                          <p class='mt-4'>Không tìm thấy kết quả.</p>\
+                      </td>\
+                  </tr>"
+      $("#id_tbodyPhieuRenLuyen").append(htmlData);
+
+      //thongBaoLoi(errorMessage.responseJSON.message);
     },
   });
 }
@@ -358,13 +377,20 @@ function LoadComboBoxThongTinKhoa() {
     error: function (errorMessage) {
       checkLoiDangNhap(errorMessage.responseJSON.message);
 
-      Swal.fire({
-        icon: "error",
-        title: "Lỗi",
-        text: errorMessage.responseText,
-        //timer: 5000,
-        timerProgressBar: true,
-      });
+      var htmlData = "<tr>\
+                        <td colspan='9' class='text-center'>\
+                            <p class='mt-4'>Không tìm thấy kết quả.</p>\
+                        </td>\
+                    </tr>"
+        $("#id_tbodyPhieuRenLuyen").append(htmlData);
+
+      // Swal.fire({
+      //   icon: "error",
+      //   title: "Lỗi",
+      //   text: errorMessage.responseText,
+      //   //timer: 5000,
+      //   timerProgressBar: true,
+      // });
     },
   });
 }

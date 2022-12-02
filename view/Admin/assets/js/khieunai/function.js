@@ -259,6 +259,7 @@ function timeSinceBadge(strDate) {
 }
 
 function GetListKhieuNai(maKhoa, maKhoaHoc, maHocKyDanhGia) {
+  var htmlData = "";
   $("#tbodyKhieuNai tr").remove();
 
   $.ajax({
@@ -279,7 +280,7 @@ function GetListKhieuNai(maKhoa, maKhoaHoc, maHocKyDanhGia) {
         autoHidePrevious: true,
         autoHideNext: true,
         callback: function (data, pagination) {
-          var htmlData = "";
+          
           var count = 0;
 
           for (let i = 0; i < data.length; i++) {
@@ -339,7 +340,14 @@ function GetListKhieuNai(maKhoa, maKhoaHoc, maHocKyDanhGia) {
 
       $("#idPhanTrangKhieuNai").empty();
 
-      ThongBaoLoi(errorMessage.responseJSON.message);
+      htmlData += "<tr>\
+                      <td colspan='9' class='text-center'>\
+                          <p class='mt-4'>Không tìm thấy kết quả.</p>\
+                      </td>\
+                  </tr>"
+      $("#tbodyKhieuNai").append(htmlData);
+
+      //ThongBaoLoi(errorMessage.responseJSON.message);
     },
   });
 
@@ -347,6 +355,7 @@ function GetListKhieuNai(maKhoa, maKhoaHoc, maHocKyDanhGia) {
 }
 
 function TimKiemKhieuNai(maSinhVien) {
+  var htmlData = "";
   $("#tbodyKhieuNai tr").remove();
 
   $.ajax({
@@ -365,7 +374,7 @@ function TimKiemKhieuNai(maSinhVien) {
         autoHidePrevious: true,
         autoHideNext: true,
         callback: function (data, pagination) {
-          var htmlData = "";
+          
           var count = 0;
 
           for (let i = 0; i < data.length; i++) {
@@ -425,7 +434,14 @@ function TimKiemKhieuNai(maSinhVien) {
 
       $("#idPhanTrangKhieuNai").empty();
 
-      ThongBaoLoi(errorMessage.responseJSON.message);
+      htmlData += "<tr>\
+                      <td colspan='9' class='text-center'>\
+                          <p class='mt-4'>Không tìm thấy kết quả.</p>\
+                      </td>\
+                  </tr>"
+      $("#tbodyKhieuNai").append(htmlData);
+
+      //ThongBaoLoi(errorMessage.responseJSON.message);
     },
   });
 

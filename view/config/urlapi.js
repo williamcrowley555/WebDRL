@@ -41,6 +41,9 @@ const urlapi_diemtrungbinhhe4_read = api_url + "/diemtrungbinhhe4/read.php";
 const urlapi_diemtrungbinhhe4_read_MaSV =
   urlapi_diemtrungbinhhe4_read + "?maSinhVien=";
 
+  const urlapi_diemtrungbinhhe4_read_Lop =
+  urlapi_diemtrungbinhhe4_read + "?maLop=";
+
 //SINGLE READ//
 const urlapi_diemtrungbinhhe4_single_read =
   api_url + "/diemtrungbinhhe4/single_read.php";

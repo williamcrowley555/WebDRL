@@ -426,20 +426,20 @@
 
 	function xuLyTimKiemMaCVHT() {
 		var _input_timKiemMaCVHT = $('#input_timKiemMaCVHT').val().trim();
-
-		if (_input_timKiemMaCVHT != '') {
-			if(Number(_input_timKiemMaCVHT)){
-				TimKiemCoVanHocTap(_input_timKiemMaCVHT);
-			} else {
-				Swal.fire({
-					icon: "error",
-					title: "Lỗi",
-					text: "Mã cố vấn học tập không hợp lệ!",
-					timer: 2000,
-					timerProgressBar: true,
-				});
-			}
-		}
+		TimKiemCoVanHocTap(_input_timKiemMaCVHT);
+		// if (_input_timKiemMaCVHT != '') {
+		// 	if(Number(_input_timKiemMaCVHT)){
+		// 		TimKiemCoVanHocTap(_input_timKiemMaCVHT);
+		// 	} else {
+		// 		Swal.fire({
+		// 			icon: "error",
+		// 			title: "Lỗi",
+		// 			text: "Mã cố vấn học tập không hợp lệ!",
+		// 			timer: 2000,
+		// 			timerProgressBar: true,
+		// 		});
+		// 	}
+		// }
 	}
 
 	LoadComboBoxThongTinKhoa_CVHT();

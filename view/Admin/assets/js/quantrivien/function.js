@@ -142,7 +142,13 @@ function getListQuanTriVien(maQuyen) {
                     $("#tbodyQuanTriVien").html(htmlData);
                     $("#idPhanTrang").empty();
 
-                    ThongBaoLoi(errorMessage.responseJSON.message);
+                    htmlData += "<tr>\
+                                <td colspan='8' class='text-center'>\
+                                    <p class='mt-4'>Không tìm thấy kết quả.</p>\
+                                </td>\
+                            </tr>"
+                    $("#tbodyQuanTriVien").append(htmlData);
+                    //ThongBaoLoi(errorMessage.responseJSON.message);
                 },
                 statusCode: {
                     403: function (xhr) {
@@ -232,7 +238,14 @@ function getListQuanTriVien(maQuyen) {
                     $("#tbodyQuanTriVien").html(htmlData);
                     $("#idPhanTrang").empty();
 
-                    ThongBaoLoi(errorMessage.responseJSON.message);
+                    htmlData += "<tr>\
+                                    <td colspan='8' class='text-center'>\
+                                        <p class='mt-4'>Không tìm thấy kết quả.</p>\
+                                    </td>\
+                                </tr>"
+                    $("#tbodyQuanTriVien").append(htmlData);
+
+                    //ThongBaoLoi(errorMessage.responseJSON.message);
                 },
                 statusCode: {
                     403: function (xhr) {
@@ -324,7 +337,14 @@ function getListQuanTriVien(maQuyen) {
                 $("#tbodyQuanTriVien").html(htmlData);
                 $("#idPhanTrang").empty();
 
-                ThongBaoLoi(errorMessage.responseJSON.message);
+                htmlData += "<tr>\
+                                <td colspan='8' class='text-center'>\
+                                    <p class='mt-4'>Không tìm thấy kết quả.</p>\
+                                </td>\
+                            </tr>"
+                $("#tbodyQuanTriVien").append(htmlData);
+
+                //ThongBaoLoi(errorMessage.responseJSON.message);
             },
             statusCode: {
                 403: function (xhr) {
@@ -418,7 +438,14 @@ function getListQuanTriVien(maQuyen) {
                     $("#tbodyQuanTriVien").html(htmlData);
                     $("#idPhanTrang").empty();
 
-                    ThongBaoLoi(errorMessage.responseJSON.message);
+                    htmlData += "<tr>\
+                                <td colspan='8' class='text-center'>\
+                                        <p class='mt-4'>Không tìm thấy kết quả.</p>\
+                                    </td>\
+                                </tr>"
+                    $("#tbodyQuanTriVien").append(htmlData);
+
+                    //ThongBaoLoi(errorMessage.responseJSON.message);
                 },
                 statusCode: {
                     403: function (xhr) {
@@ -609,7 +636,13 @@ function timKiemQuanTriVien(searchText, maQuyen) {
             });
             $("#tbodyQuanTriVien").html(htmlData);
             if(!isSuccessAdmin && !isSuccessCTSV) {
-                ThongBaoLoi("Không tìm thấy kết quả!");
+                //ThongBaoLoi("Không tìm thấy kết quả!");
+                htmlData += "<tr>\
+                                <td colspan='8' class='text-center'>\
+                                    <p class='mt-4'>Không tìm thấy kết quả.</p>\
+                                </td>\
+                            </tr>"
+                $("#tbodyQuanTriVien").append(htmlData);
             }
         } else if (maQuyen == "admin") {
             $("#id_tbodyQuanTriVien tr").remove();
@@ -694,7 +727,13 @@ function timKiemQuanTriVien(searchText, maQuyen) {
                 
                 $("#tbodyQuanTriVien").html(htmlData);
                 $("#idPhanTrang").empty();
-                ThongBaoLoi(errorMessage.responseJSON.message);
+                htmlData += "<tr>\
+                                <td colspan='8' class='text-center'>\
+                                    <p class='mt-4'>Không tìm thấy kết quả.</p>\
+                                </td>\
+                            </tr>"
+                $("#tbodyQuanTriVien").append(htmlData);
+                //ThongBaoLoi(errorMessage.responseJSON.message);
             },
             statusCode: {
                 403: function (xhr) {
@@ -788,7 +827,14 @@ function timKiemQuanTriVien(searchText, maQuyen) {
                     $("#tbodyQuanTriVien").html(htmlData);
                     $("#idPhanTrang").empty();
 
-                    ThongBaoLoi(errorMessage.responseJSON.message);
+                    htmlData += "<tr>\
+                                    <td colspan='8' class='text-center'>\
+                                        <p class='mt-4'>Không tìm thấy kết quả.</p>\
+                                    </td>\
+                                </tr>"
+                    $("#tbodyQuanTriVien").append(htmlData);
+
+                    //ThongBaoLoi(errorMessage.responseJSON.message);
                 },
                 statusCode: {
                     403: function (xhr) {

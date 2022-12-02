@@ -44,6 +44,7 @@ function checkLoiDangNhap(message) {
 function GetListThongBaoDanhGia() {
   if (getCookie("jwt") != null) {
     var jwtCookie = getCookie("jwt");
+    var htmlData = "";
 
     $("#id_tbodyLop tr").remove();
 
@@ -62,7 +63,7 @@ function GetListThongBaoDanhGia() {
           autoHideNext: true,
 
           callback: function (data, pagination) {
-            var htmlData = "";
+            
             var count = 0;
 
             for (let i = 0; i < data.length; i++) {
@@ -159,19 +160,27 @@ function GetListThongBaoDanhGia() {
       error: function (errorMessage) {
         checkLoiDangNhap(errorMessage.responseJSON.message);
 
-        Swal.fire({
-          icon: "error",
-          title: "Lỗi",
-          text: errorMessage.responseJSON.message,
-          //timer: 5000,
-          timerProgressBar: true,
-        });
+        htmlData += "<tr>\
+                        <td colspan='15' class='text-center'>\
+                            <p class='mt-4'>Không tìm thấy kết quả.</p>\
+                        </td>\
+                    </tr>"
+        $("#id_tbodyLop").append(htmlData);
+
+        // Swal.fire({
+        //   icon: "error",
+        //   title: "Lỗi",
+        //   text: errorMessage.responseJSON.message,
+        //   //timer: 5000,
+        //   timerProgressBar: true,
+        // });
       },
     });
   }
 }
 
 function TimKiemThongBaoDanhGia(maHKDG) {
+  var htmlData = "";
   if (getCookie("jwt") != null) {
     var jwtCookie = getCookie("jwt");
 
@@ -192,7 +201,7 @@ function TimKiemThongBaoDanhGia(maHKDG) {
           autoHideNext: true,
 
           callback: function (data, pagination) {
-            var htmlData = "";
+            
             var count = 0;
 
             for (let i = 0; i < data.length; i++) {
@@ -289,13 +298,20 @@ function TimKiemThongBaoDanhGia(maHKDG) {
       error: function (errorMessage) {
         checkLoiDangNhap(errorMessage.responseJSON.message);
 
-        Swal.fire({
-          icon: "error",
-          title: "Lỗi",
-          text: errorMessage.responseJSON.message,
-          //timer: 5000,
-          timerProgressBar: true,
-        });
+        htmlData += "<tr>\
+                        <td colspan='15' class='text-center'>\
+                            <p class='mt-4'>Không tìm thấy kết quả.</p>\
+                        </td>\
+                    </tr>"
+        $("#id_tbodyLop").append(htmlData);
+
+        // Swal.fire({
+        //   icon: "error",
+        //   title: "Lỗi",
+        //   text: errorMessage.responseJSON.message,
+        //   //timer: 5000,
+        //   timerProgressBar: true,
+        // });
       },
     });
   }

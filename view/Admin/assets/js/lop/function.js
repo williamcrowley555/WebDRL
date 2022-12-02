@@ -53,6 +53,7 @@ function checkLoiDangNhap(message) {
 
 //Lớp//
 function GetListLop(maKhoa) {
+  var htmlData = "";
   if (maKhoa == "tatcakhoa") {
     $("#id_tbodyLop tr").remove();
 
@@ -73,7 +74,7 @@ function GetListLop(maKhoa) {
           autoHideNext: true,
 
           callback: function (data, pagination) {
-            var htmlData = "";
+            
             var count = 0;
 
             for (let i = 0; i < data.length; i++) {
@@ -118,13 +119,20 @@ function GetListLop(maKhoa) {
 
         $("#idPhanTrang").empty();
 
-        Swal.fire({
-          icon: "error",
-          title: "Lỗi",
-          text: errorMessage.responseText,
-          //timer: 5000,
-          timerProgressBar: true,
-        });
+        htmlData += "<tr>\
+                        <td colspan='7' class='text-center'>\
+                            <p class='mt-4'>Không tìm thấy kết quả.</p>\
+                        </td>\
+                    </tr>"
+        $("#id_tbodyLop").append(htmlData);
+
+        // Swal.fire({
+        //   icon: "error",
+        //   title: "Lỗi",
+        //   text: errorMessage.responseText,
+        //   //timer: 5000,
+        //   timerProgressBar: true,
+        // });
       },
     });
   } else {
@@ -192,7 +200,14 @@ function GetListLop(maKhoa) {
 
         $("#idPhanTrang").empty();
 
-        ThongBaoLoi(errorMessage.responseJSON.message);
+        htmlData += "<tr>\
+                        <td colspan='7' class='text-center'>\
+                            <p class='mt-4'>Không tìm thấy kết quả.</p>\
+                        </td>\
+                    </tr>"
+        $("#id_tbodyLop").append(htmlData);
+
+        //ThongBaoLoi(errorMessage.responseJSON.message);
       },
     });
   }
@@ -200,6 +215,7 @@ function GetListLop(maKhoa) {
 
 function TimKiemLop(maLop) {
   $("#id_tbodyLop tr").remove();
+  var htmlData = "";
 
   $.ajax({
     url: urlapi_lop_read_maLop + maLop,
@@ -218,7 +234,7 @@ function TimKiemLop(maLop) {
         autoHideNext: true,
 
         callback: function (data, pagination) {
-          var htmlData = "";
+          
           var count = 0;
 
           for (let i = 0; i < data.length; i++) {
@@ -263,7 +279,14 @@ function TimKiemLop(maLop) {
 
       $("#idPhanTrang").empty();
 
-      ThongBaoLoi(errorMessage.responseJSON.message);
+      htmlData += "<tr>\
+                      <td colspan='7' class='text-center'>\
+                        <p class='mt-4'>Không tìm thấy kết quả.</p>\
+                      </td>\
+                  </tr>"
+      $("#id_tbodyLop").append(htmlData);
+
+      //ThongBaoLoi(errorMessage.responseJSON.message);
     },
     statusCode: {
       403: function (xhr) {
