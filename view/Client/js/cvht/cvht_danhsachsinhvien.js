@@ -153,141 +153,155 @@ function getDanhSachDRLSinhVienLopTheoHocKy(maLop, maHocKyDanhGia) {
                       today.getDate()
                   );
 
+                  var isActiveFunctionality = false;
+
+                  // Kiểm tra chức năng có được mở?
+                  $.ajax({
+                    url:
+                      urlapi_chucnang_single_read_maChucNang +
+                      CHUC_NANG_CHAM_DIEM_REN_LUYEN,
+                    async: false,
+                    type: "GET",
+                    contentType: "application/json;charset=utf-8",
+                    dataType: "json",
+                    headers: {
+                      Authorization: jwtCookie,
+                    },
+                    success: function (result_CN) {
+                      if (result_CN.kichHoat == 1) {
+                        // Kiểm tra học kỳ đang xét được áp dụng cho chức năng?
+                        $.ajax({
+                          url:
+                            urlapi_chucnang_hockydanhgia_single_details_read +
+                            `?maChucNang=${CHUC_NANG_CHAM_DIEM_REN_LUYEN}&maHocKyDanhGia=${maHocKyDanhGia}`,
+                          async: false,
+                          type: "GET",
+                          contentType: "application/json;charset=utf-8",
+                          dataType: "json",
+                          headers: {
+                            Authorization: jwtCookie,
+                          },
+                          success: function (result_CN_HKDG) {
+                            if (
+                              result_CN_HKDG.maHocKyDanhGia == maHocKyDanhGia
+                            ) {
+                              // Kiểm tra quyền đang xét được áp dụng cho chức năng?
+                              $.ajax({
+                                url:
+                                  urlapi_chucnang_quyen_single_details_read +
+                                  `?maChucNang=${CHUC_NANG_CHAM_DIEM_REN_LUYEN}&maQuyen=${getCookie(
+                                    "quyen"
+                                  )}`,
+                                async: false,
+                                type: "GET",
+                                contentType: "application/json;charset=utf-8",
+                                dataType: "json",
+                                headers: {
+                                  Authorization: jwtCookie,
+                                },
+                                success: function (result_CN_Quyen) {
+                                  if (
+                                    result_CN_Quyen.maQuyen ==
+                                    getCookie("quyen")
+                                  ) {
+                                    isActiveFunctionality = true;
+                                  }
+                                },
+                                error: function (error_CN_Quyen) {},
+                              });
+                            }
+                          },
+                          error: function (error_CN_HKDG) {},
+                        });
+                      }
+                    },
+                    error: function (error_CN) {},
+                  });
+
+                  // Trường hợp đang trong thời gian học kỳ mở chấm
                   if (
-                    ngayHienTai.getTime() >= ngayCoVanDanhGia.getTime() &&
-                    ngayHienTai.getTime() <= ngayCoVanKetThucDanhGia.getTime()
+                    isActiveFunctionality ||
+                    (ngayHienTai.getTime() >= ngayCoVanDanhGia.getTime() &&
+                      ngayHienTai.getTime() <=
+                        ngayCoVanKetThucDanhGia.getTime())
                   ) {
-                    if (result_PRL.coVanDuyet == 0) {
-                      $("#tbody_DanhSachDiemTheoKy").append(
-                        "<tr>\
+                    $("#tbody_DanhSachDiemTheoKy").append(
+                      "<tr>\
                                                 <td>" +
-                          soThuTu +
-                          "</td>\
+                        soThuTu +
+                        "</td>\
                                                 <td><p class='fw-normal mb-1'>" +
-                          maSinhVien +
-                          "</p></td>\
+                        maSinhVien +
+                        "</p></td>\
                                                 <td><p class='fw-normal mb-1'>" +
-                          hoTenSinhVien +
-                          "</p></td>\
+                        hoTenSinhVien +
+                        "</p></td>\
                                                 <td><p class='fw-normal mb-1'>" +
-                          new Date(ngaySinhSV).toLocaleDateString() +
-                          "</p></td>\
+                        new Date(ngaySinhSV).toLocaleDateString() +
+                        "</p></td>\
                                                 <td><span class='badge badge-success' style='color: black;font-size: smaller;'>Đã chấm</span></td>\
-                                                <td><span class='badge badge-warning' style='color: black;font-size: smaller;'>Chưa duyệt</span></td>\
                                                 <td>" +
-                          result_PRL.diemTongCong +
-                          "</td>\
+                        (result_PRL.coVanDuyet == 0
+                          ? `<span class='badge badge-warning' style='color: black;font-size: smaller;'>Chưa duyệt</span>`
+                          : `<span class='badge badge-success' style='color: black;font-size: smaller;'>Đã duyệt</span>`) +
+                        "</td>\
                                                 <td>" +
-                          result_PRL.xepLoai +
-                          "</td>\
+                        result_PRL.diemTongCong +
+                        "</td>\
+                                                <td>" +
+                        result_PRL.xepLoai +
+                        "</td>\
                                                 <td>\
                                                     <a href='chamdiemchitiet.php?maSinhVien=" +
-                          maSinhVien +
-                          "&maHocKy=" +
-                          maHocKyDanhGia +
-                          "' ><button type='button' class='btn btn-primary' style='color: white;width: max-content;'>Xem và duyệt</button></a>\
+                        maSinhVien +
+                        "&maHocKy=" +
+                        maHocKyDanhGia +
+                        "' >" +
+                        (result_PRL.coVanDuyet == 0
+                          ? `<button type='button' class='btn btn-primary' style='color: white;width: max-content;'>Xem và duyệt</button>`
+                          : `<button type='button' class='btn btn-warning' style='color: black;width: max-content;'>Duyệt lại</button>`) +
+                        "</a>\
                                                 </td>\
                                             </tr>"
-                      );
-                    } else {
-                      $("#tbody_DanhSachDiemTheoKy").append(
-                        "<tr>\
+                    );
+                  }
+                  // Trường hợp không nằm trong thời gian học kỳ mở chấm
+                  else {
+                    $("#tbody_DanhSachDiemTheoKy").append(
+                      "<tr>\
                                                 <td>" +
-                          soThuTu +
-                          "</td>\
+                        soThuTu +
+                        "</td>\
                                                 <td><p class='fw-normal mb-1'>" +
-                          maSinhVien +
-                          "</p></td>\
+                        maSinhVien +
+                        "</p></td>\
                                                 <td><p class='fw-normal mb-1'>" +
-                          hoTenSinhVien +
-                          "</p></td>\
+                        hoTenSinhVien +
+                        "</p></td>\
                                                 <td><p class='fw-normal mb-1'>" +
-                          new Date(ngaySinhSV).toLocaleDateString() +
-                          "</p></td>\
+                        new Date(ngaySinhSV).toLocaleDateString() +
+                        "</p></td>\
                                                 <td><span class='badge badge-success' style='color: black;font-size: smaller;'>Đã chấm</span></td>\
-                                                <td><span class='badge badge-success' style='color: black;font-size: smaller;'>Đã duyệt</span></td>\
                                                 <td>" +
-                          result_PRL.diemTongCong +
-                          "</td>\
+                        (result_PRL.coVanDuyet == 0
+                          ? `<span class='badge badge-warning' style='color: black;font-size: smaller;'>Chưa duyệt</span>`
+                          : `<span class='badge badge-success' style='color: black;font-size: smaller;'>Đã duyệt</span>`) +
+                        "</td>\
                                                 <td>" +
-                          result_PRL.xepLoai +
-                          "</td>\
-                                                <td>\
-                                                    <a href='chamdiemchitiet.php?maSinhVien=" +
-                          maSinhVien +
-                          "&maHocKy=" +
-                          maHocKyDanhGia +
-                          "' ><button type='button' class='btn btn-warning' style='color: black;width: max-content;'>Duyệt lại</button></a>\
-                                                </td>\
-                                             </tr>"
-                      );
-                    }
-                  } else {
-                    if (result_PRL.coVanDuyet == 0) {
-                      $("#tbody_DanhSachDiemTheoKy").append(
-                        "<tr>\
+                        result_PRL.diemTongCong +
+                        "</td>\
                                                 <td>" +
-                          soThuTu +
-                          "</td>\
-                                                <td><p class='fw-normal mb-1'>" +
-                          maSinhVien +
-                          "</p></td>\
-                                                <td><p class='fw-normal mb-1'>" +
-                          hoTenSinhVien +
-                          "</p></td>\
-                                                <td><p class='fw-normal mb-1'>" +
-                          new Date(ngaySinhSV).toLocaleDateString() +
-                          "</p></td>\
-                                                <td><span class='badge badge-success' style='color: black;font-size: smaller;'>Đã chấm</span></td>\
-                                                <td><span class='badge badge-success' style='color: black;font-size: smaller;'>Chưa duyệt</span></td>\
-                                                <td>" +
-                          result_PRL.diemTongCong +
-                          "</td>\
-                                                <td>" +
-                          result_PRL.xepLoai +
-                          "</td>\
+                        result_PRL.xepLoai +
+                        "</td>\
                                                 <td>\
                                                     <a href='chamdiemchitiet.php?maHocKy=" +
-                          maHocKyDanhGia +
-                          "&maSinhVien=" +
-                          maSinhVien +
-                          "' ><button type='button' class='btn btn-light' style='color: black;width: max-content;'>Xem chi tiết</button></a>\
+                        maHocKyDanhGia +
+                        "&maSinhVien=" +
+                        maSinhVien +
+                        "' ><button type='button' class='btn btn-light' style='color: black;width: max-content;'>Xem chi tiết</button></a>\
                                                 </td>\
                                              </tr>"
-                      );
-                    } else {
-                      $("#tbody_DanhSachDiemTheoKy").append(
-                        "<tr>\
-                                                <td>" +
-                          soThuTu +
-                          "</td>\
-                                                <td><p class='fw-normal mb-1'>" +
-                          maSinhVien +
-                          "</p></td>\
-                                                <td><p class='fw-normal mb-1'>" +
-                          hoTenSinhVien +
-                          "</p></td>\
-                                                <td><p class='fw-normal mb-1'>" +
-                          new Date(ngaySinhSV).toLocaleDateString() +
-                          "</p></td>\
-                                                <td><span class='badge badge-success' style='color: black;font-size: smaller;'>Đã chấm</span></td>\
-                                                <td><span class='badge badge-success' style='color: black;font-size: smaller;'>Đã duyệt</span></td>\
-                                                <td>" +
-                          result_PRL.diemTongCong +
-                          "</td>\
-                                                <td>" +
-                          result_PRL.xepLoai +
-                          "</td>\
-                                                <td>\
-                                                    <a href='chamdiemchitiet.php?maHocKy=" +
-                          maHocKyDanhGia +
-                          "&maSinhVien=" +
-                          maSinhVien +
-                          "' ><button type='button' class='btn btn-light' style='color: black;width: max-content;'>Xem chi tiết</button></a>\
-                                                </td>\
-                                             </tr>"
-                      );
-                    }
+                    );
                   }
                 },
                 error: function (errorMessage) {

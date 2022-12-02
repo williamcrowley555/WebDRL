@@ -35,10 +35,12 @@ if ($data["status"] == 1) {
                 $item->matKhauKhoa = md5($data->matKhauKhoa);
     
                 if ($item->updateKhoa()) {
+                    http_response_code(200);
                     echo json_encode(
                         array("message" =>  "Khoa cập nhật thành công.")
                     );
                 } else {
+                    http_response_code(500);
                     echo json_encode(
                         array("message" => "Khoa cập nhật KHÔNG thành công.")
                     );
@@ -50,18 +52,19 @@ if ($data["status"] == 1) {
                 $item->tenKhoa = $data->tenKhoa;
                 
                 if ($item->updateKhoa_KhongMatKhau()) {
+                    http_response_code(200);
                     echo json_encode(
                         array("message" =>  "Khoa cập nhật thành công.")
                     );
                 } else {
+                    http_response_code(500);
                     echo json_encode(
                         array("message" => "Khoa cập nhật KHÔNG thành công.")
                     );
                 }
             }
-
-            
         } else {
+            http_response_code(404);
             echo json_encode(
                 array("message" => "Không có dữ liệu gửi lên.")
             );

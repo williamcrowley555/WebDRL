@@ -3,7 +3,7 @@
     header("Content-Type: application/json; charset=UTF-8");
     
     include_once '../../config/database.php';
-    include_once '../../class/hockydanhgia.php';
+    include_once '../../class/quyen.php';
     include_once '../auth/read-data.php';
     include_once '../auth/check_quyen.php';
 
@@ -14,51 +14,47 @@
 
     // kiểm tra đăng nhập thành công 
     if($data["status"]==1){
-        //if (checkQuyen::checkQuyen_CTSV_Admin($data["user_data"]->aud)) {
+        if ($checkQuyen->checkQuyen_CTSV_Admin($data["user_data"]->aud)) {
             $database = new Database();
             $db = $database->getConnection();
     
-            $items = new HocKyDanhGia($db);
-            $stmt = $items->getAllHocKyDanhGia();
+            $items = new Quyen($db);
+            $stmt = $items->getAllQuyen();
             $itemCount = $stmt->rowCount();
     
-    
-            //echo json_encode($itemCount); //print itemCount
             if($itemCount > 0){
-                $hockydanhgiaArr = array();
-                $hockydanhgiaArr["hockydanhgia"] = array(); //tạo object json 
-                $hockydanhgiaArr["itemCount"] = $itemCount;
+                $quyenArr = array();
+                $quyenArr["quyen"] = array(); //tạo object json 
+                $quyenArr["itemCount"] = $itemCount;
     
                 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
                     extract($row);
                     $e = array(
-                        "maHocKyDanhGia" => $maHocKyDanhGia ,
-                        "hocKyXet" => $hocKyXet,
-                        "namHocXet" => $namHocXet
+                        "maQuyen" => $maQuyen ,
+                        "tenQuyen" => $tenQuyen,
                     );
-                    array_push($hockydanhgiaArr["hockydanhgia"], $e);
+                    array_push($quyenArr["quyen"], $e);
                 }
 
                 http_response_code(200);
-                echo json_encode($hockydanhgiaArr);
+                echo json_encode($quyenArr);
             }else{
                 http_response_code(404);
                 echo json_encode(
-                    array("message" => "No record found.")
+                    array("message" => "Không tìm thấy dữ liệu.")
                 );
             } 
-        // } else {
-        //     http_response_code(403);
-        //     echo json_encode(
-        //         array("message" => "Bạn không có quyền thực hiện điều này!")
-        //     );
-        // }
+        } else {
+            http_response_code(403);
+            echo json_encode(
+                array("message" => "Bạn không có quyền thực hiện điều này!")
+            );
+        }
     } else {
         http_response_code(403);
         echo json_encode(
             array("message" => "Vui lòng đăng nhập trước!")
         );
     }
-
 
 ?>

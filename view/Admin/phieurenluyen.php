@@ -12,6 +12,7 @@
 	$("#menu-button-ThongBaoDanhGia").removeClass("active");
 	$("#menu-button-KhieuNai").removeClass("active");
 	$("#menu-button-ThongKe").removeClass("active");
+	$("#menu-button-CaiDat").removeClass("active");
 
 	//add class active
 	$("#menu-button-PhieuRenLuyen").addClass("active");
@@ -331,35 +332,25 @@
 		let maHocKyDanhGiaGET = $(this).attr('data-mahocky-id');
         let _isAllowedToScore = false;
 
-        // Nếu lần đầu tiên click nút xem chi tiết phiếu hoặc xem phiếu khác với phiếu trước đó đã xem
-        if (typeof(phieuRenLuyen.thongTinPhieu.maPhieuRenLuyen) === "undefined" 
-            || maPhieuRenLuyen != phieuRenLuyen.thongTinPhieu.maPhieuRenLuyen) {
-            var oldPhieuRenLuyen = phieuRenLuyen;
-            phieuRenLuyen = getThongTinPhieuRenLuyen(maPhieuRenLuyen);
+        phieuRenLuyen = getThongTinPhieuRenLuyen(maPhieuRenLuyen);
 
-            // Kiểm tra phiếu rèn luyện cần xem có cùng các tiêu chí của phiếu rèn luyện cũ?
-            // Nếu giống => bỏ qua việc tạo lại form và ngược lại
-            if (!arraysEqual(oldPhieuRenLuyen.tieuChiCap1, phieuRenLuyen.tieuChiCap1)
-                || !arraysEqual(oldPhieuRenLuyen.tieuChiCap2, phieuRenLuyen.tieuChiCap2)
-                || !arraysEqual(oldPhieuRenLuyen.tieuChiCap3, phieuRenLuyen.tieuChiCap3)) {
-                createPhieuRenLuyenForm(
-                    {
-                        tieuChiCap1: phieuRenLuyen.tieuChiCap1,
-                        tieuChiCap2: phieuRenLuyen.tieuChiCap2,
-                        tieuChiCap3: phieuRenLuyen.tieuChiCap3,
-                    },
-                    phieuRenLuyen.thongBaoDanhGia,
-                    getCookie('quyen'),
-                    "#tbody_noiDungDanhGia",
-                );
+        createPhieuRenLuyenForm(
+                {
+                    tieuChiCap1: phieuRenLuyen.tieuChiCap1,
+                    tieuChiCap2: phieuRenLuyen.tieuChiCap2,
+                    tieuChiCap3: phieuRenLuyen.tieuChiCap3,
+                },
+                phieuRenLuyen.thongBaoDanhGia,
+                getCookie('quyen'),
+                "#tbody_noiDungDanhGia",
+            );
 
-                // Xóa nút duyệt điểm nếu user role không phải là 'khoa' hoặc nằm ngoài thời gian đánh giá
-                _isAllowedToScore = isAllowedToScore(phieuRenLuyen.thongBaoDanhGia, getCookie("quyen"), ["khoa"]);
-                if(!_isAllowedToScore) {
-                    $('form#formDanhGiaDRL').find(':submit').remove();
-                }
-            }
-        } 
+        // Xóa nút duyệt điểm nếu user role không phải là 'khoa' hoặc nằm ngoài thời gian đánh giá
+        _isAllowedToScore = isAllowedToScore(phieuRenLuyen.thongBaoDanhGia, getCookie("quyen"), ["khoa"]);
+        
+        if(!_isAllowedToScore) {
+            $('form#formDanhGiaDRL').find(':submit').remove();
+        }
             
         $('#text_maPhieuRenLuyen_XemVaDuyet').text(maPhieuRenLuyen);
         setThongTinSinhVien(phieuRenLuyen.sinhVien, phieuRenLuyen.hocKyDanhGia, "#part_thongTinSinhVien");

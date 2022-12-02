@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1:3307
--- Thời gian đã tạo: Th10 14, 2022 lúc 02:02 PM
+-- Thời gian đã tạo: Th12 01, 2022 lúc 04:56 PM
 -- Phiên bản máy phục vụ: 10.4.24-MariaDB
 -- Phiên bản PHP: 7.4.29
 
@@ -365,6 +365,52 @@ INSERT INTO `chamdiemrenluyen` (`maChamDiemRenLuyen`, `maPhieuRenLuyen`, `maTieu
 (4129, 'PRLHK122233118410202', 28, 0, '3118410202', 0, 0, 0, '', ''),
 (4130, 'PRLHK122233118410202', 0, 29, '3118410202', 0, 0, 0, '', ''),
 (4131, 'PRLHK122233118410202', 0, 30, '3118410202', 0, 0, 0, '', '');
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `chucnang`
+--
+
+CREATE TABLE `chucnang` (
+  `maChucNang` int(11) NOT NULL,
+  `tenChucNang` varchar(255) NOT NULL,
+  `kichHoat` tinyint(1) NOT NULL DEFAULT 0,
+  `moTa` text DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Đang đổ dữ liệu cho bảng `chucnang`
+--
+
+INSERT INTO `chucnang` (`maChucNang`, `tenChucNang`, `kichHoat`, `moTa`) VALUES
+(1, 'Chấm điểm rèn luyện', 0, 'Chức năng chấm điểm cho phiếu rèn luyện'),
+(2, 'Khiếu nại điểm rèn luyện', 0, 'Chức năng khiếu nại điểm rèn luyện'),
+(3, 'Nhập điểm trung bình hệ 4', 0, 'Chức năng nhập điểm trung bình hệ 4');
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `chucnang_hockydanhgia`
+--
+
+CREATE TABLE `chucnang_hockydanhgia` (
+  `maChucNang` int(11) NOT NULL,
+  `maHocKyDanhGia` varchar(11) NOT NULL,
+  `ghiChu` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `chucnang_quyen`
+--
+
+CREATE TABLE `chucnang_quyen` (
+  `maChucNang` int(11) NOT NULL,
+  `maQuyen` varchar(255) NOT NULL,
+  `ghiChu` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -1028,7 +1074,7 @@ INSERT INTO `sinhvien` (`maSinhVien`, `hoTenSinhVien`, `ngaySinh`, `he`, `matKha
 ('3118410143', 'NGUYỄN HOÀNG ANH HÙNG ', '2000-03-19', 'Đại học', '692ceffc99c8db2b2271be2f8ee116f6', NULL, NULL, NULL, 0, 'DCT1187', 'sinhvien'),
 ('3118410144', 'THẠCH CHÍ HÙNG ', '2000-03-01', 'Đại học', 'e25edfdff91b821c54e4404b6d43bcfa', NULL, NULL, NULL, 0, 'DCT1188', 'sinhvien'),
 ('3118410145', 'ÂU HẢI HUY ', '2000-06-24', 'Đại học', 'f5b2878ec0cc12b4ee6acc236422681b', NULL, NULL, NULL, 0, 'DCT1189', 'sinhvien'),
-('3118410146', 'BÙI QUANG HUY ', '2000-12-10', 'Đại học', '779bb6903da6293ac1e88fc7f6774648', 'hello12@gmail.com', '0954412587', 'buiquanghuy.jpg', 1, 'DCT1181', 'sinhvien'),
+('3118410146', 'BÙI QUANG HUY ', '2000-12-10', 'Đại học', '779bb6903da6293ac1e88fc7f6774648', 'hello12@gmail.com', '0954412587', 'buiquanghuy.jpg', 0, 'DCT1181', 'sinhvien'),
 ('3118410148', 'HUỲNH HOÀNG HUY ', '2000-08-31', 'Đại học', 'b96b82d08d0aa78ac8879bdfb2abf27d', NULL, NULL, NULL, 0, 'DCT1181', 'sinhvien'),
 ('3118410149', 'LÊ THANH HUY ', '2000-02-05', 'Đại học', '9afb79bb6aa9acb9852b2567ef012692', NULL, NULL, NULL, 0, 'DCT1181', 'sinhvien'),
 ('3118410151', 'NGUYỄN ĐỨC GIA HUY ', '2000-05-21', 'Đại học', '7182563dafda38657d67e3db633eadae', NULL, NULL, NULL, 0, 'DCT1181', 'sinhvien'),
@@ -3514,12 +3560,12 @@ INSERT INTO `user_token` (`stt`, `maSo`, `token`, `quyen`, `thoiGianDangNhap`, `
 (584, '3118410001', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJpYXQiOjE2NjQ1MTczNjYsIm5iZiI6MTY2NDUxNzM3NiwiZXhwIjoxNjY0NjAzNzY2LCJhdWQiOiJzaW5odmllbiIsInNpbmh2aWVuIjp7Im1hU2luaFZpZW4iOiIzMTE4NDEwMDAxIiwiaG9UZW5TaW5oVmllbiI6IiAgICAgICAgICAgUGhcdTFlYTFtIFx1MDExMFx1MWVlOSAgICAgICAgS2hcdTFlYTNpIiwicXV5ZW4iOiJzaW5odmllbiJ9fQ.zHvNk5tI9hpxJSG8UYyopCezmAp5zZE30VQXSmD_Log', 'sinhvien', '2022-09-30 05:57:18', '2022-09-30 00:56:10'),
 (653, '3118419999', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJpYXQiOjE2NjczMjE1NzcsIm5iZiI6MTY2NzMyMTU4NywiZXhwIjoxNjY3NDA3OTc3LCJhdWQiOiJzaW5odmllbiIsInNpbmh2aWVuIjp7Im1hU2luaFZpZW4iOiIzMTE4NDE5OTk5IiwiaG9UZW5TaW5oVmllbiI6IlRcdTAwZjluZyIsInF1eWVuIjoic2luaHZpZW4ifX0.iyeynGPplWEF3W0i6JV2BPG96Mlv58AkLKLYU6ojfOk', 'sinhvien', '2022-11-01 10:52:57', '2022-11-02 10:52:57'),
 (656, '3118410044', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJpYXQiOjE2Njc0MDkwNzMsIm5iZiI6MTY2NzQwOTA4MywiZXhwIjoxNjY3NDk1NDczLCJhdWQiOiJzaW5odmllbiIsInNpbmh2aWVuIjp7Im1hU2luaFZpZW4iOiIzMTE4NDEwMDQ0IiwiaG9UZW5TaW5oVmllbiI6IlZcdTAxMDJOIEhPXHUwMGMwTkcgQ0hcdTAxYWZcdTAxYTBORyAiLCJxdXllbiI6InNpbmh2aWVuIn19.0JYnJUDA97tA-6zyO-n6_uxjpQ9ImG6XORt2tAxzP_k', 'sinhvien', '2022-11-02 11:11:13', '2022-11-03 11:11:13'),
-(666, '3118410146', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJpYXQiOjE2Njc0NzUwMDMsIm5iZiI6MTY2NzQ3NTAxMywiZXhwIjoxNjY3NTYxNDAzLCJhdWQiOiJzaW5odmllbiIsInNpbmh2aWVuIjp7Im1hU2luaFZpZW4iOiIzMTE4NDEwMTQ2IiwiaG9UZW5TaW5oVmllbiI6IkJcdTAwZDlJIFFVQU5HIEhVWSAiLCJxdXllbiI6InNpbmh2aWVuIn19.w91UthrkurGm5IXrZE1zS7FtLdcRZuN2GAHkHzAt1Bc', 'sinhvien', '2022-11-03 05:30:03', '2022-11-04 05:30:03'),
-(730, 'admin', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJpYXQiOjE2NjgyMzU3MTEsIm5iZiI6MTY2ODIzNTcyMSwiZXhwIjoxNjY4MzIyMTExLCJhdWQiOiJhZG1pbiIsImFkbWluIjp7InRhaUtob2FuIjoiYWRtaW4iLCJob1RlbiI6IkFkbWluIiwicXV5ZW4iOiJhZG1pbiJ9fQ.QOhmHH0wHamrgTB2jBL0FbAhrngetbKH86NkfeO5Zr8', 'admin', '2022-11-12 00:48:31', '2022-11-13 00:48:31'),
 (731, '3119410262', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJpYXQiOjE2NjgyMzY5MjgsIm5iZiI6MTY2ODIzNjkzOCwiZXhwIjoxNjY4MzIzMzI4LCJhdWQiOiJzaW5odmllbiIsInNpbmh2aWVuIjp7Im1hU2luaFZpZW4iOiIzMTE5NDEwMjYyIiwiaG9UZW5TaW5oVmllbiI6IlRSXHUwMWFmXHUwMWEwTkcgTkhcdTFlYWNUIE5BTSAiLCJxdXllbiI6InNpbmh2aWVuIn19.zy3QCsaNi558nM3SznSlqh7NxCMIPadKGjDaem01VAE', 'sinhvien', '2022-11-12 01:08:48', '2022-11-13 01:08:48'),
-(742, 'ctsv1', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJpYXQiOjE2Njg0MjI0MTgsIm5iZiI6MTY2ODQyMjQyOCwiZXhwIjoxNjY4NTA4ODE4LCJhdWQiOiJwaG9uZ2Nvbmd0YWNzaW5odmllbiIsInBob25nY29uZ3RhY3Npbmh2aWVuIjp7InRhaUtob2FuIjoiY3RzdjEiLCJob1Rlbk5oYW5WaWVuIjoiTmhcdTAwZTJuIHZpXHUwMGVhbiBDVFNWIDEiLCJxdXllbiI6ImN0c3YifX0.GAPLP4WpvLdKGzn92_UwJg_TiGf8FgIT6EdksDioG-k', 'ctsv', '2022-11-14 04:40:18', '2022-11-15 04:40:18'),
 (743, '3118410202', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJpYXQiOjE2Njg0MjI0MzAsIm5iZiI6MTY2ODQyMjQ0MCwiZXhwIjoxNjY4NTA4ODMwLCJhdWQiOiJzaW5odmllbiIsInNpbmh2aWVuIjp7Im1hU2luaFZpZW4iOiIzMTE4NDEwMjAyIiwiaG9UZW5TaW5oVmllbiI6IkhcdTAwYzAgTUlOSCBLSFx1MDBkNEkgIiwicXV5ZW4iOiJzaW5odmllbiJ9fQ.kJ91SYlsf4UuTBVKBYUsPqdTKFRakRyLZqniqZCPPg4', 'sinhvien', '2022-11-14 04:40:30', '2022-11-15 04:40:30'),
-(744, '10631', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJpYXQiOjE2Njg0MzA2MzEsIm5iZiI6MTY2ODQzMDY0MSwiZXhwIjoxNjY4NTE3MDMxLCJhdWQiOiJjdmh0IiwiY3ZodCI6eyJtYUNvVmFuSG9jVGFwIjoiMTA2MzEiLCJob1RlbkNvVmFuIjoiUGhhbiBUXHUxZWE1biBRdVx1MWVkMWMiLCJxdXllbiI6ImN2aHQifX0.ratvYuMCOgQSBQ3ysR0fl0FYbWY7OFh6JxGh7EjAeNc', 'cvht', '2022-11-14 06:57:11', '2022-11-15 06:57:11');
+(744, '10631', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJpYXQiOjE2Njg0MzA2MzEsIm5iZiI6MTY2ODQzMDY0MSwiZXhwIjoxNjY4NTE3MDMxLCJhdWQiOiJjdmh0IiwiY3ZodCI6eyJtYUNvVmFuSG9jVGFwIjoiMTA2MzEiLCJob1RlbkNvVmFuIjoiUGhhbiBUXHUxZWE1biBRdVx1MWVkMWMiLCJxdXllbiI6ImN2aHQifX0.ratvYuMCOgQSBQ3ysR0fl0FYbWY7OFh6JxGh7EjAeNc', 'cvht', '2022-11-14 06:57:11', '2022-11-15 06:57:11'),
+(751, 'ctsv1', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJpYXQiOjE2Njk3Mzg5NzksIm5iZiI6MTY2OTczODk4OSwiZXhwIjoxNjY5ODI1Mzc5LCJhdWQiOiJwaG9uZ2Nvbmd0YWNzaW5odmllbiIsInBob25nY29uZ3RhY3Npbmh2aWVuIjp7InRhaUtob2FuIjoiY3RzdjEiLCJob1Rlbk5oYW5WaWVuIjoiTmhcdTAwZTJuIHZpXHUwMGVhbiBDVFNWIDEiLCJxdXllbiI6ImN0c3YifX0.Ral3uF28GI8ghnQcR4zKhKWyroblkQDsexdJmJDjYgM', 'ctsv', '2022-11-29 10:22:59', '2022-11-30 10:22:59'),
+(752, '3118410146', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJpYXQiOjE2Njk3NDE5NjcsIm5iZiI6MTY2OTc0MTk3NywiZXhwIjoxNjY5ODI4MzY3LCJhdWQiOiJzaW5odmllbiIsInNpbmh2aWVuIjp7Im1hU2luaFZpZW4iOiIzMTE4NDEwMTQ2IiwiaG9UZW5TaW5oVmllbiI6IkJcdTAwZDlJIFFVQU5HIEhVWSAiLCJxdXllbiI6InNpbmh2aWVuIn19.BRQRMLL4V-pT9GOy7xT2WCFyU2TPftMvYoEWPBlN0IA', 'sinhvien', '2022-11-29 11:12:47', '2022-11-30 11:12:47'),
+(753, 'admin', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJpYXQiOjE2Njk3NDIwMTQsIm5iZiI6MTY2OTc0MjAyNCwiZXhwIjoxNjY5ODI4NDE0LCJhdWQiOiJhZG1pbiIsImFkbWluIjp7InRhaUtob2FuIjoiYWRtaW4iLCJob1RlbiI6IkFkbWluIiwicXV5ZW4iOiJhZG1pbiJ9fQ.7hyY32O2_uaNZM-x8BIjxbs8lvDYJHeWyGRDakeRFu0', 'admin', '2022-11-29 11:13:34', '2022-11-30 11:13:34');
 
 --
 -- Chỉ mục cho các bảng đã đổ
@@ -3536,6 +3582,24 @@ ALTER TABLE `admin`
 --
 ALTER TABLE `chamdiemrenluyen`
   ADD PRIMARY KEY (`maChamDiemRenLuyen`);
+
+--
+-- Chỉ mục cho bảng `chucnang`
+--
+ALTER TABLE `chucnang`
+  ADD PRIMARY KEY (`maChucNang`);
+
+--
+-- Chỉ mục cho bảng `chucnang_hockydanhgia`
+--
+ALTER TABLE `chucnang_hockydanhgia`
+  ADD PRIMARY KEY (`maChucNang`,`maHocKyDanhGia`);
+
+--
+-- Chỉ mục cho bảng `chucnang_quyen`
+--
+ALTER TABLE `chucnang_quyen`
+  ADD PRIMARY KEY (`maChucNang`,`maQuyen`);
 
 --
 -- Chỉ mục cho bảng `covanhoctap`
@@ -3663,6 +3727,12 @@ ALTER TABLE `chamdiemrenluyen`
   MODIFY `maChamDiemRenLuyen` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4132;
 
 --
+-- AUTO_INCREMENT cho bảng `chucnang`
+--
+ALTER TABLE `chucnang`
+  MODIFY `maChucNang` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
 -- AUTO_INCREMENT cho bảng `khieunai`
 --
 ALTER TABLE `khieunai`
@@ -3702,7 +3772,7 @@ ALTER TABLE `tieuchicap3`
 -- AUTO_INCREMENT cho bảng `user_token`
 --
 ALTER TABLE `user_token`
-  MODIFY `stt` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=745;
+  MODIFY `stt` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=754;
 
 --
 -- Các ràng buộc cho các bảng đã đổ

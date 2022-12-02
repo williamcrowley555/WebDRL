@@ -6,7 +6,7 @@
     header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
     include_once '../../config/database.php';
-    include_once '../../class/khoa.php';
+    include_once '../../class/chucnang_quyen.php';
     include_once '../auth/read-data.php';
     include_once '../auth/check_quyen.php';
 
@@ -16,30 +16,47 @@
 
     // kiểm tra đăng nhập thành công 
     if($data["status"]==1){
-        if ($checkQuyen->checkQuyen_CVHT_Khoa_CTSV_Admin($data["user_data"]->aud)) {
+        if ($checkQuyen->checkQuyen_CTSV_Admin($data["user_data"]->aud)) {
             $database = new Database();
             $db = $database->getConnection();
     
-            $item = new Khoa($db); //new Khoa object
+            $item = new ChucNang_Quyen($db); //new ChucNang_Quyen object
             $data = json_decode(file_get_contents("php://input")); //lấy request data từ user 
     
             if ($data != null){
                 //set các biến bằng data nhận từ user
-                $item->maKhoa = $data->maKhoa;
-                $item->tenKhoa = $data->tenKhoa;
-                $item->taiKhoanKhoa = $data->taiKhoanKhoa;
-                $item->matKhauKhoa = md5($data->matKhauKhoa);
+                $item->maChucNang = $data->maChucNang;
+
+                if (isset($data->ghiChu)) {
+                    $item->ghiChu = $data->ghiChu;
+                } else {
+                    $item->ghiChu = null;
+                }
     
-                if($item->createKhoa()){
-                    http_response_code(200);
-                    echo json_encode(
-                        array("message" => "Khoa tạo thành công")
-                    );
-                } else{
-                    http_response_code(404);
-                    echo json_encode(
-                        array("message" => "Mã khoa vừa tạo đã bị trùng! Vui lòng nhập mã khác!")
-                    );
+                $successCount = 0;
+
+                $item->deleteChucNang_QuyenTheoMaChucNang($data->maChucNang);
+
+                if (is_array($data->maQuyen) || is_object($data->maQuyen)) {
+                    foreach ($data->maQuyen as $maQuyen) {
+                        $item->maQuyen = $maQuyen;
+
+                        if($item->createChucNang_Quyen()) {
+                            $successCount++;
+                        } 
+                    }
+                        
+                    if ($successCount > 0) {
+                        http_response_code(200);
+                        echo json_encode(
+                            array("message" => "Thêm quyền cho chức năng thành công!")
+                        );
+                    } else {
+                        http_response_code(404);
+                        echo json_encode(
+                            array("message" => "Thêm quyền cho chức năng thất bại!")
+                        );
+                    }
                 }
             }else{
                 http_response_code(404);
