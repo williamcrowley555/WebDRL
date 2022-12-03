@@ -263,7 +263,7 @@ function isAllowedToScore(thongBaoDanhGia, userRole, validRoles) {
   var result = false;
   var today = new Date();
 
-  // Kiểm tra chức năng có được mở?
+  // Kiểm tra chức năng chấm điểm rèn luyện có được mở?
   $.ajax({
     url: urlapi_chucnang_single_read_maChucNang + CHUC_NANG_CHAM_DIEM_REN_LUYEN,
     async: false,

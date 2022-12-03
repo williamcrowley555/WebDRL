@@ -109,6 +109,66 @@ function getThongTinSinhVien(maSinhVien) {
   return sinhVienInfo;
 }
 
+function isActiveFunctionality(maChucNang, maHocKyDanhGia, maQuyen) {
+  var result = false;
+
+  // Kiểm tra chức năng khiếu nại điểm rèn luyện có được mở?
+  $.ajax({
+    url: urlapi_chucnang_single_read_maChucNang + maChucNang,
+    async: false,
+    type: "GET",
+    contentType: "application/json;charset=utf-8",
+    dataType: "json",
+    headers: {
+      Authorization: jwtCookie,
+    },
+    success: function (result_CN) {
+      if (result_CN.kichHoat == 1) {
+        // Kiểm tra học kỳ đang xét được áp dụng cho chức năng?
+        $.ajax({
+          url:
+            urlapi_chucnang_hockydanhgia_single_details_read +
+            `?maChucNang=${maChucNang}&maHocKyDanhGia=${maHocKyDanhGia}`,
+          async: false,
+          type: "GET",
+          contentType: "application/json;charset=utf-8",
+          dataType: "json",
+          headers: {
+            Authorization: jwtCookie,
+          },
+          success: function (result_CN_HKDG) {
+            if (result_CN_HKDG.maHocKyDanhGia == maHocKyDanhGia) {
+              // Kiểm tra quyền đang xét được áp dụng cho chức năng?
+              $.ajax({
+                url:
+                  urlapi_chucnang_quyen_single_details_read +
+                  `?maChucNang=${maChucNang}&maQuyen=${maQuyen}`,
+                async: false,
+                type: "GET",
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                headers: {
+                  Authorization: jwtCookie,
+                },
+                success: function (result_CN_Quyen) {
+                  if (result_CN_Quyen.maQuyen == maQuyen) {
+                    result = true;
+                  }
+                },
+                error: function (error_CN_Quyen) {},
+              });
+            }
+          },
+          error: function (error_CN_HKDG) {},
+        });
+      }
+    },
+    error: function (error_CN) {},
+  });
+
+  return result;
+}
+
 function createKhieuNaiButton(
   ngayKhieuNai,
   ngayKetThucKhieuNai,
@@ -140,8 +200,13 @@ function createKhieuNaiButton(
     },
     error: function (error) {
       if (
-        ngayHienTai.getTime() >= ngayKhieuNai.getTime() &&
-        ngayHienTai.getTime() <= ngayKetThucKhieuNai.getTime()
+        isActiveFunctionality(
+          CHUC_NANG_KHIEU_NAI_DIEM_REN_LUYEN,
+          maHocKyDanhGia,
+          getCookie("quyen")
+        ) ||
+        (ngayHienTai.getTime() >= ngayKhieuNai.getTime() &&
+          ngayHienTai.getTime() <= ngayKetThucKhieuNai.getTime())
       ) {
         html =
           "<td><button type='button' class='btn btn-dark btn_KhieuNai' data-bs-toggle='modal' data-bs-target='#KhieuNaiModal' data-maHocKy='" +
@@ -217,73 +282,13 @@ function getThongTinHocKyDanhGia() {
                 var hocKyXet_HKDG = result_HKDG.hocKyXet;
                 var namHocXet_HKDG = result_HKDG.namHocXet;
 
-                var isActiveFunctionality = false;
-
-                // Kiểm tra chức năng có được mở?
-                $.ajax({
-                  url:
-                    urlapi_chucnang_single_read_maChucNang +
-                    CHUC_NANG_CHAM_DIEM_REN_LUYEN,
-                  async: false,
-                  type: "GET",
-                  contentType: "application/json;charset=utf-8",
-                  dataType: "json",
-                  headers: {
-                    Authorization: jwtCookie,
-                  },
-                  success: function (result_CN) {
-                    if (result_CN.kichHoat == 1) {
-                      // Kiểm tra học kỳ đang xét được áp dụng cho chức năng?
-                      $.ajax({
-                        url:
-                          urlapi_chucnang_hockydanhgia_single_details_read +
-                          `?maChucNang=${CHUC_NANG_CHAM_DIEM_REN_LUYEN}&maHocKyDanhGia=${maHocKyDanhGia_HKDG}`,
-                        async: false,
-                        type: "GET",
-                        contentType: "application/json;charset=utf-8",
-                        dataType: "json",
-                        headers: {
-                          Authorization: jwtCookie,
-                        },
-                        success: function (result_CN_HKDG) {
-                          if (
-                            result_CN_HKDG.maHocKyDanhGia == maHocKyDanhGia_HKDG
-                          ) {
-                            // Kiểm tra quyền đang xét được áp dụng cho chức năng?
-                            $.ajax({
-                              url:
-                                urlapi_chucnang_quyen_single_details_read +
-                                `?maChucNang=${CHUC_NANG_CHAM_DIEM_REN_LUYEN}&maQuyen=${getCookie(
-                                  "quyen"
-                                )}`,
-                              async: false,
-                              type: "GET",
-                              contentType: "application/json;charset=utf-8",
-                              dataType: "json",
-                              headers: {
-                                Authorization: jwtCookie,
-                              },
-                              success: function (result_CN_Quyen) {
-                                if (
-                                  result_CN_Quyen.maQuyen == getCookie("quyen")
-                                ) {
-                                  isActiveFunctionality = true;
-                                }
-                              },
-                              error: function (error_CN_Quyen) {},
-                            });
-                          }
-                        },
-                        error: function (error_CN_HKDG) {},
-                      });
-                    }
-                  },
-                  error: function (error_CN) {},
-                });
-
-                // Trường hợp đang trong thời gian học kỳ mở chấm
+                // Trường hợp đang trong thời gian học kỳ mở chấm hoặc chức năng chấm điểm rèn luyện được mở
                 if (
-                  isActiveFunctionality ||
+                  isActiveFunctionality(
+                    CHUC_NANG_CHAM_DIEM_REN_LUYEN,
+                    maHocKyDanhGia_HKDG,
+                    getCookie("quyen")
+                  ) ||
                   (ngayHienTai.getTime() >= ngaySinhVienDanhGia.getTime() &&
                     ngayHienTai.getTime() <=
                       ngaySinhVienKetThucDanhGia.getTime())
@@ -377,7 +382,7 @@ function getThongTinHocKyDanhGia() {
                     },
                   });
                 }
-                // Trường hợp không nằm trong thời gian học kỳ mở chấm
+                // Trường hợp không nằm trong thời gian học kỳ mở chấm và chức năng chấm điểm rèn luyện không được mở?
                 else {
                   //kiểm tra xem có tồn tại phiếu rèn luyện chưa, nếu có = đã chấm
                   $.ajax({
@@ -502,9 +507,15 @@ function GuiKhieuNai() {
       var ngayKetThucKhieuNai = new Date(result_TBDG.ngayKetThucKhieuNai);
       ngayKetThucKhieuNai.setHours(23, 59, 59, 999);
 
+      // Trường hợp đang trong thời gian học kỳ mở khiếu nại hoặc chức năng khiếu nại điểm rèn luyện được mở
       if (
-        ngayHienTai.getTime() >= ngayKhieuNai.getTime() &&
-        ngayHienTai.getTime() <= ngayKetThucKhieuNai.getTime()
+        isActiveFunctionality(
+          CHUC_NANG_KHIEU_NAI_DIEM_REN_LUYEN,
+          $("#khieuNai_maHocKy").val(),
+          getCookie("quyen")
+        ) ||
+        (ngayHienTai.getTime() >= ngayKhieuNai.getTime() &&
+          ngayHienTai.getTime() <= ngayKetThucKhieuNai.getTime())
       ) {
         var formData = new FormData(document.getElementById("form_khieu_nai"));
 
@@ -583,7 +594,9 @@ function GuiKhieuNai() {
             $("#num-of-files").val("Không có file được chọn");
           },
         });
-      } else {
+      }
+      // Trường hợp không nằm trong thời gian học kỳ mở khiếu nại hoặc chức năng khiếu nại điểm rèn luyện không được mở
+      else {
         thongBaoLoi("Rất tiếc! Đã nằm ngoài thời gian khiếu nại!");
       }
     },
