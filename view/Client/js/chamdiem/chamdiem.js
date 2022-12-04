@@ -112,7 +112,7 @@ function getThongTinSinhVien(maSinhVien) {
 function isActiveFunctionality(maChucNang, maHocKyDanhGia, maQuyen) {
   var result = false;
 
-  // Kiểm tra chức năng khiếu nại điểm rèn luyện có được mở?
+  // Kiểm tra chức năng có được mở?
   $.ajax({
     url: urlapi_chucnang_single_read_maChucNang + maChucNang,
     async: false,

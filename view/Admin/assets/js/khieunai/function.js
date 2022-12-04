@@ -280,101 +280,6 @@ function GetListKhieuNai(maKhoa, maKhoaHoc, maHocKyDanhGia) {
         autoHidePrevious: true,
         autoHideNext: true,
         callback: function (data, pagination) {
-          
-          var count = 0;
-
-          for (let i = 0; i < data.length; i++) {
-            count += 1;
-
-            htmlData +=
-              "<tr>\
-                                <td class='cell'>" +
-              data[i].soThuTu +
-              "</td>\
-                                <td class='cell'><span class='truncate'>" +
-              data[i].maKhieuNai +
-              "</span></td>\
-                                <td class='cell'>" +
-              data[i].maPhieuRenLuyen +
-              "</td>\
-                                <td class='cell'>" +
-              data[i].maSinhVien +
-              "</td>\
-                                <td class='cell'>" +
-              data[i].hoTenSinhVien +
-              "</td>\
-                                <td class='cell'>" +
-              data[i].maLop +
-              "</td>\
-                                <td class='cell'>" +
-              (data[i].trangThai == 1
-                ? "<span class='badge bg-success' style='color: white;font-size: inherit;'>Chấp thuận</span>"
-                : data[i].trangThai == -1
-                ? "<span class='badge bg-danger' style='color: white;font-size: inherit;'>Từ chối</span>"
-                : "<span class='badge bg-info' style='color: white;font-size: inherit;'>Đang chờ duyệt</span>") +
-              "</td>\
-                                <td class='cell'>" +
-              (data[i].trangThai == 0
-                ? timeSinceBadge(data[i].thoiGianKhieuNai)
-                : toDateTimeString(data[i].thoiGianKhieuNai)) +
-              "</td>\
-                                <td class='cell'>\
-                                  <button class='btn btn-secondary btn_XemChiTiet' style='color: white;' data-bs-toggle='modal' data-bs-target='#XemChiTietModal' data-id = '" +
-              data[i].maKhieuNai +
-              "' >Xem chi tiết</button>\
-                                  <button class='btn btn-info btn_PheDuyet' style='color: white;' data-bs-toggle='modal' data-bs-target='#PheDuyetModal' data-id = '" +
-              data[i].maKhieuNai +
-              "' >Phê duyệt</button>\
-              </td>\
-                                </tr>";
-          }
-
-          $("#tbodyKhieuNai").html(htmlData);
-        },
-      });
-    },
-    error: function (errorMessage) {
-      checkLoiDangNhap(errorMessage.responseJSON.message);
-
-      tableKhieuNaiContent = [];
-
-      $("#idPhanTrangKhieuNai").empty();
-
-      htmlData += "<tr>\
-                      <td colspan='9' class='text-center'>\
-                          <p class='mt-4'>Không tìm thấy kết quả.</p>\
-                      </td>\
-                  </tr>"
-      $("#tbodyKhieuNai").append(htmlData);
-
-      //ThongBaoLoi(errorMessage.responseJSON.message);
-    },
-  });
-
-  $("#select_TrangThai").val("all");
-}
-
-function TimKiemKhieuNai(maSinhVien) {
-  var htmlData = "";
-  $("#tbodyKhieuNai tr").remove();
-
-  $.ajax({
-    url: urlapi_khieunai_read_maSinhVien + maSinhVien,
-    type: "GET",
-    contentType: "application/json;charset=utf-8",
-    dataType: "json",
-    async: true,
-    headers: { Authorization: jwtCookie },
-    success: function (result) {
-      tableKhieuNaiContent = result["khieunai"];
-
-      $("#idPhanTrangKhieuNai").pagination({
-        dataSource: result["khieunai"],
-        pageSize: 10,
-        autoHidePrevious: true,
-        autoHideNext: true,
-        callback: function (data, pagination) {
-          
           var count = 0;
 
           for (let i = 0; i < data.length; i++) {
@@ -419,6 +324,9 @@ function TimKiemKhieuNai(maSinhVien) {
                                   <button class='btn btn-info btn_PheDuyet' style='color: white; width: max-content;' data-bs-toggle='modal' data-bs-target='#PheDuyetModal' data-id = '" +
               data[i].maKhieuNai +
               "' >Phê duyệt</button>\
+                                  <button class='btn btn-danger btn_XoaKhieuNai' style='color: white; width: max-content;' data-id = '" +
+              data[i].maKhieuNai +
+              "' >Xóa</button>\
               </td>\
                                 </tr>";
           }
@@ -434,11 +342,109 @@ function TimKiemKhieuNai(maSinhVien) {
 
       $("#idPhanTrangKhieuNai").empty();
 
-      htmlData += "<tr>\
+      htmlData +=
+        "<tr>\
                       <td colspan='9' class='text-center'>\
                           <p class='mt-4'>Không tìm thấy kết quả.</p>\
                       </td>\
-                  </tr>"
+                  </tr>";
+      $("#tbodyKhieuNai").append(htmlData);
+
+      //ThongBaoLoi(errorMessage.responseJSON.message);
+    },
+  });
+
+  $("#select_TrangThai").val("all");
+}
+
+function TimKiemKhieuNai(maSinhVien) {
+  var htmlData = "";
+  $("#tbodyKhieuNai tr").remove();
+
+  $.ajax({
+    url: urlapi_khieunai_read_maSinhVien + maSinhVien,
+    type: "GET",
+    contentType: "application/json;charset=utf-8",
+    dataType: "json",
+    async: true,
+    headers: { Authorization: jwtCookie },
+    success: function (result) {
+      tableKhieuNaiContent = result["khieunai"];
+
+      $("#idPhanTrangKhieuNai").pagination({
+        dataSource: result["khieunai"],
+        pageSize: 10,
+        autoHidePrevious: true,
+        autoHideNext: true,
+        callback: function (data, pagination) {
+          var count = 0;
+
+          for (let i = 0; i < data.length; i++) {
+            count += 1;
+
+            htmlData +=
+              "<tr>\
+                                <td class='cell'>" +
+              data[i].soThuTu +
+              "</td>\
+                                <td class='cell'><span class='truncate'>" +
+              data[i].maKhieuNai +
+              "</span></td>\
+                                <td class='cell'>" +
+              data[i].maPhieuRenLuyen +
+              "</td>\
+                                <td class='cell'>" +
+              data[i].maSinhVien +
+              "</td>\
+                                <td class='cell'>" +
+              data[i].hoTenSinhVien +
+              "</td>\
+                                <td class='cell'>" +
+              data[i].maLop +
+              "</td>\
+                                <td class='cell'>" +
+              (data[i].trangThai == 1
+                ? "<span class='badge bg-success' style='color: white;font-size: inherit;'>Chấp thuận</span>"
+                : data[i].trangThai == -1
+                ? "<span class='badge bg-danger' style='color: white;font-size: inherit;'>Từ chối</span>"
+                : "<span class='badge bg-info' style='color: white;font-size: inherit;'>Đang chờ duyệt</span>") +
+              "</td>\
+                                <td class='cell'>" +
+              (data[i].trangThai == 0
+                ? timeSinceBadge(data[i].thoiGianKhieuNai)
+                : toDateTimeString(data[i].thoiGianKhieuNai)) +
+              "</td>\
+                                <td class='cell'>\
+                                  <button class='btn btn-secondary btn_XemChiTiet' style='color: white; width: max-content;' data-bs-toggle='modal' data-bs-target='#XemChiTietModal' data-id = '" +
+              data[i].maKhieuNai +
+              "' >Xem chi tiết</button>\
+                                  <button class='btn btn-info btn_PheDuyet' style='color: white; width: max-content;' data-bs-toggle='modal' data-bs-target='#PheDuyetModal' data-id = '" +
+              data[i].maKhieuNai +
+              "' >Phê duyệt</button>\
+                                  <button class='btn btn-danger btn_XoaKhieuNai' style='color: white; width: max-content;' data-id = '" +
+              data[i].maKhieuNai +
+              "' >Xóa</button>\
+              </td>\
+                                </tr>";
+          }
+
+          $("#tbodyKhieuNai").html(htmlData);
+        },
+      });
+    },
+    error: function (errorMessage) {
+      checkLoiDangNhap(errorMessage.responseJSON.message);
+
+      tableKhieuNaiContent = [];
+
+      $("#idPhanTrangKhieuNai").empty();
+
+      htmlData +=
+        "<tr>\
+                      <td colspan='9' class='text-center'>\
+                          <p class='mt-4'>Không tìm thấy kết quả.</p>\
+                      </td>\
+                  </tr>";
       $("#tbodyKhieuNai").append(htmlData);
 
       //ThongBaoLoi(errorMessage.responseJSON.message);
@@ -561,6 +567,8 @@ function pheDuyet() {
             $("#select_KhoaHoc").val(),
             $("#select_HocKyDanhGia").val()
           );
+
+          $("#input_timKiemMaSinhVien").val("");
         }, 2000);
 
         if (_edit_checkBox_guiEmail == 1) {
@@ -579,4 +587,53 @@ function pheDuyet() {
   } else {
     ThongBaoLoi("Vui lòng chọn trạng thái phê duyệt!");
   }
+}
+
+function xoaKhieuNai(maKhieuNai) {
+  Swal.fire({
+    title: `Xác nhận xóa khiếu nại mã ${maKhieuNai}?`,
+    showDenyButton: true,
+    confirmButtonText: "Xác nhận",
+    denyButtonText: `Đóng`,
+  }).then((confirmation) => {
+    if (confirmation.isConfirmed) {
+      $.ajax({
+        url: urlapi_khieunai_delete,
+        type: "POST",
+        contentType: "application/json;charset=utf-8",
+        dataType: "json",
+        data: JSON.stringify({ maKhieuNai: maKhieuNai }),
+        async: false,
+        headers: { Authorization: jwtCookie },
+        success: function (result_delete) {
+          Swal.fire({
+            icon: "success",
+            title: "Xóa thành công khiếu nại mã: " + maKhieuNai + "!",
+            text: "",
+            timer: 2000,
+            timerProgressBar: true,
+          });
+
+          setTimeout(() => {
+            GetListKhieuNai(
+              $("#select_Khoa").val(),
+              $("#select_KhoaHoc").val(),
+              $("#select_HocKyDanhGia").val()
+            );
+
+            $("#input_timKiemMaSinhVien").val("");
+          }, 2000);
+
+          if (_edit_checkBox_guiEmail == 1) {
+            sendEmailApprovalNotification(_edit_input_MaKhieuNai);
+          }
+        },
+        error: function (errorMessage_delete) {
+          checkLoiDangNhap(errorMessage_delete.responseJSON.message);
+
+          ThongBaoLoi(errorMessage_delete.responseJSON.message);
+        },
+      });
+    }
+  });
 }
