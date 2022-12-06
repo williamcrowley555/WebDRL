@@ -38,7 +38,8 @@
 
         //GET ALL DIEM TRUNG BINH HE 4 THEO MA SINH VIEN
         public function getAllDiemTrungBinhHe4TheoMaSinhVien($maSinhVien){
-            $sqlQuery = "SELECT * FROM " . $this->db_table . " 
+            $sqlQuery = "SELECT maDiemTrungBinh, diem, hockydanhgia.maHocKyDanhGia, maSinhVien, hocKyXet, namHocXet
+                            FROM " . $this->db_table . " JOIN hockydanhgia ON diemtrungbinhhe4.maHocKyDanhGia = hockydanhgia.maHocKyDanhGia 
                         WHERE maSinhVien = ? ";
             $stmt = $this->conn->prepare($sqlQuery);
             $stmt->bindParam(1, $maSinhVien);

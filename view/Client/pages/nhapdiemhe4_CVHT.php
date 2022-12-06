@@ -144,9 +144,12 @@
     <script src="../js/scripts.js"></script>
 
     <!-- Custom scripts -->
-    <script src="../js/nhapdiemhe4/nhapdiemhe4.js"></script>
+    <script src="../js/nhapdiemhe4/nhapdiemhe4_CVHT.js"></script>
 
     <script>
+        // Chuyển hướng trang nếu chức năng nhập điểm chưa mở hoặc không đúng quyền.
+        redirectPage();
+
         var maSo = getCookie("maSo");
         var maHocKyDanhGia = $("#select_hocKy_namHoc").find(":selected").val();
         var maLop = $("#select_lop").find(":selected").val();

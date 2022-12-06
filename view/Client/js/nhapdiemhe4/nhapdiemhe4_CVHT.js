@@ -17,6 +17,29 @@ var listDiem = "";
 
 var jwtCookie = getCookie("jwt");
 
+function redirectPage() {
+    // Kiểm tra chức năng nhập điểm hệ 4 được mở hay không?
+    var isUnlock = isNhapDiemUnlock();
+    if(!isUnlock) {
+        window.history.back();
+        return;
+    }
+
+    // Kiểm tra quyền cố vấn học tập có vào được hay không?
+    if(quyen == "cvht") {
+        isUnlock = isUnlockForCVHT();
+        if(!isUnlock) {
+            window.history.back();
+            return;
+        }
+    }
+
+    // Kiểm tra quyền sinh viên có vào được hay không?
+    if(quyen == "sinhvien") {
+        window.history.back();
+    }
+}
+
 function getCookie(cName) {
     const name = cName + "=";
     const cDecoded = decodeURIComponent(document.cookie); //to be careful
@@ -49,45 +72,69 @@ function presentNotification(iconType, titleNotification, textNotifiaction) {
     });
 }
 
-function loadComboBoxHocKyVaNamHoc(page) {
-    var htmlData = "<option value='none'> -- Chọn học kỳ - năm học --</option>";
+function isGetAPISuccess(urlAPI) {
+    var isSuccess = false;
     $.ajax({
-        url: urlapi_hockydanhgia_read,
+        url: urlAPI,
+        async: false,
         type: "GET",
         contentType: "application/json;charset=utf-8",
         dataType: "json",
-        async: false,
-        headers: { Authorization: jwtCookie },
-        success: function (result) {
-            if(page == "nhapdiem") {
-                $("#select_hocKy_namHoc").find("option").remove();
-            } else {
-                $("#select_hocKy_namHoc_xemdiem").find("option").remove();
-            }
-            $.each(result, function (index) {
-                for (var p = 0; p < result[index].length; p++) {
-                    htmlData +=
-                        "<option value='" +
-                        result[index][p].maHocKyDanhGia +
-                        "'>" +
-                        "Học kỳ: " +
-                        result[index][p].hocKyXet +
-                        " - Năm học: " +
-                        result[index][p].namHocXet +
-                        "</option>";
-                }
-            });
-            if(page == "nhapdiem") {
-                $("#select_hocKy_namHoc").append(htmlData);
-            } else {
-                $("#select_hocKy_namHoc_xemdiem").append(htmlData);
-            }
+        headers: {Authorization: jwtCookie,},
+        success: function(result) {
+            isSuccess = true;
         },
-        error: function (errorMessage) {
-            checkLoiDangNhap(errorMessage.responseJSON.message);
-            presentNotification("error", "Lỗi", errorMessage.responseJSON.message);
-        },
+        error: function (){}
     });
+    return isSuccess;
+}
+
+function getHocKyVaNamHoc(urlAPI) {
+    var returnResult = null;
+    $.ajax({
+        url: urlAPI,
+        async: false,
+        type: "GET",
+        contentType: "application/json;charset=utf-8",
+        dataType: "json",
+        headers: {Authorization: jwtCookie,},
+        success: function(result) {
+            returnResult = result;
+        },
+        error: function (){}
+    });
+    return returnResult;
+}
+
+function loadComboBoxHocKyVaNamHoc(selector) {
+    // Kiểm tra lấy được học kỳ và năm học được mở hay không?
+    var isSuccess = isGetAPISuccess(urlapi_chucnang_hockydanhgia_details_read 
+        + "?maChucNang=" + CHUC_NANG_NHAP_DIEM_HE_4);
+    if (!isSuccess) {
+        presentNotification("error", "Lỗi", "Lỗi load combobox học kỳ và năm học!");
+        return;
+    }
+
+    // Lưu thông tin vào htmlData
+    var htmlData = "<option value='none'> -- Chọn học kỳ - năm học --</option>";
+    var result = null;
+    // Kiểm tra lưu combobox vào selector nào?
+    if(selector == "#select_hocKy_namHoc")
+        result = getHocKyVaNamHoc(urlapi_chucnang_hockydanhgia_details_read 
+            + "?maChucNang=" + CHUC_NANG_NHAP_DIEM_HE_4,);
+    else
+        result = getHocKyVaNamHoc(urlapi_hockydanhgia_read);
+    $.each(result, function(index) {
+        for(var p=0;p<result[index].length;p++) {
+            htmlData +="<option value='" + result[index][p].maHocKyDanhGia + "'>" +
+                            "Học kỳ: " + result[index][p].hocKyXet + " - Năm học: " + result[index][p].namHocXet +
+                        "</option>";
+        }
+    });
+
+    // Gắn htmlData lên combobox
+    $(selector).find("option").remove();
+    $(selector).append(htmlData);
 }
 
 function loadComboBoxLopTheoMaCVHT(page, maSo) {
@@ -185,6 +232,28 @@ function createBangDiemXemTruoc(formData) {
 }
 
 function luuDiem(maHocKyDanhGia) {
+    //Kiểm tra hệ thống còn mở cho nhập điểm hay không?
+    var isUnlock = isNhapDiemUnlock();
+    if(!isUnlock) {
+        presentNotification("error", "Lỗi", "Hệ thống đã đóng chức năng nhập và chỉnh sửa điểm!");
+        return;
+    }
+
+    // Kiểm tra quyền cố vấn học tập được nhập điểm hay không?
+    isUnlock = isUnlockForCVHT();
+    if(!isUnlock) {
+        presentNotification("error", "Lỗi", "Hệ thống không cho phép cố vấn học tập nhập và chỉnh sửa điểm!");
+        return;
+    }
+
+    //Kiểm tra học kỳ còn cho phép nhập điểm hay không?
+    isUnlock = isGetAPISuccess(urlapi_chucnang_hockydanhgia_single_details_read +
+        "?maChucNang=" + CHUC_NANG_NHAP_DIEM_HE_4 + "&maHocKyDanhGia=" + maHocKyDanhGia);
+    if(!isUnlock) {
+        presentNotification("error", "Lỗi", "Hệ thống không cho phép cố vấn học tập nhập và chỉnh sửa điểm!");
+        return;
+    }
+
     $.each(listDiem, function(index){
         for (var p = 0; p < listDiem[index].length; p++) {
             var dataPost = {
@@ -227,7 +296,7 @@ function showNhapDiemElements() {
     $("#import_file").val("");
     $("#loiXemTruoc").hide();
     $("#btnLuu").hide();
-    loadComboBoxHocKyVaNamHoc("nhapdiem");
+    loadComboBoxHocKyVaNamHoc("#select_hocKy_namHoc");
     loadComboBoxLopTheoMaCVHT("nhapdiem", maSo);
 }
 
@@ -243,7 +312,7 @@ function showXemDiemElements() {
     $("#selector_xemdiem").show();
     $("#danhsachdiemhe4").show();
     $("#tbody_danhSachDiemHe4 tr").remove();
-    loadComboBoxHocKyVaNamHoc("xemdiem");
+    loadComboBoxHocKyVaNamHoc("#select_hocKy_namHoc_xemdiem");
     loadComboBoxLopTheoMaCVHT("xemdiem", maSo);
 }
 
@@ -302,6 +371,8 @@ function loadGPAToTable(maLop, maHocKyDanhGia) {
         return;
     }
 
+    var isEditable = isGetAPISuccess(urlapi_chucnang_hockydanhgia_single_details_read +
+        "?maChucNang=" + CHUC_NANG_NHAP_DIEM_HE_4 + "&maHocKyDanhGia=" + maHocKyDanhGia);
     var listGPA = getListGPAByClassAndSemester(maLop, maHocKyDanhGia);
 
     $.each(listGPA, function(index){
@@ -311,8 +382,9 @@ function loadGPAToTable(maLop, maHocKyDanhGia) {
                             <td>" + listGPA[index][p].maSinhVien + "</td>\
                             <td>" + listGPA[index][p].hoTenSinhVien + "</td>\
                             <td>" + listGPA[index][p].diem + "</td>\
-                            <td>" + maLop + "</td>\
-                            <td>" + 
+                            <td>" + maLop + "</td>";
+            if(isEditable)
+                htmlData+= "<td>" + 
                                 "<button type='button' class='btn btn-warning btn_ChinhSua_DiemHe4' data-id='"+ listGPA[index][p].maSinhVien + "' style='color: white;'>" +
                                     "Chỉnh sửa" +
                                 "</button>" +
@@ -322,12 +394,37 @@ function loadGPAToTable(maLop, maHocKyDanhGia) {
                                 </div>"+
                             "</td>\
                         </tr>";
+            else
+                htmlData+= "<td></td>\
+                        </tr>";
         }
     });
     $("#tbody_danhSachDiemHe4").append(htmlData);
 }
 
 function updateDiemHe4(maSinhVien, maHocKyDanhGia, diem) {
+    //Kiểm tra hệ thống còn mở cho nhập điểm hay không?
+    var isUnlock = isNhapDiemUnlock();
+    if(!isUnlock) {
+        presentNotification("error", "Lỗi", "Hệ thống đã đóng chức năng nhập và chỉnh sửa điểm!");
+        return;
+    }
+
+    // Kiểm tra quyền cố vấn học tập được nhập điểm hay không?
+    isUnlock = isUnlockForCVHT();
+    if(!isUnlock) {
+        presentNotification("error", "Lỗi", "Hệ thống không cho phép cố vấn học tập nhập và chỉnh sửa điểm!");
+        return;
+    }
+
+    //Kiểm tra học kỳ còn cho phép nhập điểm hay không?
+    isUnlock = isGetAPISuccess(urlapi_chucnang_hockydanhgia_single_details_read +
+        "?maChucNang=" + CHUC_NANG_NHAP_DIEM_HE_4 + "&maHocKyDanhGia=" + maHocKyDanhGia);
+    if(!isUnlock) {
+        presentNotification("error", "Lỗi", "Hệ thống không cho phép cố vấn học tập nhập và chỉnh sửa điểm!");
+        return;
+    }
+
     var dataPost_Update = {
         maDiemTrungBinh: maSinhVien + maHocKyDanhGia,
         diem: diem,
@@ -366,4 +463,41 @@ function updateDiemHe4(maSinhVien, maHocKyDanhGia, diem) {
         });
         },
     });
+}
+
+function isNhapDiemUnlock() {
+    var isUnlock = false;
+    $.ajax({
+        url: urlapi_chucnang_single_read_maChucNang + CHUC_NANG_NHAP_DIEM_HE_4,
+        async: false,
+        type: "GET",
+        contentType: "application/json;charset=utf-8",
+        dataType: "json",
+        headers: {Authorization: jwtCookie,},
+        success: function(result_CN) {
+            if(result_CN.kichHoat == 1)
+                isUnlock = true;
+        },
+        error: function (){}
+    });
+    return isUnlock;
+}
+
+function isUnlockForCVHT() {
+    var isUnlock = false;
+    $.ajax({
+        url: urlapi_chucnang_quyen_single_details_read + "?maChucNang=" + 
+            CHUC_NANG_NHAP_DIEM_HE_4 + "&maQuyen=" + quyen,
+        async: false,
+        type: "GET",
+        contentType: "application/json;charset=utf-8",
+        dataType: "json",
+        headers: {Authorization: jwtCookie,},
+        success: function(result_CN_Quyen) {
+            if(result_CN_Quyen.maQuyen == quyen)
+                isUnlock = true;
+        },
+        error: function (){}
+    });
+    return isUnlock;
 }

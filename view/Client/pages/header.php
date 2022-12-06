@@ -72,6 +72,7 @@ if (isset($_COOKIE['jwt'])){
             $active_chamDiemChiTiet = '';
             $active_CVHT_DuyetDiem = '';
             $active_CVHT_NhapDiem = '';
+            $active_SinhVien_NhapDiem = '';
             $active_Khoa_DuyetDiem = '';
             $active_TraCuuDiem = '';
             $active_TraCuuHoatDong = '';
@@ -103,9 +104,15 @@ if (isset($_COOKIE['jwt'])){
 					break;
 				}
 
-                case 'nhapdiemhe4.php':{
-					echo "Nhập điểm hệ 4";
+                case 'nhapdiemhe4_CVHT.php':{
+					echo "Nhập điểm hệ 4 CVHT";
                     $active_CVHT_NhapDiem = "active";
+					break;
+				}
+
+                case 'nhapdiemhe4_sinhvien.php':{
+					echo "Nhập điểm hệ 4 Sinh viên";
+                    $active_SinhVien_NhapDiem = "active";
 					break;
 				}
 
@@ -221,8 +228,11 @@ if (isset($_COOKIE['jwt'])){
                             switch ($quyenNguoiDung) {
                                 case 'sinhvien':{
                                     echo "<li class='nav-item'>
-                                        <a class='nav-link ". $active_chamDiem ."' href='chamdiem.php' style='text-transform: uppercase;'> Chấm điểm rèn luyện</a>
-                                    </li>";
+                                            <a class='nav-link ". $active_chamDiem ."' href='chamdiem.php' style='text-transform: uppercase;'> Chấm điểm rèn luyện</a>
+                                        </li>
+                                        <li class='nav-item' id='nhapdiem_sinhvien'>
+                                            <a class='nav-link ".$active_SinhVien_NhapDiem."' href='nhapdiemhe4_sinhvien.php' style='text-transform: uppercase;'> Nhập điểm </a>
+                                        </li>";
                                     break;
                                 }
                                 
@@ -230,8 +240,8 @@ if (isset($_COOKIE['jwt'])){
                                     echo "<li class='nav-item'>
                                             <a class='nav-link ".$active_CVHT_DuyetDiem."' href='cvht_duyetdiemrenluyen.php' style='text-transform: uppercase;'> Duyệt danh sách điểm rèn luyện theo lớp</a>
                                         </li>
-                                        <li class='nav-item'>
-                                            <a class='nav-link ".$active_CVHT_NhapDiem."' href='nhapdiemhe4.php' style='text-transform: uppercase;'> Nhập điểm </a>
+                                        <li class='nav-item' id='nhapdiem_cvht'>
+                                            <a class='nav-link ".$active_CVHT_NhapDiem."' href='nhapdiemhe4_CVHT.php' style='text-transform: uppercase;'> Nhập điểm </a>
                                         </li>";
                                     break;
                                 }
@@ -299,8 +309,9 @@ if (isset($_COOKIE['jwt'])){
 
 
     </script>
-    <!-- Custom Script -->
-    <script src="../js/header/header.js"></script>
 
 	<!-- Constants Chuc Nang JS -->
 	<script src="../../constants/constants_chucNang.js"></script> 
+
+    <!-- Custom Script -->
+    <script src="../js/header/header.js"></script>

@@ -14,7 +14,7 @@ $checkQuyen = new checkQuyen();
 
 // kiểm tra đăng nhập thành công 
 if ($data["status"] == 1) {
-    if ($checkQuyen->checkQuyen_CVHT_Khoa_CTSV_Admin($data["user_data"]->aud)) {
+    //if ($checkQuyen->checkQuyen_CVHT_Khoa_CTSV_Admin($data["user_data"]->aud)) {
 
         if (isset($_GET['maSinhVien'])) {
             $maSinhVien = $_GET['maSinhVien'];
@@ -59,6 +59,8 @@ if ($data["status"] == 1) {
                         "maDiemTrungBinh" => $maDiemTrungBinh,
                         "maHocKyDanhGia" => $maHocKyDanhGia,
                         "maSinhVien" => $maSinhVien,
+                        "hocKyXet" => $hocKyXet,
+                        "namHocXet" => $namHocXet
                     );
                     
                     array_push($diemtrungbinhhe4Arr["diemtrungbinhhe4"], $e);
@@ -107,6 +109,6 @@ if ($data["status"] == 1) {
                 );
             }
         }
-    }
+    //}
 }
 ?>
