@@ -202,7 +202,7 @@ function getHtmlDataUnlockGPA(result) {
                                 "</button>" +
                                 "<div class='edit-confirmation' style='display:none'>\
                                     <button class='btn btn-primary btn_XacNhanNhapDiem_DiemHe4' style='color: white;' data-idMSSV = '" + result_sinhvien.maSinhVien + "' data-idMaHKDG='" + result[index][p].maHocKyDanhGia +
-                                        "' data-hocKyXet='" + result_GPA[index_GPA][p_GPA].hocKyXet + "' data-namHocXet='" + result_GPA[index_GPA][p_GPA].namHocXet + "'> Xác nhận</button>\
+                                        "' data-hocKyXet='" + result[index][p].hocKyXet + "' data-namHocXet='" + result[index][p].namHocXet + "'> Xác nhận</button>\
                                     <button class='btn bg-danger btn_HuyChinhSua_DiemHe4 ml-2' style='color: white;' data-idMSSV = '" + result_sinhvien.maSinhVien + "' data-idMaHKDG='" + result[index][p].maHocKyDanhGia + "'>Hủy</button>\
                                 </div>"+
                             "</td>\
