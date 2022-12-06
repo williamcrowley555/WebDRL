@@ -127,7 +127,7 @@ function TraCuuDiemRenLuyen(_input_MSSVTraCuu = '') {
                                             <td>"+ xepLoai +"</td>\
                                             <td>"+ covanDuyet +"</td>\
                                             <td>"+ khoaDuyet +"</td>\
-                                            <td><a href='xemdiemchitiet.php?maHocKy="+ maHocKyDanhGia +"&maSinhVien="+ _input_MSSVTraCuu +"' ><button type='button' class='btn btn-light' style='color: black;'> Xem chi tiết</button></a>\</td>\
+                                            <td><a href='chamdiemchitiet.php?maHocKy="+ maHocKyDanhGia +"&maSinhVien="+ _input_MSSVTraCuu +"' ><button type='button' class='btn btn-light' style='color: black;'> Xem chi tiết</button></a>\</td>\
                                         </tr>");     
                                     },
                                     error: function (errorMessage_tc3) {
