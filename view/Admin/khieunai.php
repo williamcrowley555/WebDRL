@@ -293,19 +293,6 @@
 	function xuLyTimKiemMSSV() {
 		var _input_timKiemMaSinhVien = $('#input_timKiemMaSinhVien').val().trim();
 		TimKiemKhieuNai(_input_timKiemMaSinhVien);
-		// if (_input_timKiemMaSinhVien != '') {
-		// 	if(Number(_input_timKiemMaSinhVien)) {
-		// 		TimKiemKhieuNai(_input_timKiemMaSinhVien);
-		// 	} else {
-		// 		Swal.fire({
-		// 			icon: "error",
-		// 			title: "Lỗi",
-		// 			text: "Mã số sinh viên không hợp lệ!",
-		// 			timer: 2000,
-		// 			timerProgressBar: true,
-		// 		});
-		// 	}
-		// }
 	}
 
 	$('#btn_timKiemMaSinhVien').on('click', function() {
@@ -322,14 +309,17 @@
 
 	$('#select_Khoa').on('change', function() {
 		GetListKhieuNai($("#select_Khoa").val(), $("#select_KhoaHoc").val(), $("#select_HocKyDanhGia").val());
+		$('#input_timKiemMaSinhVien').val('');
 	});
 
 	$('#select_KhoaHoc').on('change', function() {
 		GetListKhieuNai($("#select_Khoa").val(), $("#select_KhoaHoc").val(), $("#select_HocKyDanhGia").val());
+		$('#input_timKiemMaSinhVien').val('');
 	});
 
 	$('#select_HocKyDanhGia').on('change', function() {
 		GetListKhieuNai($("#select_Khoa").val(), $("#select_KhoaHoc").val(), $("#select_HocKyDanhGia").val());
+		$('#input_timKiemMaSinhVien').val('');
 	});
 
 	// Xử lý filter trạng thái
@@ -531,9 +521,17 @@
 		LoadThongTinPheDuyet(maKhieuNai);
 	})
 
+	// Xử lý submit form phê duyệt
 	$("#PheDuyetForm").submit(function(e) {
 		e.preventDefault();
 		pheDuyet();
 	});
 
+	//Xử lý xóa khiếu nại
+	$(document).on("click", ".btn_XoaKhieuNai", function() {
+		let maKhieuNai = $(this).attr('data-id');
+
+		xoaKhieuNai(maKhieuNai);
+	})
+	
 </script>

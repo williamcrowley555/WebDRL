@@ -288,6 +288,21 @@
             return false;
         }
 
+        // DELETE
+        function deleteKhieuNaiTheoMaKhieuNai($maKhieuNai){
+            $sqlQuery = "DELETE FROM " . $this->db_table . " WHERE maKhieuNai = ?";
+            $stmt = $this->conn->prepare($sqlQuery);
+        
+            $this->maKhieuNai = htmlspecialchars(strip_tags($maKhieuNai));
+        
+            $stmt->bindParam(1, $maKhieuNai);
+        
+            if($stmt->execute()){
+                return true;
+            }
+            return false;
+        }
+
     }
 
 ?>
