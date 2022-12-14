@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1:3307
--- Thời gian đã tạo: Th12 01, 2022 lúc 04:56 PM
+-- Thời gian đã tạo: Th12 14, 2022 lúc 04:56 PM
 -- Phiên bản máy phục vụ: 10.4.24-MariaDB
 -- Phiên bản PHP: 7.4.29
 
@@ -397,7 +397,7 @@ INSERT INTO `chucnang` (`maChucNang`, `tenChucNang`, `kichHoat`, `moTa`) VALUES
 CREATE TABLE `chucnang_hockydanhgia` (
   `maChucNang` int(11) NOT NULL,
   `maHocKyDanhGia` varchar(11) NOT NULL,
-  `ghiChu` text NOT NULL
+  `ghiChu` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -409,7 +409,7 @@ CREATE TABLE `chucnang_hockydanhgia` (
 CREATE TABLE `chucnang_quyen` (
   `maChucNang` int(11) NOT NULL,
   `maQuyen` varchar(255) NOT NULL,
-  `ghiChu` int(11) NOT NULL
+  `ghiChu` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
