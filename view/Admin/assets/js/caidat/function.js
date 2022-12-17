@@ -276,11 +276,6 @@ function TuyChinh_ChucNang() {
     ? "1"
     : "0";
 
-  console.log("Ma chuc nang: " + _custom_input_MaChucNang);
-  console.log("Hoc ky: " + _custom_select_HocKyDanhGia);
-  console.log("Quyen: " + _custom_select_Quyen);
-  console.log("Trang thai: " + _custom_check_active);
-
   var dataPost = {
     maChucNang: _custom_input_MaChucNang,
     kichHoat: _custom_check_active,

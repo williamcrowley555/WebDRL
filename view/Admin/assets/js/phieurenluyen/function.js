@@ -94,6 +94,18 @@ function checkLoiDangNhap(message) {
 
 var jwtCookie = getCookie("jwt");
 
+function sortObject(object, prop, asc) {
+  object.sort(function (a, b) {
+    if (asc) {
+      return a[prop] > b[prop] ? 1 : a[prop] < b[prop] ? -1 : 0;
+    } else {
+      return b[prop] > a[prop] ? 1 : b[prop] < a[prop] ? -1 : 0;
+    }
+  });
+
+  return object;
+}
+
 //phieurenluyen//
 function GetListPhieurenluyen(maLop, maHocKyDanhGia) {
   $("#id_tbodyPhieuRenLuyen tr").remove();
@@ -110,6 +122,9 @@ function GetListPhieurenluyen(maLop, maHocKyDanhGia) {
       async: true,
       headers: { Authorization: jwtCookie },
       success: function (result) {
+        sortObject(result["phieurenluyen"], "coVanDuyet", false);
+        sortObject(result["phieurenluyen"], "khoaDuyet", true);
+
         $("#idPhanTrang").pagination({
           dataSource: result["phieurenluyen"],
           pageSize: 10,
@@ -117,7 +132,6 @@ function GetListPhieurenluyen(maLop, maHocKyDanhGia) {
           autoHideNext: true,
 
           callback: function (data, pagination) {
-            
             var count = 0;
 
             for (let i = 0; i < data.length; i++) {
@@ -176,7 +190,9 @@ function GetListPhieurenluyen(maLop, maHocKyDanhGia) {
                 "' data-mahocky-id='" +
                 data[i].maHocKyDanhGia +
                 "' >" +
-                (isAllowedToScore(thongBaoDanhGia, getCookie("quyen"), ["khoa"])
+                (isAllowedToScore(thongBaoDanhGia, getCookie("quyen"), [
+                  "khoa",
+                ]) && data[i].coVanDuyet == 1
                   ? "Xem chi tiết và duyệt"
                   : "Xem chi tiết") +
                 "</button>\
@@ -196,21 +212,23 @@ function GetListPhieurenluyen(maLop, maHocKyDanhGia) {
       },
       error: function (errorMessage) {
         checkLoiDangNhap(errorMessage.responseJSON.message);
-        htmlData += "<tr>\
+        htmlData +=
+          "<tr>\
                         <td colspan='9' class='text-center'>\
                             <p class='mt-4'>Không tìm thấy kết quả.</p>\
                         </td>\
-                    </tr>"
+                    </tr>";
         $("#id_tbodyPhieuRenLuyen").append(htmlData);
         //thongBaoLoi(errorMessage.responseJSON.message);
       },
     });
   } else {
-    htmlData += "<tr>\
+    htmlData +=
+      "<tr>\
                     <td colspan='9' class='text-center'>\
                         <p class='mt-4'>Không tìm thấy kết quả.</p>\
                     </td>\
-                </tr>"
+                </tr>";
     $("#id_tbodyPhieuRenLuyen").append(htmlData);
     //thongBaoLoi("Không tìm thấy kết quả");
   }
@@ -293,9 +311,11 @@ function TimKiemPhieuRenLuyen(maPhieuRenLuyen) {
               "' data-mahocky-id='" +
               data[i].maHocKyDanhGia +
               "' >" +
-              (isAllowedToScore(thongBaoDanhGia, getCookie("quyen"), ["khoa"])
-                ? "Xem chi tiết"
-                : "Xem chi tiết và duyệt") +
+              (isAllowedToScore(thongBaoDanhGia, getCookie("quyen"), [
+                "khoa",
+              ]) && data[i].coVanDuyet == 1
+                ? "Xem chi tiết và duyệt"
+                : "Xem chi tiết") +
               "</button>\
                                     <a class='btn' href='#' style='color: white;background: #c04f4f;margin: 5px;'><img src='assets/images/icons/pdf.png' width='17px' /><span style='margin-left: 5px;'>Xuất phiếu</span> </a>\
                                   </td>\
@@ -309,11 +329,12 @@ function TimKiemPhieuRenLuyen(maPhieuRenLuyen) {
     error: function (errorMessage) {
       checkLoiDangNhap(errorMessage.responseJSON.message);
 
-      htmlData += "<tr>\
+      htmlData +=
+        "<tr>\
                       <td colspan='9' class='text-center'>\
                           <p class='mt-4'>Không tìm thấy kết quả.</p>\
                       </td>\
-                  </tr>"
+                  </tr>";
       $("#id_tbodyPhieuRenLuyen").append(htmlData);
 
       //thongBaoLoi(errorMessage.responseJSON.message);
@@ -377,12 +398,13 @@ function LoadComboBoxThongTinKhoa() {
     error: function (errorMessage) {
       checkLoiDangNhap(errorMessage.responseJSON.message);
 
-      var htmlData = "<tr>\
+      var htmlData =
+        "<tr>\
                         <td colspan='9' class='text-center'>\
                             <p class='mt-4'>Không tìm thấy kết quả.</p>\
                         </td>\
-                    </tr>"
-        $("#id_tbodyPhieuRenLuyen").append(htmlData);
+                    </tr>";
+      $("#id_tbodyPhieuRenLuyen").append(htmlData);
 
       // Swal.fire({
       //   icon: "error",

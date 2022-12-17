@@ -524,6 +524,7 @@ function autoFillDiemKetQuaHocTap(
   maSinhVien,
   maHocKyDanhGia,
   userRole,
+  isAllowedToScore,
   selector
 ) {
   selector += " ";
@@ -544,10 +545,10 @@ function autoFillDiemKetQuaHocTap(
       for (let i = 0; i < result_HKDG["hockydanhgia"].length; i++) {
         if (
           result_HKDG["hockydanhgia"][i].maHocKyDanhGia == maHocKyDanhGia &&
-          i < result_HKDG["hockydanhgia"].length - 1
+          i > 0
         ) {
           maHocKyDanhGiaTruoc =
-            result_HKDG["hockydanhgia"][i + 1].maHocKyDanhGia;
+            result_HKDG["hockydanhgia"][i - 1].maHocKyDanhGia;
         }
       }
 
@@ -603,125 +604,127 @@ function autoFillDiemKetQuaHocTap(
   var TBCHocKyTruoc = $(selector + "#inputTBCHocKyTruoc").val();
   var TBCHocKyDangXet = $(selector + "#inputTBCHocKyDangXet").val();
 
-  var bac_HocKyDangXet = 0;
-  var bac_HocKyTruoc = 0;
+  if (isAllowedToScore) {
+    var bac_HocKyDangXet = 0;
+    var bac_HocKyTruoc = 0;
 
-  var idTC3_1;
-  var idTC3_2;
-  var idTC3_3;
-  var idTC3_4;
-  var idTC3_5;
-  var idTC3_6;
-  var idTC3_7;
+    var idTC3_1;
+    var idTC3_2;
+    var idTC3_3;
+    var idTC3_4;
+    var idTC3_5;
+    var idTC3_6;
+    var idTC3_7;
 
-  if (userRole == roleSinhVien) {
-    idTC3_1 = "#TC3_1";
-    idTC3_2 = "#TC3_2";
-    idTC3_3 = "#TC3_3";
-    idTC3_4 = "#TC3_4";
-    idTC3_5 = "#TC3_5";
-    idTC3_6 = "#TC3_6";
-    idTC3_7 = "#TC3_7";
-  } else if (userRole == roleCVHT) {
-    idTC3_1 = "#CVHT_TC3_1";
-    idTC3_2 = "#CVHT_TC3_2";
-    idTC3_3 = "#CVHT_TC3_3";
-    idTC3_4 = "#CVHT_TC3_4";
-    idTC3_5 = "#CVHT_TC3_5";
-    idTC3_6 = "#CVHT_TC3_6";
-    idTC3_7 = "#CVHT_TC3_7";
-  } else if (userRole == roleKhoa) {
-    idTC3_1 = "#Khoa_TC3_1";
-    idTC3_2 = "#Khoa_TC3_2";
-    idTC3_3 = "#Khoa_TC3_3";
-    idTC3_4 = "#Khoa_TC3_4";
-    idTC3_5 = "#Khoa_TC3_5";
-    idTC3_6 = "#Khoa_TC3_6";
-    idTC3_7 = "#Khoa_TC3_7";
+    if (userRole == roleSinhVien) {
+      idTC3_1 = "#TC3_1";
+      idTC3_2 = "#TC3_2";
+      idTC3_3 = "#TC3_3";
+      idTC3_4 = "#TC3_4";
+      idTC3_5 = "#TC3_5";
+      idTC3_6 = "#TC3_6";
+      idTC3_7 = "#TC3_7";
+    } else if (userRole == roleCVHT) {
+      idTC3_1 = "#CVHT_TC3_1";
+      idTC3_2 = "#CVHT_TC3_2";
+      idTC3_3 = "#CVHT_TC3_3";
+      idTC3_4 = "#CVHT_TC3_4";
+      idTC3_5 = "#CVHT_TC3_5";
+      idTC3_6 = "#CVHT_TC3_6";
+      idTC3_7 = "#CVHT_TC3_7";
+    } else if (userRole == roleKhoa) {
+      idTC3_1 = "#Khoa_TC3_1";
+      idTC3_2 = "#Khoa_TC3_2";
+      idTC3_3 = "#Khoa_TC3_3";
+      idTC3_4 = "#Khoa_TC3_4";
+      idTC3_5 = "#Khoa_TC3_5";
+      idTC3_6 = "#Khoa_TC3_6";
+      idTC3_7 = "#Khoa_TC3_7";
+    }
+
+    $(selector + idTC3_1).val("");
+    $(selector + idTC3_2).val("");
+    $(selector + idTC3_3).val("");
+    $(selector + idTC3_4).val("");
+    $(selector + idTC3_5).val("");
+    $(selector + idTC3_6).val("");
+    $(selector + idTC3_7).val("");
+
+    // Bậc điểm học kỳ đang xét
+    if (TBCHocKyDangXet >= 3.6 && TBCHocKyDangXet <= 4) {
+      $(selector + idTC3_1).val($(selector + idTC3_1).attr("max_value"));
+      bac_HocKyDangXet = 4;
+    }
+
+    if (TBCHocKyDangXet >= 3.2 && TBCHocKyDangXet <= 3.59) {
+      $(selector + idTC3_2).val($(selector + idTC3_2).attr("max_value"));
+      bac_HocKyDangXet = 3;
+    }
+
+    if (TBCHocKyDangXet >= 2.5 && TBCHocKyDangXet <= 3.19) {
+      $(selector + idTC3_3).val($(selector + idTC3_3).attr("max_value"));
+      bac_HocKyDangXet = 2;
+    }
+
+    if (TBCHocKyDangXet >= 2 && TBCHocKyDangXet <= 2.49) {
+      $(selector + idTC3_4).val($(selector + idTC3_4).attr("max_value"));
+      bac_HocKyDangXet = 1;
+    }
+
+    if (TBCHocKyDangXet < 2) {
+      $(selector + idTC3_5).val($(selector + idTC3_5).attr("max_value"));
+    }
+
+    // Bậc điểm học kỳ trước
+    if (TBCHocKyTruoc >= 3.6 && TBCHocKyTruoc <= 4) {
+      bac_HocKyTruoc = 4;
+    }
+
+    if (TBCHocKyTruoc >= 3.2 && TBCHocKyTruoc <= 3.59) {
+      bac_HocKyTruoc = 3;
+    }
+
+    if (TBCHocKyTruoc >= 2.5 && TBCHocKyTruoc <= 3.19) {
+      bac_HocKyTruoc = 2;
+    }
+
+    if (TBCHocKyTruoc >= 2 && TBCHocKyTruoc <= 2.49) {
+      bac_HocKyTruoc = 1;
+    }
+
+    //So sánh bậc
+    if (bac_HocKyDangXet - bac_HocKyTruoc == 1) {
+      $(selector + idTC3_6).val($(selector + idTC3_6).attr("max_value"));
+    } else if (bac_HocKyDangXet - bac_HocKyTruoc > 1) {
+      $(selector + idTC3_7).val($(selector + idTC3_7).attr("max_value"));
+    }
+
+    //Kích hoạt sự kiên onchange manually vì value set bằng javascript ko hoạt động onchange
+    input_TC3_1 = document.getElementById("Khoa_TC3_1");
+    ev_TC3_1 = document.createEvent("Event");
+    ev_TC3_1.initEvent("change", true, false);
+    input_TC3_1.dispatchEvent(ev_TC3_1);
+
+    input_TC3_2 = document.getElementById("Khoa_TC3_2");
+    ev_TC3_2 = document.createEvent("Event");
+    ev_TC3_2.initEvent("change", true, false);
+    input_TC3_2.dispatchEvent(ev_TC3_2);
+
+    input_TC3_3 = document.getElementById("Khoa_TC3_3");
+    ev_TC3_3 = document.createEvent("Event");
+    ev_TC3_3.initEvent("change", true, false);
+    input_TC3_3.dispatchEvent(ev_TC3_3);
+
+    input_TC3_4 = document.getElementById("Khoa_TC3_4");
+    ev_TC3_4 = document.createEvent("Event");
+    ev_TC3_4.initEvent("change", true, false);
+    input_TC3_4.dispatchEvent(ev_TC3_4);
+
+    input_TC3_5 = document.getElementById("Khoa_TC3_5");
+    ev_TC3_5 = document.createEvent("Event");
+    ev_TC3_5.initEvent("change", true, false);
+    input_TC3_5.dispatchEvent(ev_TC3_5);
   }
-
-  $(selector + idTC3_1).val("");
-  $(selector + idTC3_2).val("");
-  $(selector + idTC3_3).val("");
-  $(selector + idTC3_4).val("");
-  $(selector + idTC3_5).val("");
-  $(selector + idTC3_6).val("");
-  $(selector + idTC3_7).val("");
-
-  // Bậc điểm học kỳ đang xét
-  if (TBCHocKyDangXet >= 3.6 && TBCHocKyDangXet <= 4) {
-    $(selector + idTC3_1).val($(selector + idTC3_1).attr("max_value"));
-    bac_HocKyDangXet = 4;
-  }
-
-  if (TBCHocKyDangXet >= 3.2 && TBCHocKyDangXet <= 3.59) {
-    $(selector + idTC3_2).val($(selector + idTC3_2).attr("max_value"));
-    bac_HocKyDangXet = 3;
-  }
-
-  if (TBCHocKyDangXet >= 2.5 && TBCHocKyDangXet <= 3.19) {
-    $(selector + idTC3_3).val($(selector + idTC3_3).attr("max_value"));
-    bac_HocKyDangXet = 2;
-  }
-
-  if (TBCHocKyDangXet >= 2 && TBCHocKyDangXet <= 2.49) {
-    $(selector + idTC3_4).val($(selector + idTC3_4).attr("max_value"));
-    bac_HocKyDangXet = 1;
-  }
-
-  if (TBCHocKyDangXet < 2) {
-    $(selector + idTC3_5).val($(selector + idTC3_5).attr("max_value"));
-  }
-
-  // Bậc điểm học kỳ trước
-  if (TBCHocKyTruoc >= 3.6 && TBCHocKyTruoc <= 4) {
-    bac_HocKyTruoc = 4;
-  }
-
-  if (TBCHocKyTruoc >= 3.2 && TBCHocKyTruoc <= 3.59) {
-    bac_HocKyTruoc = 3;
-  }
-
-  if (TBCHocKyTruoc >= 2.5 && TBCHocKyTruoc <= 3.19) {
-    bac_HocKyTruoc = 2;
-  }
-
-  if (TBCHocKyTruoc >= 2 && TBCHocKyTruoc <= 2.49) {
-    bac_HocKyTruoc = 1;
-  }
-
-  //So sánh bậc
-  if (bac_HocKyDangXet - bac_HocKyTruoc == 1) {
-    $(selector + idTC3_6).val($(selector + idTC3_6).attr("max_value"));
-  } else if (bac_HocKyDangXet - bac_HocKyTruoc > 1) {
-    $(selector + idTC3_7).val($(selector + idTC3_7).attr("max_value"));
-  }
-
-  //Kích hoạt sự kiên onchange manually vì value set bằng javascript ko hoạt động onchange
-  input_TC3_1 = document.getElementById("Khoa_TC3_1");
-  ev_TC3_1 = document.createEvent("Event");
-  ev_TC3_1.initEvent("change", true, false);
-  input_TC3_1.dispatchEvent(ev_TC3_1);
-
-  input_TC3_2 = document.getElementById("Khoa_TC3_2");
-  ev_TC3_2 = document.createEvent("Event");
-  ev_TC3_2.initEvent("change", true, false);
-  input_TC3_2.dispatchEvent(ev_TC3_2);
-
-  input_TC3_3 = document.getElementById("Khoa_TC3_3");
-  ev_TC3_3 = document.createEvent("Event");
-  ev_TC3_3.initEvent("change", true, false);
-  input_TC3_3.dispatchEvent(ev_TC3_3);
-
-  input_TC3_4 = document.getElementById("Khoa_TC3_4");
-  ev_TC3_4 = document.createEvent("Event");
-  ev_TC3_4.initEvent("change", true, false);
-  input_TC3_4.dispatchEvent(ev_TC3_4);
-
-  input_TC3_5 = document.getElementById("Khoa_TC3_5");
-  ev_TC3_5 = document.createEvent("Event");
-  ev_TC3_5.initEvent("change", true, false);
-  input_TC3_5.dispatchEvent(ev_TC3_5);
 }
 
 function rank(diemTongCong) {
@@ -1328,26 +1331,29 @@ function setDiemPhieuRenLuyen(
       thongTinPhieu.maSinhVien,
       thongTinPhieu.maHocKyDanhGia,
       userRole,
+      true,
       selector
     );
 
-    $(selector + "#inputTBCHocKyDangXet").on("change", function () {
-      autoFillDiemKetQuaHocTap(
-        thongTinPhieu.maSinhVien,
-        thongTinPhieu.maHocKyDanhGia,
-        userRole,
-        selector
-      );
-    });
+    // $(selector + "#inputTBCHocKyDangXet").on("change", function () {
+    //   autoFillDiemKetQuaHocTap(
+    //     thongTinPhieu.maSinhVien,
+    //     thongTinPhieu.maHocKyDanhGia,
+    //     userRole,
+    //     true,
+    //     selector
+    //   );
+    // });
 
-    $(selector + "#inputTBCHocKyTruoc").on("change", function () {
-      autoFillDiemKetQuaHocTap(
-        thongTinPhieu.maSinhVien,
-        thongTinPhieu.maHocKyDanhGia,
-        userRole,
-        selector
-      );
-    });
+    // $(selector + "#inputTBCHocKyTruoc").on("change", function () {
+    //   autoFillDiemKetQuaHocTap(
+    //     thongTinPhieu.maSinhVien,
+    //     thongTinPhieu.maHocKyDanhGia,
+    //     userRole,
+    //     true,
+    //     selector
+    //   );
+    // });
 
     autoFillDiemHoatDong(
       thongTinPhieu.maSinhVien,
@@ -1367,16 +1373,16 @@ function setDiemPhieuRenLuyen(
     var isAllowedToScore_CVHT = isAllowedToScore(thongBaoDanhGia, userRole, [
       roleCVHT,
     ]);
-    var isAllowedToScore_Khoa = isAllowedToScore(thongBaoDanhGia, userRole, [
-      roleKhoa,
-    ]);
+    var isAllowedToScore_Khoa =
+      isAllowedToScore(thongBaoDanhGia, userRole, [roleKhoa]) &&
+      thongTinPhieu.coVanDuyet == 1;
 
-    $(selector + "#inputTBCHocKyTruoc").val(
-      thongTinPhieu.diemTrungBinhChungHKTruoc
-    );
-    $(selector + "#inputTBCHocKyDangXet").val(
-      thongTinPhieu.diemTrungBinhChungHKXet
-    );
+    // $(selector + "#inputTBCHocKyTruoc").val(
+    //   thongTinPhieu.diemTrungBinhChungHKTruoc
+    // );
+    // $(selector + "#inputTBCHocKyDangXet").val(
+    //   thongTinPhieu.diemTrungBinhChungHKXet
+    // );
 
     $(selector + "#text_diemTongCong").text(thongTinPhieu.diemTongCong);
     $(selector + "#text_XepLoai").text(thongTinPhieu.xepLoai);
@@ -1426,6 +1432,7 @@ function setDiemPhieuRenLuyen(
                 }
               } else {
                 $(selector + "#Khoa_" + this.id).val(diem.diemKhoaDanhGia);
+                $(selector + "#Khoa_" + this.id).prop("disabled", true);
               }
 
               // Hiện file minh chứng
@@ -1496,6 +1503,7 @@ function setDiemPhieuRenLuyen(
                 }
               } else {
                 $(selector + "#Khoa_" + this.id).val(diem.diemKhoaDanhGia);
+                $(selector + "#Khoa_" + this.id).prop("disabled", true);
               }
 
               // Hiện file minh chứng
@@ -1516,13 +1524,33 @@ function setDiemPhieuRenLuyen(
         });
     });
 
+    if (userRole == roleKhoa && thongTinPhieu.coVanDuyet == 0) {
+      isAllowedToScore_Khoa;
+    }
+
+    autoFillDiemKetQuaHocTap(
+      thongTinPhieu.maSinhVien,
+      thongTinPhieu.maHocKyDanhGia,
+      userRole,
+      userRole == roleKhoa
+        ? isAllowedToScore_Khoa
+        : isAllowedToScore(thongBaoDanhGia, userRole, [
+            roleSinhVien,
+            roleCVHT,
+            roleKhoa,
+          ]),
+      selector
+    );
+
     tinhTongDiem(
       userRole,
-      isAllowedToScore(thongBaoDanhGia, userRole, [
-        roleSinhVien,
-        roleCVHT,
-        roleKhoa,
-      ]),
+      userRole == roleKhoa
+        ? isAllowedToScore_Khoa
+        : isAllowedToScore(thongBaoDanhGia, userRole, [
+            roleSinhVien,
+            roleCVHT,
+            roleKhoa,
+          ]),
       selector
     );
   }
