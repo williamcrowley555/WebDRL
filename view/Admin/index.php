@@ -317,6 +317,14 @@
 					        </a>\
 					    </li>\
 						<li class='nav-item' style='cursor: pointer;'>\
+					        <a class='nav-link' onclick='LoadContentMainPage(\"thongkecanhcao.php\");' id='menu-button-ThongKeCanhCao' >\
+						        <span class='nav-icon'>\
+									<img src='assets/images/icons/bad-score-analytics.png' alt='icon thống kê cảnh cáo' width='25px'>\
+						         </span>\
+		                         <span class='nav-link-text'>Thống kê cảnh cáo</span>\
+					        </a>\
+					    </li>\
+						<li class='nav-item' style='cursor: pointer;'>\
 					        <a class='nav-link' onclick='LoadContentMainPage(\"caidat.php\");' id='menu-button-CaiDat' >\
 						        <span class='nav-icon'>\
 									<img src='assets/images/icons/settings.png' alt='icon cài đặt' width='25px'>\
@@ -381,6 +389,14 @@
 									<img src='assets/images/icons/analysis.png' alt='icon thống kê' width='25px'>\
 						         </span>\
 		                         <span class='nav-link-text'>Thống kê</span>\
+					        </a>\
+					    </li>\
+						<li class='nav-item' style='cursor: pointer;'>\
+					        <a class='nav-link' onclick='LoadContentMainPage(\"thongkecanhcao.php\");' id='menu-button-ThongKeCanhCao' >\
+						        <span class='nav-icon'>\
+									<img src='assets/images/icons/bad-score-analytics.png' alt='icon thống kê cảnh cáo' width='25px'>\
+						         </span>\
+		                         <span class='nav-link-text'>Thống kê cảnh cáo</span>\
 					        </a>\
 					    </li>");
 			}

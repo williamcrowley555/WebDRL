@@ -13,6 +13,7 @@
 	$("#menu-button-ThongBaoDanhGia").removeClass("active");
 	$("#menu-button-KhieuNai").removeClass("active");
 	$("#menu-button-ThongKe").removeClass("active");
+	$("#menu-button-ThongKeCanhCao").removeClass("active");
 
 	//add class active
 	$("#menu-button-CaiDat").addClass("active");
