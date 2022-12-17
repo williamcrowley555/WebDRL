@@ -107,7 +107,12 @@
 									</div>
 
 									<button type="submit" class="btn btn-primary" style="width: auto;text-align: center;text-transform: uppercase;color: white;font-size: 16px;float: right;margin-right: 15px;margin-bottom: 20px;margin-top: -10px;">Duyệt điểm</button>
-
+                                    <div id="counselorApproveWaiting" class="text-uppercase text-center text-body fw-bold bg-warning p-3" style="display: none;font-size: 18px">
+                                        <svg style="vertical-align: middle;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-lock-fill" viewBox="0 0 16 16">
+                                            <path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"/>
+                                        </svg>
+                                        <p class="d-inline align-middle">ĐANG CHỜ CỐ VẤN HỌC TẬP DUYỆT ĐIỂM</p>
+                                    </div>
 								<div class="form-notch"><div class="form-notch-leading" style="width: 9px;"></div><div class="form-notch-middle" style="width: 0px;"></div><div class="form-notch-trailing"></div></div></div>
 							</form>
 
@@ -350,7 +355,16 @@
         _isAllowedToScore = isAllowedToScore(phieuRenLuyen.thongBaoDanhGia, getCookie("quyen"), ["khoa"]);
         
         if(!_isAllowedToScore) {
-            $('form#formDanhGiaDRL').find(':submit').remove();
+            $('form#formDanhGiaDRL').find(':submit').hide();
+            $('#counselorApproveWaiting').hide();
+        } else {
+            if (getCookie("quyen") == "khoa" && phieuRenLuyen.thongTinPhieu.coVanDuyet == 1) {
+                $('form#formDanhGiaDRL').find(':submit').show();
+                $('#counselorApproveWaiting').hide();
+            } else {
+                $('form#formDanhGiaDRL').find(':submit').hide();
+                $('#counselorApproveWaiting').show();
+            }
         }
             
         $('#text_maPhieuRenLuyen_XemVaDuyet').text(maPhieuRenLuyen);
