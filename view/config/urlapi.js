@@ -37,6 +37,7 @@ const urlapi_sinhvien_update_xettotnghiep =
 
 //READ
 const urlapi_diemtrungbinhhe4_read = api_url + "/diemtrungbinhhe4/read.php";
+const urlapi_diemtrungbinhhe4_read_NotHaveGrade = api_url + "/diemtrungbinhhe4/readKhongCoDiem.php";
 
 const urlapi_diemtrungbinhhe4_read_MaSV =
   urlapi_diemtrungbinhhe4_read + "?maSinhVien=";
@@ -198,6 +199,8 @@ const urlapi_phieurenluyen_read_MaPhieuRenLuyen =
 const urlapi_phieurenluyen_read_MaLop = urlapi_phieurenluyen_read + "?maLop=";
 const urlapi_phieurenluyen_read_MaSV =
   urlapi_phieurenluyen_read + "?maSinhVien=";
+const urlapi_phieurenluyen_details_read_MaSV = 
+  api_url + "/phieurenluyen/details_read.php?maSinhVien=";
 
 //SINGLE READ
 const urlapi_phieurenluyen_single_read =
@@ -324,6 +327,14 @@ const urlapi_tieuchicap3_update_kichHoat =
 //READ
 const urlapi_thongkelop_read = api_url + "/thongkelop/read.php";
 const urlapi_thongkesinhvien_read = api_url + "/thongkesinhvien/read.php";
+
+//---------------THONG KE CANH CAO---------------//----------------------------------
+//---------//
+
+//READ
+const urlapi_thongkecanhcao_read = api_url + "/thongkecanhcao/read.php";
+const urlapi_thongkecanhcao_readAll = api_url + "/thongkecanhcao/readAll.php";
+const urlapi_thongkecanhcao_khongyeukem_read = api_url + "/thongkecanhcao/readKhongYeuKem.php";
 
 //---------------KHIEU NAI---------------//----------------------------------
 //---------//

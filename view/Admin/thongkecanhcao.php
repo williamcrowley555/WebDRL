@@ -72,13 +72,14 @@
 
 									</tr>
 								</thead>
-								<tbody id="tbodyLop">
+								<tbody id="tbodyThongKe">
 
 								</tbody>
 							</table>
 						</div>
 						<!--//table-responsive-->
-
+						
+						
 					</div>
 					<!--//app-card-body-->
 				</div>
@@ -92,6 +93,49 @@
 
 			</div>
 			<!--//tab-pane-->
+
+			<div class="modal fade" id="danhSachPhieuDiemRenLuyenModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+				<div class="bg-light" style="min-width: 100vh; min-height: 100vh;">
+					<div class="modal-dialog p-2">
+						<div class="modal-content border-0" style="min-width: 700px;min-height:450px;margin-left:-50px;">
+							<div class="modal-header">
+								<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+							</div>
+							<h5 class="text-center"> Danh sách phiếu rèn luyện </h5>
+							<span id="maSinhVien" class="fw-bold ps-3"></span>
+							<span id="hoTenSinhVien" class="fw-bold ps-3 pb-2"></span>
+							<div class="modal-body py-0">
+								<div class="tab-content border bg-light" id="nav-tabContent">
+									<!-- List tab -->
+									<div class="tab-pane fade active show" id="nav-list" role="tabpanel" aria-labelledby="nav-list-tab">
+										<div class="table-responsive px-2" id ="DanhSachKetQua">
+										<h3 class="form-label" id="maSinhVien_ketQuaHocTap" style="color: black; font-weight: 500;"> </h3>
+											<table class="table app-table-hover mb-0 text-left" id="tableDanhSachPhieuRenLuyen">
+												<thead>
+													<tr>
+
+													</tr>
+												</thead>
+												<tbody id="tbodyDanhSachPhieuRenLuyen">
+													
+												</tbody>
+											</table>
+										</div>
+										<!--//table-responsive-->
+									</div>
+
+									<!-- Add tab -->					
+								</div>
+
+								
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 
 		</div>
 		<!--//row-->
@@ -117,12 +161,32 @@
 		$("#tableThongKe>thead>tr").append(`<th class='cell'>${title}</th>`);
 
 		if(index == tableThongKeTitle.length - 1) {
-			$("#tableThongKe>thead>tr").append(`<th class='cell' width='130'>Hành động</th>`);
+			$("#tableThongKe>thead>tr").append(`<th class='cell' width='150'>Hành động</th>`);
 		}
+	});
+
+	tableDanhSachPhieuRenLuyen.forEach(function(title, index) {
+		$("#tableDanhSachPhieuRenLuyen>thead>tr").append(`<th class='cell'>${title}</th>`);
 	});
 
 	$("#select_Khoa").on("change", function() {
 		var maKhoa = $(this).find('option:selected').val();
 		loadCombobox(urlapi_lop_read_maKhoa + maKhoa, "#select_Lop", thongBaoLoiComboboxLop);
+	});
+
+	$("#btn_thongKe").on("click", function() {
+		// console.log("hello");
+		loadTableThongKe();
+	});
+
+	$(document).on("click", ".btn_xemChiTiet", function() {
+		
+		var maSinhVien = $(this).attr('data-id');
+		var hoTenSinhVien = $(this).attr('data-hoten');
+		$("#maSinhVien").empty();
+		$("#hoTenSinhVien").empty();
+		$("#maSinhVien").append("Mã sinh viên: " + maSinhVien);
+		$("#hoTenSinhVien").append("Họ tên sinh viên: " + hoTenSinhVien);
+		loadDanhSachPhieuRenLuyen(maSinhVien);
 	});
 </script>

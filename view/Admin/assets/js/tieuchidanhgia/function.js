@@ -58,7 +58,7 @@ function GetListTieuChi(tieuChi) {
           autoHideNext: true,
 
           callback: function (data, pagination) {
-            
+            var htmlData = "";
             var count = 0;
 
             if (tieuChi == "tieuchicap1") {

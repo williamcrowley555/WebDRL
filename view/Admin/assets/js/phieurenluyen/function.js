@@ -132,6 +132,7 @@ function GetListPhieurenluyen(maLop, maHocKyDanhGia) {
           autoHideNext: true,
 
           callback: function (data, pagination) {
+            var htmlData = "";
             var count = 0;
 
             for (let i = 0; i < data.length; i++) {
@@ -253,6 +254,7 @@ function TimKiemPhieuRenLuyen(maPhieuRenLuyen) {
         autoHideNext: true,
 
         callback: function (data, pagination) {
+          var htmlData = "";
           var count = 0;
 
           for (let i = 0; i < data.length; i++) {

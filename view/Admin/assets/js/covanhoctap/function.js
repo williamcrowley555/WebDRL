@@ -76,7 +76,7 @@ function GetListCVHT(maKhoa) {
               autoHideNext: true,
 
               callback: function (data, pagination) {
-                
+                var htmlData = "";
                 var count = 0;
 
                 for (let i = 0; i < data.length; i++) {

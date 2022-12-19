@@ -75,7 +75,8 @@
             $sqlQuery = "SELECT maLop, tenLop, maKhoa, maCoVanHocTap, maKhoaHoc FROM ". $this->db_table .
                             ($this->maLop ? " WHERE UPPER(maLop) = UPPER('$this->maLop')" : "") . 
                             (($this->maKhoa && $this->maKhoaHoc) ? 
-                                (" WHERE UPPER(maLop) LIKE UPPER('%$this->maKhoa" . "1" . substr($this->maKhoaHoc, 1) . "%') ORDER BY maLop DESC") 
+                                (" WHERE UPPER(maLop) LIKE UPPER('%$this->maKhoa" . "1" . substr($this->maKhoaHoc, 1) . "%') 
+                        ORDER BY LENGTH(maLop) DESC, maLop DESC") 
                                 : 
                                 "") .
                             " LIMIT 0,1";

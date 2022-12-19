@@ -101,6 +101,7 @@ if ($data["status"] == 1) {
                         );
                         array_push($lopArr["lop"], $e);
                     }
+                    
                     http_response_code(200);
                     echo json_encode($lopArr);
                 } else {

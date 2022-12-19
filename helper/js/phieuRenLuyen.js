@@ -70,7 +70,7 @@ function getThongTinPhieuRenLuyen(maPhieuRenLuyen) {
       success: function (result_CD) {
         result_CD["ChamDiemRenLuyen"].forEach(function (result) {
           if (result.maTieuChi2 != 0) {
-            phieuRenLuyen.diemTieuChiCap2.push(result);
+            phieuRenLuyen.diemTieuChiCap2(result);
 
             // Lưu tiêu chí cấp 2
             $.ajax({

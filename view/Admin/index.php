@@ -311,9 +311,9 @@
 						<li class='nav-item' style='cursor: pointer;'>\
 					        <a class='nav-link' onclick='LoadContentMainPage(\"thongke.php\");' id='menu-button-ThongKe' >\
 						        <span class='nav-icon'>\
-									<img src='assets/images/icons/analysis.png' alt='icon thống kê' width='25px'>\
+									<img src='assets/images/icons/analysis.png' alt='icon thống kê tình trạng chấm' width='25px'>\
 						         </span>\
-		                         <span class='nav-link-text'>Thống kê</span>\
+		                         <span class='nav-link-text'>Thống kê tình trạng chấm</span>\
 					        </a>\
 					    </li>\
 						<li class='nav-item' style='cursor: pointer;'>\
@@ -386,9 +386,9 @@
 						<li class='nav-item' style='cursor: pointer;'>\
 					        <a class='nav-link' onclick='LoadContentMainPage(\"thongke.php\");' id='menu-button-ThongKe' >\
 						        <span class='nav-icon'>\
-									<img src='assets/images/icons/analysis.png' alt='icon thống kê' width='25px'>\
+									<img src='assets/images/icons/analysis.png' alt='icon thống kê tình trạng chấm' width='25px'>\
 						         </span>\
-		                         <span class='nav-link-text'>Thống kê</span>\
+		                         <span class='nav-link-text'>Thống kê tình trạng chấm</span>\
 					        </a>\
 					    </li>\
 						<li class='nav-item' style='cursor: pointer;'>\
