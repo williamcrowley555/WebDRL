@@ -475,8 +475,29 @@ function GetListSinhVien(maKhoa, maLop) {
 
 function TimKiemSinhVien(maSinhVien) {
   $("#id_tbodySinhVien tr").remove();
+
+  var paramMaKhoa = "";
+  
+  if (getCookie("quyen") == "khoa") {
+    $.ajax({
+      url: urlapi_khoa_single_read_taiKhoanKhoa + getCookie("taiKhoan"),
+      async: false,
+      type: "GET",
+      contentType: "application/json;charset=utf-8",
+      dataType: "json",
+      headers: {
+        Authorization: jwtCookie,
+      },
+      success: function (result_Khoa) {
+        paramMaKhoa += "&maKhoa_quyen=" + result_Khoa["maKhoa"];
+      },
+      error: function (errorMessage) {
+      },
+    });
+  }
+
   $.ajax({
-    url: urlapi_sinhvien_read_mssv + maSinhVien,
+    url: urlapi_sinhvien_read_mssv + maSinhVien + paramMaKhoa,
     async: false,
     type: "GET",
     contentType: "application/json;charset=utf-8",

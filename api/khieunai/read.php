@@ -39,6 +39,12 @@
                 $maSinhVien = null;
             }
 
+            if (isset($_GET['maKhoa_quyen'])) {
+                $maKhoa_quyen = $_GET['maKhoa_quyen'];
+            } else {
+                $maKhoa_quyen = null;
+            }
+
             $database = new Database();
             $db = $database->getConnection();
     
@@ -85,7 +91,13 @@
                 }
             } else if ($maSinhVien != null) {
                 $items = new KhieuNai($db);
-                $stmt = $items->getDetailsKhieuNaiTheoMSSV($maSinhVien, false);
+
+                if ($maKhoa_quyen == null) {
+                    $stmt = $items->getDetailsKhieuNaiTheoMSSV($maSinhVien, false);
+                } else {
+                    $stmt = $items->getDetailsKhieuNaiTheoMSSVVaMaKhoa($maSinhVien, $maKhoa_quyen, false);
+                }
+                
                 $itemCount = $stmt->rowCount();
         
                 if($itemCount > 0) {

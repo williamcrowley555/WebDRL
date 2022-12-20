@@ -46,8 +46,29 @@ function GetListHoatdongdanhgia() {
     var jwtCookie = getCookie("jwt");
 
     $("#id_tbodyLop tr").remove();
+
+    var apiParams = "";
+    
+    if (getCookie("quyen") == "khoa") {
+      $.ajax({
+        url: urlapi_khoa_single_read_taiKhoanKhoa + getCookie("taiKhoan"),
+        async: false,
+        type: "GET",
+        contentType: "application/json;charset=utf-8",
+        dataType: "json",
+        headers: {
+          Authorization: jwtCookie,
+        },
+        success: function (result_Khoa) {
+          apiParams += "?maKhoa=" + result_Khoa["maKhoa"];
+        },
+        error: function (errorMessage) {
+        },
+      });
+    }
+
     $.ajax({
-      url: urlapi_hoatdongdanhgia_read,
+      url: urlapi_hoatdongdanhgia_read + apiParams,
       type: "GET",
       contentType: "application/json;charset=utf-8",
       dataType: "json",
@@ -147,8 +168,29 @@ function GetListHoatdongdanhgia() {
 
 function TimKiemHoatDong(maHD) {
   $("#id_tbodyLop tr").remove();
+
+  var paramMaKhoa = "";
+  
+  if (getCookie("quyen") == "khoa") {
+    $.ajax({
+      url: urlapi_khoa_single_read_taiKhoanKhoa + getCookie("taiKhoan"),
+      async: false,
+      type: "GET",
+      contentType: "application/json;charset=utf-8",
+      dataType: "json",
+      headers: {
+        Authorization: jwtCookie,
+      },
+      success: function (result_Khoa) {
+        paramMaKhoa += "&maKhoa=" + result_Khoa["maKhoa"];
+      },
+      error: function (errorMessage) {
+      },
+    });
+  }
+
   $.ajax({
-    url: urlapi_hoatdongdanhgia_read_maHD + maHD,
+    url: urlapi_hoatdongdanhgia_read_maHD + maHD + paramMaKhoa,
     type: "GET",
     contentType: "application/json;charset=utf-8",
     dataType: "json",
@@ -248,9 +290,30 @@ function TimKiemHoatDong(maHD) {
 function LocHoatDong(from, to) {
   $("#id_tbodyLop tr").remove();
   var htmlData = "";
+
   if (from && to) {
+    var paramMaKhoa = "";
+  
+    if (getCookie("quyen") == "khoa") {
+      $.ajax({
+        url: urlapi_khoa_single_read_taiKhoanKhoa + getCookie("taiKhoan"),
+        async: false,
+        type: "GET",
+        contentType: "application/json;charset=utf-8",
+        dataType: "json",
+        headers: {
+          Authorization: jwtCookie,
+        },
+        success: function (result_Khoa) {
+          paramMaKhoa += "&maKhoa=" + result_Khoa["maKhoa"];
+        },
+        error: function (errorMessage) {
+        },
+      });
+    }
+
     $.ajax({
-      url: urlapi_hoatdongdanhgia_read + `?from=${from}&to=${to}`,
+      url: urlapi_hoatdongdanhgia_read + `?from=${from}&to=${to}` + paramMaKhoa,
       type: "GET",
       contentType: "application/json;charset=utf-8",
       dataType: "json",

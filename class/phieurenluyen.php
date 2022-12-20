@@ -87,6 +87,22 @@ class PhieuRenLuyen
         return $stmt;
     }
 
+    // GET PHIEU REN LUYEN THEO MA PHIEU REN LUYEN VA MA KHOA
+    public function getPhieuRenLuyen_TheoMaPhieuRenLuyenVaMaKhoa($maPhieuRenLuyen, $maKhoa, $isEqual = true)
+    {
+        $sqlQuery = "SELECT maPhieuRenLuyen, xepLoai, diemTongCong, maSinhVien, diemTrungBinhChungHKTruoc, diemTrungBinhChungHKXet, maHocKyDanhGia, coVanDuyet, khoaDuyet 
+                    FROM phieurenluyen LEFT JOIN sinhvien ON maPhieuRenLuyen.maSinhVien = sinhvien.maSinhVien 
+                        LEFT JOIN lop ON sinhvien.maLop = lop.maLop
+                    WHERE lop.maKhoa = '$maKhoa' 
+                        AND maPhieuRenLuyen" . 
+                        ($isEqual ? " = '$maPhieuRenLuyen'" : " LIKE '%$maPhieuRenLuyen%'") . 
+                        " ORDER BY maHocKyDanhGia DESC";
+
+        $stmt = $this->conn->prepare($sqlQuery);
+        $stmt->execute();
+        return $stmt;
+    }
+
     // READ single
     public function getSinglePhieuRenLuyen()
     {

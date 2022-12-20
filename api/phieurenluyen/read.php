@@ -48,6 +48,12 @@ if ($data["status"] == 1 ) {
             $GET_maSinhVien = null;
         }
 
+        if (isset($_GET['maKhoa_quyen'])) {
+            $maKhoa_quyen = $_GET['maKhoa_quyen'];
+        } else {
+            $maKhoa_quyen = null;
+        }
+
         $database = new Database();
         $db = $database->getConnection();
 
@@ -112,7 +118,13 @@ if ($data["status"] == 1 ) {
             }
         } else if ($GET_maPhieuRenLuyen != null) {
             $items = new PhieuRenLuyen($db);
-            $stmt = $items->getPhieuRenLuyen_TheoMaPhieuRenLuyen($GET_maPhieuRenLuyen, false);
+
+            if ($maKhoa_quyen == null) {
+                $stmt = $items->getPhieuRenLuyen_TheoMaPhieuRenLuyen($GET_maPhieuRenLuyen, false);
+            } else {
+                $stmt = $items->getPhieuRenLuyen_TheoMaPhieuRenLuyenVaMaKhoa($GET_maPhieuRenLuyen, $maKhoa_quyen, false);
+            }
+            
             $itemCount = $stmt->rowCount();
     
             if ($itemCount > 0) {

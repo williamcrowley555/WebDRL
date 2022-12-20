@@ -64,6 +64,24 @@
             $stmt->execute();
             return $stmt;
         }
+
+        // GET ALL THEO MA SO SINH VIEN VA MA KHOA
+        public function getDetailsKhieuNaiTheoMSSVVaMaKhoa($mssv, $maKhoa, $isEqual = true)
+        {
+            $sqlQuery = "SELECT * 
+                        FROM khieunai, phieurenluyen, sinhvien, lop  
+                        WHERE  khieunai.maPhieuRenLuyen = phieurenluyen.maPhieuRenLuyen 
+                            AND phieurenluyen.maSinhVien = sinhvien.maSinhVien
+                            AND sinhvien.maLop = lop.maLop
+                            AND lop.maKhoa = '$maKhoa' 
+                            AND phieurenluyen.maSinhVien" . 
+                            ($isEqual ? " = '$mssv'" : " LIKE '%$mssv%'") . 
+                        " ORDER BY thoiGianKhieuNai DESC";
+    
+            $stmt = $this->conn->prepare($sqlQuery);
+            $stmt->execute();
+            return $stmt;
+        }
         
         // GET SINGLE DETAILS THEO MA KHIEU NAI
         public function getSingleDetailsTheoMaKhieuNai($maKhieuNai) {

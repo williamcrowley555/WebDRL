@@ -42,6 +42,12 @@ if ($data["status"] == 1) {
             $GET_maCoVanHocTap = null;
         }
 
+        if (isset($_GET['maKhoa_quyen'])) {
+            $maKhoa_quyen = $_GET['maKhoa_quyen'];
+        } else {
+            $maKhoa_quyen = null;
+        }
+
         if ($GET_maKhoa != null) {
             if ($GET_maKhoaHoc != null) {
                 $items = new Lop($db);
@@ -146,8 +152,13 @@ if ($data["status"] == 1) {
             }
         } else if ($GET_maLop != null) {
             $items = new Lop($db);
+
+            if ($maKhoa_quyen == null) {
+                $stmt = $items->getLopTheoMaLop($GET_maLop, false);
+            } else {
+                $stmt = $items->getLopTheoMaLopVaMaKhoa($GET_maLop, $maKhoa_quyen, false);
+            }
             
-            $stmt = $items->getLopTheoMaLop($GET_maLop, false);
             $itemCount = $stmt->rowCount();
     
             if ($itemCount > 0) {

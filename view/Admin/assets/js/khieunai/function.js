@@ -362,8 +362,28 @@ function TimKiemKhieuNai(maSinhVien) {
   var htmlData = "";
   $("#tbodyKhieuNai tr").remove();
 
+  var paramMaKhoa = "";
+  
+  if (getCookie("quyen") == "khoa") {
+    $.ajax({
+      url: urlapi_khoa_single_read_taiKhoanKhoa + getCookie("taiKhoan"),
+      async: false,
+      type: "GET",
+      contentType: "application/json;charset=utf-8",
+      dataType: "json",
+      headers: {
+        Authorization: jwtCookie,
+      },
+      success: function (result_Khoa) {
+        paramMaKhoa += "&maKhoa_quyen=" + result_Khoa["maKhoa"];
+      },
+      error: function (errorMessage) {
+      },
+    });
+  }
+
   $.ajax({
-    url: urlapi_khieunai_read_maSinhVien + maSinhVien,
+    url: urlapi_khieunai_read_maSinhVien + maSinhVien + paramMaKhoa,
     type: "GET",
     contentType: "application/json;charset=utf-8",
     dataType: "json",

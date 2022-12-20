@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 19, 2022 at 12:32 PM
+-- Generation Time: Dec 20, 2022 at 07:45 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.29
 
@@ -1678,7 +1678,6 @@ INSERT INTO `lop` (`maLop`, `tenLop`, `maKhoa`, `maCoVanHocTap`, `maKhoaHoc`) VA
 ('DCT1176', 'Đại học chính quy - ngành Công nghệ thông tin - Khóa 2017 - Lớp 6', 'DCT', '10797', 'K17'),
 ('DCT1177', 'Đại học chính quy - ngành Công nghệ thông tin - Khóa 2017 - Lớp 7', 'DCT', '10991', 'K17'),
 ('DCT1181', 'Đại học chính quy - ngành Công nghệ thông tin - K.18 - Lớp 1', 'DCT', '10631', 'K18'),
-('DCT11810', 'xxx', 'DCT', '10218', 'K18'),
 ('DCT1182', 'Đại học chính quy - ngành Công nghệ thông tin - K.18 - Lớp 2', 'DCT', '10631', 'K18'),
 ('DCT1183', 'Đại học chính quy - ngành Công nghệ thông tin - K.18 - Lớp 3', 'DCT', '10219', 'K18'),
 ('DCT1184', 'Đại học chính quy - ngành Công nghệ thông tin - K.18 - Lớp 4', 'DCT', '10219', 'K18'),
@@ -4630,8 +4629,8 @@ INSERT INTO `user_token` (`stt`, `maSo`, `token`, `quyen`, `thoiGianDangNhap`, `
 (743, '3118410202', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJpYXQiOjE2Njg0MjI0MzAsIm5iZiI6MTY2ODQyMjQ0MCwiZXhwIjoxNjY4NTA4ODMwLCJhdWQiOiJzaW5odmllbiIsInNpbmh2aWVuIjp7Im1hU2luaFZpZW4iOiIzMTE4NDEwMjAyIiwiaG9UZW5TaW5oVmllbiI6IkhcdTAwYzAgTUlOSCBLSFx1MDBkNEkgIiwicXV5ZW4iOiJzaW5odmllbiJ9fQ.kJ91SYlsf4UuTBVKBYUsPqdTKFRakRyLZqniqZCPPg4', 'sinhvien', '2022-11-14 04:40:30', '2022-11-15 04:40:30'),
 (752, '3118410146', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJpYXQiOjE2Njk3NDE5NjcsIm5iZiI6MTY2OTc0MTk3NywiZXhwIjoxNjY5ODI4MzY3LCJhdWQiOiJzaW5odmllbiIsInNpbmh2aWVuIjp7Im1hU2luaFZpZW4iOiIzMTE4NDEwMTQ2IiwiaG9UZW5TaW5oVmllbiI6IkJcdTAwZDlJIFFVQU5HIEhVWSAiLCJxdXllbiI6InNpbmh2aWVuIn19.BRQRMLL4V-pT9GOy7xT2WCFyU2TPftMvYoEWPBlN0IA', 'sinhvien', '2022-11-29 11:12:47', '2022-11-30 11:12:47'),
 (807, '3118410071', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJpYXQiOjE2NzEzNjc1OTYsIm5iZiI6MTY3MTM2NzYwNiwiZXhwIjoxNjcxNDUzOTk2LCJhdWQiOiJzaW5odmllbiIsInNpbmh2aWVuIjp7Im1hU2luaFZpZW4iOiIzMTE4NDEwMDcxIiwiaG9UZW5TaW5oVmllbiI6IkxcdTAwY2EgVEhcdTFlYTBDIFx1MDExMFx1MWVhMFQgIiwicXV5ZW4iOiJzaW5odmllbiJ9fQ.JzqpjG7qC7t-g2T3vtvOUvT_7Y_6XgIFDY-nEnkAK5A', 'sinhvien', '2022-12-18 06:46:36', '2022-12-19 06:46:36'),
-(832, 'admin', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJpYXQiOjE2NzE0NDkzMDIsIm5iZiI6MTY3MTQ0OTMxMiwiZXhwIjoxNjcxNTM1NzAyLCJhdWQiOiJhZG1pbiIsImFkbWluIjp7InRhaUtob2FuIjoiYWRtaW4iLCJob1RlbiI6IkFkbWluIiwicXV5ZW4iOiJhZG1pbiJ9fQ.53E6tZrZ42VBiRvp28mHFHYEruxzow8_G6xaJ_l4n8U', 'admin', '2022-12-19 05:28:22', '2022-12-20 05:28:22'),
-(833, '10631', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJpYXQiOjE2NzE0NDkzNDQsIm5iZiI6MTY3MTQ0OTM1NCwiZXhwIjoxNjcxNTM1NzQ0LCJhdWQiOiJjdmh0IiwiY3ZodCI6eyJtYUNvVmFuSG9jVGFwIjoiMTA2MzEiLCJob1RlbkNvVmFuIjoiUGhhbiBUXHUxZWE1biBRdVx1MWVkMWMiLCJxdXllbiI6ImN2aHQifX0.yUABXcsBtQi7qhW0_cc3dkIM-c_lcrRg-2wCPJ8ktWY', 'cvht', '2022-12-19 05:29:04', '2022-12-20 05:29:04');
+(833, '10631', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJpYXQiOjE2NzE0NDkzNDQsIm5iZiI6MTY3MTQ0OTM1NCwiZXhwIjoxNjcxNTM1NzQ0LCJhdWQiOiJjdmh0IiwiY3ZodCI6eyJtYUNvVmFuSG9jVGFwIjoiMTA2MzEiLCJob1RlbkNvVmFuIjoiUGhhbiBUXHUxZWE1biBRdVx1MWVkMWMiLCJxdXllbiI6ImN2aHQifX0.yUABXcsBtQi7qhW0_cc3dkIM-c_lcrRg-2wCPJ8ktWY', 'cvht', '2022-12-19 05:29:04', '2022-12-20 05:29:04'),
+(834, 'admin', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJpYXQiOjE2NzE1MTg2NTMsIm5iZiI6MTY3MTUxODY2MywiZXhwIjoxNjcxNjA1MDUzLCJhdWQiOiJhZG1pbiIsImFkbWluIjp7InRhaUtob2FuIjoiYWRtaW4iLCJob1RlbiI6IkFkbWluIiwicXV5ZW4iOiJhZG1pbiJ9fQ.o9FR8G3jzDc5kIHxtEHv8u704PuM3cVXov8qIBzqbAk', 'admin', '2022-12-20 00:44:13', '2022-12-21 00:44:13');
 
 --
 -- Indexes for dumped tables
@@ -4838,7 +4837,7 @@ ALTER TABLE `tieuchicap3`
 -- AUTO_INCREMENT for table `user_token`
 --
 ALTER TABLE `user_token`
-  MODIFY `stt` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=834;
+  MODIFY `stt` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=835;
 
 --
 -- Constraints for dumped tables
