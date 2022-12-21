@@ -62,11 +62,39 @@ class PhieuRenLuyen
         return $stmt;
     }
 
+    public function getAllPhieuRenLuyenDetails_TheoMSSV($maSinhVien) {
+        $sqlQuery = "SELECT maPhieuRenLuyen, xepLoai, diemTongCong, maSinhVien, diemTrungBinhChungHKTruoc, diemTrungBinhChungHKXet, phieurenluyen.maHocKyDanhGia, 
+                        coVanDuyet, khoaDuyet, hocKyXet, namHocXet FROM phieurenluyen, hockydanhgia
+                        WHERE maSinhVien = ? AND phieurenluyen.maHocKyDanhGia = hockydanhgia.maHocKyDanhGia
+                        AND phieurenluyen.khoaDuyet = 1
+                        ORDER BY namHocXet ASC, hocKyXet ASC";
+        $stmt = $this->conn->prepare($sqlQuery);
+        $stmt->bindParam(1, $maSinhVien);
+        $stmt->execute();
+        return $stmt;
+    }
+
     // GET PHIEU REN LUYEN THEO MA PHIEU REN LUYEN
     public function getPhieuRenLuyen_TheoMaPhieuRenLuyen($maPhieuRenLuyen, $isEqual = true)
     {
         $sqlQuery = "SELECT maPhieuRenLuyen, xepLoai, diemTongCong, maSinhVien, diemTrungBinhChungHKTruoc, diemTrungBinhChungHKXet, maHocKyDanhGia, coVanDuyet, khoaDuyet FROM " . $this->db_table . "
                         WHERE maPhieuRenLuyen" . 
+                        ($isEqual ? " = '$maPhieuRenLuyen'" : " LIKE '%$maPhieuRenLuyen%'") . 
+                        " ORDER BY maHocKyDanhGia DESC";
+
+        $stmt = $this->conn->prepare($sqlQuery);
+        $stmt->execute();
+        return $stmt;
+    }
+
+    // GET PHIEU REN LUYEN THEO MA PHIEU REN LUYEN VA MA KHOA
+    public function getPhieuRenLuyen_TheoMaPhieuRenLuyenVaMaKhoa($maPhieuRenLuyen, $maKhoa, $isEqual = true)
+    {
+        $sqlQuery = "SELECT maPhieuRenLuyen, xepLoai, diemTongCong, maSinhVien, diemTrungBinhChungHKTruoc, diemTrungBinhChungHKXet, maHocKyDanhGia, coVanDuyet, khoaDuyet 
+                    FROM phieurenluyen LEFT JOIN sinhvien ON maPhieuRenLuyen.maSinhVien = sinhvien.maSinhVien 
+                        LEFT JOIN lop ON sinhvien.maLop = lop.maLop
+                    WHERE lop.maKhoa = '$maKhoa' 
+                        AND maPhieuRenLuyen" . 
                         ($isEqual ? " = '$maPhieuRenLuyen'" : " LIKE '%$maPhieuRenLuyen%'") . 
                         " ORDER BY maHocKyDanhGia DESC";
 

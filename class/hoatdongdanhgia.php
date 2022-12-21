@@ -44,6 +44,25 @@
             return $stmt;
         }
 
+        // GET HOATDONG THEO MA KHOA
+        public function getHoatDongTheoMaKhoa($maKhoa)
+        {
+            $sqlQuery = "SELECT $this->db_table.*, 
+                            case
+                                when $this->db_table.maTieuChi2 != 0 then tieuchicap2.noidung
+                                else tieuchicap3.noidung
+                            end as noiDungTieuChi
+                        FROM $this->db_table
+                            LEFT JOIN tieuchicap2 ON maTieuChi2 = matc2
+                            LEFT JOIN tieuchicap3 ON maTieuChi3 = matc3
+                        WHERE maKhoa = '$maKhoa'
+                        ORDER BY maHocKyDanhGia DESC, thoiGianBatDauHoatDong DESC, thoiGianKetThucHoatDong DESC";
+    
+            $stmt = $this->conn->prepare($sqlQuery);
+            $stmt->execute();
+            return $stmt;
+        }
+
         // GET ALL THEO MA SINH VIEN & MA HOC KY DANH GIA
         public function getAllTheoMSSVAndMaHKDG($maSinhVien, $maHocKyDanhGia){
             $sqlQuery = "SELECT hoatdongdanhgia.* 
@@ -77,6 +96,27 @@
             return $stmt;
         }
 
+        // GET HOATDONG THEO MA HOAT DONG VA MA KHOA
+        public function getHoatDongTheoMaHDVaMaKhoa($maHD, $maKhoa, $isEqual = true)
+        {
+            $sqlQuery = "SELECT $this->db_table.*, 
+                            case
+                                when $this->db_table.maTieuChi2 != 0 then tieuchicap2.noidung
+                                else tieuchicap3.noidung
+                            end as noiDungTieuChi
+                        FROM $this->db_table
+                            LEFT JOIN tieuchicap2 ON maTieuChi2 = matc2
+                            LEFT JOIN tieuchicap3 ON maTieuChi3 = matc3" 
+                        . " WHERE maKhoa = '$maKhoa' 
+                                AND UPPER(maHoatDong)" . 
+                            ($isEqual ? " =  UPPER('$maHD')" : " LIKE  UPPER('%$maHD%')")
+                        . " ORDER BY maHocKyDanhGia DESC, thoiGianBatDauHoatDong DESC, thoiGianKetThucHoatDong DESC";
+    
+            $stmt = $this->conn->prepare($sqlQuery);
+            $stmt->execute();
+            return $stmt;
+        }
+
         // GET HOATDONG THEO KHOANG THOI GIAN
         public function getHoatDongTheoKhoangThoiGian($from, $to)
         {
@@ -89,6 +129,26 @@
                             LEFT JOIN tieuchicap2 ON maTieuChi2 = matc2
                             LEFT JOIN tieuchicap3 ON maTieuChi3 = matc3" 
                         . " WHERE '$from' <= thoiGianBatDauHoatDong AND thoiGianBatDauHoatDong <= '$to'"
+                        . " ORDER BY maHocKyDanhGia DESC, thoiGianBatDauHoatDong DESC, thoiGianKetThucHoatDong DESC";
+    
+            $stmt = $this->conn->prepare($sqlQuery);
+            $stmt->execute();
+            return $stmt;
+        }
+
+        // GET HOATDONG THEO KHOANG THOI GIAN VA MA KHOA
+        public function getHoatDongTheoKhoangThoiGianVaMaKhoa($from, $to, $maKhoa)
+        {
+            $sqlQuery = "SELECT $this->db_table.*, 
+                            case
+                                when $this->db_table.maTieuChi2 != 0 then tieuchicap2.noidung
+                                else tieuchicap3.noidung
+                            end as noiDungTieuChi
+                        FROM $this->db_table
+                            LEFT JOIN tieuchicap2 ON maTieuChi2 = matc2
+                            LEFT JOIN tieuchicap3 ON maTieuChi3 = matc3" 
+                        . " WHERE maKhoa = '$maKhoa' 
+                                AND '$from' <= thoiGianBatDauHoatDong AND thoiGianBatDauHoatDong <= '$to'"
                         . " ORDER BY maHocKyDanhGia DESC, thoiGianBatDauHoatDong DESC, thoiGianKetThucHoatDong DESC";
     
             $stmt = $this->conn->prepare($sqlQuery);

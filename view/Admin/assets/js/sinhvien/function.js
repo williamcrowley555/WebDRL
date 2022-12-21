@@ -130,15 +130,13 @@ function GetListSinhVien(maKhoa, maLop) {
                     ? "<span class='badge bg-success' style='color: white;font-size: inherit;'>Đã tốt nghiệp</span>"
                     : "<span class='badge bg-warning' style='color: white;font-size: inherit;'>Chưa tốt nghiệp</span>") +
                   "</td>\
-                  <td class='cell'><button  type='button' id='id_btnReset' class='btn btn-info btn_DatLaiMatKhau_SinhVien' data-bs-toggle='modal' data-bs-target='#DatLaiMatKhauModal' style='color: white; min-width: 137px;' data-id='" +
+                  <td class='cell'><button type='button' id='id_btnReset' class='m-2 btn btn-info btn_DatLaiMatKhau_SinhVien' data-bs-toggle='modal' data-bs-target='#DatLaiMatKhauModal' style='color: white; min-width: 137px;' data-id='" +
                   data[i].maSinhVien +
-                  "' >Đặt lại mật khẩu</button></td>\
-                  <td class='cell'>\
-                  <button class='btn bg-warning btn_ChinhSua_SinhVien' style='color: white; min-width: 95px;' data-bs-toggle='modal' data-bs-target='#ChinhSuaModal' data-id = '" +
+                  "' >Đặt lại mật khẩu</button>\
+                  <button class='m-2 btn bg-warning btn_ChinhSua_SinhVien' style='color: white; min-width: 95px;' data-bs-toggle='modal' data-bs-target='#ChinhSuaModal' data-id = '" +
                   data[i].maSinhVien +
                   "' >Chỉnh sửa</button>\
-                  <td class='cell'>\
-                  <button class='btn app-btn-primary btn_QuanLyDiemTrungBinhHocKy_SinhVien' style='color: white;' data-bs-toggle='modal' data-bs-target='#QuanLyDiemTrungBinhHocKyModal' data-id = '" +
+                  <button class='m-2 btn app-btn-primary btn_QuanLyDiemTrungBinhHocKy_SinhVien' style='color: white;' data-bs-toggle='modal' data-bs-target='#QuanLyDiemTrungBinhHocKyModal' data-id = '" +
                   data[i].maSinhVien +
                   "' >Quản lý điểm trung bình</button>\
                 </td>\
@@ -234,18 +232,16 @@ function GetListSinhVien(maKhoa, maLop) {
                         ? "<span class='badge bg-success' style='color: white;font-size: inherit;'>Đã tốt nghiệp</span>"
                         : "<span class='badge bg-warning' style='color: white;font-size: inherit;'>Chưa tốt nghiệp</span>") +
                       "</td>\
-                      <td class='cell'><button  type='button' id='id_btnReset' class='btn btn-info btn_DatLaiMatKhau_SinhVien' data-bs-toggle='modal' data-bs-target='#DatLaiMatKhauModal' style='color: white; min-width: 137px;' data-id='" +
-                      data[i].maSinhVien +
-                      "' >Đặt lại mật khẩu</button></td>\
-                      <td class='cell'>\
-                      <button class='btn bg-warning btn_ChinhSua_SinhVien' style='color: white; min-width: 95px;' data-bs-toggle='modal' data-bs-target='#ChinhSuaModal' data-id = '" +
-                      data[i].maSinhVien +
-                      "' >Chỉnh sửa</button>\
-                      <td class='cell'>\
-                      <button class='btn app-btn-primary btn_QuanLyDiemTrungBinhHocKy_SinhVien' style='color: white;' data-bs-toggle='modal' data-bs-target='#QuanLyDiemTrungBinhHocKyModal' data-id = '" +
-                      data[i].maSinhVien +
-                      "' >Quản lý điểm trung bình</button>\
-                    </td>\
+                      <td class='cell'><button  type='button' id='id_btnReset' class='m-2 btn btn-info btn_DatLaiMatKhau_SinhVien' data-bs-toggle='modal' data-bs-target='#DatLaiMatKhauModal' style='color: white; min-width: 137px;' data-id='" +
+                        data[i].maSinhVien +
+                        "' >Đặt lại mật khẩu</button>\
+                        <button class='m-2 btn bg-warning btn_ChinhSua_SinhVien' style='color: white; min-width: 95px;' data-bs-toggle='modal' data-bs-target='#ChinhSuaModal' data-id = '" +
+                        data[i].maSinhVien +
+                        "' >Chỉnh sửa</button>\
+                        <button class='m-2 btn app-btn-primary btn_QuanLyDiemTrungBinhHocKy_SinhVien' style='color: white;' data-bs-toggle='modal' data-bs-target='#QuanLyDiemTrungBinhHocKyModal' data-id = '" +
+                        data[i].maSinhVien +
+                        "' >Quản lý điểm trung bình</button>\
+                      </td>\
                     </tr>";
                   }
 
@@ -333,17 +329,15 @@ function GetListSinhVien(maKhoa, maLop) {
                         ? "<span class='badge bg-success' style='color: white;font-size: inherit;'>Đã tốt nghiệp</span>"
                         : "<span class='badge bg-warning' style='color: white;font-size: inherit;'>Chưa tốt nghiệp</span>") +
                       "</td>\
-                        <td class='cell'><button  type='button' id='id_btnReset' class='btn btn-info btn_DatLaiMatKhau_SinhVien' data-bs-toggle='modal' data-bs-target='#DatLaiMatKhauModal' style='color: white; min-width: 137px;' data-id='" +
-                      data[i].maSinhVien +
-                      "' >Đặt lại mật khẩu</button></td>\
-                        <td class='cell'>\
-                        <button class='btn bg-warning btn_ChinhSua_SinhVien' style='color: white; min-width: 95px;' data-bs-toggle='modal' data-bs-target='#ChinhSuaModal' data-id = '" +
-                      data[i].maSinhVien +
-                      "' >Chỉnh sửa</button>\
-                        <td class='cell'>\
-                        <button class='btn app-btn-primary btn_QuanLyDiemTrungBinhHocKy_SinhVien' style='color: white;' data-bs-toggle='modal' data-bs-target='#QuanLyDiemTrungBinhHocKyModal' data-id = '" +
-                      data[i].maSinhVien +
-                      "' >Quản lý điểm trung bình</button>\
+                      <td class='cell'><button  type='button' id='id_btnReset' class='m-2 btn btn-info btn_DatLaiMatKhau_SinhVien' data-bs-toggle='modal' data-bs-target='#DatLaiMatKhauModal' style='color: white; min-width: 137px;' data-id='" +
+                        data[i].maSinhVien +
+                        "' >Đặt lại mật khẩu</button>\
+                        <button class='m-2 btn bg-warning btn_ChinhSua_SinhVien' style='color: white; min-width: 95px;' data-bs-toggle='modal' data-bs-target='#ChinhSuaModal' data-id = '" +
+                        data[i].maSinhVien +
+                        "' >Chỉnh sửa</button>\
+                        <button class='m-2 btn app-btn-primary btn_QuanLyDiemTrungBinhHocKy_SinhVien' style='color: white;' data-bs-toggle='modal' data-bs-target='#QuanLyDiemTrungBinhHocKyModal' data-id = '" +
+                        data[i].maSinhVien +
+                        "' >Quản lý điểm trung bình</button>\
                       </td>\
                       </tr>";
                   }
@@ -433,18 +427,16 @@ function GetListSinhVien(maKhoa, maLop) {
                       ? "<span class='badge bg-success' style='color: white;font-size: inherit;'>Đã tốt nghiệp</span>"
                       : "<span class='badge bg-warning' style='color: white;font-size: inherit;'>Chưa tốt nghiệp</span>") +
                     "</td>\
-                  <td class='cell'><button  type='button' id='id_btnReset' class='btn btn-info btn_DatLaiMatKhau_SinhVien' data-bs-toggle='modal' data-bs-target='#DatLaiMatKhauModal' style='color: white; min-width: 137px;' data-id='" +
-                    data[i].maSinhVien +
-                    "' >Đặt lại mật khẩu</button></td>\
-                  <td class='cell'>\
-                  <button class='btn bg-warning btn_ChinhSua_SinhVien' style='color: white; min-width: 95px;' data-bs-toggle='modal' data-bs-target='#ChinhSuaModal' data-id = '" +
-                    data[i].maSinhVien +
-                    "' >Chỉnh sửa</button>\
-                  <td class='cell'>\
-                  <button class='btn app-btn-primary btn_QuanLyDiemTrungBinhHocKy_SinhVien' style='color: white;' data-bs-toggle='modal' data-bs-target='#QuanLyDiemTrungBinhHocKyModal' data-id = '" +
-                    data[i].maSinhVien +
-                    "' >Quản lý điểm trung bình</button>\
-                </td>\
+                    <td class='cell'><button  type='button' id='id_btnReset' class='m-2 btn btn-info btn_DatLaiMatKhau_SinhVien' data-bs-toggle='modal' data-bs-target='#DatLaiMatKhauModal' style='color: white; min-width: 137px;' data-id='" +
+                      data[i].maSinhVien +
+                      "' >Đặt lại mật khẩu</button>\
+                      <button class='m-2 btn bg-warning btn_ChinhSua_SinhVien' style='color: white; min-width: 95px;' data-bs-toggle='modal' data-bs-target='#ChinhSuaModal' data-id = '" +
+                      data[i].maSinhVien +
+                      "' >Chỉnh sửa</button>\
+                      <button class='m-2 btn app-btn-primary btn_QuanLyDiemTrungBinhHocKy_SinhVien' style='color: white;' data-bs-toggle='modal' data-bs-target='#QuanLyDiemTrungBinhHocKyModal' data-id = '" +
+                      data[i].maSinhVien +
+                      "' >Quản lý điểm trung bình</button>\
+                    </td>\
                                     </tr>";
                 }
 
@@ -483,8 +475,29 @@ function GetListSinhVien(maKhoa, maLop) {
 
 function TimKiemSinhVien(maSinhVien) {
   $("#id_tbodySinhVien tr").remove();
+
+  var paramMaKhoa = "";
+  
+  if (getCookie("quyen") == "khoa") {
+    $.ajax({
+      url: urlapi_khoa_single_read_taiKhoanKhoa + getCookie("taiKhoan"),
+      async: false,
+      type: "GET",
+      contentType: "application/json;charset=utf-8",
+      dataType: "json",
+      headers: {
+        Authorization: jwtCookie,
+      },
+      success: function (result_Khoa) {
+        paramMaKhoa += "&maKhoa_quyen=" + result_Khoa["maKhoa"];
+      },
+      error: function (errorMessage) {
+      },
+    });
+  }
+
   $.ajax({
-    url: urlapi_sinhvien_read_mssv + maSinhVien,
+    url: urlapi_sinhvien_read_mssv + maSinhVien + paramMaKhoa,
     async: false,
     type: "GET",
     contentType: "application/json;charset=utf-8",
@@ -537,18 +550,16 @@ function TimKiemSinhVien(maSinhVien) {
                 ? "<span class='badge bg-success' style='color: white;font-size: inherit;'>Đã tốt nghiệp</span>"
                 : "<span class='badge bg-warning' style='color: white;font-size: inherit;'>Chưa tốt nghiệp</span>") +
               "</td>\
-                  <td class='cell'><button  type='button' id='id_btnReset' class='btn btn-info btn_DatLaiMatKhau_SinhVien' data-bs-toggle='modal' data-bs-target='#DatLaiMatKhauModal' style='color: white; min-width: 137px;' data-id='" +
+              <td class='cell'><button type='button' id='id_btnReset' class='m-2 btn btn-info btn_DatLaiMatKhau_SinhVien' data-bs-toggle='modal' data-bs-target='#DatLaiMatKhauModal' style='color: white; min-width: 137px;' data-id='" +
               data[i].maSinhVien +
-              "' >Đặt lại mật khẩu</button></td>\
-                  <td class='cell'>\
-                  <button class='btn bg-warning btn_ChinhSua_SinhVien' style='color: white; min-width: 95px;' data-bs-toggle='modal' data-bs-target='#ChinhSuaModal' data-id = '" +
+              "' >Đặt lại mật khẩu</button>\
+              <button class='m-2 btn bg-warning btn_ChinhSua_SinhVien' style='color: white; min-width: 95px;' data-bs-toggle='modal' data-bs-target='#ChinhSuaModal' data-id = '" +
               data[i].maSinhVien +
               "' >Chỉnh sửa</button>\
-                  <td class='cell'>\
-                  <button class='btn app-btn-primary btn_QuanLyDiemTrungBinhHocKy_SinhVien' style='color: white;' data-bs-toggle='modal' data-bs-target='#QuanLyDiemTrungBinhHocKyModal' data-id = '" +
+              <button class='m-2 btn app-btn-primary btn_QuanLyDiemTrungBinhHocKy_SinhVien' style='color: white;' data-bs-toggle='modal' data-bs-target='#QuanLyDiemTrungBinhHocKyModal' data-id = '" +
               data[i].maSinhVien +
               "' >Quản lý điểm trung bình</button>\
-                </td>\
+            </td>\
                                     </tr>";
           }
 

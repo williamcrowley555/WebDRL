@@ -14,6 +14,7 @@
 	$("#menu-button-KhieuNai").removeClass("active");
 	$("#menu-button-ThongKe").removeClass("active");
 	$("#menu-button-CaiDat").removeClass("active");
+	$("#menu-button-ThongKeCanhCao").removeClass("active");
 	
 	//add class active
 	$("#menu-button-ThongBaoDanhGia").addClass("active");
@@ -99,7 +100,6 @@
 									<select class="form-select" name="hocKyXet" id="select_HocKyXet">
 										<option value="1">1</option>
 										<option value="2">2</option>
-										<option value="3">3</option>
 									</select>
 									<span class="invalid-feedback"></span>
 								</div>

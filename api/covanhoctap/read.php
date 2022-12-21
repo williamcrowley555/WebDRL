@@ -31,6 +31,12 @@ if ($data["status"] == 1) {
             $maCVHT = null;
         }
 
+        if (isset($_GET['maKhoa_quyen'])) {
+            $maKhoa_quyen = $_GET['maKhoa_quyen'];
+        } else {
+            $maKhoa_quyen = null;
+        }
+
         if ($maCVHT == null) {
             if ($maKhoa != null) {
                 $items = new CVHT($db);
@@ -103,7 +109,13 @@ if ($data["status"] == 1) {
             }
         } else {
             $items = new CVHT($db);
-            $stmt = $items->getCVHTTheoMaCVHT($maCVHT, false);
+
+            if ($maKhoa_quyen == null) {
+                $stmt = $items->getCVHTTheoMaCVHT($maCVHT, false);
+            } else {
+                $stmt = $items->getCVHTTheoMaCVHTVaMaKhoa($maCVHT, $maKhoa_quyen, false);
+            }
+            
             $itemCount = $stmt->rowCount();
     
             $countRow = 0;

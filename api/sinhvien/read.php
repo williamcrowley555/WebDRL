@@ -33,6 +33,12 @@ if ($data["status"] == 1) {
         } else {
             $mssv = null;
         }
+
+        if (isset($_GET['maKhoa_quyen'])) {
+            $maKhoa_quyen = $_GET['maKhoa_quyen'];
+        } else {
+            $maKhoa_quyen = null;
+        }
         
         $database = new Database();
         $db = $database->getConnection();
@@ -204,7 +210,13 @@ if ($data["status"] == 1) {
             }
         } else {
             $items = new SinhVien($db);
-            $stmt = $items->getSinhVienTheoMSSV($mssv, false);
+
+            if ($maKhoa_quyen == null) {
+                $stmt = $items->getSinhVienTheoMSSV($mssv, false);
+            } else {
+                $stmt = $items->getSinhVienTheoMSSVVaMaKhoa($mssv, $maKhoa_quyen, false);
+            }
+
             $itemCount = $stmt->rowCount();
     
             $totalRecords = $items->getAllSinhVienNoPaging()->rowCount();

@@ -106,6 +106,10 @@
                         </tbody>
                     </table>
                 </div>
+
+                <nav class="app-pagination ps-2 pt-3" id="idPhanTrang">
+                    
+                </nav>
             </div>
             <form action="" method='POST' id='formDownloadMauNhapDiemHe4' class='text-center pb-2'>
                 <input type='hidden' name="table_data" id="table_data" />

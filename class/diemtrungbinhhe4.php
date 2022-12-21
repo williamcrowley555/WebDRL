@@ -57,6 +57,23 @@
             return $stmt;
         }
 
+        public function getAllNotHavingDiemTrungBinhHe4TheoMaLop($maLop, $maHocKyDanhGia){
+            $sqlQuery = "SELECT sinhvien.*
+                        FROM sinhvien
+                        WHERE maLop = '$maLop'
+                        AND sinhvien.maSinhVien NOT IN (
+                            SELECT diemtrungbinhhe4.maSinhVien
+                            FROM diemtrungbinhhe4, sinhvien
+                            WHERE diemtrungbinhhe4.maSinhVien = sinhvien.maSinhVien
+                            AND maLop = '$maLop'
+                            AND maHocKyDanhGia = '$maHocKyDanhGia'
+                        )";
+            $stmt = $this->conn->prepare($sqlQuery);
+            $stmt->execute();
+
+            return $stmt;
+        }
+
         // GET SINGLE DIEM TRUNG BINH HE 4
         public function getSingleDiemTrungBinhHe4() {
             $sqlQuery = "SELECT * FROM " . $this->db_table . "

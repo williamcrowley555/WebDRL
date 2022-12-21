@@ -74,7 +74,7 @@ function GetListLop(maKhoa) {
           autoHideNext: true,
 
           callback: function (data, pagination) {
-            
+            var htmlData = "";
             var count = 0;
 
             for (let i = 0; i < data.length; i++) {
@@ -217,8 +217,28 @@ function TimKiemLop(maLop) {
   $("#id_tbodyLop tr").remove();
   var htmlData = "";
 
+  var paramMaKhoa = "";
+  
+  if (getCookie("quyen") == "khoa") {
+    $.ajax({
+      url: urlapi_khoa_single_read_taiKhoanKhoa + getCookie("taiKhoan"),
+      async: false,
+      type: "GET",
+      contentType: "application/json;charset=utf-8",
+      dataType: "json",
+      headers: {
+        Authorization: jwtCookie,
+      },
+      success: function (result_Khoa) {
+        paramMaKhoa += "&maKhoa_quyen=" + result_Khoa["maKhoa"];
+      },
+      error: function (errorMessage) {
+      },
+    });
+  }
+
   $.ajax({
-    url: urlapi_lop_read_maLop + maLop,
+    url: urlapi_lop_read_maLop + maLop + paramMaKhoa,
     async: false,
     type: "GET",
     contentType: "application/json;charset=utf-8",
@@ -234,7 +254,7 @@ function TimKiemLop(maLop) {
         autoHideNext: true,
 
         callback: function (data, pagination) {
-          
+          var htmlData = "";
           var count = 0;
 
           for (let i = 0; i < data.length; i++) {

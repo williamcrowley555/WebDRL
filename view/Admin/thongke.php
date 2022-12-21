@@ -14,19 +14,20 @@
 	$("#menu-button-ThongBaoDanhGia").removeClass("active");
 	$("#menu-button-KhieuNai").removeClass("active");
 	$("#menu-button-CaiDat").removeClass("active");
+	$("#menu-button-ThongKeCanhCao").removeClass("active");
 
 	//add class active
 	$("#menu-button-ThongKe").addClass("active");
 
 	//set title
-	document.title = "Thống kê | Web điểm rèn luyện";
+	document.title = "Thống kê tình trạng chấm | Web điểm rèn luyện";
 </script>
 
 <div class="app-content pt-3 p-md-3 p-lg-4">
 	<div class="container-xl">
 
 		<h1 class="app-page-title">.</h1>
-		<h1 class="app-page-title"><img src="assets/images/icons/analysis.png" alt="" width="30px"> Thống kê</h1>
+		<h1 class="app-page-title"><img src="assets/images/icons/analysis.png" alt="" width="30px"> Thống kê tình trạng chấm</h1>
 
 		<div class="row g-4 mb-4">
 

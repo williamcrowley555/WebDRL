@@ -71,6 +71,19 @@
             return $stmt;
         }
 
+        // GET CO VAN HOC TAP THEO MA CVHT VA MA KHOA
+        public function getCVHTTheoMaCVHTVaMaKhoa($maCVHT, $maKhoa, $isEqual = true)
+        {
+            $sqlQuery = "SELECT * FROM " . $this->db_table . " 
+                            WHERE maKhoa = '$maKhoa' 
+                                AND maCoVanHocTap" . 
+                                ($isEqual ? " = '$maCVHT'" : " LIKE '%$maCVHT%'");
+    
+            $stmt = $this->conn->prepare($sqlQuery);
+            $stmt->execute();
+            return $stmt;
+        }
+
         // GET CVHT THEO EMAIL
         public function getCVHTTheoEmail($email, $isEqual = true)
         {

@@ -135,6 +135,20 @@ class SinhVien
         return $stmt;
     }
 
+    // GET SINHVIEN THEO MA SO SINH VIEN VA MA KHOA
+    public function getSinhVienTheoMSSVVaMaKhoa($mssv, $maKhoa, $isEqual = true)
+    {
+        $sqlQuery = "SELECT * 
+                        FROM sinhvien LEFT JOIN lop ON sinhvien.maLop = lop.maLop 
+                        WHERE maKhoa = '$maKhoa' 
+                            AND maSinhVien" . 
+                        ($isEqual ? " = '$mssv'" : " LIKE '%$mssv%'");
+
+        $stmt = $this->conn->prepare($sqlQuery);
+        $stmt->execute();
+        return $stmt;
+    }
+
     // GET SINHVIEN THEO MA SO SINH VIEN THEO LOP
     public function getSinhVienTheoMSSVTheoLop($mssv, $maLop, $isEqual = true)
     {

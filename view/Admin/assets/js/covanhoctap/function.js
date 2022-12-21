@@ -76,7 +76,7 @@ function GetListCVHT(maKhoa) {
               autoHideNext: true,
 
               callback: function (data, pagination) {
-                
+                var htmlData = "";
                 var count = 0;
 
                 for (let i = 0; i < data.length; i++) {
@@ -220,8 +220,29 @@ function GetListCVHT(maKhoa) {
 
 function TimKiemCoVanHocTap(maCVHT) {
   $("#id_tbodyData tr").remove();
+
+  var paramMaKhoa = "";
+  
+  if (getCookie("quyen") == "khoa") {
+    $.ajax({
+      url: urlapi_khoa_single_read_taiKhoanKhoa + getCookie("taiKhoan"),
+      async: false,
+      type: "GET",
+      contentType: "application/json;charset=utf-8",
+      dataType: "json",
+      headers: {
+        Authorization: jwtCookie,
+      },
+      success: function (result_Khoa) {
+        paramMaKhoa += "&maKhoa_quyen=" + result_Khoa["maKhoa"];
+      },
+      error: function (errorMessage) {
+      },
+    });
+  }
+
   $.ajax({
-    url: urlapi_cvht_read_maCVHT + maCVHT,
+    url: urlapi_cvht_read_maCVHT + maCVHT + paramMaKhoa,
     async: false,
     type: "GET",
     contentType: "application/json;charset=utf-8",

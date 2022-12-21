@@ -34,6 +34,12 @@
         } else {
             $to = null;
         }
+       
+        if (isset($_GET['maKhoa'])) {
+            $maKhoa = $_GET['maKhoa'];
+        } else {
+            $maKhoa = null;
+        }
         
         if (isset($_GET['maSinhVien'])) {
             $maSinhVien = $_GET['maSinhVien'];
@@ -58,7 +64,13 @@
             $to = str_replace("%20", " ", $to);
 
             $items = new HoatDongDanhGia($db);
-            $stmt = $items->getHoatDongTheoKhoangThoiGian($from, $to);
+
+            if ($maKhoa == null) {
+                $stmt = $items->getHoatDongTheoKhoangThoiGian($from, $to);
+            } else {
+                $stmt = $items->getHoatDongTheoKhoangThoiGianVaMaKhoa($from, $to, $maKhoa);
+            }
+
             $itemCount = $stmt->rowCount();
     
     
@@ -147,9 +159,14 @@
             }
         } else if ($maHD == null) {
             $items = new HoatDongDanhGia($db);
-            $stmt = $items->getAllHoatDongDanhGia();
+
+            if ($maKhoa == null) {
+                $stmt = $items->getAllHoatDongDanhGia();
+            } else {
+                $stmt = $items->getHoatDongTheoMaKhoa($maKhoa);
+            }
+
             $itemCount = $stmt->rowCount();
-    
     
             if($itemCount > 0) {
                 $hoatdongdanhgiaArr = array();
@@ -192,9 +209,14 @@
             }
         } else {
             $items = new HoatDongDanhGia($db);
-            $stmt = $items->getHoatDongTheoMaHD($maHD);
+
+            if ($maKhoa == null) {
+                $stmt = $items->getHoatDongTheoMaHD($maHD);
+            } else {
+                $stmt = $items->getHoatDongTheoMaHDVaMaKhoa($maHD, $maKhoa);
+            }
+
             $itemCount = $stmt->rowCount();
-    
     
             if($itemCount > 0){
                 $hoatdongdanhgiaArr = array();

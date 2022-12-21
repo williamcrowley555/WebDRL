@@ -69,13 +69,27 @@
             $stmt->execute();
             return $stmt;
         }
+
+        // GET LOP THEO MA LOP VA MA KHOA
+        public function getLopTheoMaLopVaMaKhoa($maLop, $maKhoa, $isEqual = true)
+        {
+            $sqlQuery = "SELECT maLop, tenLop, maKhoa, maCoVanHocTap, maKhoaHoc FROM " . $this->db_table . " 
+                            WHERE maKhoa = '$maKhoa' 
+                                AND UPPER(maLop)" . 
+                                ($isEqual ? " = UPPER('$maLop')" : " LIKE UPPER('%$maLop%')");
+
+            $stmt = $this->conn->prepare($sqlQuery);
+            $stmt->execute();
+            return $stmt;
+        }
         
         // READ single
         public function getSingleLop(){
             $sqlQuery = "SELECT maLop, tenLop, maKhoa, maCoVanHocTap, maKhoaHoc FROM ". $this->db_table .
                             ($this->maLop ? " WHERE UPPER(maLop) = UPPER('$this->maLop')" : "") . 
                             (($this->maKhoa && $this->maKhoaHoc) ? 
-                                (" WHERE UPPER(maLop) LIKE UPPER('%$this->maKhoa" . "1" . substr($this->maKhoaHoc, 1) . "%') ORDER BY maLop DESC") 
+                                (" WHERE UPPER(maLop) LIKE UPPER('%$this->maKhoa" . "1" . substr($this->maKhoaHoc, 1) . "%') 
+                        ORDER BY LENGTH(maLop) DESC, maLop DESC") 
                                 : 
                                 "") .
                             " LIMIT 0,1";

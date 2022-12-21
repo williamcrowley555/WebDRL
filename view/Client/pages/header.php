@@ -231,7 +231,7 @@ if (isset($_COOKIE['jwt'])){
                                             <a class='nav-link ". $active_chamDiem ."' href='chamdiem.php' style='text-transform: uppercase;'> Chấm điểm rèn luyện</a>
                                         </li>
                                         <li class='nav-item' id='nhapdiem_sinhvien'>
-                                            <a class='nav-link ".$active_SinhVien_NhapDiem."' href='nhapdiemhe4_sinhvien.php' style='text-transform: uppercase;'> Nhập điểm </a>
+                                            <a class='nav-link ".$active_SinhVien_NhapDiem."' href='nhapdiemhe4_sinhvien.php' style='text-transform: uppercase; width: 95px;'> Nhập điểm hệ 4</a>
                                         </li>";
                                     break;
                                 }
@@ -241,7 +241,7 @@ if (isset($_COOKIE['jwt'])){
                                             <a class='nav-link ".$active_CVHT_DuyetDiem."' href='cvht_duyetdiemrenluyen.php' style='text-transform: uppercase;'> Duyệt danh sách điểm rèn luyện theo lớp</a>
                                         </li>
                                         <li class='nav-item' id='nhapdiem_cvht'>
-                                            <a class='nav-link ".$active_CVHT_NhapDiem."' href='nhapdiemhe4_CVHT.php' style='text-transform: uppercase;'> Nhập điểm </a>
+                                            <a class='nav-link ".$active_CVHT_NhapDiem."' href='nhapdiemhe4_CVHT.php' style='text-transform: uppercase; width: 95px;'> Nhập điểm hệ 4</a>
                                         </li>";
                                     break;
                                 }
@@ -309,6 +309,11 @@ if (isset($_COOKIE['jwt'])){
 
 
     </script>
+
+    <!-- Pagination -->
+	<script src="../../Admin/assets/js/pagination.min.js"></script>
+
+    <link rel="stylesheet" href="../../Admin/assets/css/pagination.css"/>
 
 	<!-- Constants Chuc Nang JS -->
 	<script src="../../constants/constants_chucNang.js"></script> 

@@ -280,6 +280,7 @@ function GetListKhieuNai(maKhoa, maKhoaHoc, maHocKyDanhGia) {
         autoHidePrevious: true,
         autoHideNext: true,
         callback: function (data, pagination) {
+          var htmlData = "";
           var count = 0;
 
           for (let i = 0; i < data.length; i++) {
@@ -318,13 +319,13 @@ function GetListKhieuNai(maKhoa, maKhoaHoc, maHocKyDanhGia) {
                 : toDateTimeString(data[i].thoiGianKhieuNai)) +
               "</td>\
                                 <td class='cell'>\
-                                  <button class='me-2 btn btn-secondary btn_XemChiTiet' style='color: white; width: max-content;' data-bs-toggle='modal' data-bs-target='#XemChiTietModal' data-id = '" +
+                                  <button class='m-2 btn btn-secondary btn_XemChiTiet' style='color: white; width: max-content;' data-bs-toggle='modal' data-bs-target='#XemChiTietModal' data-id = '" +
               data[i].maKhieuNai +
               "' >Xem chi tiết</button>\
-                                  <button class='me-2 btn btn-info btn_PheDuyet' style='color: white; width: max-content;' data-bs-toggle='modal' data-bs-target='#PheDuyetModal' data-id = '" +
+                                  <button class='m-2 btn btn-info btn_PheDuyet' style='color: white; width: max-content;' data-bs-toggle='modal' data-bs-target='#PheDuyetModal' data-id = '" +
               data[i].maKhieuNai +
               "' >Phê duyệt</button>\
-                                  <button class='btn btn-danger btn_XoaKhieuNai' style='color: white; width: max-content;' data-id = '" +
+                                  <button class='m-2 btn btn-danger btn_XoaKhieuNai' style='color: white; width: max-content;' data-id = '" +
               data[i].maKhieuNai +
               "' >Xóa</button>\
               </td>\
@@ -361,8 +362,28 @@ function TimKiemKhieuNai(maSinhVien) {
   var htmlData = "";
   $("#tbodyKhieuNai tr").remove();
 
+  var paramMaKhoa = "";
+  
+  if (getCookie("quyen") == "khoa") {
+    $.ajax({
+      url: urlapi_khoa_single_read_taiKhoanKhoa + getCookie("taiKhoan"),
+      async: false,
+      type: "GET",
+      contentType: "application/json;charset=utf-8",
+      dataType: "json",
+      headers: {
+        Authorization: jwtCookie,
+      },
+      success: function (result_Khoa) {
+        paramMaKhoa += "&maKhoa_quyen=" + result_Khoa["maKhoa"];
+      },
+      error: function (errorMessage) {
+      },
+    });
+  }
+
   $.ajax({
-    url: urlapi_khieunai_read_maSinhVien + maSinhVien,
+    url: urlapi_khieunai_read_maSinhVien + maSinhVien + paramMaKhoa,
     type: "GET",
     contentType: "application/json;charset=utf-8",
     dataType: "json",
@@ -377,6 +398,7 @@ function TimKiemKhieuNai(maSinhVien) {
         autoHidePrevious: true,
         autoHideNext: true,
         callback: function (data, pagination) {
+          var htmlData = "";
           var count = 0;
 
           for (let i = 0; i < data.length; i++) {
@@ -415,13 +437,13 @@ function TimKiemKhieuNai(maSinhVien) {
                 : toDateTimeString(data[i].thoiGianKhieuNai)) +
               "</td>\
                                 <td class='cell'>\
-                                  <button class='me-2 btn btn-secondary btn_XemChiTiet' style='color: white; width: max-content;' data-bs-toggle='modal' data-bs-target='#XemChiTietModal' data-id = '" +
+                                  <button class='m-2 btn btn-secondary btn_XemChiTiet' style='color: white; width: max-content;' data-bs-toggle='modal' data-bs-target='#XemChiTietModal' data-id = '" +
               data[i].maKhieuNai +
               "' >Xem chi tiết</button>\
-                                  <button class='me-2 btn btn-info btn_PheDuyet' style='color: white; width: max-content;' data-bs-toggle='modal' data-bs-target='#PheDuyetModal' data-id = '" +
+                                  <button class='m-2 btn btn-info btn_PheDuyet' style='color: white; width: max-content;' data-bs-toggle='modal' data-bs-target='#PheDuyetModal' data-id = '" +
               data[i].maKhieuNai +
               "' >Phê duyệt</button>\
-                                  <button class='btn btn-danger btn_XoaKhieuNai' style='color: white; width: max-content;' data-id = '" +
+                                  <button class='m-2 btn btn-danger btn_XoaKhieuNai' style='color: white; width: max-content;' data-id = '" +
               data[i].maKhieuNai +
               "' >Xóa</button>\
               </td>\

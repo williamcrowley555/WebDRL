@@ -311,9 +311,17 @@
 						<li class='nav-item' style='cursor: pointer;'>\
 					        <a class='nav-link' onclick='LoadContentMainPage(\"thongke.php\");' id='menu-button-ThongKe' >\
 						        <span class='nav-icon'>\
-									<img src='assets/images/icons/analysis.png' alt='icon thống kê' width='25px'>\
+									<img src='assets/images/icons/analysis.png' alt='icon thống kê tình trạng chấm' width='25px'>\
 						         </span>\
-		                         <span class='nav-link-text'>Thống kê</span>\
+		                         <span class='nav-link-text'>Thống kê tình trạng chấm</span>\
+					        </a>\
+					    </li>\
+						<li class='nav-item' style='cursor: pointer;'>\
+					        <a class='nav-link' onclick='LoadContentMainPage(\"thongkecanhcao.php\");' id='menu-button-ThongKeCanhCao' >\
+						        <span class='nav-icon'>\
+									<img src='assets/images/icons/bad-score-analytics.png' alt='icon thống kê cảnh cáo' width='25px'>\
+						         </span>\
+		                         <span class='nav-link-text'>Thống kê cảnh cáo</span>\
 					        </a>\
 					    </li>\
 						<li class='nav-item' style='cursor: pointer;'>\
@@ -378,9 +386,17 @@
 						<li class='nav-item' style='cursor: pointer;'>\
 					        <a class='nav-link' onclick='LoadContentMainPage(\"thongke.php\");' id='menu-button-ThongKe' >\
 						        <span class='nav-icon'>\
-									<img src='assets/images/icons/analysis.png' alt='icon thống kê' width='25px'>\
+									<img src='assets/images/icons/analysis.png' alt='icon thống kê tình trạng chấm' width='25px'>\
 						         </span>\
-		                         <span class='nav-link-text'>Thống kê</span>\
+		                         <span class='nav-link-text'>Thống kê tình trạng chấm</span>\
+					        </a>\
+					    </li>\
+						<li class='nav-item' style='cursor: pointer;'>\
+					        <a class='nav-link' onclick='LoadContentMainPage(\"thongkecanhcao.php\");' id='menu-button-ThongKeCanhCao' >\
+						        <span class='nav-icon'>\
+									<img src='assets/images/icons/bad-score-analytics.png' alt='icon thống kê cảnh cáo' width='25px'>\
+						         </span>\
+		                         <span class='nav-link-text'>Thống kê cảnh cáo</span>\
 					        </a>\
 					    </li>");
 			}

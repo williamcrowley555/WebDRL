@@ -294,6 +294,8 @@ function getHtmlDataGPA(result_GPA_unlock, result_GPA) {
     //Sort điểm của sinh viên theo học kỳ giảm dần
     // result_GPA["diemtrungbinhhe4"].sort((a, b) => {sortGPA(a ,b)});
     result_GPA["diemtrungbinhhe4"].sort();
+    sortObject(result_GPA["diemtrungbinhhe4"], "namHocXet", true);
+    //sortObject(result_GPA["diemtrungbinhhe4"], "hocKyXet", true);
 
     console.log("--- 6 ---");
     console.log(result_GPA);
@@ -368,7 +370,9 @@ function loadGPAToTable() {
                 "?maChucNang=" + CHUC_NANG_NHAP_DIEM_HE_4);
         console.log(result_GPA_unlock);
         //result_GPA_unlock["chucnang_hockydanhgia"].sort((a, b) => {sortGPA(a ,b)});
-        result_GPA_unlock["chucnang_hockydanhgia"].sort();
+        // result_GPA_unlock["chucnang_hockydanhgia"].sort();
+        sortObject(result_GPA_unlock["chucnang_hockydanhgia"], "namHocXet", true);
+        //sortObject(result_GPA_unlock["chucnang_hockydanhgia"], "hocKyXet", true);
         htmlData = getHtmlDataUnlockGPA(result_GPA_unlock);
         $("#tbody_BangDiemXemTruoc").append(htmlData);
         return;
@@ -468,4 +472,16 @@ function sortGPA(a, b) {
     if (fa > fb)
         return 1;
     return 0;
+}
+
+function sortObject(object, prop, asc) {
+    object.sort(function (a, b) {
+        if (asc) {
+        return a[prop] > b[prop] ? 1 : a[prop] < b[prop] ? -1 : 0;
+        } else {
+        return b[prop] > a[prop] ? 1 : b[prop] < a[prop] ? -1 : 0;
+        }
+    });
+
+    return object;
 }

@@ -14,6 +14,7 @@
 	$("#menu-button-ThongBaoDanhGia").removeClass("active");
 	$("#menu-button-ThongKe").removeClass("active");
 	$("#menu-button-CaiDat").removeClass("active");
+	$("#menu-button-ThongKeCanhCao").removeClass("active");
 
 	//add class active
 	$("#menu-button-KhieuNai").addClass("active");
@@ -397,12 +398,15 @@
 							: toDateTimeString(data[i].thoiGianKhieuNai)) +
 						"</td>\
 											<td class='cell'>\
-											<button class='btn btn-secondary btn_XemChiTiet' style='color: white;' data-bs-toggle='modal' data-bs-target='#XemChiTietModal' data-id = '" +
+											<button class='m-2 btn btn-secondary btn_XemChiTiet' style='color: white; width: max-content;' data-bs-toggle='modal' data-bs-target='#XemChiTietModal' data-id = '" +
 						data[i].maKhieuNai +
 						"' >Xem chi tiết</button>\
-											<button class='btn btn-info btn_PheDuyet' style='color: white;' data-bs-toggle='modal' data-bs-target='#PheDuyetModal' data-id = '" +
+											<button class='m-2 btn btn-info btn_PheDuyet' style='color: white; width: max-content;' data-bs-toggle='modal' data-bs-target='#PheDuyetModal' data-id = '" +
 						data[i].maKhieuNai +
 						"' >Phê duyệt</button>\
+											<button class='m-2 btn btn-danger btn_XoaKhieuNai' style='color: white; width: max-content;' data-id = '" +
+						data[i].maKhieuNai +
+						"' >Xóa</button>\
 						</td>\
 											</tr>";
 					}

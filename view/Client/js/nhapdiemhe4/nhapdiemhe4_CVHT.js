@@ -341,7 +341,7 @@ function checkExistGPAByClass(maLop, maHocKyDanhGia) {
 }
 
 function getListGPAByClassAndSemester(maLop, maHocKyDanhGia) {
-    var listGPA = "";
+    var listGPA = null;
     $.ajax({
         url: urlapi_diemtrungbinhhe4_read + "?maLop=" + maLop + "&maHocKyDanhGia=" + maHocKyDanhGia,
         type: "GET",
@@ -356,50 +356,160 @@ function getListGPAByClassAndSemester(maLop, maHocKyDanhGia) {
     return listGPA;
 }
 
+function getListGPANotHaveGradeByClassAndSemester(maLop, maHocKyDanhGia) {
+    var listGPA = null;
+    $.ajax({
+        url: urlapi_diemtrungbinhhe4_read_NotHaveGrade + "?maLop=" + maLop + "&maHocKyDanhGia=" + maHocKyDanhGia,
+        type: "GET",
+        contentType: "application/json;charset=utf-8",
+        dataType: "json",
+        async: false,
+        headers: { Authorization: jwtCookie },
+        success: function(result) {
+            listGPA = result;
+        },
+    });
+    return listGPA;
+}
+
 function loadGPAToTable(maLop, maHocKyDanhGia) {
     $("#tbody_danhSachDiemHe4 tr").remove();
-
+    var soThuTuTiepTheo = null;
     var htmlData = "";
-    var isExisted = checkExistGPAByClass(maLop, maHocKyDanhGia);
-    if(!isExisted) {
-        htmlData += "<tr>\
-                        <td colspan='6'>\
-                            <p class='mt-4'>Không tìm thấy kết quả.</p>\
-                        </td>\
-                    </tr>"
-        $("#tbody_danhSachDiemHe4").append(htmlData);
-        return;
-    }
+    // var isExisted = checkExistGPAByClass(maLop, maHocKyDanhGia);
+    // if(!isExisted) {
+    //     htmlData += "<tr>\
+    //                     <td colspan='6'>\
+    //                         <p class='mt-4'>Không tìm thấy kết quả.</p>\
+    //                     </td>\
+    //                 </tr>"
+    //     $("#tbody_danhSachDiemHe4").append(htmlData);
+    //     return;
+    // }
 
     var isEditable = isGetAPISuccess(urlapi_chucnang_hockydanhgia_single_details_read +
         "?maChucNang=" + CHUC_NANG_NHAP_DIEM_HE_4 + "&maHocKyDanhGia=" + maHocKyDanhGia);
-    var listGPA = getListGPAByClassAndSemester(maLop, maHocKyDanhGia);
-
-    $.each(listGPA, function(index){
-        for (var p = 0; p < listGPA[index].length; p++) {
-            htmlData += "<tr>\
-                            <td>" + listGPA[index][p].soThuTu + "</td>\
-                            <td>" + listGPA[index][p].maSinhVien + "</td>\
-                            <td>" + listGPA[index][p].hoTenSinhVien + "</td>\
-                            <td>" + listGPA[index][p].diem + "</td>\
-                            <td>" + maLop + "</td>";
-            if(isEditable)
-                htmlData+= "<td>" + 
-                                "<button type='button' class='btn btn-warning btn_ChinhSua_DiemHe4' data-id='"+ listGPA[index][p].maSinhVien + "' style='color: white;'>" +
-                                    "Chỉnh sửa" +
-                                "</button>" +
-                                "<div class='edit-confirmation' style='display:none'>\
-                                    <button class='btn btn-primary btn_XacNhanChinhSua_DiemHe4' style='color: white;' data-idMSSV = '" + listGPA[index][p].maSinhVien + "' data-idMaHKDG='" + maHocKyDanhGia + "'>Xác nhận</button>\
-                                    <button class='btn bg-danger btn_HuyChinhSua_DiemHe4 ml-2' style='color: white;' data-idMSSV = '" + listGPA[index][p].maSinhVien + "' data-idMaHKDG='" + maHocKyDanhGia + "'>Hủy</button>\
-                                </div>"+
-                            "</td>\
-                        </tr>";
-            else
-                htmlData+= "<td></td>\
-                        </tr>";
+    // var listGPA = getListGPAByClassAndSemester(maLop, maHocKyDanhGia);
+    var result = getListGPAByClassAndSemester(maLop, maHocKyDanhGia);
+    if(result != null) {
+        var result_khongCoDiem = getListGPANotHaveGradeByClassAndSemester(maLop, maHocKyDanhGia);
+        console.log(result_khongCoDiem);
+        if(result_khongCoDiem != null) {
+            soThuTuTiepTheo = result["diemtrungbinhhe4"].length;
+            $.each(result_khongCoDiem, function(index){
+                for (var p = 0; p < result_khongCoDiem[index].length; p++) {
+                    soThuTuTiepTheo++;
+                    result_khongCoDiem[index][p].soThuTu = soThuTuTiepTheo;
+                    result_khongCoDiem[index][p].diem = "Chưa có điểm";
+                }
+            });
+            $.each(result_khongCoDiem, function(index){
+                for (var p = 0; p < result_khongCoDiem[index].length; p++) {
+                    result["diemtrungbinhhe4"].push(result_khongCoDiem[index][p]);
+                }
+            });
         }
-    });
-    $("#tbody_danhSachDiemHe4").append(htmlData);
+
+        $("#idPhanTrang").pagination({
+            dataSource: result["diemtrungbinhhe4"],
+            pageSize: 10,
+            autoHidePrevious: true,
+            autoHideNext: true,
+
+            callback: function (data, pagination) {
+                var htmlData = "";
+                var count = 0;
+
+                for (let i = 0; i < data.length; i++) {
+                    count += 1;
+                    htmlData += "<tr> \
+                                    <td>" + data[i].soThuTu + "</td>\
+                                    <td>" + data[i].maSinhVien + "</td>\
+                                    <td>" + data[i].hoTenSinhVien + "</td>\
+                                    <td>" + data[i].diem + "</td>\
+                                    <td>" + maLop + "</td>";
+                    if(data[i].diem == "Chưa có điểm") {
+                        htmlData += "<td></td>\
+                                </tr>";
+                    } else {
+                        if(isEditable)
+                        htmlData+= "<td>" + 
+                                        "<button type='button' class='btn btn-warning btn_ChinhSua_DiemHe4' data-id='"+ data[i].maSinhVien + "' style='color: white;'>" +
+                                            "Chỉnh sửa" +
+                                        "</button>" +
+                                        "<div class='edit-confirmation' style='display:none'>\
+                                            <button class='btn btn-primary btn_XacNhanChinhSua_DiemHe4' style='color: white;' data-idMSSV = '" + data[i].maSinhVien + "' data-idMaHKDG='" + maHocKyDanhGia + "'>Xác nhận</button>\
+                                            <button class='btn bg-danger btn_HuyChinhSua_DiemHe4 ml-2' style='color: white;' data-idMSSV = '" + data[i].maSinhVien + "' data-idMaHKDG='" + maHocKyDanhGia + "'>Hủy</button>\
+                                        </div>"+
+                                    "</td>\
+                                </tr>";
+                        else
+                            htmlData+= "<td></td>\
+                                    </tr>";
+                    }
+                    
+                    
+                }
+                $("#tbody_danhSachDiemHe4").html(htmlData);
+            },
+        });
+    } else {
+        result = getListGPANotHaveGradeByClassAndSemester(maLop, maHocKyDanhGia);
+        $.each(result, function(index){
+            for (var p = 0; p < result[index].length; p++) {
+                result[index][p].diem = "Chưa có điểm";
+            }
+        });
+        $("#idPhanTrang").pagination({
+            dataSource: result["diemtrungbinhhe4"],
+            pageSize: 10,
+            autoHidePrevious: true,
+            autoHideNext: true,
+
+            callback: function (data, pagination) {
+                var htmlData = "";
+                var count = 0;
+
+                for (let i = 0; i < data.length; i++) {
+                    count += 1;
+                    htmlData += "<tr> \
+                                    <td>" + data[i].soThuTu + "</td>\
+                                    <td>" + data[i].maSinhVien + "</td>\
+                                    <td>" + data[i].hoTenSinhVien + "</td>\
+                                    <td>" + data[i].diem + "</td>\
+                                    <td>" + maLop + "</td>\
+                                    <td> </td>\
+                                </tr>";
+                }
+                $("#tbody_danhSachDiemHe4").html(htmlData);
+            },
+        });
+    }
+    // $.each(listGPA, function(index){
+    //     for (var p = 0; p < listGPA[index].length; p++) {
+    //         htmlData += "<tr>\
+    //                         <td>" + listGPA[index][p].soThuTu + "</td>\
+    //                         <td>" + listGPA[index][p].maSinhVien + "</td>\
+    //                         <td>" + listGPA[index][p].hoTenSinhVien + "</td>\
+    //                         <td>" + listGPA[index][p].diem + "</td>\
+    //                         <td>" + maLop + "</td>";
+    //         if(isEditable)
+    //             htmlData+= "<td>" + 
+    //                             "<button type='button' class='btn btn-warning btn_ChinhSua_DiemHe4' data-id='"+ listGPA[index][p].maSinhVien + "' style='color: white;'>" +
+    //                                 "Chỉnh sửa" +
+    //                             "</button>" +
+    //                             "<div class='edit-confirmation' style='display:none'>\
+    //                                 <button class='btn btn-primary btn_XacNhanChinhSua_DiemHe4' style='color: white;' data-idMSSV = '" + listGPA[index][p].maSinhVien + "' data-idMaHKDG='" + maHocKyDanhGia + "'>Xác nhận</button>\
+    //                                 <button class='btn bg-danger btn_HuyChinhSua_DiemHe4 ml-2' style='color: white;' data-idMSSV = '" + listGPA[index][p].maSinhVien + "' data-idMaHKDG='" + maHocKyDanhGia + "'>Hủy</button>\
+    //                             </div>"+
+    //                         "</td>\
+    //                     </tr>";
+    //         else
+    //             htmlData+= "<td></td>\
+    //                     </tr>";
+    //     }
+    // });
+    //$("#tbody_danhSachDiemHe4").append(htmlData);
 }
 
 function updateDiemHe4(maSinhVien, maHocKyDanhGia, diem) {

@@ -63,7 +63,7 @@ function GetListThongBaoDanhGia() {
           autoHideNext: true,
 
           callback: function (data, pagination) {
-            
+            var htmlData = "";
             var count = 0;
 
             for (let i = 0; i < data.length; i++) {
@@ -201,7 +201,7 @@ function TimKiemThongBaoDanhGia(maHKDG) {
           autoHideNext: true,
 
           callback: function (data, pagination) {
-            
+            var htmlData = "";
             var count = 0;
 
             for (let i = 0; i < data.length; i++) {
