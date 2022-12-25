@@ -119,11 +119,12 @@ function GetListLop(maKhoa) {
 
         $("#idPhanTrang").empty();
 
-        htmlData += "<tr>\
+        htmlData +=
+          "<tr>\
                         <td colspan='7' class='text-center'>\
                             <p class='mt-4'>Không tìm thấy kết quả.</p>\
                         </td>\
-                    </tr>"
+                    </tr>";
         $("#id_tbodyLop").append(htmlData);
 
         // Swal.fire({
@@ -200,11 +201,12 @@ function GetListLop(maKhoa) {
 
         $("#idPhanTrang").empty();
 
-        htmlData += "<tr>\
+        htmlData +=
+          "<tr>\
                         <td colspan='7' class='text-center'>\
                             <p class='mt-4'>Không tìm thấy kết quả.</p>\
                         </td>\
-                    </tr>"
+                    </tr>";
         $("#id_tbodyLop").append(htmlData);
 
         //ThongBaoLoi(errorMessage.responseJSON.message);
@@ -218,7 +220,7 @@ function TimKiemLop(maLop) {
   var htmlData = "";
 
   var paramMaKhoa = "";
-  
+
   if (getCookie("quyen") == "khoa") {
     $.ajax({
       url: urlapi_khoa_single_read_taiKhoanKhoa + getCookie("taiKhoan"),
@@ -232,8 +234,7 @@ function TimKiemLop(maLop) {
       success: function (result_Khoa) {
         paramMaKhoa += "&maKhoa_quyen=" + result_Khoa["maKhoa"];
       },
-      error: function (errorMessage) {
-      },
+      error: function (errorMessage) {},
     });
   }
 
@@ -299,11 +300,12 @@ function TimKiemLop(maLop) {
 
       $("#idPhanTrang").empty();
 
-      htmlData += "<tr>\
+      htmlData +=
+        "<tr>\
                       <td colspan='7' class='text-center'>\
                         <p class='mt-4'>Không tìm thấy kết quả.</p>\
                       </td>\
-                  </tr>"
+                  </tr>";
       $("#id_tbodyLop").append(htmlData);
 
       //ThongBaoLoi(errorMessage.responseJSON.message);

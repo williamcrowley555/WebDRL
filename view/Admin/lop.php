@@ -227,7 +227,7 @@
 							</div>
 
 							<div class="form-group">
-								<p class="mb-0 fw-bold text-body">Yêu cầu thứ tự các cột như sau: STT, Mã lớp, Tên lớp, Mã cố vấn học tập, Mã khóa học, Mật khẩu (optional)</p>
+								<p class="mb-0 fw-bold text-body">Yêu cầu thứ tự các cột như sau: STT, Mã lớp, Tên lớp, Mã cố vấn học tập, Mã khóa học</p>
 							</div>
 
 						</div>
@@ -542,6 +542,8 @@
 							timerProgressBar: true,
 							showCloseButton: true,
 						});
+						
+						GetListLop($("#select_Khoa").val());
 					} else {
 						Swal.fire({
 							icon: "error",

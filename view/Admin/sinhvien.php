@@ -857,6 +857,8 @@
 							timerProgressBar: true,
 							showCloseButton: true,
 						});
+
+						GetListSinhVien($("#select_Khoa").val(), $("#select_Lop").val());
 					} else {
 						Swal.fire({
 							icon: "error",

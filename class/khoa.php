@@ -37,6 +37,16 @@
             return $stmt;
         }
 
+        // GET KHOA THEO TAI KHOAN KHOA 
+        public function getKhoaTheoTaiKhoanKhoa($taiKhoanKhoa){
+            $sqlQuery = "SELECT maKhoa, tenKhoa, taiKhoanKhoa, matKhauKhoa FROM " . $this->db_table . " 
+                            WHERE UPPER(taiKhoanKhoa) = UPPER('$taiKhoanKhoa')";
+    
+            $stmt = $this->conn->prepare($sqlQuery);
+            $stmt->execute();
+            return $stmt;
+        }
+
         // READ single
         public function getSingleKhoa(){
             $sqlQuery = "SELECT maKhoa, tenKhoa, taiKhoanKhoa, matKhauKhoa FROM ". $this->db_table ."

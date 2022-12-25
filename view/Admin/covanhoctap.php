@@ -66,7 +66,7 @@
 								</li>
 							</ul>
 						</div>
-
+						
 						<div class="col-auto dropdown" style="padding-left: 15px;">
 							<button class="btn btn-success text-white dropdown-toggle" type="button" id="dropdownExportButton" data-bs-toggle="dropdown" aria-expanded="false">
 								Export
@@ -512,6 +512,10 @@
 		$("#EditForm #edit_input_sdt").removeClass("is-invalid");
 	})
 
+	$( "#ImportFromExcelModal" ).on('shown.bs.modal', function(){
+		$('#form_import_from_excel').trigger("reset");
+	});
+
 	// Xử lý import form excel 
 	$('#form_import_from_excel').submit(function(e) {
 		e.preventDefault();
@@ -550,6 +554,8 @@
 							timerProgressBar: true,
 							showCloseButton: true,
 						});
+
+						GetListCVHT($("#select_Khoa").val());
 					} else {
 						Swal.fire({
 							icon: "error",

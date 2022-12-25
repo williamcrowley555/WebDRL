@@ -489,6 +489,8 @@
 							timerProgressBar: true,
 							showCloseButton: true,
 						});
+
+						GetListKhoa();
 					} else {
 						Swal.fire({
 							icon: "error",
