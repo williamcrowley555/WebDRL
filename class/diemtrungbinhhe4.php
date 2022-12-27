@@ -143,7 +143,7 @@
                         SET
                             maDiemTrungBinh = :maDiemTrungBinh, 
                             diem = :diem,
-                            maHocKyDanhGia = :maHocKyDanhGia, 
+                            maHocKyDanhGia = :maHocKyDanhGia,
                             maSinhVien = :maSinhVien";
 
             $stmt = $this->conn->prepare($sqlQuery);

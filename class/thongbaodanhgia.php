@@ -26,9 +26,11 @@
 
         // GET ALL
         public function getAllThongBaoDanhGia($kichHoat = 1){
-            $sqlQuery = "SELECT * 
-                        FROM " . $this->db_table . 
-                        " WHERE kichHoat = ?";
+            $sqlQuery = "SELECT thongbaodanhgia.* 
+                        FROM thongbaodanhgia, hockydanhgia
+                        WHERE thongbaodanhgia.maHocKyDanhGia = hockydanhgia.maHocKyDanhGia
+                            AND kichHoat = ?
+                        ORDER BY namHocXet DESC, hocKyXet DESC";
             $stmt = $this->conn->prepare($sqlQuery);
             $stmt->bindParam(1, $kichHoat);
             $stmt->execute();

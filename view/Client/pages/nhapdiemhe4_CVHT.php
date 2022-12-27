@@ -154,6 +154,20 @@
         // Chuyển hướng trang nếu chức năng nhập điểm chưa mở hoặc không đúng quyền.
         redirectPage();
 
+        $("#select_hocKy_namHoc").on("change", function() {
+            $("#tbody_BangDiemXemTruoc tr").remove();
+            $("#loiXemTruoc").hide();
+            $("#btnLuu").hide();
+            $("#import_file").val("");
+        });
+
+        $("#select_lop").on("change", function() {
+            $("#tbody_BangDiemXemTruoc tr").remove();
+            $("#loiXemTruoc").hide();
+            $("#btnLuu").hide();
+            $("#import_file").val("");
+        });
+
         var maSo = getCookie("maSo");
         var maHocKyDanhGia = $("#select_hocKy_namHoc").find(":selected").val();
         var maLop = $("#select_lop").find(":selected").val();

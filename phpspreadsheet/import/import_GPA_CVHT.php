@@ -14,6 +14,13 @@
 
     $allowed_ext = ['xls','csv','xlsx'];
 
+    $tableTitle = [
+        "STT",
+        "Mã sinh viên",
+        "Họ tên sinh viên",
+        "Điểm"
+    ];
+
     if(in_array($file_ext, $allowed_ext)) {
         $invalidRows = array();
 
@@ -24,6 +31,7 @@
         $database = new Database();
         $db = $database->getConnection();
 
+        $isValidTitleOrder = true;
         $success = true;
         $successfulRowCount = 0;
         $rowCount = 0;
@@ -129,6 +137,24 @@
                     continue;
                 }
 
+                $stmt = $itemSinhVien->getSinhVienTheoMSSVTheoLop($row['1'], $_POST['maLop'],true);
+                $itemCount = $stmt->rowCount();
+        
+                if ($itemCount == 0) {
+                    $success = false;
+                    // array_push($invalidRows, array($row['0'], $row['1'], $row['2'], $row['3'], 'Mã số sinh viên không tồn tại'));
+                    $e = array(
+                        "soThuTu" => $rowCount,
+                        "maSinhVien" => $row['1'],
+                        "hoTenSinhVien" => $row['2'],
+                        "diem" => $row['3'],
+                        "loi" => "Mã số sinh viên không nằm trong danh sách của lớp được chọn"
+                    );
+                    array_push($GPAArr["diemtrungbinhhe4"], $e);
+                    $rowCount++;
+                    continue;
+                }
+
                 //Kiểm tra Điểm của Sinh viên tại Mã học kỳ đánh giá có tồn tại?
                 $stmt = $item->getTonTaiDiemCuaSinhVienTheoMaHocKyDanhGia($_POST['maHocKyDanhGia'], $row['1'], true);
                 $itemCount = $stmt->rowCount();
@@ -185,24 +211,6 @@
                     $rowCount++;
                     continue;
                 }
-
-                $stmt = $itemSinhVien->getSinhVienTheoMSSVTheoLop($row['1'], $_POST['maLop'],true);
-                $itemCount = $stmt->rowCount();
-        
-                if ($itemCount == 0) {
-                    $success = false;
-                    // array_push($invalidRows, array($row['0'], $row['1'], $row['2'], $row['3'], 'Mã số sinh viên không tồn tại'));
-                    $e = array(
-                        "soThuTu" => $rowCount,
-                        "maSinhVien" => $row['1'],
-                        "hoTenSinhVien" => $row['2'],
-                        "diem" => $row['3'],
-                        "loi" => "Mã số sinh viên không nằm trong danh sách của lớp được chọn"
-                    );
-                    array_push($GPAArr["diemtrungbinhhe4"], $e);
-                    $rowCount++;
-                    continue;
-                }
                 
                 //Kiểm tra Mã học kỳ đánh giá có tồn tại?
                 $stmt = $itemHocKyDanhGia->getHocKyDanhGiaTheoMaHocKyDanhGia($_POST['maHocKyDanhGia'], true);
@@ -233,10 +241,46 @@
                     "loi" => ""
                 );
                 array_push($GPAArr["diemtrungbinhhe4"], $e);
+            } else if($rowCount == 0) {
+                // Kiểm tra thứ tự tên các cột của bảng
+                for ($i = 0; $i < count($tableTitle); $i++) {
+                    if (strcasecmp($tableTitle[$i], $row[$i]) != 0) {
+                        $success = false;
+                        $isValidTitleOrder = false;
+                        break 2;
+                    } 
+                }
+
+                // $e = array(
+                //     "soThuTu" => $rowCount,
+                //     "maSinhVien" => $row['1'],
+                //     "hoTenSinhVien" => $row['2'],
+                //     "diem" => $row['3'],
+                //     "loi" => ""
+                // );
+                //array_push($GPAArr["diemtrungbinhhe4"], $e);
+            
+                //array_push($invalidRows, array($row['0'], $row['1'], $row['2'], $row['3'], $row['4'], $row['5'], $row['6'], $row['7'], 'Lỗi'));
             }
             $rowCount++;
         }
-        echo json_encode(array('success' => $success, 'array' => $GPAArr));
+        //echo json_encode(array('success' => $success, 'array' => $GPAArr));
+
+        if($success) {
+            echo json_encode(array('success' => true,
+                                    'message' => null,
+                                    'array' => $GPAArr));
+        } else {
+            if ($isValidTitleOrder) {
+                echo json_encode(array('success' => false,
+                                        'message' => null,
+                                        'array' => $GPAArr));
+            } else {
+                echo json_encode(array('success' => false,
+                                        'message' => "Thứ tự tên các cột chưa đúng yêu cầu!",
+                                        'array' => null));
+            }
+        }
 
 
         // if($success) {

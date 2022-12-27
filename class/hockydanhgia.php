@@ -75,6 +75,16 @@
             return $stmt;
         }
 
+        public function getHocKyVaNamHoc($hocKyXet, $namHocXet) {
+            $sqlQuery = "SELECT * FROM " . $this->db_table . "
+                            WHERE hocKyXet = '$hocKyXet'
+                            AND namHocXet = '$namHocXet'";
+
+            $stmt = $this->conn->prepare($sqlQuery);
+            $stmt->execute();
+            return $stmt;
+        }
+
         // CREATE
         public function createHocKyDanhGia(){
             $sqlQuery = "INSERT INTO

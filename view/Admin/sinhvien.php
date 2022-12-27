@@ -425,7 +425,7 @@
 							</div>
 
 							<div class="form-group">
-								<p class="mb-0 fw-bold text-body">Yêu cầu thứ tự các cột như sau: STT, Mã điểm trung bình, Mã học kỳ đánh giá,  Điểm, Mã số sinh viên</p>
+								<p class="mb-0 fw-bold text-body">Yêu cầu thứ tự các cột như sau: STT, Mã số sinh viên, Học kỳ, Năm học, Điểm</p>
 							</div>
 
 						</div>

@@ -13,11 +13,11 @@
     $file_ext = pathinfo($fileName, PATHINFO_EXTENSION);
 
     $tableTitle = [
-        "STT", 
-        "Mã điểm trung bình", 
-        "Mã học kỳ đánh giá", 
-        "Điểm", 
-        "Mã số sinh viên"
+        "STT",
+        "Mã số sinh viên",
+        "Học kỳ",
+        "Năm học",
+        "Điểm"
     ];
 
     $allowed_ext = ['xls','csv','xlsx'];
@@ -44,29 +44,79 @@
                 $itemSinhVien = new SinhVien($db);
                 $itemHocKyDanhGia = new HocKyDanhGia($db);
 
-                $item->maDiemTrungBinh = $row['1'];
-                $item->maHocKyDanhGia = $row['2'];
-                $item->diem = $row['3'];
-                $item->maSinhVien = $row['4'];
+                $item->maSinhVien = $row['1'];
+                $item->hocKy = $row['2'];
+                $item->namHoc = $row['3'];
+                $item->diem = $row['4'];
+                $splitNamHoc = explode("-", $row['3']);
+                $item->maHocKyDanhGia = "HK" . $row['2'] 
+                    . substr($splitNamHoc[0], -2) . substr($splitNamHoc[1], -2);
+                $item->maDiemTrungBinh = $row['1'] . $item->maHocKyDanhGia;
+
+
+
+                // $item->maDiemTrungBinh = $row['1'];
+                // $item->maHocKyDanhGia = $row['2'];
+                // $item->diem = $row['3'];
+                // $item->maSinhVien = $row['4'];
 
                 // Validate maDiemTrungBinh
+                // if(
+                //     ($errorMsg = isRequired($row['1'], "Mã điểm trung bình không được để trống")) != null
+                //     ||
+                //     ($errorMsg = minLength($row['1'], 17, "Mã điểm trung bình phải có tối thiểu 17 chữ số")) != null
+                //     ||
+                //     ($errorMsg = isGPAIDFormat($row['1'], $row['4'], $row['2'], "Mã điểm trung bình sai định dạng")) != null
+                // ) {
+                //     $success = false;
+                //     array_push($invalidRows, array($row['0'], $row['1'], $row['2'], $row['3'], $row['4'], $errorMsg));
+                //     continue;
+                // }
+
+                // Validate maHocKyDanhGia
+                // if(
+                //     ($errorMsg = isRequired($row['2'], "Mã học kỳ đánh giá không được để trống")) != null
+                //     ||
+                //     ($errorMsg = minLength($row['2'], 7, "Mã học kỳ đánh giá phải có tối thiểu 7 chữ số")) != null
+                // ) {
+                //     $success = false;
+                //     array_push($invalidRows, array($row['0'], $row['1'], $row['2'], $row['3'], $row['4'], $errorMsg));
+                //     continue;
+                // }
+
+                // Validate maSinhVien
                 if(
-                    ($errorMsg = isRequired($row['1'], "Mã điểm trung bình không được để trống")) != null
+                    ($errorMsg = isRequired($row['1'], "Mã số sinh viên không được để trống")) != null
+                    || 
+                    ($errorMsg = isPositiveNumber($row['1'], "Mã số sinh viên chỉ bao gồm các ký tự số")) != null
                     ||
-                    ($errorMsg = minLength($row['1'], 17, "Mã điểm trung bình phải có tối thiểu 17 chữ số")) != null
-                    ||
-                    ($errorMsg = isGPAIDFormat($row['1'], $row['4'], $row['2'], "Mã điểm trung bình sai định dạng")) != null
+                    ($errorMsg = minLength($row['1'], 10, "Mã số sinh viên phải có tối thiểu 10 chữ số")) != null
                 ) {
                     $success = false;
                     array_push($invalidRows, array($row['0'], $row['1'], $row['2'], $row['3'], $row['4'], $errorMsg));
                     continue;
                 }
 
-                // Validate maHocKyDanhGia
+                // Validate hocKy
                 if(
-                    ($errorMsg = isRequired($row['2'], "Mã học kỳ đánh giá không được để trống")) != null
+                    ($errorMsg = isRequired($row['2'], "Học kỳ không được để trống")) != null
+                    || 
+                    ($errorMsg = isPositiveNumber($row['2'], "Học kỳ chỉ bao gồm các ký tự số")) != null
                     ||
-                    ($errorMsg = minLength($row['2'], 7, "Mã học kỳ đánh giá phải có tối thiểu 7 chữ số")) != null
+                    ($errorMsg = isHocKy($row['2'], "Học kỳ chỉ có thể là 1 hoặc 2")) != null
+                ) {
+                    $success = false;
+                    array_push($invalidRows, array($row['0'], $row['1'], $row['2'], $row['3'], $row['4'], $errorMsg));
+                    continue;
+                }
+
+                // Validate namHoc
+                if(
+                    ($errorMsg = isRequired($row['3'], "Năm học không được để trống")) != null
+                    ||
+                    ($errorMsg = isNamHoc($row['3'], "Định dạng năm học phải là YYYY-YYYY")) != null
+                    ||
+                    ($errorMsg = isValidNamHoc($row['3'], "Năm học trước phải nhỏ hơn năm học sau")) != null
                 ) {
                     $success = false;
                     array_push($invalidRows, array($row['0'], $row['1'], $row['2'], $row['3'], $row['4'], $errorMsg));
@@ -75,42 +125,30 @@
 
                 // Validate diem
                 if(
-                    ($errorMsg = isRequired($row['3'], "Điểm không được để trống")) != null
+                    ($errorMsg = isRequired($row['4'], "Điểm không được để trống")) != null
                     ||
-                    ($errorMsg = isNumber($row['3'], "Điểm phải là số hoặc số thập phân")) != null
+                    ($errorMsg = isNumber($row['4'], "Điểm phải là số hoặc số thập phân")) != null
                     ||
-                    ($errorMsg = isGPA($row['3'], "Điểm phải lớn hơn 0 và bé hơn 4")) != null
+                    ($errorMsg = isGPA($row['4'], "Điểm phải nằm trong khoảng từ 0 đến 4")) != null
                 ) {
                     $success = false;
                     array_push($invalidRows, array($row['0'], $row['1'], $row['2'], $row['3'], $row['4'], $errorMsg));
                     continue;
                 }
                 
-                // Validate maSinhVien
-                if(
-                    ($errorMsg = isRequired($row['4'], "Mã số sinh viên không được để trống")) != null
-                    || 
-                    ($errorMsg = isPositiveNumber($row['4'], "Mã số sinh viên chỉ bao gồm các ký tự số")) != null
-                    ||
-                    ($errorMsg = minLength($row['4'], 10, "Mã số sinh viên phải có tối thiểu 10 chữ số")) != null
-                ) {
-                    $success = false;
-                    array_push($invalidRows, array($row['0'], $row['1'], $row['2'], $row['3'], $row['4'], $errorMsg));
-                    continue;
-                }
 
                 // Kiểm tra mã điểm trung bình đã tồn tại?
-                $stmt = $item->getDiemHe4TheoMaDiemTrungBinh($row['1'], true);
-                $itemCount = $stmt->rowCount();
+                // $stmt = $item->getDiemHe4TheoMaDiemTrungBinh($row['1'], true);
+                // $itemCount = $stmt->rowCount();
         
-                if ($itemCount > 0) {
-                    $success = false;
-                    array_push($invalidRows, array($row['0'], $row['1'], $row['2'], $row['3'], $row['4'], 'Mã điểm trung bình đã tồn tại'));
-                    continue;
-                }
+                // if ($itemCount > 0) {
+                //     $success = false;
+                //     array_push($invalidRows, array($row['0'], $row['1'], $row['2'], $row['3'], $row['4'], 'Mã điểm trung bình đã tồn tại'));
+                //     continue;
+                // }
 
                 //Kiểm tra MSSV có tồn tại?
-                $stmt = $itemSinhVien->getSinhVienTheoMSSV($row['4'], true);
+                $stmt = $itemSinhVien->getSinhVienTheoMSSV($row['1'], true);
                 $itemCount = $stmt->rowCount();
         
                 if ($itemCount == 0) {
@@ -118,24 +156,35 @@
                     array_push($invalidRows, array($row['0'], $row['1'], $row['2'], $row['3'], $row['4'], 'Mã số sinh viên không tồn tại'));
                     continue;
                 }
-                
-                //Kiểm tra Mã học kỳ đánh giá có tồn tại?
-                $stmt = $itemHocKyDanhGia->getHocKyDanhGiaTheoMaHocKyDanhGia($row['2'], true);
-                $itemCount = $stmt->rowCount();
+
+                // Kiểm tra năm học và học kỳ có tồn tại?
+                // $stmt = $itemHocKyDanhGia->getHocKyVaNamHoc($row['2'], $row['3']);
+                // $itemCount = $stmt->rowCount();
         
-                if ($itemCount == 0) {
-                    $success = false;
-                    array_push($invalidRows, array($row['0'], $row['1'], $row['2'], $row['3'], $row['4'], 'Mã học kỳ đánh giá không tồn tại'));
-                    continue;
-                }
+                // if ($itemCount == 0) {
+                //     $success = false;
+                //     array_push($invalidRows, array($row['0'], $row['1'], $row['2'], $row['3'], $row['4'], 'Mã học kỳ đánh giá không tồn tại'));
+                //     continue;
+                // }
+
+
+                //Kiểm tra Mã học kỳ đánh giá có tồn tại?
+                // $stmt = $itemHocKyDanhGia->getHocKyDanhGiaTheoMaHocKyDanhGia($row['2'], true);
+                // $itemCount = $stmt->rowCount();
+        
+                // if ($itemCount == 0) {
+                //     $success = false;
+                //     array_push($invalidRows, array($row['0'], $row['1'], $row['2'], $row['3'], $row['4'], 'Mã học kỳ đánh giá không tồn tại'));
+                //     continue;
+                // }
 
                 //Kiểm tra Điểm của Sinh viên tại Mã học kỳ đánh giá có tồn tại?
-                $stmt = $item->getTonTaiDiemCuaSinhVienTheoMaHocKyDanhGia($row['2'], $row['4'], true);
+                $stmt = $item->getTonTaiDiemCuaSinhVienTheoMaHocKyDanhGia($item->maHocKyDanhGia, $row['1'], true);
                 $itemCount = $stmt->rowCount();
         
                 if ($itemCount > 0) {
                     $success = false;
-                    array_push($invalidRows, array($row['0'], $row['1'], $row['2'], $row['3'], $row['4'], 'Mã học kỳ đánh giá đã tồn tại điểm'));
+                    array_push($invalidRows, array($row['0'], $row['1'], $row['2'], $row['3'], $row['4'], 'Học kỳ - năm học đã tồn tại điểm'));
                     continue;
                 }
 

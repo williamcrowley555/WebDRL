@@ -198,7 +198,12 @@ function createBangDiemXemTruoc(formData) {
                 $("#btnLuu").show();
                 listDiem = result.array;
             } else {
-                $("#loiXemTruoc").show();
+                if(result.message != null) {
+                    presentNotification("error", "Lỗi", result.message);
+                    $("#import_file").val("");
+                    return;
+                } else
+                    $("#loiXemTruoc").show();
             }
             
             $.each(result.array, function(index){
@@ -306,6 +311,7 @@ function hideNhapDiemElements() {
     $("#bangDiemXemTruoc").hide();
     $("#loiXemTruoc").hide();
     $("#btnLuu").hide();
+    $("#idPhanTrang").empty();
 }
 
 function showXemDiemElements() {

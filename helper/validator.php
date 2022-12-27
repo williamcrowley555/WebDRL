@@ -124,4 +124,18 @@
     function isGPAIDFormat($value, $maSinhVien, $maHocKyDanhGia, $message = null) {
         return ($value == ($maSinhVien."".$maHocKyDanhGia)) ? null : $message ?? "Mã điểm trung bình không hợp lệ";
     }
+
+    function isNamHoc ($value , $message = null) {
+        $regex = "/^[12][0-9]{3}-[12][0-9]{3}$/";
+        return preg_match($regex, $value) ? null : $message ?? "Năm học không hợp lệ";
+    }
+
+    function isValidNamHoc ($value, $message = null) {
+        $namHocArr = explode("-", $value);
+        return ($namHocArr[0] < $namHocArr[1]) ? null : $message ?? "Năm học trước phải nhỏ hơn năm học sau";
+    }
+
+    function isHocKy($value, $message = null) {
+        return ($value == "1" || $value == "2") ? null : $message ?? "Học kỳ không hợp lệ";
+    }
 ?>
