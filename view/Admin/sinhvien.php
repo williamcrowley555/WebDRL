@@ -348,7 +348,7 @@
 										
 											<div class="mb-3 form-group">
 												<label for="input_DiemTrungBinh" class="form-label" style="color: black; font-weight: 500;">Điểm trung bình hệ 4</label>
-												<input type="number" name="diemTrungBinh" class="form-control mb-2" id="input_DiemTrungBinh" placeholder="Nhập điểm trung bình hệ 4 ...">
+												<input type="number" min="0" max="4" step="0.01" name="diemTrungBinh" class="form-control mb-2" id="input_DiemTrungBinh" placeholder="Nhập điểm trung bình hệ 4 ...">
 												<span class="invalid-feedback"></span>
 											</div>
 
@@ -627,7 +627,7 @@
 			Validator.isRequired('#input_DiemTrungBinh'),
 			Validator.isNumber('#input_DiemTrungBinh', 'Điểm trung bình chỉ bao gồm các ký tự số'),
 			Validator.minNumber('#input_DiemTrungBinh', 0, "Điểm trung bình phải lớn hơn 0"),
-			Validator.maxNumber('#input_DiemTrungBinh', 4, "Điểm trung bình phải nhỏ hơn 4"),
+			Validator.maxNumber('#input_DiemTrungBinh', 4, "Điểm trung bình phải nhỏ hơn bằng 4"),
 		],
 		onSubmit: NhapDiemHe4
 	})
@@ -774,12 +774,15 @@
 
 	// Xử lý quản lý điểm trung bình học kỳ
 	$(document).on("click", ".btn_QuanLyDiemTrungBinhHocKy_SinhVien", function() {
+		// nav-list-tab
 		$("#AddScoreForm #input_DiemTrungBinh").val("");
 		let maSinhVien = $(this).attr('data-id');
 		$('#input_MaSinhVien_GPA').val(maSinhVien);
 		$('#maSinhVien_ketQuaHocTap').text("Mã sinh viên: " + maSinhVien);
 		LoadComboBoxHocKyVaNamHoc();
 		LoadDiemHe4(maSinhVien);
+
+		$("#nav-list-tab").on("click", LoadDiemHe4(maSinhVien));
 	});
 
 	// Xử lý chỉnh sửa điểm trung bình học kỳ

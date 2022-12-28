@@ -1146,7 +1146,7 @@ function NhapDiemHe4() {
     async: false,
     headers: { Authorization: jwtCookie },
     success: function (result_update) {
-      $("#QuanLyDiemTrungBinhHocKyModal").modal("hide");
+      // $("#QuanLyDiemTrungBinhHocKyModal").modal("hide");
 
       Swal.fire({
         icon: "success",
