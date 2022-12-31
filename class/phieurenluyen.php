@@ -53,11 +53,28 @@ class PhieuRenLuyen
     // GET ALL THEO MSSV
     public function getAllPhieuRenLuyen_TheoMSSV($maSinhVien)
     {
-        $sqlQuery = "SELECT maPhieuRenLuyen, xepLoai, diemTongCong, maSinhVien, diemTrungBinhChungHKTruoc, diemTrungBinhChungHKXet, maHocKyDanhGia, coVanDuyet, khoaDuyet FROM " . $this->db_table . "
-                        WHERE maSinhVien = ? 
-                        ORDER BY maHocKyDanhGia DESC";
+        $sqlQuery = "SELECT * 
+                    FROM phieurenluyen, hockydanhgia
+                    WHERE phieurenluyen.maHocKyDanhGia = hockydanhgia.maHocKyDanhGia AND maSinhVien = ? 
+                    ORDER BY namHocXet DESC, hocKyXet DESC";
         $stmt = $this->conn->prepare($sqlQuery);
         $stmt->bindParam(1, $maSinhVien);
+        $stmt->execute();
+        return $stmt;
+    }
+
+    // GET ALL THEO MSSV VA MA KHOA
+    public function getAllPhieuRenLuyen_TheoMSSVVaMaKhoa($maSinhVien, $maKhoa)
+    {
+        $sqlQuery = "SELECT phieurenluyen.*, hockydanhgia.* 
+                    FROM phieurenluyen, hockydanhgia, sinhvien, lop
+                    WHERE phieurenluyen.maHocKyDanhGia = hockydanhgia.maHocKyDanhGia AND phieurenluyen.maSinhVien = sinhvien.maSinhVien 
+                        AND sinhvien.maLop = lop.maLop 
+                        AND phieurenluyen.maSinhVien = ? AND maKhoa = ?
+                    ORDER BY namHocXet DESC, hocKyXet DESC";
+        $stmt = $this->conn->prepare($sqlQuery);
+        $stmt->bindParam(1, $maSinhVien);
+        $stmt->bindParam(2, $maKhoa);
         $stmt->execute();
         return $stmt;
     }

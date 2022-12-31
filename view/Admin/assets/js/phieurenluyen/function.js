@@ -197,12 +197,9 @@ function GetListPhieurenluyen(maLop, maHocKyDanhGia) {
                   ? "Xem chi tiết và duyệt"
                   : "Xem chi tiết") +
                 "</button>\
-                  <form action='" +
-                host_domain_url +
-                "/mpdf/export_phieuRenLuyen.php' method='POST' class='d-inline form_exportPDFPhieuRenLuyen'>\
-                    <input type='hidden' name='data' class='data' />\
-                    <button type='submit' class='btn' style='color: white;background: #c04f4f;margin: 5px;'><img src='assets/images/icons/pdf.png' width='17px' /><span style='margin-left: 5px;'>Xuất phiếu</span> </button>\
-                  </form>\
+                <button type='button' data-bs-toggle='modal' data-bs-target='#ModalExportPRL' class='btn btn_XuatPRL' style='color: white;background: #c04f4f;margin: 5px;' data-id='" +
+                data[i].maPhieuRenLuyen +
+                "' ><img src='assets/images/icons/pdf.png' width='17px' /><span style='margin-left: 5px;'>Xuất phiếu</span></button>\
                   </td>\
                 </tr>";
             }
@@ -235,12 +232,12 @@ function GetListPhieurenluyen(maLop, maHocKyDanhGia) {
   }
 }
 
-function TimKiemPhieuRenLuyen(maPhieuRenLuyen) {
+function TimKiemPhieuRenLuyen(maSinhVien) {
   $("#id_tbodyPhieuRenLuyen tr").remove();
   var htmlData = "";
 
   var paramMaKhoa = "";
-  
+
   if (getCookie("quyen") == "khoa") {
     $.ajax({
       url: urlapi_khoa_single_read_taiKhoanKhoa + getCookie("taiKhoan"),
@@ -254,13 +251,12 @@ function TimKiemPhieuRenLuyen(maPhieuRenLuyen) {
       success: function (result_Khoa) {
         paramMaKhoa += "&maKhoa_quyen=" + result_Khoa["maKhoa"];
       },
-      error: function (errorMessage) {
-      },
+      error: function (errorMessage) {},
     });
   }
 
   $.ajax({
-    url: urlapi_phieurenluyen_read_MaPhieuRenLuyen + maPhieuRenLuyen + paramMaKhoa,
+    url: urlapi_phieurenluyen_read_MaSV + maSinhVien + paramMaKhoa,
     type: "GET",
     contentType: "application/json;charset=utf-8",
     dataType: "json",
@@ -339,9 +335,11 @@ function TimKiemPhieuRenLuyen(maPhieuRenLuyen) {
                 ? "Xem chi tiết và duyệt"
                 : "Xem chi tiết") +
               "</button>\
-                                    <a class='btn' href='#' style='color: white;background: #c04f4f;margin: 5px;'><img src='assets/images/icons/pdf.png' width='17px' /><span style='margin-left: 5px;'>Xuất phiếu</span> </a>\
-                                  </td>\
-                                  </tr>";
+              <button type='button' data-bs-toggle='modal' data-bs-target='#ModalExportPRL' class='btn btn_XuatPRL' style='color: white;background: #c04f4f;margin: 5px;' data-id='" +
+              data[i].maPhieuRenLuyen +
+              "' ><img src='assets/images/icons/pdf.png' width='17px' /><span style='margin-left: 5px;'>Xuất phiếu</span></button>\
+                </td>\
+              </tr>";
           }
 
           $("#id_tbodyPhieuRenLuyen").html(htmlData);
@@ -559,456 +557,6 @@ function checkValidateInput() {
 
   return true;
 }
-
-//------------------------------------------------//
-//Show tiêu chí đánh giá
-// function getTieuChiDanhGia() {
-//   //Ajax tieuchicap1
-//   $.ajax({
-//     url: urlapi_tieuchicap1_read,
-//     async: false,
-//     type: "GET",
-//     contentType: "application/json;charset=utf-8",
-//     dataType: "json",
-//     headers: {
-//       Authorization: jwtCookie,
-//     },
-//     success: function (result) {
-//       $.each(result, function (index) {
-//         for (var i = 0; i < result[index].length; i++) {
-//           //console.log(result[index][i].noidung);
-
-//           $("#tbody_noiDungDanhGia").append(
-//             "<tr>\
-//                 <td style='font-weight: bold;'>" +
-//               result[index][i].noidung +
-//               "</td>\
-//                 <td></td>\
-//                 <td></td>\
-//                 <td></td>\
-//                 <td></td>\
-//                 <td></td>\
-//                 <td></td>\
-//                 </tr>"
-//           );
-
-//           //Ajax tieuchicap2
-//           $.ajax({
-//             url: urlapi_tieuchicap2_read,
-//             async: false,
-//             type: "GET",
-//             contentType: "application/json;charset=utf-8",
-//             dataType: "json",
-//             headers: {
-//               Authorization: jwtCookie,
-//             },
-//             success: function (result_tc2) {
-//               $.each(result_tc2, function (index_tc2) {
-//                 for (var k = 0; k < result_tc2[index_tc2].length; k++) {
-//                   if (
-//                     result[index][i].matc1 === result_tc2[index_tc2][k].matc1
-//                   ) {
-//                     if (result_tc2[index_tc2][k].diemtoida != 0) {
-//                       var min_value_tc2 = 0;
-//                       //get min value
-//                       if (result_tc2[index_tc2][k].diemtoida > 0) {
-//                         min_value_tc2 = 0;
-//                       } else {
-//                         min_value_tc2 = result_tc2[index_tc2][k].diemtoida;
-//                       }
-
-//                       $("#tbody_noiDungDanhGia").append(
-//                         "<tr>\
-//                           <td><em>" +
-//                           result_tc2[index_tc2][k].noidung +
-//                           "</em></td>\
-//                           <td><em>" +
-//                           result_tc2[index_tc2][k].diemtoida +
-//                           "đ</em></td>\
-//                           <td>\
-//                             <input type='number' style='width: 100px;' onchange='changeNumberHandle(this," +
-//                           result_tc2[index_tc2][k].diemtoida +
-//                           ")' max_value='" +
-//                           result_tc2[index_tc2][k].diemtoida +
-//                           "'    \
-//                             min='" +
-//                           min_value_tc2 +
-//                           "' id='TC2_" +
-//                           result_tc2[index_tc2][k].matc2 +
-//                           "' disabled/> \
-//                           </td>\
-//                           <td>\
-//                             <input type='number' style='width: 100px;' onchange='changeNumberHandle(this," +
-//                           result_tc2[index_tc2][k].diemtoida +
-//                           ")' max_value='" +
-//                           result_tc2[index_tc2][k].diemtoida +
-//                           "'    \
-//                             min='" +
-//                           min_value_tc2 +
-//                           "' id='CVHT_TC2_" +
-//                           result_tc2[index_tc2][k].matc2 +
-//                           "' disabled/> \
-//                           </td>\
-//                           <td>\
-//                           <input type='number' style='width: 100px;' onchange='changeNumberHandle(this," +
-//                           result_tc2[index_tc2][k].diemtoida +
-//                           ")' max_value='" +
-//                           result_tc2[index_tc2][k].diemtoida +
-//                           "'    \
-//                             min='" +
-//                           min_value_tc2 +
-//                           "' id='Khoa_TC2_" +
-//                           result_tc2[index_tc2][k].matc2 +
-//                           "' /> \
-//                           </td>\
-//                           <td>\
-//                             <button type='button' class='btn btn-light btn_XemDanhSachHoatDong' style='color: black;width: max-content;' data-bs-toggle='modal' data-bs-target='#XemDanhSachHoatDongModal' data-tieuchi-id='TC2_" +
-//                           result_tc2[index_tc2][k].matc2 +
-//                           "' data-tentieuchi='" +
-//                           result_tc2[index_tc2][k].noidung +
-//                           "' >Danh sách</button>\
-//                           </td>\
-//                           <td>\
-//                           <div class='box'>\
-//                           <a href='#' id='show_file_minhchung_TC2_" +
-//                           result_tc2[index_tc2][k].matc2 +
-//                           "' target='_blank' style='display:none' ></a>\
-//                           <button type='button' class='btn btn-light btn_AnhMinhChung' data-bs-toggle='modal' data-bs-target='#AnhMinhChungModal' data-img-id='img_file_minhchung_TC2_" +
-//                           result_tc2[index_tc2][k].matc2 +
-//                           "' ><img src='#' id='img_file_minhchung_TC2_" +
-//                           result_tc2[index_tc2][k].matc2 +
-//                           "' width='100px' /></button>\
-//                           <form id='formDanhGiaDRL_TC2_" +
-//                           result_tc2[index_tc2][k].matc2 +
-//                           "' method='post' enctype='multipart/form-data'>\
-//                           </form>\
-//                         </div>\
-//                           </td>\
-//                         </tr>"
-//                       );
-
-//                       // <td><input type='text' style='width: 100px;'  id='ghiChuTC2_" + result_tc2[index_tc2][k].matc2 +"' /></td>\
-//                     } else {
-//                       if (
-//                         result_tc2[index_tc2][k].noidung ==
-//                         "1.Kết quả học tập: "
-//                       ) {
-//                         $("#tbody_noiDungDanhGia").append(
-//                           "<tr>\
-//                                             <td><em>" +
-//                             result_tc2[index_tc2][k].noidung +
-//                             "<br>Điểm TBC học kỳ trước: <input type='number' step='0.01' onchange='changeNumberHandle(this,4)' id='inputTBCHocKyTruoc' name='diemTrungBinhChungHKTruoc' style='width: 100px;margin-right: 30px;margin-bottom: 15px;' /><br>Điểm TBC học kỳ đang xét: <input type='number' step='0.01' onchange='changeNumberHandle(this,4)' id='inputTBCHocKyDangXet' name='diemTrungBinhChungHKXet' style='width: 100px;' /> </em></td>\
-//                                             <td></td>\
-//                                             <td></td>\
-//                                             <td></td>\
-//                                             <td></td>\
-//                                             <td></td>\
-//                                             <td><a href='#' id='show_file_minhchung_TC2_" +
-//                             result_tc2[index_tc2][k].matc2 +
-//                             "' target='_blank' ></a>\
-//                                             <form id='formDanhGiaDRL_TC2_" +
-//                             result_tc2[index_tc2][k].matc2 +
-//                             "' method='post' enctype='multipart/form-data'></form></td>\
-//                                             </tr>"
-//                         );
-//                       } else {
-//                         $("#tbody_noiDungDanhGia").append(
-//                           "<tr>\
-//                                             <td><em>" +
-//                             result_tc2[index_tc2][k].noidung +
-//                             "</em></td>\
-//                                             <td></td>\
-//                                             <td></td>\
-//                                             <td></td>\
-//                                             <td></td>\
-//                                             <td></td>\
-//                                             <td> <a href='#' id='show_file_minhchung_TC2_" +
-//                             result_tc2[index_tc2][k].matc2 +
-//                             "' target='_blank' ></a>\
-//                                             <form id='formDanhGiaDRL_TC2_" +
-//                             result_tc2[index_tc2][k].matc2 +
-//                             "' method='post' enctype='multipart/form-data'></form></td>\
-//                                             </tr>"
-//                         );
-//                       }
-//                     }
-
-//                     //Ajax tieuchicap3
-//                     $.ajax({
-//                       url: urlapi_tieuchicap3_read,
-//                       async: false,
-//                       type: "GET",
-//                       contentType: "application/json;charset=utf-8",
-//                       dataType: "json",
-//                       headers: {
-//                         Authorization: jwtCookie,
-//                       },
-//                       success: function (result_tc3) {
-//                         $.each(result_tc3, function (index_tc3) {
-//                           for (
-//                             var p = 0;
-//                             p < result_tc3[index_tc3].length;
-//                             p++
-//                           ) {
-//                             if (
-//                               result_tc2[index_tc2][k].matc2 ===
-//                               result_tc3[index_tc3][p].matc2
-//                             ) {
-//                               // console.log(result_tc3[index_tc3][p].noidung);
-
-//                               var min_value = 0;
-//                               var disabled_string = "";
-//                               //get min value
-//                               if (result_tc3[index_tc3][p].diem > 0) {
-//                                 min_value = 0;
-//                               } else {
-//                                 min_value = result_tc3[index_tc3][p].diem;
-//                               }
-
-//                               if (
-//                                 result_tc3[index_tc3][p].noidung.localeCompare(
-//                                   "a. Điểm trung bình chung học kì từ  3,60 đến 4,00"
-//                                 ) == 0 ||
-//                                 result_tc3[index_tc3][p].noidung.localeCompare(
-//                                   "b. Điểm trung bình chung học kì từ  3,20 đến 3,59"
-//                                 ) == 0 ||
-//                                 result_tc3[index_tc3][p].noidung.localeCompare(
-//                                   "c. Điểm trung bình chung học kì từ  2,50 đến 3,19"
-//                                 ) == 0 ||
-//                                 result_tc3[index_tc3][p].noidung.localeCompare(
-//                                   "d. Điểm trung bình chung học kì từ  2,00 đến 2,49"
-//                                 ) == 0 ||
-//                                 result_tc3[index_tc3][p].noidung.localeCompare(
-//                                   "đ. Điểm trung bình chung học kì  dưới 2,00"
-//                                 ) == 0 ||
-//                                 result_tc3[index_tc3][p].noidung.localeCompare(
-//                                   "a. Kết quả học tập tăng một bậc so với học kỳ trước,  ĐTBCHK từ  2,00 trở lên"
-//                                 ) == 0 ||
-//                                 result_tc3[index_tc3][p].noidung.localeCompare(
-//                                   "b. Kết quả học tập tăng hai bậc so với học kỳ trước,  ĐTBCHK từ  2,00 trở lên"
-//                                 ) == 0
-//                               ) {
-//                                 disabled_string = "readonly";
-//                               }
-
-//                               if (
-//                                 result_tc3[index_tc3][p].noidung.localeCompare(
-//                                   "a. Điểm trung bình chung học kì từ  3,60 đến 4,00"
-//                                 ) == 0 ||
-//                                 result_tc3[index_tc3][p].noidung.localeCompare(
-//                                   "b. Điểm trung bình chung học kì từ  3,20 đến 3,59"
-//                                 ) == 0 ||
-//                                 result_tc3[index_tc3][p].noidung.localeCompare(
-//                                   "c. Điểm trung bình chung học kì từ  2,50 đến 3,19"
-//                                 ) == 0 ||
-//                                 result_tc3[index_tc3][p].noidung.localeCompare(
-//                                   "d. Điểm trung bình chung học kì từ  2,00 đến 2,49"
-//                                 ) == 0 ||
-//                                 result_tc3[index_tc3][p].noidung.localeCompare(
-//                                   "đ. Điểm trung bình chung học kì  dưới 2,00"
-//                                 ) == 0 ||
-//                                 result_tc3[index_tc3][p].noidung.localeCompare(
-//                                   "a. Kết quả học tập tăng một bậc so với học kỳ trước,  ĐTBCHK từ  2,00 trở lên"
-//                                 ) == 0 ||
-//                                 result_tc3[index_tc3][p].noidung.localeCompare(
-//                                   "b. Kết quả học tập tăng hai bậc so với học kỳ trước,  ĐTBCHK từ  2,00 trở lên"
-//                                 ) == 0 ||
-//                                 result_tc3[index_tc3][p].noidung.localeCompare(
-//                                   "c. Sinh viên năm thứ I, nếu có kết quả học tập HK I từ 2,00 trở lên"
-//                                 ) == 0
-//                               ) {
-//                                 $("#tbody_noiDungDanhGia").append(
-//                                   "<tr>\
-//                                                   <td>" +
-//                                     result_tc3[index_tc3][p].noidung +
-//                                     "</span></td>\
-//                                                   <td><em>" +
-//                                     result_tc3[index_tc3][p].diem +
-//                                     "đ</em></td>\
-//                                                   <td><input type='number' style='width: 100px;' onchange='changeNumberHandle(this," +
-//                                     result_tc3[index_tc3][p].diem +
-//                                     ")' max_value='" +
-//                                     result_tc3[index_tc3][p].diem +
-//                                     "'  id='TC3_" +
-//                                     result_tc3[index_tc3][p].matc3 +
-//                                     "' " +
-//                                     disabled_string +
-//                                     " disabled/></td>\
-//                                     <td><input type='number' style='width: 100px;' onchange='changeNumberHandle(this," +
-//                                     result_tc3[index_tc3][p].diem +
-//                                     ")' max_value='" +
-//                                     result_tc3[index_tc3][p].diem +
-//                                     "'  id='CVHT_TC3_" +
-//                                     result_tc3[index_tc3][p].matc3 +
-//                                     "' " +
-//                                     disabled_string +
-//                                     " disabled/></td>\
-//                                     <td><input type='number' style='width: 100px;' onchange='changeNumberHandle(this," +
-//                                     result_tc3[index_tc3][p].diem +
-//                                     ")' max_value='" +
-//                                     result_tc3[index_tc3][p].diem +
-//                                     "'  id='Khoa_TC3_" +
-//                                     result_tc3[index_tc3][p].matc3 +
-//                                     "' " +
-//                                     disabled_string +
-//                                     " disabled/></td>\
-//                                     <td></td>\
-//                                     <td> <a href='#' id='show_file_minhchung_TC3_" +
-//                                     result_tc3[index_tc3][p].matc3 +
-//                                     "' target='_blank' style='display:none' ></a>\
-//                                     <form id='formDanhGiaDRL_TC3_" +
-//                                     result_tc3[index_tc3][p].matc3 +
-//                                     "' method='post' enctype='multipart/form-data'></form></td>\
-//                                                   </tr>"
-//                                 );
-//                               } else {
-//                                 $("#tbody_noiDungDanhGia").append(
-//                                   "<tr>\
-//                                                   <td>" +
-//                                     result_tc3[index_tc3][p].noidung +
-//                                     "</span></td>\
-//                                                   <td><em>" +
-//                                     result_tc3[index_tc3][p].diem +
-//                                     "đ</em></td>\
-//                                                   <td><input type='number' style='width: 100px;' onchange='changeNumberHandle(this," +
-//                                     result_tc3[index_tc3][p].diem +
-//                                     ")' max_value='" +
-//                                     result_tc3[index_tc3][p].diem +
-//                                     "'  id='TC3_" +
-//                                     result_tc3[index_tc3][p].matc3 +
-//                                     "' " +
-//                                     disabled_string +
-//                                     "  disabled /></td>\
-//                                     <td><input type='number' style='width: 100px;' onchange='changeNumberHandle(this," +
-//                                     result_tc3[index_tc3][p].diem +
-//                                     ")' max_value='" +
-//                                     result_tc3[index_tc3][p].diem +
-//                                     "'  id='CVHT_TC3_" +
-//                                     result_tc3[index_tc3][p].matc3 +
-//                                     "' " +
-//                                     disabled_string +
-//                                     " disabled/></td>\
-//                                     <td><input type='number' style='width: 100px;' onchange='changeNumberHandle(this," +
-//                                     result_tc3[index_tc3][p].diem +
-//                                     ")' max_value='" +
-//                                     result_tc3[index_tc3][p].diem +
-//                                     "'  id='Khoa_TC3_" +
-//                                     result_tc3[index_tc3][p].matc3 +
-//                                     "' " +
-//                                     disabled_string +
-//                                     " /></td>\
-//                                     <td>\
-//                                       <button type='button' class='btn btn-light btn_XemDanhSachHoatDong' style='color: black;width: max-content;' data-bs-toggle='modal' data-bs-target='#XemDanhSachHoatDongModal' data-tieuchi-id='TC3_" +
-//                                     result_tc3[index_tc3][p].matc3 +
-//                                     "' data-tentieuchi='" +
-//                                     result_tc3[index_tc3][p].noidung +
-//                                     "' >Danh sách</button>\
-//                                     </td>\
-//                                     <td>\
-//                                     <div class='box'>\
-//                                         <a href='#' id='show_file_minhchung_TC3_" +
-//                                     result_tc3[index_tc3][p].matc3 +
-//                                     "' target='_blank' style='display: none' ></a>\
-//                                         <button type='button' class='btn btn-light btn_AnhMinhChung' data-bs-toggle='modal' data-bs-target='#AnhMinhChungModal' data-img-id='img_file_minhchung_TC3_" +
-//                                     result_tc3[index_tc3][p].matc3 +
-//                                     "' ><img src='#' id='img_file_minhchung_TC3_" +
-//                                     result_tc3[index_tc3][p].matc3 +
-//                                     "' width='100px' /></button>\
-//                                         <form id='formDanhGiaDRL_TC3_" +
-//                                     result_tc3[index_tc3][p].matc3 +
-//                                     "' method='post' enctype='multipart/form-data'>\
-//                                       </form>\
-//                                       </div>\
-//                                   </td>\
-//                                       </tr>"
-//                                 );
-//                               }
-//                             }
-
-//                             // <td><input type='text' style='width: 100px;'  id='ghiChuTC3_" + result_tc3[index_tc3][p].matc3 + "' /></td>\
-//                           }
-//                         });
-//                       },
-//                       error: function (errorMessage_tc3) {
-//                         thongBaoLoi(errorMessage_tc3.responseText);
-//                       },
-//                     });
-//                   }
-//                 }
-//               });
-//             },
-//             error: function (errorMessage_tc2) {
-//               thongBaoLoi(errorMessage_tc2.responseText);
-//             },
-//           });
-
-//           $("#tbody_noiDungDanhGia").append(
-//             "<tr style='background: darkseagreen;' >\
-//                 <td style='font-weight: bold;' >Cộng: </span>\
-//                 </td>\
-//                 <td><em></em></td>\
-//                 <td><input type='number' style='width: 100px' onchange='changeNumberHandle(this," +
-//               result[index][i].diemtoida +
-//               ")' max-value='" +
-//               result[index][i].diemtoida +
-//               "' min='0' max='" +
-//               result[index][i].diemtoida +
-//               "' id='TongCong_TC1_" +
-//               result[index][i].matc1 +
-//               "' disabled/></td>\
-//               <td><input type='number' style='width: 100px' onchange='changeNumberHandle(this," +
-//               result[index][i].diemtoida +
-//               ")' max-value='" +
-//               result[index][i].diemtoida +
-//               "' min='0' max='" +
-//               result[index][i].diemtoida +
-//               "' id='CVHT_TongCong_TC1_" +
-//               result[index][i].matc1 +
-//               "' disabled/></td>\
-//               <td><input type='number' style='width: 100px' onchange='changeNumberHandle(this," +
-//               result[index][i].diemtoida +
-//               ")' max-value='" +
-//               result[index][i].diemtoida +
-//               "' min='0' max='" +
-//               result[index][i].diemtoida +
-//               "' id='Khoa_TongCong_TC1_" +
-//               result[index][i].matc1 +
-//               "' disabled/></td>\
-//               <td></td>\
-//               <td></td>\
-//                 </tr>"
-//           );
-//         }
-//       });
-//     },
-//     error: function (errorMessage) {
-//       thongBaoLoi(errorMessage.responseText);
-//     },
-//   });
-
-//   $("#tbody_noiDungDanhGia").append(
-//     "<tr>\
-//             <td style='font-weight: bold;' >ĐIỂM TỔNG CỘNG (tối đa không quá 100 điểm): </span>\
-//             </td>\
-//             <td><em></em></td>\
-//             <td><input type='number' style='width: 100px' onchange='changeNumberHandle(this, 100)' id='input_diemtongcong' readonly='true' /></td>\
-//             <td><input type='number' style='width: 100px' onchange='changeNumberHandle(this, 100)' id='CVHT_input_diemtongcong'  readonly='true' /></td>\
-//             <td><input type='number' style='width: 100px' onchange='changeNumberHandle(this, 100)' id='Khoa_input_diemtongcong' name='diemTongCong' readonly='true' /></td>\
-//             <td></td>\
-//             <td></td>\
-//             </tr>"
-//   );
-
-//   $("#tbody_noiDungDanhGia").append(
-//     "<tr>\
-//           <td style='font-weight: bold;text-transform: uppercase;font-size: 18px;'  >ĐIỂM: <span id='text_diemTongCong' ></span></td>\
-//           <td></td>\
-//           <td style='font-weight: bold;text-transform: uppercase;' colspan='2' >Xếp loại: <span id='text_XepLoai' ></span></td>\
-//           <td></td>\
-//           <td style='font-weight: bold;'  ><span></span></td>\
-//       </tr>"
-//   );
-// }
 
 //Load thông tin sinh viên đã đánh giá
 function LoadThongTinSinhVienDanhGia(GET_MaSinhVien, GET_MaHocKy) {

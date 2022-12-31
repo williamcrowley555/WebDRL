@@ -116,7 +116,7 @@ class SinhVien
     {
         $sqlQuery = "SELECT * FROM " . $this->db_table . 
                     " WHERE email IS NOT NULL" .
-                    ($totNghiep ? " AND totNghiep = 1" : "");
+                    ($totNghiep ? " AND totNghiep = 1" : " AND totNghiep = 0");
 
         $stmt = $this->conn->prepare($sqlQuery);
         $stmt->execute();

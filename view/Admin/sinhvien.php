@@ -650,20 +650,20 @@
 
 	function xuLyTimKiemMSSV() {
 		var _input_timKiemMaSinhVien = $('#input_timKiemMaSinhVien').val().trim();
-		TimKiemSinhVien(_input_timKiemMaSinhVien);
-		// if (_input_timKiemMaSinhVien != '') {
-		// 	if(Number(_input_timKiemMaSinhVien)){
-		// 		TimKiemSinhVien(_input_timKiemMaSinhVien);
-		// 	} else {
-		// 		Swal.fire({
-		// 			icon: "error",
-		// 			title: "Lỗi",
-		// 			text: "Mã số sinh viên không hợp lệ!",
-		// 			timer: 2000,
-		// 			timerProgressBar: true,
-		// 		});
-		// 	}
-		// }
+		
+		if (_input_timKiemMaSinhVien != '') {
+			if(Number(_input_timKiemMaSinhVien)){
+				TimKiemSinhVien(_input_timKiemMaSinhVien);
+			} else {
+				Swal.fire({
+					icon: "error",
+					title: "Lỗi",
+					text: "Mã số sinh viên không hợp lệ!",
+					timer: 2000,
+					timerProgressBar: true,
+				});
+			}
+		}
 	}
 
 	$('#select_Khoa').on('change', function() {

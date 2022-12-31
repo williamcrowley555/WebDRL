@@ -59,7 +59,13 @@ if ($data["status"] == 1 ) {
 
         if ($GET_maSinhVien != null){
             $items = new PhieuRenLuyen($db);
-            $stmt = $items->getAllPhieuRenLuyen_TheoMSSV($GET_maSinhVien);
+
+            if ($maKhoa_quyen == null) {
+                $stmt = $items->getAllPhieuRenLuyen_TheoMSSV($GET_maSinhVien);
+            } else {
+                $stmt = $items->getAllPhieuRenLuyen_TheoMSSVVaMaKhoa($GET_maSinhVien, $maKhoa_quyen);
+            }
+            
             $itemCount = $stmt->rowCount();
 
 
@@ -75,37 +81,20 @@ if ($data["status"] == 1 ) {
                 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                     extract($row);
                     $countRow++;
-                    // if ($fileDinhKem != null){
-                    //     $e = array(
-                    //         "soThuTu" => $countRow,
-                    //         "maPhieuRenLuyen" => $maPhieuRenLuyen,
-                    //         "xepLoai" => $xepLoai,
-                    //         "diemTongCong" => $diemTongCong,
-                    //         "maSinhVien" => $maSinhVien,
-                    //         "diemTrungBinhChungHKTruoc" => $diemTrungBinhChungHKTruoc,
-                    //         "diemTrungBinhChungHKXet" => $diemTrungBinhChungHKXet,
-                    //         "maHocKyDanhGia" => $maHocKyDanhGia,
-                    //         "coVanDuyet" => $coVanDuyet,
-                    //         "khoaDuyet" => $khoaDuyet,
-                    //         "fileDinhKem" => $urlFile.$maHocKyDanhGia."/".$maSinhVien.'/'.$fileDinhKem
-                    //     );
-                    //     array_push($phieurenluyenArr["phieurenluyen"], $e);
-                    // }else{
-                        $e = array(
-                            "soThuTu" => $countRow,
-                            "maPhieuRenLuyen" => $maPhieuRenLuyen,
-                            "xepLoai" => $xepLoai,
-                            "diemTongCong" => $diemTongCong,
-                            "maSinhVien" => $maSinhVien,
-                            "diemTrungBinhChungHKTruoc" => $diemTrungBinhChungHKTruoc,
-                            "diemTrungBinhChungHKXet" => $diemTrungBinhChungHKXet,
-                            "maHocKyDanhGia" => $maHocKyDanhGia,
-                            "coVanDuyet" => $coVanDuyet,
-                            "khoaDuyet" => $khoaDuyet
-                            //"fileDinhKem" => $fileDinhKem
-                        );
-                        array_push($phieurenluyenArr["phieurenluyen"], $e);
-                    //}
+                    $e = array(
+                        "soThuTu" => $countRow,
+                        "maPhieuRenLuyen" => $maPhieuRenLuyen,
+                        "xepLoai" => $xepLoai,
+                        "diemTongCong" => $diemTongCong,
+                        "maSinhVien" => $maSinhVien,
+                        "diemTrungBinhChungHKTruoc" => $diemTrungBinhChungHKTruoc,
+                        "diemTrungBinhChungHKXet" => $diemTrungBinhChungHKXet,
+                        "maHocKyDanhGia" => $maHocKyDanhGia,
+                        "coVanDuyet" => $coVanDuyet,
+                        "khoaDuyet" => $khoaDuyet
+                        //"fileDinhKem" => $fileDinhKem
+                    );
+                    array_push($phieurenluyenArr["phieurenluyen"], $e);
                     
                 }
                 http_response_code(200);
