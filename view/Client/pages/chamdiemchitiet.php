@@ -475,7 +475,7 @@
 
                 // Tạo HTML Phieu Ren Luyen 
                 $.ajax({
-                    url: host_domain_url + '/helper/phieuRenLuyenGenerator.php',
+                    url: host_domain_url + '/helper/htmlPRLGenerator.php',
                     type: "POST",
                     data: formData,
                     processData: false, 

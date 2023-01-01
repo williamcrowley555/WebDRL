@@ -144,10 +144,7 @@
 						<h4 class="mb-3 text-uppercase hoc-ky-danh-gia">Kết quả điểm rèn luyện</h4>
 
 						<div class="d-flex justify-content-between align-items-center mb-3">
-							<form method="POST" id="form_exportPDFKetQuaDRL" class="d-inline">
-								<input type="hidden" name="data" class="data" />
-								<button type="submit" class="btn btn-danger text-white">In PDF</button>
-							</form>
+							<button type="button" class="btn btn-danger text-white" id="btn_inThongKe" data-bs-toggle='modal' data-bs-target='#ModalExportKetQuaDRL'>In thống kê</button>
 
 							<div class="d-inline">
 								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-funnel-fill" viewBox="0 0 16 16">
@@ -205,10 +202,50 @@
 </div>
 <!--//app-content-->
 
+<!-- Modal xuất kết quả điểm rèn luyện -->
+<div class="modal fade" id="ModalExportKetQuaDRL" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<form action="" method='POST' class="modal-dialog" id="formExportKetQuaDRL">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel"> In thống kê </h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+
+				<label class="mb-3 form-label" style="color: black; font-weight: 500;">Vui lòng chọn loại file muốn tải về</label>
+				
+				<input type='hidden' name='data' class='data' />
+
+				<div class="mb-3 form-check">
+					<input class="form-check-input" type="radio" name="fileTypeExport" value="doc" id="radioExportWord" checked>
+					<label class="form-check-label" for="radioExportWord">
+						Word (.doc)
+					</label>
+				</div>
+
+				<div class="mb-3 form-check">
+					<input class="form-check-input" type="radio" name="fileTypeExport" value="pdf" id="radioExportPDF">
+					<label class="form-check-label" for="radioExportPDF">
+						PDF (.pdf)
+					</label>
+				</div>
+
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+				<button type="submit" class="btn app-btn-primary" style='color: white;'>Tải về</button>
+			</div>
+		</div>
+	</form>
+</div>
+
 <footer class="app-footer">
 
 </footer>
 <!--//app-footer-->
+
+<!-- Export Word JS -->
+<script src="../../helper/js/export_word.js"></script>
 
 <!-- Page Specific JS -->
 <script src="assets/js/thongke/function.js"></script>
@@ -536,13 +573,17 @@
 			});
 	});
 
-	$('#form_exportPDFKetQuaDRL').submit(function() {
-		if(Array.isArray(tmpTableSinhVienContent) && tmpTableSinhVienContent.length > 0) {
-			$(this).attr('action', host_domain_url + '/mpdf/export_ketQuaDRL.php');
-			
-			var fileName = $(this).children('.data').attr('file-name');
+	// Xử lý click nút in thống kê
+    $(document).on("click", "#btn_inThongKe", function() {
+        $('#formExportKetQuaDRL').trigger("reset");
+    })
 
-			$("#form_exportPDFKetQuaDRL .data").val(
+    // In thống kê
+	$('#formExportKetQuaDRL').submit(function() {
+		if(Array.isArray(tmpTableSinhVienContent) && tmpTableSinhVienContent.length > 0) {
+			var fileName = $(this).find('.data').attr('file-name');
+
+			$("#formExportKetQuaDRL .data").val(
 				JSON.stringify({
 					fileName: fileName,
 					classInfo: selectedClass,
@@ -551,12 +592,40 @@
 				})
 			);
 
+			var fileType = $('input[name="fileTypeExport"]:checked').val();
+
+			if (fileType.toLowerCase() == 'doc') {
+				$(this).attr('action', '');
+
+				var formData = new FormData(this);
+
+				// Tạo HTML Thống kê kết quả điểm rèn luyện
+				$.ajax({
+					url: host_domain_url + '/helper/htmlThongKeKetQuaDRLGenerator.php',
+					type: "POST",
+					data: formData,
+					processData: false, 
+					contentType: false,
+					enctype: 'multipart/form-data',
+					mimeType: 'multipart/form-data',
+					success: function (result) {
+						result = JSON.parse(result);
+
+						exportToWord(result.htmlThongKeKetQuaDRL, fileName);
+					},
+				});
+
+				return false;
+			} else if (fileType.toLowerCase() == 'pdf') {
+				$(this).attr('action', host_domain_url + '/mpdf/export_ketQuaDRL.php');
+			} 
+
 			return true;
 		} else {
 			Swal.fire({
 				icon: "error",
 				title: "Lỗi",
-				text: "Không có dữ liệu để in PDF!",
+				text: "Không có dữ liệu để in!",
 				timer: 2000,
 				timerProgressBar: true,
 				showCloseButton: true,
