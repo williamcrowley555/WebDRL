@@ -4,5 +4,6 @@
 <p>Thời gian đánh giá của sinh viên: Từ ngày {ngaySinhVienDanhGia} đến hết ngày {ngaySinhVienKetThucDanhGia}.</p> 
 <p>Thời gian đánh giá của cố vấn học tập: Từ ngày {ngayCoVanDanhGia} đến hết ngày {ngayCoVanKetThucDanhGia}.</p> 
 <p>Thời gian đánh giá của khoa: Từ ngày {ngayKhoaDanhGia} đến hết ngày {ngayKhoaKetThucDanhGia}.</p> 
+<p>Thời gian khiếu nại của sinh viên: Từ ngày {ngayKhieuNai} đến hết ngày {ngayKetThucKhieuNai}.</p> 
 <p>Yêu cầu sinh viên và giáo viên thực hiện chấm/duyệt điểm theo đúng thời gian quy định.</p>
 <p><i>Trân trọng cảm ơn!</i></p>

@@ -443,12 +443,13 @@ function ThongKeLop(maKhoa, maKhoaHoc, maHocKyDanhGia) {
 
       $("#idPhanTrangLop").empty();
 
-      htmlData += "<tr>\
+      htmlData +=
+        "<tr>\
 									<td colspan='9' class='text-center'>\
 										<p class='mt-4'>Không tìm thấy kết quả.</p>\
 									</td>\
-								</tr>"
-			$("#tbodyLop").append(htmlData);
+								</tr>";
+      $("#tbodyLop").append(htmlData);
 
       //ThongBaoLoi(errorMessage.responseJSON.message);
     },
@@ -529,7 +530,7 @@ function ThongKeSinhVien(maLop, maHocKyDanhGia) {
         `<p class="fw-bold">Sỉ số lớp: <span class="fw-normal">${result["itemCount"]}</span></p>`
       );
 
-      $("#form_exportPDFKetQuaDRL .data").attr(
+      $("#formExportKetQuaDRL .data").attr(
         "file-name",
         `ket_qua_drl_lop_${tmpTableSinhVienContent[0].maLop}_${maHocKyDanhGia}`
       );
@@ -602,14 +603,13 @@ function ThongKeSinhVien(maLop, maHocKyDanhGia) {
       );
 
       $("#idPhanTrangSinhVien").empty();
-      htmlData += "<tr>\
+      htmlData +=
+        "<tr>\
 									<td colspan='9' class='text-center'>\
 										<p class='mt-4'>Không tìm thấy kết quả.</p>\
 									</td>\
-								</tr>"
-			$("#tbodySinhVien").append(htmlData);
-
-      
+								</tr>";
+      $("#tbodySinhVien").append(htmlData);
 
       ThongBaoLoi(errorMessage.responseJSON.message);
     },

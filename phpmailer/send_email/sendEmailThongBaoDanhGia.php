@@ -56,6 +56,8 @@
                 "ngayCoVanKetThucDanhGia" => $thongBaoDanhGia->ngayCoVanKetThucDanhGia,
                 "ngayKhoaDanhGia" => $thongBaoDanhGia->ngayKhoaDanhGia,
                 "ngayKhoaKetThucDanhGia" => $thongBaoDanhGia->ngayKhoaKetThucDanhGia,
+                "ngayKhieuNai" => $thongBaoDanhGia->ngayKhieuNai,
+                "ngayKetThucKhieuNai" => $thongBaoDanhGia->ngayKetThucKhieuNai,
                 "ngayThongBao" => $thongBaoDanhGia->ngayThongBao,
                 "maHocKyDanhGia" => $thongBaoDanhGia->maHocKyDanhGia,  
                 "hocKyXet" => $thongBaoDanhGia->hocKyXet,
@@ -102,8 +104,11 @@
                                     $mail->addAddress($email, ucwords($hoTenSinhVien)); // email và tên người nhận  
                                     $noidungthu = file_get_contents('../mail_content/noiDungThongBaoDanhGia_sinhVien.txt');
                                     $noidungthu = str_replace(
-                                        ['{hocKyXet}', '{namHocXet}', '{hoTenSinhVien}', '{maSinhVien}', '{ngaySinhVienDanhGia}', '{ngaySinhVienKetThucDanhGia}'],
-                                        [$thongbaodanhgia_arr['hocKyXet'], $thongbaodanhgia_arr['namHocXet'], $hoTenSinhVien, $maSinhVien, date_format(date_create($thongbaodanhgia_arr['ngaySinhVienDanhGia']), "d/m/Y"), date_format(date_create($thongbaodanhgia_arr['ngaySinhVienKetThucDanhGia']), "d/m/Y")],
+                                        ['{hocKyXet}', '{namHocXet}', '{hoTenSinhVien}', '{maSinhVien}', '{ngaySinhVienDanhGia}', '{ngaySinhVienKetThucDanhGia}', 
+                                            '{ngayKhieuNai}', '{ngayKetThucKhieuNai}'],
+                                        [$thongbaodanhgia_arr['hocKyXet'], $thongbaodanhgia_arr['namHocXet'], $hoTenSinhVien, $maSinhVien, 
+                                            date_format(date_create($thongbaodanhgia_arr['ngaySinhVienDanhGia']), "d/m/Y"), date_format(date_create($thongbaodanhgia_arr['ngaySinhVienKetThucDanhGia']), "d/m/Y"), 
+                                            date_format(date_create($thongbaodanhgia_arr['ngayKhieuNai']), "d/m/Y"), date_format(date_create($thongbaodanhgia_arr['ngayKetThucKhieuNai']), "d/m/Y")],
                                         $noidungthu
                                     );
                                     $mail->Body = $noidungthu;
@@ -165,11 +170,14 @@
                                             $mail->addAddress($row[$emailColumnIndex], ""); // email và tên người nhận  
                                             $noidungthu = file_get_contents('../mail_content/noiDungThongBaoDanhGia_all.txt');
                                             $noidungthu = str_replace(
-                                                ['{hocKyXet}', '{namHocXet}', '{ngaySinhVienDanhGia}', '{ngaySinhVienKetThucDanhGia}', '{ngayCoVanDanhGia}', '{ngayCoVanKetThucDanhGia}', '{ngayKhoaDanhGia}', '{ngayKhoaKetThucDanhGia}'],
+                                                ['{hocKyXet}', '{namHocXet}', '{ngaySinhVienDanhGia}', '{ngaySinhVienKetThucDanhGia}', 
+                                                    '{ngayCoVanDanhGia}', '{ngayCoVanKetThucDanhGia}', '{ngayKhoaDanhGia}', '{ngayKhoaKetThucDanhGia}',
+                                                    '{ngayKhieuNai}', '{ngayKetThucKhieuNai}'],
                                                 [$thongbaodanhgia_arr['hocKyXet'], $thongbaodanhgia_arr['namHocXet'], 
                                                     date_format(date_create($thongbaodanhgia_arr['ngaySinhVienDanhGia']), "d/m/Y"), date_format(date_create($thongbaodanhgia_arr['ngaySinhVienKetThucDanhGia']), "d/m/Y"), 
                                                     date_format(date_create($thongbaodanhgia_arr['ngayCoVanDanhGia']), "d/m/Y"), date_format(date_create($thongbaodanhgia_arr['ngayCoVanKetThucDanhGia']), "d/m/Y"), 
-                                                    date_format(date_create($thongbaodanhgia_arr['ngayKhoaDanhGia']), "d/m/Y"), date_format(date_create($thongbaodanhgia_arr['ngayKhoaKetThucDanhGia']), "d/m/Y")],
+                                                    date_format(date_create($thongbaodanhgia_arr['ngayKhoaDanhGia']), "d/m/Y"), date_format(date_create($thongbaodanhgia_arr['ngayKhoaKetThucDanhGia']), "d/m/Y"), 
+                                                    date_format(date_create($thongbaodanhgia_arr['ngayKhieuNai']), "d/m/Y"), date_format(date_create($thongbaodanhgia_arr['ngayKetThucKhieuNai']), "d/m/Y")],
                                                 $noidungthu
                                             );
                                             $mail->Body = $noidungthu;

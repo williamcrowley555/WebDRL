@@ -54,6 +54,10 @@
                         </div>
 
                         <button type="submit" class="btn btn-primary" style="width: auto;">Chấm điểm</button>
+                        <button type='button' data-bs-toggle='modal' data-bs-target='#ModalExportPRL' class='btn btn_XuatPRL' style='color: white;background: #c04f4f;margin: 5px;'>
+                            <img src='../../Admin/assets/images/icons/pdf.png' width='17px' />
+                            <span style='margin-left: 5px;'>Xuất phiếu</span>
+                        </button>
                     </div>
                 </form>
             </div>
@@ -62,6 +66,43 @@
     </div>
 
     <!-- end of container -->
+
+    <!-- Modal xuất phiếu rèn luyện -->
+    <div class="modal fade" id="ModalExportPRL" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <form action="" method='POST' class="modal-dialog" id="form_export_prl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel"> Xuất phiếu rèn luyện </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+                    <label class="mb-3 form-label" style="color: black; font-weight: 500;">Vui lòng chọn loại file muốn tải về</label>
+
+                    <input type='hidden' name='data' class='data' />
+
+                    <div class="mb-3 form-check">
+                        <input class="form-check-input" type="radio" name="fileTypeExport" value="doc" id="radioExportWord" checked>
+                        <label class="form-check-label" for="radioExportWord">
+                            Word (.doc)
+                        </label>
+                    </div>
+
+                    <div class="mb-3 form-check">
+                        <input class="form-check-input" type="radio" name="fileTypeExport" value="pdf" id="radioExportPDF">
+                        <label class="form-check-label" for="radioExportPDF">
+                            PDF (.pdf)
+                        </label>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                    <button type="submit" class="btn btn-success" style='color: white;'>Tải về</button>
+                </div>
+            </div>
+        </form>
+    </div>
 
 
     <!-- Modal xem danh sách hoạt động-->
@@ -138,6 +179,9 @@
 
     <!-- Phieu Ren Luyen Helper JS -->
     <script src="../../../helper/js/phieuRenLuyen.js"></script>
+
+    <!-- Export Word JS -->
+    <script src="../../../helper/js/export_word.js"></script>
 
     <!-- Custom scripts -->
     <script src="../js/chamdiemchitiet/chamdiemchitiet.js"></script>
@@ -298,6 +342,10 @@
                         error: function (error) {},
                     });
                 }
+
+                // Xóa nút và form xuất phiếu rèn luyện
+                $('.btn_XuatPRL').remove();
+                $('#ModalExportPRL').remove();
             }
 
             createPhieuRenLuyenForm(
@@ -405,6 +453,48 @@
             $('#id_thamgiahd_tieuChiDuocCong').text(thamgiahd_tenTieuChi);
 
             LoadDanhSachHoatDongDaThamGia(thamgiahd_maHocKyDanhGia, thamgiahd_maTieuChi, thamgiahd_maSinhVien);
+        })
+
+        // Xử lý click nút xuất phiếu
+        $(document).on("click", ".btn_XuatPRL", function() {
+            $('#form_export_prl').trigger("reset");
+        })
+
+        // Xuất phiếu rèn luyện
+        $(document).on("submit", "#form_export_prl", function(e) {
+            $(this).find('.data').val(
+                JSON.stringify(phieuRenLuyen)
+            );
+
+            var fileType = $('input[name="fileTypeExport"]:checked').val();
+
+            if (fileType.toLowerCase() == 'doc') {
+                $(this).attr('action', '');
+
+                var formData = new FormData(this);
+
+                // Tạo HTML Phieu Ren Luyen 
+                $.ajax({
+                    url: host_domain_url + '/helper/htmlPRLGenerator.php',
+                    type: "POST",
+                    data: formData,
+                    processData: false, 
+                    contentType: false,
+                    enctype: 'multipart/form-data',
+                    mimeType: 'multipart/form-data',
+                    success: function (result) {
+                        result = JSON.parse(result);
+
+                        exportToWord(result.htmlPhieuRenLuyen, 'phieu_ren_luyen');
+                    },
+                });
+
+                return false;
+            } else if (fileType.toLowerCase() == 'pdf') {
+                $(this).attr('action', host_domain_url + '/mpdf/export_phieuRenLuyen.php');
+            } 
+
+            return true;
         })
 
     </script>

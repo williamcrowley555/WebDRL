@@ -2,5 +2,6 @@
 <hr>
 <p>Gửi sinh viên: {hoTenSinhVien} - MSSV: {maSinhVien}</p>
 <p>Từ ngày {ngaySinhVienDanhGia} đến hết ngày {ngaySinhVienKetThucDanhGia}, hệ thống chấm điểm rèn luyện của trường Đại học Sài Gòn sẽ được mở cho sinh viên vào đánh giá.</p> 
+<p>Từ ngày {ngayKhieuNai} đến hết ngày {ngayKetThucKhieuNai}, sinh viên có thể vào hệ thống chấm điểm rèn luyện để khiếu nại điểm rèn luyện nếu có thắc mắc về điểm đánh giá của trường.</p> 
 <p>Sinh viên lưu ý chấm điểm đúng hạn để tránh bị phạt chấm trễ.</p>
 <p><i>Trân trọng cảm ơn!</i></p>

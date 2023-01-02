@@ -896,7 +896,6 @@ function createPhieuRenLuyenForm(
   selector
 ) {
   if (tieuChiDanhGiaList) {
-    console.log(tieuChiDanhGiaList);
     var html = "";
 
     $(selector).empty();
