@@ -13,6 +13,13 @@ var tableDanhSachDiemHe4Title = [
     "Lớp"
 ];
 
+var tableDanhSachLopTitle = [
+    "STT",
+    "Mã lớp",
+    "Tên lớp",
+    "Mã khoa"
+];
+
 var listDiem = "";
 
 var jwtCookie = getCookie("jwt");
@@ -27,10 +34,13 @@ function redirectPage() {
 
     // Kiểm tra quyền cố vấn học tập có vào được hay không?
     if(quyen == "cvht") {
-        isUnlock = isUnlockForCVHT();
+        isUnlock = isUnlockForCVHT("lop");
         if(!isUnlock) {
-            window.history.back();
-            return;
+            isUnlock = isUnlockForCVHT();
+            if(!isUnlock) {
+                window.history.back();
+                return;
+            }
         }
     }
 
@@ -116,13 +126,14 @@ function loadComboBoxHocKyVaNamHoc(selector) {
     }
 
     // Lưu thông tin vào htmlData
-    var htmlData = "<option value='none'> -- Chọn học kỳ - năm học --</option>";
+    var htmlData = "<option selected disabled value='none'> -- Chọn học kỳ - năm học --</option>";
     var result = null;
     // Kiểm tra lưu combobox vào selector nào?
-    if(selector == "#select_hocKy_namHoc")
+    if(selector == "#select_hocKy_namHoc") {
         result = getHocKyVaNamHoc(urlapi_chucnang_hockydanhgia_details_read 
-            + "?maChucNang=" + CHUC_NANG_NHAP_DIEM_HE_4,);
-    else
+            + "?maChucNang=" + CHUC_NANG_NHAP_DIEM_HE_4);
+        sortObject(result["chucnang_hockydanhgia"], "namHocXet", true);
+    } else
         result = getHocKyVaNamHoc(urlapi_hockydanhgia_read);
     $.each(result, function(index) {
         for(var p=0;p<result[index].length;p++) {
@@ -138,7 +149,7 @@ function loadComboBoxHocKyVaNamHoc(selector) {
 }
 
 function loadComboBoxLopTheoMaCVHT(page, maSo) {
-    var htmlData = "<option value='none'> -- Chọn lớp -- </option>";
+    var htmlData = "<option selected disabled value='none'> -- Chọn lớp -- </option>";
     $.ajax({
         url: urlapi_lop_read_maCVHT + maSo,
         async: false,
@@ -327,6 +338,102 @@ function hideXemDiemElements() {
     $("#danhsachdiemhe4").hide();
 }
 
+function showMoLopElements() {
+    $("#selector_molop").show();
+    $("#danhsachlop").show();
+    $("#tbody_danhSachLop tr").remove();
+    $("#select_hocKy_namHoc_molop").find("option").remove();
+    var isUnlock = isUnlockForCVHT("lop");
+    if(isUnlock) {
+        var htmlData = "<option selected disabled value='none'> -- Chọn học kỳ - năm học --</option>";
+        var result = null;
+        result = getHocKyVaNamHoc(urlapi_chucnang_hockydanhgia_details_read 
+            + "?maChucNang=" + CHUC_NANG_NHAP_DIEM_HE_4);
+        sortObject(result["chucnang_hockydanhgia"], "namHocXet", true);
+        $.each(result, function(index) {
+            for(var p=0;p<result[index].length;p++) {
+                htmlData +="<option value='" + result[index][p].maHocKyDanhGia + "'>" +
+                                "Học kỳ: " + result[index][p].hocKyXet + " - Năm học: " + result[index][p].namHocXet +
+                            "</option>";
+            }
+        });
+        // Gắn htmlData lên combobox
+        $("#select_hocKy_namHoc_molop").append(htmlData);
+    } else {
+        presentNotification("error", "Lỗi", "Quyền lớp chưa mở để load combobox!");
+    }
+    
+}
+
+function hideMoLopElements() {
+    $("#selector_molop").hide();
+    $("#danhsachlop").hide();
+    $("#idPhanTrangDanhSachLop").empty();
+}
+
+function showRadioNhapDiem() {
+    $("#radio_nhapdiem").show();
+    $("#label_nhapdiem").show();
+}
+
+function hideRadioNhapDiem() {
+    $("#radio_nhapdiem").hide();
+    $("#label_nhapdiem").hide();
+}
+
+function showRadioXemDiem() {
+    $("#radio_xemdiem").show();
+    $("#label_xemdiem").show();
+}
+
+function hideRadioXemDiem() {
+    $("#radio_xemdiem").hide();
+    $("#label_xemdiem").hide();
+}
+
+function showRadioMoLop() {
+    $("#radio_molop").show();
+    $("#label_molop").show();
+}
+
+function hideRadioMoLop() {
+    $("#radio_molop").hide();
+    $("#label_molop").hide();
+}
+
+function showUnlockCVHTAndLopElements() {
+    $("#radio_nhapdiem").prop("checked", true);
+    hideXemDiemElements();
+    hideMoLopElements();
+    showNhapDiemElements();
+
+    showRadioNhapDiem();
+    showRadioXemDiem();
+    showRadioMoLop();
+}
+
+function showUnlockLopElements() {
+    $("#radio_molop").prop("checked", true);
+    hideXemDiemElements();
+    hideNhapDiemElements();
+    showMoLopElements();
+
+    hideRadioNhapDiem();
+    hideRadioXemDiem();
+    showRadioMoLop();
+}
+
+function showUnlockCVHTElements() {
+    $("#radio_nhapdiem").prop("checked", true);
+    hideMoLopElements();
+    hideXemDiemElements();
+    showNhapDiemElements();
+    
+    hideRadioMoLop();
+    showRadioNhapDiem();
+    showRadioXemDiem();
+}
+
 function checkExistGPAByClass(maLop, maHocKyDanhGia) {
     var isExisted = false;
     $.ajax({
@@ -344,6 +451,22 @@ function checkExistGPAByClass(maLop, maHocKyDanhGia) {
         }
     });
     return isExisted;
+}
+
+function callGetAPI(urlAPI) {
+    var list = null;
+    $.ajax({
+        url: urlAPI,
+        type: "GET",
+        contentType: "application/json;charset=utf-8",
+        dataType: "json",
+        async: false,
+        headers: { Authorization: jwtCookie },
+        success: function(result) {
+            list = result;
+        },
+    });
+    return list;
 }
 
 function getListGPAByClassAndSemester(maLop, maHocKyDanhGia) {
@@ -491,31 +614,6 @@ function loadGPAToTable(maLop, maHocKyDanhGia) {
             },
         });
     }
-    // $.each(listGPA, function(index){
-    //     for (var p = 0; p < listGPA[index].length; p++) {
-    //         htmlData += "<tr>\
-    //                         <td>" + listGPA[index][p].soThuTu + "</td>\
-    //                         <td>" + listGPA[index][p].maSinhVien + "</td>\
-    //                         <td>" + listGPA[index][p].hoTenSinhVien + "</td>\
-    //                         <td>" + listGPA[index][p].diem + "</td>\
-    //                         <td>" + maLop + "</td>";
-    //         if(isEditable)
-    //             htmlData+= "<td>" + 
-    //                             "<button type='button' class='btn btn-warning btn_ChinhSua_DiemHe4' data-id='"+ listGPA[index][p].maSinhVien + "' style='color: white;'>" +
-    //                                 "Chỉnh sửa" +
-    //                             "</button>" +
-    //                             "<div class='edit-confirmation' style='display:none'>\
-    //                                 <button class='btn btn-primary btn_XacNhanChinhSua_DiemHe4' style='color: white;' data-idMSSV = '" + listGPA[index][p].maSinhVien + "' data-idMaHKDG='" + maHocKyDanhGia + "'>Xác nhận</button>\
-    //                                 <button class='btn bg-danger btn_HuyChinhSua_DiemHe4 ml-2' style='color: white;' data-idMSSV = '" + listGPA[index][p].maSinhVien + "' data-idMaHKDG='" + maHocKyDanhGia + "'>Hủy</button>\
-    //                             </div>"+
-    //                         "</td>\
-    //                     </tr>";
-    //         else
-    //             htmlData+= "<td></td>\
-    //                     </tr>";
-    //     }
-    // });
-    //$("#tbody_danhSachDiemHe4").append(htmlData);
 }
 
 function updateDiemHe4(maSinhVien, maHocKyDanhGia, diem) {
@@ -599,21 +697,139 @@ function isNhapDiemUnlock() {
     return isUnlock;
 }
 
-function isUnlockForCVHT() {
+function isUnlockForCVHT(quyenLop = null) {
     var isUnlock = false;
     $.ajax({
         url: urlapi_chucnang_quyen_single_details_read + "?maChucNang=" + 
-            CHUC_NANG_NHAP_DIEM_HE_4 + "&maQuyen=" + quyen,
+            CHUC_NANG_NHAP_DIEM_HE_4 + "&maQuyen=" + ((quyenLop == null) ? quyen : quyenLop),
         async: false,
         type: "GET",
         contentType: "application/json;charset=utf-8",
         dataType: "json",
         headers: {Authorization: jwtCookie,},
         success: function(result_CN_Quyen) {
+            // Nếu là quyền lớp, chỉ mở nhập điểm cho cvht
+            if(quyenLop != null)
+                if(result_CN_Quyen.maQuyen == quyenLop)
+                    isUnlock = true;
             if(result_CN_Quyen.maQuyen == quyen)
                 isUnlock = true;
         },
         error: function (){}
     });
     return isUnlock;
+}
+
+function loadDanhSachLop(maSo) {
+    $("#tbody_danhSachLop tr").remove();
+    var maHocKyDanhGia = $("#select_hocKy_namHoc_molop").find(":selected").val();
+    var result_hocKy = callGetAPI(urlapi_hockydanhgia_single_read + maHocKyDanhGia);
+    var maHocKyMo = result_hocKy.hocKyXet + "-" + result_hocKy.namHocXet;
+    var result = callGetAPI(urlapi_lop_read_maCVHT + maSo);
+    if(result == null) {
+        presentNotification("error", "Lỗi", "Cố vấn học tập chưa quản lý bất kì lớp nào!");
+        return;
+    }
+
+    $.each(result, function(index) {
+        for (var i = 0; i < result[index].length; i++) {
+            isSuccess = isGetAPISuccess(urlapi_lopmonhapdiemhe4_read + "?maLop="
+                + result[index][i].maLop + "&maHocKyMo=" + maHocKyMo);
+            if(isSuccess)
+                result[index][i].hanhDong = "khoaNhapDiem";
+            else
+                result[index][i].hanhDong = "moKhoaNhapDiem";
+        }
+    });
+
+    console.log(result);
+
+    $("#idPhanTrangDanhSachLop").pagination({
+        dataSource: result["lop"],
+        pageSize: 10,
+        autoHidePrevious: true,
+        autoHideNext: true,
+
+        callback: function (data, pagination) {
+            var htmlData = "";
+            var count = 0;
+
+            for (let i = 0; i < data.length; i++) {
+                count += 1;
+                htmlData += "<tr>\
+                                <td> " + count + "</td>\
+                                <td> " + data[i].maLop + "</td>\
+                                <td> " + data[i].tenLop + "</td>\
+                                <td> " + data[i].maKhoa + "</td>"
+                if(data[i].hanhDong == "moKhoaNhapDiem")
+                    htmlData += "<td>\
+                                    <button type='button' class='btn btn-success btn_MoNhapDiem' data-malop='" + data[i].maLop + "'>\
+                                        <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-unlock' viewBox='0 0 16 16'>\
+                                            <path d='M11 1a2 2 0 0 0-2 2v4a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h5V3a3 3 0 0 1 6 0v4a.5.5 0 0 1-1 0V3a2 2 0 0 0-2-2zM3 8a1 1 0 0 0-1 1v5a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V9a1 1 0 0 0-1-1H3z'/>\
+                                        </svg>\
+                                        Mở nhập điểm\
+                                    </button>\
+                                </td>\
+                            <tr>"
+                else
+                    htmlData += "<td>\
+                                    <button type='button' class='btn btn-danger btn_KhoaNhapDiem' data-malop='" + data[i].maLop + "'>\
+                                        <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-lock' viewBox='0 0 16 16'>\
+                                            <path d='M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2zM5 8h6a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z'/>\
+                                        </svg>\
+                                        Khóa nhập điểm\
+                                    </button>\
+                                </td>\
+                            <tr>";
+
+            }
+
+            $("#tbody_danhSachLop").html(htmlData);
+        },
+    });   
+}
+
+function khoaHoacMoNhapDiem(urlAPI, maLop, maHocKyMo) {
+    //urlapi_lopmochamdiemhe4_create
+    var dataPost = {
+        maLop: maLop,
+        maHocKyMo: maHocKyMo
+    }
+
+    $.ajax({
+        url: urlAPI,
+        type: "POST",
+        contentType: "application/json;charset=utf-8",
+        dataType: "json",
+        data: JSON.stringify(dataPost),
+        async: false,
+        headers: { Authorization: jwtCookie },
+        success: function(result) {
+            var maSo = getCookie("maSo");
+            loadDanhSachLop(maSo);
+            if(urlAPI == urlapi_lopmonhapdiemhe4_create)
+                presentNotification("success", "Thành công", "Mở nhập điểm cho lớp " + maLop + " thành công!");
+            else
+                presentNotification("success", "Thành công", "Khóa nhập điểm cho lớp " + maLop + " thành công!");
+                
+        },
+        error: function () {
+            if(urlAPI == urlapi_lopmonhapdiemhe4_create)
+                presentNotification("error", "Lỗi", "Mở nhập điểm thất bại!");
+            else
+                presentNotification("error", "Lỗi", "Khóa nhập điểm thất bại!");
+        }
+    });   
+}
+
+function sortObject(object, prop, asc) {
+    object.sort(function (a, b) {
+        if (asc) {
+        return a[prop] > b[prop] ? 1 : a[prop] < b[prop] ? -1 : 0;
+        } else {
+        return b[prop] > a[prop] ? 1 : b[prop] < a[prop] ? -1 : 0;
+        }
+    });
+
+    return object;
 }

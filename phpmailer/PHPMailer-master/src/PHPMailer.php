@@ -2577,7 +2577,7 @@ class PHPMailer
             return;
         }
 
-         ($this->message_type) {
+        switch ($this->message_type) {
             case 'alt':
             case 'alt_inline':
             case 'alt_attach':

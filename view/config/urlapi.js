@@ -114,6 +114,19 @@ const urlapi_lop_create = api_url + "/lop/create.php";
 //UPDATE
 const urlapi_lop_update = api_url + "/lop/update.php";
 
+//---------------LOP MO CHAM DIEM HE 4---------------//----------------------------------
+//---------//
+
+//READ
+const urlapi_lopmonhapdiemhe4_read = api_url + "/lopmonhapdiemhe4/read.php";
+const urlapi_lopmonhapdiemhe4_read_maLop = urlapi_lopmonhapdiemhe4_read + "?maLop=";
+
+//CREATE
+const urlapi_lopmonhapdiemhe4_create = api_url + "/lopmonhapdiemhe4/create.php";
+
+//DELETE
+const urlapi_lopmonhapdiemhe4_delete = api_url + "/lopmonhapdiemhe4/delete.php";
+
 //---------------THONG BAO DANH GIA---------------//----------------------------------
 //---------//
 
@@ -333,7 +346,11 @@ const urlapi_thongkesinhvien_read = api_url + "/thongkesinhvien/read.php";
 
 //READ
 const urlapi_thongkecanhcao_read = api_url + "/thongkecanhcao/read.php";
+const urlapi_thongkecanhcao_readYeu = api_url + "/thongkecanhcao/readYeu.php";
+const urlapi_thongkecanhcao_readKem = api_url + "/thongkecanhcao/readKem.php";
 const urlapi_thongkecanhcao_readAll = api_url + "/thongkecanhcao/readAll.php";
+const urlapi_thongkecanhcao_readAllYeu = api_url + "/thongkecanhcao/readAllYeu.php";
+const urlapi_thongkecanhcao_readAllKem = api_url + "/thongkecanhcao/readAllKem.php";
 const urlapi_thongkecanhcao_khongyeukem_read = api_url + "/thongkecanhcao/readKhongYeuKem.php";
 
 //---------------KHIEU NAI---------------//----------------------------------

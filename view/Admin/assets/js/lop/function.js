@@ -568,49 +568,65 @@ function ThemMoi_Lop() {
   if (_input_MaLop == "" || _input_TenLop == "") {
     ThongBaoLoi("Vui lòng nhập đầy đủ thông tin!");
   } else {
-    var dataPost = {
-      maLop: _input_MaLop,
-      tenLop: _input_TenLop,
-      maKhoa: _select_Khoa_Add,
-      maCoVanHocTap: _select_CVHT_Add,
-      maKhoaHoc: _select_KhoaHoc_Add,
-    };
-
+    // Kiểm tra mã lớp đã tồn tại?
     $.ajax({
-      url: urlapi_lop_create,
-      type: "POST",
+      url: urlapi_lop_single_read + _input_MaLop,
+      async: false,
+      type: "GET",
       contentType: "application/json;charset=utf-8",
       dataType: "json",
-      data: JSON.stringify(dataPost),
-      async: false,
-      headers: { Authorization: jwtCookie },
-      success: function (result_Create) {
-        $("#AddModal").modal("hide");
-
-        Swal.fire({
-          icon: "success",
-          title: "Tạo thành công!",
-          text: "",
-          timer: 2000,
-          timerProgressBar: true,
-        });
-
-        setTimeout(() => {
-          GetListLop($("#select_Khoa").val());
-        }, 2000);
-
-        $("#input_MaLop").val("");
-        $("#input_TenLop").val("");
+      headers: {
+        Authorization: jwtCookie,
       },
-      error: function (errorMessage) {
-        checkLoiDangNhap(errorMessage.responseJSON.message);
+      success: function () {
+        ThongBaoLoi("Mã lớp đã tồn tại!");
+      },
+      error: function () {
+        var dataPost = {
+          maLop: _input_MaLop,
+          tenLop: _input_TenLop,
+          maKhoa: _select_Khoa_Add,
+          maCoVanHocTap: _select_CVHT_Add,
+          maKhoaHoc: _select_KhoaHoc_Add,
+        };
 
-        Swal.fire({
-          icon: "error",
-          title: "Lỗi",
-          text: errorMessage.responseJSON.message,
-          //timer: 5000,
-          timerProgressBar: true,
+        $.ajax({
+          url: urlapi_lop_create,
+          type: "POST",
+          contentType: "application/json;charset=utf-8",
+          dataType: "json",
+          data: JSON.stringify(dataPost),
+          async: false,
+          headers: { Authorization: jwtCookie },
+          success: function (result_Create) {
+            $("#AddModal").modal("hide");
+
+            Swal.fire({
+              icon: "success",
+              title: "Tạo thành công!",
+              text: "",
+              timer: 2000,
+              timerProgressBar: true,
+            });
+
+            setTimeout(() => {
+              GetListLop($("#select_Khoa").val());
+            }, 2000);
+
+            $("#input_MaLop").val("");
+            $("#input_TenLop").val("");
+          },
+          error: function (errorMessage) {
+            checkLoiDangNhap(errorMessage.responseJSON.message);
+
+            Swal.fire({
+              icon: "error",
+              title: "Lỗi",
+              text: errorMessage.responseJSON.message,
+              //timer: 5000,
+              timerProgressBar: true,
+            });
+          },
         });
       },
     });

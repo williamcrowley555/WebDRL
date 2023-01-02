@@ -919,7 +919,8 @@
 				success: function (result) {
 					$('#form_send_email_notification button[type=submit]').text("Gửi");
 					$('#form_send_email_notification button[type=submit]').prop('disabled', false);
-					
+					console.log(options);
+					console.log(result);
 					result = JSON.parse(result);
 
 					if(result.success) {

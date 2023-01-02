@@ -156,8 +156,9 @@
             let maHocKyDanhGiaXemDiem = $(this).attr('data-idmahkdg');
             let namHocXet = $(this).attr('data-namHocXet');
             let hocKyXet = $(this).attr('data-hocKyXet');
+            var maHocKyMo = hocKyXet + "-" + namHocXet;
             // Call Edit API here...
-            updateDiemHe4(maSinhVien, maHocKyDanhGiaXemDiem, diemChinhSua, "nhapDiem", namHocXet, hocKyXet);
+            updateDiemHe4(maSinhVien, maHocKyDanhGiaXemDiem, diemChinhSua, "nhapDiem", namHocXet, hocKyXet, maHocKyMo);
             // Call Get All API
             loadGPAToTable();
 
@@ -171,8 +172,9 @@
             let maHocKyDanhGiaXemDiem = $(this).attr('data-idmahkdg');
             let namHocXet = $(this).attr('data-namHocXet');
             let hocKyXet = $(this).attr('data-hocKyXet');
+            var maHocKyMo = hocKyXet + "-" + namHocXet;
             // Call Edit API here...
-            updateDiemHe4(maSinhVien, maHocKyDanhGiaXemDiem, diemChinhSua, "chinhSua", namHocXet, hocKyXet);
+            updateDiemHe4(maSinhVien, maHocKyDanhGiaXemDiem, diemChinhSua, "chinhSua", namHocXet, hocKyXet, maHocKyMo);
             // Call Get All API
             loadGPAToTable();
 
@@ -186,7 +188,7 @@
             //LoadDiemHe4(maSinhVien);
             var maHocKyDanhGiaXemDiem = $("#select_hocKy_namHoc_xemdiem").find(":selected").val();
             var maLopXemDiem = $("#select_lop_xemdiem").find(":selected").val();
-            loadGPAToTable(maLopXemDiem, maHocKyDanhGiaXemDiem);
+            loadGPAToTable();
 
             $(this).parent().hide();
             $(this).closest('tr').find('.btn_ChinhSua_DiemHe4').show();

@@ -7,7 +7,28 @@ var tableThongKeTitle = [
     "Tốt nghiệp",
     "Số lần xếp loại yếu, kém",
     "Số lần xếp loại yếu, kém liên tiếp",
-    "Tình trạng",
+];
+
+var tableThongKeYeuTitle = [
+    "STT",
+    "Mã số sinh viên",
+    "Họ tên sinh viên",
+    "Ngày sinh",
+    "Lớp",
+    "Tốt nghiệp",
+    "Số lần xếp loại yếu",
+    "Số lần xếp loại yếu liên tiếp"
+];
+
+var tableThongKeKemTitle = [
+    "STT",
+    "Mã số sinh viên",
+    "Họ tên sinh viên",
+    "Ngày sinh",
+    "Lớp",
+    "Tốt nghiệp",
+    "Số lần xếp loại kém",
+    "Số lần xếp loại kém liên tiếp"
 ];
 
 var tableDanhSachPhieuRenLuyen = [
@@ -18,6 +39,19 @@ var tableDanhSachPhieuRenLuyen = [
     "Năm học",
     "Xếp loại",    
 ];
+
+var tableThongKeCanhCao = null;
+
+var maLopToanCuc = null;
+var maKhoaToanCuc = null;
+
+function getMaLopToanCuc(maLop) {
+    maLopToanCuc = maLop;
+}
+
+function getMaKhoaToanCuc(maKhoa) {
+    maKhoaToanCuc = maKhoa;
+}
 
 function getCookie(cName) {
     const name = cName + "=";
@@ -143,6 +177,109 @@ function loadCombobox(urlAPI, selector, thongBaoLoiCombobox) {
     $(selector).append(htmlData);
 }
 
+function getSoLanYeuLienTiep(result) {
+    var soLanYeuLienTiep = 0;
+    var hocKyXet = null;
+    var hocKyXetTiepTheo = null;
+    var namHocXet = null;
+    var namHocTruoc = null;
+    var namHocTruocTiepTheo = null;
+    var namHocSau = null;
+    var namHocSauTiepTheo = null;
+    var namHocXetTiepTheo = null;
+    var namHocArr = null;
+
+    $.each(result, function(index) {
+        for (var i=0;i<result[index].length;i++) {
+            if(result[index][i].diemTongCong < 50 && result[index][i].diemTongCong >= 35) {
+                //console.log(result[index][i].namHocXet);
+                hocKyXet = Number(result[index][i].hocKyXet);
+                hocKyXetTiepTheo = hocKyXet + 1;
+                if(hocKyXetTiepTheo > 2) {
+                    hocKyXetTiepTheo = 1;
+                    namHocArr = result[index][i].namHocXet.split("-");
+                    namHocTruoc = Number(namHocArr[0]);
+                    namHocTruocTiepTheo = namHocTruoc + 1;
+                    namHocSau = Number(namHocArr[1]);
+                    namHocSauTiepTheo = namHocSau + 1;
+                    namHocXetTiepTheo = namHocTruocTiepTheo + "-" + namHocSauTiepTheo;
+                } else {
+                    hocKyXetTiepTheo = 2;
+                    namHocXetTiepTheo = result[index][i].namHocXet;
+                }
+                //hocKyXetTiepTheo = (hocKyXetTiepTheo > 2) ? 1 : 2;
+                
+
+                $.each(result, function(index2) {
+                    for (var j=0;j<result[index2].length;j++) {
+                        if(result[index2][j].namHocXet == namHocXetTiepTheo
+                            &&
+                            result[index2][j].hocKyXet == hocKyXetTiepTheo
+                            &&
+                            result[index2][j].diemTongCong < 50
+                            &&
+                            result[index2][j].diemTongCong >= 35)
+
+                            soLanYeuLienTiep++;
+                    }
+                });
+            }
+        }
+    });
+
+    return soLanYeuLienTiep;
+}
+
+function getSoLanKemLienTiep(result) {
+    var soLanKemLienTiep = 0;
+    var hocKyXet = null;
+    var hocKyXetTiepTheo = null;
+    var namHocXet = null;
+    var namHocTruoc = null;
+    var namHocTruocTiepTheo = null;
+    var namHocSau = null;
+    var namHocSauTiepTheo = null;
+    var namHocXetTiepTheo = null;
+    var namHocArr = null;
+
+    $.each(result, function(index) {
+        for (var i=0;i<result[index].length;i++) {
+            if(result[index][i].diemTongCong < 35) {
+                hocKyXet = Number(result[index][i].hocKyXet);
+                hocKyXetTiepTheo = hocKyXet + 1;
+                if(hocKyXetTiepTheo > 2) {
+                    hocKyXetTiepTheo = 1;
+                    namHocArr = result[index][i].namHocXet.split("-");
+                    namHocTruoc = Number(namHocArr[0]);
+                    namHocTruocTiepTheo = namHocTruoc + 1;
+                    namHocSau = Number(namHocArr[1]);
+                    namHocSauTiepTheo = namHocSau + 1;
+                    namHocXetTiepTheo = namHocTruocTiepTheo + "-" + namHocSauTiepTheo;
+                } else {
+                    hocKyXetTiepTheo = 2;
+                    namHocXetTiepTheo = result[index][i].namHocXet;
+                }
+                //hocKyXetTiepTheo = (hocKyXetTiepTheo > 2) ? 1 : 2;
+                
+
+                $.each(result, function(index2) {
+                    for (var j=0;j<result[index2].length;j++) {
+                        if(result[index2][j].namHocXet == namHocXetTiepTheo
+                            &&
+                            result[index2][j].hocKyXet == hocKyXetTiepTheo
+                            &&
+                            result[index2][j].diemTongCong < 35)
+
+                            soLanKemLienTiep++;
+                    }
+                });
+            }
+        }
+    });
+
+    return soLanKemLienTiep;
+}
+
 function getSoLanYeuKemLienTiep(result) {
     var soLanYeuKemLienTiep = 0;
     var hocKyXet = null;
@@ -198,10 +335,249 @@ function getSoLanYeuKemLienTiep(result) {
     return soLanYeuKemLienTiep;
 }
 
+function filterTableYeu() {
+    var maLop = maLopToanCuc;
+    var maKhoa = maKhoaToanCuc;
+    var soLanYeuLienTiep = null;
+    var result = null;
+    if(maLop == "tatcalop") {
+        result = callReadAPI(urlapi_thongkecanhcao_readAllYeu + "?maKhoa=" + maKhoa, thongBaoLoiRong);
+        $.each(result, function(index) {
+            for (var i=0;i<result[index].length;i++) {
+                var result_phieuRenLuyen = callReadAPI(urlapi_phieurenluyen_details_read_MaSV + result[index][i].maSinhVien, thongBaoLoiGetPhieuRenLuyen);
+                soLanYeuLienTiep = getSoLanYeuLienTiep(result_phieuRenLuyen);
+                result[index][i].soLanYeuLienTiep = soLanYeuLienTiep;
+            }
+        });
+    } else {
+        result = callReadAPI(urlapi_thongkecanhcao_readYeu + "?maLop=" + maLop, thongBaoLoiRong);
+        $.each(result, function(index) {
+            for (var i=0;i<result[index].length;i++) {
+                var result_phieuRenLuyen = callReadAPI(urlapi_phieurenluyen_details_read_MaSV + result[index][i].maSinhVien, thongBaoLoiGetPhieuRenLuyen);
+                soLanYeuLienTiep = getSoLanYeuLienTiep(result_phieuRenLuyen);
+                result[index][i].soLanYeuLienTiep = soLanYeuLienTiep;
+                // console.log("Số lần điểm yếu kém liên tiếp của sinh viên " + result[index][i].maSinhVien + " là: " + soLanYeuKemLienTiep);
+            }
+        });
+    }
+    return result;
+}
+
+function filterTableKem() {
+    var maLop = maLopToanCuc;
+    var maKhoa = maKhoaToanCuc;
+    var soLanKemLienTiep = null;
+    var result = null;
+    if(maLop == "tatcalop") {
+        result = callReadAPI(urlapi_thongkecanhcao_readAllKem + "?maKhoa=" + maKhoa, thongBaoLoiRong);
+        $.each(result, function(index) {
+            for (var i=0;i<result[index].length;i++) {
+                var result_phieuRenLuyen = callReadAPI(urlapi_phieurenluyen_details_read_MaSV + result[index][i].maSinhVien, thongBaoLoiGetPhieuRenLuyen);
+                soLanKemLienTiep = getSoLanKemLienTiep(result_phieuRenLuyen);
+                result[index][i].soLanKemLienTiep = soLanKemLienTiep;
+            }
+        });
+    } else {
+        result = callReadAPI(urlapi_thongkecanhcao_readKem + "?maLop=" + maLop, thongBaoLoiRong);
+        $.each(result, function(index) {
+            for (var i=0;i<result[index].length;i++) {
+                var result_phieuRenLuyen = callReadAPI(urlapi_phieurenluyen_details_read_MaSV + result[index][i].maSinhVien, thongBaoLoiGetPhieuRenLuyen);
+                soLanKemLienTiep = getSoLanKemLienTiep(result_phieuRenLuyen);
+                result[index][i].soLanKemLienTiep = soLanKemLienTiep;
+            }
+        });
+    }
+    return result;
+}
+
+function loadFilterTableThongKeCanhCao(trangThai) {
+    $("#tableThongKe>thead>tr").empty();
+    $("#idPhanTrangThongKe").empty();
+    if(trangThai == "all") {
+        tableThongKeTitle.forEach(function(title, index) {
+            $("#tableThongKe>thead>tr").append(`<th class='cell'>${title}</th>`);
+    
+            if(index == tableThongKeTitle.length - 1) {
+                $("#tableThongKe>thead>tr").append(`<th class='cell' width='150'>Hành động</th>`);
+            }
+        });
+
+        result = tableThongKeCanhCao;
+
+        if(result == null) {
+            var htmlData = "<tr>\
+                                <td colspan='9' class='text-center'>\
+                                    <p class='mt-4'>Không tìm thấy kết quả.</p>\
+                                </td>\
+                            </tr>";
+            $("#tbodyThongKe").html(htmlData);
+            return;
+        }
+
+        $("#idPhanTrangThongKe").pagination({
+            dataSource: result["sinhvien"],
+            pageSize: 10,
+            autoHidePrevious: true,
+            autoHideNext: true,
+
+            callback: function (data, pagination) {
+                var htmlData = "";
+                var count = 0;
+
+                for (let i = 0; i < data.length; i++) {
+                    count += 1;
+                    htmlData += "<tr> \
+                                    <td>" + data[i].soThuTu + "</td>\
+                                    <td>" + data[i].maSinhVien + "</td>\
+                                    <td>" + data[i].hoTenSinhVien + "</td>\
+                                    <td>" + data[i].ngaySinh + "</td>\
+                                    <td>" + data[i].maLop + "</td>\
+                                    <td>" + (Number(data[i].totNghiep) == 0 ? "Chưa tốt nghiệp" : "Đã tốt nghiệp") + "</td>\
+                                    <td>" + data[i].soLanYeuKem + "</td>\
+                                    <td>" + data[i].soLanYeuKemLienTiep + " </td>\
+                                    <td>\
+                                        <button type='button' class='btn btn-success btn_xemChiTiet' style='color: white;'\
+                                        data-bs-toggle='modal' data-bs-target='#danhSachPhieuDiemRenLuyenModal'\
+                                        data-id='" + data[i].maSinhVien + "' data-hoten='" + 
+                                            data[i].hoTenSinhVien + "' + data-prl='all'> Danh sách phiếu rèn luyện </button>\
+                                    </td>\
+                                </tr>";
+                    
+                }
+
+                $("#tbodyThongKe").html(htmlData);
+            },
+        });
+        return;
+    }
+
+    if(trangThai == "yeu") {
+        tableThongKeYeuTitle.forEach(function(title, index) {
+            $("#tableThongKe>thead>tr").append(`<th class='cell'>${title}</th>`);
+    
+            if(index == tableThongKeYeuTitle.length - 1) {
+                $("#tableThongKe>thead>tr").append(`<th class='cell' width='150'>Hành động</th>`);
+            }
+        });
+
+        result = filterTableYeu();
+
+        if(result == null) {
+            var htmlData = "<tr>\
+                                <td colspan='9' class='text-center'>\
+                                    <p class='mt-4'>Không tìm thấy kết quả.</p>\
+                                </td>\
+                            </tr>";
+            $("#tbodyThongKe").html(htmlData);
+            return;
+        }
+
+        $("#tbodyThongKe tr").remove();
+
+        $("#idPhanTrangThongKe").pagination({
+            dataSource: result["sinhvien"],
+            pageSize: 10,
+            autoHidePrevious: true,
+            autoHideNext: true,
+
+            callback: function (data, pagination) {
+                var htmlData = "";
+                var count = 0;
+
+                for (let i = 0; i < data.length; i++) {
+                    count += 1;
+                    htmlData += "<tr> \
+                                    <td>" + data[i].soThuTu + "</td>\
+                                    <td>" + data[i].maSinhVien + "</td>\
+                                    <td>" + data[i].hoTenSinhVien + "</td>\
+                                    <td>" + data[i].ngaySinh + "</td>\
+                                    <td>" + data[i].maLop + "</td>\
+                                    <td>" + (Number(data[i].totNghiep) == 0 ? "Chưa tốt nghiệp" : "Đã tốt nghiệp") + "</td>\
+                                    <td>" + data[i].soLanYeu + "</td>\
+                                    <td>" + data[i].soLanYeuLienTiep + " </td>\
+                                    <td>\
+                                        <button type='button' class='btn btn-success btn_xemChiTiet' style='color: white;'\
+                                        data-bs-toggle='modal' data-bs-target='#danhSachPhieuDiemRenLuyenModal'\
+                                        data-id='" + data[i].maSinhVien + "' data-hoten='" + 
+                                            data[i].hoTenSinhVien + "' + data-prl='yeu'> Danh sách phiếu rèn luyện </button>\
+                                    </td>\
+                                </tr>";
+                    
+                }
+
+                $("#tbodyThongKe").html(htmlData);
+            },
+        });
+        return;
+    }
+
+    if(trangThai == "kem") {
+        tableThongKeKemTitle.forEach(function(title, index) {
+            $("#tableThongKe>thead>tr").append(`<th class='cell'>${title}</th>`);
+    
+            if(index == tableThongKeKemTitle.length - 1) {
+                $("#tableThongKe>thead>tr").append(`<th class='cell' width='150'>Hành động</th>`);
+            }
+        });
+        
+        result = filterTableKem();
+
+        if(result == null) {
+            var htmlData = "<tr>\
+                                <td colspan='9' class='text-center'>\
+                                    <p class='mt-4'>Không tìm thấy kết quả.</p>\
+                                </td>\
+                            </tr>";
+            $("#tbodyThongKe").html(htmlData);
+            return;
+        }
+
+        $("#tbodyThongKe tr").remove();
+
+        $("#idPhanTrangThongKe").pagination({
+            dataSource: result["sinhvien"],
+            pageSize: 10,
+            autoHidePrevious: true,
+            autoHideNext: true,
+
+            callback: function (data, pagination) {
+                var htmlData = "";
+                var count = 0;
+
+                for (let i = 0; i < data.length; i++) {
+                    count += 1;
+                    htmlData += "<tr> \
+                                    <td>" + data[i].soThuTu + "</td>\
+                                    <td>" + data[i].maSinhVien + "</td>\
+                                    <td>" + data[i].hoTenSinhVien + "</td>\
+                                    <td>" + data[i].ngaySinh + "</td>\
+                                    <td>" + data[i].maLop + "</td>\
+                                    <td>" + (Number(data[i].totNghiep) == 0 ? "Chưa tốt nghiệp" : "Đã tốt nghiệp") + "</td>\
+                                    <td>" + data[i].soLanKem + "</td>\
+                                    <td>" + data[i].soLanKemLienTiep + " </td>\
+                                    <td>\
+                                        <button type='button' class='btn btn-success btn_xemChiTiet' style='color: white;'\
+                                        data-bs-toggle='modal' data-bs-target='#danhSachPhieuDiemRenLuyenModal'\
+                                        data-id='" + data[i].maSinhVien + "' data-hoten='" + 
+                                            data[i].hoTenSinhVien + "' + data-prl='kem'> Danh sách phiếu rèn luyện </button>\
+                                    </td>\
+                                </tr>";
+                    
+                }
+
+                $("#tbodyThongKe").html(htmlData);
+            },
+        });
+        return;
+    }
+}
+
 function loadTableThongKe() {
+
     $("#tbodyThongKe tr").remove();
-    var maLop = $("#select_Lop").find('option:selected').val();
-    var maKhoa = $("#select_Khoa").find('option:selected').val();
+    $("#idPhanTrangThongKe").empty();
+    var maLop = maLopToanCuc;
+    var maKhoa = maKhoaToanCuc;
     var result = null;
     var hocKyXet = null;
     var namHocXet = null;
@@ -211,8 +587,15 @@ function loadTableThongKe() {
         presentNotification("error", "Lỗi", "Không tìm thấy lớp để thống kê!");
         return;
     }
+
+    $("#select_TrangThai").empty();
+    $("#select_TrangThai").append("<option value='all' selected>Tất cả</option>\
+                                <option value='yeu'>Yếu</option>\
+                                <option value='kem'>Kém</option>");
+
     if(maLop == "tatcalop") {
         result = callReadAPI(urlapi_thongkecanhcao_readAll + "?maKhoa=" + maKhoa, thongBaoLoiRong);
+        tableThongKeCanhCao = result;
         if(result == null) {
             var htmlData = "<tr>\
                                 <td colspan='9' class='text-center'>\
@@ -226,16 +609,10 @@ function loadTableThongKe() {
                     var result_phieuRenLuyen = callReadAPI(urlapi_phieurenluyen_details_read_MaSV + result[index][i].maSinhVien, thongBaoLoiGetPhieuRenLuyen);
                     soLanYeuKemLienTiep = getSoLanYeuKemLienTiep(result_phieuRenLuyen);
                     result[index][i].soLanYeuKemLienTiep = soLanYeuKemLienTiep;
-                    if(soLanYeuKemLienTiep >=2) 
-                        result[index][i].tinhTrang = "Đình chỉ học";
-                    else if(soLanYeuKemLienTiep == 1)
-                        result[index][i].tinhTrang = "Tạm ngưng học 1 học kỳ";
-                        else if(soLanYeuKemLienTiep == 0 && result[index][i].soLanYeuKem > 0)
-                            result[index][i].tinhTrang = "Cảnh cáo điểm rèn luyện";
-                            else
-                                result[index][i].tinhTrang = "";
                 }
             });
+
+            tableThongKeCanhCao = result;
     
             $("#idPhanTrangThongKe").pagination({
                 dataSource: result["sinhvien"],
@@ -258,12 +635,11 @@ function loadTableThongKe() {
                                         <td>" + (Number(data[i].totNghiep) == 0 ? "Chưa tốt nghiệp" : "Đã tốt nghiệp") + "</td>\
                                         <td>" + data[i].soLanYeuKem + "</td>\
                                         <td>" + data[i].soLanYeuKemLienTiep + " </td>\
-                                        <td>" + data[i].tinhTrang + " </td>\
                                         <td>\
                                             <button type='button' class='btn btn-success btn_xemChiTiet' style='color: white;'\
                                             data-bs-toggle='modal' data-bs-target='#danhSachPhieuDiemRenLuyenModal'\
                                             data-id='" + data[i].maSinhVien + "' data-hoten='" + 
-                                                data[i].hoTenSinhVien + "'> Danh sách phiếu rèn luyện </button>\
+                                                data[i].hoTenSinhVien + "' + data-prl='all'> Danh sách phiếu rèn luyện </button>\
                                         </td>\
                                     </tr>";
                         
@@ -275,6 +651,7 @@ function loadTableThongKe() {
         }
         return;
     }
+    
     result = callReadAPI(urlapi_thongkecanhcao_read + "?maLop=" + maLop, thongBaoLoiRong);
     // var htmlData = "";
     
@@ -309,19 +686,7 @@ function loadTableThongKe() {
             
         }
 
-        $.each(result, function(index) {
-            for (var i=0;i<result[index].length;i++) {
-                if(result[index][i].soLanYeuKemLienTiep >=2) 
-                    result[index][i].tinhTrang = "Đình chỉ học";
-                else if(result[index][i].soLanYeuKemLienTiep == 1)
-                    result[index][i].tinhTrang = "Tạm ngưng học 1 học kỳ";
-                    else if(result[index][i].soLanYeuKemLienTiep == 0 && result[index][i].soLanYeuKem > 0)
-                        result[index][i].tinhTrang = "Cảnh cáo điểm rèn luyện";
-                        else
-                            result[index][i].tinhTrang = "";
-            }
-        });
-        
+        tableThongKeCanhCao = result;
 
         $("#idPhanTrangThongKe").pagination({
             dataSource: result["sinhvien"],
@@ -344,12 +709,11 @@ function loadTableThongKe() {
                                     <td>" + (Number(data[i].totNghiep) == 0 ? "Chưa tốt nghiệp" : "Đã tốt nghiệp") + "</td>\
                                     <td>" + data[i].soLanYeuKem + "</td>\
                                     <td>" + data[i].soLanYeuKemLienTiep + " </td>\
-                                    <td>" + data[i].tinhTrang + " </td>\
                                     <td>\
                                         <button type='button' class='btn btn-success btn_xemChiTiet' style='color: white;'\
                                         data-bs-toggle='modal' data-bs-target='#danhSachPhieuDiemRenLuyenModal'\
                                         data-id='" + data[i].maSinhVien + "' data-hoten='" + 
-                                            data[i].hoTenSinhVien + "'> Danh sách phiếu rèn luyện </button>\
+                                            data[i].hoTenSinhVien + "' + data-prl='all'> Danh sách phiếu rèn luyện </button>\
                                     </td>\
                                 </tr>";
                     
@@ -362,6 +726,7 @@ function loadTableThongKe() {
         
     } else {
         var result = callReadAPI(urlapi_thongkecanhcao_khongyeukem_read + "?maLop=" + maLop, thongBaoLoiRong);
+        tableThongKeCanhCao = result;
         if(result == null) {
             var htmlData = "<tr>\
                             <td colspan='9' class='text-center'>\
@@ -375,9 +740,10 @@ function loadTableThongKe() {
             for (var i=0;i<result[index].length;i++) {
                 result[index][i].soLanYeuKem = 0;
                 result[index][i].soLanYeuKemLienTiep = 0;
-                result[index][i].tinhTrang = "";
             }
         });
+
+        tableThongKeCanhCao = result;
 
         $("#idPhanTrangThongKe").pagination({
             dataSource: result["sinhvien"],
@@ -400,12 +766,11 @@ function loadTableThongKe() {
                                     <td>" + (Number(data[i].totNghiep) == 0 ? "Chưa tốt nghiệp" : "Đã tốt nghiệp") + "</td>\
                                     <td>" + data[i].soLanYeuKem + "</td>\
                                     <td>" + data[i].soLanYeuKemLienTiep + " </td>\
-                                    <td>" + data[i].tinhTrang + " </td>\
                                     <td>\
                                         <button type='button' class='btn btn-success btn_xemChiTiet' style='color: white;'\
                                         data-bs-toggle='modal' data-bs-target='#danhSachPhieuDiemRenLuyenModal'\
                                         data-id='" + data[i].maSinhVien + "' data-hoten='" + 
-                                            data[i].hoTenSinhVien + "'> Danh sách phiếu rèn luyện </button>\
+                                            data[i].hoTenSinhVien + "' + data-prl='all'> Danh sách phiếu rèn luyện </button>\
                                     </td>\
                                 </tr>";
                     
@@ -414,58 +779,11 @@ function loadTableThongKe() {
                 $("#tbodyThongKe").html(htmlData);
             },
         });
-
-        // $.each(result, function(index) {
-        //     for (var i=0;i<result[index].length;i++) {
-        //         htmlData += "<tr> \
-        //                         <td>" + (i+1) + "</td>\
-        //                         <td>" + result[index][i].maSinhVien + "</td>\
-        //                         <td>" + result[index][i].hoTenSinhVien + "</td>\
-        //                         <td>" + result[index][i].ngaySinh + "</td>\
-        //                         <td>" + result[index][i].maLop + "</td>\
-        //                         <td>" + (Number(result[index][i].totNghiep) == 0 ? "Chưa tốt nghiệp" : "Đã tốt nghiệp") + "</td>\
-        //                         <td>" + result[index][i].soLanYeuKem + "</td>\
-        //                         <td>" + result[index][i].soLanYeuKemLienTiep + " </td>\
-        //                         <td>\
-        //                             <button type='button' class='btn btn-success btn_xemChiTiet' style='color: white;'\
-        //                             data-bs-toggle='modal' data-bs-target='#danhSachPhieuDiemRenLuyenModal'\
-        //                             data-id='" + result[index][i].maSinhVien + "' data-hoten='"+ result[index][i].hoTenSinhVien
-        //                                 +"'> Danh sách phiếu rèn luyện </button>\
-        //                         </td>\
-        //                     </tr>";
-        //     }
-        // });
-    
-        // $("#tbodyThongKe").append(htmlData);
     }
     
-    
-    //     return;
-    // $.each(result, function(index) {
-    //     for (var i=0;i<result[index].length;i++) {
-    //         htmlData += "<tr> \
-    //                         <td>" + soThuTuTiepTheo + "</td>\
-    //                         <td>" + result[index][i].maSinhVien + "</td>\
-    //                         <td>" + result[index][i].hoTenSinhVien + "</td>\
-    //                         <td>" + result[index][i].ngaySinh + "</td>\
-    //                         <td>" + result[index][i].maLop + "</td>\
-    //                         <td>" + (Number(result[index][i].totNghiep) == 0 ? "Chưa tốt nghiệp" : "Đã tốt nghiệp") + "</td>\
-    //                         <td>" + 0 + "</td>\
-    //                         <td>" + 0 + " </td>\
-    //                         <td>\
-    //                             <button type='button' class='btn btn-success btn_xemChiTiet' style='color: white;'\
-    //                             data-bs-toggle='modal' data-bs-target='#danhSachPhieuDiemRenLuyenModal'\
-    //                             data-id='"
-    //                                 + result[index][i].maSinhVien + "'> Xem chi tiết </button>\
-    //                         </td>\
-    //                     </tr>";
-    //         soThuTuTiepTheo++;
-    //     }
-    // });
-    // $("#tbodyThongKe").append(htmlData);
 }
 
-function loadDanhSachPhieuRenLuyen(maSinhVien) {
+function loadDanhSachPhieuRenLuyen(maSinhVien, hienThi) {
     $("#tbodyDanhSachPhieuRenLuyen tr").remove();
     var result = callReadAPI(urlapi_phieurenluyen_details_read_MaSV + maSinhVien, thongBaoLoiRong);
     var htmlData = "";
@@ -479,10 +797,23 @@ function loadDanhSachPhieuRenLuyen(maSinhVien) {
         var style = "";
         $.each(result, function(index) {
             for (var i=0;i<result[index].length;i++) {
-                if(result[index][i].diemTongCong < 50)
-                    style = " style='color: red;'";
-                else
-                    style = "";
+                if(hienThi == "all") {
+                    if(result[index][i].diemTongCong < 50)
+                        style = " style='color: red;'";
+                    else
+                        style = "";
+                } else if(hienThi == "yeu") {
+                    if(result[index][i].diemTongCong < 50 && result[index][i].diemTongCong >=35)
+                        style = " style='color: red;'";
+                    else
+                        style = "";
+                } else {
+                    if(result[index][i].diemTongCong < 35)
+                        style = " style='color: red;'";
+                    else
+                        style = "";
+                }
+                
                 htmlData += "<tr> \
                                 <td" + style + ">" + result[index][i].soThuTu + "</td>\
                                 <td" + style + ">" + result[index][i].maPhieuRenLuyen + "</td>\

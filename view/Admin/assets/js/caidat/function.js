@@ -8,6 +8,40 @@ var tableTitle = [
 
 var tableContent = [];
 
+var quyenChucNang = [
+    {
+        maQuyen: "sinhvien",
+        tenQuyen: "Sinh viên",
+        maChucNang: [
+            CHUC_NANG_CHAM_DIEM_REN_LUYEN,
+            CHUC_NANG_KHIEU_NAI_DIEM_REN_LUYEN,
+            CHUC_NANG_NHAP_DIEM_HE_4
+        ]
+    },
+    {
+        maQuyen: "cvht",
+        tenQuyen: "Cố vấn học tập",
+        maChucNang: [
+            CHUC_NANG_CHAM_DIEM_REN_LUYEN,
+            CHUC_NANG_NHAP_DIEM_HE_4
+        ]
+    },
+    {
+        maQuyen: "khoa",
+        tenQuyen: "Khoa",
+        maChucNang: [
+            CHUC_NANG_CHAM_DIEM_REN_LUYEN
+        ]
+    },
+    {
+        maQuyen: "lop",
+        tenQuyen: "Lớp",
+        maChucNang: [
+            CHUC_NANG_NHAP_DIEM_HE_4
+        ]
+    }
+];
+
 function getCookie(cName) {
   const name = cName + "=";
   const cDecoded = decodeURIComponent(document.cookie); //to be careful
@@ -159,36 +193,18 @@ function LoadComboBoxThongTinHocKyDanhGia_CaiDat() {
   });
 }
 
-function LoadComboBoxThongTinQuyen_CaiDat() {
-  $("#custom_select_Quyen").find("option").remove();
+function LoadComboBoxThongTinQuyen_CaiDat(maChucNang) {
+    $("#custom_select_Quyen").find("option").remove();
 
-  //Load HocKyDanhGia
-  $.ajax({
-    url: urlapi_quyen_read,
-    type: "GET",
-    contentType: "application/json;charset=utf-8",
-    dataType: "json",
-    async: false,
-    headers: { Authorization: jwtCookie },
-    success: function (result) {
-      $("#custom_select_Quyen").find("option").remove();
-
-      $.each(result, function (index) {
-        for (var p = 0; p < result[index].length; p++) {
-          $("#custom_select_Quyen").append(
-            "<option value='" +
-              result[index][p].maQuyen +
-              "'>" +
-              result[index][p].tenQuyen +
-              "</option>"
-          );
+  //Load Quyen
+    var options = quyenChucNang.reduce(function(filtered, quyen) {
+        if (quyen.maChucNang.includes(parseInt(maChucNang))) {
+            filtered.push({label: quyen.tenQuyen, value: quyen.maQuyen});
         }
-      });
-    },
-    error: function (errorMessage) {
-      checkLoiDangNhap(errorMessage.responseJSON.message);
-    },
-  });
+        return filtered;
+    }, []);
+
+    document.querySelector('#custom_select_Quyen').setOptions(options);
 }
 
 function LoadThongTinTuyChinh_ChucNang(maChucNang) {
@@ -305,7 +321,7 @@ function TuyChinh_ChucNang() {
         async: false,
         headers: { Authorization: jwtCookie },
         success: function () {
-          // Cập nhật quyền áp dụng của chức năng
+          // Cập nhật đối tượng áp dụng của chức năng
           dataPost = {
             maChucNang: _custom_input_MaChucNang,
             maQuyen: _custom_select_Quyen,

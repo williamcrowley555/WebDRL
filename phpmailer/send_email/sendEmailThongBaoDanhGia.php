@@ -91,7 +91,7 @@
                     switch ($option) {
                         case "allSinhVien":
                             $sinhVienList = new SinhVien($db);
-                            $stmt = $sinhVienList->getAllSinhVienWithEmail(true);
+                            $stmt = $sinhVienList->getAllSinhVienWithEmail();
                             $itemCount = $stmt->rowCount();
                     
                             if ($itemCount > 0) {

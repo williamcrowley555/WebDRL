@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 20, 2022 at 07:45 AM
+-- Generation Time: Dec 27, 2022 at 05:53 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.29
 
@@ -1505,6 +1505,10 @@ INSERT INTO `diemtrungbinhhe4` (`maDiemTrungBinh`, `diem`, `maHocKyDanhGia`, `ma
 ('3118410087HK12223', 1, 'HK12223', '3118410087'),
 ('3118410087HK22021', 1, 'HK22021', '3118410087'),
 ('3118410087HK22122', 1, 'HK22122', '3118410087'),
+('3118410103HK12021', 3.8, 'HK12021', '3118410103'),
+('3118410103HK12122', 1, 'HK12122', '3118410103'),
+('3118410103HK22021', 2, 'HK22021', '3118410103'),
+('3118410103HK22122', 4, 'HK22122', '3118410103'),
 ('3118410117HK12021', 1, 'HK12021', '3118410117'),
 ('3118410117HK12122', 1.1, 'HK12122', '3118410117'),
 ('3118410117HK12223', 1, 'HK12223', '3118410117'),
@@ -1548,8 +1552,8 @@ CREATE TABLE `hoatdongdanhgia` (
 
 INSERT INTO `hoatdongdanhgia` (`maHoatDong`, `maTieuChi2`, `maTieuChi3`, `maKhoa`, `tenHoatDong`, `diemNhanDuoc`, `diaDiemDienRaHoatDong`, `maQRDiaDiem`, `thoiGianBatDauHoatDong`, `thoiGianKetThucHoatDong`, `maHocKyDanhGia`, `thoiGianBatDauDiemDanh`) VALUES
 ('HD1', 12, 0, 'DCT', 'Chủ nhật xanh 2022', 5, 'SGU', '6295e2d7778ea.png', '2022-05-31 16:41:00', '2022-06-24 16:43:00', 'HK22122', '2022-05-31 16:43:11'),
-('HD10', 29, 0, 'DCT', 'Hoạt đông 1211111', 10, 'Đại Học Sài Gòn, An Dương Vương, phường 3, Quận 5, Thành phố Hồ Chí Minh', '62a4134e40bf0.png', '2022-06-11 11:00:00', '2022-06-24 11:00:00', 'HK22122', '2022-06-23 19:00:48'),
-('HD11', 17, 0, 'DCT', 'Hoạt động thiện nguyện Củ Chi', 5, 'Nhà Văn Hóa Thanh Niên Tp. HCM, Phạm Ngọc Thạch, Bến Nghé, Quận 1, Thành phố Hồ Chí Minh', '62b460bf250fb.png', '2022-06-22 19:46:00', '2022-06-25 19:46:00', 'HK22122', '2022-06-24 04:58:28'),
+('HD10', 29, 0, 'DCT', 'Hoạt đông 1211111', 10, 'Đại Học Sài Gòn, An Dương Vương, phường 3, Quận 5, Thành phố Hồ Chí Minh', '62a4134e40bf0.png', '2022-06-11 11:00:00', '2022-12-28 11:00:00', 'HK22122', '2022-12-27 11:49:50'),
+('HD11', 17, 0, 'DCT', 'Hoạt động thiện nguyện Củ Chi', 5, 'Nhà Văn Hóa Thanh Niên Tp. HCM, Phạm Ngọc Thạch, Bến Nghé, Quận 1, Thành phố Hồ Chí Minh', '62b460bf250fb.png', '2022-06-22 19:46:00', '2022-12-28 19:46:00', 'HK22122', '2022-12-27 11:48:53'),
 ('HD2', 29, 0, 'DCT', 'Hoạt động 23', 5, 'KLF SGU', '6295e2f451707.png', '2022-05-30 16:42:00', '2022-06-02 16:42:00', 'HK22122', '2022-06-23 04:29:05'),
 ('HD3', 7, 0, 'DCT', 'Thích thì đi', 3, 'Quận 8', '62962d37668eb.png', '2022-05-31 21:58:00', '2022-06-01 21:58:00', 'HK22122', '2022-05-31 22:05:03'),
 ('HD4', 29, 0, 'DCT', 'Hoạt động 12', 5, 'KLF SGU', '6296fd93be083.png', '2022-06-01 12:47:00', '2022-06-03 12:47:00', 'HK22122', '2022-06-01 12:48:48'),
@@ -4438,7 +4442,9 @@ INSERT INTO `thamgiahoatdong` (`maThamGiaHoatDong`, `maHoatDong`, `maSinhVienTha
 (14, 'HD6', '3119410262', NULL),
 (15, 'HD10', '3119410262', NULL),
 (16, 'HD11', '3119410262', NULL),
-(18, 'HD11', '3118410262', '2022-06-24 04:58:40');
+(18, 'HD11', '3118410262', '2022-06-24 04:58:40'),
+(19, 'HD11', '3118410103', '2022-12-27 11:49:23'),
+(20, 'HD10', '3118410103', '2022-12-27 11:50:03');
 
 -- --------------------------------------------------------
 
@@ -4630,7 +4636,8 @@ INSERT INTO `user_token` (`stt`, `maSo`, `token`, `quyen`, `thoiGianDangNhap`, `
 (752, '3118410146', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJpYXQiOjE2Njk3NDE5NjcsIm5iZiI6MTY2OTc0MTk3NywiZXhwIjoxNjY5ODI4MzY3LCJhdWQiOiJzaW5odmllbiIsInNpbmh2aWVuIjp7Im1hU2luaFZpZW4iOiIzMTE4NDEwMTQ2IiwiaG9UZW5TaW5oVmllbiI6IkJcdTAwZDlJIFFVQU5HIEhVWSAiLCJxdXllbiI6InNpbmh2aWVuIn19.BRQRMLL4V-pT9GOy7xT2WCFyU2TPftMvYoEWPBlN0IA', 'sinhvien', '2022-11-29 11:12:47', '2022-11-30 11:12:47'),
 (807, '3118410071', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJpYXQiOjE2NzEzNjc1OTYsIm5iZiI6MTY3MTM2NzYwNiwiZXhwIjoxNjcxNDUzOTk2LCJhdWQiOiJzaW5odmllbiIsInNpbmh2aWVuIjp7Im1hU2luaFZpZW4iOiIzMTE4NDEwMDcxIiwiaG9UZW5TaW5oVmllbiI6IkxcdTAwY2EgVEhcdTFlYTBDIFx1MDExMFx1MWVhMFQgIiwicXV5ZW4iOiJzaW5odmllbiJ9fQ.JzqpjG7qC7t-g2T3vtvOUvT_7Y_6XgIFDY-nEnkAK5A', 'sinhvien', '2022-12-18 06:46:36', '2022-12-19 06:46:36'),
 (833, '10631', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJpYXQiOjE2NzE0NDkzNDQsIm5iZiI6MTY3MTQ0OTM1NCwiZXhwIjoxNjcxNTM1NzQ0LCJhdWQiOiJjdmh0IiwiY3ZodCI6eyJtYUNvVmFuSG9jVGFwIjoiMTA2MzEiLCJob1RlbkNvVmFuIjoiUGhhbiBUXHUxZWE1biBRdVx1MWVkMWMiLCJxdXllbiI6ImN2aHQifX0.yUABXcsBtQi7qhW0_cc3dkIM-c_lcrRg-2wCPJ8ktWY', 'cvht', '2022-12-19 05:29:04', '2022-12-20 05:29:04'),
-(834, 'admin', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJpYXQiOjE2NzE1MTg2NTMsIm5iZiI6MTY3MTUxODY2MywiZXhwIjoxNjcxNjA1MDUzLCJhdWQiOiJhZG1pbiIsImFkbWluIjp7InRhaUtob2FuIjoiYWRtaW4iLCJob1RlbiI6IkFkbWluIiwicXV5ZW4iOiJhZG1pbiJ9fQ.o9FR8G3jzDc5kIHxtEHv8u704PuM3cVXov8qIBzqbAk', 'admin', '2022-12-20 00:44:13', '2022-12-21 00:44:13');
+(836, 'admin', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJpYXQiOjE2NzIxMTY0MTgsIm5iZiI6MTY3MjExNjQyOCwiZXhwIjoxNjcyMjAyODE4LCJhdWQiOiJhZG1pbiIsImFkbWluIjp7InRhaUtob2FuIjoiYWRtaW4iLCJob1RlbiI6IkFkbWluIiwicXV5ZW4iOiJhZG1pbiJ9fQ.C-Ei8z0t5N4NUDiv6DWUvrsSXm5AlSifpf50MBJbRXI', 'admin', '2022-12-26 22:46:58', '2022-12-27 22:46:58'),
+(837, '3118410103', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJpYXQiOjE2NzIxMTY1NTUsIm5iZiI6MTY3MjExNjU2NSwiZXhwIjoxNjcyMjAyOTU1LCJhdWQiOiJzaW5odmllbiIsInNpbmh2aWVuIjp7Im1hU2luaFZpZW4iOiIzMTE4NDEwMTAzIiwiaG9UZW5TaW5oVmllbiI6IlBIXHUwMGQ5TkcgVFJcdTFlYTROIEhcdTFlYTJJICIsInF1eWVuIjoic2luaHZpZW4ifX0.kzfsRSmCZ5JFT5QRHRh6sBZBhkBznbc1mbvxwBvwqQw', 'sinhvien', '2022-12-26 22:49:15', '2022-12-27 22:49:15');
 
 --
 -- Indexes for dumped tables
@@ -4807,7 +4814,7 @@ ALTER TABLE `khieunai`
 -- AUTO_INCREMENT for table `thamgiahoatdong`
 --
 ALTER TABLE `thamgiahoatdong`
-  MODIFY `maThamGiaHoatDong` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `maThamGiaHoatDong` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `thongbaodanhgia`
@@ -4837,7 +4844,7 @@ ALTER TABLE `tieuchicap3`
 -- AUTO_INCREMENT for table `user_token`
 --
 ALTER TABLE `user_token`
-  MODIFY `stt` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=835;
+  MODIFY `stt` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=838;
 
 --
 -- Constraints for dumped tables

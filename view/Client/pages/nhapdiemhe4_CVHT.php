@@ -25,13 +25,15 @@
         <div class="row" style="margin: 0 auto; background: white;border-radius: 10px;">
             <div style="padding-right: 48px; padding-left: 48px; padding-top: 48px; padding-bottom: 24px;">
                 <input class="form-check-input" type="radio" name="radio_nhapdiemhe4" id="radio_nhapdiem">
-                <label class="form-check-label" > Nhập điểm </label>
+                <label class="form-check-label" id="label_nhapdiem" for="radio_nhapdiem"> Nhập điểm </label>
                 <input class="form-check-input ms-5" type="radio" name="radio_nhapdiemhe4" id="radio_xemdiem">
-                <label class="form-check-label" > Xem điểm </label>
+                <label class="form-check-label" id="label_xemdiem" for="radio_xemdiem"> Xem điểm </label>
+                <input class="form-check-input ms-5" type="radio" name="radio_nhapdiemhe4" id="radio_molop">
+                <label class="form-check-label" id="label_molop" for="radio_molop"> Mở lớp nhập điểm </label>
             </div>
             
             <!-- Bảng nhập điểm -->
-            <div id='selector_nhapdiem' style="padding-right: 48px; padding-left: 48px; padding-bottom: 48px; text-align: center; ">
+            <div id='selector_nhapdiem' style="padding: 0 60px; padding-bottom: 48px;">
                 <span style="font-weight: 700" >Học kỳ - Năm học:</span>
                 <select class="ms-3" id="select_hocKy_namHoc">
                     
@@ -80,7 +82,7 @@
             </div>
             
             <!-- Bảng xem điểm -->
-            <div id='selector_xemdiem' style="padding-right: 48px; padding-left: 48px; padding-bottom: 48px; text-align: center; ">
+            <div id='selector_xemdiem' style="padding:0 60px; padding-bottom: 48px; ">
                 <span style="font-weight: 700" >Học kỳ - Năm học:</span>
                 <select class="ms-3" id="select_hocKy_namHoc_xemdiem">
                     
@@ -111,6 +113,36 @@
                     
                 </nav>
             </div>
+
+            <!-- Bảng mở lớp -->
+            <div id='selector_molop' style="padding: 0 60px; padding-bottom: 48px; ">
+                <span style="font-weight: 700" >Học kỳ - Năm học:</span>
+                <select class="ms-3" id="select_hocKy_namHoc_molop">
+                    
+                </select>
+
+            </div>
+            <div id='danhsachlop' style="padding-right: 48px; padding-left: 48px; padding-bottom: 48px; text-align: center; ">
+                <h4 style="text-transform: uppercase; text-align:center;">Danh sách lớp</h4>
+                <div class="table-responsive px-2" id ="DanhSachLop">
+                    <table class="table app-table-hover mb-0 text-left" id="table_danhSachLop">
+                        <thead>
+                            <tr>
+
+                            </tr>
+                        </thead>
+                        <tbody id="tbody_danhSachLop">
+                            
+                        </tbody>
+                    </table>
+                </div>
+
+                <nav class="app-pagination ps-2 pt-3" id="idPhanTrangDanhSachLop">
+                    
+                </nav>
+            </div>
+
+            <!-- Form tải về mẫu phiếu nhập điểm -->
             <form action="" method='POST' id='formDownloadMauNhapDiemHe4' class='text-center pb-2'>
                 <input type='hidden' name="table_data" id="table_data" />
                 <p>Tải về mẫu nhập điểm hệ 4 <button type='submit' class='btn btn-link bg-white p-0' name="btn_export_to_excel" style='outline: none; box-shadow: none;'>tại đây</button></p>
@@ -136,6 +168,11 @@
             <!-- end of row -->
         </div>
         <!-- end of container -->
+
+        <!-- Icon mở khóa -->
+        <!-- <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-unlock" viewBox="0 0 16 16">
+  <path d="M11 1a2 2 0 0 0-2 2v4a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h5V3a3 3 0 0 1 6 0v4a.5.5 0 0 1-1 0V3a2 2 0 0 0-2-2zM3 8a1 1 0 0 0-1 1v5a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V9a1 1 0 0 0-1-1H3z"/>
+</svg> -->
     </div>
     <!-- end of footer -->
     <!-- end of footer -->
@@ -168,21 +205,35 @@
             $("#import_file").val("");
         });
 
+        $("#select_hocKy_namHoc_molop").on("change", function() {
+            $("#tbody_danhSachLop tr").remove();
+            $("#idPhanTrangDanhSachLop").empty();
+        });
+
         var maSo = getCookie("maSo");
         var maHocKyDanhGia = $("#select_hocKy_namHoc").find(":selected").val();
         var maLop = $("#select_lop").find(":selected").val();
         var maHocKyDanhGiaXemDiem = $("#select_hocKy_namHoc_xemdiem").find(":selected").val();
         var maLopXemDiem = $("#select_lop_xemdiem").find(":selected").val();
 
-        // Check radio nhập điểm khi tải trang
-        $("#radio_nhapdiem").prop("checked", true);
-        hideXemDiemElements();
-        showNhapDiemElements();
+        //Hiển thị Elements tương ứng với các quyền được mở khi tải trang.
+        var isUnlockLop = isUnlockForCVHT("lop");
+        var isUnlockCVHT = isUnlockForCVHT();
+        if (isUnlockLop && isUnlockCVHT)
+            showUnlockCVHTAndLopElements();
+        else if(isUnlockLop)
+            showUnlockLopElements();
+            else
+                showUnlockCVHTElements();
 
         // Chọn radio nhập điểm thì hiện bảng điểm xem trước
         $("#radio_nhapdiem").on("click", function() {
             // Ẩn thông tin của bảng xem điểm
             hideXemDiemElements();
+
+            // Ẩn thông tin của bảng mở lớp
+            hideMoLopElements();
+
             // Hiện thông tin của bảng nhập điểm
             showNhapDiemElements();
         });
@@ -191,8 +242,22 @@
             // Ẩn thông tin của bảng nhập điểm
             hideNhapDiemElements();
 
+            // Ẩn thông tin của bảng mở lớp
+            hideMoLopElements();
+
             // Hiện thông tin của bảng xem điểm
             showXemDiemElements();
+        });
+
+        $("#radio_molop").on("click", function() {
+            // Ẩn thông tin của bảng nhập điểm
+            hideNhapDiemElements();
+
+            // Ẩn thông tin của bảng xem điểm
+            hideXemDiemElements();
+
+            // Hiện thông tin của bảng mở lớp
+            showMoLopElements();
         });
         
         tableTitle.forEach(function(title, index) {
@@ -208,6 +273,14 @@
 
             if(index == tableDanhSachDiemHe4Title.length - 1) {
                 $("#table_ketQuaHocTap>thead>tr").append(`<th class='cell'>Hành động</th>`);
+            }
+        });
+
+        tableDanhSachLopTitle.forEach(function(title, index) {
+            $("#table_danhSachLop>thead>tr").append(`<th class='cell'>${title}</th>`);
+
+            if(index == tableDanhSachLopTitle.length - 1) {
+                $("#table_danhSachLop>thead>tr").append(`<th class='cell'>Hành động</th>`);
             }
         });
 
@@ -269,6 +342,15 @@
             loadGPAToTable(maLopXemDiem, maHocKyDanhGiaXemDiem);
         });
 
+        $("#select_hocKy_namHoc_molop").on("change", function() {
+            var maHocKyDanhGiaMoLop = $("#select_hocKy_namHoc_molop").find(":selected").val();
+            if(maHocKyDanhGiaMoLop == "none") {
+                presentNotification("error", "Lỗi", "Vui lòng chọn học kỳ - năm học trước!");
+                return;
+            }
+            loadDanhSachLop(maSo);
+        });
+
         // Xử lý chỉnh sửa điểm trung bình học kỳ
 	$(document).on("click", ".btn_ChinhSua_DiemHe4", function() {
 		var diem = $(this).closest('tr').children('td:nth-child(4)').text();
@@ -307,6 +389,24 @@
 		$(this).parent().hide();
 		$(this).closest('tr').find('.btn_ChinhSua_DiemHe4').show();
 	});
+
+    // Xử lý mở nhập điểm
+    $(document).on("click", ".btn_MoNhapDiem", function() {
+        var maLop = $(this).attr('data-malop');
+        var maHocKyDanhGia = $("#select_hocKy_namHoc_molop").find(":selected").val();
+        var result = callGetAPI(urlapi_hockydanhgia_single_read + maHocKyDanhGia);
+        var maHocKyMo = result.hocKyXet + "-" + result.namHocXet;
+        khoaHoacMoNhapDiem(urlapi_lopmonhapdiemhe4_create, maLop, maHocKyMo);
+    });
+
+    // Xử lý khóa nhập điểm
+    $(document).on("click", ".btn_KhoaNhapDiem", function() {
+        var maLop = $(this).attr('data-malop');
+        var maHocKyDanhGia = $("#select_hocKy_namHoc_molop").find(":selected").val();
+        var result = callGetAPI(urlapi_hockydanhgia_single_read + maHocKyDanhGia);
+        var maHocKyMo = result.hocKyXet + "-" + result.namHocXet;
+        khoaHoacMoNhapDiem(urlapi_lopmonhapdiemhe4_delete, maLop, maHocKyMo);
+    });
 
     $(document).on("submit", "#formDownloadMauNhapDiemHe4", function(e) {
         $(this).attr('action', host_domain_url + '/phpspreadsheet/export/export_diemhe4.php');

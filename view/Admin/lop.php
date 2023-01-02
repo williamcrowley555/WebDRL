@@ -107,7 +107,7 @@
 
 							<div class="mb-3 form-group">
 								<label for="input_MaLop" class="form-label" style="color: black; font-weight: 500;">Mã lớp</label>
-								<input type="text" name="maLop" class="form-control mb-2" id="input_MaLop" placeholder="Mã lớp sẽ tự động nhập..." readonly>
+								<input type="text" name="maLop" class="form-control mb-2" id="input_MaLop" placeholder="Mã lớp sẽ tự động nhập..." />
 								<span class="invalid-feedback"></span>
 							</div>
 

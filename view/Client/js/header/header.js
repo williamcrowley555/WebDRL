@@ -1,5 +1,6 @@
 var jwtCookie = getCookie("jwt");
 var quyen = getCookie("quyen");
+var maSo = getCookie("maSo");
 
 loadAvatarByQuyen();
 if(quyen == "cvht")
@@ -28,7 +29,6 @@ function loadAvatarByQuyen() {
 }
 
 function loadAvatar(urlApi, quyen) {
-    maSo = getCookie("maSo");
     $.ajax({
         url: urlApi + maSo,
         type: "GET",
@@ -79,23 +79,62 @@ function isNhapDiemUnlock() {
     return isUnlock;
 }
 
-function isUnlockForQuyen() {
+function isUnlockForQuyen(quyenLop = null) {
     var isUnlock = false;
     $.ajax({
         url: urlapi_chucnang_quyen_single_details_read + "?maChucNang=" + 
-            CHUC_NANG_NHAP_DIEM_HE_4 + "&maQuyen=" + quyen,
+            CHUC_NANG_NHAP_DIEM_HE_4 + "&maQuyen=" + ((quyenLop == null) ? quyen : quyenLop),
         async: false,
         type: "GET",
         contentType: "application/json;charset=utf-8",
         dataType: "json",
         headers: {Authorization: jwtCookie,},
         success: function(result_CN_Quyen) {
+            // Nếu là quyền lớp, chỉ mở nhập điểm cho cvht
+            if(quyenLop != null)
+                if(result_CN_Quyen.maQuyen == quyenLop)
+                    isUnlock = true;
+
+            // Mở nhập điểm cho tài khoản có quyền tương ứng 
             if(result_CN_Quyen.maQuyen == quyen)
                 isUnlock = true;
         },
         error: function (errorMessage){}
     });
     return isUnlock;
+}
+
+function callGetAPI(urlAPI) {
+    var list = null;
+    $.ajax({
+        url: urlAPI,
+        type: "GET",
+        contentType: "application/json;charset=utf-8",
+        dataType: "json",
+        async: false,
+        headers: { Authorization: jwtCookie },
+        success: function(result) {
+            list = result;
+        },
+    });
+    return list;
+}
+
+function isGetAPISuccess(urlAPI) {
+    var isSuccess = false;
+    $.ajax({
+        url: urlAPI,
+        async: false,
+        type: "GET",
+        contentType: "application/json;charset=utf-8",
+        dataType: "json",
+        headers: {Authorization: jwtCookie,},
+        success: function(result) {
+            isSuccess = true;
+        },
+        error: function (){}
+    });
+    return isSuccess;
 }
 
 function showNhapDiemInMenu(selector) {
@@ -106,12 +145,37 @@ function showNhapDiemInMenu(selector) {
         return;
     }
 
+    // Kiểm tra quyền lớp có được mở cho cố vấn học tập hay không?
+    if(quyen == "cvht") {
+        isUnlock = isUnlockForQuyen("lop");
+        if(isUnlock) {
+            $(selector).show();
+            return;
+        }
+    }
+    
+    //Kiểm tra quyền lớp có được mở cho sinh viên hay không?
+    if(quyen == "sinhvien") {
+        isUnlock = isUnlockForQuyen("lop");
+        if(isUnlock) {
+            var result = callGetAPI(urlapi_sinhvien_read_mssv + maSo);
+            console.log(result["sinhvien"][0].maLop);
+            var isSuccess = isGetAPISuccess(urlapi_lopmonhapdiemhe4_read_maLop + result["sinhvien"][0].maLop);
+            console.log(isSuccess);
+            if(isSuccess) {
+                $(selector).show();
+                return;
+            }
+        }
+    }
+
     // Kiểm tra quyền của tài khoản có được nhập điểm hay không?
     isUnlock = isUnlockForQuyen();
     if(!isUnlock) {
         $(selector).hide();
         return;
     }
+
     $(selector).show();
 
 }

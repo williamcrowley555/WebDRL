@@ -79,7 +79,7 @@
 							</div>
 
 							<div class="mb-3 form-group">
-								<label for="custom_select_Quyen" class="form-label" style="color: black; font-weight: 500;">Quyền áp dụng</label>
+								<label for="custom_select_Quyen" class="form-label" style="color: black; font-weight: 500;">Đối tượng áp dụng</label>
 								<select class="mw-100" name="maQuyen[]" id="custom_select_Quyen" style="color: #5d6778; font-size: 1rem;" 
 									multiple data-search="true" data-silent-initial-value-set="true" placeholder="Chọn quyền">
 
@@ -167,7 +167,7 @@
           Validator.isRequired('#custom_input_MaChucNang', 'Vui lòng nhập mã chức năng'),
           Validator.isNumber('#custom_input_MaChucNang', 'Mã lớp chỉ bao gồm ký tự số'),
           Validator.isRequired('#custom_select_HocKyDanhGia', 'Vui lòng chọn học kỳ - năm học áp dụng'),
-          Validator.isRequired('#custom_select_Quyen', 'Vui lòng chọn quyền áp dụng'),
+          Validator.isRequired('#custom_select_Quyen', 'Vui lòng chọn đối tượng áp dụng'),
         ],
         onSubmit: TuyChinh_ChucNang
     })
@@ -181,8 +181,6 @@
 	});
 
 	LoadComboBoxThongTinHocKyDanhGia_CaiDat();
-
-	LoadComboBoxThongTinQuyen_CaiDat();
 
 	GetListChucNang();
 
@@ -208,6 +206,8 @@
 		let maChucNang_custom = $(this).attr('data-id');
 
 		$('#custom_input_MaChucNang').val(maChucNang_custom);
+
+		LoadComboBoxThongTinQuyen_CaiDat(maChucNang_custom);
 
 		LoadThongTinTuyChinh_ChucNang(maChucNang_custom);
 

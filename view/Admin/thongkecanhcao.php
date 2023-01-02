@@ -56,11 +56,21 @@
 							</div> -->
 
 					</div>
+				
 					<!--//row-->
 				</div>
 				<!--//table-utilities-->
 			</div>
 			<!--//col-auto-->
+
+			<div class="d-inline text-end">
+				<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-funnel-fill" viewBox="0 0 16 16">
+								<path d="M1.5 1.5A.5.5 0 0 1 2 1h12a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.128.334L10 8.692V13.5a.5.5 0 0 1-.342.474l-3 1A.5.5 0 0 1 6 14.5V8.692L1.628 3.834A.5.5 0 0 1 1.5 3.5v-2z"/>
+				</svg>
+				Lọc trạng thái: 
+				<select class="form-select w-auto d-inline mx-3" id="select_TrangThai">
+				</select>
+			</div>
 
 			<div class="tab-pane fade show active" role="tabpanel" aria-labelledby="orders-all-tab">
 				<div class="app-card app-card-orders-table shadow-sm mb-5">
@@ -171,22 +181,45 @@
 
 	$("#select_Khoa").on("change", function() {
 		var maKhoa = $(this).find('option:selected').val();
+		// $('#select_TrangThai').empty();
+		// $('#tbodyThongKe tr').remove();
+		// $('#idPhanTrangThongKe').empty();
+		if(maKhoa != "none" && maKhoa != null)
+			getMaKhoaToanCuc(maKhoa);
 		loadCombobox(urlapi_lop_read_maKhoa + maKhoa, "#select_Lop", thongBaoLoiComboboxLop);
 	});
 
+	$("#select_Lop").on("change", function() {
+		var maLop = $(this).find('option:selected').val();
+		if(maLop != "none" && maLop != null)
+			getMaLopToanCuc(maLop);
+		// $('#select_TrangThai').empty();
+		// $('#tbodyThongKe tr').remove();
+		// $('#idPhanTrangThongKe').empty();
+	});
+
 	$("#btn_thongKe").on("click", function() {
+		
 		// console.log("hello");
-		loadTableThongKe();
+		$('#select_TrangThai').find('option[value=all]').attr('selected','selected');
+		loadTableThongKe("all");
+	});
+
+	$('#select_TrangThai').on('change', function() {
+		var trangThai = $('#select_TrangThai').val();
+		loadFilterTableThongKeCanhCao(trangThai);
+
 	});
 
 	$(document).on("click", ".btn_xemChiTiet", function() {
 		
 		var maSinhVien = $(this).attr('data-id');
 		var hoTenSinhVien = $(this).attr('data-hoten');
+		var hienThi = $(this).attr('data-prl');
 		$("#maSinhVien").empty();
 		$("#hoTenSinhVien").empty();
 		$("#maSinhVien").append("Mã sinh viên: " + maSinhVien);
 		$("#hoTenSinhVien").append("Họ tên sinh viên: " + hoTenSinhVien);
-		loadDanhSachPhieuRenLuyen(maSinhVien);
+		loadDanhSachPhieuRenLuyen(maSinhVien, hienThi);
 	});
 </script>

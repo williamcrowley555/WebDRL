@@ -21,14 +21,18 @@ function redirectPage() {
     // Kiểm tra quyền cố vấn học tập có vào được hay không?
     if(quyen == "cvht") {
         window.history.back();
+
     }
 
     // Kiểm tra quyền sinh viên có vào được hay không?
     if(quyen == "sinhvien") {
         isUnlock = isUnlockForSinhVien();
         if(!isUnlock) {
-            window.history.back();
-            return;
+            isUnlock = isUnlockForSinhVien("lop");
+            if(!isUnlock) {
+                window.history.back();
+                return;
+            }
         }
     }
 }
@@ -113,17 +117,20 @@ function loadThongTinSinhVien() {
     $("#information-card_maCoVanHocTap").text("(" + result_cvht.maCoVanHocTap + ")");
 }
 
-function isUnlockForSinhVien() {
+function isUnlockForSinhVien(quyenLop = null) {
     var isUnlock = false;
     $.ajax({
         url: urlapi_chucnang_quyen_single_details_read + "?maChucNang=" + 
-            CHUC_NANG_NHAP_DIEM_HE_4 + "&maQuyen=" + quyen,
+            CHUC_NANG_NHAP_DIEM_HE_4 + "&maQuyen=" + ((quyenLop == null) ? quyen : quyenLop),
         async: false,
         type: "GET",
         contentType: "application/json;charset=utf-8",
         dataType: "json",
         headers: {Authorization: jwtCookie,},
         success: function(result_CN_Quyen) {
+            if(quyenLop != null)
+                if(result_CN_Quyen.maQuyen == quyenLop)
+                    isUnlock = true;
             if(result_CN_Quyen.maQuyen == quyen)
                 isUnlock = true;
         },
@@ -210,6 +217,87 @@ function getHtmlDataUnlockGPA(result) {
         }
     });
     
+    return htmlData;
+}
+
+function getHtmlDataUnlockLop() {
+    var htmlData = "";
+    var result_lop = getReadAPI(urlapi_sinhvien_read_mssv + maSinhVien);
+    var result = getReadAPI(urlapi_lopmonhapdiemhe4_read_maLop + result_lop["sinhvien"][0].maLop);
+    var result_diemhe4 = getReadAPI(urlapi_diemtrungbinhhe4_read_MaSV + maSinhVien);
+    var result_sinhvien = getReadAPI(urlapi_sinhvien_single_read + maSinhVien);
+    $.each(result, function(index) {
+        for(var i = 0; i<result[index].length ;i++) {
+            var maHocKyMoArr = result[index][i].maHocKyMo.split("-");
+            var hocKy = maHocKyMoArr[0];
+            var namHocTruoc = maHocKyMoArr[1];
+            var namHocSau = maHocKyMoArr[2];
+            var maHocKyDanhGiaTemp = "HK" + hocKy + namHocTruoc.slice(-2) + namHocSau.slice(-2);
+            var isSuaDiem = false;
+            console.log("maHocKyDanhGiaTemp = " + maHocKyDanhGiaTemp);
+            $.each(result_diemhe4, function(index_diemhe4) {
+                for(var j = 0; j<result_diemhe4[index_diemhe4].length ;j++) {
+                    if(maHocKyDanhGiaTemp == result_diemhe4[index_diemhe4][j].maHocKyDanhGia) {
+                        console.log("Chay if");
+                        result[index][i].diem =  result_diemhe4[index_diemhe4][j].diem;
+                        result[index][i].hocKyXet = hocKy;
+                        result[index][i].namHocXet = namHocTruoc + "-" + namHocSau;
+                        result[index][i].hanhDong = "suaDiem";
+                        result[index][i].hoTenSinhVien = result_sinhvien.hoTenSinhVien;
+                        result[index][i].maSinhVien = result_sinhvien.maSinhVien;
+                        result[index][i].maHocKyDanhGia = maHocKyDanhGiaTemp;
+                        isSuaDiem = true;
+                    }
+                }
+            });
+            if(!isSuaDiem) {
+                result[index][i].hocKyXet = hocKy;
+                result[index][i].namHocXet = namHocTruoc + "-" + namHocSau;
+                result[index][i].hanhDong = "chamDiem";
+                result[index][i].hoTenSinhVien = result_sinhvien.hoTenSinhVien;
+                result[index][i].maSinhVien = result_sinhvien.maSinhVien;
+                result[index][i].maHocKyDanhGia = maHocKyDanhGiaTemp;
+            }
+        }
+    });
+    
+    $.each(result, function(index) {
+        for (var p=0;p<result[index].length;p++) {
+            console.log(result[index][p].hanhDong);
+            htmlData += "<tr>\
+                            <td> " + result[index][p].soThuTu + " </td>\
+                            <td> " + result[index][p].maSinhVien + " </td>\
+                            <td> " + result[index][p].hoTenSinhVien + " </td>\
+                            <td> " + result[index][p].hocKyXet + " </td>\
+                            <td> " + result[index][p].namHocXet + " </td>";    
+            if(result[index][p].hanhDong == "chamDiem")
+                htmlData += "<td> </td>" +
+                            "<td>" + 
+                                "<button type='button' class='btn btn-success btn_NhapDiem_DiemHe4' data-id='"+ result[index][p].maSinhVien + "' style='color: white;'>" +
+                                    "Nhập điểm" +
+                                "</button>" +
+                                "<div class='edit-confirmation' style='display:none'>\
+                                    <button class='btn btn-primary btn_XacNhanNhapDiem_DiemHe4' style='color: white;' data-idMSSV = '" + result[index][p].maSinhVien + "' data-idMaHKDG='" + result[index][p].maHocKyDanhGia +
+                                        "' data-hocKyXet='" + result[index][p].hocKyXet + "' data-namHocXet='" + result[index][p].namHocXet + "'>Xác nhận</button>\
+                                    <button class='btn bg-danger btn_HuyChinhSua_DiemHe4 ml-2' style='color: white;' data-idMSSV = '" + result[index][p].maSinhVien + "' data-idMaHKDG='" + result[index][p].maHocKyDanhGia + "'>Hủy</button>\
+                                </div>"+
+                            "</td>";
+                
+            if(result[index][p].hanhDong == "suaDiem")
+                htmlData += "<td>" + result[index][p].diem + "</td>" +
+                            "<td>" + 
+                                "<button type='button' class='btn btn-warning btn_ChinhSua_DiemHe4' data-id='"+ result[index][p].maSinhVien + "' style='color: white;'>" +
+                                    "Chỉnh sửa" +
+                                "</button>" +
+                                "<div class='edit-confirmation' style='display:none'>\
+                                    <button class='btn btn-primary btn_XacNhanChinhSua_DiemHe4' style='color: white;' data-idMSSV = '" + result[index][p].maSinhVien + "' data-idMaHKDG='" + result[index][p].maHocKyDanhGia +
+                                    "' data-hocKyXet='" + result[index][p].hocKyXet + "' data-namHocXet='" + result[index][p].namHocXet + "'> Xác nhận</button>\
+                                    <button class='btn bg-danger btn_HuyChinhSua_DiemHe4 ml-2' style='color: white;' data-idMSSV = '" + result[index][p].maSinhVien + "' data-idMaHKDG='" + result[index][p].maHocKyDanhGia + "'>Hủy</button>\
+                                </div>"+
+                            "</td>";
+            htmlData += "</tr>";
+        }
+    });
     return htmlData;
 }
 
@@ -353,6 +441,8 @@ function loadGPAToTable() {
 
     // Nếu học kỳ không mở và sinh viên chưa có bất kỳ điểm nào -> Không tìm thấy kết quả.
     var isUnlock = isNhapDiemUnlock();
+    var isUnlockSinhVien = isUnlockForSinhVien();
+    var isUnlockLop = isUnlockForSinhVien("lop");
     var isHavingGPA = isGetAPISuccess(urlapi_diemtrungbinhhe4_read_MaSV + maSinhVien);
     if(!isUnlock && !isHavingGPA) {
         htmlData += "<tr>\
@@ -364,28 +454,37 @@ function loadGPAToTable() {
         return;
     }
 
-    // Nếu học kỳ mở nhưng sinh viên chưa có bất kỳ điểm nào -> Hiện chấm điểm cho học kỳ đang mở
-    if(isUnlock && !isHavingGPA) {
-        result_GPA_unlock = getReadAPI(urlapi_chucnang_hockydanhgia_details_read +
-                "?maChucNang=" + CHUC_NANG_NHAP_DIEM_HE_4);
-        console.log(result_GPA_unlock);
-        //result_GPA_unlock["chucnang_hockydanhgia"].sort((a, b) => {sortGPA(a ,b)});
-        // result_GPA_unlock["chucnang_hockydanhgia"].sort();
-        sortObject(result_GPA_unlock["chucnang_hockydanhgia"], "namHocXet", true);
-        //sortObject(result_GPA_unlock["chucnang_hockydanhgia"], "hocKyXet", true);
-        htmlData = getHtmlDataUnlockGPA(result_GPA_unlock);
-        $("#tbody_BangDiemXemTruoc").append(htmlData);
+    if(isUnlockSinhVien) {
+        // Nếu học kỳ mở nhưng sinh viên chưa có bất kỳ điểm nào -> Hiện chấm điểm cho học kỳ đang mở
+        if(isUnlock && !isHavingGPA) {
+            result_GPA_unlock = getReadAPI(urlapi_chucnang_hockydanhgia_details_read +
+                    "?maChucNang=" + CHUC_NANG_NHAP_DIEM_HE_4);
+            console.log(result_GPA_unlock);
+            //result_GPA_unlock["chucnang_hockydanhgia"].sort((a, b) => {sortGPA(a ,b)});
+            // result_GPA_unlock["chucnang_hockydanhgia"].sort();
+            sortObject(result_GPA_unlock["chucnang_hockydanhgia"], "namHocXet", true);
+            //sortObject(result_GPA_unlock["chucnang_hockydanhgia"], "hocKyXet", true);
+            htmlData = getHtmlDataUnlockGPA(result_GPA_unlock);
+            $("#tbody_BangDiemXemTruoc").append(htmlData);
+            return;
+        }
+
+        //Nếu học kỳ mở và sinh viên đã có dữ liệu điểm -> Hiện chấm điểm hoặc chỉnh sửa cho học kỳ mở, hiện xem cho học kỳ khác.
+        if(isUnlock && isHavingGPA) {
+            result_GPA_unlock = getReadAPI(urlapi_chucnang_hockydanhgia_details_read +
+                    "?maChucNang=" + CHUC_NANG_NHAP_DIEM_HE_4);
+            result_GPA = getReadAPI(urlapi_diemtrungbinhhe4_read_MaSV + maSinhVien);
+            console.log("--- 1 ---");
+            console.log(result_GPA);
+            htmlData = getHtmlDataGPA(result_GPA_unlock, result_GPA);
+            $("#tbody_BangDiemXemTruoc").append(htmlData);
+            return;
+        }
         return;
     }
 
-    //Nếu học kỳ mở và sinh viên đã có dữ liệu điểm -> Hiện chấm điểm hoặc chỉnh sửa cho học kỳ mở, hiện xem cho học kỳ khác.
-    if(isUnlock && isHavingGPA) {
-        result_GPA_unlock = getReadAPI(urlapi_chucnang_hockydanhgia_details_read +
-                "?maChucNang=" + CHUC_NANG_NHAP_DIEM_HE_4);
-        result_GPA = getReadAPI(urlapi_diemtrungbinhhe4_read_MaSV + maSinhVien);
-        console.log("--- 1 ---");
-        console.log(result_GPA);
-        htmlData = getHtmlDataGPA(result_GPA_unlock, result_GPA);
+    if(isUnlockLop) {
+        htmlData = getHtmlDataUnlockLop();
         $("#tbody_BangDiemXemTruoc").append(htmlData);
         return;
     }
@@ -423,33 +522,45 @@ function postDiemHe4(maSinhVien, maHocKyDanhGia, diem, urlAPI, namHocXet, hocKyX
     });
 }
 
-function updateDiemHe4(maSinhVien, maHocKyDanhGia, diem, chucNang, namHocXet, hocKyXet) {
+function updateDiemHe4(maSinhVien, maHocKyDanhGia, diem, chucNang, namHocXet, hocKyXet, maHocKyMo = null) {
     //Kiểm tra hệ thống còn mở cho nhập điểm hay không?
     var isUnlock = isNhapDiemUnlock();
     if(!isUnlock) {
-        presentNotification("error", "Lỗi", "Hệ thống đã đóng chức năng nhập và chỉnh sửa điểm 1!");
+        presentNotification("error", "Lỗi", "Hệ thống đã đóng chức năng nhập và chỉnh sửa điểm!");
         return;
     }
 
     // Kiểm tra quyền sinh viên được nhập điểm hay không?
-    isUnlock = isUnlockForSinhVien();
-    if(!isUnlock) {
-        presentNotification("error", "Lỗi", "Hệ thống không cho phép sinh viên nhập và chỉnh sửa điểm 2!");
-        return;
-    }
+    var isUnlockSinhVien = isUnlockForSinhVien();
+    var isUnlockLop = isUnlockForSinhVien("lop");
+    if(isUnlockSinhVien) {
+        //Kiểm tra học kỳ còn cho phép nhập điểm hay không?
+        isUnlock = isGetAPISuccess(urlapi_chucnang_hockydanhgia_single_details_read +
+            "?maChucNang=" + CHUC_NANG_NHAP_DIEM_HE_4 + "&maHocKyDanhGia=" + maHocKyDanhGia);
+        if(!isUnlock) {
+            presentNotification("error", "Lỗi", "Hệ thống không cho sinh viên nhập và chỉnh sửa điểm!");
+            return;
+        }
 
-    //Kiểm tra học kỳ còn cho phép nhập điểm hay không?
-    isUnlock = isGetAPISuccess(urlapi_chucnang_hockydanhgia_single_details_read +
-        "?maChucNang=" + CHUC_NANG_NHAP_DIEM_HE_4 + "&maHocKyDanhGia=" + maHocKyDanhGia);
-    if(!isUnlock) {
-        presentNotification("error", "Lỗi", "Hệ thống không cho sinh viên nhập và chỉnh sửa điểm 3!");
-        return;
-    }
+        if(chucNang == "chinhSua")
+            postDiemHe4(maSinhVien, maHocKyDanhGia, diem, urlapi_diemtrungbinhhe4_update, namHocXet, hocKyXet);
+        else
+            postDiemHe4(maSinhVien, maHocKyDanhGia, diem, urlapi_diemtrungbinhhe4_create, namHocXet, hocKyXet);
+    } else if(isUnlockLop) {
+        
+        var result_lop = getSingleReadAPI(urlapi_sinhvien_single_read + maSinhVien);
+        console.log("maLop = " + result_lop.maLop + " | " + "maHocKyMo = " + maHocKyMo);
+        isUnlock = isGetAPISuccess(urlapi_lopmonhapdiemhe4_read + "?maLop=" + result_lop.maLop + "&maHocKyMo=" + maHocKyMo);
+        if(isUnlock) {
+            console.log("chay trong nay");
+            if(chucNang == "chinhSua")
+                postDiemHe4(maSinhVien, maHocKyDanhGia, diem, urlapi_diemtrungbinhhe4_update, namHocXet, hocKyXet);
+            else
+                postDiemHe4(maSinhVien, maHocKyDanhGia, diem, urlapi_diemtrungbinhhe4_create, namHocXet, hocKyXet);
+        }
+    } else
+        presentNotification("error", "Lỗi", "Hệ thống không cho phép sinh viên nhập và chỉnh sửa điểm!");
 
-    if(chucNang == "chinhSua")
-        postDiemHe4(maSinhVien, maHocKyDanhGia, diem, urlapi_diemtrungbinhhe4_update, namHocXet, hocKyXet);
-    else
-        postDiemHe4(maSinhVien, maHocKyDanhGia, diem, urlapi_diemtrungbinhhe4_create, namHocXet, hocKyXet);
 }
 
 function isGPA(inputElement, min, max) {

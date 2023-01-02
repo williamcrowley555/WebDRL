@@ -319,13 +319,13 @@ function GetListKhieuNai(maKhoa, maKhoaHoc, maHocKyDanhGia) {
                 : toDateTimeString(data[i].thoiGianKhieuNai)) +
               "</td>\
                                 <td class='cell'>\
-                                  <button class='m-2 btn btn-secondary btn_XemChiTiet' style='color: white; width: max-content;' data-bs-toggle='modal' data-bs-target='#XemChiTietModal' data-id = '" +
+                                  <button class='m-1 btn btn-secondary btn_XemChiTiet' style='color: white; width: max-content;' data-bs-toggle='modal' data-bs-target='#XemChiTietModal' data-id = '" +
               data[i].maKhieuNai +
               "' >Xem chi tiết</button>\
-                                  <button class='m-2 btn btn-info btn_PheDuyet' style='color: white; width: max-content;' data-bs-toggle='modal' data-bs-target='#PheDuyetModal' data-id = '" +
+                                  <button class='m-1 btn btn-info btn_PheDuyet' style='color: white; width: max-content;' data-bs-toggle='modal' data-bs-target='#PheDuyetModal' data-id = '" +
               data[i].maKhieuNai +
               "' >Phê duyệt</button>\
-                                  <button class='m-2 btn btn-danger btn_XoaKhieuNai' style='color: white; width: max-content;' data-id = '" +
+                                  <button class='m-1 btn btn-danger btn_XoaKhieuNai' style='color: white; width: max-content;' data-id = '" +
               data[i].maKhieuNai +
               "' >Xóa</button>\
               </td>\
@@ -437,13 +437,13 @@ function TimKiemKhieuNai(maSinhVien) {
                 : toDateTimeString(data[i].thoiGianKhieuNai)) +
               "</td>\
                                 <td class='cell'>\
-                                  <button class='m-2 btn btn-secondary btn_XemChiTiet' style='color: white; width: max-content;' data-bs-toggle='modal' data-bs-target='#XemChiTietModal' data-id = '" +
+                                  <button class='m-1 btn btn-secondary btn_XemChiTiet' style='color: white; width: max-content;' data-bs-toggle='modal' data-bs-target='#XemChiTietModal' data-id = '" +
               data[i].maKhieuNai +
               "' >Xem chi tiết</button>\
-                                  <button class='m-2 btn btn-info btn_PheDuyet' style='color: white; width: max-content;' data-bs-toggle='modal' data-bs-target='#PheDuyetModal' data-id = '" +
+                                  <button class='m-1 btn btn-info btn_PheDuyet' style='color: white; width: max-content;' data-bs-toggle='modal' data-bs-target='#PheDuyetModal' data-id = '" +
               data[i].maKhieuNai +
               "' >Phê duyệt</button>\
-                                  <button class='m-2 btn btn-danger btn_XoaKhieuNai' style='color: white; width: max-content;' data-id = '" +
+                                  <button class='m-1 btn btn-danger btn_XoaKhieuNai' style='color: white; width: max-content;' data-id = '" +
               data[i].maKhieuNai +
               "' >Xóa</button>\
               </td>\
