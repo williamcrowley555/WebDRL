@@ -366,7 +366,7 @@ function LoadComboBoxThongTinKhoa_Lop() {
       $("#edit_select_Khoa_Add").find("option").remove();
       $("#select_khoa_import").find("option").remove();
 
-      if (getCookie("quyen") == "admin" || getCookie("quyen") == "ctsv") {
+      if (getCookie("quyen") == "superadmin" || getCookie("quyen") == "admin" || getCookie("quyen") == "ctsv") {
         $("#select_Khoa").append(
           "<option selected value='tatcakhoa'>Tất cả khoa</option>"
         );
@@ -374,7 +374,7 @@ function LoadComboBoxThongTinKhoa_Lop() {
 
       $.each(result_Khoa, function (index_Khoa) {
         for (var p = 0; p < result_Khoa[index_Khoa].length; p++) {
-          if (getCookie("quyen") == "admin" || getCookie("quyen") == "ctsv") {
+          if (getCookie("quyen") == "superadmin" || getCookie("quyen") == "admin" || getCookie("quyen") == "ctsv") {
             $("#select_Khoa").append(
               "<option value='" +
                 result_Khoa[index_Khoa][p].maKhoa +

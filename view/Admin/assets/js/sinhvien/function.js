@@ -603,7 +603,7 @@ function LoadComboBoxThongTinKhoa_SinhVien(selector) {
     success: function (result_Khoa) {
       $(selector).find("option").remove();
 
-      if (getCookie("quyen") == "admin" || getCookie("quyen") == "ctsv") {
+      if (getCookie("quyen") == "superadmin" || getCookie("quyen") == "admin" || getCookie("quyen") == "ctsv") {
         $(selector).append(
           "<option selected value='tatcakhoa'>Tất cả khoa</option>"
         );
@@ -611,7 +611,7 @@ function LoadComboBoxThongTinKhoa_SinhVien(selector) {
 
       $.each(result_Khoa, function (index_Khoa) {
         for (var p = 0; p < result_Khoa[index_Khoa].length; p++) {
-          if (getCookie("quyen") == "admin" || getCookie("quyen") == "ctsv") {
+          if (getCookie("quyen") == "superadmin" || getCookie("quyen") == "admin" || getCookie("quyen") == "ctsv") {
             $(selector).append(
               "<option value='" +
                 result_Khoa[index_Khoa][p].maKhoa +

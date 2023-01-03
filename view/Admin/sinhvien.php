@@ -704,8 +704,12 @@
 	$("#select_Lop_XetTotNghiep").on("change", function() {
 		$('#input_TimKiem_XetTotNghiep').val('');
 		var maLop_selected = $('#select_Lop_XetTotNghiep').val();
-		getListXetTotNghiep(maLop_selected);
-		viewCheckBox();
+		if(maLop_selected) {
+			getListXetTotNghiep(maLop_selected);
+			viewCheckBox();
+		} else {
+			$("#listXetTotNghiep").empty();
+		}
 	});
 
 	$('#btn_timKiemMaSinhVien').on('click', function() {
@@ -1019,11 +1023,14 @@
 	// Xử lý xét tốt nghiệp
 	$(document).on("click", ".btn_XetTotNghiep", function() {
 		LoadComboBoxThongTinKhoa_SinhVien("#select_Khoa_XetTotNghiep");
+		$("#select_Khoa_XetTotNghiep option[value='tatcakhoa']").remove();
 		LoadComboBoxThongTinLopTheoKhoa($('#select_Khoa_XetTotNghiep').val(), "#select_Lop_XetTotNghiep");
 
 		$("#select_Lop_XetTotNghiep option[value='tatcalop']").remove();
 		$("#input_TimKiem_XetTotNghiep").val("");
 		$("#listXetTotNghiep").empty();
+
+		$("#select_Lop_XetTotNghiep").trigger("change");
 	});
 
 	// Chọn tất cả

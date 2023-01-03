@@ -391,7 +391,7 @@ function LoadComboBoxThongTinKhoa() {
 
       $.each(result_Khoa, function (index_Khoa) {
         for (var p = 0; p < result_Khoa[index_Khoa].length; p++) {
-          if (getCookie("quyen") == "admin" || getCookie("quyen") == "ctsv") {
+          if (getCookie("quyen") == "superadmin" || getCookie("quyen") == "admin" || getCookie("quyen") == "ctsv") {
             $("#select_Khoa").append(
               "<option value='" +
                 result_Khoa[index_Khoa][p].maKhoa +
