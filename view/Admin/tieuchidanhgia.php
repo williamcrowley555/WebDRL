@@ -342,9 +342,9 @@
 
 		var edit_select_TieuChiCapTren_search = document.getElementById('edit_select_TieuChiCapTren');
 
-		dselect(edit_select_TieuChiCapTren_search, {
-			search: true
-		})
+		// dselect(edit_select_TieuChiCapTren_search, {
+		// 	search: true
+		// })
 	})
 
 	// Xử lý kích hoạt tiêu chí đánh giá

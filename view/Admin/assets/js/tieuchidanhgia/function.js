@@ -182,7 +182,7 @@ function GetListTieuChi(tieuChi) {
                   "' data-diem = '" +
                   data[i].diem +
                   "'  data-tieuchicaptren = '" +
-                  data[i].matc3 +
+                  data[i].matc2 +
                   "'  >Chỉnh sửa</button>" +
                   (data[i].kichHoat == "0"
                     ? "<button class='btn bg-success btn_KichHoat_TieuChiDanhGia' style='color: white;width: max-content; margin: 5px;' data-id = '" +
@@ -207,11 +207,12 @@ function GetListTieuChi(tieuChi) {
       error: function (errorMessage) {
         checkLoiDangNhap(errorMessage.responseJSON.message);
         $("#idPhanTrang").empty();
-        htmlData += "<tr>\
+        htmlData +=
+          "<tr>\
                         <td colspan='6' class='text-center'>\
                             <p class='mt-4'>Không tìm thấy kết quả.</p>\
                         </td>\
-                    </tr>"
+                    </tr>";
         $("#id_tbodyLop").append(htmlData);
 
         // Swal.fire({

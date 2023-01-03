@@ -47,7 +47,7 @@
                                         <div class="row justify-content-between align-items-center">
                                             <div class="col-auto">
                                                 <div class="item-label mb-2"><strong>Ảnh đại diện</strong></div>
-                                                <div class="item-data"><img class="profile-image rounded-circle" id="blah" src="../account-images/user.png" width="100px"></div>
+                                                <div class="item-data" style='clip-path: circle();'><img class="profile-image" id="blah" src="../account-images/user.png" width="100px"></div>
                                                 <input type="file" accept="image/*" id="imgInp" style="display: none;"/>
                                             </div>
                                             <!--//col-->
@@ -296,6 +296,9 @@
                 inputElement.show();
                 inputElement.focus();
             }
+        })
+
+        $("#ProfileForm").find("#imgInp").on("change", function(e){
             $("#groupButtons").show();
         })
 
