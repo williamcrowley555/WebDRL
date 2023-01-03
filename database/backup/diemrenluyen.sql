@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 27, 2022 at 05:53 AM
+-- Generation Time: Jan 02, 2023 at 07:01 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.29
 
@@ -1391,6 +1391,11 @@ INSERT INTO `chucnang_hockydanhgia` (`maChucNang`, `maHocKyDanhGia`, `ghiChu`) V
 (1, 'HK12223', ''),
 (1, 'HK22021', ''),
 (1, 'HK22122', ''),
+(2, 'HK12021', ''),
+(2, 'HK12122', ''),
+(2, 'HK12223', ''),
+(2, 'HK22021', ''),
+(2, 'HK22122', ''),
 (3, 'HK12021', ''),
 (3, 'HK12122', ''),
 (3, 'HK22021', ''),
@@ -1413,15 +1418,11 @@ CREATE TABLE `chucnang_quyen` (
 --
 
 INSERT INTO `chucnang_quyen` (`maChucNang`, `maQuyen`, `ghiChu`) VALUES
-(1, 'admin', ''),
-(1, 'ctsv', ''),
 (1, 'cvht', ''),
 (1, 'khoa', ''),
 (1, 'sinhvien', ''),
-(3, 'admin', ''),
-(3, 'ctsv', ''),
+(2, 'sinhvien', ''),
 (3, 'cvht', ''),
-(3, 'khoa', ''),
 (3, 'sinhvien', '');
 
 -- --------------------------------------------------------
@@ -1727,6 +1728,18 @@ INSERT INTO `lop` (`maLop`, `tenLop`, `maKhoa`, `maCoVanHocTap`, `maKhoaHoc`) VA
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `lopmonhapdiemhe4`
+--
+
+CREATE TABLE `lopmonhapdiemhe4` (
+  `id` int(11) NOT NULL,
+  `maLop` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `maHocKyMo` varchar(11) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `phieurenluyen`
 --
 
@@ -1817,6 +1830,7 @@ INSERT INTO `quyen` (`maQuyen`, `tenQuyen`) VALUES
 ('ctsv', 'Công tác sinh viên'),
 ('cvht', 'Cố vấn học tập'),
 ('khoa', 'Khoa'),
+('lop', 'Lop'),
 ('sinhvien', 'Sinh viên');
 
 -- --------------------------------------------------------
@@ -4635,9 +4649,10 @@ INSERT INTO `user_token` (`stt`, `maSo`, `token`, `quyen`, `thoiGianDangNhap`, `
 (743, '3118410202', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJpYXQiOjE2Njg0MjI0MzAsIm5iZiI6MTY2ODQyMjQ0MCwiZXhwIjoxNjY4NTA4ODMwLCJhdWQiOiJzaW5odmllbiIsInNpbmh2aWVuIjp7Im1hU2luaFZpZW4iOiIzMTE4NDEwMjAyIiwiaG9UZW5TaW5oVmllbiI6IkhcdTAwYzAgTUlOSCBLSFx1MDBkNEkgIiwicXV5ZW4iOiJzaW5odmllbiJ9fQ.kJ91SYlsf4UuTBVKBYUsPqdTKFRakRyLZqniqZCPPg4', 'sinhvien', '2022-11-14 04:40:30', '2022-11-15 04:40:30'),
 (752, '3118410146', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJpYXQiOjE2Njk3NDE5NjcsIm5iZiI6MTY2OTc0MTk3NywiZXhwIjoxNjY5ODI4MzY3LCJhdWQiOiJzaW5odmllbiIsInNpbmh2aWVuIjp7Im1hU2luaFZpZW4iOiIzMTE4NDEwMTQ2IiwiaG9UZW5TaW5oVmllbiI6IkJcdTAwZDlJIFFVQU5HIEhVWSAiLCJxdXllbiI6InNpbmh2aWVuIn19.BRQRMLL4V-pT9GOy7xT2WCFyU2TPftMvYoEWPBlN0IA', 'sinhvien', '2022-11-29 11:12:47', '2022-11-30 11:12:47'),
 (807, '3118410071', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJpYXQiOjE2NzEzNjc1OTYsIm5iZiI6MTY3MTM2NzYwNiwiZXhwIjoxNjcxNDUzOTk2LCJhdWQiOiJzaW5odmllbiIsInNpbmh2aWVuIjp7Im1hU2luaFZpZW4iOiIzMTE4NDEwMDcxIiwiaG9UZW5TaW5oVmllbiI6IkxcdTAwY2EgVEhcdTFlYTBDIFx1MDExMFx1MWVhMFQgIiwicXV5ZW4iOiJzaW5odmllbiJ9fQ.JzqpjG7qC7t-g2T3vtvOUvT_7Y_6XgIFDY-nEnkAK5A', 'sinhvien', '2022-12-18 06:46:36', '2022-12-19 06:46:36'),
-(833, '10631', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJpYXQiOjE2NzE0NDkzNDQsIm5iZiI6MTY3MTQ0OTM1NCwiZXhwIjoxNjcxNTM1NzQ0LCJhdWQiOiJjdmh0IiwiY3ZodCI6eyJtYUNvVmFuSG9jVGFwIjoiMTA2MzEiLCJob1RlbkNvVmFuIjoiUGhhbiBUXHUxZWE1biBRdVx1MWVkMWMiLCJxdXllbiI6ImN2aHQifX0.yUABXcsBtQi7qhW0_cc3dkIM-c_lcrRg-2wCPJ8ktWY', 'cvht', '2022-12-19 05:29:04', '2022-12-20 05:29:04'),
-(836, 'admin', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJpYXQiOjE2NzIxMTY0MTgsIm5iZiI6MTY3MjExNjQyOCwiZXhwIjoxNjcyMjAyODE4LCJhdWQiOiJhZG1pbiIsImFkbWluIjp7InRhaUtob2FuIjoiYWRtaW4iLCJob1RlbiI6IkFkbWluIiwicXV5ZW4iOiJhZG1pbiJ9fQ.C-Ei8z0t5N4NUDiv6DWUvrsSXm5AlSifpf50MBJbRXI', 'admin', '2022-12-26 22:46:58', '2022-12-27 22:46:58'),
-(837, '3118410103', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJpYXQiOjE2NzIxMTY1NTUsIm5iZiI6MTY3MjExNjU2NSwiZXhwIjoxNjcyMjAyOTU1LCJhdWQiOiJzaW5odmllbiIsInNpbmh2aWVuIjp7Im1hU2luaFZpZW4iOiIzMTE4NDEwMTAzIiwiaG9UZW5TaW5oVmllbiI6IlBIXHUwMGQ5TkcgVFJcdTFlYTROIEhcdTFlYTJJICIsInF1eWVuIjoic2luaHZpZW4ifX0.kzfsRSmCZ5JFT5QRHRh6sBZBhkBznbc1mbvxwBvwqQw', 'sinhvien', '2022-12-26 22:49:15', '2022-12-27 22:49:15');
+(837, '3118410103', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJpYXQiOjE2NzIxMTY1NTUsIm5iZiI6MTY3MjExNjU2NSwiZXhwIjoxNjcyMjAyOTU1LCJhdWQiOiJzaW5odmllbiIsInNpbmh2aWVuIjp7Im1hU2luaFZpZW4iOiIzMTE4NDEwMTAzIiwiaG9UZW5TaW5oVmllbiI6IlBIXHUwMGQ5TkcgVFJcdTFlYTROIEhcdTFlYTJJICIsInF1eWVuIjoic2luaHZpZW4ifX0.kzfsRSmCZ5JFT5QRHRh6sBZBhkBznbc1mbvxwBvwqQw', 'sinhvien', '2022-12-26 22:49:15', '2022-12-27 22:49:15'),
+(838, 'admin', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJpYXQiOjE2NzI2MzgzMjQsIm5iZiI6MTY3MjYzODMzNCwiZXhwIjoxNjcyNzI0NzI0LCJhdWQiOiJhZG1pbiIsImFkbWluIjp7InRhaUtob2FuIjoiYWRtaW4iLCJob1RlbiI6IkFkbWluIiwicXV5ZW4iOiJhZG1pbiJ9fQ.fWVwHkXC7WiQEa_Kbx-jFQbRcybZHQFk5UNFjbipBJo', 'admin', '2023-01-01 23:45:24', '2023-01-02 23:45:24'),
+(839, '10631', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJpYXQiOjE2NzI2MzgzNjAsIm5iZiI6MTY3MjYzODM3MCwiZXhwIjoxNjcyNzI0NzYwLCJhdWQiOiJjdmh0IiwiY3ZodCI6eyJtYUNvVmFuSG9jVGFwIjoiMTA2MzEiLCJob1RlbkNvVmFuIjoiUGhhbiBUXHUxZWE1biBRdVx1MWVkMWMiLCJxdXllbiI6ImN2aHQifX0.yl_wufNx4dZ_aSp5w_ntif4U-q7s41DNb8py8u_Z8JY', 'cvht', '2023-01-01 23:46:00', '2023-01-02 23:46:00'),
+(840, '3118410179', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJpYXQiOjE2NzI2MzgzODYsIm5iZiI6MTY3MjYzODM5NiwiZXhwIjoxNjcyNzI0Nzg2LCJhdWQiOiJzaW5odmllbiIsInNpbmh2aWVuIjp7Im1hU2luaFZpZW4iOiIzMTE4NDEwMTc5IiwiaG9UZW5TaW5oVmllbiI6IlBIXHUxZWEwTSBcdTAxMTBcdTFlZThDIEtIXHUxZWEySSIsInF1eWVuIjoic2luaHZpZW4ifX0.gnH_RZ95Wd5Pl_RLg-WZIz6qLygOaNd5gwQWxhtFfZY', 'sinhvien', '2023-01-01 23:46:26', '2023-01-02 23:46:26');
 
 --
 -- Indexes for dumped tables
@@ -4721,6 +4736,12 @@ ALTER TABLE `khoahoc`
 --
 ALTER TABLE `lop`
   ADD PRIMARY KEY (`maLop`);
+
+--
+-- Indexes for table `lopmonhapdiemhe4`
+--
+ALTER TABLE `lopmonhapdiemhe4`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `phieurenluyen`
@@ -4811,6 +4832,12 @@ ALTER TABLE `khieunai`
   MODIFY `maKhieuNai` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
+-- AUTO_INCREMENT for table `lopmonhapdiemhe4`
+--
+ALTER TABLE `lopmonhapdiemhe4`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT for table `thamgiahoatdong`
 --
 ALTER TABLE `thamgiahoatdong`
@@ -4844,7 +4871,7 @@ ALTER TABLE `tieuchicap3`
 -- AUTO_INCREMENT for table `user_token`
 --
 ALTER TABLE `user_token`
-  MODIFY `stt` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=838;
+  MODIFY `stt` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=841;
 
 --
 -- Constraints for dumped tables

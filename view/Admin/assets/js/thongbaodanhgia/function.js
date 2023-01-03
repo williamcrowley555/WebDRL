@@ -133,7 +133,7 @@ function GetListThongBaoDanhGia() {
                     //                 <button class='btn bg-danger btn_Xoa_ThongBaoDanhGia' style='color: white;width: max-content;margin: 5px;' data-id='" +
                     // data[i].maThongBao +
                     // "' >Xóa</button>\
-                                    "<button class='btn btn_GuiEmail_ThongBaoDanhGia' style='color: white;width: max-content;margin: 5px;background: dodgerblue;' data-bs-toggle='modal' data-bs-target='#SendEmailNotificationModal' data-id='" +
+                    "<button class='btn btn_GuiEmail_ThongBaoDanhGia' style='color: white;width: max-content;margin: 5px;background: dodgerblue;' data-bs-toggle='modal' data-bs-target='#SendEmailNotificationModal' data-id='" +
                     data[i].maThongBao +
                     "' >Gửi email thông báo</button>\
                                 </td>\
@@ -160,11 +160,12 @@ function GetListThongBaoDanhGia() {
       error: function (errorMessage) {
         checkLoiDangNhap(errorMessage.responseJSON.message);
 
-        htmlData += "<tr>\
+        htmlData +=
+          "<tr>\
                         <td colspan='15' class='text-center'>\
                             <p class='mt-4'>Không tìm thấy kết quả.</p>\
                         </td>\
-                    </tr>"
+                    </tr>";
         $("#id_tbodyLop").append(htmlData);
 
         // Swal.fire({
@@ -271,7 +272,7 @@ function TimKiemThongBaoDanhGia(maHKDG) {
                     //                 <button class='btn bg-danger btn_Xoa_ThongBaoDanhGia' style='color: white;width: max-content;margin: 5px;' data-id='" +
                     // data[i].maThongBao +
                     // "' >Xóa</button>\
-                                    "<button class='btn btn_GuiEmail_ThongBaoDanhGia' style='color: white;width: max-content;margin: 5px;background: dodgerblue;' data-bs-toggle='modal' data-bs-target='#SendEmailNotificationModal' data-id='" +
+                    "<button class='btn btn_GuiEmail_ThongBaoDanhGia' style='color: white;width: max-content;margin: 5px;background: dodgerblue;' data-bs-toggle='modal' data-bs-target='#SendEmailNotificationModal' data-id='" +
                     data[i].maThongBao +
                     "' >Gửi email thông báo</button>\
                                 </td>\
@@ -298,11 +299,12 @@ function TimKiemThongBaoDanhGia(maHKDG) {
       error: function (errorMessage) {
         checkLoiDangNhap(errorMessage.responseJSON.message);
 
-        htmlData += "<tr>\
+        htmlData +=
+          "<tr>\
                         <td colspan='15' class='text-center'>\
                             <p class='mt-4'>Không tìm thấy kết quả.</p>\
                         </td>\
-                    </tr>"
+                    </tr>";
         $("#id_tbodyLop").append(htmlData);
 
         // Swal.fire({
@@ -361,20 +363,17 @@ function setTimerToCheckNotification(maHocKyDanhGia) {
     },
     success: function (result) {
       if (result.tuDongThongBao == 1) {
+        // Gửi email khi đã đến ngày thông báo
         if (isToday(new Date(result.ngayThongBao))) {
           autoSendEmailNotification(result.maThongBao, [
             "allSinhVien",
             "allCVHT",
           ]);
         } else {
-          var today = new Date();
-          today.setHours(0, 0, 0, 0);
-          // Nếu ngày thông báo chưa trôi qua => Kiểm tra lại mỗi 12 tiếng để thông báo
-          if (today > new Date(result.ngayThongBao)) {
-            setInterval(function () {
-              setTimerToCheckNotification(maHocKyDanhGia);
-            }, 1000 * 60 * 60 * 12);
-          }
+          // Nếu ngày thông báo chưa trôi qua => Kiểm tra lại mỗi 12 tiếng để gửi thông báo
+          setTimeout(function () {
+            setTimerToCheckNotification(maHocKyDanhGia);
+          }, 1000 * 60 * 60 * 12);
         }
       }
     },

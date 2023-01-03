@@ -2,10 +2,10 @@
 -- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Jan 02, 2023 at 07:01 AM
--- Server version: 10.4.24-MariaDB
--- PHP Version: 7.4.29
+-- Máy chủ: 127.0.0.1:3307
+-- Thời gian đã tạo: Th1 03, 2023 lúc 06:01 AM
+-- Phiên bản máy phục vụ: 10.4.24-MariaDB
+-- Phiên bản PHP: 7.4.29
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `diemrenluyen`
+-- Cơ sở dữ liệu: `diemrenluyen`
 --
 CREATE DATABASE IF NOT EXISTS `diemrenluyen` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
 USE `diemrenluyen`;
@@ -26,7 +26,7 @@ USE `diemrenluyen`;
 -- --------------------------------------------------------
 
 --
--- Table structure for table `admin`
+-- Cấu trúc bảng cho bảng `admin`
 --
 
 CREATE TABLE `admin` (
@@ -41,7 +41,7 @@ CREATE TABLE `admin` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `admin`
+-- Đang đổ dữ liệu cho bảng `admin`
 --
 
 INSERT INTO `admin` (`id`, `taiKhoan`, `matKhau`, `hoTen`, `email`, `soDienThoai`, `quyen`, `kichHoat`) VALUES
@@ -50,7 +50,7 @@ INSERT INTO `admin` (`id`, `taiKhoan`, `matKhau`, `hoTen`, `email`, `soDienThoai
 -- --------------------------------------------------------
 
 --
--- Table structure for table `chamdiemrenluyen`
+-- Cấu trúc bảng cho bảng `chamdiemrenluyen`
 --
 
 CREATE TABLE `chamdiemrenluyen` (
@@ -67,7 +67,7 @@ CREATE TABLE `chamdiemrenluyen` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `chamdiemrenluyen`
+-- Đang đổ dữ liệu cho bảng `chamdiemrenluyen`
 --
 
 INSERT INTO `chamdiemrenluyen` (`maChamDiemRenLuyen`, `maPhieuRenLuyen`, `maTieuChi3`, `maTieuChi2`, `maSinhVien`, `diemSinhVienDanhGia`, `diemLopDanhGia`, `diemKhoaDanhGia`, `fileMinhChung`, `ghiChu`) VALUES
@@ -1350,7 +1350,7 @@ INSERT INTO `chamdiemrenluyen` (`maChamDiemRenLuyen`, `maPhieuRenLuyen`, `maTieu
 -- --------------------------------------------------------
 
 --
--- Table structure for table `chucnang`
+-- Cấu trúc bảng cho bảng `chucnang`
 --
 
 CREATE TABLE `chucnang` (
@@ -1361,7 +1361,7 @@ CREATE TABLE `chucnang` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `chucnang`
+-- Đang đổ dữ liệu cho bảng `chucnang`
 --
 
 INSERT INTO `chucnang` (`maChucNang`, `tenChucNang`, `kichHoat`, `moTa`) VALUES
@@ -1372,7 +1372,7 @@ INSERT INTO `chucnang` (`maChucNang`, `tenChucNang`, `kichHoat`, `moTa`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `chucnang_hockydanhgia`
+-- Cấu trúc bảng cho bảng `chucnang_hockydanhgia`
 --
 
 CREATE TABLE `chucnang_hockydanhgia` (
@@ -1382,7 +1382,7 @@ CREATE TABLE `chucnang_hockydanhgia` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `chucnang_hockydanhgia`
+-- Đang đổ dữ liệu cho bảng `chucnang_hockydanhgia`
 --
 
 INSERT INTO `chucnang_hockydanhgia` (`maChucNang`, `maHocKyDanhGia`, `ghiChu`) VALUES
@@ -1404,7 +1404,7 @@ INSERT INTO `chucnang_hockydanhgia` (`maChucNang`, `maHocKyDanhGia`, `ghiChu`) V
 -- --------------------------------------------------------
 
 --
--- Table structure for table `chucnang_quyen`
+-- Cấu trúc bảng cho bảng `chucnang_quyen`
 --
 
 CREATE TABLE `chucnang_quyen` (
@@ -1414,7 +1414,7 @@ CREATE TABLE `chucnang_quyen` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `chucnang_quyen`
+-- Đang đổ dữ liệu cho bảng `chucnang_quyen`
 --
 
 INSERT INTO `chucnang_quyen` (`maChucNang`, `maQuyen`, `ghiChu`) VALUES
@@ -1428,7 +1428,7 @@ INSERT INTO `chucnang_quyen` (`maChucNang`, `maQuyen`, `ghiChu`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `covanhoctap`
+-- Cấu trúc bảng cho bảng `covanhoctap`
 --
 
 CREATE TABLE `covanhoctap` (
@@ -1443,7 +1443,7 @@ CREATE TABLE `covanhoctap` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `covanhoctap`
+-- Đang đổ dữ liệu cho bảng `covanhoctap`
 --
 
 INSERT INTO `covanhoctap` (`maCoVanHocTap`, `hoTenCoVan`, `soDienThoai`, `matKhauTaiKhoanCoVan`, `email`, `anhDaiDien`, `quyen`, `maKhoa`) VALUES
@@ -1475,7 +1475,7 @@ INSERT INTO `covanhoctap` (`maCoVanHocTap`, `hoTenCoVan`, `soDienThoai`, `matKha
 -- --------------------------------------------------------
 
 --
--- Table structure for table `diemtrungbinhhe4`
+-- Cấu trúc bảng cho bảng `diemtrungbinhhe4`
 --
 
 CREATE TABLE `diemtrungbinhhe4` (
@@ -1486,7 +1486,7 @@ CREATE TABLE `diemtrungbinhhe4` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `diemtrungbinhhe4`
+-- Đang đổ dữ liệu cho bảng `diemtrungbinhhe4`
 --
 
 INSERT INTO `diemtrungbinhhe4` (`maDiemTrungBinh`, `diem`, `maHocKyDanhGia`, `maSinhVien`) VALUES
@@ -1529,7 +1529,7 @@ INSERT INTO `diemtrungbinhhe4` (`maDiemTrungBinh`, `diem`, `maHocKyDanhGia`, `ma
 -- --------------------------------------------------------
 
 --
--- Table structure for table `hoatdongdanhgia`
+-- Cấu trúc bảng cho bảng `hoatdongdanhgia`
 --
 
 CREATE TABLE `hoatdongdanhgia` (
@@ -1548,7 +1548,7 @@ CREATE TABLE `hoatdongdanhgia` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `hoatdongdanhgia`
+-- Đang đổ dữ liệu cho bảng `hoatdongdanhgia`
 --
 
 INSERT INTO `hoatdongdanhgia` (`maHoatDong`, `maTieuChi2`, `maTieuChi3`, `maKhoa`, `tenHoatDong`, `diemNhanDuoc`, `diaDiemDienRaHoatDong`, `maQRDiaDiem`, `thoiGianBatDauHoatDong`, `thoiGianKetThucHoatDong`, `maHocKyDanhGia`, `thoiGianBatDauDiemDanh`) VALUES
@@ -1567,7 +1567,7 @@ INSERT INTO `hoatdongdanhgia` (`maHoatDong`, `maTieuChi2`, `maTieuChi3`, `maKhoa
 -- --------------------------------------------------------
 
 --
--- Table structure for table `hockydanhgia`
+-- Cấu trúc bảng cho bảng `hockydanhgia`
 --
 
 CREATE TABLE `hockydanhgia` (
@@ -1577,7 +1577,7 @@ CREATE TABLE `hockydanhgia` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `hockydanhgia`
+-- Đang đổ dữ liệu cho bảng `hockydanhgia`
 --
 
 INSERT INTO `hockydanhgia` (`maHocKyDanhGia`, `hocKyXet`, `namHocXet`) VALUES
@@ -1590,7 +1590,7 @@ INSERT INTO `hockydanhgia` (`maHocKyDanhGia`, `hocKyXet`, `namHocXet`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `khieunai`
+-- Cấu trúc bảng cho bảng `khieunai`
 --
 
 CREATE TABLE `khieunai` (
@@ -1605,7 +1605,7 @@ CREATE TABLE `khieunai` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `khieunai`
+-- Đang đổ dữ liệu cho bảng `khieunai`
 --
 
 INSERT INTO `khieunai` (`maKhieuNai`, `maPhieuRenLuyen`, `lyDoKhieuNai`, `minhChung`, `trangThai`, `thoiGianKhieuNai`, `loiNhan`, `lyDoTuChoi`) VALUES
@@ -1614,7 +1614,7 @@ INSERT INTO `khieunai` (`maKhieuNai`, `maPhieuRenLuyen`, `lyDoKhieuNai`, `minhCh
 -- --------------------------------------------------------
 
 --
--- Table structure for table `khoa`
+-- Cấu trúc bảng cho bảng `khoa`
 --
 
 CREATE TABLE `khoa` (
@@ -1626,7 +1626,7 @@ CREATE TABLE `khoa` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `khoa`
+-- Đang đổ dữ liệu cho bảng `khoa`
 --
 
 INSERT INTO `khoa` (`maKhoa`, `tenKhoa`, `taiKhoanKhoa`, `matKhauKhoa`, `quyen`) VALUES
@@ -1636,7 +1636,7 @@ INSERT INTO `khoa` (`maKhoa`, `tenKhoa`, `taiKhoanKhoa`, `matKhauKhoa`, `quyen`)
 -- --------------------------------------------------------
 
 --
--- Table structure for table `khoahoc`
+-- Cấu trúc bảng cho bảng `khoahoc`
 --
 
 CREATE TABLE `khoahoc` (
@@ -1646,7 +1646,7 @@ CREATE TABLE `khoahoc` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `khoahoc`
+-- Đang đổ dữ liệu cho bảng `khoahoc`
 --
 
 INSERT INTO `khoahoc` (`maKhoaHoc`, `namBatDau`, `namKetThuc`) VALUES
@@ -1659,7 +1659,7 @@ INSERT INTO `khoahoc` (`maKhoaHoc`, `namBatDau`, `namKetThuc`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `lop`
+-- Cấu trúc bảng cho bảng `lop`
 --
 
 CREATE TABLE `lop` (
@@ -1671,7 +1671,7 @@ CREATE TABLE `lop` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `lop`
+-- Đang đổ dữ liệu cho bảng `lop`
 --
 
 INSERT INTO `lop` (`maLop`, `tenLop`, `maKhoa`, `maCoVanHocTap`, `maKhoaHoc`) VALUES
@@ -1728,7 +1728,7 @@ INSERT INTO `lop` (`maLop`, `tenLop`, `maKhoa`, `maCoVanHocTap`, `maKhoaHoc`) VA
 -- --------------------------------------------------------
 
 --
--- Table structure for table `lopmonhapdiemhe4`
+-- Cấu trúc bảng cho bảng `lopmonhapdiemhe4`
 --
 
 CREATE TABLE `lopmonhapdiemhe4` (
@@ -1740,7 +1740,7 @@ CREATE TABLE `lopmonhapdiemhe4` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `phieurenluyen`
+-- Cấu trúc bảng cho bảng `phieurenluyen`
 --
 
 CREATE TABLE `phieurenluyen` (
@@ -1756,11 +1756,11 @@ CREATE TABLE `phieurenluyen` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `phieurenluyen`
+-- Đang đổ dữ liệu cho bảng `phieurenluyen`
 --
 
 INSERT INTO `phieurenluyen` (`maPhieuRenLuyen`, `xepLoai`, `diemTongCong`, `maSinhVien`, `diemTrungBinhChungHKTruoc`, `diemTrungBinhChungHKXet`, `maHocKyDanhGia`, `coVanDuyet`, `khoaDuyet`) VALUES
-('PRLHK120213118410071', 'Xuất sắc', 91, '3118410071', 0, 0, 'HK12021', 1, 1),
+('PRLHK120213118410071', 'Xuất sắc', 91, '3118410071', 0, 1, 'HK12021', 1, 1),
 ('PRLHK120213118410087', 'Kém', 2, '3118410087', 0, 0, 'HK12021', 1, 1),
 ('PRLHK120213118410117', 'Kém', 1, '3118410117', 0, 0, 'HK12021', 1, 1),
 ('PRLHK120213118410179', 'Kém', 16, '3118410179', 0, 0, 'HK12021', 1, 1),
@@ -1789,7 +1789,7 @@ INSERT INTO `phieurenluyen` (`maPhieuRenLuyen`, `xepLoai`, `diemTongCong`, `maSi
 -- --------------------------------------------------------
 
 --
--- Table structure for table `phongcongtacsinhvien`
+-- Cấu trúc bảng cho bảng `phongcongtacsinhvien`
 --
 
 CREATE TABLE `phongcongtacsinhvien` (
@@ -1804,7 +1804,7 @@ CREATE TABLE `phongcongtacsinhvien` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `phongcongtacsinhvien`
+-- Đang đổ dữ liệu cho bảng `phongcongtacsinhvien`
 --
 
 INSERT INTO `phongcongtacsinhvien` (`taiKhoan`, `matKhau`, `hoTenNhanVien`, `email`, `sodienthoai`, `diaChi`, `quyen`, `kichHoat`) VALUES
@@ -1813,7 +1813,7 @@ INSERT INTO `phongcongtacsinhvien` (`taiKhoan`, `matKhau`, `hoTenNhanVien`, `ema
 -- --------------------------------------------------------
 
 --
--- Table structure for table `quyen`
+-- Cấu trúc bảng cho bảng `quyen`
 --
 
 CREATE TABLE `quyen` (
@@ -1822,7 +1822,7 @@ CREATE TABLE `quyen` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `quyen`
+-- Đang đổ dữ liệu cho bảng `quyen`
 --
 
 INSERT INTO `quyen` (`maQuyen`, `tenQuyen`) VALUES
@@ -1836,7 +1836,7 @@ INSERT INTO `quyen` (`maQuyen`, `tenQuyen`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `sinhvien`
+-- Cấu trúc bảng cho bảng `sinhvien`
 --
 
 CREATE TABLE `sinhvien` (
@@ -1854,7 +1854,7 @@ CREATE TABLE `sinhvien` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `sinhvien`
+-- Đang đổ dữ liệu cho bảng `sinhvien`
 --
 
 INSERT INTO `sinhvien` (`maSinhVien`, `hoTenSinhVien`, `ngaySinh`, `he`, `matKhauSinhVien`, `email`, `sdt`, `anhDaiDien`, `totNghiep`, `maLop`, `quyen`) VALUES
@@ -4432,7 +4432,7 @@ INSERT INTO `sinhvien` (`maSinhVien`, `hoTenSinhVien`, `ngaySinh`, `he`, `matKha
 -- --------------------------------------------------------
 
 --
--- Table structure for table `thamgiahoatdong`
+-- Cấu trúc bảng cho bảng `thamgiahoatdong`
 --
 
 CREATE TABLE `thamgiahoatdong` (
@@ -4443,7 +4443,7 @@ CREATE TABLE `thamgiahoatdong` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `thamgiahoatdong`
+-- Đang đổ dữ liệu cho bảng `thamgiahoatdong`
 --
 
 INSERT INTO `thamgiahoatdong` (`maThamGiaHoatDong`, `maHoatDong`, `maSinhVienThamGia`, `thoiGianDiemDanh`) VALUES
@@ -4463,7 +4463,7 @@ INSERT INTO `thamgiahoatdong` (`maThamGiaHoatDong`, `maHoatDong`, `maSinhVienTha
 -- --------------------------------------------------------
 
 --
--- Table structure for table `thongbaodanhgia`
+-- Cấu trúc bảng cho bảng `thongbaodanhgia`
 --
 
 CREATE TABLE `thongbaodanhgia` (
@@ -4484,7 +4484,7 @@ CREATE TABLE `thongbaodanhgia` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `thongbaodanhgia`
+-- Đang đổ dữ liệu cho bảng `thongbaodanhgia`
 --
 
 INSERT INTO `thongbaodanhgia` (`maThongBao`, `ngaySinhVienDanhGia`, `ngaySinhVienKetThucDanhGia`, `ngayCoVanDanhGia`, `ngayCoVanKetThucDanhGia`, `ngayKhoaDanhGia`, `ngayKhoaKetThucDanhGia`, `ngayKhieuNai`, `ngayKetThucKhieuNai`, `tuDongThongBao`, `ngayThongBao`, `maHocKyDanhGia`, `kichHoat`, `taiKhoanCTSV`) VALUES
@@ -4497,7 +4497,7 @@ INSERT INTO `thongbaodanhgia` (`maThongBao`, `ngaySinhVienDanhGia`, `ngaySinhVie
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tieuchicap1`
+-- Cấu trúc bảng cho bảng `tieuchicap1`
 --
 
 CREATE TABLE `tieuchicap1` (
@@ -4508,7 +4508,7 @@ CREATE TABLE `tieuchicap1` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `tieuchicap1`
+-- Đang đổ dữ liệu cho bảng `tieuchicap1`
 --
 
 INSERT INTO `tieuchicap1` (`matc1`, `noidung`, `diemtoida`, `kichHoat`) VALUES
@@ -4522,7 +4522,7 @@ INSERT INTO `tieuchicap1` (`matc1`, `noidung`, `diemtoida`, `kichHoat`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tieuchicap2`
+-- Cấu trúc bảng cho bảng `tieuchicap2`
 --
 
 CREATE TABLE `tieuchicap2` (
@@ -4534,7 +4534,7 @@ CREATE TABLE `tieuchicap2` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `tieuchicap2`
+-- Đang đổ dữ liệu cho bảng `tieuchicap2`
 --
 
 INSERT INTO `tieuchicap2` (`matc2`, `noidung`, `diemtoida`, `matc1`, `kichHoat`) VALUES
@@ -4572,7 +4572,7 @@ INSERT INTO `tieuchicap2` (`matc2`, `noidung`, `diemtoida`, `matc1`, `kichHoat`)
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tieuchicap3`
+-- Cấu trúc bảng cho bảng `tieuchicap3`
 --
 
 CREATE TABLE `tieuchicap3` (
@@ -4584,7 +4584,7 @@ CREATE TABLE `tieuchicap3` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `tieuchicap3`
+-- Đang đổ dữ liệu cho bảng `tieuchicap3`
 --
 
 INSERT INTO `tieuchicap3` (`matc3`, `noidung`, `diem`, `matc2`, `kichHoat`) VALUES
@@ -4597,7 +4597,7 @@ INSERT INTO `tieuchicap3` (`matc3`, `noidung`, `diem`, `matc2`, `kichHoat`) VALU
 (7, 'b. Kết quả học tập tăng hai bậc so với học kỳ trước,  ĐTBCHK từ  2,00 trở lên', 6, 2, 1),
 (8, 'c. Sinh viên năm thứ I, nếu có kết quả học tập HK I từ 2,00 trở lên', 3, 2, 1),
 (9, 'a. Khóa luận tốt nghiệp từ loại giỏi trở lên', 6, 3, 1),
-(10, 'b. Đề tài NCKH cấp trường từ loại giỏi trở lên.', 6, 10, 1),
+(10, 'b. Đề tài NCKH cấp trường từ loại giỏi trở lên.', 6, 3, 1),
 (11, 'c. Đề tài NCKH cấp trường từ loại đạt trở lên', 5, 3, 1),
 (12, 'a. Tham gia hội thi RLNV cấp khoa', 2, 4, 1),
 (13, 'b. Tham gia hội thi  RLNV cấp trường', 4, 4, 1),
@@ -4620,7 +4620,7 @@ INSERT INTO `tieuchicap3` (`matc3`, `noidung`, `diem`, `matc2`, `kichHoat`) VALU
 -- --------------------------------------------------------
 
 --
--- Table structure for table `user_token`
+-- Cấu trúc bảng cho bảng `user_token`
 --
 
 CREATE TABLE `user_token` (
@@ -4633,7 +4633,7 @@ CREATE TABLE `user_token` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `user_token`
+-- Đang đổ dữ liệu cho bảng `user_token`
 --
 
 INSERT INTO `user_token` (`stt`, `maSo`, `token`, `quyen`, `thoiGianDangNhap`, `thoiGianHetHan`) VALUES
@@ -4648,237 +4648,238 @@ INSERT INTO `user_token` (`stt`, `maSo`, `token`, `quyen`, `thoiGianDangNhap`, `
 (653, '3118419999', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJpYXQiOjE2NjczMjE1NzcsIm5iZiI6MTY2NzMyMTU4NywiZXhwIjoxNjY3NDA3OTc3LCJhdWQiOiJzaW5odmllbiIsInNpbmh2aWVuIjp7Im1hU2luaFZpZW4iOiIzMTE4NDE5OTk5IiwiaG9UZW5TaW5oVmllbiI6IlRcdTAwZjluZyIsInF1eWVuIjoic2luaHZpZW4ifX0.iyeynGPplWEF3W0i6JV2BPG96Mlv58AkLKLYU6ojfOk', 'sinhvien', '2022-11-01 10:52:57', '2022-11-02 10:52:57'),
 (743, '3118410202', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJpYXQiOjE2Njg0MjI0MzAsIm5iZiI6MTY2ODQyMjQ0MCwiZXhwIjoxNjY4NTA4ODMwLCJhdWQiOiJzaW5odmllbiIsInNpbmh2aWVuIjp7Im1hU2luaFZpZW4iOiIzMTE4NDEwMjAyIiwiaG9UZW5TaW5oVmllbiI6IkhcdTAwYzAgTUlOSCBLSFx1MDBkNEkgIiwicXV5ZW4iOiJzaW5odmllbiJ9fQ.kJ91SYlsf4UuTBVKBYUsPqdTKFRakRyLZqniqZCPPg4', 'sinhvien', '2022-11-14 04:40:30', '2022-11-15 04:40:30'),
 (752, '3118410146', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJpYXQiOjE2Njk3NDE5NjcsIm5iZiI6MTY2OTc0MTk3NywiZXhwIjoxNjY5ODI4MzY3LCJhdWQiOiJzaW5odmllbiIsInNpbmh2aWVuIjp7Im1hU2luaFZpZW4iOiIzMTE4NDEwMTQ2IiwiaG9UZW5TaW5oVmllbiI6IkJcdTAwZDlJIFFVQU5HIEhVWSAiLCJxdXllbiI6InNpbmh2aWVuIn19.BRQRMLL4V-pT9GOy7xT2WCFyU2TPftMvYoEWPBlN0IA', 'sinhvien', '2022-11-29 11:12:47', '2022-11-30 11:12:47'),
-(807, '3118410071', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJpYXQiOjE2NzEzNjc1OTYsIm5iZiI6MTY3MTM2NzYwNiwiZXhwIjoxNjcxNDUzOTk2LCJhdWQiOiJzaW5odmllbiIsInNpbmh2aWVuIjp7Im1hU2luaFZpZW4iOiIzMTE4NDEwMDcxIiwiaG9UZW5TaW5oVmllbiI6IkxcdTAwY2EgVEhcdTFlYTBDIFx1MDExMFx1MWVhMFQgIiwicXV5ZW4iOiJzaW5odmllbiJ9fQ.JzqpjG7qC7t-g2T3vtvOUvT_7Y_6XgIFDY-nEnkAK5A', 'sinhvien', '2022-12-18 06:46:36', '2022-12-19 06:46:36'),
 (837, '3118410103', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJpYXQiOjE2NzIxMTY1NTUsIm5iZiI6MTY3MjExNjU2NSwiZXhwIjoxNjcyMjAyOTU1LCJhdWQiOiJzaW5odmllbiIsInNpbmh2aWVuIjp7Im1hU2luaFZpZW4iOiIzMTE4NDEwMTAzIiwiaG9UZW5TaW5oVmllbiI6IlBIXHUwMGQ5TkcgVFJcdTFlYTROIEhcdTFlYTJJICIsInF1eWVuIjoic2luaHZpZW4ifX0.kzfsRSmCZ5JFT5QRHRh6sBZBhkBznbc1mbvxwBvwqQw', 'sinhvien', '2022-12-26 22:49:15', '2022-12-27 22:49:15'),
 (838, 'admin', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJpYXQiOjE2NzI2MzgzMjQsIm5iZiI6MTY3MjYzODMzNCwiZXhwIjoxNjcyNzI0NzI0LCJhdWQiOiJhZG1pbiIsImFkbWluIjp7InRhaUtob2FuIjoiYWRtaW4iLCJob1RlbiI6IkFkbWluIiwicXV5ZW4iOiJhZG1pbiJ9fQ.fWVwHkXC7WiQEa_Kbx-jFQbRcybZHQFk5UNFjbipBJo', 'admin', '2023-01-01 23:45:24', '2023-01-02 23:45:24'),
 (839, '10631', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJpYXQiOjE2NzI2MzgzNjAsIm5iZiI6MTY3MjYzODM3MCwiZXhwIjoxNjcyNzI0NzYwLCJhdWQiOiJjdmh0IiwiY3ZodCI6eyJtYUNvVmFuSG9jVGFwIjoiMTA2MzEiLCJob1RlbkNvVmFuIjoiUGhhbiBUXHUxZWE1biBRdVx1MWVkMWMiLCJxdXllbiI6ImN2aHQifX0.yl_wufNx4dZ_aSp5w_ntif4U-q7s41DNb8py8u_Z8JY', 'cvht', '2023-01-01 23:46:00', '2023-01-02 23:46:00'),
-(840, '3118410179', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJpYXQiOjE2NzI2MzgzODYsIm5iZiI6MTY3MjYzODM5NiwiZXhwIjoxNjcyNzI0Nzg2LCJhdWQiOiJzaW5odmllbiIsInNpbmh2aWVuIjp7Im1hU2luaFZpZW4iOiIzMTE4NDEwMTc5IiwiaG9UZW5TaW5oVmllbiI6IlBIXHUxZWEwTSBcdTAxMTBcdTFlZThDIEtIXHUxZWEySSIsInF1eWVuIjoic2luaHZpZW4ifX0.gnH_RZ95Wd5Pl_RLg-WZIz6qLygOaNd5gwQWxhtFfZY', 'sinhvien', '2023-01-01 23:46:26', '2023-01-02 23:46:26');
+(840, '3118410179', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJpYXQiOjE2NzI2MzgzODYsIm5iZiI6MTY3MjYzODM5NiwiZXhwIjoxNjcyNzI0Nzg2LCJhdWQiOiJzaW5odmllbiIsInNpbmh2aWVuIjp7Im1hU2luaFZpZW4iOiIzMTE4NDEwMTc5IiwiaG9UZW5TaW5oVmllbiI6IlBIXHUxZWEwTSBcdTAxMTBcdTFlZThDIEtIXHUxZWEySSIsInF1eWVuIjoic2luaHZpZW4ifX0.gnH_RZ95Wd5Pl_RLg-WZIz6qLygOaNd5gwQWxhtFfZY', 'sinhvien', '2023-01-01 23:46:26', '2023-01-02 23:46:26'),
+(841, 'ctsv1', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJpYXQiOjE2NzI3MjE4NzYsIm5iZiI6MTY3MjcyMTg4NiwiZXhwIjoxNjcyODA4Mjc2LCJhdWQiOiJwaG9uZ2Nvbmd0YWNzaW5odmllbiIsInBob25nY29uZ3RhY3Npbmh2aWVuIjp7InRhaUtob2FuIjoiY3RzdjEiLCJob1Rlbk5oYW5WaWVuIjoiTmhcdTAwZTJuIHZpXHUwMGVhbiBDVFNWIDEiLCJxdXllbiI6ImN0c3YifX0.gcFKbKD__gf3A2epKVh3nY4i1Hw6UxXPiJ1Xklo6u0Y', 'ctsv', '2023-01-02 22:57:56', '2023-01-03 22:57:56'),
+(842, '3118410071', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJpYXQiOjE2NzI3MjE5MTYsIm5iZiI6MTY3MjcyMTkyNiwiZXhwIjoxNjcyODA4MzE2LCJhdWQiOiJzaW5odmllbiIsInNpbmh2aWVuIjp7Im1hU2luaFZpZW4iOiIzMTE4NDEwMDcxIiwiaG9UZW5TaW5oVmllbiI6IkxcdTAwY2EgVEhcdTFlYTBDIFx1MDExMFx1MWVhMFQgIiwicXV5ZW4iOiJzaW5odmllbiJ9fQ.lAocbovQZIP31g1QzsAHGRTmsU3vedmI9HRoizlQum4', 'sinhvien', '2023-01-02 22:58:36', '2023-01-03 22:58:36');
 
 --
--- Indexes for dumped tables
+-- Chỉ mục cho các bảng đã đổ
 --
 
 --
--- Indexes for table `admin`
+-- Chỉ mục cho bảng `admin`
 --
 ALTER TABLE `admin`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `chamdiemrenluyen`
+-- Chỉ mục cho bảng `chamdiemrenluyen`
 --
 ALTER TABLE `chamdiemrenluyen`
   ADD PRIMARY KEY (`maChamDiemRenLuyen`);
 
 --
--- Indexes for table `chucnang`
+-- Chỉ mục cho bảng `chucnang`
 --
 ALTER TABLE `chucnang`
   ADD PRIMARY KEY (`maChucNang`);
 
 --
--- Indexes for table `chucnang_hockydanhgia`
+-- Chỉ mục cho bảng `chucnang_hockydanhgia`
 --
 ALTER TABLE `chucnang_hockydanhgia`
   ADD PRIMARY KEY (`maChucNang`,`maHocKyDanhGia`);
 
 --
--- Indexes for table `chucnang_quyen`
+-- Chỉ mục cho bảng `chucnang_quyen`
 --
 ALTER TABLE `chucnang_quyen`
   ADD PRIMARY KEY (`maChucNang`,`maQuyen`);
 
 --
--- Indexes for table `covanhoctap`
+-- Chỉ mục cho bảng `covanhoctap`
 --
 ALTER TABLE `covanhoctap`
   ADD PRIMARY KEY (`maCoVanHocTap`),
   ADD KEY `maKhoa` (`maKhoa`);
 
 --
--- Indexes for table `diemtrungbinhhe4`
+-- Chỉ mục cho bảng `diemtrungbinhhe4`
 --
 ALTER TABLE `diemtrungbinhhe4`
   ADD PRIMARY KEY (`maDiemTrungBinh`);
 
 --
--- Indexes for table `hoatdongdanhgia`
+-- Chỉ mục cho bảng `hoatdongdanhgia`
 --
 ALTER TABLE `hoatdongdanhgia`
   ADD PRIMARY KEY (`maHoatDong`);
 
 --
--- Indexes for table `hockydanhgia`
+-- Chỉ mục cho bảng `hockydanhgia`
 --
 ALTER TABLE `hockydanhgia`
   ADD PRIMARY KEY (`maHocKyDanhGia`);
 
 --
--- Indexes for table `khieunai`
+-- Chỉ mục cho bảng `khieunai`
 --
 ALTER TABLE `khieunai`
   ADD PRIMARY KEY (`maKhieuNai`);
 
 --
--- Indexes for table `khoa`
+-- Chỉ mục cho bảng `khoa`
 --
 ALTER TABLE `khoa`
   ADD PRIMARY KEY (`maKhoa`);
 
 --
--- Indexes for table `khoahoc`
+-- Chỉ mục cho bảng `khoahoc`
 --
 ALTER TABLE `khoahoc`
   ADD PRIMARY KEY (`maKhoaHoc`);
 
 --
--- Indexes for table `lop`
+-- Chỉ mục cho bảng `lop`
 --
 ALTER TABLE `lop`
   ADD PRIMARY KEY (`maLop`);
 
 --
--- Indexes for table `lopmonhapdiemhe4`
+-- Chỉ mục cho bảng `lopmonhapdiemhe4`
 --
 ALTER TABLE `lopmonhapdiemhe4`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `phieurenluyen`
+-- Chỉ mục cho bảng `phieurenluyen`
 --
 ALTER TABLE `phieurenluyen`
   ADD PRIMARY KEY (`maPhieuRenLuyen`);
 
 --
--- Indexes for table `phongcongtacsinhvien`
+-- Chỉ mục cho bảng `phongcongtacsinhvien`
 --
 ALTER TABLE `phongcongtacsinhvien`
   ADD PRIMARY KEY (`taiKhoan`);
 
 --
--- Indexes for table `quyen`
+-- Chỉ mục cho bảng `quyen`
 --
 ALTER TABLE `quyen`
   ADD PRIMARY KEY (`maQuyen`);
 
 --
--- Indexes for table `sinhvien`
+-- Chỉ mục cho bảng `sinhvien`
 --
 ALTER TABLE `sinhvien`
   ADD PRIMARY KEY (`maSinhVien`);
 
 --
--- Indexes for table `thamgiahoatdong`
+-- Chỉ mục cho bảng `thamgiahoatdong`
 --
 ALTER TABLE `thamgiahoatdong`
   ADD PRIMARY KEY (`maThamGiaHoatDong`);
 
 --
--- Indexes for table `thongbaodanhgia`
+-- Chỉ mục cho bảng `thongbaodanhgia`
 --
 ALTER TABLE `thongbaodanhgia`
   ADD PRIMARY KEY (`maThongBao`);
 
 --
--- Indexes for table `tieuchicap1`
+-- Chỉ mục cho bảng `tieuchicap1`
 --
 ALTER TABLE `tieuchicap1`
   ADD PRIMARY KEY (`matc1`);
 
 --
--- Indexes for table `tieuchicap2`
+-- Chỉ mục cho bảng `tieuchicap2`
 --
 ALTER TABLE `tieuchicap2`
   ADD PRIMARY KEY (`matc2`);
 
 --
--- Indexes for table `tieuchicap3`
+-- Chỉ mục cho bảng `tieuchicap3`
 --
 ALTER TABLE `tieuchicap3`
   ADD PRIMARY KEY (`matc3`);
 
 --
--- Indexes for table `user_token`
+-- Chỉ mục cho bảng `user_token`
 --
 ALTER TABLE `user_token`
   ADD PRIMARY KEY (`stt`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT cho các bảng đã đổ
 --
 
 --
--- AUTO_INCREMENT for table `admin`
+-- AUTO_INCREMENT cho bảng `admin`
 --
 ALTER TABLE `admin`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT for table `chamdiemrenluyen`
+-- AUTO_INCREMENT cho bảng `chamdiemrenluyen`
 --
 ALTER TABLE `chamdiemrenluyen`
   MODIFY `maChamDiemRenLuyen` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5112;
 
 --
--- AUTO_INCREMENT for table `chucnang`
+-- AUTO_INCREMENT cho bảng `chucnang`
 --
 ALTER TABLE `chucnang`
   MODIFY `maChucNang` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT for table `khieunai`
+-- AUTO_INCREMENT cho bảng `khieunai`
 --
 ALTER TABLE `khieunai`
   MODIFY `maKhieuNai` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
--- AUTO_INCREMENT for table `lopmonhapdiemhe4`
+-- AUTO_INCREMENT cho bảng `lopmonhapdiemhe4`
 --
 ALTER TABLE `lopmonhapdiemhe4`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT for table `thamgiahoatdong`
+-- AUTO_INCREMENT cho bảng `thamgiahoatdong`
 --
 ALTER TABLE `thamgiahoatdong`
   MODIFY `maThamGiaHoatDong` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
--- AUTO_INCREMENT for table `thongbaodanhgia`
+-- AUTO_INCREMENT cho bảng `thongbaodanhgia`
 --
 ALTER TABLE `thongbaodanhgia`
   MODIFY `maThongBao` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
--- AUTO_INCREMENT for table `tieuchicap1`
+-- AUTO_INCREMENT cho bảng `tieuchicap1`
 --
 ALTER TABLE `tieuchicap1`
   MODIFY `matc1` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
--- AUTO_INCREMENT for table `tieuchicap2`
+-- AUTO_INCREMENT cho bảng `tieuchicap2`
 --
 ALTER TABLE `tieuchicap2`
   MODIFY `matc2` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
--- AUTO_INCREMENT for table `tieuchicap3`
+-- AUTO_INCREMENT cho bảng `tieuchicap3`
 --
 ALTER TABLE `tieuchicap3`
   MODIFY `matc3` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
--- AUTO_INCREMENT for table `user_token`
+-- AUTO_INCREMENT cho bảng `user_token`
 --
 ALTER TABLE `user_token`
-  MODIFY `stt` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=841;
+  MODIFY `stt` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=843;
 
 --
--- Constraints for dumped tables
+-- Các ràng buộc cho các bảng đã đổ
 --
 
 --
--- Constraints for table `covanhoctap`
+-- Các ràng buộc cho bảng `covanhoctap`
 --
 ALTER TABLE `covanhoctap`
   ADD CONSTRAINT `covanhoctap_ibfk_1` FOREIGN KEY (`maKhoa`) REFERENCES `khoa` (`maKhoa`);

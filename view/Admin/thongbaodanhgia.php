@@ -313,6 +313,7 @@
 
 								<div class="mb-3 form-group" style="display:none">
 									<input type="file" name="email_file" class="form-control" id="email_file" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" >
+									<p class="mt-4 fw-bold text-body">Yêu cầu thứ tự các cột như sau: Email.</p>
 								</div>
 
 							</div>

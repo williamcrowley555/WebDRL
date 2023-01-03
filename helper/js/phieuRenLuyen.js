@@ -196,11 +196,14 @@ function getThongTinPhieuRenLuyen(maPhieuRenLuyen) {
       error: function (error) {},
     });
 
-    // Sort tieuChiCap1 theo matc1 giảm dần
+    // Sort tieuChiCap1 theo matc1 tăng dần
     phieuRenLuyen.tieuChiCap1.sort((a, b) => a.matc1 - b.matc1);
 
-    // Sort tieuChiCap2 theo matc1 giảm dần
+    // Sort tieuChiCap2 theo matc2 tăng dần
     phieuRenLuyen.tieuChiCap2.sort((a, b) => a.matc2 - b.matc2);
+
+    // Sort tieuChiCap3 theo matc3 tăng dần
+    phieuRenLuyen.tieuChiCap3.sort((a, b) => a.matc3 - b.matc3);
 
     // Lấy thông tin sinh viên
     $.ajax({
