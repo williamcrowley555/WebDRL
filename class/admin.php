@@ -21,7 +21,7 @@
         //-------------------
         //Các chức năng
 
-        // GET ALL
+        // GET Super Admin and Admin
         public function getAllAdmin(){
             $sqlQuery = "SELECT * FROM " . $this->db_table;
             $stmt = $this->conn->prepare($sqlQuery);
@@ -29,6 +29,15 @@
             return $stmt;
         }
 
+        // GET Admin Only
+        public function getAdmin(){
+            $sqlQuery = "SELECT * FROM " . $this->db_table . " WHERE quyen = 'admin'";
+            $stmt = $this->conn->prepare($sqlQuery);
+            $stmt->execute();
+            return $stmt;
+        }
+
+        // Search include Super Admin
         public function getAllAdminBySearchText($searchText) {
             $sqlQuery = "SELECT * FROM " . $this->db_table . " INNER JOIN quyen
                             ON quyen = maQuyen 
@@ -37,6 +46,20 @@
                             "OR email LIKE '%$searchText%' " .
                             "OR soDienThoai LIKE '%$searchText%'" .
                             "OR tenQuyen LIKE '%$searchText%'";
+            $stmt = $this->conn->prepare($sqlQuery);
+            $stmt->execute();
+            return $stmt;
+        }
+
+        // Search exclude Super Admin
+        public function getAdminBySearchText($searchText) {
+            $sqlQuery = "SELECT * FROM " . $this->db_table . " INNER JOIN quyen
+                            ON quyen = maQuyen 
+                            WHERE maQuyen = 'admin' AND (taiKhoan LIKE '%$searchText%' " .
+                            "OR hoTen LIKE '%$searchText%' " .
+                            "OR email LIKE '%$searchText%' " .
+                            "OR soDienThoai LIKE '%$searchText%'" .
+                            "OR tenQuyen LIKE '%$searchText%')";
             $stmt = $this->conn->prepare($sqlQuery);
             $stmt->execute();
             return $stmt;

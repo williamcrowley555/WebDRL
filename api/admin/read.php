@@ -20,7 +20,13 @@ if ($data["status"] == 1) {
     if ($checkQuyen->checkQuyen_Khoa_CTSV_Admin($data["user_data"]->aud)) {
         if (isset($_GET['searchText'])) {
             $items = new Admin($db);
-            $stmt = $items->getAllAdminBySearchText($_GET['searchText']);
+
+            if ($data["user_data"]->aud == "superadmin") {
+                $stmt = $items->getAllAdminBySearchText($_GET['searchText']);
+            } else {
+                $stmt = $items->getAdminBySearchText($_GET['searchText']);
+            }
+            
             $itemCount = $stmt->rowCount();
 
             $countRow = 0;
@@ -56,7 +62,13 @@ if ($data["status"] == 1) {
             }
         } else {
             $items = new Admin($db);
-            $stmt = $items->getAllAdmin();
+
+            if ($data["user_data"]->aud == "superadmin") {
+                $stmt = $items->getAllAdmin();
+            } else {
+                $stmt = $items->getAdmin();
+            }
+            
             $itemCount = $stmt->rowCount();
 
             $countRow = 0;

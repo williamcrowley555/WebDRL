@@ -58,6 +58,28 @@ function Login() {
         var quyen = result["0"]["quyen"];
 
         switch (quyen) {
+          case "superadmin": {
+            // deleteAllCookies();
+
+            document.cookie = "taiKhoan=" + result["0"]["taiKhoan"];
+            document.cookie = "hoTen=" + result["0"]["hoTen"];
+            document.cookie = "quyen=" + quyen;
+            document.cookie = "jwt=" + result["jwt"];
+
+            Swal.fire({
+              icon: "success",
+              title: "Đăng nhập thành công",
+              text: "",
+              timer: 3000,
+              timerProgressBar: true,
+            });
+
+            setTimeout(function () {
+              window.location.href = "index.php";
+            }, 2000);
+            break;
+          }
+
           case "admin": {
             // deleteAllCookies();
 

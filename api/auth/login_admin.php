@@ -76,7 +76,12 @@
                 $obj_Admin->soDienThoai = $dataRow_Admin['soDienThoai'];
                 $obj_Admin->quyen = $dataRow_Admin['quyen'];
 
-                $jwt = create_token("admin",$obj_Admin,"taiKhoan","hoTen", "quyen");
+                if($dataRow_Admin['quyen'] == "superadmin") {
+                    $jwt = create_token("superadmin",$obj_Admin,"taiKhoan","hoTen", "quyen");
+                } else {
+                    $jwt = create_token("admin",$obj_Admin,"taiKhoan","hoTen", "quyen");
+                }
+                    
 
                 //Them phien dang nhap vao table user_token
                 $objUserToken = new UserToken($db);

@@ -1,4 +1,5 @@
 var jwtCookie = getCookie("jwt");
+var quyen = getCookie("quyen");
 var quyenBefore = null;
 
 var tableQuanTriVienTitle = [
@@ -107,30 +108,15 @@ function getListQuanTriVien(maQuyen) {
                                 <td class='cell'>" +
                                 (data[i].quyen == "admin"
                                 ? "Admin"
-                                : "Công tác sinh viên") +
+                                : (data[i].quyen == "ctsv" ? "Công tác sinh viên" : "Super Admin")) +
                                 "</td>\
                                 <td class='cell'>" +
                                 (data[i].kichHoat == 1
-                                ? "<span class='badge bg-success' style='color: white;font-size: inherit;'>Kích hoạt</span>"
-                                : "<span class='badge bg-warning' style='color: white;font-size: inherit;'>Vô hiệu hóa</span>") +
-                                "</td>\
-                                <td class='cell'><button  type='button' id='id_btnReset' class='btn btn-info btn_DatLaiMatKhau_QuanTriVien' data-bs-toggle='modal' data-bs-target='#DatLaiMatKhauModal' style='color: white; min-width: 137px;' data-id='" +
-                                data[i].taiKhoan + "' data-quyen='" + data[i].quyen +
-                                "' >Đặt lại mật khẩu</button></td>\
-                                <td class='cell'>\
-                                <button class='btn bg-warning btn_ChinhSua_QuanTriVien' style='color: white; min-width: 95px;' data-bs-toggle='modal' data-bs-target='#ChinhSuaModal' data-id = '" +
-                                data[i].id +  "' data-quyen='" + data[i].quyen +
-                                "' >Chỉnh sửa</button>\
-                                <td class='cell'>" +
-                                (data[i].kichHoat == "0"
-                                ? "<button class='btn bg-success btn_KichHoat_QuanTriVien' style='color: white;width: max-content; margin: 5px;' data-id = '" +
-                                data[i].id +  "' data-quyen='" + data[i].quyen +
-                                "'>Kích hoạt</button>"
-                                : "<button class='btn bg-danger btn_VoHieuHoa_QuanTriVien' style='color: white;width: max-content; margin: 5px;' data-id = '" +
-                                data[i].id +  "' data-quyen='" + data[i].quyen +
-                                "'>Vô hiệu hóa</button>") +
-                                "</td>\
-                                                </tr>";
+                                    ? "<span class='badge bg-success' style='color: white;font-size: inherit;'>Kích hoạt</span>"
+                                    : "<span class='badge bg-warning' style='color: white;font-size: inherit;'>Vô hiệu hóa</span>") +
+                                    "</td>" +
+                                 createActionButtons(data[i]) +
+                                "</tr>";
                             }
                         },
                     });
@@ -198,32 +184,15 @@ function getListQuanTriVien(maQuyen) {
                             <td class='cell'>" +
                             (data[i].quyen == "admin"
                                 ? "Admin"
-                                : "Công tác sinh viên") +
+                                : (data[i].quyen == "ctsv" ? "Công tác sinh viên" : "Super Admin")) +
                             "</td>\
                             <td class='cell'>" +
-                            (data[i].kichHoat == 1 ? 
-                            "<span class='badge bg-success' style='color: white;font-size: inherit;'>Kích hoạt</span>"
-                            : 
-                            "<span class='badge bg-warning' style='color: white;font-size: inherit;'>Vô hiệu hóa</span>"
-                            ) +
-                            "</td>\
-                            <td class='cell'><button  type='button' id='id_btnReset' class='btn btn-info btn_DatLaiMatKhau_QuanTriVien' data-bs-toggle='modal' data-bs-target='#DatLaiMatKhauModal' style='color: white; min-width: 137px;' data-id='" +
-                            data[i].taiKhoan + "' data-quyen='" + data[i].quyen +
-                            "' >Đặt lại mật khẩu</button></td>\
-                            <td class='cell'>\
-                            <button class='btn bg-warning btn_ChinhSua_QuanTriVien' style='color: white; min-width: 95px;' data-bs-toggle='modal' data-bs-target='#ChinhSuaModal' data-id = '" +
-                            data[i].taiKhoan + "' data-quyen='" + data[i].quyen +
-                            "' >Chỉnh sửa</button>\
-                            <td class='cell'>" +
-                            (data[i].kichHoat == "0"
-                            ? "<button class='btn bg-success btn_KichHoat_QuanTriVien' style='color: white;width: max-content; margin: 5px;' data-id = '" +
-                            data[i].taiKhoan + "' data-quyen='" + data[i].quyen +
-                            "'>Kích hoạt</button>"
-                            : "<button class='btn bg-danger btn_VoHieuHoa_QuanTriVien' style='color: white;width: max-content; margin: 5px;' data-id = '" +
-                            data[i].taiKhoan + "' data-quyen='" + data[i].quyen +
-                            "'>Vô hiệu hóa</button>") +
-                            "</td>\
-                            </tr>";
+                            (data[i].kichHoat == 1
+                                    ? "<span class='badge bg-success' style='color: white;font-size: inherit;'>Kích hoạt</span>"
+                                    : "<span class='badge bg-warning' style='color: white;font-size: inherit;'>Vô hiệu hóa</span>") +
+                                    "</td>" +
+                                createActionButtons(data[i]) +
+                            "</tr>";
                         }
 
                         $("#tbodyQuanTriVien").html(htmlData);
@@ -299,30 +268,15 @@ function getListQuanTriVien(maQuyen) {
                             <td class='cell'>" +
                             (data[i].quyen == "admin"
                                 ? "Admin"
-                                : "Công tác sinh viên") +
+                                : (data[i].quyen == "ctsv" ? "Công tác sinh viên" : "Super Admin")) +
                             "</td>\
                             <td class='cell'>" +
                             (data[i].kichHoat == 1
-                            ? "<span class='badge bg-success' style='color: white;font-size: inherit;'>Kích hoạt</span>"
-                            : "<span class='badge bg-warning' style='color: white;font-size: inherit;'>Vô hiệu hóa</span>") +
-                            "</td>\
-                            <td class='cell'><button  type='button' id='id_btnReset' class='btn btn-info btn_DatLaiMatKhau_QuanTriVien' data-bs-toggle='modal' data-bs-target='#DatLaiMatKhauModal' style='color: white; min-width: 137px;' data-id='" +
-                            data[i].taiKhoan + "' data-quyen='" + data[i].quyen +
-                            "' >Đặt lại mật khẩu</button></td>\
-                            <td class='cell'>\
-                            <button class='btn bg-warning btn_ChinhSua_QuanTriVien' style='color: white; min-width: 95px;' data-bs-toggle='modal' data-bs-target='#ChinhSuaModal' data-id = '" +
-                            data[i].taiKhoan + "' data-quyen='" + data[i].quyen +
-                            "' >Chỉnh sửa</button>\
-                            <td class='cell'>" +
-                            (data[i].kichHoat == "0"
-                            ? "<button class='btn bg-success btn_KichHoat_QuanTriVien' style='color: white;width: max-content; margin: 5px;' data-id = '" +
-                            data[i].id + "' data-quyen='" + data[i].quyen +
-                            "'>Kích hoạt</button>"
-                            : "<button class='btn bg-danger btn_VoHieuHoa_QuanTriVien' style='color: white;width: max-content; margin: 5px;' data-id = '" +
-                            data[i].id + "' data-quyen='" + data[i].quyen +
-                            "'>Vô hiệu hóa</button>") +
-                            "</td>\
-                                            </tr>";
+                                    ? "<span class='badge bg-success' style='color: white;font-size: inherit;'>Kích hoạt</span>"
+                                    : "<span class='badge bg-warning' style='color: white;font-size: inherit;'>Vô hiệu hóa</span>") +
+                                    "</td>" +
+                                createActionButtons(data[i]) +
+                            "</tr>";
                         }
 
                         $("#tbodyQuanTriVien").html(htmlData);
@@ -398,32 +352,15 @@ function getListQuanTriVien(maQuyen) {
                             <td class='cell'>" +
                             (data[i].quyen == "admin"
                                 ? "Admin"
-                                : "Công tác sinh viên") +
+                                : (data[i].quyen == "ctsv" ? "Công tác sinh viên" : "Super Admin")) +
                             "</td>\
                             <td class='cell'>" +
-                            (data[i].kichHoat == 1 ? 
-                            "<span class='badge bg-success' style='color: white;font-size: inherit;'>Kích hoạt</span>"
-                            : 
-                            "<span class='badge bg-warning' style='color: white;font-size: inherit;'>Vô hiệu hóa</span>"
-                            ) +
-                            "</td>\
-                            <td class='cell'><button  type='button' id='id_btnReset' class='btn btn-info btn_DatLaiMatKhau_QuanTriVien' data-bs-toggle='modal' data-bs-target='#DatLaiMatKhauModal' style='color: white; min-width: 137px;' data-id='" +
-                            data[i].taiKhoan + "' data-quyen='" + data[i].quyen +
-                            "' >Đặt lại mật khẩu</button></td>\
-                            <td class='cell'>\
-                            <button class='btn bg-warning btn_ChinhSua_QuanTriVien' style='color: white; min-width: 95px;' data-bs-toggle='modal' data-bs-target='#ChinhSuaModal' data-id = '" +
-                            data[i].taiKhoan + "' data-quyen='" + data[i].quyen +
-                            "' >Chỉnh sửa</button>\
-                            <td class='cell'>" +
-                            (data[i].kichHoat == "0"
-                            ? "<button class='btn bg-success btn_KichHoat_QuanTriVien' style='color: white;width: max-content; margin: 5px;' data-id = '" +
-                            data[i].taiKhoan + "' data-quyen='" + data[i].quyen +
-                            "'>Kích hoạt</button>"
-                            : "<button class='btn bg-danger btn_VoHieuHoa_QuanTriVien' style='color: white;width: max-content; margin: 5px;' data-id = '" +
-                            data[i].taiKhoan + "' data-quyen='" + data[i].quyen +
-                            "'>Vô hiệu hóa</button>") +
-                            "</td>\
-                            </tr>";
+                            (data[i].kichHoat == 1
+                                    ? "<span class='badge bg-success' style='color: white;font-size: inherit;'>Kích hoạt</span>"
+                                    : "<span class='badge bg-warning' style='color: white;font-size: inherit;'>Vô hiệu hóa</span>") +
+                                    "</td>" +
+                                createActionButtons(data[i]) +
+                            "</tr>";
                         }
 
                         $("#tbodyQuanTriVien").html(htmlData);
@@ -504,30 +441,15 @@ function timKiemQuanTriVien(searchText, maQuyen) {
                                 <td class='cell'>" +
                                 (data[i].quyen == "admin"
                                 ? "Admin"
-                                : "Công tác sinh viên") +
+                                : (data[i].quyen == "ctsv" ? "Công tác sinh viên" : "Super Admin")) +
                                 "</td>\
                                 <td class='cell'>" +
                                 (data[i].kichHoat == 1
-                                ? "<span class='badge bg-success' style='color: white;font-size: inherit;'>Kích hoạt</span>"
-                                : "<span class='badge bg-warning' style='color: white;font-size: inherit;'>Vô hiệu hóa</span>") +
-                                "</td>\
-                                <td class='cell'><button  type='button' id='id_btnReset' class='btn btn-info btn_DatLaiMatKhau_QuanTriVien' data-bs-toggle='modal' data-bs-target='#DatLaiMatKhauModal' style='color: white; min-width: 137px;' data-id='" +
-                                data[i].taiKhoan + "' data-quyen='" + data[i].quyen +
-                                "' >Đặt lại mật khẩu</button></td>\
-                                <td class='cell'>\
-                                <button class='btn bg-warning btn_ChinhSua_QuanTriVien' style='color: white; min-width: 95px;' data-bs-toggle='modal' data-bs-target='#ChinhSuaModal' data-id = '" +
-                                data[i].taiKhoan + "' data-quyen='" + data[i].quyen +
-                                "' >Chỉnh sửa</button>\
-                                <td class='cell'>" +
-                                (data[i].kichHoat == "0"
-                                ? "<button class='btn bg-success btn_KichHoat_QuanTriVien' style='color: white;width: max-content; margin: 5px;' data-id = '" +
-                                data[i].id + "' data-quyen='" + data[i].quyen +
-                                "'>Kích hoạt</button>"
-                                : "<button class='btn bg-danger btn_VoHieuHoa_QuanTriVien' style='color: white;width: max-content; margin: 5px;' data-id = '" +
-                                data[i].id + "' data-quyen='" + data[i].quyen +
-                                "'>Vô hiệu hóa</button>") +
-                                "</td>\
-                                                </tr>";
+                                    ? "<span class='badge bg-success' style='color: white;font-size: inherit;'>Kích hoạt</span>"
+                                    : "<span class='badge bg-warning' style='color: white;font-size: inherit;'>Vô hiệu hóa</span>") +
+                                    "</td>" +
+                                createActionButtons(data[i]) +
+                                "</tr>";
                             }
                         },
                     });
@@ -589,32 +511,15 @@ function timKiemQuanTriVien(searchText, maQuyen) {
                             <td class='cell'>" +
                             (data[i].quyen == "admin"
                                 ? "Admin"
-                                : "Công tác sinh viên") +
+                                : (data[i].quyen == "ctsv" ? "Công tác sinh viên" : "Super Admin")) +
                             "</td>\
                             <td class='cell'>" +
-                            (data[i].kichHoat == 1 ? 
-                            "<span class='badge bg-success' style='color: white;font-size: inherit;'>Kích hoạt</span>"
-                            : 
-                            "<span class='badge bg-warning' style='color: white;font-size: inherit;'>Vô hiệu hóa</span>"
-                            ) +
-                            "</td>\
-                            <td class='cell'><button  type='button' id='id_btnReset' class='btn btn-info btn_DatLaiMatKhau_QuanTriVien' data-bs-toggle='modal' data-bs-target='#DatLaiMatKhauModal' style='color: white; min-width: 137px;' data-id='" +
-                            data[i].taiKhoan + "' data-quyen='" + data[i].quyen +
-                            "' >Đặt lại mật khẩu</button></td>\
-                            <td class='cell'>\
-                            <button class='btn bg-warning btn_ChinhSua_QuanTriVien' style='color: white; min-width: 95px;' data-bs-toggle='modal' data-bs-target='#ChinhSuaModal' data-id = '" +
-                            data[i].taiKhoan + "' data-quyen='" + data[i].quyen +
-                            "' >Chỉnh sửa</button>\
-                            <td class='cell'>" +
-                            (data[i].kichHoat == "0"
-                            ? "<button class='btn bg-success btn_KichHoat_QuanTriVien' style='color: white;width: max-content; margin: 5px;' data-id = '" +
-                            data[i].id + "' data-quyen='" + data[i].quyen +
-                            "'>Kích hoạt</button>"
-                            : "<button class='btn bg-danger btn_VoHieuHoa_QuanTriVien' style='color: white;width: max-content; margin: 5px;' data-id = '" +
-                            data[i].id + "' data-quyen='" + data[i].quyen +
-                            "'>Vô hiệu hóa</button>") +
-                            "</td>\
-                            </tr>";
+                            (data[i].kichHoat == 1
+                                    ? "<span class='badge bg-success' style='color: white;font-size: inherit;'>Kích hoạt</span>"
+                                    : "<span class='badge bg-warning' style='color: white;font-size: inherit;'>Vô hiệu hóa</span>") +
+                                    "</td>" +
+                                createActionButtons(data[i]) +
+                            "</tr>";
                         }
                     },
                     });
@@ -689,30 +594,15 @@ function timKiemQuanTriVien(searchText, maQuyen) {
                             <td class='cell'>" +
                             (data[i].quyen == "admin"
                                 ? "Admin"
-                                : "Công tác sinh viên") +
+                                : (data[i].quyen == "ctsv" ? "Công tác sinh viên" : "Super Admin")) +
                             "</td>\
                             <td class='cell'>" +
                             (data[i].kichHoat == 1
-                            ? "<span class='badge bg-success' style='color: white;font-size: inherit;'>Kích hoạt</span>"
-                            : "<span class='badge bg-warning' style='color: white;font-size: inherit;'>Vô hiệu hóa</span>") +
-                            "</td>\
-                            <td class='cell'><button  type='button' id='id_btnReset' class='btn btn-info btn_DatLaiMatKhau_QuanTriVien' data-bs-toggle='modal' data-bs-target='#DatLaiMatKhauModal' style='color: white; min-width: 137px;' data-id='" +
-                            data[i].taiKhoan + "' data-quyen='" + data[i].quyen +
-                            "' >Đặt lại mật khẩu</button></td>\
-                            <td class='cell'>\
-                            <button class='btn bg-warning btn_ChinhSua_QuanTriVien' style='color: white; min-width: 95px;' data-bs-toggle='modal' data-bs-target='#ChinhSuaModal' data-id = '" +
-                            data[i].taiKhoan + "' data-quyen='" + data[i].quyen +
-                            "' >Chỉnh sửa</button>\
-                            <td class='cell'>" +
-                            (data[i].kichHoat == "0"
-                            ? "<button class='btn bg-success btn_KichHoat_QuanTriVien' style='color: white;width: max-content; margin: 5px;' data-id = '" +
-                            data[i].id + "' data-quyen='" + data[i].quyen +
-                            "'>Kích hoạt</button>"
-                            : "<button class='btn bg-danger btn_VoHieuHoa_QuanTriVien' style='color: white;width: max-content; margin: 5px;' data-id = '" +
-                            data[i].id + "' data-quyen='" + data[i].quyen +
-                            "'>Vô hiệu hóa</button>") +
-                            "</td>\
-                                            </tr>";
+                                    ? "<span class='badge bg-success' style='color: white;font-size: inherit;'>Kích hoạt</span>"
+                                    : "<span class='badge bg-warning' style='color: white;font-size: inherit;'>Vô hiệu hóa</span>") +
+                                    "</td>" +
+                                createActionButtons(data[i]) +
+                            "</tr>";
                         }
 
                         $("#tbodyQuanTriVien").html(htmlData);
@@ -787,32 +677,15 @@ function timKiemQuanTriVien(searchText, maQuyen) {
                             <td class='cell'>" +
                             (data[i].quyen == "admin"
                                 ? "Admin"
-                                : "Công tác sinh viên") +
+                                : (data[i].quyen == "ctsv" ? "Công tác sinh viên" : "Super Admin")) +
                             "</td>\
                             <td class='cell'>" +
-                            (data[i].kichHoat == 1 ? 
-                            "<span class='badge bg-success' style='color: white;font-size: inherit;'>Kích hoạt</span>"
-                            : 
-                            "<span class='badge bg-warning' style='color: white;font-size: inherit;'>Vô hiệu hóa</span>"
-                            ) +
-                            "</td>\
-                            <td class='cell'><button  type='button' id='id_btnReset' class='btn btn-info btn_DatLaiMatKhau_QuanTriVien' data-bs-toggle='modal' data-bs-target='#DatLaiMatKhauModal' style='color: white; min-width: 137px;' data-id='" +
-                            data[i].taiKhoan + "' data-quyen='" + data[i].quyen +
-                            "' >Đặt lại mật khẩu</button></td>\
-                            <td class='cell'>\
-                            <button class='btn bg-warning btn_ChinhSua_QuanTriVien' style='color: white; min-width: 95px;' data-bs-toggle='modal' data-bs-target='#ChinhSuaModal' data-id = '" +
-                            data[i].taiKhoan + "' data-quyen='" + data[i].quyen +
-                            "' >Chỉnh sửa</button>\
-                            <td class='cell'>" +
-                            (data[i].kichHoat == "0"
-                            ? "<button class='btn bg-success btn_KichHoat_QuanTriVien' style='color: white;width: max-content; margin: 5px;' data-id = '" +
-                            data[i].id + "' data-quyen='" + data[i].quyen +
-                            "'>Kích hoạt</button>"
-                            : "<button class='btn bg-danger btn_VoHieuHoa_QuanTriVien' style='color: white;width: max-content; margin: 5px;' data-id = '" +
-                            data[i].id + "' data-quyen='" + data[i].quyen +
-                            "'>Vô hiệu hóa</button>") +
-                            "</td>\
-                            </tr>";
+                            (data[i].kichHoat == 1
+                                    ? "<span class='badge bg-success' style='color: white;font-size: inherit;'>Kích hoạt</span>"
+                                    : "<span class='badge bg-warning' style='color: white;font-size: inherit;'>Vô hiệu hóa</span>") +
+                                    "</td>" +
+                                createActionButtons(data[i]) +
+                            "</tr>";
                         }
 
                         $("#tbodyQuanTriVien").html(htmlData);
@@ -1462,4 +1335,28 @@ function voHieuHoaQuanTriVien(taiKhoan, quyen) {
             }
         }
     });
+}
+
+function createActionButtons(data) {
+    if(data.quyen == "admin" && quyen != "superadmin") {
+        return "<td colspan='3' class='cell'></td>";
+    } 
+
+    return "<td class='cell'>\
+        <button  type='button' id='id_btnReset' class='btn btn-info btn_DatLaiMatKhau_QuanTriVien' data-bs-toggle='modal' data-bs-target='#DatLaiMatKhauModal' style='color: white; min-width: 137px;' data-id='" +
+        data.taiKhoan + "' data-quyen='" + data.quyen +
+        "' >Đặt lại mật khẩu</button></td>\
+        <td class='cell'>\
+        <button class='btn bg-warning btn_ChinhSua_QuanTriVien' style='color: white; min-width: 95px;' data-bs-toggle='modal' data-bs-target='#ChinhSuaModal' data-id = '" +
+        (data.quyen == "ctsv" ? data.taiKhoan : data.id) +  "' data-quyen='" + data.quyen +
+        "' >Chỉnh sửa</button>\
+        <td class='cell'>" +
+        (data.kichHoat == "0"
+        ? "<button class='btn bg-success btn_KichHoat_QuanTriVien' style='color: white;width: max-content; margin: 5px;' data-id = '" +
+        (data.quyen == "ctsv" ? data.taiKhoan : data.id) +  "' data-quyen='" + data.quyen +
+        "'>Kích hoạt</button>"
+        : "<button class='btn bg-danger btn_VoHieuHoa_QuanTriVien' style='color: white;width: max-content; margin: 5px;' data-id = '" +
+        (data.quyen == "ctsv" ? data.taiKhoan : data.id) +  "' data-quyen='" + data.quyen +
+        "'>Vô hiệu hóa</button>\
+        </td>");
 }

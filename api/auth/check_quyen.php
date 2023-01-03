@@ -4,7 +4,7 @@ class checkQuyen{
 
     //cvht hoặc khoa hoặc phòng ctsv
     public static function checkQuyen_CVHT_Khoa_CTSV($quyen){
-        if ($quyen == "cvht" || $quyen == "khoa" || $quyen == "phongcongtacsinhvien"){
+        if ($quyen == "superadmin" || $quyen == "cvht" || $quyen == "khoa" || $quyen == "phongcongtacsinhvien"){
             return true;
         }else{
             return false;
@@ -14,7 +14,7 @@ class checkQuyen{
     
     //cvht hoặc khoa hoặc phòng ctsv hoặc admin
     public static function checkQuyen_CVHT_Khoa_CTSV_Admin($quyen){
-        if ($quyen == "cvht" || $quyen == "khoa" || $quyen == "phongcongtacsinhvien" || $quyen == "admin"){
+        if ($quyen == "superadmin" || $quyen == "cvht" || $quyen == "khoa" || $quyen == "phongcongtacsinhvien" || $quyen == "admin"){
             return true;
         }else{
             return false;
@@ -24,7 +24,7 @@ class checkQuyen{
 
     //khoa hoặc phòng ctsv
     public static function checkQuyen_Khoa_CTSV($quyen){
-        if ($quyen == "khoa" || $quyen == "phongcongtacsinhvien"){
+        if ($quyen == "superadmin" || $quyen == "khoa" || $quyen == "phongcongtacsinhvien"){
             return true;
         }else{
             return false;
@@ -34,7 +34,7 @@ class checkQuyen{
 
     //khoa hoặc phòng ctsv hoặc admin
     public static function checkQuyen_Khoa_CTSV_Admin($quyen){
-        if ($quyen == "khoa" || $quyen == "phongcongtacsinhvien" || $quyen == "admin"){
+        if ($quyen == "superadmin" || $quyen == "khoa" || $quyen == "phongcongtacsinhvien" || $quyen == "admin"){
             return true;
         }else{
             return false;
@@ -44,7 +44,7 @@ class checkQuyen{
 
     //phòng ctsv
     public static function checkQuyen_CTSV($quyen){
-        if ($quyen == "phongcongtacsinhvien"){
+        if ($quyen == "superadmin" || $quyen == "phongcongtacsinhvien"){
             return true;
         }else{
             return false;
@@ -54,7 +54,7 @@ class checkQuyen{
 
     //phòng ctsv hoặc admin
     public static function checkQuyen_CTSV_Admin($quyen){
-        if ($quyen == "phongcongtacsinhvien" || $quyen == "admin"){
+        if ($quyen == "superadmin" || $quyen == "phongcongtacsinhvien" || $quyen == "admin"){
             return true;
         }else{
             return false;
@@ -64,7 +64,7 @@ class checkQuyen{
 
     //admin
     public static function checkQuyen_Admin($quyen){
-        if ($quyen == "admin"){
+        if ($quyen == "superadmin" || $quyen == "admin"){
             return true;
         }else{
             return false;

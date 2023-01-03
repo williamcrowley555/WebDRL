@@ -334,7 +334,7 @@
 		$("#tableQuanTriVien>thead>tr").append(`<th class='cell'>${title}</th>`);
 
 		if(index == tableQuanTriVienTitle.length - 1) {
-			$("#tableQuanTriVien>thead>tr").append(`<th class='cell'>Hành động</th>`);
+			$("#tableQuanTriVien>thead>tr").append(`<th colspan='3' class='cell'>Hành động</th>`);
 		}
 	});
 	

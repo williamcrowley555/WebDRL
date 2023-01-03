@@ -212,7 +212,7 @@
 	<script>
 		$(document).ready(function() {
 
-			if (_getQuyen.localeCompare('admin') === 0) {
+			if (_getQuyen.localeCompare('superadmin') === 0 || _getQuyen.localeCompare('admin') === 0) {
 				LoadContentMainPage("quantrivien.php");
 			} else {
 				LoadContentMainPage("sinhvien.php");
@@ -224,7 +224,7 @@
 
 		$('#menu_feature li').empty();
 
-		if (_getQuyen.localeCompare('admin') === 0){
+		if (_getQuyen.localeCompare('superadmin') === 0 || _getQuyen.localeCompare('admin') === 0){
 			$('#menu-accordion').append("<li class='nav-item' style='cursor: pointer;'>\
 					        <a class='nav-link' onclick='LoadContentMainPage(\"quantrivien.php\");' id='menu-button-QuanTriVien' >\
 						        <span class='nav-icon'>\
@@ -235,7 +235,7 @@
 					    </li>");
 		}
 
-		if (_getQuyen.localeCompare('ctsv') === 0 || _getQuyen.localeCompare('admin') === 0){
+		if (_getQuyen.localeCompare('superadmin') === 0 || _getQuyen.localeCompare('ctsv') === 0 || _getQuyen.localeCompare('admin') === 0){
 			$('#menu-accordion').append("<li class='nav-item' style='cursor: pointer;'>\
 					        <a class='nav-link'  onclick='LoadContentMainPage(\"sinhvien.php\");' id='menu-button-SinhVien'>\
 						        <span class='nav-icon'>\
