@@ -100,7 +100,11 @@ function LoadComboBoxThongTinKhoa_ThongKe() {
 
       $.each(result_Khoa, function (index_Khoa) {
         for (var p = 0; p < result_Khoa[index_Khoa].length; p++) {
-          if (getCookie("quyen") == "superadmin" || getCookie("quyen") == "admin" || getCookie("quyen") == "ctsv") {
+          if (
+            getCookie("quyen") == "superadmin" ||
+            getCookie("quyen") == "admin" ||
+            getCookie("quyen") == "ctsv"
+          ) {
             $("#select_Khoa").append(
               "<option value='" +
                 result_Khoa[index_Khoa][p].maKhoa +
@@ -352,6 +356,8 @@ function ThongKeLop(maKhoa, maKhoaHoc, maHocKyDanhGia) {
     async: true,
     headers: { Authorization: jwtCookie },
     success: function (result) {
+      tableLopContent = [];
+
       $("#idPhanTrangLop").pagination({
         dataSource: result["lop"],
         pageSize: 10,
@@ -433,6 +439,7 @@ function ThongKeLop(maKhoa, maKhoaHoc, maHocKyDanhGia) {
           }
 
           $("#tbodyLop").html(htmlData);
+          $("#btn_inThongKeLop").show();
         },
       });
     },
@@ -442,6 +449,7 @@ function ThongKeLop(maKhoa, maKhoaHoc, maHocKyDanhGia) {
       tableLopContent = [];
 
       $("#idPhanTrangLop").empty();
+      $("#btn_inThongKeLop").hide();
 
       htmlData +=
         "<tr>\

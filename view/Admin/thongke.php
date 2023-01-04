@@ -69,6 +69,8 @@
 			<!--//col-auto-->
 
 			<div class="tab-pane fade show active" id="tabLop" role="tabpanel" aria-labelledby="orders-all-tab">
+				<button type="button" class="btn btn-danger text-white mb-2" style="display: none;" id="btn_inThongKeLop" data-bs-toggle='modal' data-bs-target='#ModalExportKetQuaDRL'>In thống kê</button>
+
 				<div class="app-card app-card-orders-table shadow-sm mb-5">
 					<div class="app-card-body">
 						<div class="table-responsive">
@@ -144,7 +146,7 @@
 						<h4 class="mb-3 text-uppercase hoc-ky-danh-gia">Kết quả điểm rèn luyện</h4>
 
 						<div class="d-flex justify-content-between align-items-center mb-3">
-							<button type="button" class="btn btn-danger text-white" id="btn_inThongKe" data-bs-toggle='modal' data-bs-target='#ModalExportKetQuaDRL'>In thống kê</button>
+							<button type="button" class="btn btn-danger text-white" id="btn_inThongKeSinhVien" data-bs-toggle='modal' data-bs-target='#ModalExportKetQuaDRL'>In thống kê</button>
 
 							<div class="d-inline">
 								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-funnel-fill" viewBox="0 0 16 16">
@@ -214,6 +216,7 @@
 
 				<label class="mb-3 form-label" style="color: black; font-weight: 500;">Vui lòng chọn loại file muốn tải về</label>
 				
+				<input type='hidden' name='statisticalDataType' />
 				<input type='hidden' name='data' class='data' />
 
 				<div class="mb-3 form-check">
@@ -275,6 +278,14 @@
 		if (maKhoa && maKhoaHoc && maHocKyDanhGia) {
 			ThongKeLop(maKhoa, maKhoaHoc, maHocKyDanhGia);
 			$('#backToTabLop').click();
+
+			$("#btn_inThongKeLop").attr("data-maKhoa", maKhoa);
+			$("#btn_inThongKeLop").attr("data-maKhoaHoc", maKhoaHoc);
+			$("#btn_inThongKeLop").attr("data-maHocKyDanhGia", maHocKyDanhGia);
+
+			$("#btn_inThongKeSinhVien").attr("data-maKhoa", maKhoa);
+			$("#btn_inThongKeSinhVien").attr("data-maKhoaHoc", maKhoaHoc);
+			$("#btn_inThongKeSinhVien").attr("data-maHocKyDanhGia", maHocKyDanhGia);
 		} else {
 			Swal.fire({
 				icon: "error",
@@ -573,65 +584,165 @@
 			});
 	});
 
-	// Xử lý click nút in thống kê
-    $(document).on("click", "#btn_inThongKe", function() {
+	// Xử lý click nút in thống kê tình trạng chấm của các lớp
+	$(document).on("click", "#btn_inThongKeLop", function() {
+		$('#formExportKetQuaDRL').trigger("reset");
+		$("#formExportKetQuaDRL input[name='statisticalDataType']").val('classStatistics');
+	})
+
+	// Xử lý click nút in thống kê tình trạng chấm của các sinh viên
+    $(document).on("click", "#btn_inThongKeSinhVien", function() {
         $('#formExportKetQuaDRL').trigger("reset");
+		$("#formExportKetQuaDRL input[name='statisticalDataType']").val('studentStatistics');
     })
 
     // In thống kê
 	$('#formExportKetQuaDRL').submit(function() {
-		if(Array.isArray(tmpTableSinhVienContent) && tmpTableSinhVienContent.length > 0) {
-			var fileName = $(this).find('.data').attr('file-name');
+		let statisticalDataType = $(this).find('input[name="statisticalDataType"]').val();
+		let thongTinKhoa = '';
+		let thongTinHocKyDanhGia = '';
 
-			$("#formExportKetQuaDRL .data").val(
-				JSON.stringify({
-					fileName: fileName,
-					classInfo: selectedClass,
-					tableTitle: tableSinhVienTitle,
-					tableContent: tmpTableSinhVienContent
-				})
-			);
+		// Lấy thông tin khoa
+		$.ajax({
+			url: urlapi_khoa_single_read + $('#btn_inThongKeLop').attr('data-maKhoa'),
+			async: false,
+			type: "GET",
+			contentType: "application/json;charset=utf-8",
+			dataType: "json",
+			headers: {
+				Authorization: jwtCookie,
+			},
+			success: function (result_khoa) {
+				thongTinKhoa = result_khoa;
+			},
+			error: function (error) {},
+		});
 
-			var fileType = $('input[name="fileTypeExport"]:checked').val();
+		// Lấy thông tin học kỳ đánh giá
+		$.ajax({
+			url: urlapi_hockydanhgia_single_read + $('#btn_inThongKeLop').attr('data-maHocKyDanhGia'),
+			async: false,
+			type: "GET",
+			contentType: "application/json;charset=utf-8",
+			dataType: "json",
+			headers: {
+				Authorization: jwtCookie,
+			},
+			success: function (result_HKDG) {
+				thongTinHocKyDanhGia = result_HKDG;
+			},
+			error: function (error) {},
+		});
 
-			if (fileType.toLowerCase() == 'doc') {
-				$(this).attr('action', '');
+		if (statisticalDataType == 'classStatistics') {
+			if(Array.isArray(tableLopContent) && tableLopContent.length > 0) {
+				$("#formExportKetQuaDRL .data").val(
+					JSON.stringify({
+						fileName: 'thong_ke_tinh_trang_cham_cac_lop',
+						thongTinKhoa: thongTinKhoa,
+						maKhoaHoc: $('#btn_inThongKeLop').attr('data-maKhoaHoc'),
+						thongTinHocKyDanhGia: thongTinHocKyDanhGia,
+						tableTitle: tableLopTitle,
+						tableContent: tableLopContent
+					})
+				);
 
-				var formData = new FormData(this);
+				var fileType = $('input[name="fileTypeExport"]:checked').val();
 
-				// Tạo HTML Thống kê kết quả điểm rèn luyện
-				$.ajax({
-					url: host_domain_url + '/helper/htmlThongKeKetQuaDRLGenerator.php',
-					type: "POST",
-					data: formData,
-					processData: false, 
-					contentType: false,
-					enctype: 'multipart/form-data',
-					mimeType: 'multipart/form-data',
-					success: function (result) {
-						result = JSON.parse(result);
+				if (fileType.toLowerCase() == 'doc') {
+					$(this).attr('action', '');
 
-						exportToWord(result.htmlThongKeKetQuaDRL, fileName);
-					},
+					var formData = new FormData(this);
+
+					// Tạo HTML Thống kê tình trạng chấm các lớp
+					$.ajax({
+						url: host_domain_url + '/helper/htmlThongKeLop.php',
+						type: "POST",
+						data: formData,
+						processData: false, 
+						contentType: false,
+						enctype: 'multipart/form-data',
+						mimeType: 'multipart/form-data',
+						success: function (result) {
+							result = JSON.parse(result);
+
+							exportToWord(result.htmlThongKeLop, 'thong_ke_tinh_trang_cham_cac_lop');
+						},
+					});
+
+					return false;
+				} else if (fileType.toLowerCase() == 'pdf') {
+					$(this).attr('action', host_domain_url + '/mpdf/export_thongKeLop.php');
+				} 
+
+				return true;
+			} else {
+				Swal.fire({
+					icon: "error",
+					title: "Lỗi",
+					text: "Không có dữ liệu để in!",
+					timer: 2000,
+					timerProgressBar: true,
+					showCloseButton: true,
 				});
 
 				return false;
-			} else if (fileType.toLowerCase() == 'pdf') {
-				$(this).attr('action', host_domain_url + '/mpdf/export_ketQuaDRL.php');
-			} 
+			}
+		} else if (statisticalDataType == 'studentStatistics') {
+			if(Array.isArray(tmpTableSinhVienContent) && tmpTableSinhVienContent.length > 0) {
+				var fileName = $(this).find('.data').attr('file-name');
 
-			return true;
-		} else {
-			Swal.fire({
-				icon: "error",
-				title: "Lỗi",
-				text: "Không có dữ liệu để in!",
-				timer: 2000,
-				timerProgressBar: true,
-				showCloseButton: true,
-			});
+				$("#formExportKetQuaDRL .data").val(
+					JSON.stringify({
+						fileName: fileName,
+						classInfo: selectedClass,
+						thongTinHocKyDanhGia: thongTinHocKyDanhGia,
+						tableTitle: tableSinhVienTitle,
+						tableContent: tmpTableSinhVienContent
+					})
+				);
 
-			return false;
+				var fileType = $('input[name="fileTypeExport"]:checked').val();
+
+				if (fileType.toLowerCase() == 'doc') {
+					$(this).attr('action', '');
+
+					var formData = new FormData(this);
+
+					// Tạo HTML Thống kê kết quả điểm rèn luyện
+					$.ajax({
+						url: host_domain_url + '/helper/htmlThongKeKetQuaDRLGenerator.php',
+						type: "POST",
+						data: formData,
+						processData: false, 
+						contentType: false,
+						enctype: 'multipart/form-data',
+						mimeType: 'multipart/form-data',
+						success: function (result) {
+							result = JSON.parse(result);
+
+							exportToWord(result.htmlThongKeKetQuaDRL, fileName);
+						},
+					});
+
+					return false;
+				} else if (fileType.toLowerCase() == 'pdf') {
+					$(this).attr('action', host_domain_url + '/mpdf/export_ketQuaDRL.php');
+				} 
+
+				return true;
+			} else {
+				Swal.fire({
+					icon: "error",
+					title: "Lỗi",
+					text: "Không có dữ liệu để in!",
+					timer: 2000,
+					timerProgressBar: true,
+					showCloseButton: true,
+				});
+
+				return false;
+			}
 		}
 	});
 
