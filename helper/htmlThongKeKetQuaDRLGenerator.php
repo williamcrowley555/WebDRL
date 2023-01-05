@@ -1,10 +1,28 @@
 <?php
     $data = json_decode($_POST["data"], true);
     $classInfo = $data["classInfo"];
+    $thongTinHocKyDanhGia = $data["thongTinHocKyDanhGia"];
     $tableTitle = $data["tableTitle"];
     $tableContent = $data["tableContent"];
 
     $html = '';
+
+    $html .= "<table style='padding-bottom: 20px; width: 100%; '>
+                <tr>
+                    <td style='width: 40%'>
+                        <h4 style='text-align: center; font-weight: 400'>
+                            ỦY BAN NHÂN DÂN <br />THÀNH PHỐ HỒ CHÍ MINH <br /><b>TRƯỜNG ĐẠI HỌC SÀI GÒN</b>
+                            <hr style='border-top: 2px solid black; width: 140px;' />
+                        </h4>
+                    </td>
+                    <td style='width: 60%'>
+                        <h4 style='text-align: center;'>
+                            CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM <br />Độc lập - Tự do - Hạnh phúc
+                            <hr style='border-top: 2px solid black; width: 140px;' />
+                        </h4>
+                    </td>
+                </tr>
+            </table>";
 
     if($classInfo) {
         $html .= '<h2 style="text-transform: uppercase; text-align: center; margin-bottom: 10px;">Thông tin lớp</h2>';
@@ -18,7 +36,8 @@
     }
 
     if($tableTitle && $tableContent) {
-        $html .= '<h2 style="text-transform: uppercase; text-align: center; margin-top: 20px">Kết quả điểm rèn luyện</h2>';
+        $html .= '<h2 style="text-transform: uppercase; text-align: center; margin-top: 50px">Kết quả điểm rèn luyện</h2>';
+        $html .= '<p style="font-weight: bold; font-size: 18px; text-align: center">Học kỳ: ' . $thongTinHocKyDanhGia['hocKyXet'] . ', Năm học: ' . $thongTinHocKyDanhGia['namHocXet'] .'</p>';
 
         $html .= '<table style="border-collapse: collapse; margin: 15px auto;">
                     <thead style="color: black; font-weight: bold;">

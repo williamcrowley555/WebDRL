@@ -37,17 +37,17 @@
     }
 
     $html .= "<div style='margin-bottom: 20px'>
-                <div style='width: 50%;float: left;'>
-                    <h3 style='text-align: center; font-weight: 400'>
+                <div style='width: 40%;float: left;'>
+                    <h4 style='text-align: center; font-weight: 400'>
                         ỦY BAN NHÂN DÂN <br />THÀNH PHỐ HỒ CHÍ MINH <br /><b>TRƯỜNG ĐẠI HỌC SÀI GÒN</b>
                         <hr style='border-top: 2px solid black; width: 140px;' />
-                    </h3>
+                    </h4>
                 </div>
-                <div style='width: 50%;float: left;'>
-                    <h3 style='text-align: center;'>
+                <div style='width: 60%;float: left;'>
+                    <h4 style='text-align: center;'>
                         CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM <br />Độc lập - Tự do - Hạnh phúc
                         <hr style='border-top: 2px solid black; width: 140px;' />
-                    </h3>
+                    </h4>
                 </div>
             </div>";
     

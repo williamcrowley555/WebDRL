@@ -34,17 +34,17 @@
 
     $html .= "<table style='padding-bottom: 20px; width: 100%; '>
                 <tr>
-                    <td style='width: 50%'>
-                        <h3 style='text-align: center; font-weight: 400'>
+                    <td style='width: 40%'>
+                        <h4 style='text-align: center; font-weight: 400'>
                             ỦY BAN NHÂN DÂN <br />THÀNH PHỐ HỒ CHÍ MINH <br /><b>TRƯỜNG ĐẠI HỌC SÀI GÒN</b>
                             <hr style='border-top: 2px solid black; width: 140px;' />
-                        </h3>
+                        </h4>
                     </td>
-                    <td style='width: 50%'>
-                        <h3 style='text-align: center;'>
+                    <td style='width: 60%'>
+                        <h4 style='text-align: center;'>
                             CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM <br />Độc lập - Tự do - Hạnh phúc
                             <hr style='border-top: 2px solid black; width: 140px;' />
-                        </h3>
+                        </h4>
                     </td>
                 </tr>
             </table>";
