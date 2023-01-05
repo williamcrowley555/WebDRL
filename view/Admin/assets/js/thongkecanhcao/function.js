@@ -40,10 +40,14 @@ var tableDanhSachPhieuRenLuyen = [
     "Xếp loại",    
 ];
 
+var tableTitle = null;
+
 var tableThongKeCanhCao = null;
+var tmpTableThongKeCanhCao = [];
 
 var maLopToanCuc = null;
 var maKhoaToanCuc = null;
+var exportType = null;
 
 function getMaLopToanCuc(maLop) {
     maLopToanCuc = maLop;
@@ -150,10 +154,8 @@ function loadCombobox(urlAPI, selector, thongBaoLoiCombobox) {
     else
         htmlData += "<option value='tatcalop'> Tất cả lớp </option>";
     var result = callReadAPI(urlAPI, thongBaoLoiCombobox);
-    // console.log(result);
     if(result == null)
         return;
-    // console.log(result);
     $.each(result, function(index) {
         for (var i=0;i<result[index].length;i++) {
             if(urlAPI == urlapi_khoa_read){
@@ -192,7 +194,6 @@ function getSoLanYeuLienTiep(result) {
     $.each(result, function(index) {
         for (var i=0;i<result[index].length;i++) {
             if(result[index][i].diemTongCong < 50 && result[index][i].diemTongCong >= 35) {
-                //console.log(result[index][i].namHocXet);
                 hocKyXet = Number(result[index][i].hocKyXet);
                 hocKyXetTiepTheo = hocKyXet + 1;
                 if(hocKyXetTiepTheo > 2) {
@@ -292,12 +293,9 @@ function getSoLanYeuKemLienTiep(result) {
     var namHocXetTiepTheo = null;
     var namHocArr = null;
 
-    // console.log(result);
-
     $.each(result, function(index) {
         for (var i=0;i<result[index].length;i++) {
             if(result[index][i].diemTongCong < 50) {
-                //console.log(result[index][i].namHocXet);
                 hocKyXet = Number(result[index][i].hocKyXet);
                 hocKyXetTiepTheo = hocKyXet + 1;
                 if(hocKyXetTiepTheo > 2) {
@@ -317,8 +315,6 @@ function getSoLanYeuKemLienTiep(result) {
 
                 $.each(result, function(index2) {
                     for (var j=0;j<result[index2].length;j++) {
-                        // console.log(result[index][i].maSinhVien + ": " + result[index][i].diemTongCong + "-" + result[index2][j].diemTongCong + " | " + soLanYeuKemLienTiep);
-                        // console.log("hoc ky tiep theo: " + hocKyXetTiepTheo + " | nam hoc tiep theo: " + namHocXetTiepTheo);
                         if(result[index2][j].namHocXet == namHocXetTiepTheo
                             &&
                             result[index2][j].hocKyXet == hocKyXetTiepTheo
@@ -356,7 +352,6 @@ function filterTableYeu() {
                 var result_phieuRenLuyen = callReadAPI(urlapi_phieurenluyen_details_read_MaSV + result[index][i].maSinhVien, thongBaoLoiGetPhieuRenLuyen);
                 soLanYeuLienTiep = getSoLanYeuLienTiep(result_phieuRenLuyen);
                 result[index][i].soLanYeuLienTiep = soLanYeuLienTiep;
-                // console.log("Số lần điểm yếu kém liên tiếp của sinh viên " + result[index][i].maSinhVien + " là: " + soLanYeuKemLienTiep);
             }
         });
     }
@@ -391,6 +386,7 @@ function filterTableKem() {
 }
 
 function loadFilterTableThongKeCanhCao(trangThai) {
+    tmpTableThongKeCanhCao = [];
     $("#tableThongKe>thead>tr").empty();
     $("#idPhanTrangThongKe").empty();
     if(trangThai == "all") {
@@ -403,6 +399,23 @@ function loadFilterTableThongKeCanhCao(trangThai) {
         });
 
         result = tableThongKeCanhCao;
+        exportType = "all";
+        tableTitle = tableThongKeTitle;
+
+        $.each(result, function(index) {
+            for (let i=0;i<result[index].length;i++) {
+                tmpTableThongKeCanhCao.push({
+                    soThuTu: result[index][i].soThuTu,
+                    maSinhVien: result[index][i].maSinhVien,
+                    hoTenSinhVien: result[index][i].hoTenSinhVien,
+                    ngaySinh: result[index][i].ngaySinh,
+                    maLop: result[index][i].maLop,
+                    totNghiep: (Number(result[index][i].totNghiep) == 0 ? "Chưa tốt nghiệp" : "Đã tốt nghiệp"),
+                    soLanYeuKem: result[index][i].soLanYeuKem,
+                    soLanYeuKemLienTiep: result[index][i].soLanYeuKemLienTiep,
+                });
+            }
+        });
 
         if(result == null) {
             var htmlData = "<tr>\
@@ -461,6 +474,23 @@ function loadFilterTableThongKeCanhCao(trangThai) {
         });
 
         result = filterTableYeu();
+        exportType = "yeu";
+        tableTitle = tableThongKeYeuTitle;
+
+        $.each(result, function(index) {
+            for (let i=0;i<result[index].length;i++) {
+                tmpTableThongKeCanhCao.push({
+                    soThuTu: result[index][i].soThuTu,
+                    maSinhVien: result[index][i].maSinhVien,
+                    hoTenSinhVien: result[index][i].hoTenSinhVien,
+                    ngaySinh: result[index][i].ngaySinh,
+                    maLop: result[index][i].maLop,
+                    totNghiep: (Number(result[index][i].totNghiep) == 0 ? "Chưa tốt nghiệp" : "Đã tốt nghiệp"),
+                    soLanYeu: result[index][i].soLanYeu,
+                    soLanYeuLienTiep: result[index][i].soLanYeuLienTiep,
+                });
+            }
+        });
 
         if(result == null) {
             var htmlData = "<tr>\
@@ -521,6 +551,23 @@ function loadFilterTableThongKeCanhCao(trangThai) {
         });
         
         result = filterTableKem();
+        exportType = "kem";
+        tableTitle = tableThongKeKemTitle;
+
+        $.each(result, function(index) {
+            for (let i=0;i<result[index].length;i++) {
+                tmpTableThongKeCanhCao.push({
+                    soThuTu: result[index][i].soThuTu,
+                    maSinhVien: result[index][i].maSinhVien,
+                    hoTenSinhVien: result[index][i].hoTenSinhVien,
+                    ngaySinh: result[index][i].ngaySinh,
+                    maLop: result[index][i].maLop,
+                    totNghiep: (Number(result[index][i].totNghiep) == 0 ? "Chưa tốt nghiệp" : "Đã tốt nghiệp"),
+                    soLanKem: result[index][i].soLanKem,
+                    soLanKemLienTiep: result[index][i].soLanKemLienTiep,
+                });
+            }
+        });
 
         if(result == null) {
             var htmlData = "<tr>\
@@ -573,7 +620,7 @@ function loadFilterTableThongKeCanhCao(trangThai) {
 }
 
 function loadTableThongKe() {
-
+    tmpTableThongKeCanhCao = [];
     $("#tbodyThongKe tr").remove();
     $("#idPhanTrangThongKe").empty();
     var maLop = maLopToanCuc;
@@ -613,6 +660,23 @@ function loadTableThongKe() {
             });
 
             tableThongKeCanhCao = result;
+            exportType = "all";
+            tableTitle = tableThongKeTitle;
+
+            $.each(result, function(index) {
+                for (let i=0;i<result[index].length;i++) {
+                    tmpTableThongKeCanhCao.push({
+                        soThuTu: result[index][i].soThuTu,
+                        maSinhVien: result[index][i].maSinhVien,
+                        hoTenSinhVien: result[index][i].hoTenSinhVien,
+                        ngaySinh: result[index][i].ngaySinh,
+                        maLop: result[index][i].maLop,
+                        totNghiep: (Number(result[index][i].totNghiep) == 0 ? "Chưa tốt nghiệp" : "Đã tốt nghiệp"),
+                        soLanYeuKem: result[index][i].soLanYeuKem,
+                        soLanYeuKemLienTiep: result[index][i].soLanYeuKemLienTiep,
+                    });
+                }
+            });
     
             $("#idPhanTrangThongKe").pagination({
                 dataSource: result["sinhvien"],
@@ -655,20 +719,17 @@ function loadTableThongKe() {
     result = callReadAPI(urlapi_thongkecanhcao_read + "?maLop=" + maLop, thongBaoLoiRong);
     // var htmlData = "";
     
-    // console.log(result);
     if(result != null) {
         $.each(result, function(index) {
             for (var i=0;i<result[index].length;i++) {
                 var result_phieuRenLuyen = callReadAPI(urlapi_phieurenluyen_details_read_MaSV + result[index][i].maSinhVien, thongBaoLoiGetPhieuRenLuyen);
                 soLanYeuKemLienTiep = getSoLanYeuKemLienTiep(result_phieuRenLuyen);
                 result[index][i].soLanYeuKemLienTiep = soLanYeuKemLienTiep;
-                // console.log("Số lần điểm yếu kém liên tiếp của sinh viên " + result[index][i].maSinhVien + " là: " + soLanYeuKemLienTiep);
             }
         });
     
         var result_KhongYeuKem = callReadAPI(urlapi_thongkecanhcao_khongyeukem_read + "?maLop=" + maLop, thongBaoLoiRong);
         soThuTuYeuKem = result["sinhvien"].length;
-        // console.log(result);
         if(result_KhongYeuKem != null) {
             $.each(result_KhongYeuKem, function(index) {
                 for (var i=0;i<result_KhongYeuKem[index].length;i++) {
@@ -686,7 +747,25 @@ function loadTableThongKe() {
             
         }
 
+    
         tableThongKeCanhCao = result;
+        exportType = "all";
+        tableTitle = tableThongKeTitle;
+        
+        $.each(result, function(index) {
+            for (let i=0;i<result[index].length;i++) {
+                tmpTableThongKeCanhCao.push({
+                    soThuTu: result[index][i].soThuTu,
+                    maSinhVien: result[index][i].maSinhVien,
+                    hoTenSinhVien: result[index][i].hoTenSinhVien,
+                    ngaySinh: result[index][i].ngaySinh,
+                    maLop: result[index][i].maLop,
+                    totNghiep: (Number(result[index][i].totNghiep) == 0 ? "Chưa tốt nghiệp" : "Đã tốt nghiệp"),
+                    soLanYeuKem: result[index][i].soLanYeuKem,
+                    soLanYeuKemLienTiep: result[index][i].soLanYeuKemLienTiep,
+                });
+            }
+        });
 
         $("#idPhanTrangThongKe").pagination({
             dataSource: result["sinhvien"],
@@ -699,6 +778,7 @@ function loadTableThongKe() {
                 var count = 0;
 
                 for (let i = 0; i < data.length; i++) {
+
                     count += 1;
                     htmlData += "<tr> \
                                     <td>" + data[i].soThuTu + "</td>\
@@ -744,6 +824,23 @@ function loadTableThongKe() {
         });
 
         tableThongKeCanhCao = result;
+        exportType = "all";
+        tableTitle = tableThongKeTitle;
+
+        $.each(result, function(index) {
+            for (let i=0;i<result[index].length;i++) {
+                tmpTableThongKeCanhCao.push({
+                    soThuTu: result[index][i].soThuTu,
+                    maSinhVien: result[index][i].maSinhVien,
+                    hoTenSinhVien: result[index][i].hoTenSinhVien,
+                    ngaySinh: result[index][i].ngaySinh,
+                    maLop: result[index][i].maLop,
+                    totNghiep: (Number(result[index][i].totNghiep) == 0 ? "Chưa tốt nghiệp" : "Đã tốt nghiệp"),
+                    soLanYeuKem: result[index][i].soLanYeuKem,
+                    soLanYeuKemLienTiep: result[index][i].soLanYeuKemLienTiep,
+                });
+            }
+        });
 
         $("#idPhanTrangThongKe").pagination({
             dataSource: result["sinhvien"],
@@ -756,6 +853,7 @@ function loadTableThongKe() {
                 var count = 0;
 
                 for (let i = 0; i < data.length; i++) {
+
                     count += 1;
                     htmlData += "<tr> \
                                     <td>" + data[i].soThuTu + "</td>\

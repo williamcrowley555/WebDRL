@@ -62,15 +62,19 @@
 				<!--//table-utilities-->
 			</div>
 			<!--//col-auto-->
-
-			<div class="d-inline text-end">
-				<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-funnel-fill" viewBox="0 0 16 16">
-								<path d="M1.5 1.5A.5.5 0 0 1 2 1h12a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.128.334L10 8.692V13.5a.5.5 0 0 1-.342.474l-3 1A.5.5 0 0 1 6 14.5V8.692L1.628 3.834A.5.5 0 0 1 1.5 3.5v-2z"/>
-				</svg>
-				Lọc trạng thái: 
-				<select class="form-select w-auto d-inline mx-3" id="select_TrangThai">
-				</select>
+			
+			<div class="d-flex justify-content-between align-item-center">
+				<button type="button" class="btn btn-danger text-white" id="btn_inThongKe" data-bs-toggle='modal' data-bs-target='#ModalExportThongKeCanhCao'>In thống kê</button>
+				<div class="d-inline text-end">
+					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-funnel-fill" viewBox="0 0 16 16">
+									<path d="M1.5 1.5A.5.5 0 0 1 2 1h12a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.128.334L10 8.692V13.5a.5.5 0 0 1-.342.474l-3 1A.5.5 0 0 1 6 14.5V8.692L1.628 3.834A.5.5 0 0 1 1.5 3.5v-2z"/>
+					</svg>
+					Lọc trạng thái: 
+					<select class="form-select w-auto d-inline mx-3" id="select_TrangThai">
+					</select>
+				</div>
 			</div>
+			
 
 			<div class="tab-pane fade show active" role="tabpanel" aria-labelledby="orders-all-tab">
 				<div class="app-card app-card-orders-table shadow-sm mb-5">
@@ -147,6 +151,43 @@
 				</div>
 			</div>
 
+			<!-- Modal xuất thống kê cảnh cáo -->
+			<div class="modal fade" id="ModalExportThongKeCanhCao" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+				<form action="" method='POST' class="modal-dialog" id="formExportThongKeCanhCao">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="exampleModalLabel"> In thống kê </h5>
+							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						</div>
+						<div class="modal-body">
+
+							<label class="mb-3 form-label" style="color: black; font-weight: 500;">Vui lòng chọn loại file muốn tải về</label>
+							
+							<input type='hidden' name='data' class='data' />
+
+							<div class="mb-3 form-check">
+								<input class="form-check-input" type="radio" name="fileTypeExport" value="doc" id="radioExportWord" checked>
+								<label class="form-check-label" for="radioExportWord">
+									Word (.doc)
+								</label>
+							</div>
+
+							<div class="mb-3 form-check">
+								<input class="form-check-input" type="radio" name="fileTypeExport" value="pdf" id="radioExportPDF">
+								<label class="form-check-label" for="radioExportPDF">
+									PDF (.pdf)
+								</label>
+							</div>
+
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+							<button type="submit" class="btn app-btn-primary" style='color: white;'>Tải về</button>
+						</div>
+					</div>
+				</form>
+			</div>
+
 		</div>
 		<!--//row-->
 
@@ -160,6 +201,9 @@
 
 </footer>
 <!--//app-footer-->
+
+<!-- Export Word JS -->
+<script src="../../helper/js/export_word.js"></script>
 
 <!-- Page Specific JS -->
 <script src="assets/js/thongkecanhcao/function.js"></script>
@@ -184,8 +228,12 @@
 		// $('#select_TrangThai').empty();
 		// $('#tbodyThongKe tr').remove();
 		// $('#idPhanTrangThongKe').empty();
-		if(maKhoa != "none" && maKhoa != null)
+		if(maKhoa != "none" && maKhoa != null) {
 			getMaKhoaToanCuc(maKhoa);
+			if(maKhoa == "DCT")
+				getMaLopToanCuc("tatcalop");
+		}
+			
 		loadCombobox(urlapi_lop_read_maKhoa + maKhoa, "#select_Lop", thongBaoLoiComboboxLop);
 	});
 
@@ -199,8 +247,6 @@
 	});
 
 	$("#btn_thongKe").on("click", function() {
-		
-		// console.log("hello");
 		$('#select_TrangThai').find('option[value=all]').attr('selected','selected');
 		loadTableThongKe("all");
 	});
@@ -221,5 +267,65 @@
 		$("#maSinhVien").append("Mã sinh viên: " + maSinhVien);
 		$("#hoTenSinhVien").append("Họ tên sinh viên: " + hoTenSinhVien);
 		loadDanhSachPhieuRenLuyen(maSinhVien, hienThi);
+	});
+
+	// Xử lý click nút in thống kê
+    $(document).on("click", "#btn_inThongKe", function() {
+        $('#formExportThongKeCanhCao').trigger("reset");
+    })
+
+	// In thống kê
+	$('#formExportThongKeCanhCao').submit(function() {
+		if(Array.isArray(tmpTableThongKeCanhCao) && tmpTableThongKeCanhCao.length > 0) {
+			$("#formExportThongKeCanhCao .data").val(
+				JSON.stringify({
+					fileName: 'thong_ke_canh_cao',
+					tableTitle: tableTitle,
+					tableContent: tmpTableThongKeCanhCao,
+					exportType: exportType
+				})
+			);
+
+			var fileType = $('input[name="fileTypeExport"]:checked').val();
+
+			if (fileType.toLowerCase() == 'doc') {
+				$(this).attr('action', '');
+
+				var formData = new FormData(this);
+
+				// Tạo HTML Thống kê kết quả điểm rèn luyện
+				$.ajax({
+					url: host_domain_url + '/helper/htmlThongKeCanhCaoGenerator.php',
+					type: "POST",
+					data: formData,
+					processData: false, 
+					contentType: false,
+					enctype: 'multipart/form-data',
+					mimeType: 'multipart/form-data',
+					success: function (result) {
+						result = JSON.parse(result);
+
+						exportToWord(result.htmlThongKeCanhCao, "Thong_ke_canh_cao");
+					},
+				});
+
+				return false;
+			} else if (fileType.toLowerCase() == 'pdf') {
+				$(this).attr('action', host_domain_url + '/mpdf/export_thongKeCanhCao.php');
+			} 
+
+			return true;
+		} else {
+			Swal.fire({
+				icon: "error",
+				title: "Lỗi",
+				text: "Không có dữ liệu để in!",
+				timer: 2000,
+				timerProgressBar: true,
+				showCloseButton: true,
+			});
+
+			return false;
+		}
 	});
 </script>
