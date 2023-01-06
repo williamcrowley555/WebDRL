@@ -784,6 +784,7 @@
 		$('#input_MaSinhVien_GPA').val(maSinhVien);
 		$('#maSinhVien_ketQuaHocTap').text("Mã sinh viên: " + maSinhVien);
 		LoadComboBoxHocKyVaNamHoc();
+		console.log("masinhvien:" + maSinhVien);
 		LoadDiemHe4(maSinhVien);
 
 		$("#nav-list-tab").on("click", LoadDiemHe4(maSinhVien));

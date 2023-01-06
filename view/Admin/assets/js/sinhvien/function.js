@@ -1180,6 +1180,13 @@ function LoadDiemHe4(maSinhVien) {
     async: false,
     headers: { Authorization: jwtCookie },
     success: function (result_data) {
+      sortObject(result_data["diemtrungbinhhe4"], "namHocXet", true);
+      $.each(result_data, function (index) {
+        for (var i = 0; i < result_data[index].length; i++) {
+          result_data[index][i].soThuTu = i+1;
+        }
+      });
+
       $("#id_tbodyKetQuaHocTap tr").remove();
       var htmlData = "";
 
@@ -1456,4 +1463,16 @@ function luuXetTotNghiep() {
       });
     }
   });
+}
+
+function sortObject(object, prop, asc) {
+  object.sort(function (a, b) {
+    if (asc) {
+      return a[prop] > b[prop] ? 1 : a[prop] < b[prop] ? -1 : 0;
+    } else {
+      return b[prop] > a[prop] ? 1 : b[prop] < a[prop] ? -1 : 0;
+    }
+  });
+
+  return object;
 }
