@@ -1,5 +1,5 @@
 //load điểm rèn luyện của sinh viên
-const maSo = getCookie("maSo");
+// const maSo = getCookie("maSo");
 var jwtCookie = getCookie("jwt");
 if(maSo.length == 10) { //Nếu là sinh viên
     //var _input_MSSVTraCuu = $('#input_MSSVTraCuu').val();

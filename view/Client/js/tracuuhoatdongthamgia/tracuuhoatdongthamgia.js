@@ -1,4 +1,4 @@
-const maSo = getCookie("maSo");
+// const maSo = getCookie("maSo");
 var jwtCookie = getCookie("jwt");
 if(maSo.length == 10) { //Nếu là sinh viên
     TraCuuHoatDong(maSo);
