@@ -114,13 +114,13 @@ function GetListSinhVien(maKhoa, maLop) {
                   data[i].ngaySinh +
                   "</td>\
                   <td class='cell'>" +
-                  data[i].he +
-                  "</td>\
-                  <td class='cell'>" +
                   data[i].email +
                   "</td>\
                   <td class='cell'>" +
                   data[i].sdt +
+                  "</td>\
+                  <td class='cell'>" +
+                  data[i].he +
                   "</td>\
                   <td class='cell'>" +
                   data[i].maLop +
@@ -216,13 +216,13 @@ function GetListSinhVien(maKhoa, maLop) {
                       data[i].ngaySinh +
                       "</td>\
                       <td class='cell'>" +
-                      data[i].he +
-                      "</td>\
-                      <td class='cell'>" +
                       data[i].email +
                       "</td>\
                       <td class='cell'>" +
                       data[i].sdt +
+                      "</td>\
+                      <td class='cell'>" +
+                      data[i].he +
                       "</td>\
                       <td class='cell'>" +
                       data[i].maLop +
@@ -313,13 +313,13 @@ function GetListSinhVien(maKhoa, maLop) {
                       data[i].ngaySinh +
                       "</td>\
                         <td class='cell'>" +
-                      data[i].he +
-                      "</td>\
-                        <td class='cell'>" +
                       data[i].email +
                       "</td>\
                         <td class='cell'>" +
                       data[i].sdt +
+                      "</td>\
+                        <td class='cell'>" +
+                      data[i].he +
                       "</td>\
                         <td class='cell'>" +
                       data[i].maLop +
@@ -411,13 +411,13 @@ function GetListSinhVien(maKhoa, maLop) {
                     data[i].ngaySinh +
                     "</td>\
                   <td class='cell'>" +
-                    data[i].he +
-                    "</td>\
-                  <td class='cell'>" +
                     data[i].email +
                     "</td>\
                   <td class='cell'>" +
                     data[i].sdt +
+                    "</td>\
+                  <td class='cell'>" +
+                    data[i].he +
                     "</td>\
                   <td class='cell'>" +
                     data[i].maLop +
@@ -534,13 +534,13 @@ function TimKiemSinhVien(maSinhVien) {
               data[i].ngaySinh +
               "</td>\
                   <td class='cell'>" +
-              data[i].he +
-              "</td>\
-                  <td class='cell'>" +
               data[i].email +
               "</td>\
                   <td class='cell'>" +
               data[i].sdt +
+              "</td>\
+                  <td class='cell'>" +
+              data[i].he +
               "</td>\
                   <td class='cell'>" +
               data[i].maLop +
